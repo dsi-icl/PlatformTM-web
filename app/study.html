@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>eTriks | Study</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="lib/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="lib/nvd3/nv.d3.min.css">
+    <link href="css/style_ori.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="top-bar">
+
+    <div class="content">
+        <img src="img/etriks-logo.svg" width="55px" class="pull-left" style="margin-top: .5em"/>
+
+
+        <div class="pull-left">
+            <form class="top-search-form" action="search">
+                <input type="text" name="value" placeholder="Search For">
+                <input type="text" name="search_on" placeholder="ALL">
+                <button type="submit" class="submit"><span class="glyphicon glyphicon-search"></span></button>
+            </form>
+        </div>
+
+        <div class="pull-left menu">
+            <ul>
+                <li><a href="explore">Explore</a></li>
+                <li><a href="help">Help</a></li>
+                <li><a href="contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="pull-right login">
+            Logged in as <span class="username">iemam</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="clearfix"></div>
+
+<div class="breadcrumbs">
+    <div class="content">
+        <div class="pull-left">
+            <ul>
+                <li><a href="explore">ETRIKS ></a></li>
+                <li><a href="help">STUDIES ></a></li>
+                <li class="active"><a href="contact">GSE9134</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="description">
+    <div class="content">
+        <h3>Genome-wide gene expression in HDAC5 wildtype and knockout mice treated with chronic cocaine or saline</h3>
+
+        <p>Some individuals are more vulnerable than others to chronic psychiatric illnesses, such as drug addiction or
+            depression, but the neural and molecular mechanisms responsible for this are poorly understood.</p>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+<div class="content">
+
+    <div class="panel subject-panel">
+        <div class="panel-header">
+            <h3><span class="glyphicon glyphicon-user" style="color: #39b3d7; margin-right: 3px"></span> Subject</h3>
+        </div>
+
+        <div id="subject-plots" class="subject-view">
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="subject" style="border-top: 1px solid #35495E">
+            <div class="option-list">
+
+                <ul class="pull-left">
+                    <li id="subject_age">
+                        <div>Age</div>
+                    </li>
+                    <li id="subject_sex">
+                        <div>Sex</div>
+                    </li>
+                    <li id="subject_weight">
+                        <div>Weight</div>
+                    </li>
+                </ul>
+
+                <ul class="pull-left">
+                    <li id="subject_height">
+                        <div>Height</div>
+                    </li>
+                    <li id="subject_hair-colour">
+                        <div>Hair Colour</div>
+                    </li>
+                    <li id="subject_bmi">
+                        <div>BMI</div>
+                    </li>
+                </ul>
+
+
+                <ul class="pull-left">
+                    <li id="subject_race">
+                        <div>Race</div>
+                    </li>
+                    <li id="subject_abdomen-girth">
+                        <div>Abdomen Girth</div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel publication-panel">
+        <div class="panel-header">
+            <h3><span class="glyphicon glyphicon-book" style="color: #39b3d7; margin-right: 3px"></span> Publications
+            </h3>
+        </div>
+
+        <div class="publications">
+            <div class="publication">
+                <p class="title">Histone deacetylase 5 epigenetically controls behavioral adaptations to chronic
+                    emotional stimuli. </p>
+
+                <p class="authors">Renthal W, Maze I, Krishnan V, Covington HE 3rd et al.</p>
+
+                <p class="journal">Neuron 2007 Nov 8;56(3):517-29. </p>
+
+                <p class="pmed">PMID: <span>17988634</span></p>
+            </div>
+
+            <div class="publication">
+                <p class="title">Histone deacetylase 5 epigenetically controls behavioral adaptations to chronic
+                    emotional stimuli. </p>
+
+                <p class="authors">Renthal W, Maze I, Krishnan V, Covington HE 3rd et al.</p>
+
+                <p class="journal">Neuron 2007 Nov 8;56(3):517-29. </p>
+
+                <p class="pmed">PMID: <span>17988634</span></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div id="clinical-data" class="content">
+    <div class="panel-header">
+        <h3><span class="glyphicon glyphicon-plus" style="color: #39b3d7; margin-right: 3px"></span> Clinical Assessment
+        </h3>
+    </div>
+
+    <div class="section-block-header" id="findings">
+        <h3>Findings
+        </h3>
+    </div>
+
+    <div id="findings-block">
+        <div id="findings-content" class="section-block-content">
+
+            <div align="center" style="padding-top:20px ">
+
+                <span class="glyphicon glyphicon-plus"
+                      style="background-color: #39b3d7; cursor:pointer;; color: #fff; border-radius: 50%; width: 50px; height: 50px; padding-top: 12px"
+                      onclick="etriks.function.toggleSectionOptions('findings')"></span>
+            </div>
+        </div>
+
+        <div id="findings-options" class="section-block-content-option hidden" align="center">
+            <p>Select Findings</p>
+
+            <ul>
+                <li id="findings_spirometry" class="selected">SPIROMETRY</li>
+                <li id="findings_reversibility">REVERSIBILITY</li>
+                <li id="findings_plethysmography">PLETHYSMOGRAPHY</li>
+            </ul>
+
+            <div class="clearfix"></div>
+            <div class="option-buttons">
+                <span class="pull-left" onclick="etriks.function.toggleSectionOptions('findings');">
+                    <span class="glyphicon glyphicon-remove"></span> Cancel</span>
+                <span class="pull-right" onclick="etriks.function.toggleSectionOptions('findings');">
+                    <span class="glyphicon glyphicon-ok"></span> Confirm</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section-block-header" id="events">
+        <h3>Events
+        </h3>
+    </div>
+
+    <div id="events-block">
+        <div id="events-content" class="section-block-content">
+
+            <div align="center" style="padding-top:20px ">
+
+                <span class="glyphicon glyphicon-plus"
+                      style="background-color: #39b3d7; cursor:pointer;; color: #fff; border-radius: 50%; width: 50px; height: 50px; padding-top: 12px"
+                      onclick="etriks.function.toggleSectionOptions('events')"></span>
+            </div>
+        </div>
+
+        <div id="events-options" class="section-block-content-option hidden" align="center">
+            <p>Select Events</p>
+
+            <ul>
+                <li id="events_spirometry" class="selected">Medical History</li>
+                <li id="events_reversibility">Adverse Events</li>
+            </ul>
+
+            <div class="clearfix"></div>
+            <div class="option-buttons">
+                <span class="pull-left" onclick="etriks.function.toggleSectionOptions('events');">
+                    <span class="glyphicon glyphicon-remove"></span> Cancel</span>
+                <span class="pull-right" onclick="etriks.function.toggleSectionOptions('events');">
+                    <span class="glyphicon glyphicon-ok"></span> Confirm</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section-block-header" id="interventions">
+        <h3>Interventions
+        </h3>
+    </div>
+
+    <div id="interventions-block" class="hidden">
+        <div id="interventions-content" class="section-block-content">
+
+            <div align="center" style="padding-top:20px ">
+
+                <span class="glyphicon glyphicon-plus"
+                      style="background-color: #39b3d7; cursor:pointer;; color: #fff; border-radius: 50%; width: 50px; height: 50px; padding-top: 12px"
+                      onclick="etriks.function.toggleSectionOptions('interventions')"></span>
+            </div>
+        </div>
+
+        <div id="interventions-options" class="section-block-content-option hidden" align="center">
+            <p>Select Interventions</p>
+
+            <ul>
+                <li id="int_1">Intervention 1</li>
+                <li id="int_2">Intervention 2</li>
+                <li id="int_3">Intervention 1</li>
+            </ul>
+
+            <div class="clearfix"></div>
+            <div class="option-buttons">
+                <span class="pull-left" onclick="etriks.function.toggleSectionOptions('interventions');">
+                    <span class="glyphicon glyphicon-remove"></span> Cancel</span>
+                <span class="pull-right" onclick="etriks.function.toggleSectionOptions('interventions');">
+                    <span class="glyphicon glyphicon-ok"></span> Confirm</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section-block-header" id="sample">
+        <h3>Sample Collection
+        </h3>
+    </div>
+
+    <div id="sample-block" class="hidden">
+        <div id="sample-content" class="section-block-content">
+
+            <div align="center" style="padding-top:20px ">
+
+                <span class="glyphicon glyphicon-plus"
+                      style="background-color: #39b3d7; cursor:pointer;; color: #fff; border-radius: 50%; width: 50px; height: 50px; padding-top: 12px"
+                      onclick="etriks.function.toggleSectionOptions('sample')"></span>
+            </div>
+        </div>
+
+        <div id="sample-options" class="section-block-content-option hidden" align="center">
+            <p>Select Sample Collection</p>
+
+            <ul>
+                <li id="samp1">Sample coll 1</li>
+                <li id="samp2">Sample coll 2</li>
+                <li id="samp3">Sample coll 3</li>
+            </ul>
+
+            <div class="clearfix"></div>
+            <div class="option-buttons">
+                <span class="pull-left" onclick="etriks.function.toggleSectionOptions('sample');">
+                    <span class="glyphicon glyphicon-remove"></span> Cancel</span>
+                <span class="pull-right" onclick="etriks.function.toggleSectionOptions('sample');">
+                    <span class="glyphicon glyphicon-ok"></span> Confirm</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="clearfix"></div>
+
+<div id="molecular-data" class="content">
+    <div class="panel-header">
+        <h3><span class="glyphicon glyphicon-book" style="color: #39b3d7; margin-right: 3px"></span> Molecular Data
+        </h3>
+    </div>
+
+    <ul>
+        <li>
+            <div class="assay-info" align="center">
+                <img src="img/assays/transcriptomics.svg">
+
+                <p class="assay-type">Transcriptomics</p>
+
+                <p class="assay-tech">DNA Microarray</p>
+
+                <p class="assay-count">345 assays</p>
+            </div>
+        </li>
+
+        <li class="odd">
+            <div class="assay-info" align="center">
+                <img src="img/assays/proteomics.svg">
+
+                <p class="assay-type">Proteomics</p>
+
+                <p class="assay-tech">Mass Spectrometry</p>
+
+                <p class="assay-count">322 assays</p>
+
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="clearfix"></div>
+
+<div id="study-design" class="content">
+    <div class="panel-header">
+        <h3><span class="glyphicon glyphicon-adjust" style="color: #39b3d7; margin-right: 3px"></span> Study Design
+        </h3>
+    </div>
+
+</div>
+
+<div class="footer" align="center">
+    <img src="img/etriks-logo.svg" width="55px" style="margin-top: .5em"/>
+</div>
+
+
+</body>
+
+<!-- do all the JS stuff after the page is loaded...-->
+<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+<script src="lib/d3/d3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="lib/nvd3/nv.d3.min.js"></script>
+<script src="js/functions.js"></script>
+
+<script>
+    //defaults
+    var type = "subject";
+    var defaultPlots = ["age", "race", "sex"];
+    for (var plotType in defaultPlots) {
+        var chartId = type + "-" + defaultPlots[plotType] + "-plot";
+
+        $("#" + type + "_" + defaultPlots[plotType]).addClass("selected");
+
+
+        etriks.function.addChartContainer(type, defaultPlots[plotType], chartId);
+        etriks.function.addGraph(chartId, "data/data-" + defaultPlots[plotType] + ".json", defaultPlots[plotType] == "age" ? "bar" : "pie");
+    }
+
+</script>
+</html>
