@@ -1,0 +1,129 @@
+[
+    {"Classname": "Findings",
+     "domains":[
+         {"name":"Laboratory Test Results",
+          "code": "LB"
+         },
+         {"name":"Vital Signs",
+             "code": "VS"
+         },
+         {"name":"Physical Examination",
+             "code": "PE"
+         },
+         {"name":"Drug Accountability",
+             "code": "DA"
+         },
+         {"name":"Questionnaires",
+             "code": "QS"
+         },
+         {"name":"ECG Test Results",
+             "code": "EG"
+         },
+         {"name":"Microbiology Specimen",
+             "code": "MB"
+         },
+         {"name":"Microbiology Susceptibility Test",
+             "code": "MS"
+         },
+         {"name":"PK Concentrations",
+             "code": "PC"
+         },
+         {"name":"PK Parameters",
+             "code": "PP"
+         },
+         {"name":"Subject Characteristics",
+             "code": "SC"
+         },
+         {"name":"Respiratory System Findings",
+             "code": "RE"
+         },
+         {"name":"Morphology",
+             "code": "MO"
+         },
+         {"name":"Reproductive System Findings",
+             "code": "RP"
+         },
+         {"name":"Tumor Identification",
+             "code": "TU"
+         },
+         {"name":"Death Details",
+             "code": "DD"
+         },
+         {"name":"Subject Status",
+             "code": "SS"
+         },
+         {"name":"Microscopic Findings",
+             "code": "MI"
+         },
+         {"name":"Disease Response",
+             "code": "RS"
+         },
+         {"name":"Tumor Results",
+             "code": "TR"
+         }
+     ]
+    },
+    {"Classname": "Events",
+     "domains": [
+         {"name":"Adverse Events",
+             "code": "AE"
+         },
+         {"name":"Medical History",
+             "code": "MH"
+         },
+         {"name":"Clinical Events",
+             "code": "CE"
+         },
+         {"name":"Disposition",
+             "code": "DS"
+         },
+         {"name":"Healthcare Encounters",
+             "code": "HO"
+         },
+         {"name":"Protocol Deviations",
+             "code": "DV"
+         }
+     ]
+    },
+    {"Classname": "Interventions",
+     "domains": [
+         {"name":"Concomitant Medications",
+             "code": "CM"
+         },
+         {"name":"Exposure",
+             "code": "EX"
+         },{"name":"Procedures",
+             "code": "PR"
+         },{"name":"Exposure as Collected",
+             "code": "EC"
+         },{"name":"Substance Use",
+             "code": "SU"
+         }
+     ]
+    },
+    {"Classname": "Findings About",
+        "domains": [
+            {"name":"Findings About",
+                "code": "FA"
+            },
+            {"name":"Skin Response",
+                "code": "SR"
+            }
+        ]
+    }
+    ,
+    {"Classname": "Special Purpose",
+        "domains": [
+            {"name":"Comments",
+                "code": "CO"
+            },
+            {"name":"Demographics",
+                "code": "DM"
+            },
+            {"name":"Supplemental Qualifiers",
+                "code": "SUPP"
+            }
+        ]
+    }
+
+]

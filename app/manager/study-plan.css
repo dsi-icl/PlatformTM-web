@@ -1,0 +1,104 @@
+.studyCell{
+    display: inline-block;
+}
+
+.studySegment{
+    margin-right: 5px;
+    margin-left: 5px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #005580;
+    border-radius: 5px;
+    padding: 9px;
+    min-width: 100px;
+    display: inline-block;
+    text-align: center;
+    font-size: 0.6em;
+}
+
+.epoch{
+    border-right: 2px;
+    border-color: black;
+    border-right-style: solid;
+    display: inline-block;
+    padding-top:20px;
+    min-height: 80px;
+    background-color: aliceblue;
+}
+.epoch.odd{
+    background-color: linen;
+}
+.epoch.even{
+    background-color: #add8e6;
+}
+
+.studySegment:hover{
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.epoch-header{
+    height: 20px;
+    font-size: 0.5em;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    top:-20px;
+    padding: 3px;
+    color:white;
+    background-color: #2C3E50
+}
+
+.armbar{
+    border-width: 2px;
+    background-color: #add8e6;
+    width: 20px;
+    height: 80px;
+    float: left;
+    /*display: inline-block;*/
+    /*border-left-style: solid;*/
+}
+.arm{
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.arm-container{
+    padding-left: 2px;
+    display: inline-block;
+}
+
+
+.planContainer{
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+
+.icon-remove{
+    cursor: pointer;
+    left: -9px;
+    font-size: 0.7em;
+    z-index: 100;
+    top: -17px;
+    color: #256e93;
+}
+.assessment-list{
+    background-color: #F1F2F2;
+}
+.assessment-list ul{
+    /*border-top: 1px solid white;*/
+    list-style: none;
+    font-size: .6em;
+    padding-left: 0px;
+}
+
+.assessment-list ul li{
+    border-bottom: 1px solid white;
+    padding: 4px 14px;
+    cursor: pointer;
+}
+.assessment-list ul li:hover {
+    background-color: white;
+    color:#39b3d7;
+}
+
+
+

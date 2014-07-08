@@ -1,0 +1,305 @@
+<link type="text/css" rel="stylesheet" href="explore/css/clinicalDataTree.css" />
+
+<div id="clinical-data" class="content">
+    <div class="panel-header">
+        <h3><span class="glyphicon glyphicon-plus" style="color: #39b3d7; margin-right: 3px"></span> Clinical Assessment
+        </h3>
+    </div>
+
+    <div class="plots-view">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#clinical-plots" data-toggle="tab">Data Plots</a></li>
+            <li><a href="#clinical-datatable" data-toggle="tab">Data Table</a></li>
+            <li><a href="#settings" data-toggle="tab">Export</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div id="clinical-plots" class="tab-pane active plots-view">
+                <div class='row'>
+
+                    <div class='pie-graph col-md-6' id='dc-magnitude-chart'>
+                        <h4>Spirometry Test - FEV1</h4>
+                    </div>
+                    <div class='pie-graph col-md-6' id='dc-depth-chart'>
+                        <h4>Spirometry Test PEF</h4>
+                    </div>
+
+                </div>
+
+                <!--<div class='row'>
+                    <div class='col-md-12' id='dc-time-chart'>
+                        <h4>Events per hour</h4>
+                    </div>
+                </div>-->
+
+                <div class='row'>
+                    <div class='col-md-4' id='dc-dayweek-chart'>
+                        <h4>Day of the Week</h4>
+                    </div>
+                    <div class='col-md-4' id='dc-island-chart'>
+                        <h4>Smoking History</h4>
+                    </div>
+                    <div class='col-md-4' id='blank2'></div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="clinical-datatable">
+                <div class='row'>
+                    <div class='pie-graph col-md-12'>
+                        <table class='table table-hover' id='dc-table-graph'>
+                            <thead>
+                            <tr class='header'>
+                                <th>DTG</th>
+                                <th>Lat</th>
+                                <th>Long</th>
+                                <th>Depth</th>
+                                <th>Magnitude</th>
+                                <th>Google Map</th>
+                                <th>OSM Map</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="settings">...</div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="clinicalTree row " style="height: 300px; overflow: scroll" >
+        <div class="col-md-12">
+            <button class="btn btn-sm btn-block">
+                <span>Clinical Observations</span>
+            </button>
+        </div>
+
+
+
+        <!--Findings-->
+        <div class="col-md-4">
+            <div class="connecting-line"></div>
+            <button type="button" class="btn btn-sm btn-block" style="background-color: #00afbc;border-radius:30px">Findings</button>
+            <div class="connecting-line"></div>
+
+            <!--Domains-->
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#LB-CAT0-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node" id="deny">
+                    <span>Clinical Laboratory Tests</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+            </div>
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#LB-CAT1-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                    <span>Physical Examination</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+            </div>
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#LB-CAT2-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                    <span>Clinical Laboratory Tests</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+            </div>
+
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#LB-CAT3-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                    <span>Vital Signs</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+            </div>
+
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#LB-CAT4-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                    <span>Respiratory Findings</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+            </div>
+
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#LB-CAT5-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                    <span>ECG Test Results</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+            </div>
+            <!--End of Domains-->
+        </div>
+
+        <!--Events-->
+        <div class="col-md-4">
+            <div class="connecting-line"></div>
+            <button type="button" class="btn btn-sm btn-block" style="background-color: #e57e25;border-radius:30px">Events</button>
+            <div class="connecting-line"></div>
+
+            <!--MH domain-->
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#MH-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node">
+                    <span>Medical History</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+            </div>
+
+            <!--MH Categories-->
+            <div id="MH-content"  class="collapse col-md-offset-1">
+                <!--<button id="" class="btn btn-sm tree-leaf">-->
+                <!--<span>Undernourishment</span>-->
+                <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                <!--</button>-->
+
+                <div class="btn-group btn-block">
+                    <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#MH-CAT1-content">
+                        <span class="caret"></span>
+                    </button>
+                    <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                        <span>Diagnosis of Asthma</span>
+                        <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                    </button>
+                </div>
+
+                <div class="btn-group btn-block">
+                    <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#MH-CAT2-content">
+                        <span class="caret"></span>
+                    </button>
+                    <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                        <span>Respiratory History</span>
+                        <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                    </button>
+                </div>
+
+                <!--MH Observations-->
+                <div id="MH-CAT2-content" class="collapse col-md-offset-1" style="height: inherit; overflow: scroll">
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Breathing Problem</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Breathing Problem Doctor Visit</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Emergency Room Visit</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Overnight Treatment</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Rescue Inhaler Use</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>ICU admission</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>ICU admission last year</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Intubation</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Pneumonia</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Bronchitis</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Chronic Bronchitis</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Emphysema or COPD</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                    <button  class="btn btn-sm tree-leaf">
+                        <span>Supplemental Oxygen</span>
+                        <!--<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>-->
+                    </button>
+                </div>
+                <!--End of MH observations-->
+
+                <div class="btn-group btn-block">
+                    <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#MH-CAT3-content">
+                        <span class="caret"></span>
+                    </button>
+                    <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                        <span>Medical/Surgical History</span>
+                        <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                    </button>
+                </div>
+
+                <div class="btn-group btn-block">
+                    <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#MH-CAT4-content">
+                        <span class="caret"></span>
+                    </button>
+                    <button class="tree-node col-md-11 btn btn-sm tree-node" >
+                        <span>Asthma Exacerbation</span>
+                        <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                    </button>
+                </div>
+            </div>
+            <!--End of MH Categories-->
+            <!--End of MH Domain-->
+
+            <!--AE domain-->
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#AE-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node">
+                    <span>Adverse Events</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+            </div>
+        </div>
+
+        <!--Interventions-->
+        <div class="col-md-4">
+            <div class="connecting-line"></div>
+            <button type="button" class="btn btn-sm btn-block" style="color:white;background-color: #2c3e50;border-radius:30px">Interventions</button>
+            <div class="connecting-line"></div>
+
+            <div class="btn-group btn-block">
+                <button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#IT-CAT0-content">
+                    <span class="caret"></span>
+                </button>
+                <button class="tree-node col-md-11 btn btn-sm tree-node" id="deny">
+                    <span>Concomitant Medications</span>
+                    <!--&lt;!&ndash;<div class="IndexTreeRemoveButton" title="Remove this dimension">×</div>&ndash;&gt;-->
+                </button>
+
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>

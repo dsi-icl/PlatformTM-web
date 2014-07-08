@@ -7,7 +7,7 @@
             <h3><span class="glyphicon glyphicon-user" style="color: #39b3d7; margin-right: 3px"></span> {{title}}</h3>
         </div>
 
-        <div id="subject-plots" ng-controller="subjPlotsCtrl" class="subject-view">
+        <div id="subject-plots" ng-controller="subjPlotsCtrl" class="plots-view">
 
         </div>
 
@@ -16,13 +16,13 @@
             <div class="subject" style="border-top: 1px solid #35495E">
                 <div class="option-list">
 
-                    <ul class="pull-left">
+                    <ul id="subjChars" class="pull-left">
                         <li ng-repeat="sc in subjChars"
                             ng-init="scSelected = false"
                             ng-class="{'selected': scSelected}"
                             ng-click="toggleSCPlot(sc)"
                             id="subject_{{sc}}">
-                            <div>{{sc}}</div>
+                            {{sc}}
                         </li>
                     </ul>
                 </div>
@@ -32,8 +32,7 @@
         </div>
     </div>
 
-
-    <div class="panel publication-panel">
+<div class="panel publication-panel">
         <div class="panel-header">
             <h3><span class="glyphicon glyphicon-book" style="color: #39b3d7; margin-right: 3px"></span> Data export
             </h3>

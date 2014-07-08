@@ -6,6 +6,17 @@
     {
         "label": "Arabic",
         "value": 10
+
+    },
+    {
+        "label": "White",
+        "value": 20
+
+    },
+    {
+        "label": "Black",
+        "value": 5
+
     }
 ]
 
