@@ -6,11 +6,11 @@ body {
 a {
     color: #39C2D7;
     text-decoration: none;
-    /*cursor: pointer;*/
+    cursor: pointer;
 }
 
 a:hover {
-    color: #39C2D7;
+    color: #2b9cc7;
     text-decoration: none;
 }
 
@@ -66,6 +66,9 @@ a:hover {
 
 .menu {
     margin-left: -20px;
+}
+.menu a{
+    color: white;
 }
 
 .menu ul {
@@ -149,6 +152,12 @@ a:hover {
     text-transform: uppercase;
     color: white;
     padding: 15px;
+}
+
+.panel-content{
+    background: #f1f2f1;
+    /*min-height: 430px;*/
+    font-size: .8em;
 }
 
 .subject-panel {
@@ -243,7 +252,7 @@ a:hover {
 
 .section-block-header h3 {
     margin: 0;
-    font-size: .7em;
+    /*font-size: .7em;*/
 }
 
 .section-block-content {

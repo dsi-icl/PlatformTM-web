@@ -1,0 +1,63 @@
+<div class="dataset-container">
+    <span><h5>Select dataset template</h5></span>
+    <div id="data-accordion" style="float:left; width: 35%; margin-right: .5%">
+    <!--<div class="panel" style="border: 0; width:100%">-->
+
+        <div class="section-block-header" style="cursor: pointer" id="clinicaldata" data-toggle="collapse" data-parent="#data-accordion" data-target="#clinicadata-content">
+            Clinical Data
+        </div>
+        <div id="clinicadata-content" class="assessment-list collapse in" >
+
+            <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
+                Search: <input ng-model="searchText">
+            </div>
+            <div style="height: 200px; overflow-y: scroll;">
+                <ul ng-repeat="class in cdiscClasses">
+                    <li ui-sref="manager.study-activities.new.dataset.details" ng-repeat="domain in class.domains | filter:{name: searchText}" ng-mouseover="mouseOverDataset(domain)" >{{domain.name}} - ({{domain.code}})</li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="section-block-header" style="cursor: pointer" id="moleculardata" data-toggle="collapse" data-parent="#data-accordion" data-target="#moleculardata-content">
+            Molecular Assays
+        </div>
+        <div id="moleculardata-content" class="assessment-list collapse">
+            <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
+                Search: <input ng-model="searchText">
+            </div>
+            <div style="height: 200px; overflow-y: scroll;">
+                <ul >
+                    <li ng-repeat="isaconf in isaconfigs | filter:{name: searchText}">{{isaconf.name}}</li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        <div class="section-block-header" id="subjectdata" data-toggle="collapse" data-parent="#data-accordion" data-target="#subjectdata-content">
+            Subject Characteristics
+        </div>
+        <div id="subjectdata-content" class="assessment-list collapse">
+            <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
+                Search: <input ng-model="searchText">
+            </div>
+            <div style="height: 200px; overflow-y: scroll;">
+                <ul>
+                    <li>Demographics</li>
+                    <li>Subject Characteristics</li>
+                </ul>
+            </div>
+        </div>
+   <!-- </div>-->
+
+
+    </div>
+
+    <div style="float: left; width:63%; border: 1px solid white; padding: 10px; margin-left: 1%">
+        <span>Class:</span><span>Findings</span>
+        <p>{{preview}}Laboratory test findings including, but is not limited to hematology, clinical chemistry and urinalysis data. This domain does not include microbiology or pharmacokinetic data, which are stored in separate domains</p>
+    </div>
+</div>
+

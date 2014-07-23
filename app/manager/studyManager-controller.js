@@ -32,5 +32,8 @@ angular.module('eTRIKSdata.studyDesign')
 
     })
 
+        $scope.mouseOverDataset = function(domain) {
+            $scope.preview = "Mouse Over: " + domain.name;
+        }
 
 });

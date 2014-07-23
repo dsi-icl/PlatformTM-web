@@ -10,12 +10,15 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
 
 eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider){
 
-       $urlRouterProvider.otherwise('/home');
+       /*$urlRouterProvider.otherwise('/home');*/
 
+    $urlRouterProvider.when('', '/home');
         $stateProvider
             .state('home',{
                 url: "/home",
                 templateUrl:"home.html"
             })
+
+
 
     });

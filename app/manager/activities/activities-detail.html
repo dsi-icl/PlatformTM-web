@@ -1,39 +1,19 @@
-<div style=" width: 75%; font-size: 0.6em; float: right" >
-    <div style="background-color: white;margin: 10px;">
-        <dl class="dl-horizontal">
-            <dt>Name</dt>
-            <dd>{{domain.name}}</dd>
-            <dt>Class</dt>
-            <dd>Findings</dd>
-            <dt>Description</dt>
-            <dd>Laboratory test findings including, but is not limited to hematology, clinical chemistry and urinalysis data. This domain does not include microbiology or pharmacokinetic data, which are stored in separate domains.</dd>
-        </dl>
-    </div>
-
-
-    <div style=" width: 33%; float:left">
-        <div>
-            <span><h5>Dataset Variables</h5></span>
-            <ul class="list-unstyled">
-                <li ng-repeat="var in lbDomain.variables">
-                    <label ui-sref="manager.activities.detail.variable({variableId:var.id})">
-                        <input
-                                type="checkbox"
-
-                                value="{{var}}"
-
-                                ng-click="selectVariable(var)"
-                                > {{var.name}}
-                    </label>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div ui-view>
-        <small class="muted"> Click on a variable to see details</small>
-    </div>
-
-
-
+<div>
+    <dl class="dl-horizontal description-list ">
+        <dt>Activity Name</dt>
+        <dd><a href="#" e-ng-model="activityName" editable-text="activityName"  buttons="no" blur="submit">{{activity.name || "Enter name"}}</a></dd>
+        <dt>Datasets</dt>
+        <dd>
+            <div style="background-color: #ffffff;width: 250px;border: 1px solid transparent;border-color: #ddd;">
+                <ul style="list-style: none; margin-top: 5px;">
+                    <!--<li ui-sref="manager.activities-def.detail.dataset"><span class="glyphicon glyphicon-th-list"></span>Laboratory Test Findings</li>-->
+                    <!--<li><span class="glyphicon glyphicon-align-justify">&NonBreakingSpace;</span>Laboratory Test Findings</li>-->
+                    <li><a ui-sref="manager.study-activities.new.dataset"><span class="glyphicon glyphicon-align-justify">&NonBreakingSpace;</span>Add dataset</a></li>
+                </ul>
+            </div>
+        </dd>
+    </dl>
 </div>
+
+<div ui-view="dataset.detail"></div>
+
