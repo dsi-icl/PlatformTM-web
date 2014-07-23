@@ -1,54 +1,24 @@
-<div id="data-accordion">
-    <div class="panel" style="border: 0">
+<div style="padding: 10px" ui-sref-active="new_activity_active">
+ <!--   <ul class="unstyled">
+        <li ui-sref="manager.study-activities.new" ui-sref-active="new_activity_active">
+            <h5>Create new activity</h5>
+        </li>
+    </ul>-->
+    <span ui-sref="manager.study-activities.new"  ><h5>Create new activity</h5></span>
+    <!-- <button style="float: left"  type="button" class="btn btn-info" ng-init="btnText = 'New Activity'">{{ btnText }}</button>-->
+</div>
 
-        <div class="section-block-header" style="cursor: pointer" id="clinicaldata" data-toggle="collapse" data-parent="#data-accordion" data-target="#clinicadata-content">
-            <h3>Clinical Data</h3>
+<div style="font-size: 0.6em">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Study Activities</h3>
         </div>
-        <div id="clinicadata-content" class="assessment-list collapse" >
-
-            <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
-                Search: <input ng-model="searchText">
-            </div>
-            <div style="height: 200px; overflow-y: scroll; margin-bottom: 10px;">
-                <ul ng-repeat="class in cdiscClasses">
-                    <li ng-repeat="domain in class.domains | filter:{name: searchText}"><a ui-sref="manager.activities.detail({domainID:domain.oid})">{{domain.name}} - ({{domain.code}})</a></li>
-                </ul>
-            </div>
-        </div>
-
-
-
-        <div class="section-block-header" style="cursor: pointer" id="moleculardata" data-toggle="collapse" data-parent="#data-accordion" data-target="#moleculardata-content">
-            <h3>Molecular Assays</h3>
-        </div>
-        <div id="moleculardata-content" class="assessment-list collapse">
-            <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
-                Search: <input ng-model="searchText">
-            </div>
-            <div style="height: 200px; overflow-y: scroll; margin-bottom: 10px;">
-                <ul >
-                    <li ng-repeat="isaconf in isaconfigs | filter:{name: searchText}">{{isaconf.name}}</li>
-                </ul>
-            </div>
-
-        </div>
-
-
-        <div class="section-block-header" id="subjectdata" data-toggle="collapse" data-parent="#data-accordion" data-target="#subjectdata-content">
-            <h3>Subject Characteristics</h3>
-        </div>
-        <div id="subjectdata-content" class="assessment-list collapse">
-            <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
-                Search: <input ng-model="searchText">
-            </div>
-            <div style="height: 200px; overflow-y: scroll; margin-bottom: 10px;">
-                <ul>
-                    <li>Demographics</li>
-                    <li>Subject Characteristics</li>
-                </ul>
-            </div>
+        <div>
+            <ul class="list-group">
+                <li ng-repeat="activity in data.activities" class="list-group-item">
+                    <a ui-sref="manager.study-activities.detail({activityId:activity.id})">{{activity.name}}</a>
+                </li>
+            </ul>
         </div>
     </div>
-
-
 </div>

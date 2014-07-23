@@ -80,13 +80,18 @@
     top: -17px;
     color: #256e93;
 }
+
+#activities{
+    min-height: 550px;
+    background-color: #F1F2F2;
+}
 .assessment-list{
     background-color: #F1F2F2;
 }
 .assessment-list ul{
     /*border-top: 1px solid white;*/
     list-style: none;
-    font-size: .6em;
+    /*font-size: .6em;*/
     padding-left: 0px;
 }
 
@@ -100,5 +105,38 @@
     color:#39b3d7;
 }
 
+.description-list{
+    /*background-color: white;*/
+    margin: 0px;
+}
+.description-list dd, dt{
+    padding-top: 10px;
+}
 
+.dataset-container{
+    background-color: aliceblue;
+    padding: 10px;
+    height: 420px;
+    margin-right: 2em;
+    margin-top: 0.5em;
+}
+
+.new-activity-active{
+    background-color: #ffffff;
+    border-radius: 2px;
+    color: red;
+}
+
+.variables-list ul{
+
+}
+.variable-list ul li{
+
+}
+.variable-list ul li:hover{
+
+}
+.variable-active{
+    background-color: #ffffff;
+}
 
