@@ -6,7 +6,32 @@
     </div>
 
     <div class="panel-content">
-        <div ui-view="activities.list" class="panel-content" style="float: left; width: 25%"></div>
+        <div class="panel-content" style="float: left; width: 25%">
+            <div style="padding: 10px" ui-sref-active="new_activity_active">
+                <!--   <ul class="unstyled">
+                        <li ui-sref="manager.study-activities.new" ui-sref-active="new_activity_active">
+                            <h5>Create new activity</h5>
+                        </li>
+                    </ul>-->
+               <!-- <span ui-sref="manager.activities.new"  ><h5>Create new activity</h5></span>-->
+              <button style="float: left"  type="button" class="btn btn-info" ng-click="$state.go('manager.activities.new', { activityId: new });" ng-init="btnText = 'New Activity'">{{ btnText }}</button>
+            </div>
+
+            <div style="font-size: 0.6em">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Study Activities</h3>
+                    </div>
+                    <div>
+                        <ul class="list-group">
+                            <li ng-repeat="activity in data.activities" class="list-group-item">
+                                <a ui-sref="manager.activities.detail({activityId:activity.id})">{{activity.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div ui-view="activities.detail" class="panel-content" style=" width: 75%; float: right; "></div>
     </div>
 </div>

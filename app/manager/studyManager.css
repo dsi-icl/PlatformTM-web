@@ -109,9 +109,6 @@
     /*background-color: white;*/
     margin: 0px;
 }
-.description-list dd, dt{
-    padding-top: 10px;
-}
 
 .dataset-container{
     background-color: aliceblue;

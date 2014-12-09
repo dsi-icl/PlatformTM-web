@@ -6,6 +6,8 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
         "ui.router",
         "eTRIKSdata.studyDesign",
         "eTRIKSdata.explorer"
+
+
     ]);
 
 eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider){

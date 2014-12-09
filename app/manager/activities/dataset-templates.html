@@ -12,8 +12,12 @@
                 Search: <input ng-model="searchText">
             </div>
             <div style="height: 200px; overflow-y: scroll;">
-                <ul ng-repeat="class in cdiscClasses">
-                    <li ui-sref="manager.study-activities.new.dataset.details" ng-repeat="domain in class.domains | filter:{name: searchText}" ng-mouseover="mouseOverDataset(domain)" >{{domain.name}} - ({{domain.code}})</li>
+                <ul>
+                    <li ng-click="selectTemplate(domain)"
+                        ng-repeat="domain in templates.domains | filter:{name: searchText}"
+                        ng-mouseover="mouseOverDataset(domain)">
+                        {{domain.name}} - ({{domain.code}})
+                    </li>
                 </ul>
             </div>
         </div>
@@ -29,7 +33,7 @@
             </div>
             <div style="height: 200px; overflow-y: scroll;">
                 <ul >
-                    <li ng-repeat="isaconf in isaconfigs | filter:{name: searchText}">{{isaconf.name}}</li>
+                    <li ng-repeat="isaconf in templates.isaconfigs | filter:{name: searchText}">{{isaconf.name}}</li>
                 </ul>
             </div>
 
@@ -55,9 +59,9 @@
 
     </div>
 
-    <div style="float: left; width:63%; border: 1px solid white; padding: 10px; margin-left: 1%">
-        <span>Class:</span><span>Findings</span>
-        <p>{{preview}}Laboratory test findings including, but is not limited to hematology, clinical chemistry and urinalysis data. This domain does not include microbiology or pharmacokinetic data, which are stored in separate domains</p>
+    <div style="float: left; width:63%; border: 1px solid white; padding: 10px; margin-left: 1%" >
+        <span>Class:</span><span>{{templates.preview.class}}</span>
+        <p>{{templates.preview.description}}</p>
     </div>
 </div>
 

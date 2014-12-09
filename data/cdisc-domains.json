@@ -1,129 +1,152 @@
 [
-    {"Classname": "Findings",
-     "domains":[
-         {"name":"Laboratory Test Results",
-          "code": "LB"
-         },
-         {"name":"Vital Signs",
-             "code": "VS"
-         },
-         {"name":"Physical Examination",
-             "code": "PE"
-         },
-         {"name":"Drug Accountability",
-             "code": "DA"
-         },
-         {"name":"Questionnaires",
-             "code": "QS"
-         },
-         {"name":"ECG Test Results",
-             "code": "EG"
-         },
-         {"name":"Microbiology Specimen",
-             "code": "MB"
-         },
-         {"name":"Microbiology Susceptibility Test",
-             "code": "MS"
-         },
-         {"name":"PK Concentrations",
-             "code": "PC"
-         },
-         {"name":"PK Parameters",
-             "code": "PP"
-         },
-         {"name":"Subject Characteristics",
-             "code": "SC"
-         },
-         {"name":"Respiratory System Findings",
-             "code": "RE"
-         },
-         {"name":"Morphology",
-             "code": "MO"
-         },
-         {"name":"Reproductive System Findings",
-             "code": "RP"
-         },
-         {"name":"Tumor Identification",
-             "code": "TU"
-         },
-         {"name":"Death Details",
-             "code": "DD"
-         },
-         {"name":"Subject Status",
-             "code": "SS"
-         },
-         {"name":"Microscopic Findings",
-             "code": "MI"
-         },
-         {"name":"Disease Response",
-             "code": "RS"
-         },
-         {"name":"Tumor Results",
-             "code": "TR"
-         }
-     ]
+
+    {"name":"Laboratory Test Results",
+        "code": "LB",
+        "class": "Findings",
+        "description": "Laboratory test findings including, but is not limited to hematology, clinical chemistry and urinalysis data. This domain does not include microbiology or pharmacokinetic data, which are stored in separate domains"
     },
-    {"Classname": "Events",
-     "domains": [
-         {"name":"Adverse Events",
-             "code": "AE"
-         },
-         {"name":"Medical History",
-             "code": "MH"
-         },
-         {"name":"Clinical Events",
-             "code": "CE"
-         },
-         {"name":"Disposition",
-             "code": "DS"
-         },
-         {"name":"Healthcare Encounters",
-             "code": "HO"
-         },
-         {"name":"Protocol Deviations",
-             "code": "DV"
-         }
-     ]
+    {"name":"Vital Signs",
+        "code": "VS",
+        "class": "Findings"
     },
-    {"Classname": "Interventions",
-     "domains": [
-         {"name":"Concomitant Medications",
-             "code": "CM"
-         },
-         {"name":"Exposure",
-             "code": "EX"
-         },{"name":"Procedures",
-             "code": "PR"
-         },{"name":"Exposure as Collected",
-             "code": "EC"
-         },{"name":"Substance Use",
-             "code": "SU"
-         }
-     ]
+    {"name":"Physical Examination",
+        "code": "PE",
+        "class": "Findings"
     },
-    {"Classname": "Findings About",
-        "domains": [
-            {"name":"Findings About",
-                "code": "FA"
-            },
-            {"name":"Skin Response",
-                "code": "SR"
-            }
-        ]
+    {"name":"Drug Accountability",
+        "code": "DA",
+        "class": "Findings"
+    },
+    {"name":"Questionnaires",
+        "code": "QS",
+        "class": "Findings"
+    },
+    {"name":"ECG Test Results",
+        "code": "EG",
+        "class": "Findings"
+    },
+    {"name":"Microbiology Specimen",
+        "code": "MB",
+        "class": "Findings"
+    },
+    {"name":"Microbiology Susceptibility Test",
+        "code": "MS",
+        "class": "Findings"
+    },
+    {"name":"PK Concentrations",
+        "code": "PC",
+        "class": "Findings"
+    },
+    {"name":"PK Parameters",
+        "code": "PP",
+        "class": "Findings"
+    },
+    {"name":"Subject Characteristics",
+        "code": "SC",
+        "class": "Findings"
+    },
+    {"name":"Respiratory System Findings",
+        "code": "RE",
+        "class": "Findings"
+    },
+    {"name":"Morphology",
+        "code": "MO",
+        "class": "Findings"
+    },
+    {"name":"Reproductive System Findings",
+        "code": "RP",
+        "class": "Findings"
+    },
+    {"name":"Tumor Identification",
+        "code": "TU",
+        "class": "Findings"
+    },
+    {"name":"Death Details",
+        "code": "DD",
+        "class": "Findings"
+    },
+    {"name":"Subject Status",
+        "code": "SS",
+        "class": "Findings"
+    },
+    {"name":"Microscopic Findings",
+        "code": "MI",
+        "class": "Findings"
+    },
+    {"name":"Disease Response",
+        "code": "RS",
+        "class": "Findings"
+    },
+    {"name":"Tumor Results",
+        "code": "TR",
+        "class": "Findings"
+    },
+
+    {"name":"Adverse Events",
+        "code": "AE",
+        "class": "Events"
+    },
+    {"name":"Medical History",
+        "code": "MH",
+        "class": "Events"
+    },
+    {"name":"Clinical Events",
+        "code": "CE",
+        "class": "Events"
+    },
+    {"name":"Disposition",
+        "code": "DS",
+        "class": "Events"
+    },
+    {"name":"Healthcare Encounters",
+        "code": "HO",
+        "class": "Events"
+    },
+    {"name":"Protocol Deviations",
+        "code": "DV",
+        "class": "Events"
+    },
+    {"name":"Concomitant Medications",
+        "code": "CM",
+        "class": "Interventions"
+    },
+    {"name":"Exposure",
+        "code": "EX",
+        "class": "Interventions"
+    },
+    {"name":"Procedures",
+        "code": "PR",
+        "class": "Interventions"
+    },
+    {"name":"Exposure as Collected",
+        "code": "EC",
+        "class": "Interventions"
+    },
+    {"name":"Substance Use",
+        "code": "SU",
+        "class": "Interventions"
+    },
+    {"name":"Findings About",
+        "code": "FA",
+        "class": "Findings About"
+    },
+    {"name":"Skin Response",
+        "code": "SR",
+        "class": "Findings About"
+    },
+    {"name":"Comments",
+        "code": "CO",
+        "class": "Special Purpose"
+    },
+    {"name":"Demographics",
+        "code": "DM",
+        "class": "Special Purpose"
+    },
+    {"name":"Supplemental Qualifiers",
+        "code": "SUPP",
+        "class": "Special Purpose"
     }
-    ,
-    {"Classname": "Special Purpose",
-        "domains": [
-            {"name":"Comments",
-                "code": "CO"
-            },
-            {"name":"Demographics",
-                "code": "DM"
-            },
-            {"name":"Supplemental Qualifiers",
-                "code": "SUPP"
-            }
-        ]
-    }
+
+
 
 ]

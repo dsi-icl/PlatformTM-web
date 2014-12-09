@@ -1,14 +1,20 @@
 <div>
     <dl class="dl-horizontal description-list ">
         <dt>Activity Name</dt>
-        <dd><a href="#" e-ng-model="activityName" editable-text="activityName"  buttons="no" blur="submit">{{activity.name || "Enter name"}}</a></dd>
+        <dd><a href="#" e-ng-model="data.activity.name" editable-text="data.activity.name"  buttons="no" blur="submit">{{data.activity.name || "Enter name"}}</a></dd>
         <dt>Datasets</dt>
         <dd>
             <div style="background-color: #ffffff;width: 250px;border: 1px solid transparent;border-color: #ddd;">
                 <ul style="list-style: none; margin-top: 5px;">
-                    <!--<li ui-sref="manager.activities-def.detail.dataset"><span class="glyphicon glyphicon-th-list"></span>Laboratory Test Findings</li>-->
-                    <!--<li><span class="glyphicon glyphicon-align-justify">&NonBreakingSpace;</span>Laboratory Test Findings</li>-->
-                    <li><a ui-sref="manager.study-activities.new.dataset"><span class="glyphicon glyphicon-align-justify">&NonBreakingSpace;</span>Add dataset</a></li>
+                    <li ng-repeat="dataset in data.activity.datasets">
+                        <a ui-sref="manager.activities.detail.dataset({datasetId:dataset.id})">
+                        <span class="glyphicon glyphicon-align-justify">&NonBreakingSpace;</span>{{dataset.name}}</a>
+                    </li>
+
+                    <li>
+                        <a ui-sref="manager.activities.detail.newdataset">
+                        <span class="glyphicon glyphicon-align-justify">&NonBreakingSpace;</span>Add dataset</a>
+                    </li>
                 </ul>
             </div>
         </dd>

@@ -14,14 +14,16 @@ angular.module('eTRIKSdata.studyDesign')
         });
     })
 
-    .factory('datasetResource',function($resource){
-        return $resource('/api/activities/:activityId/datasets')
+/*    .factory('DatasetResource',function($resource){
+        return $resource('/api/activities/:activityId/datasets',
+            { 'query': { method: 'GET', isArray: false } })
+    })*/
+
+    .factory('TemplateResource',function($resource){
+        return $resource('http://rachmaninoff.local:8080/api/Dataset/:datasetId')
     })
 
-    .factory('datasetDefResource',function($resource){
-        return $resource('/api/datasets/:datasetId')
+    .factory('ISAconfigResource',function($resource){
+        /*return $resource('/api/datasets/:datasetId')*/
+        return $resource('../data/isaconfigs.json');
     })
-
-    .factory('datasetDefResource',function($resource){
-        return $resource('/api/datasets/:datasetId/variables')
-    });

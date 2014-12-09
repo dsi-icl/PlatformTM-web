@@ -205,8 +205,9 @@ div.dc-chart {
 }
 
 .dc-chart g.row text {
-    fill: white;
-    font-size: 12px;
+    fill: #333;
+    font-weight: bold;
+    font-size: 10px;
     cursor: pointer;
 }
 

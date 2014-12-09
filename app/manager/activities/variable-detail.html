@@ -1,15 +1,18 @@
 <div style="width: 80%;
 float: right;
 /*margin-right: 15px;*/
-background: white;">
+background: white;
+padding-right: 10px;
+padding-left: 10px"
+>
     <span><h6>Variable Definition</h6></span>
     <dl class="dl-horizontal">
         <dt>Name</dt>
-        <dd>LBTEST</dd>
+        <dd>{{model.variable.name}}</dd>
         <dt>Label</dt>
-        <dd>Lab Test or Examination Name</dd>
+        <dd>{{model.variable.label}}</dd>
         <dt>Description</dt>
-        <dd>Verbatim name of the test or examination used to obtain the measurement or finding. Note any test normally performed by a clinical laboratory is considered a lab test. The value in LBTEST cannot be longer than 40 characters. Examples: Alanine Aminotransferase, Lactate Dehydrogenase.</dd>
+        <dd>{{model.variable.description}}</dd>
         <dt>Controlled Vocabulary</dt>
         <dd><select class="form-control">
             <option>1</option>
@@ -19,4 +22,14 @@ background: white;">
             <option>5</option>
         </select></dd>
     </dl>
+    <hr>
+    <div>
+        <h6>Variable attributes</h6>
+        <input id="mandatoryCHK" type="checkbox" ng-model="model.variable.mandatory">
+        <label for="mandatoryCHK">Mandatory</label>
+        <input id="order" type="text" ng-model="model.variable.order">
+        <label for="order">Order Number</label>
+        <input id="seq" type="text" ng-model="model.variable.sequence">
+        <label for="seq">Sequence Number</label>
+    </div>
 </div>

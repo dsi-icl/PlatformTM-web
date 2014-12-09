@@ -1,35 +1,189 @@
-<div id="molecular-data" class="content">
+<div  id="molecular-data" class="container-fluid content">
+
     <div class="panel-header">
-        <h3><span class="glyphicon glyphicon-book" style="color: #39b3d7; margin-right: 3px"></span> Molecular Data
+        <h3 style="padding: 7px"><span class="flaticon-molecules1" style="color: #39b3d7; margin-right: 3px"></span> Molecular Data
         </h3>
     </div>
 
-    <ul>
-        <li>
-            <div class="assay-info" align="center">
-                <img src="img/assays/transcriptomics.svg">
+    <tabset class="assay-panel">
+        <tab>
+            <tab-heading>
+                <div class="assay-info" align="center">
+                    <img src="img/assays/transcriptomics.svg">
+                    <p class="assay-type">Transcription Profiling</p>
+                    <p class="assay-tech">DNA Microarray</p>
+                    <p class="assay-count">345 assays</p>
+                    <i class="flaticon-download164" style="margin-left: 150px;cursor: pointer"
+                       ng-click="addAssayGrp('Transcription Profiling')"></i>
+                </div>
+            </tab-heading>
+            <div class="assay-content">
 
-                <p class="assay-type">Transcriptomics</p>
+                <div class="assay-sample-header">
+                        <div style="float: left">
+                            <span style=" padding-left: 15px;">Samples</span>
+                        </div>
+                           <span>
+                            <a ng-click="isSamplesCollapsed = !isSamplesCollapsed">
+                                Show Characteristics <span class="caret"></span></a>
+                            </span>
+                        <div collapse="isSamplesCollapsed">
+                            <div>
+                                <div class="section-block-content-option"  align="center">
+                                    <p>Select Sample Characteristics</p>
+                                    <ul>
+                                        <li ng-repeat="sc in sampleCharacteristics" >
+                                            <label id="sc_{{$index}}"
+                                                   charting-button val="{{sc}}" active="{{isActive}}"
+                                                   container="{{sampleChartContainerId}}"
+                                                   grp="{{TP}}"
+                                                   cf="cf"
+                                                   ng-class="{'': !isActive, 'active': isActive}"
+                                                   ng-init="isActive = false"
+                                                   ng-click="isActive = !isActive">
+                                                {{sc}}
+                                            </label>
+                                            <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
+                                                 class="flaticon-download164"></div>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <p class="assay-tech">DNA Microarray</p>
+                <div id="samplePlots" style="min-height: 220px; padding:15px">
 
-                <p class="assay-count">345 assays</p>
+                </div>
+
+                <div class="assay-factor-header">
+                    <div style="float: left">
+                        <span style=" padding-left: 15px;">Experimental Factors</span>
+                    </div>
+                    <span>
+                       <a ng-click="isFactorsCollapsed = !isFactorsCollapsed">
+                           Show Factors <span class="caret"></span></a>
+                    </span>
+
+
+                    <div collapse="isFactorsCollapsed">
+                        <div>
+                            <div class="section-block-content-option"  align="center">
+                                <p>Select Factors</p>
+                                <ul>
+                                    <li ng-repeat="ef in expFactors" >
+                                        <label id="ef_{{$index}}"
+                                               charting-button val="{{ef}}" active="{{isActive}}"
+                                               container="{{assayChartContainerId}}"
+                                               grp="{{TP}}"
+                                               cf="cf"
+                                               ng-class="{'': !isActive, 'active': isActive}"
+                                               ng-init="isActive = false"
+                                               ng-click="isActive = !isActive">
+                                            {{ef}}
+                                        </label>
+                                        <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(ef,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
+                                             class="flaticon-download164"></div>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="assayPlots" style="min-height: 210px; padding:15px"></div>
+
+                <ng-include src="'explore/ISAviewer.html'"> </ng-include>
             </div>
-        </li>
+        </tab>
 
-        <li class="odd">
-            <div class="assay-info" align="center">
-                <img src="img/assays/proteomics.svg">
+        <tab class="odd">
+            <tab-heading>
+                <div class="assay-info" align="center">
+                    <img src="img/assays/proteomics.svg">
 
-                <p class="assay-type">Proteomics</p>
+                    <p class="assay-type">Protein expression Profiling</p>
 
-                <p class="assay-tech">Mass Spectrometry</p>
+                    <p class="assay-tech">RPPA</p>
 
-                <p class="assay-count">322 assays</p>
+                    <p class="assay-count">56 assays</p>
+                    <i class="flaticon-download164" style="margin-left: 150px;cursor: pointer"
+                       ng-click="addAssayGrp('Transcription Profiling')"></i>
 
-            </div>
-        </li>
-    </ul>
+                </div>
+            </tab-heading>
+           <div class="assay-content">TESTETSETS</div>
+        </tab>
+
+        <tab>
+            <tab-heading>
+                <div class="assay-info" align="center">
+                    <img src="img/assays/proteomics.svg">
+
+                    <p class="assay-type">Whole Genome sequencing</p>
+
+                    <p class="assay-tech">Nucleotide sequencing</p>
+
+                    <p class="assay-count">322 assays</p>
+                    <i class="flaticon-download164" style="margin-left: 150px;cursor: pointer"
+                       ng-click="addAssayGrp('Transcription Profiling')"></i>
+
+                </div>
+            </tab-heading>
+            <div class="assay-content">TESTETSETS</div>
+        </tab>
+
+        <tab class="odd">
+            <tab-heading>
+                <div class="assay-info" align="center">
+                    <img src="img/assays/proteomics.svg">
+
+                    <p class="assay-type">Exome</p>
+
+                    <p class="assay-tech">Nucleotide Sequencing</p>
+
+                    <p class="assay-count">322 assays</p>
+                    <i class="flaticon-download164" style="margin-left: 150px;cursor: pointer"
+                       ng-click="addAssayGrp('Transcription Profiling')"></i>
+                </div>
+            </tab-heading>
+            <div class="assay-content">TESTETSETS</div>
+        </tab>
+        <tab>
+            <tab-heading>
+                <div class="assay-info" align="center">
+                    <img src="img/assays/proteomics.svg">
+
+                    <p class="assay-type">Epigenomic profiling</p>
+
+                    <p class="assay-tech">DNA methylation Sequencing</p>
+
+                    <p class="assay-count">230 assays</p>
+                    <i class="flaticon-download164" style="margin-left: 150px;cursor: pointer"
+                       ng-click="addAssayGrp('Transcription Profiling')"></i>
+                </div>
+            </tab-heading>
+            <div class="assay-content">TESTETSETS</div>
+        </tab>
+        <tab class="odd">
+            <tab-heading>
+                <div class="assay-info" align="center">
+                    <img src="img/assays/proteomics.svg">
+
+                    <p class="assay-type">Transcription profiling</p>
+
+                    <p class="assay-tech">microRNA sequencing</p>
+
+                    <p class="assay-count">322 assays</p>
+                    <i class="flaticon-download164" style="margin-left: 150px;cursor: pointer"
+                       ng-click="addAssayGrp('Transcription Profiling')"></i>
+                </div>
+            </tab-heading>
+            <div class="assay-content">TESTETSETS</div>
+        </tab>
+    </tabset>
 </div>
 
 <div class="clearfix"></div>

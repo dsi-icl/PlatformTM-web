@@ -34,8 +34,18 @@ $(".section-block-header").click(function () {
 var etriks = {};
 
 etriks.colors = ["#39C2D7", "#2c3e50", "#e57e25", "#d25627"];
+etriks.colors1 = ["#03899C","#1F6B75","#015965","#36BBCE",//blue
+                  "#FF7A00","#BF7530","#A65000","#FF9B40",//oranges
+                  "#F3FD00","#B8BE2F","#9EA400","#F7FE40",//greens
+                  "#7908AA","#64247F","#4E026E","#A63CD4", //purple
+                  ]
+
+etriks.colors2 = ["#39C2D7", "#2c3e50", "#e57e25", "#d25627","#0776A0","#024C68","#3AA6D0","#226078",
+                  "#FF8500","#BF7A30","#A65600","#FFA340", //oranges
+                  "#E2FA00","#AEBC2F","#93A300","#EAFD3F", //yelloegreen
+                  "#8805A8","#6C227E","#58026D","#B53AD4"] //purples
 etriks.myColors = function () {
-    return d3.scale.ordinal().range(etriks.colors);
+    return d3.scale.ordinal().range(etriks.colors2);
 };
 
 etriks.function = {
