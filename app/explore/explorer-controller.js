@@ -22,47 +22,6 @@ angular.module('eTRIKSdata.explorer')
         SubjCf.setup($scope)
         $scope.cf = SubjCf;
 
-        /*$scope.toggleSCPlot = function(sc){
-
-
-//            This will test the "type" of the characteristics and depending on that
-//                if continuous data then do a line chart or bin in bar chart
-//                    if discreet then pie char
-            this.scSelected = !this.scSelected;
-//            $scope.togglePlot = sc;
-            var chartId = "subject-" + sc + "-plot";
-
-            console.log(sc)
-
-            if (sc == "Gender" ) {
-                etriks.function.addChartContainer("subject", sc, chartId);
-                etriks.function.addGraph(chartId, "../data/data-sex.json", "pie");
-            }else
-            if (sc == "Race"){
-                etriks.function.addChartContainer("subject", sc, chartId);
-                etriks.function.addGraph(chartId, "../data/data-race.json", "pie");
-
-            }else {
-//                $(this).addClass("selected");
-                etriks.function.addChartContainer("subject", sc, chartId);
-                etriks.function.addGraph(chartId, "../data/data-age.json", "bar");
-
-            }
-        }
-
-        var sc = "Gender";
-        var chartId = "subject-" + sc + "-plot";
-
-        etriks.function.addChartContainer("subject", "Gender", chartId);
-        etriks.function.addGraph(chartId, "../data/data-sex.json", "pie");
-        var sc = "Age";
-        var chartId = "subject-" + sc + "-plot";
-
-        etriks.function.addChartContainer("subject", "Age", chartId);
-        etriks.function.addGraph(chartId, "../data/data-age.json", "bar");*/
-//        $scope.isSelected = function(sc){
-//            return $scope.selected === sc;
-//        }
     }])
 
     .controller('ExportCtrl',['$scope','ExportCriteria',function($scope,ExportCriteria) {

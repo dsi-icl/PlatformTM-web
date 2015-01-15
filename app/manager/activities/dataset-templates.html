@@ -1,5 +1,9 @@
 <div class="dataset-container">
-    <span><h5>Select dataset template</h5></span>
+    <div>
+        <h5>Select dataset template</h5>
+    </div>
+
+<div>
     <div id="data-accordion" style="float:left; width: 35%; margin-right: .5%">
     <!--<div class="panel" style="border: 0; width:100%">-->
 
@@ -13,7 +17,7 @@
             </div>
             <div style="height: 200px; overflow-y: scroll;">
                 <ul>
-                    <li ng-click="selectTemplate(domain)"
+                    <li ng-click="selectTemplate(domain.domainId)"
                         ng-repeat="domain in templates.domains | filter:{name: searchText}"
                         ng-mouseover="mouseOverDataset(domain)">
                         {{domain.name}} - ({{domain.code}})
@@ -62,6 +66,14 @@
     <div style="float: left; width:63%; border: 1px solid white; padding: 10px; margin-left: 1%" >
         <span>Class:</span><span>{{templates.preview.class}}</span>
         <p>{{templates.preview.description}}</p>
+    </div>
+    </div>
+    <div style="padding: 1em;
+position: absolute;
+bottom: 0;
+right: 0;">
+        <button  type="button" class="btn btn-default btn-xs" ng-click="$state.go('manager.activities.new', { activityId: new });">Cancel</button>
+        <button  type="button" class="btn btn-default btn-xs" ng-click="$state.go('manager.activities.new', { activityId: new });">Next</button>
     </div>
 </div>
 

@@ -30,73 +30,27 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                 template: '<ui-view/>'
             })
 
-            .state('manager.activities.new',{
-                url:"/new",
-                views:{
-                    'activities.detail@manager':{
-                        templateUrl:'manager/activities/activities-detail.html',
-                        controller: 'NewActivityCtrl'
-                    }
-                }
-            })
-            /*
-            .state('manager.activities.new.dataset',{
-                url:"/dataset/new",
-                views:{
-                    'dataset.detail':{
-                        templateUrl: 'manager/activities/dataset-templates.html',
-                        controller: 'DatasetTemplatesCtrl'
-                    }
-                }
-            })
-
-            .state('manager.activities.new.dataset.details',{
-                url:"/details",
-                views:{
-                    'dataset.detail@manager.study-activities.new':{
-                        templateUrl:'manager/activities/dataset-detail.html'
-                    }
-                }
-            })
-
-            .state('manager.activities.new.dataset.details.variables',{
-                url:"/variables",
-                views:{
-                    '':{
-                        templateUrl:'manager/activities/variable-detail.html'
-                    }
-                }
-            })*/
-
             .state('manager.activities.detail',{
-                url:'/{activityId:[0-9]}',
+                url:'/{activityId}',
                 views:{
                     'activities.detail@manager':{
                         url:'',
                         templateUrl:'manager/activities/activities-detail.html',
-                        controller: 'ActivityViewCtrl'
+                        controller: 'ActivityCtrl'
                     }
                 }
             })
 
             .state('manager.activities.detail.dataset',{
-                url:'/dataset/{datasetId:[0-9]}',
-                views:{
-                     'dataset.detail@manager.activities.detail':{
-                        templateUrl:'manager/activities/dataset-detail.html',
-                         controller: 'DatasetController'
-                     }
-                }
+                url:'/dataset?domainId/{datasetId}',
+                templateUrl:'manager/activities/dataset-detail.html',
+                controller: 'DatasetController'
             })
 
             .state('manager.activities.detail.newdataset',{
-                url:'/dataset/selectTemplate',
-                views:{
-                    'dataset.detail':{
-                        templateUrl: 'manager/activities/dataset-templates.html',
-                        controller: 'DatasetTemplatesCtrl'
-                    }
-                }
+                url:'/selectTemplate',
+                templateUrl: 'manager/activities/dataset-templates.html',
+                controller: 'DatasetTemplatesCtrl'
             })
 
             .state('manager.activities.detail.dataset.variable',{

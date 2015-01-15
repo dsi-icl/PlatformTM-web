@@ -1,36 +1,45 @@
 <div class="dataset-container">
+    <div>
+       <h5><span>Add Variables</span></h5>
+    </div>
 
     <dl class="dl-horizontal">
         <dt>Name</dt>
-        <dd>{{model.dataset.name}}</dd>
+        <dd>{{vmodel.dataset.name}}</dd>
         <dt>Class</dt>
-        <dd>{{model.dataset.class}}</dd>
+        <dd>{{vmodel.dataset.class}}</dd>
         <dt>Description</dt>
-        <dd>{{model.dataset.description}}</dd>
+        <dd>{{vmodel.dataset.description}}</dd>
         <dt>Structure</dt>
-        <dd>{{model.dataset.structure}}</dd>
+        <dd>{{vmodel.dataset.structure}}</dd>
     </dl>
 
-    <div style=" width: 20%; float:left; padding-left: 10px">
+    <div style="border: 1px solid white; width: 20%; float:left; padding-left: 10px">
             <span><h6>Dataset Variables</h6></span>
-            <ul class="list-unstyled">
-                <li ui-sref-active="variable-active" ng-repeat="var in model.dataset.variables">
-                    <input type="checkbox" ng-model="var.selected" ng-click="selectVariable(var)">
-                    <label ui-sref="manager.activities.detail.dataset.variable({variableId:var.id})">
-                        <a> {{var.name}} </a>
+            <ul style="height: 200px;overflow-x: scroll;" class="list-unstyled">
+                <li ui-sref-active="variable-active" ng-repeat="var in vmodel.dataset.variables">
+                    <input type="checkbox" ng-model="var.isSelected" ng-click="selectVariable(var)">
+                    <label ui-sref="manager.activities.detail.dataset.variable({variableId:var.accession})">
+                        <a> {{var.name}}</a>
                     </label>
                 </li>
-                <li><a ui-sref="manager.activities.new.dataset.details.variable">New variable</a></li>
-
             </ul>
+            <span><a ui-sref="manager.activities.new.dataset.details.variable">New variable</a></span>
     </div>
     <div style="margin-top: 20px">
         <!--<button style="float: right" ng-click="toggleControls()" type="button" class="btn btn-info" ng-init="btnText = 'Save dataset'">{{ btnText }}</button>-->
-{{model.dataset.variables}}
     </div>
 
     <div ui-view>
         <small class="muted"> Click on a variable to see details</small>
     </div>
+    <div style="padding: 1em;
+position: absolute;
+bottom: 0;
+right: 0;">
+        <button  type="button" class="btn btn-default btn-xs" ng-click="$state.go('manager.activities.new', { activityId: new });">Cancel</button>
+        <button  type="button" class="btn btn-default btn-xs" ng-click="$state.go('manager.activities.new', { activityId: new });">Back</button>
+    </div>
+
 
 </div>

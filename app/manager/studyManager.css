@@ -82,7 +82,7 @@
 }
 
 #activities{
-    min-height: 550px;
+    min-height: 628px;
     background-color: #F1F2F2;
 }
 .assessment-list{
@@ -116,6 +116,7 @@
     height: 420px;
     margin-right: 2em;
     margin-top: 0.5em;
+    position:relative;
 }
 
 .new-activity-active{
@@ -135,5 +136,12 @@
 }
 .variable-active{
     background-color: #ffffff;
+    margin-right: -5px;
+}
+.new-activity-active{
+    background-color: #ffffff;
+}
+.dataset-active{
+    color: #2C3E50;
 }
 

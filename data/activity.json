@@ -2,7 +2,9 @@
         "id":"1",
         "name":"Spirometry",
         "datasets" : [
-            {"id": "LB123",
-             "name": "Laboratory Test Findings"}
+            {"id": "D-SDTM-LB",
+             "name": "Laboratory Test Findings"},
+            {"id": "D-SDTM-LBSUPP",
+                "name": "Supplementary Laboratory Test Findings"}
         ]
     }

@@ -10,77 +10,70 @@
             "label": "Lab Test or Examination Short Name",
             "dataType": "",
             "description": "Short name of the measurement, test, or examination described in LBTEST. It can be used as a column name when converting a dataset from a vertical to a horizontal format. The value in LBTESTCD cannot be longer than 8 characters, nor can it start with a number (e.g.”1TEST”). LBTESTCD cannot contain characters other than letters, numbers, or underscores. Examples: ALT, LDH.",
-            "dictionary":{
-                "code":"CL-LBTESTCD",
-                "terms":[
-                    {"name":"bla bla bla"},
-                    {"name":"bla3 bla3 bla3"},
-                    {"name":"bla2 bla2 bla2"}
-                ]
-            },
+            "dictionaryName":"CL",
+            "dictionaryOID":"",
+            "dictionaryDefinition":"",
+            "dictionaryURL":"dictionary=NCI_Thesaurus&ns=NCI_Thesaurus&code=C66781",
             "selected" : true,
             "mandatory":true,
-            "key":"kkk"
+            "key":"kkk",
+            "order":""
         },
         {   "id" : "V-SDTM-LB-LBTEST",
             "name" : "LBTESTCD",
             "label": "Lab Test or Examination Name",
             "dataType": "",
             "description": "Short name of the measurement, test, or examination described in LBTEST. It can be used as a column name when converting a dataset from a vertical to a horizontal format. The value in LBTESTCD cannot be longer than 8 characters, nor can it start with a number (e.g.”1TEST”). LBTESTCD cannot contain characters other than letters, numbers, or underscores. Examples: ALT, LDH.",
-            "dictionary":{
-                "code":"CL-LBTEST",
-                "terms":[
-                    {"name":"bla bla bla"},
-                    {"name":"bla3 bla3 bla3"},
-                    {"name":"bla2 bla2 bla2"}
-                ]
-            },
-            "selected" : false
+            "dictionaryName":"CL",
+            "dictionaryOID":"",
+            "dictionaryDefinition":"",
+            "dictionaryURL":"dictionary=NCI_Thesaurus&ns=NCI_Thesaurus&code=C66781",
+            "selected" : false,
+            "mandatory":true,
+            "key":"kkk",
+            "order":""
         },
         {   "id" : "V-SDTM-LB-LBCAT",
             "name" : "LBTESTCD",
             "label": "Lab Test or Examination Name",
             "dataType": "",
             "description": "Short name of the measurement, test, or examination described in LBTEST. It can be used as a column name when converting a dataset from a vertical to a horizontal format. The value in LBTESTCD cannot be longer than 8 characters, nor can it start with a number (e.g.”1TEST”). LBTESTCD cannot contain characters other than letters, numbers, or underscores. Examples: ALT, LDH.",
-            "dictionary":{
-                "code":"CL-LBTEST",
-                "terms":[
-                    {"name":"bla bla bla"},
-                    {"name":"bla3 bla3 bla3"},
-                    {"name":"bla2 bla2 bla2"}
-                ]
-            },
-            "selected" : true
+            "dictionaryName":"CL",
+            "dictionaryOID":"",
+            "dictionaryDefinition":"",
+            "dictionaryURL":"dictionary=NCI_Thesaurus&ns=NCI_Thesaurus&code=C66781",
+            "selected" : true,
+            "mandatory":false,
+            "key":"kkk",
+            "order":""
         },
         {   "id" : "V-SDTM-LB-LBORRES",
             "name" : "LBTESTCD",
             "label": "Lab Test or Examination Name",
             "dataType": "",
             "description": "Short name of the measurement, test, or examination described in LBTEST. It can be used as a column name when converting a dataset from a vertical to a horizontal format. The value in LBTESTCD cannot be longer than 8 characters, nor can it start with a number (e.g.”1TEST”). LBTESTCD cannot contain characters other than letters, numbers, or underscores. Examples: ALT, LDH.",
-            "dictionary":{
-                "code":"CL-LBTEST",
-                "terms":[
-                    {"name":"bla bla bla"},
-                    {"name":"bla3 bla3 bla3"},
-                    {"name":"bla2 bla2 bla2"}
-                ]
-            },
-            "selected" : true
+            "dictionaryName":"CL",
+            "dictionaryOID":"",
+            "dictionaryDefinition":"",
+            "dictionaryURL":"dictionary=NCI_Thesaurus&ns=NCI_Thesaurus&code=C66781",
+            "selected" : true,
+            "mandatory":true,
+            "key":"kkk",
+            "order":""
         },
         {   "id" : "V-SDTM-LB-LBORRESU",
             "name" : "LBTESTCD",
             "label": "Lab Test or Examination Name",
             "dataType": "",
             "description": "Short name of the measurement, test, or examination described in LBTEST. It can be used as a column name when converting a dataset from a vertical to a horizontal format. The value in LBTESTCD cannot be longer than 8 characters, nor can it start with a number (e.g.”1TEST”). LBTESTCD cannot contain characters other than letters, numbers, or underscores. Examples: ALT, LDH.",
-            "dictionary":{
-                "code":"CL-LBTEST",
-                "terms":[
-                    {"name":"bla bla bla"},
-                    {"name":"bla3 bla3 bla3"},
-                    {"name":"bla2 bla2 bla2"}
-                ]
-            },
-            "selected" : true
+            "dictionaryName":"CL",
+            "dictionaryOID":"",
+            "dictionaryDefinition":"",
+            "dictionaryURL":"dictionary=NCI_Thesaurus&ns=NCI_Thesaurus&code=C66781",
+            "selected" : true,
+            "mandatory":true,
+            "key":"kkk",
+            "order":""
         }
     ]
  }

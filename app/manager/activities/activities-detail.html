@@ -1,25 +1,44 @@
-<div>
-    <dl class="dl-horizontal description-list ">
-        <dt>Activity Name</dt>
-        <dd><a href="#" e-ng-model="data.activity.name" editable-text="data.activity.name"  buttons="no" blur="submit">{{data.activity.name || "Enter name"}}</a></dd>
-        <dt>Datasets</dt>
-        <dd>
-            <div style="background-color: #ffffff;width: 250px;border: 1px solid transparent;border-color: #ddd;">
-                <ul style="list-style: none; margin-top: 5px;">
-                    <li ng-repeat="dataset in data.activity.datasets">
-                        <a ui-sref="manager.activities.detail.dataset({datasetId:dataset.id})">
-                        <span class="glyphicon glyphicon-align-justify">&NonBreakingSpace;</span>{{dataset.name}}</a>
-                    </li>
+<div style="background: #fff;padding: 1em;">
 
-                    <li>
-                        <a ui-sref="manager.activities.detail.newdataset">
-                        <span class="glyphicon glyphicon-align-justify">&NonBreakingSpace;</span>Add dataset</a>
-                    </li>
-                </ul>
-            </div>
-        </dd>
-    </dl>
+    <div>
+        <dl class="definition-list">
+            <dt>Activity Name</dt>
+            <dd ><a href="#" e-ng-model="vmodel.activity.name" editable-text="vmodel.activity.name"  buttons="no" blur="submit">{{vmodel.activity.name || "Enter name"}}</a></dd>
+            <dt>Datasets</dt>
+            <dd>
+                <div ng-if="vmodel.activity.datasets" style="border: 1px solid aliceblue;">
+                    <ul style="list-style: none; margin-top: 5px;padding-left: 0.5em;">
+                        <li  ng-repeat="dataset in vmodel.activity.datasets">
+                            <a ui-sref-active="dataset-active" ui-sref="manager.activities.detail.dataset({datasetId:dataset.id})" >
+                                <span class="flaticon-little14">&NonBreakingSpace;</span>{{dataset.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div ng-hide="vmodel.activity.datasets">
+                   <small>None attached to activity</small>
+                </div>
+
+            </dd>
+        </dl>
+
+    </div>
+
+    <div ui-view>
+        <dl class="definition-list" style="margin-top:-15px">
+            <dt></dt>
+            <dd><a ui-sref="manager.activities.detail.newdataset">
+                <span class="flaticon-little14">&NonBreakingSpace;</span>Add dataset</a></dd>
+        </dl>
+
+    </div>
+
+    <div style="padding: 1em;">
+        <button  type="button" class="btn btn-default btn-xs" ng-click="saveActivity()">Save</button>
+        <button  type="button" class="btn btn-default btn-xs" ng-click="$state.go('manager.activities.new', { activityId: new });">Cancel</button>
+    </div>
+    {{vmodel.activity}}
+    {{model}}
 </div>
 
-<div ui-view="dataset.detail"></div>
+
 

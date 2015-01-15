@@ -33,19 +33,19 @@ angular.module('eTRIKSdata.explorer',['eTRIKSdata.dcPlots','eTRIKSdata.exporter'
                         }*/
                     },
                     'subjects@explore':{
-                        templateUrl: 'explore/study_subjects.html',
+                        templateUrl: 'explore/partials/study_subjects.html',
                         controller: 'SubjectsCtrl'
                     },
                     'assessments@explore':{
-                        templateUrl: 'explore/study_clinical.html',
+                        templateUrl: 'explore/partials/study_clinical.html',
                         controller: 'ClinicalCtrl'
                     },
                     'assays@explore':{
-                        templateUrl: 'explore/study_assays.html',
+                        templateUrl: 'explore/partials/study_assays.html',
                         controller: 'AssayCtrl'
                     },
                     'design@explore':{
-                        templateUrl: 'explore/study_design.html'
+                        templateUrl: 'explore/partials/study_design.html'
                     }
                 }
 

@@ -5,86 +5,157 @@ angular.module('eTRIKSdata.studyDesign')
 
     //Create a controller for each state
 
-    .controller('ActivityListController', ['$scope', 'ActivityResource', function ($scope, ActivityResource) {
-        $scope.data = {};
+    .controller('ActivityListController', ['$scope', 'ActivityResource','model', function ($scope, ActivityResource, model) {
+        $scope.vmodel = {};
+        console.log("List Controller requested")
         //Retrieves list of study activities
-        ActivityResource.query(function(response){
-            $scope.data.activities = response;
+        ActivityResource.getActivitiesForStudy({studyId:'study1'},function(response){
+            model.activities = response;
+            $scope.vmodel.activities = model.activities;
         });
+    }])
+
+    .controller('ActivityCtrl', ['$state','$scope', '$stateParams', 'ActivityResource','model', function ($state, $scope, $stateParams, ActivityResource, model) {
+        $scope.vmodel = {};
+        console.log("Activity Controller requested")
+        console.log($stateParams.activityId);
+
+        if($stateParams.activityId==0){
+            console.log("New Activity")
+            model.activity = new ActivityResource();
+            model.activity.StudyID = "Study1"
+            model.activity.isNew = true;
+            model.activityId = 0;
+            $scope.vmodel.activity = model.activity;
+        }
+
+        else if($stateParams.activityId){
+            ActivityResource.get({ activityId: $stateParams.activityId }, function(response){
+                model.activity = response;
+                model.activity.isNew = false;
+
+                $scope.vmodel.activity = model.activity;
+            });
+            //temp
+            /*$http.get('../data/activity.json').success(function(response){
+             $scope.model.activity = response;
+             })*/
+        }
+
+        $scope.saveActivity = function(){
+            if(model.activity.isNew){
+                $scope.vmodel.activity.$save(function(response) {
+                    console.log("Activity created")
+                    if(model.dataset.isNew){
+                        model.dataset.activityId = response.oid
+                        model.dataset.$save(function(){
+                            console.log("Dataset created")
+                        })
+                    }
+                });
+            }
+            else{
+                console.log("Activity Edited")
+                $scope.vmodel.activity.$update(function(response) {
+                    console.log("Activity Updated")
+
+                    if(model.dataset){
+                        if(model.dataset.isNew){
+                            model.dataset.activityId = response.id
+                            model.dataset.$save(function(){
+                                console.log("Dataset created")
+                            })
+                        }
+                        else{
+                            if(response.datasets != null ){
+                                model.dataset.$update(function(){
+                                    console.log("Dataset updated")
+                                })
+                            }
+                        }
+                    }
+                });
+            }
+            /*$state.transitionTo($state.current, $stateParams, {
+             reload: true,
+             inherit: false,
+             notify: true
+             });*/
+            //console.log($stateParams)
+            $state.go('manager.activities.detail',$stateParams,{
+                reload: true,
+                inherit: false
+                });
+        }
+
+
+
 
     }])
 
-    .controller('ActivityViewCtrl', ['$http','$scope', '$stateParams', 'ActivityResource', function ($http, $scope, $stateParams, ActivityResource) {
-        $scope.data = {};
-        /*ActivityResource.get({ id: $stateParams.activityId }, function(response){
-            $scope.data.activity = response;
-        });*/
+    .controller('DatasetController',['$http','$scope', '$stateParams', '$state','DatasetResource','model',
+        function ($http, $scope, $stateParams,$state, DatasetResource,model) {
+            $scope.vmodel = {};
+            console.log("Dataset Controller requested")
+            console.log($stateParams.datasetId);
+            console.log($stateParams);
 
-        //temp
-        $http.get('../data/activity.json').success(function(response){
-            $scope.data.activity = response;
-        })
-    }])
+            if($stateParams.datasetId==0 && $stateParams.domainId){
+                console.log("new Dataset")
+                DatasetResource.get({datasetId:$stateParams.domainId}, function(response){
+                    model.dataset = response;
+                    model.dataset.isNew = true;
+                    $scope.vmodel.dataset = model.dataset;
+                    //$scope.model = model.dataset
+                });
+            }
+            else{
+                //temp
+                /*$http.get('../data/dataset.json').success(function(response){
+                 $scope.vmodel.dataset = response;
+                 })*/
 
-    .controller('DatasetController',['$http','$scope', '$stateParams', 'TemplateResource',
-        function ($http, $scope, $stateParams, TemplateResource) {
-        $scope.model = {};
-
-        /*TemplateResource.get({datasetId:$stateParams.datasetId}, function(response){
-           $scope.data.dataset = response;
-        });*/
-
-        //temp
-        $http.get('../data/dataset.json').success(function(response){
-            $scope.model.dataset = response;
-        })
-    }])
+                DatasetResource.getDatasetForActivity({activityId:'1', datasetId:$stateParams.datasetId},function(response){
+                    model.dataset = response;
+                    model.dataset.isNew = false
+                    $scope.vmodel.dataset = model.dataset;
+                });
+            }
+        }])
 
     .controller('VariableController',['$scope','$stateParams', 'utils', function($scope, $stateParams, utils){
-        console.log($scope.model.dataset)
-        console.log($stateParams.variableId)
-
-        $scope.model.variable = utils.findById($scope.model.dataset.variables, $stateParams.variableId)
-
+        $scope.vmodel.variable = utils.findByAccession($scope.vmodel.dataset.variables, $stateParams.variableId)
     }])
 
 
-    .controller('NewActivityCtrl', ['$scope', '$state','ActivityResource', function ($scope, $state, ActivityResource) {
-        $scope.model = {}
-        $scope.model.activity = new ActivityResource();
-
-        $scope.addActivity = function(){
-            $scope.model.activity.$save(function(){
-                $state.go('manager')
-            })
-        }
-    }])
+    .controller('DatasetTemplatesCtrl', ['$scope', '$state','DatasetResource', 'ISAconfigResource','model',
+        function ($scope, $state, DatasetResource, ISAconfigResource,model) {
 
 
+            $scope.templates = {}
 
-    .controller('DatasetTemplatesCtrl', ['$scope', '$state','TemplateResource', 'ISAconfigResource',
-        function ($scope, $state, TemplateResource, ISAconfigResource) {
-        $scope.templates = {}
+            DatasetResource.query(function(response){
+                $scope.templates.domains = response;
+            });
 
-        TemplateResource.query(function(response){
-            $scope.templates.domains = response;
-        });
+            ISAconfigResource.query(function(response){
+                $scope.templates.isaconfigs = response;
+            });
 
-        ISAconfigResource.query(function(response){
-            $scope.templates.isaconfigs = response;
-        });
+            $scope.mouseOverDataset = function(domain) {
+                $scope.templates.preview = domain;
+            }
 
-        $scope.mouseOverDataset = function(domain) {
-            $scope.templates.preview = domain;
-        }
+            $scope.selectTemplate = function(domainId){
 
-        $scope.selectTemplate = function(domain){
+                //console.log(domain.oid)
+                //console.log($state.current.name)
+                //go and send param saying this is a new dataset
+                $state.go('manager.activities.detail.dataset',{datasetId:0, domainId:domainId})
+                //console.log($state.current.name)
 
-            console.log(domain.oid)
-            $state.go("manager.activities.detail.dataset",{datasetId:domain.oid})
-
-        }
-    }])
+            }
+        }])
 
     .controller('ISAconfigsCtrl', ['$scope', 'ISAconfigResource', function ($scope, ISAconfigResource) {
         $scope.model = {}

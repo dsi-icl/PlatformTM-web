@@ -11,13 +11,9 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
 	font-family: Flaticon;
-        /*font-size: 20px;*/
-    font-size: 2.0em;;
-    font-style: normal;
-/*margin-left: 10px;*/
-}
-
-.flaticon-arrow397:before {
+font-style: normal;
+/*margin-left: 5px;*/
+}.flaticon-arrow397:before {
 	content: "\e000";
 }
 .flaticon-cells:before {
@@ -53,33 +49,36 @@
 .flaticon-female206:before {
 	content: "\e00b";
 }
-.flaticon-male209:before {
+.flaticon-little14:before {
 	content: "\e00c";
 }
-.flaticon-man412:before {
+.flaticon-male209:before {
 	content: "\e00d";
 }
-.flaticon-medicine13:before {
+.flaticon-man412:before {
 	content: "\e00e";
 }
-.flaticon-molecules1:before {
+.flaticon-medicine13:before {
 	content: "\e00f";
 }
-.flaticon-mouse33:before {
+.flaticon-molecules1:before {
 	content: "\e010";
 }
-.flaticon-pie14:before {
+.flaticon-mouse33:before {
 	content: "\e011";
 }
-.flaticon-rat2:before {
+.flaticon-pie14:before {
 	content: "\e012";
 }
-.flaticon-standing55:before {
+.flaticon-rat2:before {
 	content: "\e013";
 }
-.flaticon-surgeon1:before {
+.flaticon-standing55:before {
 	content: "\e014";
 }
-.flaticon-women13:before {
+.flaticon-surgeon1:before {
 	content: "\e015";
+}
+.flaticon-women13:before {
+	content: "\e016";
 }
