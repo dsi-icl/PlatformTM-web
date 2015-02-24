@@ -14,13 +14,13 @@
         <dd>{{vmodel.dataset.structure}}</dd>
     </dl>
 
-    <div style="border: 1px solid white; width: 20%; float:left; padding-left: 10px">
+    <div style="border: 1px solid white; width: 30%; float:left; padding-left: 10px">
             <span><h6>Dataset Variables</h6></span>
             <ul style="height: 200px;overflow-x: scroll;" class="list-unstyled">
                 <li ui-sref-active="variable-active" ng-repeat="var in vmodel.dataset.variables">
                     <input type="checkbox" ng-model="var.isSelected" ng-click="selectVariable(var)">
                     <label ui-sref="manager.activities.detail.dataset.variable({variableId:var.accession})">
-                        <a> {{var.name}}</a>
+                        <a> {{var.label}}</a>
                     </label>
                 </li>
             </ul>

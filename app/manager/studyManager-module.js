@@ -9,7 +9,7 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
 
         $stateProvider
             .state('manager',{
-                url:'/manager',
+                url:'/manager/{studyId}',
                 views:{
                     '':{
                         templateUrl:"manager/studyManager.html"

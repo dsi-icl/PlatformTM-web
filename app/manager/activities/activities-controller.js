@@ -5,11 +5,11 @@ angular.module('eTRIKSdata.studyDesign')
 
     //Create a controller for each state
 
-    .controller('ActivityListController', ['$scope', 'ActivityResource','model', function ($scope, ActivityResource, model) {
+    .controller('ActivityListController', ['$scope','$stateParams', 'ActivityResource','model', function ($scope, $stateParams, ActivityResource, model) {
         $scope.vmodel = {};
         console.log("List Controller requested")
         //Retrieves list of study activities
-        ActivityResource.getActivitiesForStudy({studyId:'study1'},function(response){
+        ActivityResource.getActivitiesForStudy({studyId:$stateParams.studyId},function(response){
             model.activities = response;
             $scope.vmodel.activities = model.activities;
         });
@@ -23,7 +23,7 @@ angular.module('eTRIKSdata.studyDesign')
         if($stateParams.activityId==0){
             console.log("New Activity")
             model.activity = new ActivityResource();
-            model.activity.StudyID = "Study1"
+            model.activity.StudyID = $stateParams.studyId;//"Study1"
             model.activity.isNew = true;
             model.activityId = 0;
             $scope.vmodel.activity = model.activity;
@@ -105,6 +105,7 @@ angular.module('eTRIKSdata.studyDesign')
                 DatasetResource.get({datasetId:$stateParams.domainId}, function(response){
                     model.dataset = response;
                     model.dataset.isNew = true;
+                    model.dataset.studyId = $stateParams.studyId;
                     $scope.vmodel.dataset = model.dataset;
                     //$scope.model = model.dataset
                 });

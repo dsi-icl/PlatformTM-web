@@ -5,7 +5,8 @@
 var eTRIKSdataApp = angular.module('eTRIKSdata', [
         "ui.router",
         "eTRIKSdata.studyDesign",
-        "eTRIKSdata.explorer"
+        "eTRIKSdata.explorer",
+        "eTRIKSdata.loader"
 
 
     ]);

@@ -1,0 +1,65 @@
+[
+    {
+        "Class":"Findings",
+        "Domains":[
+            {   "Name" : "Vital Signs",
+                "Domain": "Vital Signs",
+                "Code":"VS",
+                "Observations":[
+                    { "Name":"Body Mass Index", "Code":"BMI", "Variable":"V-SDTM-VS-VSTESTCD"},
+                    { "Name":"Diastolic Blood Pressure", "Code":"DIABP"},
+                    { "Name":"Height", "Code":"Height"},
+                    { "Name":"Heart Rate", "Code":"HR"},
+                    { "Name":"Weight", "Code":"Weight"},
+                    { "Name":"Temperature", "Code":"Temp"}
+                ]
+            },
+
+            {
+                "Name" : "Laboratory Findings",
+                "Domain": "Laboratory Findings",
+                "Code":"LB",
+                "Observations":[
+                    {   "Name":"Chemistry",
+                        "Code":"LB-CAT0",
+                        "Observations":[
+                            { "Name":"Adjusted Calcium", "xxTESTCD":"ACA", "Variable":"V-SDTM-LB-LBTEST"},
+                            { "Name":"Albumin", "xxTESTCD":"ALB", "Accession":"VSTEST-VS"},
+                            { "Name":"Alkaline Phosphatase", "xxTESTCD":"ALP", "Accession":"VSTEST-VS"}
+                        ]
+
+                    },
+                    {   "Name":"Hematology",
+                        "Code":"LB-CAT1",
+                        "Observations":[
+                            { "Name":"Adjusted Calcium", "xxTESTCD":"ACA", "Accession":"VSTEST-VS"},
+                            { "Name":"Albumin", "xxTESTCD":"ALB", "Accession":"VSTEST-VS"},
+                            { "Name":"Alkaline Phosphatase", "xxTESTCD":"ALP", "Accession":"VSTEST-VS"}
+                        ]
+
+                    },
+                    {   "Name":"Urinalysis",
+                        "Code":"LB-CAT2",
+                        "Observations":[
+                            { "Name":"Blood", "xxTESTCD":"ACA", "Accession":"VSTEST-VS"},
+                            { "Name":"Glucose", "xxTESTCD":"ALB", "Accession":"VSTEST-VS"},
+                            { "Name":"Leucocytese", "xxTESTCD":"ALP", "Accession":"VSTEST-VS"}
+                        ]
+
+                    }
+                ]
+
+            }
+        ]
+    },
+    {
+        "Class":"Events",
+        "Domains":[
+        ]
+    },
+    {
+        "Class":"Interventions",
+        "Domains":[
+        ]
+    }
+]

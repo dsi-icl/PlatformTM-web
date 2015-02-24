@@ -12,7 +12,7 @@ angular.module('eTRIKSdata.dcPlots')
                 isActive: '@active',
                 container: '@',
                 section: '@',
-                cf: '='
+                chartService: '@'
             },
 
             /*controller: function($scope, $compile, $http) {
@@ -26,20 +26,14 @@ angular.module('eTRIKSdata.dcPlots')
                 element.bind("click", function(){
 
                     var elemId = attrs.id+'-chart';
-
-//                    console.log(scope.grp)
-//                    console.log(scope.val)
-//                    console.log(scope.container)
-//                    console.log(scope.isActive)
-
                     var isActive = scope.isActive === 'true'
-
+                    console.log(scope)
                     if(isActive){
                         scope.$apply(function(){
                             angular.element(document.getElementById(scope.container))
                                 .append(
                                     $compile('<div id="'+elemId+'">' +
-                                        '<dc-chart cf="'+scope.cf+'"></dc-chart>'+
+                                        '<dc-chart></dc-chart>'+
                                         '</div>')(scope)
                                 )
                         })
@@ -72,9 +66,9 @@ angular.module('eTRIKSdata.dcPlots')
                 scope.$watch(
                     function($scope) { return $scope.cf.getCountGroup(); },
                     function(newval, oldval){
-                    console.log(newval)
-                        console.log(cf.getCountData())
-                        console.log(cf.getCountGroup())
+                    //console.log(newval)
+                       // console.log(cf.getCountData())
+                       // console.log(cf.getCountGroup())
 
                         chartOptions["dimension"] = cf.getCountData()
                         chartOptions["group"] =  cf.getCountGroup()
@@ -125,11 +119,17 @@ angular.module('eTRIKSdata.dcPlots')
         }*/
         return {
             restrict: 'E',
-            replace:true,// the directive can be invoked only by using <my-directive> tag in the template
+            replace:true,
             /*scope: {
                 val: '='
             },*/
-            controller: ['$scope','ExportCriteria',function($scope, exportCriteria) {
+            controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
+
+                console.log($scope)
+                var chartService = $injector.get($scope.chartService);
+                console.log($scope)
+
+                $scope.cf = chartService;
 
                 $scope.addFilterToExport = function(filter){
                     console.log($scope.grp,$scope.val,filter)
@@ -137,7 +137,7 @@ angular.module('eTRIKSdata.dcPlots')
                 };
 
 
-             }],
+            }],
             template:'<div style="padding-top: 20px;float: left;max-height: 200px; overflow: scroll">'+
                 '<div class="chart-title" id="returnsLabel">'+
                 '<span>{{val}}</span>'+
@@ -162,9 +162,9 @@ angular.module('eTRIKSdata.dcPlots')
                 var chartType,
                     chartOptions = {};
 
-                console.log(cf.getGroup(scope.val).all()[0])
+/*                console.log(cf.getGroup(scope.val).all()[0])
                 console.log(cf.getDimension(scope.val).top(1))
-                console.log(cf.getDimension(scope.val).bottom(1))
+                console.log(cf.getDimension(scope.val).bottom(1))*/
 
                 //check for type of plotted values
                 if(isNaN(cf.getGroup(scope.val).all()[0].key)){
@@ -192,6 +192,9 @@ angular.module('eTRIKSdata.dcPlots')
 
                     maxValue = cf.getDimension(scope.val).top(1)[0][scope.val]
                     minValue = cf.getDimension(scope.val).bottom(1)[0][scope.val]
+
+                    console.log(maxValue)
+                    console.log(minValue)
                     chartType = "barChart";
                     chartOptions["transitionDuration"] = "500"
                     chartOptions["centerBar"] = "true"

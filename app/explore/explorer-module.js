@@ -1,7 +1,11 @@
 /**
  * Created by iemam on 08/07/2014.
  */
-angular.module('eTRIKSdata.explorer',['eTRIKSdata.dcPlots','eTRIKSdata.exporter','duScroll'])
+angular.module('eTRIKSdata.explorer',[
+        'biospeak.clinical',
+        'eTRIKSdata.dcPlots',
+        'eTRIKSdata.exporter',
+        'duScroll'])
 
     .config(function($stateProvider){
 
