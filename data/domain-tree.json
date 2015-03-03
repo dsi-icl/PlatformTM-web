@@ -6,12 +6,12 @@
                 "Domain": "Vital Signs",
                 "Code":"VS",
                 "Observations":[
-                    { "Name":"Body Mass Index", "Code":"BMI", "Variable":"V-SDTM-VS-VSTESTCD"},
-                    { "Name":"Diastolic Blood Pressure", "Code":"DIABP"},
-                    { "Name":"Height", "Code":"Height"},
-                    { "Name":"Heart Rate", "Code":"HR"},
-                    { "Name":"Weight", "Code":"Weight"},
-                    { "Name":"Temperature", "Code":"Temp"}
+                    { "Name":"Body Mass Index", "Code":"bmi", "Variable":"V-SDTM-VS-VSTESTCD"},
+                    { "Name":"Diastolic Blood Pressure", "Code":"DIABP", "Variable":"V-SDTM-VS-VSTESTCD"},
+                    { "Name":"Height", "Code":"height"},
+                    { "Name":"Heart Rate", "Code":"hr"},
+                    { "Name":"Weight", "Code":"weight"},
+                    { "Name":"Temperature", "Code":"temp"}
                 ]
             },
 
