@@ -1,4 +1,4 @@
-<div  id="molecular-data" class="container-fluid content">
+<div  id="molecular-data" class="content">
 
     <div class="panel-header">
         <h3 style="padding: 7px"><span class="flaticon-molecules1" style="color: #39b3d7; margin-right: 3px"></span> Molecular Data
@@ -9,17 +9,17 @@
         <tab>
             <tab-heading>
                 <div class="assay-info" align="center">
-                    <img src="img/assays/transcriptomics.svg">
+                    <img src="../../img/assays/transcriptomics.svg">
                     <p class="assay-type">Transcription Profiling</p>
                     <p class="assay-tech">DNA Microarray</p>
-                    <p class="assay-count">345 assays</p>
+                    <p class="assay-count"><dc-count-widget cf="cf"></dc-count-widget> assays</p>
                     <i class="flaticon-download164" style="margin-left: 150px;cursor: pointer"
                        ng-click="addAssayGrp('Transcription Profiling')"></i>
                 </div>
             </tab-heading>
-            <div class="assay-content">
+            <!--<div class="assay-content">-->
 
-                <div class="assay-sample-header">
+                <!--<div class="assay-sample-header">
                         <div style="float: left">
                             <span style=" padding-left: 15px;">Samples</span>
                         </div>
@@ -51,13 +51,64 @@
                                 </div>
                             </div>
                         </div>
+                    </div>-->
+
+                <div id="samplePlots" class="assay-content">
+
+                </div>
+                <div class="clearfix"></div>
+                <div class="subject" style="border-top: 1px solid #72879C">
+                    <div class="option-list">
+                        <ul id="subjChars">
+                            <li ng-repeat="sc in sampleCharacteristics" >
+                                <label id="samplec_{{sc}}"
+                                       charting-button
+                                       val="{{sc}}"
+                                       active="{{isActive}}"
+                                       container="{{sampleChartContainerId}}"
+                                       section="{{section}}"
+                                       grp="{{section}}"
+                                       chart-service="{{chartService}}"
+                                       ng-class="{'active': isActive}"
+                                       ng-init="isActive = false"
+                                       ng-click="isActive = !isActive">
+                                    {{sc}}
+                                </label>
+                                <!-- <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
+                                      class="flaticon-download164"></div>-->
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
                     </div>
 
-                <div id="samplePlots" style="min-height: 220px; padding:15px">
+                </div>
+                <div class="subject" style="border-top: 1px solid #72879C">
+                    <div class="option-list">
+                        <ul>
+                            <li ng-repeat="ef in expFactors" >
+                                <label id="ef_{{ef}}"
+                                       charting-button
+                                       val="{{ef}}"
+                                       active="{{isActive}}"
+                                       container="{{sampleChartContainerId}}"
+                                       section="{{section}}"
+                                       grp="{{section}}"
+                                       chart-service="{{chartService}}"
+                                       ng-class="{'active': isActive}"
+                                       ng-init="isActive = false"
+                                       ng-click="isActive = !isActive">
+                                    {{ef}}
+                                </label>
+                                <!-- <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
+                                      class="flaticon-download164"></div>-->
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
 
                 </div>
 
-                <div class="assay-factor-header">
+                <!--<div class="assay-factor-header">
                     <div style="float: left">
                         <span style=" padding-left: 15px;">Experimental Factors</span>
                     </div>
@@ -93,13 +144,13 @@
                     </div>
                 </div>
 
-                <div id="assayPlots" style="min-height: 210px; padding:15px"></div>
+                <div id="assayPlots" style="min-height: 210px; padding:15px"></div>-->
 
-                <ng-include src="'explore/ISAviewer.html'"> </ng-include>
-            </div>
+                <!--<ng-include src="'explore/ISAviewer.html'"> </ng-include>-->
+            <!--</div>-->
         </tab>
 
-        <tab class="odd">
+<!--        <tab class="odd">
             <tab-heading>
                 <div class="assay-info" align="center">
                     <img src="img/assays/proteomics.svg">
@@ -116,7 +167,6 @@
             </tab-heading>
            <div class="assay-content">TESTETSETS</div>
         </tab>
-
         <tab>
             <tab-heading>
                 <div class="assay-info" align="center">
@@ -134,7 +184,6 @@
             </tab-heading>
             <div class="assay-content">TESTETSETS</div>
         </tab>
-
         <tab class="odd">
             <tab-heading>
                 <div class="assay-info" align="center">
@@ -182,7 +231,7 @@
                 </div>
             </tab-heading>
             <div class="assay-content">TESTETSETS</div>
-        </tab>
+        </tab>-->
     </tabset>
 </div>
 

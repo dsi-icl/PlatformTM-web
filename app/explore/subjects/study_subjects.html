@@ -1,8 +1,8 @@
 
 
-<div class="content">
+<div id="subject-data" class="content">
 
-    <div class="panel subject-panel">
+    <!--<div class="panel subject-panel">-->
         <div class="panel-header">
             <h3 style="padding-left: 3px;padding-top: 3px;"><span class="flaticon-standing55" style="color: #39b3d7; margin-right: -10px;font-size: 1.4em;"></span> {{title}}</h3>
         </div>
@@ -18,23 +18,23 @@
                         Human subjects
                     </p>
                 </tab-heading>
-                <div id="subject-plots"
-                     ng-controller="subjPlotsCtrl" class="plots-view">
-                </div>
+                <div id="subject-plots" class="plots-view"></div>
 
                 <div class="clearfix"></div>
 
                 <div class="subject" style="border-top: 1px solid #72879C">
                     <div class="option-list">
-                        <ul id="subjChars" class="pull-left">
-                            <li ng-repeat="sc in subjChars" >
-                                <label id="sc_{{$index}}"
-                                       charting-button val="{{sc}}" active="{{isActive}}"
+                        <ul id="subjChars">
+                            <li ng-repeat="sc in subjCharsDB" >
+                                <label id="sc_{{sc}}"
+                                       charting-button
+                                       val="{{sc}}"
+                                       active="{{isActive}}"
                                        container="{{subjChartContainerId}}"
                                        section="{{section}}"
                                        grp="{{section}}"
                                        chart-service="{{chartService}}"
-                                       ng-class="{'': !isActive, 'active': isActive}"
+                                       ng-class="{'active': isActive}"
                                        ng-init="isActive = false"
                                        ng-click="isActive = !isActive">
                                     {{sc}}
@@ -48,34 +48,6 @@
 
                 </div>
 
-<!--                <div id="subject-plots" style="margin-bottom: 0px;margin: 40px;border-top: 1px solid #72879C;"
-                     ng-controller="subjPlotsCtrl" class="plots-view">
-                </div>
-
-                <div class="clearfix"></div>
-
-                <div class="subject" style="border-top: 1px solid #72879C">
-                    <div class="option-list">
-                        <ul id="subjChars" class="pull-left">
-                            <li ng-repeat="sc in subjChars" >
-                                <label id="sc_{{$index}}"
-                                       charting-button val="{{sc}}" active="{{isActive}}"
-                                       container="{{subjChartContainerId}}"
-                                       section="{{section}}"
-                                       grp="{{section}}"
-                                       cf="cf"
-                                       ng-class="{'': !isActive, 'active': isActive}"
-                                       ng-init="isActive = false"
-                                       ng-click="isActive = !isActive">
-                                    {{sc}}
-                                </label>
-                                &lt;!&ndash; <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
-                                      class="flaticon-download164"></div>&ndash;&gt;
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>-->
             </tab>
 
 
@@ -83,14 +55,14 @@
                 <tab-heading>
                     <p class="model-icon">
                         <span class="flaticon-rat2"></span>
-                        <span class="model-count">234</span>
+                        <span class="model-count"></span>
                     </p>
                     <p class="model-name">
-                        Xenograft Mouse Models
+                        Animal subjects
                     </p>
                 </tab-heading>
                 <div id="xenograft-plots" style="margin-bottom: 0px;margin: 40px;border-top: 1px solid #72879C;"
-                     ng-controller="subjPlotsCtrl" class="plots-view">
+                      class="plots-view">
                 </div>
 
                 <div class="clearfix"></div>
@@ -124,13 +96,13 @@
                 <tab-heading>
                     <p class="model-icon">
                         <span class="flaticon-cells"></span>
-                        <span class="model-count">134</span>
+                        <span class="model-count"></span>
                     </p>
                     <p class="model-name">
                         Cell Line Cultures
                     </p>
                 </tab-heading>
-                <div>TESTETSTST</div>
+                <div>&nbsp;</div>
             </tab>
         </tabset>
 
@@ -138,10 +110,10 @@
         <div class="clearfix"></div>
 
 
-    </div>
+    <!--</div>-->
 </div>
 
-<div class="panel export-panel" ng-controller="ExportCtrl">
+<!--<div class="panel export-panel" ng-controller="ExportCtrl">
     <div class="panel-header">
         <h3><span class="glyphicon glyphicon-book" style="color: #39b3d7; margin-right: 3px"></span> Data export
         </h3>
@@ -154,7 +126,7 @@
                 <ul>
                     <li ng-repeat="scr in subjCriteria">
                         {{scr.value}}{{scr.filter}}</li>
-                    <!--<li>Cohort = "M"</li>-->
+                    <li>Cohort = "M"</li>
                 </ul>
             </section>
 
@@ -163,8 +135,8 @@
                 <ul>
                     <li ng-repeat="ccr in clinicCriteria">
                         {{ccr.value}}{{ccr.filter}}</li>
-                    <!--<li>Surgery (All)</li>
-                    <li>Days to progression > 120</li>-->
+                    <li>Surgery (All)</li>
+                    <li>Days to progression > 120</li>
                 </ul>
             </section>
 
@@ -175,13 +147,12 @@
                     {{assayGrp.name}}
                     <ul>
                         <li ng-repeat="acr in assayGrp.assayCriteria">
-                            {{acr.value}}&NonBreakingSpace;{{acr.filter}}
+                            {{acr.value}}{{acr.filter}}
                         </li>
-                        <!--
                         <li>{{select}}{{filter}}Sample Origin = Xenograft</li>
                         <li>Tissue (All)</li>
                         <li>Treatment (All)</li>
-                        <li>Treatement Response[TC] > 120</li>-->
+                        <li>Treatement Response[TC] > 120</li>
                     </ul>
                 </li>
 
@@ -192,7 +163,7 @@
 
     </div>
 </div>
-</div>
+</div>-->
 
 <div class="clearfix"></div>
 

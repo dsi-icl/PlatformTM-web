@@ -1,0 +1,60 @@
+<link type="text/css" rel="stylesheet" href="../css/clinicalDataTree.css" />
+
+<div id="clinical-data" class="content">
+    <div class="panel-header">
+        <h3 style="padding: 10px;"><span class="flaticon-man412" style="color: #39b3d7; margin-right: 3px"></span> Clinical Assessment
+        </h3>
+    </div>
+
+    <tabset class="models-list clinical-section">
+        <tab>
+            <tab-heading>
+                <!--<p class="model-icon">
+                    <span class="flaticon-standing55"></span>
+                    &lt;!&ndash;<dc-count-widget cf="cf"></dc-count-widget>&ndash;&gt;
+                </p>-->
+                <p class="model-name">
+                    Data Plots
+                </p>
+            </tab-heading>
+            <div id="{{chartContainerId}}" class="tab-pane active plots-view"></div>
+        </tab>
+        <tab >
+            <tab-heading>
+                <!--<p class="model-icon">
+                    <span class="flaticon-standing55"></span>
+                    &lt;!&ndash;<dc-count-widget cf="cf"></dc-count-widget>&ndash;&gt;
+                </p>-->
+                <p class="model-name">
+                    Data Table
+                </p>
+            </tab-heading>
+            <div style="height: 300px;overflow: scroll;">
+               <!-- <dc-datatable class="dc-data-table">Choose observations from the tree below</dc-datatable>-->
+            </div>
+
+        </tab>
+
+    </tabset>
+
+    <div class="clearfix"></div>
+
+    <div class="plots-view">
+        <!--<ul class="nav nav-tabs">
+            <li class="active"><a href="#clinical-plots" data-toggle="tab">Data Plots</a></li>
+            <li><a href="#clinical-datatable" data-toggle="tab">Data Table</a></li>
+            &lt;!&ndash;<li><a href="#settings" data-toggle="tab">Export</a></li>&ndash;&gt;
+        </ul>
+
+        &lt;!&ndash; Tab panes &ndash;&gt;
+        <div class="tab-content">
+
+        </div>-->
+
+
+
+        <cl-tree  observations="clinicalData" get-charting-opts="getChartingOpts()"></cl-tree>
+
+
+    </div>
+</div>
