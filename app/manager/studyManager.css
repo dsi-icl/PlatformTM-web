@@ -3,7 +3,7 @@
 }
 
 .studySegment{
-    margin-right: 5px;
+   /* margin-right: 5px;
     margin-left: 5px;
     border-width: 2px;
     border-style: solid;
@@ -13,7 +13,19 @@
     min-width: 100px;
     display: inline-block;
     text-align: center;
-    font-size: 0.6em;
+    font-size: 0.6em;*/
+
+    margin-right: 5px;
+    margin-left: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #005580;
+    /* border-radius: 5px; */
+    padding: 1px;
+    min-width: 50px;
+    display: inline-block;
+    text-align: center;
+    font-size: 0.4em;
 }
 
 .epoch{

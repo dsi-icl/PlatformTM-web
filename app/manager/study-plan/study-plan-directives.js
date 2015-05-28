@@ -26,7 +26,7 @@ angular.module('eTRIKSdata.studyDesign')
             /*scope:true,*/
             template:
                 '<div  class="epoch" ng-class-odd="\'odd\'" >' +
-                    /*'<div  class="epoch-header">{{epoch.name}}</div>'+*/
+                    '<div  class="epoch-header">{{epoch.name}}</div>'+
                     '<cdz-cell ng-repeat="cell in epoch.cells" cellname=cell.name>' +
                     '<span id="removeCell" data-toggle="tooltip" data-placement="top" title="Remove Cell" ng-show="isVisible" class="glyphicon glyphicon-remove-circle icon-remove"></span>' +
                     '</cdz-cell>' +
@@ -153,7 +153,7 @@ angular.module('eTRIKSdata.studyDesign')
                 }
 
                 // Default the blocks to be visible.
-                $scope.isVisible = true;
+                $scope.isVisible = false;
 
                 $scope.toggleControls = function() {
 

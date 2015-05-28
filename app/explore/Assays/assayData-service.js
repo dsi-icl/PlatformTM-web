@@ -1,14 +1,14 @@
 /**
  * Created by iemam on 19/02/2015.
  */
-angular.module('biospeak.clinical')
+angular.module('biospeak.assays')
 
-    .factory('subjectDataService',['$http','$q', function($http,$q) {
+    .factory('assayDataService',['$http','$q', function($http,$q) {
         return {
             getSubjData: function(studyId,characs) {
                 //var domainCode = "VS"
                 return $http({
-                    url:'http://rachmaninoff.local:8080/api/studies/'+studyId+'/data/subjects/characteristics',
+                    url:'http://rachmaninoff.local:8080/api/studies/'+studyId+'/data/assays/characteristics',
                     method:'POST',
                     data: angular.toJson(characs)
                 }).then(

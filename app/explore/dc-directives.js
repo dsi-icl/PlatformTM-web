@@ -8,6 +8,8 @@ angular.module('eTRIKSdata.dcPlots')
         return {
             scope: { // attributes bound to the scope of the directive
                 val: '@',
+                obsid: '@',
+                domain:'@',
                 grp: '@',
                 isActive: '@active',
                 container: '@',
@@ -27,7 +29,7 @@ angular.module('eTRIKSdata.dcPlots')
 
                     var elemId = attrs.id+'-chart';
                     var isActive = scope.isActive === 'true'
-                    console.log(scope)
+                    //console.log(scope)
                     if(isActive){
                         scope.$apply(function(){
                             angular.element(document.getElementById(scope.container))
@@ -83,11 +85,7 @@ angular.module('eTRIKSdata.dcPlots')
         }
     })
 
-
     .directive('dcChart', function () {
-
-
-
         return {
             restrict: 'E',
             replace:true,
@@ -97,18 +95,13 @@ angular.module('eTRIKSdata.dcPlots')
             controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
 
                 var chartService = $injector.get($scope.chartService);
-                //$scope.cf = chartService;
-
-                //var chartData //= chartService.getChartData($scope.val);
-
-                //$scope.chartData = chartData;
-                //console.log($scope.chartData)
-                chartService.getChartData($scope.val)
+                //console.log($scope.obsrv)
+                chartService.getChartData($scope.val,$scope.obsid,$scope.domain)
                     .then(
                         // success function
                         function(data) {
-                            console.log("GOT BACK from getChartData...")
-                            console.log(data)
+                            /*console.log("GOT BACK from getChartData...")
+                            console.log(data)*/
                             $scope.chartData = data;
                         },
                         // error function
@@ -120,43 +113,47 @@ angular.module('eTRIKSdata.dcPlots')
 
 
                 $scope.addFilterToExport = function(filter){
-                    console.log($scope.grp,$scope.val,filter)
+                    //console.log($scope.grp,$scope.val,filter)
                     exportCriteria.addFilter(filter,$scope.val,$scope.grp)
                 };
 
 
             }],
-            template:'<div style="padding-top: 20px;float: left;max-height: 200px; overflow: scroll">'+
+            template:'<div style="padding-top: 20px;/*float: left;max-height: 200px; overflow: scroll*/">'+
                 '<div class="chart-title" id="returnsLabel">'+
                 '<span>{{val}}</span>'+
-                '<a class="reset">reset</a> <span class="filter"></span>'+
+                '<span class="filter"></span> <a class="reset">reset</a> '+
                 '</div>'+
                 '<div class="clearfix"></div>'+
                 '</div>'
             ,
             link: function (scope, element, attrs) {
 
-                console.log(scope.val)
+                //console.log(scope.val)
 
                 scope.$watch('chartData', function(newVal) {
                     if (newVal) {
 
                         var cfGroup = scope.chartData.group;
                         var cfDimension = scope.chartData.dimension;
-                        var chartData = getChartOptions(scope.val,cfDimension, cfGroup);
+                        var requiresBoxplot = scope.chartData.requiresBoxplot;
+                        //console.log(requiresBoxplot)
+                        var chartData = getChartOptions(scope.val,cfDimension, cfGroup, requiresBoxplot);
+
+                        //console.log(chartData)
 
                         var chartFactory = dc[chartData.chartType];
                         var chart = chartFactory(element[0]);
                         chart.options(chartData.chartOptions);
 
-//                console.log(isNaN(cf.getGroup(scope.val).all()[0].key));
-//                console.log(cf.getDimension(scope.val).top(1)[0][scope.val])
-//                console.log(cf.getDimension(scope.val).bottom(1)[0][scope.val])
-//                console.log(cf.getGroup(scope.val).all())
-//                console.log(cfGroup)
-//                console.log(cfGroup.all())
-//                console.log(cfDimension.top(1))
-//                console.log(cfDimension.bottom(1))
+    //                console.log(isNaN(cf.getGroup(scope.val).all()[0].key));
+    //                console.log(cf.getDimension(scope.val).top(1)[0][scope.val])
+    //                console.log(cf.getDimension(scope.val).bottom(1)[0][scope.val])
+    //                console.log(cf.getGroup(scope.val).all())
+    //                console.log(cfGroup)
+    //                console.log(cfGroup.all())
+    //                console.log(cfDimension.top(1))
+    //                console.log(cfDimension.bottom(1))
 
 
                         chart.on('filtered', function(chart, filter){
@@ -188,15 +185,10 @@ angular.module('eTRIKSdata.dcPlots')
                     dc.redrawAll();
                 }, 1000);*/
 
-                // whenever the bound 'exp' expression changes, execute this
-                /*scope.$watch('exp', function (newVal, oldVal) {
-                    // ...
-                });*/
-
-                // var chart = dc.pieChart(element[0]);
+                /* var chart = dc.pieChart(element[0]);
 
 
-                /*chart.width(180)
+                chart.width(180)
                  .height(180)
                  .radius(80)
                  //.innerRadius(10)
@@ -247,13 +239,24 @@ angular.module('eTRIKSdata.dcPlots')
             }
         };
 
-        function getChartOptions(val,cfDimension,cfGroup){
+        function getChartOptions(val,cfDimension,cfGroup,requiresBoxplot){
 
             var chartType,
                 chartOptions = {};
 
-            //check for type of plotted values
-            if(isNaN(cfGroup.all()[0].key)){
+            if(requiresBoxplot){
+                chartType = "boxPlot"
+                chartOptions["width"] = 768 //384// //300//384//330//
+                chartOptions["height"] = 480 //240//480 //260 //240 //200//
+                //chartOptions["margins"] = {top: 10, right: 50, bottom: 30, left: 50}
+                chartOptions["elasticX"] = "true"
+                chartOptions["elasticY"] = "true"
+                chartOptions["boxWidth"] = "10"
+                chartOptions["boxPadding"] = "0.9"
+                    //.dimension(cfDimension)
+                    //.group(cfGroup)
+
+            }else if(isNaN(cfGroup.all()[0].key)){
                 //Ordinal chart (rowChart or PieChart)
                 var noOfGroups = cfGroup.size();
 
@@ -267,15 +270,17 @@ angular.module('eTRIKSdata.dcPlots')
                 else{
                     chartType = "pieChart";
                     chartOptions["radius"] = "60"
-                    chartOptions["width"] = "160"
-                    chartOptions["height"] = "160"
+                    chartOptions["width"] = "120"
+                    chartOptions["height"] = "120"
                 }
             }else{
                 //numeric bar chart
                 maxValue = cfDimension.top(1)[0][val]
-                minValue = cfDimension.bottom(1)[0][val]
-                console.log(maxValue)
-                console.log(minValue)
+                minValue = getMinimumValue(cfDimension,val);
+                //minValue = cfDimension.bottom(1)[0][val]
+                //console.log('max ',maxValue)
+                //console.log('min ',minValue)
+
                 chartType = "barChart";
                 chartOptions["transitionDuration"] = "500"
                 chartOptions["centerBar"] = "true"
@@ -284,6 +289,7 @@ angular.module('eTRIKSdata.dcPlots')
                 chartOptions["elasticY"] = "true"
                 chartOptions["width"] = "300"
                 chartOptions["height"] = "170"
+                chartOptions["xUnits"] = dc.units.fp.precision(0.05)
                 //chartOptions["margins"] = "{top: 10, right: 10, bottom: 40, left: 20}"
                 //chartOptions[".xAxis().tickFormat"] = "2"
                 //d3.extent(data, function(d) { return d.TC; })
@@ -307,6 +313,17 @@ angular.module('eTRIKSdata.dcPlots')
             chartData.chartType = chartType;
             return chartData;
 
+        };
+
+        function getMinimumValue(dimension, val){
+            var orderedVals = dimension.bottom(Infinity)
+            //console.log(orderedVals)
+            var i=0;
+            while (orderedVals[i][val]==null || orderedVals[i][val]=="") {
+                i++;
+            }
+            //console.log(orderedVals[i][val])
+            return orderedVals[i][val]
         }
         //var sampleOriginChart = dc.pieChart("#dc-sampleOrigin-chart");
 //        var margin = 20,
@@ -340,4 +357,89 @@ angular.module('eTRIKSdata.dcPlots')
          .zipObject()
          .value();
          }*/
-    });
+    })
+
+    .directive('dcDatatable', function () {
+    return {
+        restrict: 'E',
+        replace:true,
+        /*scope: {
+         val: '='
+         },*/
+        controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
+            var chartService = $injector.get($scope.chartService);
+            chartService.getTableData()
+                .then(
+                // success function
+                function(data) {
+//                            console.log("GOT BACK from getChartData...")
+//                            console.log(data)
+                    $scope.tableData = data;
+
+                },
+                // error function
+                function(result) {
+                    console.log("Failed to get chart data " + result);
+                });
+
+        }],
+        template:
+
+                     '<table class="table table-hover" id="dc-table-graph">'+
+                            '<thead>'+
+                                '<tr class="header">'+
+                                    '<th ng-repeat="header in tableData.headers">{{header}}</th>'+
+                                '</tr>'+
+                            '</thead>'+
+                     '</table>'
+                 ,
+        link: function (scope, element, attrs) {
+
+            //console.log(scope.val)
+
+            scope.$watch('tableData', function(newVal) {
+                if (newVal) {
+
+                    var cfDimension = scope.tableData.dimension;
+                    var headers = scope.tableData.headers;
+                    var chartFactory = dc["dataTable"];
+                    var chart = chartFactory(element[0]);
+
+                    /*console.log(cfDimension)
+                    console.log(headers)
+                    console.log(element[0])*/
+
+                    var grp = function(d) {return d["USUBJID"]}
+
+                    headers = [
+                        function(d) { return d["USUBJID"]; },
+                        function(d) { return d["visit"]; },
+                        function(d) { return d["bmi"]; },
+                        function(d) { return d["height"] },
+                        function(d) { return d["weight"] },
+                        function(d) { return d["temp"] },
+                        function(d) { return d["hr"]},
+                        function(d) { return d["diabp"]},
+                        function(d) { return d["sysbp"]}
+                    ]
+
+                    chartOptions = {};
+                    chartOptions["dimension"] = cfDimension
+                    chartOptions["group"] = grp
+                    chartOptions["width"] = "960"
+                    chartOptions["height"] = "800"
+                    console.log(headers)
+                    chartOptions["columns"] = headers
+                    chartOptions["sortBy"] = function (d) {
+                        return d.visit;
+                    }
+
+                    chart.options(chartOptions);
+                    dc.renderAll();
+
+                }
+            })
+        }
+
+    }
+});

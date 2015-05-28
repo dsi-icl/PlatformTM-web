@@ -1,22 +1,23 @@
-<link type="text/css" rel="stylesheet" href="../css/clinicalDataTree.css" />
+<link type="text/css" rel="stylesheet" href="explore/clinical/css/clinicalDataTree.css" />
 
 <div id="clinical-data" class="content">
     <div class="panel-header">
-        <h3 style="padding: 10px;"><span class="flaticon-man412" style="color: #39b3d7; margin-right: 3px"></span> Clinical Assessment
+        <h3 style="padding: 10px;"><span class="flaticon-man412" style="color: #39b3d7; margin-right: 3px"></span> Clinical Observations
         </h3>
     </div>
 
     <tabset class="models-list clinical-section">
         <tab>
             <tab-heading>
-                <!--<p class="model-icon">
-                    <span class="flaticon-standing55"></span>
-                    &lt;!&ndash;<dc-count-widget cf="cf"></dc-count-widget>&ndash;&gt;
-                </p>-->
+
                 <p class="model-name">
                     Data Plots
                 </p>
             </tab-heading>
+            <p class="model-icon">
+                <span class="flaticon-standing55"></span>
+                <!--<dc-count-widget cf="cf"></dc-count-widget>-->
+            </p>
             <div id="{{chartContainerId}}" class="tab-pane active plots-view"></div>
         </tab>
         <tab >

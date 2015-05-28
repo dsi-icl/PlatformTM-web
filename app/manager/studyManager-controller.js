@@ -5,7 +5,7 @@ angular.module('eTRIKSdata.studyDesign')
 
     .controller('StudyPlanCtrl', function ($scope, $http) {
 
-    $http.get('../data/study-plan.json').success(function(data){
+    $http.get('../data/study-plan-BVS.json').success(function(data){
         //if(data.size == 0)
 
         $scope.Arms = data;

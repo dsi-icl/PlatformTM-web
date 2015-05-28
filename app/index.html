@@ -10,12 +10,9 @@
     <link type="text/css" rel="stylesheet" href="lib/dc/dc.css">
     <link type="text/css" rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" type="text/css" href="css/flaticon/flaticon.css">
-
-
-
-
-
+    <!--<link rel="stylesheet" type="text/css" href="lib/fullpage/jquery.fullPage.css" />-->
 </head>
+
 <body ng-app="eTRIKSdata">
 <div class="top-bar">
 
@@ -33,9 +30,9 @@
 
         <div class="pull-left menu">
             <ul>
-                <li><a ui-sref="explore">Immerse</a></li>
-                <li><a ui-sref="form">Populate</a></li>
-                <li><a ui-sref="manager">Setup</a></li>
+                <li><a ui-sref="explore">Explore</a></li>
+                <li><a ui-sref="loader">Populate</a></li>
+                <li><a ui-sref="manager({ studyId: 'STD-BVS-01' })">Setup</a></li>
             </ul>
         </div>
 
@@ -85,6 +82,10 @@
 <script src="lib/angular/angular-ui-router.min.js"></script>
 <script src="lib/angular/angular-resource.min.js"></script>
 <script src="lib/angular-scroll/angular-scroll.min.js"></script>
+<script src="../bower_components/jsonq/jsonQ.min.js"></script>
+
+<script type="text/javascript" src="lib/fullpage/jquery.fullPage.min.js"></script>
+
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="lib/d3/d3.min.js"></script>
 <script src="lib/nvd3/nv.d3.min.js"></script>
@@ -95,23 +96,37 @@
 <script src="lib/angular-xeditable/xeditable.min.js"></script>
 <script src="lib/onepage-scroll-master/jquery.onepage-scroll.min.js"></script>
 <script src="lib/angular-ngAnimate/angular-animate.min.js"></script>
-
 <script type="text/javascript" src="lib/ISAviewer/handlebars-v1.3.0.js"></script>
 <script type="text/javascript" src="lib/ISAviewer/ISATabViewer.js"></script>
 
-<script src="explore/exportCriteria-service.js"></script>
+<script src="explore/export/exportCriteria-service.js"></script>
 <script src="explore/crossFilter-service.js"></script>
+<script src="explore/dc-directives.js"></script>
 
+
+
+
+
+
+<script src="explore/subjects/subjects-controller.js"></script>
+<script src="explore/subjects/subjectData-service.js"></script>
+
+<script src="explore/clinical/clinical-controller.js"></script>
 <script src="explore/clinical/clinicalData-service.js"></script>
 <script src="explore/clinical/domain-tree-directive.js"></script>
-<script src="explore/dc-directives.js"></script>
+
+<script src="explore/assays/assays-controller.js"></script>
+<script src="explore/assays/assayData-service.js"></script>
+
+
 <script src="explore/explorer-module.js"></script>
-
-
 <script src="explore/explorer-controller.js"></script>
+
+
 <script src="common/utils-service.js"></script>
 
 <script src="loader/loader.js"></script>
+<script src="lib/angular-file-upload/angular-file-upload.min.js"></script>
 
 <script src="manager/studyManager-module.js"></script>
 <script src="manager/studyManager-controller.js"></script>

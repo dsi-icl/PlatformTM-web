@@ -2,7 +2,9 @@
  * Created by iemam on 08/07/2014.
  */
 angular.module('eTRIKSdata.explorer',[
+        'biospeak.subjects',
         'biospeak.clinical',
+        'biospeak.assays',
         'eTRIKSdata.dcPlots',
         'eTRIKSdata.exporter',
         'duScroll'])
@@ -14,11 +16,11 @@ angular.module('eTRIKSdata.explorer',[
                 url: "/explore",
                 views:{
                     '':{
-                        templateUrl: 'explore/explore.html'
-                        /*controller:function(){
-                            angular.element(document).ready(function () {
+                        templateUrl: 'explore/explore.html',
+                        controller:function(){
+/*                            angular.element(document).ready(function () {
                                 $(".main").onepage_scroll({
-                                    sectionContainer: "section",     // sectionContainer accepts any kind of selector in case you don't want to use section
+
                                     easing: "ease",                  // Easing options accepts the CSS3 easing animation such "ease", "linear", "ease-in",
                                     // "ease-out", "ease-in-out", or even cubic bezier value such as "cubic-bezier(0.175, 0.885, 0.420, 1.310)"
                                     animationTime: 1000,             // AnimationTime let you define how long each section takes to animate
@@ -31,21 +33,21 @@ angular.module('eTRIKSdata.explorer',[
                                     responsiveFallback: false,        // You can fallback to normal page scroll by defining the width of the browser in which
                                     // you want the responsive fallback to be triggered. For example, set this to 600 and whenever
                                     // the browser's width is less than 600, the fallback will kick in.
-                                    direction: "horizontal"            // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".
+                                    direction: "vertical"            // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".
                                 });
-                            });
-                        }*/
+                            });*/
+                        }
                     },
                     'subjects@explore':{
-                        templateUrl: 'explore/partials/study_subjects.html',
+                        templateUrl: 'explore/subjects/study_subjects.html',
                         controller: 'SubjectsCtrl'
                     },
                     'assessments@explore':{
-                        templateUrl: 'explore/partials/study_clinical.html',
+                        templateUrl: 'explore/clinical/study_clinical.html',
                         controller: 'ClinicalCtrl'
                     },
                     'assays@explore':{
-                        templateUrl: 'explore/partials/study_assays.html',
+                        templateUrl: 'explore/assays/study_assays.html',
                         controller: 'AssayCtrl'
                     },
                     'design@explore':{

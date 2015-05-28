@@ -4,28 +4,23 @@
                  {"name" : "Screening",
                   "cells":[{"name":"Screening"}]
                  },
-                 {"name" : "Baseline",
-                  "cells": [{"name":"Baseline1"},
-                            {"name":"Baseline2"}]
+                 {"name" : "Treatment",
+                  "cells": [{"name":"Day 1"},
+                            {"name":"Day 2"},
+                            {"name":"Day 3"},
+                            {"name":"Day 4"},
+                            {"name":"Day 5"},
+                            {"name":"Day 6"},
+                            {"name":"Day 7"}]
                  },
-                 {"name" : "Observation",
-                  "cells": [{"name": "Observation"}]
+                 {"name" : "Follow up",
+                  "cells": [{"name": "FW 1"},
+                            {"name":"FW 2"},
+                            {"name":"FW 3"},
+                            {"name":"FW 4"},
+                            {"name":"FW 5"}]
                  }
                ]
-    },
-    {"armName": "Pediatric",
-        "epochs": [
-            {"name" : "Screening",
-                "cells":[{"name":"Screening"}]
-            },
-            {"name" : "Baseline",
-                "cells": [{"name":"Baseline1"},
-                    {"name":"Baseline2"}]
-            },
-            {"name" : "Observation",
-                "cells": [{"name": "Observation"}]
-            }
-        ]
     }
 
 ]

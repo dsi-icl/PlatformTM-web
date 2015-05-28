@@ -7,15 +7,42 @@
 </nav>-->
 
 
-    <section id="section-1">
-        <div ui-view="subjects"><i>Subject panel should load here!</i></div>
-    </section>
-    <section id="section-2">
-        <div ui-view="assessments"><i>Clinical Assessments panel should load here!</i></div>
-    </section>
-    <section id="section-3">
-        <div ui-view="assays"><i>Assays  panel should load here!</i></div>
-    </section>
+<!--<div class="breadcrumbs">
+    <div class="content">
+        <div class="pull-left">
+            <ul>
+                <li><a href="explore">ETRIKS ></a></li>
+                <li><a href="help">STUDIES ></a></li>
+                <li class="active"><a href="contact">BioVacSafe</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
+<div class="clearfix"></div>
+
+<div class="description">
+    <div class="content">
+        <h3>Biomarkers for enhanced vaccines immunosafety</h3>
+
+        <p>The overall objective of the project is to develop cutting edge tools to speed up and improve the testing and monitoring of vaccine safety, both before and after release to the market - See more at:</p><a href="http://www.biovacsafe.eu/home#sthash.6mEz5DlV.dpuf">www.biovacsafe.eu</a> </p>
+    </div>
+</div>
+
+<div class="clearfix"></div>-->
+
+
+<div class="main">
+
+    <section ui-view="subjects" id="section-1">
+        <i>Subject panel should load here!</i>
+    </section>
+    <section ui-view="assessments" id="section-2">
+        <i>Clinical Assessments panel should load here!</i>
+    </section>
+    <section ui-view="assays" id="section-3">
+        <i>Assays  panel should load here!</i>
+    </section>
+</div>
 <!--
 <div ui-view="design"><i>Study design panel should load here!</i></div>-->

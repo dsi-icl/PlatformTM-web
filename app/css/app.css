@@ -205,7 +205,7 @@ nav a {
 }
 
 .subject {
-    margin: 14px;
+    /*margin: 14px;*/
     padding: 8px;
     padding-top: 15px;
     font-size: .6em;
@@ -286,14 +286,14 @@ nav a {
 }
 
 .assay-panel ul li.active a {
-    background-color: #2b9cc7;
+    background-color: #2BAFC7;
     border: 0;
 }
 /*.assay-panel ul li.active a:focus {
     background-color: #256e93;
 }*/
 .assay-panel ul li.active a:hover {
-    background-color: #2b9cc7;
+    background-color: #2BAFC7;
     border: 0;
 }
 
@@ -313,8 +313,9 @@ nav a {
 
 
 .assay-panel .assay-info .assay-count {
-    color:#39b3d7;
-    font-size: .7em;
+    color:#CDFF3B;
+    font-size: 1.4em;
+    font-weight: bold;
     margin: 0px;
 }
 
@@ -338,8 +339,9 @@ nav a {
 
 .assay-content{
     background-color: #F1F2F1;
-    border-top: 15px solid #2b9cc7;
+    border-top: 15px solid #2BAFC7;
     min-height: 250px;
+    padding-left:20px;
     overflow: scroll;
 }
 
@@ -369,7 +371,7 @@ nav a {
     color:#39b3d7;
 }
 
-#study-design, #clinical-data, #molecular-data{
+#study-design, #clinical-data, #molecular-data, #subject-data{
     margin-top: 30px;
 }
 
@@ -455,12 +457,14 @@ nav a {
 
 /*Subject Panel*/
 .plots-view {
-    min-height: 200px;
+    min-height: 280px;
     background-color: #F1F2F2;
+    padding:20px;
+    overflow: scroll;
 }
 
 .models-list {
-    padding: 10px;
+    padding-top: 5px;
 }
 
 .models-list ul{
@@ -469,6 +473,10 @@ nav a {
     display: table;
     width: 100%;
     padding-left:0;
+}
+
+.clinical-section ul{
+    display: block;;
 }
 
 .models-list ul li{
@@ -513,6 +521,12 @@ nav a {
     font-size: 1.1em;
     font-weight: normal;
     -webkit-padding-start: 10px;
+}
+
+.option-list ul li {
+    display: inline-block;
+    /*width: 10%;*/
+    position: relative;
 }
 
 .option-list ul li label {
@@ -626,4 +640,21 @@ nav a {
     width: 10%;
     position: relative;
 
+}
+
+.dc-chart .x.axis text {
+    text-anchor: end !important;
+    font-size: 0.4em;
+    font-weight: bold;
+    transform: rotate(-20deg);
+}
+
+.dc-data-table {
+    color: #666;
+    font-size: 0.6em;
+
+}
+.dc-data-table .dc-table-group
+{
+    background-color: rgba(57, 194, 215, 0.12);
 }

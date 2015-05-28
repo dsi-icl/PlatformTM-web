@@ -1,7 +1,7 @@
 /**
  * Created by iemam on 19/02/2015.
  */
-angular.module('biospeak.clinical')
+angular.module('biospeak.subjects')
 
     .factory('subjectDataService',['$http','$q', function($http,$q) {
         return {
