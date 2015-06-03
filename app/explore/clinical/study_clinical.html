@@ -16,9 +16,11 @@
             </tab-heading>
             <p class="model-icon">
                 <span class="flaticon-standing55"></span>
-                <!--<dc-count-widget cf="cf"></dc-count-widget>-->
+
+                <dc-number-display cf="cf"></dc-number-display>
             </p>
             <div id="{{chartContainerId}}" class="tab-pane active plots-view"></div>
+            <!--<div><button ng-click="filterByStudy()">filter</button></div>-->
         </tab>
         <tab >
             <tab-heading>
@@ -54,7 +56,7 @@
 
 
 
-        <cl-tree  observations="clinicalData" get-charting-opts="getChartingOpts()"></cl-tree>
+        <cl-tree  observations="clinicalData" get-obs-ids-for-meddra="getObsIdsForMeddra(medraterm)" get-charting-opts="getChartingOpts()"></cl-tree>
 
 
     </div>

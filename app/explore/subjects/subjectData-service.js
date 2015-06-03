@@ -14,7 +14,8 @@ angular.module('biospeak.subjects')
                 }).then(
                     function (response) {
                         return {
-                            scs: (response.data)
+                            scs: (response.data.scs),
+                            data: (response.data.data)
                         }
                     },
                     function (httpError) {
@@ -24,10 +25,10 @@ angular.module('biospeak.subjects')
                     });
             },
 
-            getSubjCharacteristics: function(studyId){
+            getSubjCharacteristics: function(projectId){
 
                     return $http({
-                        url:'http://rachmaninoff.local:8080/api/studies/{studyId}/subjects/characteristics',
+                        url:'http://rachmaninoff.local:8080/api/projects/'+projectId+'/subjects/characteristics',
                         method:'GET'
                     }).then(
                         function (response){

@@ -15,18 +15,19 @@ angular.module('biospeak.assays',[])
         $scope.assayChartContainerId = "assayPlots";
         $scope.sampleChartContainerId = "samplePlots";
         $scope.TP = "Transcription Profiling";
+        $scope.chartGroup = "assay";
 
 
-        AssayCf.setup($scope).then(
-            function(){
-                $timeout(function() {
-                    angular.forEach(initEFs, function(ef) {
-                        angular.element('#ef_'+ef).trigger('click');
-                    });
-                },100)
-
-            }
-        )
+        //AssayCf.setup($scope).then(
+        //    function(){
+        //        $timeout(function() {
+        //            angular.forEach(initEFs, function(ef) {
+        //                angular.element('#ef_'+ef).trigger('click');
+        //            });
+        //        },100)
+        //
+        //    }
+        //)
         $scope.cf = AssayCf;
 
         $scope.chartService = "AssayCf"

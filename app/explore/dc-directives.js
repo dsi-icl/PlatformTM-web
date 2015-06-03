@@ -9,12 +9,15 @@ angular.module('eTRIKSdata.dcPlots')
             scope: { // attributes bound to the scope of the directive
                 val: '@',
                 obsid: '@',
+                obsids:'=',
                 domain:'@',
                 grp: '@',
                 isActive: '@active',
+                isGroupBtn: '@',
                 container: '@',
                 section: '@',
-                chartService: '@'
+                chartService: '@',
+                projectId:'@'
             },
 
             /*controller: function($scope, $compile, $http) {
@@ -29,7 +32,7 @@ angular.module('eTRIKSdata.dcPlots')
 
                     var elemId = attrs.id+'-chart';
                     var isActive = scope.isActive === 'true'
-                    //console.log(scope)
+                    console.log(isActive)
                     if(isActive){
                         scope.$apply(function(){
                             angular.element(document.getElementById(scope.container))
@@ -65,18 +68,27 @@ angular.module('eTRIKSdata.dcPlots')
                 var chart = chartFactory(element[0]);
                 var chartOptions = {};
 
+                //scope.$watch('chartToPlot', function(newVal) {
+                //    if (newVal) {
+                //
+                //    }
+                //})
                 scope.$watch(
                     function($scope) { return $scope.cf.getCountGroup(); },
                     function(newval, oldval){
-                    //console.log(newval)
-                       // console.log(cf.getCountData())
-                       // console.log(cf.getCountGroup())
 
-                        chartOptions["dimension"] = cf.getCountData()
-                        chartOptions["group"] =  cf.getCountGroup()
+                        if(newval){
+                            //console.log(newval)
+                            //console.log(cf.getCountData())
+                            //console.log(cf.getCountGroup())
+                            chartOptions["dimension"] = cf.getCountData()
+                            chartOptions["group"] =  cf.getCountGroup()
 
-                        chart.options(chartOptions);
-                        dc.renderAll();
+                            chart.options(chartOptions);
+                            chart.render();
+                            //dc.renderAll();
+                        }
+
                 })
 
 
@@ -94,28 +106,41 @@ angular.module('eTRIKSdata.dcPlots')
             },*/
             controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
 
+                console.log('inside dc-chart controller')
                 var chartService = $injector.get($scope.chartService);
-                //console.log($scope.obsrv)
-                chartService.getChartData($scope.val,$scope.obsid,$scope.domain)
+                console.log('projectId ',$scope.projectId,$scope.val,$scope.obsid,$scope.grp)
+                $scope.chartCFservice = chartService
+
+
+
+
+                chartService.getDCchart($scope.projectId,$scope.val,$scope.obsid,$scope.grp)
                     .then(
-                        // success function
-                        function(data) {
-                            /*console.log("GOT BACK from getChartData...")
-                            console.log(data)*/
-                            $scope.chartData = data;
-                        },
-                        // error function
-                        function(result) {
-                            console.log("Failed to get chart data " + result);
-                        });
+                    function(chart){
+                        $scope.chartToPlot = chart;
+                    },
+                    function(result){
+                        console.log("Failed to create DC chart",result);
+                    }
+                );
 
+                //chartService.getChartData($scope.val,$scope.obsid,$scope.domain)
+                //    .then(
+                //        // success function
+                //        function(data) {
+                //            /*console.log("GOT BACK from getChartData...")
+                //            console.log(data)*/
+                //            $scope.chartData = data;
+                //        },
+                //        // error function
+                //        function(result) {
+                //            console.log("Failed to get chart data " + result);
+                //        });
 
-
-
-                $scope.addFilterToExport = function(filter){
-                    //console.log($scope.grp,$scope.val,filter)
-                    exportCriteria.addFilter(filter,$scope.val,$scope.grp)
-                };
+                //$scope.addFilterToExport = function(filter){
+                //    //console.log($scope.grp,$scope.val,filter)
+                //    exportCriteria.addFilter(filter,$scope.val,$scope.grp)
+                //};
 
 
             }],
@@ -125,56 +150,97 @@ angular.module('eTRIKSdata.dcPlots')
                 '<span class="filter"></span> <a class="reset">reset</a> '+
                 '</div>'+
                 '<div class="clearfix"></div>'+
+                //'<div><img src="img/icons/spinner.gif"></div>'+
                 '</div>'
             ,
             link: function (scope, element, attrs) {
 
                 //console.log(scope.val)
 
-                scope.$watch('chartData', function(newVal) {
+                scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
+                        //console.log(scope.chartToPlot)
+                        scope.chartToPlot.anchor(element[0])
 
-                        var cfGroup = scope.chartData.group;
-                        var cfDimension = scope.chartData.dimension;
-                        var requiresBoxplot = scope.chartData.requiresBoxplot;
-                        //console.log(requiresBoxplot)
-                        var chartData = getChartOptions(scope.val,cfDimension, cfGroup, requiresBoxplot);
-
-                        //console.log(chartData)
-
-                        var chartFactory = dc[chartData.chartType];
-                        var chart = chartFactory(element[0]);
-                        chart.options(chartData.chartOptions);
-
-    //                console.log(isNaN(cf.getGroup(scope.val).all()[0].key));
-    //                console.log(cf.getDimension(scope.val).top(1)[0][scope.val])
-    //                console.log(cf.getDimension(scope.val).bottom(1)[0][scope.val])
-    //                console.log(cf.getGroup(scope.val).all())
-    //                console.log(cfGroup)
-    //                console.log(cfGroup.all())
-    //                console.log(cfDimension.top(1))
-    //                console.log(cfDimension.bottom(1))
+                        if(scope.val == 'study'){
+                            scope.chartToPlot.on('filtered', function(chart, filter){
+                                console.log('inside dc chart', filter)
+                                //console.log(chart.title())
+                                scope.chartCFservice.filterClinicalCF(filter,'study')
+                                //dc.renderAll();
+                            })
+                        }
 
 
-                        chart.on('filtered', function(chart, filter){
-                            scope.addFilterToExport(filter)
-                            //exportCriteria.addFilter(filter,scope.val,scope.grp)
-                        })
+                        console.log('chartId',scope.chartToPlot.chartID())
+                        console.log('chart group inside directive',scope.chartToPlot.chartGroup())
+                        var groupChart = scope.chartToPlot.chartGroup()
+                          //console.log(dc.chartRegistry.list())
 
+                          //Set reset link
+                            var a = angular.element(element[0].querySelector('a.reset'));
+                            a.attr('href', 'javascript:;');
+                            a.css('display', 'none');
+                            a.on('click', function () {
+                                scope.chartToPlot.filterAll();
+                                dc.redrawAll();
+                            });
+                        scope.chartToPlot.render()
 
-                        //Set reset link
-                        var a = angular.element(element[0].querySelector('a.reset'));
-                        a.attr('href', 'javascript:;');
-                        a.css('display', 'none');
-                        a.on('click', function () {
-                            chart.filterAll();
-                            dc.redrawAll();
-                        });
-
-                        dc.renderAll();
-
+                        //dc.renderAll(groupChart);
+                        //dc.redrawAll();
                     }
-                });
+                })
+
+    //            scope.$watch('chartData', function(newVal) {
+    //                if (newVal) {
+    //
+    //                    var cfGroup = scope.chartData.group;
+    //                    var cfDimension = scope.chartData.dimension;
+    //                    var requiresBoxplot = scope.chartData.requiresBoxplot;
+    //                    //console.log(requiresBoxplot)
+    //                    var chartData = getChartOptions(scope.val,cfDimension, cfGroup, requiresBoxplot);
+    //
+    //                    //console.log(chartData)
+    //
+    //                    var chartFactory = dc[chartData.chartType];
+    //                    var chart = chartFactory(element[0]);
+    //
+    //
+    //
+    //
+    //                    console.log(chart.chartID())
+    //                    console.log(dc.chartRegistry.list())
+    //
+    //                    chart.options(chartData.chartOptions);
+    //
+    //                    //Set reset link
+    //                    var a = angular.element(element[0].querySelector('a.reset'));
+    //                    a.attr('href', 'javascript:;');
+    //                    a.css('display', 'none');
+    //                    a.on('click', function () {
+    //                        chart.filterAll();
+    //                        dc.redrawAll();
+    //                    });
+    //
+    //                    dc.renderAll();
+    //                    //dc.redrawAll();
+    ////                console.log(isNaN(cf.getGroup(scope.val).all()[0].key));
+    ////                console.log(cf.getDimension(scope.val).top(1)[0][scope.val])
+    ////                console.log(cf.getDimension(scope.val).bottom(1)[0][scope.val])
+    ////                console.log(cf.getGroup(scope.val).all())
+    ////                console.log(cfGroup)
+    ////                console.log(cfGroup.all())
+    ////                console.log(cfDimension.top(1))
+    ////                console.log(cfDimension.bottom(1))
+    //
+    //                    //chart.on('filtered', function(chart, filter){
+    //                    //    scope.addFilterToExport(filter)
+    //                    //    //exportCriteria.addFilter(filter,scope.val,scope.grp)
+    //                    //})
+    //
+    //                }
+    //            });
                 /*setTimeout(function () {
                     cf.add([{
                         "key": "KEY-6",
@@ -239,92 +305,92 @@ angular.module('eTRIKSdata.dcPlots')
             }
         };
 
-        function getChartOptions(val,cfDimension,cfGroup,requiresBoxplot){
+        //function getChartOptions(val,cfDimension,cfGroup,requiresBoxplot){
+        //
+        //    var chartType,
+        //        chartOptions = {};
+        //
+        //    if(requiresBoxplot){
+        //        chartType = "boxPlot"
+        //        chartOptions["width"] = 768 //384// //300//384//330//
+        //        chartOptions["height"] = 480 //240//480 //260 //240 //200//
+        //        //chartOptions["margins"] = {top: 10, right: 50, bottom: 30, left: 50}
+        //        chartOptions["elasticX"] = "true"
+        //        chartOptions["elasticY"] = "true"
+        //        chartOptions["boxWidth"] = "10"
+        //        chartOptions["boxPadding"] = "0.9"
+        //            //.dimension(cfDimension)
+        //            //.group(cfGroup)
+        //
+        //    }else if(isNaN(cfGroup.all()[0].key)){
+        //        //Ordinal chart (rowChart or PieChart)
+        //        var noOfGroups = cfGroup.size();
+        //
+        //        if(noOfGroups > 3){
+        //            chartType = "rowChart"
+        //            chartOptions["elasticX"] = "true"
+        //            chartOptions["xAxis"] = {"ticks":"4"}
+        //            chartOptions["width"] = "300"
+        //            chartOptions["height"] = noOfGroups*30+20
+        //        }
+        //        else{
+        //            chartType = "pieChart";
+        //            chartOptions["radius"] = "60"
+        //            chartOptions["width"] = "120"
+        //            chartOptions["height"] = "120"
+        //        }
+        //    }else{
+        //        //numeric bar chart
+        //        maxValue = cfDimension.top(1)[0][val]
+        //        minValue = getMinimumValue(cfDimension,val);
+        //        //minValue = cfDimension.bottom(1)[0][val]
+        //        //console.log('max ',maxValue)
+        //        //console.log('min ',minValue)
+        //
+        //        chartType = "barChart";
+        //        chartOptions["transitionDuration"] = "500"
+        //        chartOptions["centerBar"] = "true"
+        //        chartOptions["gap"] = "20"
+        //        chartOptions["x"] = d3.scale.linear().domain([minValue,maxValue])
+        //        chartOptions["elasticY"] = "true"
+        //        chartOptions["width"] = "300"
+        //        chartOptions["height"] = "170"
+        //        chartOptions["xUnits"] = dc.units.fp.precision(0.05)
+        //        //chartOptions["margins"] = "{top: 10, right: 10, bottom: 40, left: 20}"
+        //        //chartOptions[".xAxis().tickFormat"] = "2"
+        //        //d3.extent(data, function(d) { return d.TC; })
+        //        // bar width Keep increasing to get right then back off.
+        //        /* .x(d3.scale.linear()
+        //         .domain(d3.extent(data, function(d) { return d.TC; }))
+        //         )
+        //         .y(d3.scale.linear().domain([0, d3.max(data, function(d) { return d.close; })]))
+        //         .xAxis().tickFormat(function(v) {return v;});
+        //        */
+        //    }
+        //
+        //
+        //    chartOptions["dimension"] = cfDimension
+        //    chartOptions["group"] = cfGroup
+        //    chartOptions["title"] = function(d){return d.value;}
+        //    chartOptions["colors"] = etriks.myColors();
+        //
+        //    var chartData = {}
+        //    chartData.chartOptions = chartOptions;
+        //    chartData.chartType = chartType;
+        //    return chartData;
+        //
+        //};
 
-            var chartType,
-                chartOptions = {};
-
-            if(requiresBoxplot){
-                chartType = "boxPlot"
-                chartOptions["width"] = 768 //384// //300//384//330//
-                chartOptions["height"] = 480 //240//480 //260 //240 //200//
-                //chartOptions["margins"] = {top: 10, right: 50, bottom: 30, left: 50}
-                chartOptions["elasticX"] = "true"
-                chartOptions["elasticY"] = "true"
-                chartOptions["boxWidth"] = "10"
-                chartOptions["boxPadding"] = "0.9"
-                    //.dimension(cfDimension)
-                    //.group(cfGroup)
-
-            }else if(isNaN(cfGroup.all()[0].key)){
-                //Ordinal chart (rowChart or PieChart)
-                var noOfGroups = cfGroup.size();
-
-                if(noOfGroups > 3){
-                    chartType = "rowChart"
-                    chartOptions["elasticX"] = "true"
-                    chartOptions["xAxis"] = {"ticks":"4"}
-                    chartOptions["width"] = "300"
-                    chartOptions["height"] = noOfGroups*30+20
-                }
-                else{
-                    chartType = "pieChart";
-                    chartOptions["radius"] = "60"
-                    chartOptions["width"] = "120"
-                    chartOptions["height"] = "120"
-                }
-            }else{
-                //numeric bar chart
-                maxValue = cfDimension.top(1)[0][val]
-                minValue = getMinimumValue(cfDimension,val);
-                //minValue = cfDimension.bottom(1)[0][val]
-                //console.log('max ',maxValue)
-                //console.log('min ',minValue)
-
-                chartType = "barChart";
-                chartOptions["transitionDuration"] = "500"
-                chartOptions["centerBar"] = "true"
-                chartOptions["gap"] = "20"
-                chartOptions["x"] = d3.scale.linear().domain([minValue,maxValue])
-                chartOptions["elasticY"] = "true"
-                chartOptions["width"] = "300"
-                chartOptions["height"] = "170"
-                chartOptions["xUnits"] = dc.units.fp.precision(0.05)
-                //chartOptions["margins"] = "{top: 10, right: 10, bottom: 40, left: 20}"
-                //chartOptions[".xAxis().tickFormat"] = "2"
-                //d3.extent(data, function(d) { return d.TC; })
-                // bar width Keep increasing to get right then back off.
-                /* .x(d3.scale.linear()
-                 .domain(d3.extent(data, function(d) { return d.TC; }))
-                 )
-                 .y(d3.scale.linear().domain([0, d3.max(data, function(d) { return d.close; })]))
-                 .xAxis().tickFormat(function(v) {return v;});
-                */
-            }
-
-
-            chartOptions["dimension"] = cfDimension
-            chartOptions["group"] = cfGroup
-            chartOptions["title"] = function(d){return d.value;}
-            chartOptions["colors"] = etriks.myColors();
-
-            var chartData = {}
-            chartData.chartOptions = chartOptions;
-            chartData.chartType = chartType;
-            return chartData;
-
-        };
-
-        function getMinimumValue(dimension, val){
-            var orderedVals = dimension.bottom(Infinity)
-            //console.log(orderedVals)
-            var i=0;
-            while (orderedVals[i][val]==null || orderedVals[i][val]=="") {
-                i++;
-            }
-            //console.log(orderedVals[i][val])
-            return orderedVals[i][val]
-        }
+        //function getMinimumValue(dimension, val){
+        //    var orderedVals = dimension.bottom(Infinity)
+        //    //console.log(orderedVals)
+        //    var i=0;
+        //    while (orderedVals[i][val]==null || orderedVals[i][val]=="") {
+        //        i++;
+        //    }
+        //    //console.log(orderedVals[i][val])
+        //    return orderedVals[i][val]
+        //}
         //var sampleOriginChart = dc.pieChart("#dc-sampleOrigin-chart");
 //        var margin = 20,
 //            width = 960,
@@ -442,4 +508,119 @@ angular.module('eTRIKSdata.dcPlots')
         }
 
     }
-});
+})
+
+    .directive('dcNumberDisplay',function(){
+        return{
+            restrict: 'E',
+            replace:true,
+            //controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
+            //
+            //    var chartService = $injector.get($scope.chartService);
+            //
+            //    chartService.getDCchart($scope.val,$scope.obsid)
+            //        .then(
+            //        function(chart){
+            //            $scope.chartToPlot = chart;
+            //        },
+            //        function(result){
+            //            console.log("Failed to create DC chart",result);
+            //        }
+            //    );
+            //
+            //
+            //}],
+            template:'<span id="subjClinicalCount" class="filter-count model-count number-display"></span>',
+            link: function(scope, element, attrs){
+            var cf = scope.cf
+            var chartFactory = dc['numberDisplay'];
+            // Create an unconfigured instance of the chart
+            var chart = chartFactory(element[0]);
+            var chartOptions = {};
+
+            //scope.$watch('chartToPlot', function(newVal) {
+            //    if (newVal) {
+            //
+            //    }
+            //})
+            scope.$watch(
+                function($scope) { return $scope.cf.getSubjectGroup(); },
+                function(newval, oldval){
+
+                    if(newval){
+
+                        var expCount = function(d) {
+                            console.log(d)
+                            //return d.size;
+                        };
+
+                        //console.log(newval)
+                       // console.log(cf.getSubjcount());
+                        //console.log( cf.getSubjectGroup().top(Infinity).length)
+
+                        //var subjectCount = cf.getSubjectGroup().top(Infinity).length
+                        chartOptions["valueAccessor"] = function(d){
+                            //d = subjectCount
+                            console.log('inside valueAccessor', d)
+                            return d
+                        };
+                        chartOptions["group"] =  cf.getSubjectGroup()
+
+                        chart.options(chartOptions);
+                        chart.render();
+                        //dc.renderAll();
+                    }
+
+                })
+
+
+
+        }
+
+        }
+    })
+
+    .directive('dcVisitChart',function(){
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div style="padding-top: 20px;/*float: left;max-height: 200px; overflow: scroll*/">' +
+            '<div class="chart-title" id="returnsLabel">' +
+            '<span>{{val}}</span>' +
+            '<span class="filter"></span> <a class="reset">reset</a> ' +
+            '</div>' +
+            '<div class="clearfix"></div>' +
+                //'<div><img src="img/icons/spinner.gif"></div>'+
+            '</div>'
+            ,
+            link: function (scope, element, attrs) {
+
+                //console.log(scope.val)
+
+                scope.$watch('chartToPlot', function (newVal) {
+                    if (newVal) {
+                        //console.log(scope.chartToPlot)
+                        scope.chartToPlot.anchor(element[0])
+
+                        console.log('chartId', scope.chartToPlot.chartID())
+                        console.log('chart group inside directive', scope.chartToPlot.chartGroup())
+                        var groupChart = scope.chartToPlot.chartGroup()
+                        //console.log(dc.chartRegistry.list())
+
+                        //Set reset link
+                        var a = angular.element(element[0].querySelector('a.reset'));
+                        a.attr('href', 'javascript:;');
+                        a.css('display', 'none');
+                        a.on('click', function () {
+                            scope.chartToPlot.filterAll();
+                            dc.redrawAll();
+                        });
+                        scope.chartToPlot.render()
+
+                        //dc.renderAll(groupChart);
+                        //dc.redrawAll();
+                    }
+                })
+            }
+        }
+    });

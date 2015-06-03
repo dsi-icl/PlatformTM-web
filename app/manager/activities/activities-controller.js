@@ -82,10 +82,10 @@ angular.module('eTRIKSdata.studyDesign')
              notify: true
              });*/
             //console.log($stateParams)
-            $state.go('manager.activities.detail',$stateParams,{
-                reload: true,
-                inherit: false
-                });
+            //$state.go('manager.activities.detail',$stateParams,{
+            //    reload: true,
+            //    inherit: false
+            //    });
         }
 
 

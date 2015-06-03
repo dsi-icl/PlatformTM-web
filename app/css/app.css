@@ -500,7 +500,7 @@ nav a {
 }
 
 .models-list .model-icon{
-    font-size: 1.5em;
+    font-size: 2em;
     color: #2C3E50;
 }
 .models-list .model-count{
@@ -518,7 +518,7 @@ nav a {
 .option-list ul {
     list-style: none;
     color: #414042;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: normal;
     -webkit-padding-start: 10px;
 }
@@ -539,6 +539,15 @@ nav a {
 }
 
 .option-list ul li label.active {
+    opacity: 1;
+    font-weight: normal;
+    background: url("../img/icons/selected_dark.svg") 10px no-repeat;
+    padding-left: 38px;
+    background-size: 20px;
+}
+
+.option-list ul li label.hide {
+    display: none;
     opacity: 1;
     font-weight: normal;
     background: url("../img/icons/selected_dark.svg") 10px no-repeat;
@@ -637,7 +646,7 @@ nav a {
 
 #subjChars li{
     display: inline-block;
-    width: 10%;
+    /*width: 10%;*/
     position: relative;
 
 }
@@ -647,6 +656,19 @@ nav a {
     font-size: 0.4em;
     font-weight: bold;
     transform: rotate(-20deg);
+}
+
+.dc-chart .x-axis-label{
+    font-weight: bold;
+    font-size: 0.5em;
+    color: #35495E;
+}
+
+.dc-chart .pie-slice {
+    fill: white;
+    cursor: pointer;
+    font-size: 0.4em;
+    font-weight: bold;
 }
 
 .dc-data-table {

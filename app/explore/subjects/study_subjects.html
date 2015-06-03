@@ -18,7 +18,9 @@
                         Human subjects
                     </p>
                 </tab-heading>
-                <div id="subject-plots" class="plots-view"></div>
+                <div id="subject-plots" class="plots-view">
+
+                </div>
 
                 <div class="clearfix"></div>
 
@@ -26,22 +28,45 @@
                     <div class="option-list">
                         <ul id="subjChars">
                             <li ng-repeat="sc in subjCharsDB" >
-                                <label id="sc_{{sc}}"
+                                <label id="sc_{{sc.code}}"
                                        charting-button
-                                       val="{{sc}}"
+                                       val="{{sc.code}}"
+                                       obsid="{{sc.id}}"
                                        active="{{isActive}}"
                                        container="{{subjChartContainerId}}"
                                        section="{{section}}"
-                                       grp="{{section}}"
+                                       grp="{{chartGroup}}"
                                        chart-service="{{chartService}}"
+                                       project-id="{{projectId}}"
                                        ng-class="{'active': isActive}"
                                        ng-init="isActive = false"
                                        ng-click="isActive = !isActive">
-                                    {{sc}}
+                                    {{sc.name}}
                                 </label>
                                 <!-- <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
                                       class="flaticon-download164"></div>-->
                             </li>
+
+                            <li ng-repeat="isc in initSCs" >
+                                <label id="isc_{{isc}}"
+                                       charting-button
+                                       val="{{isc}}"
+                                       obsid="{{isc}}"
+                                       active="{{isActive}}"
+                                       container="{{subjChartContainerId}}"
+                                       section="{{section}}"
+
+                                       chart-service="{{chartService}}"
+                                       project-id="{{projectId}}"
+                                       ng-class="{'hide': isActive}"
+                                       ng-init="isActive = false"
+                                       ng-click="isActive = !isActive">
+                                    {{isc}}
+                                </label>
+                                <!-- <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
+                                      class="flaticon-download164"></div>-->
+                            </li>
+
                         </ul>
                         <div class="clearfix"></div>
                     </div>

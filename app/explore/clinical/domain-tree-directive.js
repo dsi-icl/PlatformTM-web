@@ -8,7 +8,8 @@ angular.module('biospeak.clinical')
             restrict:'E',
             scope:{
                 observations:'=',
-                getChartingOpts:'&'
+                getChartingOpts:'&',
+                getObsIdsForMeddra: '&'
             },
             template:
                 '<div class="clinicalTree row ">'+
@@ -17,7 +18,8 @@ angular.module('biospeak.clinical')
                             '<span>Clinical Observations</span>'+
                         '</button>'+
                     '</div>'+
-                    '<cl-tree-class ng-repeat="class in observations" class="class" plot-obs="plotObs({obs:obs})" ></cl-tree-class>'+
+                    '<cl-tree-class ng-repeat="class in observations" ' +
+                        'class="class" get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })" ></cl-tree-class>'+
                 '</div>',
             link: function(scope, element, attrs){
             }
@@ -27,18 +29,17 @@ angular.module('biospeak.clinical')
     .directive('clTreeClass', function(){
         return{
             restrict:'EA',
-            /*scope:{
-              class:'=',
-              plotObs:'&'
-            },*/
             template:
-                '<div class="col-md-4">'+
+                '<div class="col-md-5">'+
                     '<div class="connecting-line"></div>'+
                         '<button type="button" class="btn btn-sm btn-block" style="background-color: #00afbc;border-radius:30px">{{class.class}}</button>'+
                     '<div class="connecting-line"></div>'+
-                    '<cl-tree-obs-grp ng-repeat="domain in class.domains" group="domain"  get-charting-opts="getChartingOpts()"></cl-tree-obs-grp>'+
-
-                    '</div>'
+                    '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
+                        'group="domain"  ' +
+                        'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
+                        'get-charting-opts="getChartingOpts()">' +
+                    '</cl-tree-obs-grp>'+
+                '</div>'
         }
     })
 
@@ -47,20 +48,48 @@ angular.module('biospeak.clinical')
             restrict:'EA',
             scope:{
                 group:'=',
-                getChartingOpts:'&'
+                getChartingOpts:'&',
+                getObsIdsForMeddra: '&'
             },
+            controller: function($scope) {
+             // $scope is the appropriate scope for the directive
+             //console.log('inside cltreeobsgrouo controller ',$scope)
+             },
             template:
                 '<div class="btn-group btn-block">'+
                     '<button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#{{group.code}}">'+
                         '<span class="caret"></span>'+
                     '</button>'+
-                    '<button class="tree-node col-md-11 btn btn-sm tree-node" id="deny">'+
-                        '<span>{{group.name}}</span>'+
+                    '<button class="tree-node col-md-11 btn btn-sm tree-node" ' +
+                        'id="grp_{{group.code}}"'+
+                        'val="{{group.groupTerm}}"'+
+                        'obsid = "{{group.termIds}}"'+
+                        'grp="{{chartGroup}}"'+
+                        'charting-button ' +
+                        'active="{{isActive}}"'+
+                        'ng-init="isActive = false"'+
+                        'ng-click="isActive = !isActive"' +
+                        'chart-service="{{chartService}}"'+
+                        'project-id="{{projectId}}"'+
+                        'container="{{chartContainerId}}">'+
+                        '<span>{{group.name}}</span>'+' <span>({{group.count}})</span>'+
                     '</button>'+
                 '</div>'+
                 '<div id="{{group.code}}"  class="collapse col-md-offset-1">'+
-                    '<cl-tree-obs ng-repeat="obs in group.observations" <!--observation="obs" plot-obs="plotObs({obs:obs})"-->></cl-tree-obs>'+
-                '</div>'
+                    '<cl-tree-obs ng-repeat="obs in group.terms" <!--observation="obs" plot-obs="plotObs({obs:obs})"-->></cl-tree-obs>'+
+                '</div>',
+            link: function (scope, element, attrs) {
+
+
+                    //console.log(scope.getChartingOpts())
+                    scope.chartContainerId = scope.getChartingOpts().container
+                    scope.chartService = scope.getChartingOpts().chartingServiceName
+                    scope.chartGroup = scope.getChartingOpts().chartGroup
+                //var medraterm =scope.group.code;
+                //console.log('scope inside link function of cltreeobsgrp',scope.group.groupTerm)
+                    //scope.ids = scope.getObsIdsForMeddra({ medraterm: medraterm })
+
+            }
         }
     })
 
@@ -81,8 +110,9 @@ angular.module('biospeak.clinical')
                     'obsrv="{{obs.code}}"'+
                     'active="{{isActive}}"'+
                     'container="{{chartContainerId}}"'+
-                    'grp="{{TP}}"'+
+                    'grp="{{chartGroup}}"'+
                     'chart-service="{{chartService}}"'+
+                    'project-id="{{projectId}}"'+
                     //'ng-class="{'': !isActive, 'active': isActive}"
                     'ng-init="isActive = false"'+
                     'ng-click="isActive = !isActive">' +
@@ -90,14 +120,17 @@ angular.module('biospeak.clinical')
                 '</button>',
             link: function (scope, element, attrs) {
 
-                if (angular.isArray(scope.obs.observations)) {
-                    $compile("<cl-tree-obs-grp group='obs' get-charting-opts='getChartingOpts()'></cl-tree-obs-grp>")(scope, function(cloned, scope){
+                if (angular.isArray(scope.obs.terms)) {
+                    $compile("<cl-tree-obs-grp group='obs' " +
+                             'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
+                             "get-charting-opts='getChartingOpts()'></cl-tree-obs-grp>")(scope, function(cloned, scope){
                         element.replaceWith(cloned);
                     });
                 }else{
                     //console.log(scope.getChartingOpts())
                     scope.chartContainerId = scope.getChartingOpts().container
                     scope.chartService = scope.getChartingOpts().chartingServiceName
+                    scope.chartGroup = scope.getChartingOpts().chartGroup
                 }
             }
         }

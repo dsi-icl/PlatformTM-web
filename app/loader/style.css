@@ -1,13 +1,24 @@
 /* BASIC STYLINGS
 ============================================================================= */
-body                            { padding-top:20px; }
+body                            { padding-top:20px; color: #269abc}
 pre                             { margin-bottom:20px; }
 
+.my-drop-zone { border: dotted 3px #95f3ff; }
+.nv-file-drop { border: dotted 5px #a89ca5; } /* Default class applied to drop zones on over */
+
 /* form styling */
-#form-container                { background:#2f2f2f; margin-bottom:20px;
-    border-radius:5px; }
-#form-container .page-header   { background:#151515; margin:0; padding:30px;
-    border-top-left-radius:5px; border-top-right-radius:5px; }
+#form-container {
+    background: #222f3f;
+    margin-bottom:20px;
+    border-radius:5px;
+}
+#form-container .page-header   {
+    background: #eeede9;
+    margin:0;
+    padding:30px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
 
 /* numbered buttons */
 #status-buttons                 {  }
@@ -21,13 +32,28 @@ pre                             { margin-bottom:20px; }
 
 /* ANIMATION STYLINGS
 ============================================================================= */
-#signup-form            { position:relative; min-height:300px; overflow:hidden; padding:30px; }
+#signup-form {
+    color: #FFF;
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 10px;
+    text-transform: uppercase;
+    position:relative;
+    min-height:300px;
+    overflow:hidden;
+    padding:30px;
+}
 
 /* basic styling for entering and leaving */
 /* left and right added to ensure full width */
 #form-views.ng-enter,
-#form-views.ng-leave      { position:absolute; left:30px; right:30px;
-    transition:0.5s all ease; -moz-transition:0.5s all ease; -webkit-transition:0.5s all ease;
+#form-views.ng-leave {
+    position:absolute;
+    left:30px;
+    right:30px;
+    transition:0.5s all ease;
+    -moz-transition:0.5s all ease;
+    -webkit-transition:0.5s all ease;
 }
 
 /* enter animation */

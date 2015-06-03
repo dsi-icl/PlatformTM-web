@@ -17,7 +17,7 @@ angular.module('biospeak.clinical')
 
         return {
             getObservations: function(studyId,observations) {
-                console.log(observations)
+                console.log(angular.toJson(observations))
 
                 return $http({
                     url:'http://rachmaninoff.local:8080/api/studies/'+studyId+'/data/clinical/observations',

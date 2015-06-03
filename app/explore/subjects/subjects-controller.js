@@ -4,42 +4,45 @@
 angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
     .controller('SubjectsCtrl', ['$scope','subjectDataService','SubjCf','$timeout',function($scope,subjectDataService, SubjCf,$timeout) {
-        $scope.title = "Subjects";
-
-        //$scope.subjChars =    ['Cohort','Age','Sex','Race','Ethnicity']
-        $scope.subjCharsDB =
-            ['study','arm','age','sex','race','ethnic'];
-
-        //subjectDataService.getSubjCharacteristics('STD-BVS-01')
-        //    .then(function(data){
-        //        $scope.subjCharsDB = data;
-        //        //console.log(data)
-        //    })
-
-        var initSCs = ['study','arm','age','sex']
-        /*subjectDataService.getSubjCharacteristics('CRC305C')
-         .then(function(data){
-         $scope.subjChars = data;
-         })*/
-        //MOVE CF services to controllers instead of in the directive
-
-        $scope.subjChartContainerId = 'subject-plots';
-        $scope.section="Subjects";
 
         var projectId = "P-BVS";
-        var projectId = "CRC305C";
+        var initSCs;          //= ['STUDY','ARMCD','AGE','SEX','RACE']
+        $scope.title = "Subjects";
+        $scope.subjChartContainerId = 'subject-plots';
+        $scope.section="Subjects";
+        $scope.projectId = projectId;
 
-        SubjCf.setup(projectId).then(
-            function(){
-                $timeout(function() {
-                    angular.forEach(initSCs, function(sc) {
-                        angular.element('#sc_'+sc).trigger('click');
-                    });
-                },100)
 
-            }
-        )
+
+        //Gets data for StudyId, Arm and Site
+
+
+        subjectDataService.getSubjCharacteristics(projectId)
+            .then(function(data){
+                $scope.subjCharsDB = data.SCs;
+
+
+
+                SubjCf.initialize(projectId).then(
+                    function(subjChars){
+                        console.log(subjChars)
+                        $scope.initSCs = subjChars
+                        $timeout(function() {
+                            angular.forEach(subjChars, function(sc) {
+                                console.log('#isc_'+sc)
+                                angular.element('#isc_'+sc).trigger('click');
+                            });
+                        },100)
+
+                    }
+                )
+
+            })
+
+
+
+
         $scope.cf = SubjCf;
         $scope.chartService = "SubjCf"
-
+        $scope.chartGroup = "subject;"
     }])
