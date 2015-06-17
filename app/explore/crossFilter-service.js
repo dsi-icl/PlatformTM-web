@@ -187,6 +187,8 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         var dataToPlot;
 
         var subjCfService = {}
+        var cfReady;
+        var counterWidgetId;
 
         subjCfService.getData = function(StudyId){
             var deferred = $q.defer();
@@ -225,24 +227,31 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
                 cfdata = crossfilter(dataToPlot);
                 all = cfdata.groupAll();
+                console.log('inside initialize',subjChars)
+
                 subjChars.forEach(function(sc){
                     //console.log((sc.value))
                     var dim = cfdata.dimension(function (d) {
                         return d[sc];
                     });
                     dimensions[sc] = dim
+                    console.log('adding dimension',sc, ' ',dim.top(1))
                     var grp = dim.group().reduceCount();
                     groups[sc] = grp;
+                    console.log('adding group',sc, ' ',dim.groupAll())
                 })
+                cfReady = true
                 deferred.resolve(subjChars)
             })
             return deferred.promise
         }
 
         subjCfService.refreshCharts = function(){
-            var allCharts = dc.chartRegistry.list();
+            var allCharts = dc.chartRegistry.list('subject');
+            console.log('Inside refresh charts ',allCharts)
             var oldFilters
             allCharts.forEach(function(chart){
+                console.log('got chart ',chart.chartID(),' ',chart.chartGroup())
                 oldFilters = chart.filters(); // Get current filters
                 chart.filter(null); // Reset all filters on current chart
                 chart.expireCache();
@@ -251,15 +260,24 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 // the new dimensions created for this observation
                 var obs = chartIdToObs[chart.chartID()]
 
-                chart.dimension(subjCfService.getDimension(obs))
-                chart.group(subjCfService.getGroup(obs));
-                oldFilters.forEach(function(filter){
-                    chart.filter(filter)
-                })
+                if(!angular.isUndefined(obs)) {
+                    console.log('refreshing ', obs)
+                    chart.dimension(subjCfService.getDimension(obs))
+                    chart.group(subjCfService.getGroup(obs));
+                    oldFilters.forEach(function (filter) {
+                        chart.filter(filter)
+                    })
+                }
+
+                if(chart.chartID() == counterWidgetId){
+                    console.log('refreshing counter')
+                    chart.dimension(subjCfService.getCountData())
+                    chart.group(subjCfService.getCountGroup());
+                }
             })
         }
 
-        subjCfService.getDCchart = function(projectId,scName, scID){
+        subjCfService.getDCchart = function(projectId,scName, scID,chartGrp){
 
             var deferred = $q.defer();
             var chart;
@@ -300,7 +318,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
                     //TODO: could replace obsCode with obsId if both obsCode and obsID
                     //TODO: are grouped together in a map
-                    chart = subjCfService.createChart(scName)
+                    chart = subjCfService.createChart(scName,chartGrp)
                     //console.log(chart)
 
                     //chartData.group = groups[obsCode];
@@ -312,7 +330,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return deferred.promise
         }
 
-        subjCfService.createChart = function(obsName){
+        subjCfService.createChart = function(obsName,chartGrp){
 
             var cfDimension = subjCfService.getDimension(obsName)
             var cfGroup = subjCfService.getGroup(obsName)
@@ -326,6 +344,8 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             var chartFactory = dc[chartData.chartType];
             var chart = chartFactory();
             chart.options(chartData.chartOptions);
+            /*chart.chartGroup(chartGrp);
+            dc.registerChart(chart,chartGrp)*/
 
             //Reference to chart dimension and group used when refreshing data
             //chartDimensions[chart.chartID()] = cfDimension;
@@ -334,6 +354,23 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             obsToChartId[obsName] = chart.chartID();
             chartIdToObs[chart.chartID()] = obsName;
 
+            return chart
+        }
+
+        subjCfService.createDCcounter = function(countObj, chartGrp){
+            var chartFactory = dc['dataCount'];
+            var chart = chartFactory();
+            var chartOptions = {};
+            chartOptions["dimension"] = subjCfService.getCountData()
+            chartOptions["group"] =  subjCfService.getCountGroup()
+            chart.options(chartOptions);
+            counterWidgetId = chart.chartID();
+            /*chart.options(chartData.chartOptions);
+            chart.chartGroup(chartGrp);
+            dc.registerChart(chart,chartGrp)
+
+            obsToChartId[countObj] = chart.chartID();
+            chartIdToObs[chart.chartID()] = countObj;*/
             return chart
         }
 
@@ -449,6 +486,10 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
          ClinicalCf.filterClinicalData(filter,dimensionName);
         }
 
+        subjCfService.cfReady = function(){
+            return cfReady;
+        }
+
         return subjCfService
     }])
 
@@ -459,30 +500,32 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
         var requestedObsvs = {};
 
-        var headers = ['SUBJECT','VISIT','BMI','HEIGHT','WEIGHT','TEMPERATURE','HEART RATE','DIASTOLIC BP','SYSTOLIC BP'];
+        //var headers = ['SUBJECT','VISIT','BMI','HEIGHT','WEIGHT','TEMPERATURE','HEART RATE','DIASTOLIC BP','SYSTOLIC BP'];
 
+        var columns;
         var subjectDim, subjectGrp,
             subjectColumnName = "subjectId";
         var allGroup;
 
 
-        var visitColumn = "visit", studyColumn = "study"
+        var visitColumn = "visit", studyColumn = "study",
+            armColumn = "arm", siteColumn = "site";
 
         var dimensions = [], groups = [];
 
         var chartIdToObs = [];
         var obsToChartId = [];
+        var tableWidgetId,counterWidgetId;
 
         var cfData;
         var dataToPlot;
         var boxplots = [];
 
+        var cfReady;
         var cfservice = {};
-        var noOfSubj;
 
-        var subjCount;
 
-        cfservice.cf_reset = function(xfilter, dims, newData) {
+/*        cfservice.cf_reset = function(xfilter, dims, newData) {
             var i;
             for (i = 0; i < dims.length; i++) {
                 // Clear all filters from this dimension.
@@ -493,7 +536,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             xfilter.remove(); // Remove all data from the crossfilter
             xfilter.add(newData);
             return xfilter;
-        }
+        }*/
 
 
         cfservice.getData = function(){
@@ -501,6 +544,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             clinicalDataService.getObservations('CRC305C',requestedObsvs)
                 .then(function(data){
                     dataToPlot = data.observations;
+                    columns = data.columns;
                     deferred.resolve(dataToPlot)
                 })
             return deferred.promise
@@ -509,59 +553,30 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         cfservice.refreshCf = function(){
             var deferred = $q.defer();
 
-            /*function reduceAdd(p, v) {
-                if( v[subjColumnName] in p.subjects)
-                    p.subjects[v[subjColumnName]]++;
-                else p.subjects[v.USUBJID] = 1;
-                p.push(v[subjColumnName]);
-                return p;
+            function reduceAddSubj(p, v) {
 
-                ++p.count;
-                p.total += v[USUBJID];
-                return p;
-            }
-
-            function reduceRemove(p, v) {
-                p.subjects[v.USUBJID]--;
-                if(p.subjects[v.USUBJID] === 0)
-                    delete p.subjects[v.USUBJID];
-                --p.count;
-                p.total -= v.value;
-                p.splice(p.indexOf(v[subjColumnName]), 1);
+                if( v[subjectColumnName] in p.subjects){
+                    p.subjects[v[subjectColumnName]]++
+                }
+                else {
+                    p.subjects[v[subjectColumnName]] = 1;
+                    ++p.count;
+                }
                 return p;
             }
-
-            function reduceInitial() {
-                return [];
-                //return {subjects: {}};
-                //return {count: 0, total: 0};
-            }*/
-            /*function reduceAdd(key) {
-             //console.log(key)
-             return function(p, v){
-             //console.log('p is ',p)
-             //console.log('v of ',key,' is', v)
-
-             if(v[key] === null && p === null){
-             console.log("here")
-             return null;
-             }
-             //p += v[key];
-             //return p;
-             return p + 1;
-             }
-             }
-             function reduceRemove(key) {
-             return function(p, v){
-             if(v[key] === null && p === null){ return null; }
-             //p -= v[key];
-             //return p;
-             return p - 1;
-             }
-             }
-             function reduceInit(key) {
-             return {count: 0, total: 0};
-             }*/
+            function reduceRemoveSubj(p, v) {
+                p.subjects[v[subjectColumnName]]--;
+                if(p.subjects[v[subjectColumnName]] === 0){
+                    delete p.subjects[v[subjectColumnName]];
+                    --p.count;
+                }
+                return p;
+            }
+            function initialSubj() {
+                return {subjects: {},
+                        count:0
+                };
+            }
 
             function reduceAdd(key) {
                 //console.log(key)
@@ -590,8 +605,6 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 return null;
             }
 
-            //d3.json("../data/clinicalTest2.json",function(data){
-            //d3.tsv("../data/VS_mod_full.txt", function (data) {
             this.getData().then(function(data){
 
 
@@ -631,17 +644,15 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
                 cfData = crossfilter(data);  // Gets 'observations' into crossfilter
 
-
-                //CREATE a dimension for the subject Ids
-                subjectDim = cfData.dimension(function(d) {return d[subjectColumnName]})
-                //console.log('subject dimension',subjectDim)
-                console.log('inside cf subjectDim ',subjectDim.group().size())
-                subjectGrp = subjectDim.groupAll();
-                //subjectGrp = subjectDim.group();//.reduceCount(function(d) {return d.value});
-
-
                 //number of subject Observations
                 allGroup= cfData.groupAll()
+
+                subjectDim = cfData.dimension(function(d) {return d[subjectColumnName]})
+                uniqueSubjGrp = subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
+                uniqueSubjGrpM = {value: function() {
+                    return uniqueSubjGrp.value().count;
+                } };
+
 
                 visitDim = cfData.dimension(function(d) {return d[visitColumn]})
                 visitGrp = visitDim.group()
@@ -653,12 +664,24 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 dimensions[studyColumn] = studyDim
                 groups[studyColumn] = studyGrp;
 
+                siteDim = cfData.dimension(function(d) {return d[siteColumn]})
+                siteGrp = siteDim.group()
+                dimensions[siteColumn] = siteDim
+                groups[siteColumn] = siteGrp;
 
+                armDim = cfData.dimension(function(d) {return d[armColumn]})
+                armGrp = armDim.group()
+                dimensions[armColumn] = armDim
+                groups[armColumn] = armGrp;
+
+
+                console.log('observationCodes inside refresh cf', observationCodes)
 
                 /**
                  * Create Dimensions for each column in the data
                  */
                 observationCodes.forEach(function(obs){
+                    console.log('Adding ',obs, ' to crossfilter');
                     if(boxplots.indexOf(obs)!= -1){
                         console.log("doing boxplot for ",obs)
                         dim = cfData.dimension(function(d) {return d['visit']})
@@ -680,8 +703,10 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                     }
                     else{
                         var dim = cfData.dimension(function (d) {return d[obs]});
+                        console.log(obs,' created dimension ',dim.top(1), ' in crossfilter');
                         dimensions[obs] = dim
                         var grp = dim.group().reduce(reduceAdd(obs),reduceRemove(obs),reduceInit);
+                        console.log(obs,' created group ',grp.all(), ' in crossfilter');
                         /*var grpF = {
                             all: function () {
                                 return grp.all().filter(function(d) { return +d.key > 0; })
@@ -693,8 +718,11 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                         groups[obs] = grp;
                     }
                 })
-                deferred.resolve()
+
+                cfReady = true;
+                deferred.resolve(cfReady)
             });
+
             return deferred.promise
         }
 
@@ -707,32 +735,43 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         }
 
         cfservice.refreshCharts = function(){
-            console.log('Inside refresh charts')
-            var allCharts = dc.chartRegistry.list();
+
+            var allCharts = dc.chartRegistry.list('clinical');
+            console.log('Inside refresh charts ',allCharts)
             var oldFilters
 
-            //TODO: need to separate between clinical plots and subject plots
-
             allCharts.forEach(function(chart){
+                console.log('got chart ',chart.chartID(),' ',chart.chartGroup())
+                if(chart.chartGroup() == "clinical"){
+                    oldFilters = chart.filters(); // Get current filters
+                    chart.filter(null); // Reset all filters on current chart
+                    chart.expireCache();
 
-                console.log(chart.chartGroup())
-                /*oldFilters = chart.filters(); // Get current filters
-                chart.filter(null); // Reset all filters on current chart
-                chart.expireCache();
+                    //I need to know which observations this id was associated with so that I can query for
+                    // the new dimensions created for this observation
+                    var obs = chartIdToObs[chart.chartID()]
+                    if(!angular.isUndefined(obs)){
+                        console.log('refreshing ',obs)
+                        chart.dimension(cfservice.getDimension(obs))
+                        chart.group(cfservice.getGroup(obs));
+                        oldFilters.forEach(function(filter){
+                            chart.filter(filter)
+                        })
+                    }
 
-                //I need to know which observations this id was associated with so that I can query for
-                // the new dimensions created for this observation
-                var obs = chartIdToObs[chart.chartID()]
-                if(!angular.isUndefined(obs)){
-                    console.log('refreshing ',obs)
-                    chart.dimension(cfservice.getDimension(obs))
-                    chart.group(cfservice.getGroup(obs));
-                    oldFilters.forEach(function(filter){
-                        chart.filter(filter)
-                    })
-                    chart.redraw()
-                }*/
+                    if(chart.chartID() == tableWidgetId){
+                        console.log('refreshing table')
+                        chart.dimension(cfservice.getTableDimension())
+                        chart.group(cfservice.getTableGroup());
+                        chart.columns(columns);
+                    }
+                    if(chart.chartID() == counterWidgetId){
+                        console.log('refreshing counter')
+                        chart.dimension(cfservice.getCountData())
+                        chart.group(cfservice.getCountGroup());
+                    }
 
+                }
             })
         }
 
@@ -767,8 +806,11 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 /**
                  * ****************************************************************
                  */
-                //observation
+                if(obsId.indexOf('4') == 0)
+                    observationCodes.push(obsCode+' sev');
+
                 observationCodes.push(obsCode);
+                //observationCodes.push(obsCode)
                 observationIds.push(obsId);
 
                 requestedObsvs[obsCode] = obsId
@@ -782,6 +824,9 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
                 cfservice.refreshCf().then(function () {
                     cfservice.refreshCharts();
+
+                    if(obsId.indexOf('4') == 0)
+                        obsCode = obsCode+' sev'
                     chart = cfservice.createChart(obsCode,chartGroup)
                     deferred.resolve(chart)
                 })
@@ -794,6 +839,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             var cfDimension = cfservice.getDimension(obsName)
             var cfGroup = cfservice.getGroup(obsName)
 
+            console.log("Creating chart for ",obsName);
             console.log('chart group ',chartGrp);
             console.log(obsName,' dimension top 3',cfDimension.top(3))
             console.log(obsName,' group size ',cfGroup.size())
@@ -805,47 +851,78 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             var chartFactory = dc[chartData.chartType];
             var chart = chartFactory();
             chart.options(chartData.chartOptions);
-            chart.chartGroup(chartGrp);
-            dc.registerChart(chart,chartGrp)
+            //chart.chartGroup(chartGrp);
+            //dc.registerChart(chart,chartGrp)
+
+
 
             obsToChartId[obsName] = chart.chartID();
             chartIdToObs[chart.chartID()] = obsName;
 
+            console.log('adding ',obsName, ' to obsToChartId',obsToChartId[obsName]);
+            console.log('chartIdToObs: ',chartIdToObs)
+
+
             return chart
         }
 
-        cfservice.getTableHeaders = function(){
-            var deferred = $q.defer();
-            deferred.resolve(observationCodes)
-            return deferred.promise
+        cfservice.createDCcounter = function(countObj, chartGrp){
+            var chartFactory = dc['dataCount'];
+            var chart = chartFactory();
+            var chartOptions = {};
+            chartOptions["dimension"] = cfservice.getCountData()
+            chartOptions["group"] =  cfservice.getCountGroup()
+            chart.options(chartOptions);
+            counterWidgetId = chart.chartID();
+
+            /*console.log('dimension size ', cfservice.getCountData().size())
+            console.log('group size ', cfservice.getCountGroup().value())
+
+            chart.options(chartData.chartOptions);
+            chart.chartGroup(chartGrp);
+            dc.registerChart(chart,chartGrp)
+
+
+            obsToChartId[countObj] = chart.chartID();
+            chartIdToObs[chart.chartID()] = countObj;*/
+            return chart
         }
 
-        cfservice.getTableData = function(){
-            var deferred = $q.defer();
-            var tableData ={}
-            //this.setup().then(function(){
-                //console.log("GOT UPDATED DATA")
-                tableData.dimension = subjectDim;
-                tableData.headers = headers;
-                deferred.resolve(tableData)
-            //})
-            return deferred.promise
+        cfservice.createDCtable = function(){
+            var chartFactory = dc['dataTable'];
+            var chart = chartFactory();
+            var chartOptions = {};
+            chartOptions["dimension"] = this.getTableDimension();//subjectDim;//cfservice.getCountData()
+            chartOptions["group"] =  this.getTableGroup();//function(d) {return d[subjectColumnName]}//cfservice.getCountGroup()
+            chartOptions["columns"] = columns //observationCodes
+            chartOptions["width"] = "960"
+            chartOptions["height"] = "800"
+            chartOptions["sortBy"] = function(d){
+                return d[subjectColumnName];
+            }
+
+            chart.options(chartOptions);
+            /*chart.chartGroup('clinical');
+            dc.registerChart(chart,'clinical')*/
+            tableWidgetId = chart.chartID();
+
+            return chart
         }
 
         cfservice.getCountData = function(){
-            return cfData
+            return subjectDim.group()//.all();subjectGrp.group()
         }
 
-        cfservice.getSubjectGroup = function(){
-            return subjectGrp;
-            //return allGroup;
-        }
-        cfservice.getSubjcount = function(){
-            return subjectGrp.size()
+        cfservice.getCountGroup = function() {
+            return uniqueSubjGrpM
         }
 
-        cfservice.getNoOfSubjects = function(){
-            return noOfSubj;
+        cfservice.getTableDimension = function(){
+            return subjectDim
+        }
+
+        cfservice.getTableGroup = function(){
+            return function(d) {return d[subjectColumnName]}
         }
 
         cfservice.getChartOptions = function(val,cfDimension,cfGroup,requiresBoxplot){
@@ -865,7 +942,8 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 //.dimension(cfDimension)
                 //.group(cfGroup)
 
-            }else if(isNaN(cfGroup.all()[0].key)){
+            }
+            else if(isNaN(cfGroup.all()[0].key)){
                 //Ordinal chart (rowChart or PieChart)
                 var noOfGroups = cfGroup.size();
 
@@ -939,8 +1017,24 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
         cfservice.filterClinicalData = function(filter,dimensionName){
             console.log('filter',filter,'dimension',dimensionName)
-            dimensions[dimensionName].filterExact(filter)
-            dc.renderAll("clinical");
+            if(angular.isDefined(dimensions[dimensionName])){
+                dimensions[dimensionName].filterExact(filter)
+                dc.renderAll("clinical");
+            }
+
+        }
+
+        cfservice.getVisitchart = function(projectId,val,grp){
+            var deferred = $q.defer();
+            var chart;
+
+            chart = cfservice.createChart(val,grp)
+            deferred.resolve(chart)
+            return deferred.promise
+        }
+
+        cfservice.cfReady = function(){
+            return cfReady;
         }
 
 
