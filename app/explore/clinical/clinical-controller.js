@@ -24,6 +24,10 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
         $scope.filterByStudy = function(){
             ClinicalCf.filterClinicalData('CRC305C','study');
         }
+
+        $scope.showVisits = function(){
+
+        }
         $scope.getObsIdsForMeddra = function(medraterm){
             var jsonQobj=jsonQ($scope.clinicalData);
 

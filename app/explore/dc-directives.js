@@ -57,42 +57,35 @@ angular.module('eTRIKSdata.dcPlots')
         return{
             restrict:'E',
             scope:{
-                cf:'='
+                cf:'=',
+                chartgroup: '@'
             },
             template:
                 '<span id="subjCount" class="filter-count model-count number-display"></span>',
+                /*'<span class="filter-count"></span> selected out of <span class="total-count"></span> subjects | ' +
+                '<a href="javascript:dc.filterAll();dc.renderAll();">Reset filters</a>',*/
             link: function(scope, element, attrs){
-                var cf = scope.cf
-                var chartFactory = dc['dataCount'];
-                // Create an unconfigured instance of the chart
-                var chart = chartFactory(element[0]);
-                var chartOptions = {};
-
-                //scope.$watch('chartToPlot', function(newVal) {
-                //    if (newVal) {
-                //
-                //    }
-                //})
                 scope.$watch(
-                    function($scope) { return $scope.cf.getCountGroup(); },
+                    function($scope) { return $scope.cf.cfReady(); },
                     function(newval, oldval){
-
                         if(newval){
-                            //console.log(newval)
+
+                            //TODO: need to add dc-count-widget to the list of charts in CF to be refreshed when Xfilter is refreshed
+                            //cf.createChart('subjects',$scope.obsid,$scope.grp)
+                            var chart = scope.cf.createDCcounter()
+                            console.log('inside dc-count-widget chartgroup',scope.chartgroup)
+                            chart.anchor(element[0],scope.chartgroup);
+                            //var groupChart = chart.chartGroup()
+                            //console.log(groupChart)
                             //console.log(cf.getCountData())
                             //console.log(cf.getCountGroup())
-                            chartOptions["dimension"] = cf.getCountData()
-                            chartOptions["group"] =  cf.getCountGroup()
-
-                            chart.options(chartOptions);
+                            //chartOptions["dimension"] = cf.getCountData()
+                            //chartOptions["group"] =  cf.getCountGroup()
+                            //chart.options(chartOptions);
                             chart.render();
                             //dc.renderAll();
                         }
-
                 })
-
-
-
             }
         }
     })
@@ -106,13 +99,11 @@ angular.module('eTRIKSdata.dcPlots')
             },*/
             controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
 
-                console.log('inside dc-chart controller')
                 var chartService = $injector.get($scope.chartService);
-                console.log('projectId ',$scope.projectId,$scope.val,$scope.obsid,$scope.grp)
                 $scope.chartCFservice = chartService
 
-
-
+                console.log('inside dc-chart controller')
+                console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp)
 
                 chartService.getDCchart($scope.projectId,$scope.val,$scope.obsid,$scope.grp)
                     .then(
@@ -123,25 +114,6 @@ angular.module('eTRIKSdata.dcPlots')
                         console.log("Failed to create DC chart",result);
                     }
                 );
-
-                //chartService.getChartData($scope.val,$scope.obsid,$scope.domain)
-                //    .then(
-                //        // success function
-                //        function(data) {
-                //            /*console.log("GOT BACK from getChartData...")
-                //            console.log(data)*/
-                //            $scope.chartData = data;
-                //        },
-                //        // error function
-                //        function(result) {
-                //            console.log("Failed to get chart data " + result);
-                //        });
-
-                //$scope.addFilterToExport = function(filter){
-                //    //console.log($scope.grp,$scope.val,filter)
-                //    exportCriteria.addFilter(filter,$scope.val,$scope.grp)
-                //};
-
 
             }],
             template:'<div style="padding-top: 20px;/*float: left;max-height: 200px; overflow: scroll*/">'+
@@ -160,30 +132,35 @@ angular.module('eTRIKSdata.dcPlots')
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
                         //console.log(scope.chartToPlot)
-                        scope.chartToPlot.anchor(element[0])
+                        scope.chartToPlot.anchor(element[0],scope.grp);
 
-                        if(scope.val == 'study'){
+                        if(scope.val == 'arm' || scope.val == 'site'){
+                            /*scope.chartToPlot.on('filtered',scope.chartCFservice.filterClinicalCF(filter,scope.val))*/
                             scope.chartToPlot.on('filtered', function(chart, filter){
                                 console.log('inside dc chart', filter)
-                                //console.log(chart.title())
-                                scope.chartCFservice.filterClinicalCF(filter,'study')
-                                //dc.renderAll();
+                                //console.log(scope.chartCFservice.getCountGroup())
+                                scope.chartCFservice.filterClinicalCF(filter,scope.val)
+                                //dc.renderAll("Clinical");
                             })
                         }
 
 
-                        console.log('chartId',scope.chartToPlot.chartID())
-                        console.log('chart group inside directive',scope.chartToPlot.chartGroup())
+                        //console.log('chartId',scope.chartToPlot.chartID())
+                        //console.log('chart group inside directive',scope.chartToPlot.chartGroup())
+                        //console.log('subject cf size',scope.chartCFservice.getCountData().size())
+                        //console.log('subject group',scope.chartCFservice.subjDimension().group())
+                        //console.log('subject groupAll',scope.chartCFservice.subjDimension().group().all())
+                        //console.log('subject dimension groupAll value',scope.chartCFservice.subjDimension().groupAll().value())
                         var groupChart = scope.chartToPlot.chartGroup()
-                          //console.log(dc.chartRegistry.list())
+                          console.log(groupChart)
 
                           //Set reset link
                             var a = angular.element(element[0].querySelector('a.reset'));
                             a.attr('href', 'javascript:;');
                             a.css('display', 'none');
                             a.on('click', function () {
-                                scope.chartToPlot.filterAll();
-                                dc.redrawAll();
+                                scope.chartToPlot.filterAll(groupChart);
+                                dc.redrawAll(groupChart);
                             });
                         scope.chartToPlot.render()
 
@@ -432,7 +409,7 @@ angular.module('eTRIKSdata.dcPlots')
         /*scope: {
          val: '='
          },*/
-        controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
+        /*controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
             var chartService = $injector.get($scope.chartService);
             chartService.getTableData()
                 .then(
@@ -448,63 +425,31 @@ angular.module('eTRIKSdata.dcPlots')
                     console.log("Failed to get chart data " + result);
                 });
 
-        }],
+        }],*/
         template:
 
                      '<table class="table table-hover" id="dc-table-graph">'+
                             '<thead>'+
-                                '<tr class="header">'+
-                                    '<th ng-repeat="header in tableData.headers">{{header}}</th>'+
-                                '</tr>'+
+                                /*'<tr class="header">'+
+                                    '<th ng-repeat="header in tableHeaders">{{header}}</th>'+
+                                '</tr>'+*/
                             '</thead>'+
                      '</table>'
                  ,
         link: function (scope, element, attrs) {
 
-            //console.log(scope.val)
+            scope.$watch(
+                function($scope) { return $scope.cf.cfReady(); },
+                function(newval, oldval){
 
-            scope.$watch('tableData', function(newVal) {
-                if (newVal) {
-
-                    var cfDimension = scope.tableData.dimension;
-                    var headers = scope.tableData.headers;
-                    var chartFactory = dc["dataTable"];
-                    var chart = chartFactory(element[0]);
-
-                    /*console.log(cfDimension)
-                    console.log(headers)
-                    console.log(element[0])*/
-
-                    var grp = function(d) {return d["USUBJID"]}
-
-                    headers = [
-                        function(d) { return d["USUBJID"]; },
-                        function(d) { return d["visit"]; },
-                        function(d) { return d["bmi"]; },
-                        function(d) { return d["height"] },
-                        function(d) { return d["weight"] },
-                        function(d) { return d["temp"] },
-                        function(d) { return d["hr"]},
-                        function(d) { return d["diabp"]},
-                        function(d) { return d["sysbp"]}
-                    ]
-
-                    chartOptions = {};
-                    chartOptions["dimension"] = cfDimension
-                    chartOptions["group"] = grp
-                    chartOptions["width"] = "960"
-                    chartOptions["height"] = "800"
-                    console.log(headers)
-                    chartOptions["columns"] = headers
-                    chartOptions["sortBy"] = function (d) {
-                        return d.visit;
+                    if(newval){
+                        console.log(newval)
+                        var chart = scope.cf.createDCtable()
+                        console.log(chart.columns());
+                        chart.anchor(element[0],'clinical');
+                        chart.render();
                     }
-
-                    chart.options(chartOptions);
-                    dc.renderAll();
-
-                }
-            })
+                })
         }
 
     }
@@ -561,7 +506,7 @@ angular.module('eTRIKSdata.dcPlots')
                         //var subjectCount = cf.getSubjectGroup().top(Infinity).length
                         chartOptions["valueAccessor"] = function(d){
                             //d = subjectCount
-                            console.log('inside valueAccessor', d)
+                            //console.log('inside valueAccessor', d)
                             return d
                         };
                         chartOptions["group"] =  cf.getSubjectGroup()
@@ -580,19 +525,59 @@ angular.module('eTRIKSdata.dcPlots')
         }
     })
 
-    .directive('dcVisitChart',function(){
+    .directive('dcChartVisit',function(){
         return {
             restrict: 'E',
             replace: true,
             template: '<div style="padding-top: 20px;/*float: left;max-height: 200px; overflow: scroll*/">' +
             '<div class="chart-title" id="returnsLabel">' +
-            '<span>{{val}}</span>' +
+            '<span>Visits</span>' +
             '<span class="filter"></span> <a class="reset">reset</a> ' +
             '</div>' +
             '<div class="clearfix"></div>' +
                 //'<div><img src="img/icons/spinner.gif"></div>'+
-            '</div>'
-            ,
+            '</div>',
+
+            controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
+
+                //console.log('inside dc-chart controller')
+                var chartService = $injector.get($scope.chartService);
+                console.log('projectId ',$scope.projectId,$scope.val,$scope.obsid,$scope.grp)
+                $scope.chartCFservice = chartService
+
+
+
+
+                chartService.getVisitchart($scope.projectId,$scope.val,$scope.grp)
+                    .then(
+                    function(chart){
+                        $scope.chartToPlot = chart;
+                    },
+                    function(result){
+                        console.log("Failed to create DC chart",result);
+                    }
+                );
+
+                //chartService.getChartData($scope.val,$scope.obsid,$scope.domain)
+                //    .then(
+                //        // success function
+                //        function(data) {
+                //            /*console.log("GOT BACK from getChartData...")
+                //            console.log(data)*/
+                //            $scope.chartData = data;
+                //        },
+                //        // error function
+                //        function(result) {
+                //            console.log("Failed to get chart data " + result);
+                //        });
+
+                //$scope.addFilterToExport = function(filter){
+                //    //console.log($scope.grp,$scope.val,filter)
+                //    exportCriteria.addFilter(filter,$scope.val,$scope.grp)
+                //};
+
+
+            }],
             link: function (scope, element, attrs) {
 
                 //console.log(scope.val)
@@ -602,9 +587,9 @@ angular.module('eTRIKSdata.dcPlots')
                         //console.log(scope.chartToPlot)
                         scope.chartToPlot.anchor(element[0])
 
-                        console.log('chartId', scope.chartToPlot.chartID())
-                        console.log('chart group inside directive', scope.chartToPlot.chartGroup())
-                        var groupChart = scope.chartToPlot.chartGroup()
+                        //console.log('chartId', scope.chartToPlot.chartID())
+                        //console.log('chart group inside directive', scope.chartToPlot.chartGroup())
+                        v//ar groupChart = scope.chartToPlot.chartGroup()
                         //console.log(dc.chartRegistry.list())
 
                         //Set reset link

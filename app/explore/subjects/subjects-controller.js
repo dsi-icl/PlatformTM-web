@@ -6,43 +6,34 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
     .controller('SubjectsCtrl', ['$scope','subjectDataService','SubjCf','$timeout',function($scope,subjectDataService, SubjCf,$timeout) {
 
         var projectId = "P-BVS";
-        var initSCs;          //= ['STUDY','ARMCD','AGE','SEX','RACE']
         $scope.title = "Subjects";
         $scope.subjChartContainerId = 'subject-plots';
-        $scope.section="Subjects";
+        //$scope.section="Subjects";
         $scope.projectId = projectId;
+        $scope.cf = SubjCf;
+        $scope.chartService = "SubjCf";
+        $scope.chartGroup = "subject";
 
 
 
         //Gets data for StudyId, Arm and Site
-
-
         subjectDataService.getSubjCharacteristics(projectId)
             .then(function(data){
                 $scope.subjCharsDB = data.SCs;
 
-
-
                 SubjCf.initialize(projectId).then(
                     function(subjChars){
                         console.log(subjChars)
+
                         $scope.initSCs = subjChars
                         $timeout(function() {
                             angular.forEach(subjChars, function(sc) {
                                 console.log('#isc_'+sc)
+                                SubjCf.createChart(sc,'subject')
                                 angular.element('#isc_'+sc).trigger('click');
                             });
-                        },100)
-
+                        },500)
                     }
                 )
-
             })
-
-
-
-
-        $scope.cf = SubjCf;
-        $scope.chartService = "SubjCf"
-        $scope.chartGroup = "subject;"
     }])

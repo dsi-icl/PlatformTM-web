@@ -12,7 +12,7 @@
                 <tab-heading>
                     <p class="model-icon">
                         <span class="flaticon-standing55"></span>
-                        <dc-count-widget cf="cf"></dc-count-widget>
+                        <dc-count-widget cf="cf" chartgroup="{{chartGroup}}"></dc-count-widget>
                     </p>
                     <p class="model-name">
                         Human subjects
@@ -55,7 +55,7 @@
                                        active="{{isActive}}"
                                        container="{{subjChartContainerId}}"
                                        section="{{section}}"
-
+                                       grp="{{chartGroup}}"
                                        chart-service="{{chartService}}"
                                        project-id="{{projectId}}"
                                        ng-class="{'hide': isActive}"

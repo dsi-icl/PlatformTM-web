@@ -5,22 +5,26 @@
         <h3 style="padding: 10px;"><span class="flaticon-man412" style="color: #39b3d7; margin-right: 3px"></span> Clinical Observations
         </h3>
     </div>
+    <div>
+        <p class="model-icon">
+            <span class="flaticon-standing55"></span>
+
+            <!--<dc-number-display cf="cf"></dc-number-display>-->
+            <dc-count-widget cf="cf" chartgroup="{{chartGroup}}"></dc-count-widget>
+            <!-- <div><button ng-click="showVisits()">Show visits</button></div>-->
+        </p>
+    </div>
 
     <tabset class="models-list clinical-section">
         <tab>
             <tab-heading>
-
                 <p class="model-name">
                     Data Plots
                 </p>
             </tab-heading>
-            <p class="model-icon">
-                <span class="flaticon-standing55"></span>
 
-                <dc-number-display cf="cf"></dc-number-display>
-            </p>
             <div id="{{chartContainerId}}" class="tab-pane active plots-view"></div>
-            <!--<div><button ng-click="filterByStudy()">filter</button></div>-->
+
         </tab>
         <tab >
             <tab-heading>
@@ -33,7 +37,7 @@
                 </p>
             </tab-heading>
             <div style="height: 300px;overflow: scroll;">
-               <!-- <dc-datatable class="dc-data-table">Choose observations from the tree below</dc-datatable>-->
+                <dc-datatable class="dc-data-table">Choose observations from the tree below</dc-datatable>
             </div>
 
         </tab>
@@ -55,7 +59,9 @@
         </div>-->
 
 
-
+<!--
+<dc-chart-visit chart-service='ClinicalCf' val="visit" grp="clinical"></dc-chart-visit>
+-->
         <cl-tree  observations="clinicalData" get-obs-ids-for-meddra="getObsIdsForMeddra(medraterm)" get-charting-opts="getChartingOpts()"></cl-tree>
 
 
