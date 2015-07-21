@@ -1,0 +1,106 @@
+<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"-->
+        <!--"http://www.w3.org/TR/html4/loose.dtd">-->
+<!--<html ng-app="demoApp">-->
+
+<!--<head>-->
+    <!--<meta charset="utf-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+   <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+    <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+
+<!--</head>-->
+<!--<body>-->
+
+<div class="container">
+
+
+    <div class="container" >
+        <!-- **************************** Navigation Bar ****************************** -->
+        <ul class="nav nav-tabs" id="navigationbar" ng-controller="czDropDownMenuController">
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h2>Findings</h2> <span class="caret"></span></a>
+                <ul class="dropdown-menu"  ng-repeat="finding in findings| orderBy:finding.name">
+                    <li><a ui-sref={{finding.link}}> {{finding.name}} </a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h2>Interventions</h2> <span class="caret"></span></a>
+                <ul class="dropdown-menu" ng-repeat="intervention in interventions |orderBy:intervention.name">
+                    <li><a ui-sref={{intervention.link}}>{{intervention.name}}</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h2>Events</h2> <span class="caret"></span></a>
+                <ul  ng-repeat="event in events |orderBy:event.name" class="dropdown-menu">
+                    <li><a ui-sref={{event.link}}>{{event.name}}</a></li>
+
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h2>Help</h2> <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="findingsHelp.html">Findings</a></li>
+                    <li><a href="#">Interventions</a></li>
+                    <li><a href="#">Events</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- **************************** Navigation Bar ****************************** -->
+
+
+    <div class="container" id="myownform">
+        <!-- **************************** User Upload Form *******************************-->
+        <div class ="col-md-4">
+
+            <div >
+                <h3>Search Uploads:</h3>
+              <h4><input type="text" ng-model="uplaodSearchText"/></h4>
+            </div>
+
+            <div class= "listgroup" ng-controller="czUserUploadsController">
+                <a href="#" class="list-group-item list-group-item-success" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText"> {{variable}} </a>
+                <!--<li class="list-group-item" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText">{{variable}} </li>-->
+            </div>
+            <p></p>
+            <div class="row">
+                <div class= "col-sm-3">
+                    <button type="button" class="btn btn-success"> Math</button>
+                </div>
+
+                <div class= "col-sm-3">
+                    <button type="button" class="btn btn-warning"> Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- **************************** User Upload Form *******************************-->
+
+        <!-- ?????????  Different Domains can have different Views -->
+        <div ui-view>Something should show up here.  Different Domains can have different Views</div>
+        <!--<div ng-view></div>-->
+        <!-- ?????????  Different Domains can have different Views -->
+
+    </div>
+
+
+</div>
+
+<!--<script src="../lib/angular/angular.min.js"></script>-->
+<!--<script src="../lib/angular/angular-route.js"></script>-->
+<!--<script src="../lib/angular/angular-route.min.js" ></script>-->
+<script src="js/domain.js"></script>
+<!--<script src="js/userUpload.js"></script>-->
+<!--<script src="js/dropDownMenu.js"></script>-->
+<!--<script src="js/mapper.js"></script>-->
+<script src="js/listgroup.js"></script>
+
+
+
+<!--</body>-->
+<!--</html>-->
