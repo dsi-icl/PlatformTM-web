@@ -1,4 +1,4 @@
-angular.module('eTRIKSdata.mapper',[])
+var mapperApp =angular.module('eTRIKSdata.mapper',[]);
 
   //demoApp.config(['$routeProvider',
   //    function($routeProvider) {
@@ -13,18 +13,22 @@ angular.module('eTRIKSdata.mapper',[])
   //    }]);
 
 
-.config(function($stateProvider, $urlRouterProvider) {
-
+mapperApp.config(function($stateProvider, $urlRouterProvider) {
+    //$urlRouterProvider.when('', 'Mapper/default.html');
     $stateProvider
-
         // route to show our basic form (/form)
         .state('mapper', {
             url: '/mapper',
             templateUrl: 'Mapper/main.html',
             controller: 'czDropDownMenuController'
         })
-})
-    .controller('czDropDownMenuController',function($scope){
+            .state('mapper.VitalSigns',{
+                url:'/mapper/VitalSigns',
+                templateUrl:'Mapper/VitalSigns.html'
+            })
+});
+
+mapperApp.controller('czDropDownMenuController',function($scope){
         $scope.findings=[
             {name:'Drug Accountability (DA)', link:"#/DrugAccountability"},
             {name:'Death Details (DD)', link:"#/DeathDetails"},
@@ -44,9 +48,9 @@ angular.module('eTRIKSdata.mapper',[])
             {name:'Disease Response (RS)', link:""},
             {name:'Subject Characteristics (SC)', link:""},
             {name:'Subject Status (SS)', link:""},
-            {name:'Tumor Identification (TU)', link:"#/TumorIdentification"},
-            {name:'Tumor Results (TR)', link:"#/TumorResults"},
-            {name:'Vital Signs (VS)', link:"#/VitalSigns"}
+            {name:'Tumor Identification (TU)', link:"TumorIdentification"},
+            {name:'Tumor Results (TR)', link:"TumorResults"},
+            {name:'Vital Signs (VS)', link:".VitalSigns"}
         ];
         $scope.interventions=[
             {name:'Concomitant Medications (CM)', link:"#/ConcomitantMedications"},
@@ -64,9 +68,9 @@ angular.module('eTRIKSdata.mapper',[])
             {name:'Medical History (MH)', link:"#/MedicalHistory"}
 
         ];
-    })
+    });
 
-.controller('czUserUploadsController', function($scope){
+mapperApp.controller('czUserUploadsController', function($scope){
     $scope.userUplaodVariables =[
         'patient_code',
         'systolic_blood_pressure',
@@ -76,6 +80,7 @@ angular.module('eTRIKSdata.mapper',[])
         'visit_date'
     ];
 });
+
 
 
 
