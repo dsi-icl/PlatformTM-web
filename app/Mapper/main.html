@@ -65,7 +65,10 @@
             </div>
 
             <div class= "listgroup" ng-controller="czUserUploadsController">
-                <a href="#" class="list-group-item list-group-item-success" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText"> {{variable}} </a>
+                <li ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText" selection-model>
+                    {{variable}}
+                </li>
+                <!--<a href="#" class="list-group-item list-group-item-success" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText"> {{variable}} </a>-->
                 <!--<li class="list-group-item" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText">{{variable}} </li>-->
             </div>
             <p></p>

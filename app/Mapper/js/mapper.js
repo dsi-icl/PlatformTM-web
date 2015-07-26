@@ -1,17 +1,5 @@
 var mapperApp =angular.module('eTRIKSdata.mapper',[]);
 
-  //demoApp.config(['$routeProvider',
-  //    function($routeProvider) {
-  //        $routeProvider
-  //                .when('/',{
-  //                    templateUrl:'default.html'
-  //                })
-  //                .when('/VistalSigns',{
-  //                    templateUrl:'VitalSigns.html'
-  //                })
-  //                .otherwise({redirectTo: '/'});
-  //    }]);
-
 
 mapperApp.config(function($stateProvider, $urlRouterProvider) {
     //$urlRouterProvider.when('', 'Mapper/default.html');
@@ -82,7 +70,34 @@ mapperApp.controller('czUserUploadsController', function($scope){
 });
 
 
+mapperApp.controller ('addTestController',function($scope){
+    $scope.testCount=0;
+});
 
+mapperApp.directive("addtestsbutton", function(){
+    return {
+        restrict: "E",
+        template: "<button addtests >Add New Test</button>"
+    }
+});
+mapperApp.directive("addtests", function($compile){
+    return function(scope, element, attrs){
+        element.bind("click", function(){
+            scope.testCount++;
+            angular.element(
+                document.getElementById('space-for-newTest')).append(
+                $compile("<div><h4>Test"+scope.testCount+"</h4><ul> <li>Vital Sigs Test Name(VSTEST)*: &nbsp;<input> </li> <li >Result or Finding in Original Units (VSORRES)*:&nbsp;</li> <li >Original Units (VSORRESU)*:&nbsp;<input> </li> </ul> </div>")(scope));
+
+            //<div>
+            //<ul class="list-group">
+            //    <li class="list-group-item">Vital Sins Test Name(VSTEST)*: &nbsp;<input type="text" class="form-control"> </li>
+            //    <li class="list-group-item">Result or Finding in Original Units (VSORRES)*:&nbsp;</li>
+            //<li class="list-group-item">Original Units (VSORRESU)*:&nbsp;<input type="text" class="form-control"></li>
+            //    </ul>
+            //    </div>
+        });
+    };
+});
 
     //demoApp.controller('domainsViewController',function($scope, $route, $routeParams, $location){
     //    $scope.$route = $route;

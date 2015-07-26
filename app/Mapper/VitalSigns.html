@@ -59,11 +59,18 @@
 		<!-- everytime add this list group when click the add new Test -->
 	</div>
 
-	<div>
-		<button type="button" class="btn btn-success">Add New Test</button>
-		<span>&nbsp&nbsp</span>
-		<button type="button" class="btn btn-danger">Remove Test</button>
-	</div>
+	<div class="well" ng-model="VSTest" id="space-for-newTest"> </div>
+
+		<div style="padding-bottom: 20px" ng-controller="addTestController">
+			<addtestsbutton></addtestsbutton>
+
+
+			<!--<button type="button" class="btn btn-success">Add New Test</button>-->
+			<!--<span>&nbsp&nbsp</span>-->
+			<!--<button type="button" class="btn btn-danger">Remove Test</button>-->
+		</div>
+
+
 	<!-- <div class= "well" ng-model ="Timing"> <h4>Timing</h4>
 		<div class= "listgroup">
 			<a href="#" class="list-group-item list-group-item-info">Start Date/Time of Visit (SVSTDTC)*:</a>
