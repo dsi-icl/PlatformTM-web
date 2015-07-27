@@ -12,6 +12,13 @@
 
 <!--</head>-->
 <!--<body>-->
+<style>
+    .selected {
+        background-color:black;
+        color:white;
+        font-weight:bold;
+    }
+</style>
 
 <div class="container">
 
@@ -61,16 +68,26 @@
 
             <div >
                 <h3>Search Uploads:</h3>
-              <h4><input style="width:350px;" type="text" ng-model="uplaodSearchText"/></h4>
+              <h4><input style="width:350px;" placeholder="Input here..." type="text" ng-model="uplaodSearchText"/></h4>
             </div>
 
-            <div class= "listgroup" ng-controller="czUserUploadsController">
-                <li ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText" selection-model>
-                    {{variable}}
-                </li>
+            <div ng-controller="czUserUploadsController">
+                <!--<td ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText">-->
+                    <!--{{variable.label}}-->
+                <!--</td>-->
+                <table class="table table-bordered">
+
+                    <tr ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                       <td> {{variable.label}}</td>
+                    </tr>
+                </table>
+                <!--<li ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText" selection-model>-->
+                    <!--{{variable.label}}-->
+                <!--</li>-->
                 <!--<a href="#" class="list-group-item list-group-item-success" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText"> {{variable}} </a>-->
                 <!--<li class="list-group-item" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText">{{variable}} </li>-->
             </div>
+
             <p></p>
             <div class="row">
                 <div class= "col-sm-3">
@@ -88,7 +105,9 @@
         <!-- Different Domains -->
 
 
-            <div class = "col-md-8" style="height:600px;overflow:auto;" ui-view>Something should show up here</div>
+            <div class = "col-md-8" style="height:600px;overflow:auto;" ui-view>
+                <h2>Select A domain and mapp your data </h2>
+            </div>
 
 
             <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->

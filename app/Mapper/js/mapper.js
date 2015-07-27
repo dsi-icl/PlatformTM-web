@@ -59,14 +59,39 @@ mapperApp.controller('czDropDownMenuController',function($scope){
     });
 
 mapperApp.controller('czUserUploadsController', function($scope){
+    $scope.selectedRow=null;
     $scope.userUplaodVariables =[
-        'patient_code',
-        'systolic_blood_pressure',
-        'diastolic_blood_pressure',
-        'heart_rate',
-        'respiratory_rate',
-        'visit_date'
+        {selected:false, label:'patient_code'},
+        {selected:false, label: 'systolic_blood_pressure'},
+        {selected:false, label:'diastolic_blood_pressure'},
+        {selected:false, label:'heart_rate'},
+        {selected:false, label:'respiratory_rate'},
+        {selected:false, label:'visit_date'}
     ];
+    $scope.setClickedRow = function(index){
+        $scope.selectedRow = index;
+    };
+
+});
+
+mapperApp.controller('mappingFormSelectionController',function($scope){
+    $scope.selectedRow=null;
+
+    $scope.Identifers=[
+        {variableName:"Study Identifier (STUDYID)*:", mappingVar:"Replace_Input_Form"},
+        {variableName:"Domain Abbreviation (DOMAIN)*", mappingVar:'VS'},
+        {variableName:'Unique Subject Identifier (USUBJID)*:', mappingVar:'MappingForm'},
+        {variableName:'Unique Subject Identifier (USUBJID)*:', mappingVar:'MappingForm'},
+
+    ];
+
+    $scope.topic=[
+        {variableName:'Vital Signs Test Short Name (VSTESTCD)*:', mappingVar:'VSTESTCD' }
+    ];
+
+    $scope.setClickedRow= function(index){
+        $scope.selectedRow = index;
+    };
 });
 
 

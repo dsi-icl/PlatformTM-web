@@ -1,66 +1,116 @@
 
-	<!--<input type="text" ng-model="name">{{name}}-->
-	<h3>Vital Sight</h3>
+<style>
+	.selected {
+		background-color:black;
+		color:white;
+		font-weight:bold;
+	}
+	.variableNameTd{
+		width:400px;
+	}
 
-	<div class= "well" id ="Identifier" ng-model ="VSIdentifier"> <h4>Identifier</h4>
-		<div>
-			<ul class="list-group">
-				<li class="list-group-item active">Study Identifier (STUDYID)*: &nbsp;<input type="text" class="form-control"> </li>
-				<li class="list-group-item disabled">Domain Abbreviation (DOMAIN)*:&nbsp;VS</li>
-				<li class="list-group-item">Unique Subject Identifier (USUBJID)*: &nbsp; </li>
-				<li class="list-group-item">Sequence Number (VSSEQ)*: </li>
 
-			</ul>
+</style>
+<!--<input type="text" ng-model="name">{{name}}-->
+	<h3 >Vital Sight</h3>
+
+
+
+	<div class= "well" id ="Identifier" ng-model ="VSIdentifier">
+		<h4>Identifier</h4>
+		<div ng-controller="mappingFormSelectionController" >
+			<table class="table table-bordered" >
+				<tr ng-repeat="Identifier in Identifers" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+					<td class="variableNameTd"> {{Identifier.variableName}} </td>
+					<td> {{Identifier.mappingVar}} </td>
+				</tr>
+
+			</table>
+		</div>
+
+		<div  ng-controller="mappingFormSelectionController">
+			<table class="table table-bordered"  >
+				<tr >
+					<td class="variableNameTd">Study Identifier (STUDYID)*:</td>
+					<td><input type="text" class="form-control"></td>
+				</tr>
+				<tr>
+					<td class="variableNameTd">Domain Abbreviation (DOMAIN)*:</td>
+					<td>VS</td>
+				</tr>
+				<tr>
+					<td class="variableNameTd">Unique Subject Identifier (USUBJID)*:</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="variableNameTd">Sequence Number (VSSEQ)*:</td>
+					<td><label>Maching</label></td>
+				</tr>
+			</table>
+			<!--<ul class="list-group">-->
+				<!--<li class="list-group-item active">Study Identifier (STUDYID)*: &nbsp;<input type="text" class="form-control"> </li>-->
+				<!--<li class="list-group-item disabled">Domain Abbreviation (DOMAIN)*:&nbsp;VS</li>-->
+				<!--<li class="list-group-item">Unique Subject Identifier (USUBJID)*: &nbsp; </li>-->
+				<!--<li class="list-group-item">Sequence Number (VSSEQ)*: </li>-->
+
+			<!--</ul>-->
 		</div>
 
 
 	</div>
 
-	<div class= "well" ng-model ="VSTopic"><h4>Topic</h4>
-		<ul class="list-group">
+	<div class= "well"><h4>Topic</h4>
+		<table class="table table-bordered">
+			<tr>
+				<td class="variableNameTd">Vital Signs Test Short Name (VSTESTCD)*:</td>
+				<td class>VSTESTCD</td>
+			</tr>
+		</table>
+		<!--<ul class="list-group">-->
 
-			<li class="list-group-item disabled">Vital Signs Test Short Name (VSTESTCD)*:&nbsp;VSTESTCD</li>
+			<!--<li class="list-group-item disabled">Vital Signs Test Short Name (VSTESTCD)*:&nbsp;VSTESTCD</li>-->
 
-		</ul>
+		<!--</ul>-->
 	</div>
 
 	<div class= "well" ng-model ="VSQualifier"> <h4>Qualifier</h4>
-		<div class= "listgroup">
 
 
-
-			<div class="form-group" style="display:inline-block;">
-				<label >Baseline Flag*:&nbsp;</label>
-				<select class="form-control">
-					<option>Yes</option>
-					<option>No</option>
-				</select>
-			</div>
-
-
-
-		</div>
+			<table class="table table-bordered">
+				<tr>
+					<td class="variableNameTd">Baseline Flag*:</td>
+					<td><select class="form-control">
+						<option>Yes</option>
+						<option>No</option>
+					</select>
+					</td>
+				</tr>
+			</table>
 	</div>
 
-	<div class="well" ng-model="VSTest">
 
-		<h4>Test</h4>
-		<!-- everytime add this list group when click the add new Test -->
+	<!--<div class="well" ng-model="VSTest">-->
 
-		<div>
-			<ul class="list-group">
-				<li class="list-group-item">Vital Sins Test Name(VSTEST)*: &nbsp;<input type="text" class="form-control"> </li>
-				<li class="list-group-item">Result or Finding in Original Units (VSORRES)*:&nbsp;</li>
-				<li class="list-group-item">Original Units (VSORRESU)*:&nbsp;<input type="text" class="form-control"></li>
-			</ul>
-		</div>
+		<!--<h4>Test</h4>-->
+		<!--&lt;!&ndash; everytime add this list group when click the add new Test &ndash;&gt;-->
+
+		<!--<table>-->
+			<!--<tr>-->
+				<!--<td></td>-->
+			<!--</tr>-->
+			<!--&lt;!&ndash;<ul class="list-group">&ndash;&gt;-->
+				<!--&lt;!&ndash;<li class="list-group-item">Vital Sins Test Name(VSTEST)*: &nbsp;<input type="text" class="form-control"> </li>&ndash;&gt;-->
+				<!--&lt;!&ndash;<li class="list-group-item">Result or Finding in Original Units (VSORRES)*:&nbsp;</li>&ndash;&gt;-->
+				<!--&lt;!&ndash;<li class="list-group-item">Original Units (VSORRESU)*:&nbsp;<input type="text" class="form-control"></li>&ndash;&gt;-->
+			<!--&lt;!&ndash;</ul>&ndash;&gt;-->
+		<!--</table>-->
 
 
-		<!-- everytime add this list group when click the add new Test -->
-	</div>
+		<!--&lt;!&ndash; everytime add this list group when click the add new Test &ndash;&gt;-->
+	<!--</div>-->
 
-	<div class="well" ng-model="VSTest" id="space-for-newTest"> </div>
-
+	<div class="well" ng-model="VSTest" id="space-for-newTest"> Test
+		<p></p>
 		<div style="padding-bottom: 20px" ng-controller="addTestController">
 			<addtestsbutton></addtestsbutton>
 
@@ -69,6 +119,10 @@
 			<!--<span>&nbsp&nbsp</span>-->
 			<!--<button type="button" class="btn btn-danger">Remove Test</button>-->
 		</div>
+
+	</div>
+
+
 
 
 	<!-- <div class= "well" ng-model ="Timing"> <h4>Timing</h4>
