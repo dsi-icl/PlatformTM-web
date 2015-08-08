@@ -18,6 +18,17 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                  url:'/mapper/VitalSigns',
                 templateUrl:'Mapper/VitalSigns.html'
             })
+
+
+            .state('mapper.ConcomitantMedications',{
+                url:'/mapper/ConcomitantMedications',
+                templateUrl:'Mapper/ConcomitantMedications.html'
+            })
+
+            .state('mapper.AdverseEvents',{
+                url:'/mapper/AdverseEvents',
+                templateUrl:'Mapper/AdverseEvents.html'
+            })
 });
 
 mapperApp.controller('czDropDownMenuController',function($scope){
