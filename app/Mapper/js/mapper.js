@@ -14,49 +14,54 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 url:'/mapper/VitalSigns',
                 templateUrl:'Mapper/VitalSigns.html'
             })
+            .state('mapper.DrugAccountability',{
+                 url:'/mapper/VitalSigns',
+                templateUrl:'Mapper/VitalSigns.html'
+            })
 });
 
 mapperApp.controller('czDropDownMenuController',function($scope){
         $scope.findings=[
-            {name:'Drug Accountability (DA)', link:"#/DrugAccountability"},
-            {name:'Death Details (DD)', link:"#/DeathDetails"},
-            {name:'ECG Test Results (EG)', link:""},
-            {name:'Inclusion/Exclusion Critierion Not Met (IE)', link:""},
-            {name:'Immunogenicity Specimen Accessments (IS)', link:""},
-            {name:'Laboratory Test Results (LB)', link:""},
-            {name:'Microbiology Specimen (MB)', link:""},
-            {name:'Microscopic Findings (MI)', link:""},
-            {name:'Morphology (MO)', link:""},
-            {name:'Microbiology Susceptibility Test (MS)', link:""},
-            {name:'PK Concentrations (PC)', link:""},
-            {name:'PK Parameters (PP)', link:""},
-            {name:'Physical Examination (PE)', link:""},
-            {name:'Questionnaires (QS)', link:""},
-            {name:'Reproductive System Findings (RP)', link:""},
-            {name:'Disease Response (RS)', link:""},
-            {name:'Subject Characteristics (SC)', link:""},
-            {name:'Subject Status (SS)', link:""},
-            {name:'Tumor Identification (TU)', link:"TumorIdentification"},
-            {name:'Tumor Results (TR)', link:"TumorResults"},
+            {name:'Drug Accountability (DA)', link:".DrugAccountability"},
+            {name:'Death Details (DD)', link:".DeathDetails"},
+            {name:'ECG Test Results (EG)', link:".ECGTestResults"},
+            {name:'Inclusion/Exclusion Critierion Not Met (IE)', link:".InclusionExclusionCritierionNotMet"},
+            {name:'Immunogenicity Specimen Accessments (IS)', link:".ImmunogenicitySpecimenAccessments"},
+            {name:'Laboratory Test Results (LB)', link:".LaboratoryTestResults"},
+            {name:'Microbiology Specimen (MB)', link:".MicrobiologySpecimen"},
+            {name:'Microscopic Findings (MI)', link:".MicroscopicFindings"},
+            {name:'Morphology (MO)', link:".Morphology"},
+            {name:'Microbiology Susceptibility Test (MS)', link:".MicrobiologySusceptibilityTest"},
+            {name:'PK Concentrations (PC)', link:".PKConcentrations"},
+            {name:'PK Parameters (PP)', link:".PKParameters"},
+            {name:'Physical Examination (PE)', link:".PhysicalExamination"},
+            {name:'Questionnaires (QS)', link:".Questionnaires"},
+            {name:'Reproductive System Findings (RP)', link:".ReproductiveSystemFindings"},
+            {name:'Disease Response (RS)', link:".DiseaseResponse"},
+            {name:'Subject Characteristics (SC)', link:".SubjectCharacteristics"},
+            {name:'Subject Status (SS)', link:".SubjectStatus"},
+            {name:'Tumor Identification (TU)', link:".TumorIdentification"},
+            {name:'Tumor Results (TR)', link:".TumorResults"},
             {name:'Vital Signs (VS)', link:".VitalSigns"}
         ];
         $scope.interventions=[
-            {name:'Concomitant Medications (CM)', link:"#/ConcomitantMedications"},
-            {name:'Exposure as Collected (EC)', link:"#/ExposureasCollected"},
-            {name:'Exposure (EX)', link:"#/Exposure (EX)"},
-            {name:'Substance Use (SU)', link:"#/SubstanceUse"},
-            {name:'Procedures (PR)', link:"#/Procedures"}
+            {name:'Concomitant Medications (CM)', link:".ConcomitantMedications"},
+            {name:'Exposure as Collected (EC)', link:".ExposureasCollected"},
+            {name:'Exposure (EX)', link:".Exposure"},
+            {name:'Substance Use (SU)', link:".SubstanceUse"},
+            {name:'Procedures (PR)', link:".Procedures"}
         ];
         $scope.events=[
-            {name:'Adverse Events (AE)', link:"#/AdverseEvents"},
-            {name:'Clinical Events (CE)', link:"#/ClinicalEvents"},
-            {name:'Disposition (DS)', link:"#/Disposition"},
-            {name:'Protocol Deviations (DV)', link:"#/ProtocolDeviations"},
-            {name:'Healthcare Encounters (HO)', link:"#/HealthcareEncounters"},
-            {name:'Medical History (MH)', link:"#/MedicalHistory"}
+            {name:'Adverse Events (AE)', link:".AdverseEvents"},
+            {name:'Clinical Events (CE)', link:".ClinicalEvents"},
+            {name:'Disposition (DS)', link:".Disposition"},
+            {name:'Protocol Deviations (DV)', link:".ProtocolDeviations"},
+            {name:'Healthcare Encounters (HO)', link:".HealthcareEncounters"},
+            {name:'Medical History (MH)', link:".MedicalHistory"}
 
         ];
     });
+
 
 mapperApp.controller('czUserUploadsController', function($scope){
     $scope.selectedRow=null;
@@ -68,6 +73,7 @@ mapperApp.controller('czUserUploadsController', function($scope){
         {selected:false, label:'respiratory_rate'},
         {selected:false, label:'visit_date'}
     ];
+
     $scope.setClickedRow = function(index){
         $scope.selectedRow = index;
     };
@@ -77,8 +83,28 @@ mapperApp.controller('czUserUploadsController', function($scope){
 mapperApp.controller('mappingFormSelectionController',function($scope){
     $scope.selectedRow=null;
 
+    $scope.mappingStandardsData = {
+        "domain":"VS",
+        "indentifiers":[
+            {"name":"STUDYID",
+             "label":"Study Identifier"
+            },
+            {"name":"USUBJID",
+             "lable":"Unique Subject Identifier"}
+        ],
+        "obsVariables":[
+            {"name":"VSTESTCD",
+             "label":"Vital Signs Test Short Name"},
+            {"name":"VSTEST",
+                "label":"Vital Signs Test"},
+            {"name":"VSORRES",
+                "label":"Vital Signs Test Result"},
+            {"name":"VSORRESU",
+                "label":"Vital Signs Test Result Unit"}
+        ]
+    }
     $scope.Identifers=[
-        {variableName:"Study Identifier (STUDYID)*:", mappingVar:"Replace_Input_Form"},
+        {variableName:"Study Identifier (STUDYID)*:", mappingVar: '< input type="text" class="form-control">' },
         {variableName:"Domain Abbreviation (DOMAIN)*", mappingVar:'VS'},
         {variableName:'Unique Subject Identifier (USUBJID)*:', mappingVar:'MappingForm'},
         {variableName:'Unique Subject Identifier (USUBJID)*:', mappingVar:'MappingForm'},
@@ -92,6 +118,16 @@ mapperApp.controller('mappingFormSelectionController',function($scope){
     $scope.setClickedRow= function(index){
         $scope.selectedRow = index;
     };
+
+    $scope.removeItem = function removeItem(row) {
+        var index = $scope.Identifers.indexOf(row);
+        if (index !== -1) {
+            $scope.Identifers.splice(index, 1);
+        }
+    };
+    $scope.matchVar = function(){
+
+    }
 });
 
 
@@ -100,9 +136,10 @@ mapperApp.controller ('addTestController',function($scope){
 });
 
 mapperApp.directive("addtestsbutton", function(){
+
     return {
         restrict: "E",
-        template: "<button addtests >Add New Test</button>"
+        template: "<button addtests class=\"btn btn-md btn-success \">Add New Test</button>"
     }
 });
 mapperApp.directive("addtests", function($compile){
@@ -111,31 +148,25 @@ mapperApp.directive("addtests", function($compile){
             scope.testCount++;
             angular.element(
                 document.getElementById('space-for-newTest')).append(
-                $compile("<div><h4>Test"+scope.testCount+"</h4><ul> <li>Vital Sigs Test Name(VSTEST)*: &nbsp;<input> </li> <li >Result or Finding in Original Units (VSORRES)*:&nbsp;</li> <li >Original Units (VSORRESU)*:&nbsp;<input> </li> </ul> </div>")(scope));
+                $compile("<div><h4>Test"+scope.testCount+"</h4> <table class=\"table table-bordered \"> <tr> <td class=\"variableNameTd\">Vital Sins Test Name(VSTEST)*: </td> <td><input type=\"text\" class=\"form-control\"></td> </tr> <tr> <td class=\"variableNameTd\">Result or Finding in Original Units (VSORRES)*:</td> <td>Mapping Variable</td> </tr> <tr> <td class=\"variableNameTd\">Original Units (VSORRESU)*:</td> <td><input type=\"text\" class=\"form-control\"></td> </tr> </table></div>")(scope));
 
-            //<div>
-            //<ul class="list-group">
-            //    <li class="list-group-item">Vital Sins Test Name(VSTEST)*: &nbsp;<input type="text" class="form-control"> </li>
-            //    <li class="list-group-item">Result or Finding in Original Units (VSORRES)*:&nbsp;</li>
-            //<li class="list-group-item">Original Units (VSORRESU)*:&nbsp;<input type="text" class="form-control"></li>
-            //    </ul>
-            //    </div>
+            //<table class="table table-bordered ">
+            //    <tr>
+            //    <td class="variableNameTd">Vital Sins Test Name(VSTEST)*: </td>
+            //<td><input type="text" class="form-control"></td>
+            //    </tr>
+            //    <tr>
+            //    <td class="variableNameTd">Result or Finding in Original Units (VSORRES)*:</td>
+            //<td>Mapping Variable</td>
+            //</tr>
+            //<tr>
+            //<td class="variableNameTd">Original Units (VSORRESU)*:</td>
+            //<td><input type="text" class="form-control"></td>
+            //    </tr>
+            //    </table>
+
         });
     };
 });
 
-    //demoApp.controller('domainsViewController',function($scope, $route, $routeParams, $location){
-    //    $scope.$route = $route;
-    //    $scope.$location = $location;
-    //    $scope.$routeParams = $routeParams;
-    //});
-    //demoApp.config(function($routeProvider, $locationProvider){
-    //    $routeProvider
-    //            .when('/',{
-    //                templateUrl:'default.html'
-    //            })
-    //            .when('/VistalSigns',{
-    //                templateUrl:'VitalSigns.html'
-    //            })
-    //            .otherwise({redirectTo: '/'});
-    //});
+

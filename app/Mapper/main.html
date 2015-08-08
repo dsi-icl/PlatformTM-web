@@ -18,6 +18,29 @@
         color:white;
         font-weight:bold;
     }
+    .animate-enter,
+    .animate-leave
+    {
+        -webkit-transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
+        -moz-transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
+        -ms-transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
+        -o-transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
+        transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
+    }
+
+    .animate-enter {
+        top: 100%;
+    }
+    .animate-enter.animate-enter-active {
+        top: 0;
+    }
+
+    .animate-leave {
+        top: 0;
+    }
+    .animate-leave.animate-leave-active{
+        top: -100%;
+    }
 </style>
 
 <div class="container">
@@ -29,21 +52,23 @@
 
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h2>Findings</h2> <span class="caret"></span></a>
-                <ul class="dropdown-menu"  ng-repeat="finding in findings| orderBy:finding.name" style="vertical-align: middle">
-                    <li ><a ui-sref={{finding.link}}> {{finding.name}} </a></li>
+                <ul class="dropdown-menu"   style="vertical-align: middle;">
+                    <li ng-repeat="finding in findings| orderBy:finding.name"><a ui-sref={{finding.link}}> {{finding.name}} </a></li>
                 </ul>
             </li>
+            
+            
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h2>Interventions</h2> <span class="caret"></span></a>
-                <ul class="dropdown-menu" ng-repeat="intervention in interventions |orderBy:intervention.name">
-                    <li><a ui-sref={{intervention.link}}>{{intervention.name}}</a></li>
+                <ul class="dropdown-menu" >
+                    <li ng-repeat="intervention in interventions |orderBy:intervention.name"><a ui-sref={{intervention.link}}>{{intervention.name}}</a></li>
                 </ul>
             </li>
 
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h2>Events</h2> <span class="caret"></span></a>
-                <ul  ng-repeat="event in events |orderBy:event.name" class="dropdown-menu">
-                    <li><a ui-sref={{event.link}}>{{event.name}}</a></li>
+                <ul  class="dropdown-menu"  >
+                    <li ng-repeat="event in events |orderBy:event.name"><a ui-sref={{event.link}}>{{event.name}}</a></li>
 
                 </ul>
             </li>
@@ -88,51 +113,20 @@
                 <!--<li class="list-group-item" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText">{{variable}} </li>-->
             </div>
 
-            <p></p>
-            <div class="row">
-                <div class= "col-sm-3">
-                    <button type="button" class="btn btn-success"> Math</button>
-                </div>
 
-                <div class= "col-sm-3">
-                    <button type="button" class="btn btn-warning"> Cancel</button>
-                </div>
-            </div>
-        </div>
+
+
         <!-- **************************** User Upload Form *******************************-->
-
-        <!-- ?????????  Different Domains can have different Views -->
-        <!-- Different Domains -->
-
-
-            <div class = "col-md-8" style="height:600px;overflow:auto;" ui-view>
-                <h2>Select A domain and mapp your data </h2>
-            </div>
 
 
             <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-
-
-
-        <!--<div ng-view></div>-->
-        <!-- ?????????  Different Domains can have different Views -->
+        </div>
+        <div style="height:600px;overflow:auto;" ui-view>
+            <h2>Select A domain to map your data </h2>
+        </div>
 
     </div>
 
 
 </div>
 
-
-<!--<script src="../lib/angular/angular.min.js"></script>-->
-<!--<script src="../lib/angular/angular-route.js"></script>-->
-<!--<script src="../lib/angular/angular-route.min.js" ></script>-->
-<!--<script src="js/domain.js"></script>-->
-<!--<script src="js/userUpload.js"></script>-->
-<!--<script src="js/dropDownMenu.js"></script>-->
-<!--<script src="js/mapper.js"></script>-->
-
-
-
-
-<!--</body>-->
-<!--</html>-->

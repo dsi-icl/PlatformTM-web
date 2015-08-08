@@ -20,9 +20,18 @@
 		<h4>Identifier</h4>
 		<div ng-controller="mappingFormSelectionController" >
 			<table class="table table-bordered" >
-				<tr ng-repeat="Identifier in Identifers" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
-					<td class="variableNameTd"> {{Identifier.variableName}} </td>
-					<td> {{Identifier.mappingVar}} </td>
+				<tr ng-repeat="Identifier in mappingStandardsData.indentifiers" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+					<td class="variableNameTd"> {{Identifier.name}} </td>
+					<!--This td will ng-repeat on droppable container-->
+					<td> {{Identifier.mappingVar}}
+						<button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+							<i class="glyphicon glyphicon-remove-circle">
+							</i>
+						</button>
+					</td>
+
+
+
 				</tr>
 
 			</table>
@@ -109,22 +118,31 @@
 		<!--&lt;!&ndash; everytime add this list group when click the add new Test &ndash;&gt;-->
 	<!--</div>-->
 
-	<div class="well" ng-model="VSTest" id="space-for-newTest"> Test
-		<p></p>
-		<div style="padding-bottom: 20px" ng-controller="addTestController">
-			<addtestsbutton></addtestsbutton>
+	<!--<div class="well" ng-model="VSTest" id="space-for-newTest"> Test-->
+		<!--<p></p>-->
+		<!--<div style="padding-bottom: 20px" ng-controller="addTestController">-->
+			<!--<addtestsbutton></addtestsbutton>-->
 
 
-			<!--<button type="button" class="btn btn-success">Add New Test</button>-->
-			<!--<span>&nbsp&nbsp</span>-->
-			<!--<button type="button" class="btn btn-danger">Remove Test</button>-->
-		</div>
+			<!--&lt;!&ndash;<button type="button" class="btn btn-success">Add New Test</button>&ndash;&gt;-->
+			<!--&lt;!&ndash;<span>&nbsp&nbsp</span>&ndash;&gt;-->
+			<!--&lt;!&ndash;<button type="button" class="btn btn-danger">Remove Test</button>&ndash;&gt;-->
+		<!--</div>-->
+
+
 
 	</div>
 
 
 
+<div>
 
+
+		<!--<li class="list-group-item">Vital Sins Test Name(VSTEST)*: &nbsp;<input type="text" class="form-control"> </li>-->
+		<!--<li class="list-group-item">Result or Finding in Original Units (VSORRES)*:&nbsp;</li>-->
+		<!--<li class="list-group-item">Original Units (VSORRESU)*:&nbsp;<input type="text" class="form-control"></li>-->
+
+</div>
 	<!-- <div class= "well" ng-model ="Timing"> <h4>Timing</h4>
 		<div class= "listgroup">
 			<a href="#" class="list-group-item list-group-item-info">Start Date/Time of Visit (SVSTDTC)*:</a>

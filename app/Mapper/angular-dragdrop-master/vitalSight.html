@@ -1,0 +1,103 @@
+
+<html ng-app="drag-and-drop">
+<head lang="en">
+  <meta charset="utf-8">
+  <title>Drag & Drop: Multiple listsr</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="src/angular-dragdrop.min.js"></script>
+  <script src="czDrag.js"></script>
+  
+</head>
+<body>
+
+  <style>
+  .thumbnail { height: 38px; width: 220px; }
+  .btn-droppable { width: 220px; height: 40px; margin-left: 100px; margin-top: 10px; }
+  .btn-draggable { width: 200px; height: 28px; padding-left: 5px;}
+   .selected {
+        background-color:black;
+        color:white;
+        font-weight:bold;
+    }
+  </style>
+
+
+  <!--User upload section-->
+  <div ng-controller="userUploadVariablesCtr" >
+
+    <div class="row">
+      <div class="col-md-4" ng-repeat="item in userUploadVariables" >
+       <div class="btn btn-droppable" data-drop="true" ng-model='userUploadVariables' data-jqyoui-options="{accept:'.btn-draggable:not([ng-model=userUploadVariables])'}"  jqyoui-droppable="{index: {{$index}}}">
+        <div class="btn btn-info btn-draggable" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid',helper:'clone'}" ng-model="userUploadVariables" jqyoui-draggable="{index: {{$index}},animate:true, placeholder: 'true'}" ng-hide="!item.title">{{item.title}}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!--User Mapping Section-->
+  <div>
+    <h3 >Vital Sight</h3>
+
+    <div>
+
+      <h4>Identifier</h4>
+
+      <div ng-controller="mappingFormSelectionController" >
+        <table class="table table-bordered " >
+          <tr ng-repeat="Identifier in standardsData.indentifiers" >
+            <td > {{Identifier.label}} ({{Identifier.name}}) :</td>
+            <td>  
+              <div ng-controller="userUploadVariablesCtr">
+                <div class="thumbnail" data-drop="true" ng-model='list1' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:false}">
+                  <div class="btn btn-info btn-draggable" ng-repeat="item in list1" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </table>
+          </div>
+
+        </div>
+
+      <h4>Observables</h4>
+      <div ng-controller="mappingFormSelectionController" >
+        <table class="table table-bordered " >
+          <tr ng-repeat="obsVariable in standardsData.obsVariables" >
+            <td > {{obsVariable.label}} ({{obsVariable.name}}) :</td>
+            <td>  
+              <div ng-controller="userUploadVariablesCtr">
+                <div class="thumbnail" data-drop="true" ng-model='list1' data-jqyoui-options="optionsList1" jqyoui-droppable="{multiple:false}">
+                  <div class="btn btn-info btn-draggable" ng-repeat="item in list1" ng-show="item.title" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{index: {{$index}},animate:true}">{{item.title}}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <h4>Test</h4>
+      <div ng-controller="mappingFormSelectionController" >
+        <table class="table table-bordered " >
+          <tr ng-repeat="obsVariable in standardsData.obsVariables" >
+            <td > {{obsVariable.label}} ({{obsVariable.name}}) :</td>
+            <td> 
+                <div class="btn btn-droppable" data-drop="true" ng-model='list1' jqyoui-droppable="{index: {{$index}}, onDrop:'dropCallback',onOver: 'overCallback', onOut: 'outCallback'}">
+                      <div class="btn btn-info btn-draggable" ng-show="list1[$index].title" data-drag="{{list1[$index].drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{list1[$index].title}}</div>
+                    </div>             
+              </td>
+            </tr>
+            </table>
+          </div>
+
+        </div>
+
+
+
+      </body>
+      </html>
