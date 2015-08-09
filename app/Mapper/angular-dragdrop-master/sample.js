@@ -1,14 +1,30 @@
 var App = angular.module('drag-and-drop', ['ngDragDrop']);
 
-App.controller('userUploadVariablesCtr', function($scope, $timeout) {
-  
+App.controller('oneCtrl', function($scope, $timeout) {
+  //$scope.images = [{'thumb': '1.png'},{'thumb': '2.png'},{'thumb': '3.png'},{'thumb': '4.png'}]
   $scope.identifierList = [];
-  angular.forEach(function(val, key) {
-    $scope.identifierList.push({});
-  });
+  $scope.testsList=[];
 
 
-  $scope.userUploadVariables =[
+  $scope.testNumberList=[1];
+  $scope.testCount=1;
+
+
+  $scope.addNewTest =function(){
+    $scope.testCount++;
+    $scope.testNumberList.push($scope.testCount);
+  };
+  $scope.removeNewTest = function(index){
+      $scope.testNumberList.splice(index-1,1);
+
+          $scope.testCount--;
+
+  }
+   $scope.getTestNumber = function() {
+    return $scope.testNumberList;
+ };
+
+  $scope.uploadVariables = [
     { 'title': 'patient_code', 'drag': true },
     { 'title': 'systolic_blood_pressure', 'drag': true },
     { 'title': 'diastolic_blood_pressure', 'drag': true },
@@ -16,6 +32,38 @@ App.controller('userUploadVariablesCtr', function($scope, $timeout) {
     { 'title': 'respiratory_rate', 'drag': true },
     { 'title': 'visit_date', 'drag': true }
   ];
+
+  $scope.standardData = {
+        "domain":"VS",
+
+          "indentifiers":[
+              {"name":"STUDYID",
+               "label":"Study Identifier"
+              },
+              {"name":"USUBJID",
+               "label":"Unique Subject Identifier"}
+          ],
+
+          "obsVariables":[
+              {"name":"VSTESTCD",
+               "label":"Vital Signs Test Short Name"},
+              {"name":"VSTEST",
+                  "label":"Vital Signs Test"},
+              {"name":"VSORRES",
+                  "label":"Vital Signs Test Result"},
+              {"name":"VSORRESU",
+                  "label":"Vital Signs Test Result Unit"}
+          ]
+
+
+    };
+
+angular.forEach($scope.standardData, function(val, key) {
+    $scope.identifierList.push({});
+  });
+angular.forEach($scope.standardData, function(val, key) {
+    $scope.testsList.push({});
+  });
 
   $scope.startCallback = function(event, ui, title) {
     console.log('You started draggin: ' + title.title);
@@ -43,32 +91,3 @@ App.controller('userUploadVariablesCtr', function($scope, $timeout) {
   };
 });
 
-
-
-App.controller('mappingFormSelectionController',function($scope){
-    
-    $scope.standardsData = {
-        "domain":"VS",
-
-          "indentifiers":[
-              {"name":"STUDYID",
-               "label":"Study Identifier"
-              },
-              {"name":"USUBJID",
-               "label":"Unique Subject Identifier"}
-          ],
-
-          "obsVariables":[
-              {"name":"VSTESTCD",
-               "label":"Vital Signs Test Short Name"},
-              {"name":"VSTEST",
-                  "label":"Vital Signs Test"},
-              {"name":"VSORRES",
-                  "label":"Vital Signs Test Result"},
-              {"name":"VSORRESU",
-                  "label":"Vital Signs Test Result Unit"}
-          ]
-
-
-    };
-});

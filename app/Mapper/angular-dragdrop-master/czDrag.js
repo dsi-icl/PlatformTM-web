@@ -74,7 +74,7 @@ App.controller('mappingFormSelectionController',function($scope){
           ]
 
 
-    }
+    };
     $scope.Identifers=[
         {variableName:"Study Identifier (STUDYID)*:", mappingVar: '< input type="text" class="form-control">' },
         {variableName:"Domain Abbreviation (DOMAIN)*", mappingVar:'VS'},
