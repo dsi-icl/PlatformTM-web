@@ -1,4 +1,4 @@
-var mapperApp =angular.module('eTRIKSdata.mapper',[]);
+var mapperApp =angular.module('eTRIKSdata.mapper',['ngDragDrop']);
 
 
 mapperApp.config(function($stateProvider, $urlRouterProvider) {
@@ -10,25 +10,146 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'Mapper/main.html',
             controller: 'czDropDownMenuController'
         })
+
+            //findings
             .state('mapper.VitalSigns',{
-                url:'/mapper/VitalSigns',
-                templateUrl:'Mapper/VitalSigns.html'
+                url:'/VitalSigns',
+                templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html'
             })
             .state('mapper.DrugAccountability',{
-                 url:'/mapper/VitalSigns',
-                templateUrl:'Mapper/VitalSigns.html'
+                 url:'/DrugAccountability',
+                templateUrl:'Mapper/standardFormParts/Findings/DrugAccountability.html'
+            })
+            .state('mapper.DeathDetails',{
+                url:'/mapper/DeathDetails',
+                templateUrl:'Mapper/standardFormParts/Findings/DeathDetails.html'
+            })
+            .state('mapper.ECGTestResults',{
+                url:'/mapper/ECGTestResults',
+                templateUrl:'Mapper/standardFormParts/Findings/ECGTestResults.html'
+            })
+            .state('mapper.InclusionExclusionCritierionNotMet',{
+                url:'/mapper/InclusionExclusionCritierionNotMet',
+                templateUrl:'Mapper/standardFormParts/Findings/InclusionExclusionCritierionNotMet.html'
             })
 
+            .state('mapper.ImmunogenicitySpecimenAccessments',{
+                url:'/mapper/ImmunogenicitySpecimenAccessments',
+                templateUrl:'Mapper/standardFormParts/Findings/ImmunogenicitySpecimenAccessments.html'
+            })
+            .state('mapper.LaboratoryTestResults',{
+                url:'/mapper/LaboratoryTestResults',
+                templateUrl:'Mapper/standardFormParts/Findings/LaboratoryTestResults.html'
+            })
+            .state('mapper.MicrobiologySpecimen',{
+                url:'/mapper/MicrobiologySpecimen',
+                templateUrl:'Mapper/standardFormParts/Findings/MicrobiologySpecimen.html'
+            })
+            .state('mapper.MicroscopicFindings',{
+                url:'/mapper/MicroscopicFindings',
+                templateUrl:'Mapper/standardFormParts/Findings/MicroscopicFindings.html'
+            })
 
+            .state('mapper.Morphology',{
+                url:'/mapper/Morphology',
+                templateUrl:'Mapper/standardFormParts/Findings/Morphology.html'
+            })
+            .state('mapper.MicrobiologySusceptibilityTest',{
+                url:'/mapper/MicrobiologySusceptibilityTest',
+                templateUrl:'Mapper/standardFormParts/Findings/MicrobiologySusceptibilityTest.html'
+            })
+            .state('mapper.PKConcentrations',{
+                url:'/mapper/PKConcentrations',
+                templateUrl:'Mapper/standardFormParts/Findings/PKConcentrations.html'
+            })
+            .state('mapper.PKParameters',{
+                url:'/mapper/PKParameters',
+                templateUrl:'Mapper/standardFormParts/Findings/PKParameters.html'
+            })
+
+            .state('mapper.PhysicalExamination',{
+                url:'/mapper/PhysicalExamination',
+                templateUrl:'Mapper/standardFormParts/Findings/PhysicalExamination.html'
+            })
+
+            .state('mapper.Questionnaires',{
+                url:'/mapper/Questionnaires',
+                templateUrl:'Mapper/standardFormParts/Findings/Questionnaires.html'
+            })
+
+            .state('mapper.ReproductiveSystemFindings',{
+                url:'/mapper/ReproductiveSystemFindings',
+                templateUrl:'Mapper/standardFormParts/Findings/ReproductiveSystemFindings.html'
+            })
+            .state('mapper.DiseaseResponse',{
+                url:'/mapper/DiseaseResponse',
+                templateUrl:'Mapper/standardFormParts/Findings/DiseaseResponse.html'
+            })
+            .state('mapper.SubjectCharacteristics',{
+                url:'/mapper/SubjectCharacteristics',
+                templateUrl:'Mapper/standardFormParts/Findings/SubjectCharacteristics.html'
+            })
+            .state('mapper.SubjectStatus',{
+                url:'/mapper/SubjectStatus',
+                templateUrl:'Mapper/standardFormParts/Findings/SubjectStatus.html'
+            })
+            .state('mapper.TumorIdentification',{
+                url:'/mapper/TumorIdentification',
+                templateUrl:'Mapper/standardFormParts/Findings/TumorIdentification.html'
+            })
+            .state('mapper.TumorResults',{
+                url:'/mapper/TumorResults',
+                templateUrl:'Mapper/standardFormParts/Findings/TumorResults.html'
+            })
+
+             //Interventions
             .state('mapper.ConcomitantMedications',{
-                url:'/mapper/ConcomitantMedications',
-                templateUrl:'Mapper/ConcomitantMedications.html'
+                url:'ConcomitantMedications',
+                templateUrl:'Mapper/standardFormParts/Interventions/ConcomitantMedications.html'
+            })
+            .state('mapper.ExposureasCollected',{
+                url:'ExposureasCollected',
+                templateUrl:'Mapper/standardFormParts/Interventions/ExposureasCollected.html'
+            })
+            .state('mapper.Exposure',{
+                url:'Exposure',
+                templateUrl:'Mapper/standardFormParts/Interventions/Exposure.html'
+            })
+            .state('mapper.SubstanceUse',{
+                url:'SubstanceUse',
+                templateUrl:'Mapper/standardFormParts/Interventions/SubstanceUse.html'
+            })
+            .state('mapper.Procedures',{
+                url:'Procedures',
+                templateUrl:'Mapper/standardFormParts/Interventions/Procedures.html'
             })
 
+            //Events
             .state('mapper.AdverseEvents',{
                 url:'/mapper/AdverseEvents',
-                templateUrl:'Mapper/AdverseEvents.html'
+                templateUrl:'Mapper/standardFormParts/Events/AdverseEvents.html'
             })
+            .state('mapper.ClinicalEvents',{
+                url:'/mapper/ClinicalEvents',
+                templateUrl:'Mapper/standardFormParts/Events/ClinicalEvents.html'
+            })
+            .state('mapper.Disposition',{
+                url:'/mapper/Disposition',
+                templateUrl:'Mapper/standardFormParts/Events/Disposition.html'
+            })
+            .state('mapper.ProtocolDeviations',{
+                url:'/mapper/ProtocolDeviations',
+                templateUrl:'Mapper/standardFormParts/Events/ProtocolDeviations.html'
+            })
+            .state('mapper.HealthcareEncounters',{
+                url:'/mapper/HealthcareEncounters',
+                templateUrl:'Mapper/standardFormParts/Events/HealthcareEncounters.html'
+            })
+            .state('mapper.MedicalHistory',{
+                url:'/mapper/MedicalHistory',
+                templateUrl:'Mapper/standardFormParts/Events/MedicalHistory.html'
+            })
+
 });
 
 mapperApp.controller('czDropDownMenuController',function($scope){
@@ -181,3 +302,107 @@ mapperApp.directive("addtests", function($compile){
 });
 
 
+mapperApp.controller('oneCtrl', function($scope, $timeout) {
+    //$scope.images = [{'thumb': '1.png'},{'thumb': '2.png'},{'thumb': '3.png'},{'thumb': '4.png'}]
+    $scope.identifierList = [];
+    $scope.testsList=[];
+
+
+    $scope.testNumberList=[1];
+    $scope.testCount=1;
+
+//////
+    $scope.twoDimentionList=[{'testId':1, 'testDropList':[]}];
+
+    $scope.addNewTest =function(){
+        $scope.testCount++;
+        $scope.testNumberList.push($scope.testCount);
+        ///////////
+        $scope.twoDimentionList.testId.push($scope.testCount);
+
+    };
+    ///////////////////
+    angular.forEach($scope.standardData, function(val, key) {
+        $scope.twoDimentionList.testId.push({});
+    });
+    $scope.getNewTestDropLit = function(index){
+
+    };
+
+    /////////////////
+    $scope.removeNewTest = function(index){
+        $scope.testNumberList.splice(index-1,1);
+
+        $scope.testCount--;
+
+    }
+    $scope.getTestNumber = function() {
+        return $scope.testNumberList;
+    };
+
+    $scope.uploadVariables = [
+        { 'title': 'patient_code', 'drag': true },
+        { 'title': 'systolic_blood_pressure', 'drag': true },
+        { 'title': 'diastolic_blood_pressure', 'drag': true },
+        { 'title': 'heart_rate', 'drag': true },
+        { 'title': 'respiratory_rate', 'drag': true },
+        { 'title': 'visit_date', 'drag': true }
+    ];
+
+    $scope.standardData = {
+        "domain":"VS",
+
+        "indentifiers":[
+            {"name":"STUDYID",
+                "label":"Study Identifier"
+            },
+            {"name":"USUBJID",
+                "label":"Unique Subject Identifier"}
+        ],
+
+        "obsVariables":[
+            {"name":"VSTESTCD",
+                "label":"Vital Signs Test Short Name"},
+            {"name":"VSTEST",
+                "label":"Vital Signs Test"},
+            {"name":"VSORRES",
+                "label":"Vital Signs Test Result"},
+            {"name":"VSORRESU",
+                "label":"Vital Signs Test Result Unit"}
+        ]
+
+
+    };
+
+    angular.forEach($scope.standardData, function(val, key) {
+        $scope.identifierList.push({});
+    });
+    angular.forEach($scope.standardData, function(val, key) {
+        $scope.testsList.push({});
+    });
+
+    $scope.startCallback = function(event, ui, title) {
+        console.log('You started draggin: ' + title.title);
+        $scope.draggedTitle = title.title;
+    };
+
+    $scope.stopCallback = function(event, ui) {
+        console.log('Why did you stop draggin me?');
+    };
+
+    $scope.dragCallback = function(event, ui) {
+        console.log('hey, look I`m flying');
+    };
+
+    $scope.dropCallback = function(event, ui) {
+        console.log('hey, you dumped me :-(' , $scope.draggedTitle);
+    };
+
+    $scope.overCallback = function(event, ui) {
+        console.log('Look, I`m over you');
+    };
+
+    $scope.outCallback = function(event, ui) {
+        console.log('I`m not, hehe');
+    };
+});

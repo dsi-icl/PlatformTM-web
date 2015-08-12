@@ -55,16 +55,20 @@
   <h4>Observation Variables</h4>
 
   <div ng-repeat="testIndex in getTestNumber() track by $index">
-    <h4 ng-init="newTestIndex=testIndex">Test{{newTestIndex}}</h4>
-    <input type="button" value="Remove" class="btn btn-primary" ng-click="removeNewTest(newTestIndex)" />
-  <table class="table table-bordered ">
+    <div>
+      <h4 ng-init="newTestIndex=testIndex">Test{{newTestIndex}}</h4>
+      <button class="btn btn-primary" ng-click="removeNewTest(newTestIndex)">Remove</button>
 
+    </div>
+
+    <table class="table table-bordered ">
     <tr ng-repeat="obsVariable in standardData.obsVariables" >
       <td> {{obsVariable.label}} ({{obsVariable.name}}) :</td>
       <td>
         <div class="btn btn-droppable" data-drop="true" ng-model='testsList' jqyoui-droppable="{index: {{$index}}, onDrop:'dropCallback',onOver: 'overCallback', onOut: 'outCallback'}">
           <div class="btn btn-info btn-draggable" ng-show="testsList[$index].title" data-drag="{{testsList[$index].drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="testsList" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{testsList[$index].title}}</div>
         </div>
+
       </td>
     </tr>
   </table>

@@ -9,11 +9,25 @@ App.controller('oneCtrl', function($scope, $timeout) {
   $scope.testNumberList=[1];
   $scope.testCount=1;
 
+//////
+    $scope.twoDimentionList=[{'testId':1, 'testDropList':[]}];
 
   $scope.addNewTest =function(){
     $scope.testCount++;
     $scope.testNumberList.push($scope.testCount);
+      ///////////
+      $scope.twoDimentionList.testId.push($scope.testCount);
+
   };
+    ///////////////////
+    angular.forEach($scope.standardData, function(val, key) {
+        $scope.twoDimentionList.testId.push({});
+    });
+    $scope.getNewTestDropLit = function(index){
+
+    };
+
+    /////////////////
   $scope.removeNewTest = function(index){
       $scope.testNumberList.splice(index-1,1);
 

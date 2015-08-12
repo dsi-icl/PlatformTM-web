@@ -1,46 +1,23 @@
-<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"-->
-        <!--"http://www.w3.org/TR/html4/loose.dtd">-->
-<!--<html ng-app="demoApp">-->
 
-<!--<head>-->
-    <!--<meta charset="utf-8">-->
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-   <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
-
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-    <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-
-<!--</head>-->
-<!--<body>-->
 <style>
+
+    .btn-droppable { width: 200px; height: 45px; padding-left: 4px;margin-top:5px;background-color: #E9E9E9; }
+    .btn-draggable { width: 180px;  }
+    ul{
+        list-style-type: none;
+    }
+
     .selected {
         background-color:black;
         color:white;
         font-weight:bold;
     }
-    .animate-enter,
-    .animate-leave
-    {
-        -webkit-transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
-        -moz-transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
-        -ms-transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
-        -o-transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
-        transition: 900ms cubic-bezier(0.215, 0.610, 0.355, 1.000) all;
+
+    .stepNum{
+       color:#39C2D7;
+        font-weight: bold;
     }
 
-    .animate-enter {
-        top: 100%;
-    }
-    .animate-enter.animate-enter-active {
-        top: 0;
-    }
-
-    .animate-leave {
-        top: 0;
-    }
-    .animate-leave.animate-leave-active{
-        top: -100%;
-    }
 </style>
 
 <div class="container">
@@ -88,41 +65,54 @@
 
 
     <div class="container" id="myownform">
+
         <!-- **************************** User Upload Form *******************************-->
-        <div class ="col-md-4">
+        <div class ="col-md-3">
 
-            <div >
-                <h3>Search Uploads:</h3>
-              <h4><input style="width:350px;" placeholder="Input here..." type="text" ng-model="uplaodSearchText"/></h4>
+
+            <div ng-controller="oneCtrl">
+                <ul>
+                    <li ng-repeat="item in uploadVariables">
+                        <div class="btn btn-droppable"  data-drop="true" ng-model='uploadVariables' jqyoui-droppable="{index: {{$index}}}">
+                            <div class="btn btn-info btn-draggable" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="uploadVariables" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:false, onStart:'startCallback(item, $index)', onStop: 'stopCallback', onDrag: 'dragCallback'}" ng-hide="!item.title">{{item.title}}</div>
+                        </div>
+
+                    </li>
+                </ul>
             </div>
-
-            <div ng-controller="czUserUploadsController">
-                <!--<td ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText">-->
-                    <!--{{variable.label}}-->
-                <!--</td>-->
-                <table class="table table-bordered">
-
-                    <tr ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
-                       <td> {{variable.label}}</td>
-                    </tr>
-                </table>
-                <!--<li ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText" selection-model>-->
-                    <!--{{variable.label}}-->
-                <!--</li>-->
-                <!--<a href="#" class="list-group-item list-group-item-success" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText"> {{variable}} </a>-->
-                <!--<li class="list-group-item" ng-repeat="variable in userUplaodVariables| filter:uplaodSearchText">{{variable}} </li>-->
-            </div>
-
-
-
+        </div>
 
         <!-- **************************** User Upload Form *******************************-->
 
 
             <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-        </div>
-        <div style="height:600px;overflow:auto;" ui-view>
-            <h2>Select A domain to map your data </h2>
+
+        <div style="height:450px;overflow:auto;" ui-view>
+            <div class="container" style="width:850px;">
+
+                <div class="jumbotron" >
+
+                    <h1>Select a domain to map your data!</h1>
+
+                    <div class="row">
+
+                            <h3 class="stepNum">Step 1</h3>
+                            <p>Choose different classes: Findings, Intervention or Event.</p>
+
+
+                            <h3 class="stepNum">Step 2</h3>
+                            <p>Choose the corresponding domain in a Classto map your data.</p>
+
+
+                            <h3 class="stepNum">Step 3</h3>
+                            <p>Drag and drop your upload data to map of a domain.</p>
+                        <p style="color:#AAAAAA">Check <span style="color:#39C2D7;font-weight: bold;">HELP</span> for more information</p>
+                    </div>
+
+                </div>
+            </div>
+
+
         </div>
 
     </div>
