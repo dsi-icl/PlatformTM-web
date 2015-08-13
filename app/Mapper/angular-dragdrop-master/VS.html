@@ -27,7 +27,7 @@
   <div class="row">
     <div class="col-md-4">
       <ul>
-        <li ng-repeat="item in uploadVariables">
+        <li ng-repeat="item in uploadVariables| orderBy:name">
           <div class="btn btn-droppable"  data-drop="true" ng-model='uploadVariables' jqyoui-droppable="{index: {{$index}}}">
             <div class="btn btn-info btn-draggable" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="uploadVariables" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}" ng-hide="!item.title">{{item.title}}</div>
           </div>

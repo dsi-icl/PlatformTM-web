@@ -14,7 +14,8 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             //findings
             .state('mapper.VitalSigns',{
                 url:'/VitalSigns',
-                templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html'
+                templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
+
             })
             .state('mapper.DrugAccountability',{
                  url:'/DrugAccountability',
@@ -315,7 +316,7 @@ mapperApp.controller('oneCtrl', function($scope, $timeout) {
         $scope.testCount++;
         $scope.testNumberList.push($scope.testCount);
         $scope.testsList.push([]);
-        angular.forEach($scope.uploadVariables, function(val, key) {
+        angular.forEach($scope.standardData.obsVariables, function(val, key) {
             $scope.testsList[$scope.testCount-1].push({});
         });
 
@@ -329,7 +330,13 @@ mapperApp.controller('oneCtrl', function($scope, $timeout) {
     $scope.getTestNumber = function() {
         return $scope.testNumberList;
     };
-
+    $scope.submitData = function(){
+        return {
+            "testNumber":$scope.testCount,
+            "identiferList":$scope.identifierList,
+            "testsList":$scope.testsList
+        }
+    }
     $scope.uploadVariables = [
         { 'title': 'patient_code', 'drag': true },
         { 'title': 'systolic_blood_pressure', 'drag': true },
@@ -364,10 +371,10 @@ mapperApp.controller('oneCtrl', function($scope, $timeout) {
 
     };
 
-    angular.forEach($scope.uploadVariables, function(val, key) {
+    angular.forEach($scope.standardData.obsVariables, function(val, key) {
         $scope.identifierList.push({});
     });
-    angular.forEach($scope.uploadVariables, function(val, key) {
+    angular.forEach($scope.standardData.obsVariables, function(val, key) {
         $scope.testsList[$scope.testCount-1].push({});
     });
 
