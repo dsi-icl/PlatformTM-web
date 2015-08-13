@@ -29,7 +29,7 @@
       <ul>
         <li ng-repeat="item in uploadVariables">
           <div class="btn btn-droppable"  data-drop="true" ng-model='uploadVariables' jqyoui-droppable="{index: {{$index}}}">
-            <div class="btn btn-info btn-draggable" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="uploadVariables" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true, onStart:'startCallback(item, $index)', onStop: 'stopCallback', onDrag: 'dragCallback'}" ng-hide="!item.title">{{item.title}}</div>
+            <div class="btn btn-info btn-draggable" data-drag="{{item.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="uploadVariables" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}" ng-hide="!item.title">{{item.title}}</div>
           </div>
 
       </li>
@@ -44,7 +44,7 @@
     <tr ng-repeat="Identifier in standardData.indentifiers" >
       <td > {{Identifier.label}} ({{Identifier.name}}) :</td>
       <td>
-        <div class="btn btn-droppable" data-drop="true" ng-model='identifierList' jqyoui-droppable="{index: {{$index}}, onDrop:'dropCallback',onOver: 'overCallback', onOut: 'outCallback'}">
+        <div class="btn btn-droppable" data-drop="true" ng-model='identifierList' jqyoui-droppable="{index: {{$index}} }">
           <div class="btn btn-info btn-draggable" ng-show="identifierList[$index].title" data-drag="{{identifierList[$index].drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="identifierList" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{identifierList[$index].title}}</div>
         </div>
       </td>
@@ -65,12 +65,13 @@
     <tr ng-repeat="obsVariable in standardData.obsVariables" >
       <td> {{obsVariable.label}} ({{obsVariable.name}}) :</td>
       <td>
-        <div class="btn btn-droppable" data-drop="true" ng-model='testsList' jqyoui-droppable="{index: {{$index}}, onDrop:'dropCallback',onOver: 'overCallback', onOut: 'outCallback'}">
-          <div class="btn btn-info btn-draggable" ng-show="testsList[$index].title" data-drag="{{testsList[$index].drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="testsList" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{testsList[$index].title}}</div>
+        <div class="btn btn-droppable" data-drop="true" ng-model='testsList[testIndex-1]' jqyoui-droppable="{index: {{$index}} }">
+          <div class="btn btn-info btn-draggable" ng-show="testsList[testIndex-1][$index].title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="testsList[testIndex-1]" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{testsList[testIndex-1][$index].title}}</div>
         </div>
-
-      </td>
+        
+      </td>   
     </tr>
+    <div ng-repeat="test in testsList"><h1>测试</h1>{{test}}</div>
   </table>
   </div>
   <button class="btn btn-md btn-success" ng-click="addNewTest()">Add New Test</button>
