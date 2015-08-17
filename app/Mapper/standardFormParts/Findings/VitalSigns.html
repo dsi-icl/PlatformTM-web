@@ -1,10 +1,19 @@
 
 <div ng-controller="dragAndDropController">
-	<h2 class="domainTitleName">Vital Signs</h2>
+
+	<h2 class="domainTitleName">Domain : {{getDomainName()}}</h2>
 	<div class="seperateLine"></div>
 
 	<h3 class="domainSubName">Identifier</h3>
 	<table class="table table-bordered ">
+		<tr>
+			<td>
+				Domain Abbreviation (DOMAIN):
+			</td>
+			<td>
+				{{getShortName() }}
+			</td>
+		</tr>
 		<tr ng-repeat="Identifier in standardData.indentifiers" >
 			<td > {{Identifier.label}} ({{Identifier.name}}) :</td>
 			<td>
@@ -15,7 +24,7 @@
 
 		</tr>
 	</table>
-
+	<div class="seperateLine"></div>
 	<h3 class="domainSubName">Observation Variables</h3>
 
 	<div ng-repeat="testIndex in getTestNumber() track by $index">
@@ -30,14 +39,28 @@
 		</div>
 
 		<table class="table table-bordered ">
+			<tr>
+				<td>{{getDomainName()}} Test Short Name ({{getShortName() }}TESTCD):</td>
+				<td ><input style="width: 200px;"/></td>
+			</tr>
+			<tr>
+				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST):</td>
+				<td ><input style="width: 200px;"/></td>
+			</tr>
 			<tr ng-repeat="obsVariable in standardData.obsVariables" >
-				<td> {{obsVariable.label}} ({{obsVariable.name}}) :</td>
+
+				<td>  {{getDomainName()}} {{obsVariable.label}} ({{getShortName()}}{{obsVariable.name}}) :</td>
 				<td>
 					<div class="btn btn-droppable" data-drop="true" ng-model='testsList[testIndex-1]' jqyoui-droppable="{index: {{$index}} }">
 						<div class="btn btn-info btn-draggable" ng-show="testsList[testIndex-1][$index].title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="testsList[testIndex-1]" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{testsList[testIndex-1][$index].title}}</div>
 					</div>
 
 				</td>
+
+			</tr>
+			<tr>
+				<td>{{getDomainName()}} Result Unit ({{getShortName()}}ORRESU):</td>
+				<td ><input style="width: 200px;"/></td>
 			</tr>
 		</table>
 	</div>
