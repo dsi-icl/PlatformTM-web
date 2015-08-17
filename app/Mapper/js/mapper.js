@@ -9,14 +9,13 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/mapper',
             templateUrl: 'Mapper/main.html',
             controller: 'czDropDownMenuController',
-            data:{name:"mapper  Tjladjfal"}
+
         })
 
             //findings
             .state('mapper.VitalSigns',{
                 url:'/VitalSigns',
-                templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
-                 data:{name:"faldfjlasjfdlasjfdla"}
+                templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html'
             })
             .state('mapper.DrugAccountability',{
                  url:'/DrugAccountability',
@@ -194,6 +193,8 @@ mapperApp.controller('czDropDownMenuController',function($scope){
             {name:'Medical History (MH)', link:".MedicalHistory"}
 
         ];
+
+
     });
 
 
@@ -211,6 +212,7 @@ mapperApp.controller('czUserUploadsController', function($scope){
     $scope.setClickedRow = function(index){
         $scope.selectedRow = index;
     };
+
 
 });
 
@@ -260,6 +262,9 @@ mapperApp.controller('mappingFormSelectionController',function($scope){
         }
     };
 
+
+
+
 });
 
 
@@ -302,7 +307,7 @@ mapperApp.directive("addtests", function($compile){
 });
 
 
-mapperApp.controller('oneCtrl', function($scope, $timeout) {
+mapperApp.controller('dragAndDropController', function($scope, $timeout) {
 
     $scope.identifierList = [];
     $scope.testsList= [[]];
@@ -379,28 +384,28 @@ mapperApp.controller('oneCtrl', function($scope, $timeout) {
         $scope.testsList[$scope.testCount-1].push({});
     });
 
-    $scope.startCallback = function(event, ui, title) {
-        console.log('You started draggin: ' + title.title);
-        $scope.draggedTitle = title.title;
-    };
-
-    $scope.stopCallback = function(event, ui) {
-        console.log('Why did you stop draggin me?');
-    };
-
-    $scope.dragCallback = function(event, ui) {
-        console.log('hey, look I`m flying');
-    };
-
-    $scope.dropCallback = function(event, ui) {
-        console.log('hey, you dumped me :-(' , $scope.draggedTitle);
-    };
-
-    $scope.overCallback = function(event, ui) {
-        console.log('Look, I`m over you');
-    };
-
-    $scope.outCallback = function(event, ui) {
-        console.log('I`m not, hehe');
-    };
+    //$scope.startCallback = function(event, ui, title) {
+    //    console.log('You started draggin: ' + title.title);
+    //    $scope.draggedTitle = title.title;
+    //};
+    //
+    //$scope.stopCallback = function(event, ui) {
+    //
+    //};
+    //
+    //$scope.dragCallback = function(event, ui) {
+    //
+    //};
+    //
+    //$scope.dropCallback = function(event, ui) {
+    //    console.log('Drop down' , $scope.draggedTitle);
+    //};
+    //
+    //$scope.overCallback = function(event, ui) {
+    //
+    //};
+    //
+    //$scope.outCallback = function(event, ui) {
+    //  //  console.log('I`m not, hehe');
+    //};
 });

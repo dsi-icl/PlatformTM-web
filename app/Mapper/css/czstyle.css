@@ -1,0 +1,9 @@
+.selected {
+    background-color:black;
+    color:white;
+    font-weight:bold;
+}
+.variableNameTd{
+    width:400px;
+}
+
