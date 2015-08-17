@@ -6,4 +6,34 @@
 .variableNameTd{
     width:400px;
 }
+.btn-droppable { width: 200px; height: 45px; padding-left: 4px;margin-top:5px;background-color: #E9E9E9; }
+.btn-draggable { width: 180px;  }
+ul{
+    list-style-type: none;
+
+}
+
+.selected {
+    background-color:black;
+    color:white;
+    font-weight:bold;
+}
+
+.stepNum{
+    color:#39C2D7;
+    font-weight: bold;
+}
+.domainTitleName, .newTestTitle{
+    color:#39C2D7;
+    font-weight: bold;
+    text-align: center;
+}
+
+.domainSubName{
+    color: #000000;
+    font-weight: bold;
+}
+.seperateLine{
+    border-bottom:  solid #AAAAAA;
+}
 

@@ -1,7 +1,9 @@
 
 <div ng-controller="dragAndDropController">
+	<h2 class="domainTitleName">Vital Signs</h2>
+	<div class="seperateLine"></div>
 
-	<h4>Identifier</h4>
+	<h3 class="domainSubName">Identifier</h3>
 	<table class="table table-bordered ">
 		<tr ng-repeat="Identifier in standardData.indentifiers" >
 			<td > {{Identifier.label}} ({{Identifier.name}}) :</td>
@@ -14,13 +16,17 @@
 		</tr>
 	</table>
 
-	<h4>Observation Variables</h4>
+	<h3 class="domainSubName">Observation Variables</h3>
 
 	<div ng-repeat="testIndex in getTestNumber() track by $index">
 		<div>
-			<h4 ng-init="newTestIndex=testIndex">Test{{newTestIndex}}</h4>
-			<button class="btn btn-primary" ng-click="removeNewTest(newTestIndex)">Remove</button>
+			<h4 class="newTestTitle" ng-init="newTestIndex=testIndex">Test{{newTestIndex}}</h4>
 
+			<div style="text-align:right;">
+			<button type="button" class="btn btn-danger" ng-click="removeNewTest(newTestIndex)" >
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+			</button>
+			</div>
 		</div>
 
 		<table class="table table-bordered ">
@@ -35,9 +41,16 @@
 			</tr>
 		</table>
 	</div>
-	<button class="btn btn-md btn-success" ng-click="addNewTest()">Add New Test</button>
-
-	<div><button class="btn btn-md btn-success" ng-click="submitData()" >Submit</button></div>
+	<button class="btn btn-md btn-success" ng-click="addNewTest()">
+		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Test
+	</button>
+	<div class="seperateLine" style="padding-bottom:5px"></div>
+	<div style="padding-top: 5px;"></div>
+	<div style="text-align:center">
+		<button class="btn btn-md btn-success" ng-click="submitData()" style="width:150px;"  >
+			<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit
+		</button>
+	</div>
 
 </div>
 
