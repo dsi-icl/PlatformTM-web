@@ -8,14 +8,15 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
         .state('mapper', {
             url: '/mapper',
             templateUrl: 'Mapper/main.html',
-            controller: 'czDropDownMenuController'
+            controller: 'czDropDownMenuController',
+            data:{name:"mapper  Tjladjfal"}
         })
 
             //findings
             .state('mapper.VitalSigns',{
                 url:'/VitalSigns',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
-
+                 data:{name:"faldfjlasjfdlasjfdla"}
             })
             .state('mapper.DrugAccountability',{
                  url:'/DrugAccountability',
