@@ -6,8 +6,11 @@
 .variableNameTd{
     width:400px;
 }
-.btn-droppable { width: 200px; height: 45px; padding-left: 4px;margin-top:5px;background-color: #E9E9E9; }
-.btn-draggable { width: 180px;  }
+.btn-droppable {
+    width: 200px; height: 45px; padding-left: 4px;margin-top:5px;background-color: #E9E9E9;
+}
+.btn-draggable {
+    width: 180px;  }
 ul{
     list-style-type: none;
 

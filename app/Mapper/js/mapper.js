@@ -323,27 +323,26 @@ mapperApp.controller('czDropDownMenuController',function($scope){
             {name:'Protocol Deviations (DV)', link:".ProtocolDeviations"},
             {name:'Healthcare Encounters (HO)', link:".HealthcareEncounters"},
             {name:'Medical History (MH)', link:".MedicalHistory"}
-
         ];
 
     });
 
-
-mapperApp.controller('czUserUploadsController', function($scope){
-
-    $scope.userUplaodVariables =[
-        {selected:false, label:'patient_code'},
-        {selected:false, label: 'systolic_blood_pressure'},
-        {selected:false, label:'diastolic_blood_pressure'},
-        {selected:false, label:'heart_rate'},
-        {selected:false, label:'respiratory_rate'},
-        {selected:false, label:'visit_date'}
-    ];
-    //$scope.selectedRow=null;
-    //$scope.setClickedRow = function(index){
-    //    $scope.selectedRow = index;
-    //};
-});
+//
+//mapperApp.controller('czUserUploadsController', function($scope){
+//
+//    $scope.userUplaodVariables =[
+//        {selected:false, label:'patient_code'},
+//        {selected:false, label: 'systolic_blood_pressure'},
+//        {selected:false, label:'diastolic_blood_pressure'},
+//        {selected:false, label:'heart_rate'},
+//        {selected:false, label:'respiratory_rate'},
+//        {selected:false, label:'visit_date'}
+//    ];
+//    //$scope.selectedRow=null;
+//    //$scope.setClickedRow = function(index){
+//    //    $scope.selectedRow = index;
+//    //};
+//});
 
 
 
@@ -389,7 +388,22 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
     };
     $scope.getTestByIndex=function(testIndex){
         return $scope.testsList[testIndex-1];
-    }
+    };
+    $scope.getStandardName = function(userInput){
+        //if(userInput.contains('_')){
+
+        //First Replace Special Characters with Space :heart_test-> heart test
+        newUserInput =userInput;
+        if(/^[a-zA-Z0-9 ]*$/.test(newUserInput) == false) {
+            newUserInput = newUserInput.replace(/[&@\/\\#,+()$~%.'":*?<>_{}-]/g, ' ');
+        }
+        //Capitalized Each World's first character heart test -> Heart Test
+        newUserInput= newUserInput.replace(/\w\S*/g,
+            function(txt){
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        //newUserInput= newUserInput.charAt(0).toUpperCase() + newUserInput.slice(1);
+        return newUserInput;
+    };
 
     $scope.submitData = function(){
         return {
@@ -405,7 +419,9 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         { 'title': 'diastolic_blood_pressure', 'drag': true },
         { 'title': 'heart_rate', 'drag': true },
         { 'title': 'respiratory_rate', 'drag': true },
-        { 'title': 'visit_date', 'drag': true }
+        { 'title': 'visit_date', 'drag': true },
+        { 'title': 'TEST', 'drag': true },
+        { 'title': 'TE*@#$%ST', 'drag': true }
     ];
 
     $scope.standardData = {

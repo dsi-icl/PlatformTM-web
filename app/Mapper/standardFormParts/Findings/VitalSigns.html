@@ -33,9 +33,9 @@
 
 	<div ng-repeat="testIndex in getTestNumber() track by $index">
 		<div>
-			<h4 class="newTestTitle" ng-init="newTestIndex=testIndex">Test{{newTestIndex}}</h4>
+			<h4 class="newTestTitle" ng-init="newTestIndex=testIndex">Test {{newTestIndex}}</h4>
 
-			<div style="text-align:right;">
+			<div style="text-align:right;padding-bottom: 3px;">
 			<button type="button" class="btn btn-danger" ng-click="removeNewTest(newTestIndex)" >
 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
 			</button>
@@ -49,7 +49,7 @@
 			</tr>
 			<tr>
 				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST):</td>
-				<td ><input type="text" class="userInputBox" placeholder={{getTestByIndex(testIndex)[0].title}} /></td>
+				<td ><input type="text" class="userInputBox" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} /></td>
 			</tr>
 
 			<tr ng-repeat="obsVariable in standardData.obsVariables" >
@@ -80,6 +80,7 @@
 			<span class="glyphicon glyphicon-send" aria-hidden="true"></span>  &nbsp Submit
 		</button>
 	</div>
+	<div ui-view></div>
 
 </div>
 
