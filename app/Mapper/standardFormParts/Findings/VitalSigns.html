@@ -14,8 +14,12 @@
 				{{getShortName() }}
 			</td>
 		</tr>
+		<tr>
+			<td>Study Identifier (STUDYID):</td>
+			<td ><input class="userInputBox"/></td>
+		</tr>
 		<tr ng-repeat="Identifier in standardData.indentifiers" >
-			<td > {{Identifier.label}} ({{Identifier.name}}) :</td>
+			<td > {{Identifier.label}} ({{getShortName()}}{{Identifier.name}}) :</td>
 			<td>
 				<div class="btn btn-droppable" data-drop="true" ng-model='identifierList' jqyoui-droppable="{index: {{$index}} }">
 					<div class="btn btn-info btn-draggable" ng-show="identifierList[$index].title" data-drag="{{identifierList[$index].drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="identifierList" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:false}">{{identifierList[$index].title}}</div>
@@ -41,15 +45,17 @@
 		<table class="table table-bordered ">
 			<tr>
 				<td>{{getDomainName()}} Test Short Name ({{getShortName() }}TESTCD):</td>
-				<td ><input style="width: 200px;"/></td>
+				<td ><input class="userInputBox"/></td>
 			</tr>
 			<tr>
 				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST):</td>
-				<td ><input style="width: 200px;"/></td>
+				<td ><input type="text" class="userInputBox" placeholder={{getTestByIndex(testIndex)[0].title}} /></td>
 			</tr>
+
 			<tr ng-repeat="obsVariable in standardData.obsVariables" >
 
-				<td>  {{getDomainName()}} {{obsVariable.label}} ({{getShortName()}}{{obsVariable.name}}) :</td>
+				<td>  {{getDomainName()}} {{obsVariable.label}} ({{getShortName()}}{{obsVariable.name}}) :
+				</td>
 				<td>
 					<div class="btn btn-droppable" data-drop="true" ng-model='testsList[testIndex-1]' jqyoui-droppable="{index: {{$index}} }">
 						<div class="btn btn-info btn-draggable" ng-show="testsList[testIndex-1][$index].title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="testsList[testIndex-1]" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{testsList[testIndex-1][$index].title}}</div>
@@ -71,7 +77,7 @@
 	<div style="padding-top: 5px;"></div>
 	<div style="text-align:center">
 		<button class="btn btn-md btn-success" ng-click="submitData()" style="width:150px;"  >
-			<span class="glyphicon glyphicon-send" aria-hidden="true"></span> Submit
+			<span class="glyphicon glyphicon-send" aria-hidden="true"></span>  &nbsp Submit
 		</button>
 	</div>
 

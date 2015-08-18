@@ -194,7 +194,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
              //Interventions
             .state('mapper.ConcomitantMedications',{
                 url:'ConcomitantMedications',
-                templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
+                templateUrl:'Mapper/standardFormParts/Interventions/ConcomitantMedications.html',
                 controller:function($scope){
                 $scope.domainName='Concomitant Medications';
                 $scope.shortName ='CM';
@@ -380,12 +380,17 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
 
     $scope.removeNewTest = function(index){
         $scope.testNumberList.splice(index-1,1);
+
         $scope.testCount--;
 
     }
     $scope.getTestNumber = function() {
         return $scope.testNumberList;
     };
+    $scope.getTestByIndex=function(testIndex){
+        return $scope.testsList[testIndex-1];
+    }
+
     $scope.submitData = function(){
         return {
             "testNumber":$scope.testCount,
@@ -405,12 +410,12 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
 
     $scope.standardData = {
         "indentifiers":[
-            {"name":"STUDYID",
-                "label":"Study Identifier"
-            },
+            //{"name":"STUDYID",
+            //    "label":"Study Identifier"
+            //},
             {"name":"USUBJID",
                 "label":"Unique Subject Identifier"},
-            {"name":"VSSEQ",
+            {"name":"SEQ",
                 "label":"Sequence Number"}
         ],
 

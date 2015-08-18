@@ -36,4 +36,6 @@ ul{
 .seperateLine{
     border-bottom:  solid #AAAAAA;
 }
-
+.userInputBox{
+    width: 200px;
+}
