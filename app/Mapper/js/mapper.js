@@ -534,6 +534,8 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
 
     //Array to store the mapping variable for identifier
     $scope.identifierList = [];
+    //Array to store the static and input data for identifier
+    $scope.identifierInput={};
     // Two dimentional array to store all tests. Each test may contain several variables
     $scope.testsList= [[]];
 
@@ -548,6 +550,9 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
     };
     $scope.getShortName = function(){
         return  $scope.shortName;
+    };
+    $scope.getIdentifierInput =function(){
+        return $scope.identifierInput;
     };
 
     $scope.addNewTest =function(){
@@ -588,9 +593,9 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         return newUserInput;
     };
 
-    $scope.setTESTCD =function(testIndex,input){
-        $scope.testsList[testIndex-1].push({TESTCD:'input'});
-    }
+    //$scope.setTESTCD =function(testIndex,input){
+    //    $scope.testsList[testIndex-1].push({TESTCD:'input'});
+    //}
 
 
     $scope.submitData = function(){
@@ -611,6 +616,82 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         { 'title': 'TEST', 'drag': true },
         { 'title': 'TE*@#$%ST', 'drag': true }
     ];
+    $scope.upLoadVariablesDetails={
+        "patient_code":[
+            {"Value": "01-001"},
+            {"Value": "01-002"},
+            {"Value": "01-003"},
+            {"Value": "13-001"},
+            {"Value": "11-001"},
+            {"Value": "11-002"},
+            {"Value": "01-004"},
+            {"Value": "01-005"},
+            {"Value": "11-003"},
+            {"Value": "01-006"}
+        ],
+        "systolic_blood_pressure":[
+            {"Value": "182"},
+            {"Value": "112"},
+            {"Value": "127"},
+            {"Value": "100"},
+            {"Value": "134"},
+            {"Value": "135"},
+            {"Value": "128"},
+            {"Value": "125"},
+            {"Value": "132"},
+            {"Value": "132"}
+        ],
+        "diastolic_blood_pressure":[
+            {"Value": "112"},
+            {"Value": "81"},
+            {"Value": "74"},
+            {"Value": "65"},
+            {"Value": "77"},
+            {"Value": "77"},
+            {"Value": "87"},
+            {"Value": "80"},
+            {"Value": "80"},
+            {"Value": "87"}
+        ],
+        "heart_rate":[
+            {"Value": "96"},
+            {"Value": "38"},
+            {"Value": "68"},
+            {"Value": "76"},
+            {"Value": "60"},
+            {"Value": "66"},
+            {"Value": "62"},
+            {"Value": "68"},
+            {"Value": "71"},
+            {"Value": "84"}
+        ],
+        "respiratory_rate":[
+            {"Value": "10"},
+            {"Value": "10"},
+            {"Value": "11"},
+            {"Value": "20"},
+            {"Value": "13"},
+            {"Value": "8"},
+            {"Value": "12"},
+            {"Value": "14"},
+            {"Value": "12"},
+            {"Value": "13"}
+        ],
+        "visit_date":[
+            {"Value": "40665"},
+            {"Value": "40687"},
+            {"Value": "40686"},
+            {"Value": "40742"},
+            {"Value": "40759"},
+            {"Value": "40779"},
+            {"Value": "40773"},
+            {"Value": "40788"},
+            {"Value": "40812"},
+            {"Value": "40792"},
+        ]
+
+
+    };
 
     $scope.FindingStandardData = {
         "indentifiers":[
@@ -634,6 +715,7 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
             //    "label":"Test Result Unit"}
         ]
     };
+
     $scope.InterventionStandardData={
         "identifiers":[
             {"name":"USUBJID",

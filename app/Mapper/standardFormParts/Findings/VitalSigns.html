@@ -1,10 +1,11 @@
 
-<div ng-controller="dragAndDropController" ui-view>
+<div ng-controller="dragAndDropController">
 
 	<h2 class="domainTitleName">Domain : {{getDomainName()}}</h2>
 	<div class="seperateLine"></div>
 
 	<h3 class="domainSubName">Identifier</h3>
+	<form>
 	<table class="table table-bordered ">
 		<tr>
 			<td>
@@ -16,7 +17,7 @@
 		</tr>
 		<tr>
 			<td>Study Identifier (STUDYID):</td>
-			<td ng-model="STUDYID"><input class="userInputBox"/></td>
+			<td ><input class="userInputBox" ng-model="identifierInput.STUDYID" ></td>
 		</tr>
 		<tr ng-repeat="Identifier in FindingStandardData.indentifiers" >
 			<td > {{Identifier.label}} ({{getShortName()}}{{Identifier.name}}) :</td>
@@ -28,6 +29,11 @@
 
 		</tr>
 	</table>
+	</form>
+
+<pre>getIdentifier = "{{identifierInput}}</pre>
+
+
 	<div class="seperateLine"></div>
 	<h3 class="domainSubName">Observation Variables</h3>
 
@@ -43,14 +49,15 @@
 			</div>
 		</div>
 
+		<form>
 		<table class="table table-bordered ">
 			<tr>
 				<td>{{getDomainName()}} Test Short Name ({{getShortName()}}TESTCD):{{TESTCD}}</td>
-				<td ><input class="input" ng-model="TESTShortName"/></td>
+				<td ><input class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTShortName" /></td>
 			</tr>
 			<tr>
 				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST):</td>
-				<td ><input type="text" class="userInputBox" ng-model="TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} /></td>
+				<td ><input type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}}  /></td>
 			</tr>
 
 			<tr ng-repeat="obsVariable in FindingStandardData.obsVariables" >
@@ -59,7 +66,7 @@
 				</td>
 				<td>
 					<div class="btn btn-droppable" data-drop="true" ng-model='testsList[testIndex-1]' jqyoui-droppable="{index: {{$index}} }">
-						<div class="btn btn-info btn-draggable" ng-show="testsList[testIndex-1][$index].title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="testsList[testIndex-1]" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{testsList[testIndex-1][$index].title}}</div>
+						<div class="btn btn-info btn-draggable" ng-show=" testsList[testIndex-1][$index].title" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="testsList[testIndex-1]" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">{{testsList[testIndex-1][$index].title}}</div>
 					</div>
 
 				</td>
@@ -67,9 +74,10 @@
 			</tr>
 			<tr>
 				<td>{{getDomainName()}} Test Result Unit ({{getShortName()}}ORRESU):</td>
-				<td ><input style="width: 200px;"/></td>
+				<td ><input type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTResultUnit"  /></td>
 			</tr>
 		</table>
+		</form>
 	</div>
 
 	<button class="btn btn-md btn-success" ng-click="addNewTest()">
@@ -84,9 +92,8 @@
 		</button>
 		</a>
 	</div>
+	<div ui-view></div>
 
-
-	<!--<h1>{{testsList}}</h1>-->
 </div>
 
 <!--<input type="text" ng-model="name">{{name}}-->
