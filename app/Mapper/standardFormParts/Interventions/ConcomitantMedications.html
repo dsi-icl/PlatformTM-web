@@ -19,8 +19,8 @@
             <td>Study Identifier (STUDYID):</td>
             <td ><input class="userInputBox"/></td>
         </tr>
-        <tr ng-repeat="Identifier in standardData.indentifiers" >
-            <td > {{Identifier.label}} ({{Identifier.name}}) :</td>
+        <tr ng-repeat="Identifier in FindingStandardData.indentifiers" >
+            <td > {{Identifier.label}} ({{getShortName()}}{{Identifier.name}}) :</td>
             <td>
                 <div class="btn btn-droppable" data-drop="true" ng-model='identifierList' jqyoui-droppable="{index: {{$index}} }">
                     <div class="btn btn-info btn-draggable" ng-show="identifierList[$index].title" data-drag="{{identifierList[$index].drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="identifierList" jqyoui-draggable="{index: {{$index}},placeholder:true,animate:false}">{{identifierList[$index].title}}</div>
@@ -52,7 +52,7 @@
                 <td>{{getDomainName()}} Test Name ({{getShortName() }}TEST):</td>
                 <td ><input class="userInputBox"/></td>
             </tr>
-            <tr ng-repeat="obsVariable in standardData.obsVariables" >
+            <tr ng-repeat="obsVariable in FindingStandardData.obsVariables" >
 
                 <td>  {{getDomainName()}} {{obsVariable.label}} ({{getShortName()}}{{obsVariable.name}}) :</td>
                 <td>

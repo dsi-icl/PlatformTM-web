@@ -25,6 +25,10 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             //            shortName:'VS'};}}
 
             })
+                .state('mapper.VitalSigns.Submission',{
+                    url:'/DrugAccountability',
+                    templateUrl:'Mapper/standardFormParts/Findings/Table.html'
+                })
             .state('mapper.DrugAccountability',{
                  url:'/DrugAccountability',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -283,6 +287,23 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
 
+    //Help Section
+            .state('mapper.FindingsHelp',{
+                url:'/mapper/FindingsHelp',
+                templateUrl:'Mapper/standardFormParts/Help/Findings.html',
+
+            })
+            .state('mapper.InterventionsHelp',{
+                url:'/mapper/InterventionsHelp',
+                templateUrl:'Mapper/standardFormParts/Help/Interventions.html',
+
+            })
+            .state('mapper.EventsHelp',{
+                url:'/mapper/EventsHelp',
+                templateUrl:'Mapper/standardFormParts/Help/Events.html',
+
+            })
+
 });
 
 mapperApp.controller('czDropDownMenuController',function($scope){
@@ -371,7 +392,7 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         $scope.testCount++;
         $scope.testNumberList.push($scope.testCount);
         $scope.testsList.push([]);
-        angular.forEach($scope.standardData.obsVariables, function(val, key) {
+        angular.forEach($scope.FindingStandardData.obsVariables, function(val, key) {
             $scope.testsList[$scope.testCount-1].push({});
         });
 
@@ -405,6 +426,11 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         return newUserInput;
     };
 
+    $scope.setTESTCD =function(testIndex,input){
+        $scope.testsList[testIndex-1].push({TESTCD:'input'});
+    }
+
+
     $scope.submitData = function(){
         return {
             "testNumber":$scope.testCount,
@@ -424,7 +450,7 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         { 'title': 'TE*@#$%ST', 'drag': true }
     ];
 
-    $scope.standardData = {
+    $scope.FindingStandardData = {
         "indentifiers":[
             //{"name":"STUDYID",
             //    "label":"Study Identifier"
@@ -442,17 +468,23 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
             //    "label":"Test"},
             {"name":"ORRES",
                 "label":"Test Result"}
-            //{"name":"VSORRESU",
-            //    "label":"Vital Signs Test Result Unit"}
+            //{"name":"ORRESU",
+            //    "label":"Test Result Unit"}
         ]
-
-
     };
+    $scope.InterventionStandardData={
+        "identifiers":[
+            {"name":"USUBJID",
+                "label":"Unique Subject Identifier"},
+            {"name":"SEQ",
+                "label":"Sequence Number"}
+        ]
+    }
 
-    angular.forEach($scope.standardData.obsVariables, function(val, key) {
+    angular.forEach($scope.FindingStandardData.obsVariables, function(val, key) {
         $scope.identifierList.push({});
     });
-    angular.forEach($scope.standardData.obsVariables, function(val, key) {
+    angular.forEach($scope.FindingStandardData.obsVariables, function(val, key) {
         $scope.testsList[$scope.testCount-1].push({});
     });
 
@@ -483,7 +515,48 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
 });
 
 
+mapperApp.controller('helpMenuController',function($scope){
+    $scope.details={
+        "Findings":[
+            {"DomainName":"DA", "DomainDescription":"Drug Accountability. Data regarding the accountability of study drug, such as information on the receipt, dispensing, return, and packaging."},
+            {"DomainName":"DD", "DomainDescription":"Death Details. The domain is designed to hold supplemental data that are typically collected when a death occurs, such as the official cause of death. It does not replace existing data such as the SAE details in AE. Furthermore, it does not introduce a new requirement to collect information that is not already indicated as Good Clinical Practice or defined in regulatory guidelines. Instead, it provides a consistent place within SDTM to hold information that previously did not have a clearly defined home." },
+            {"DomainName":"EG", "DomainDescription":"Electrocardiogram Results. Findings related to the collection of ECG data, including position of the subject, method of evaluation, all cycle measurements and all findings from the ECG including an overall interpretation if collected or derived."},
+            {"DomainName":"IE", "DomainDescription":"Inclusion/Exclusion Criteria Not Met. The intent of the domain model is to only collect those criteria that cause the subject to be in violation of the inclusion/exclusion criteria not a response to each criterion." },
+            {"DomainName":"IS", "DomainDescription":"The Immunogenicity Specimen Assessments (IS). It is intended to be used only for data collected regarding the immunogenic potential of materials under study." },
+            {"DomainName":"LB", "DomainDescription":"Laboratory Test Findings. Laboratory test findings including, but is not limited to hematology, clinical chemistry and urinalysis data. This domain does not include microbiology or pharmacokinetic data, which are stored in separate domains." },
+            {"DomainName":"MB and MS", "DomainDescription":"Microbiology. MB - Microbiology specimen findings, including gram stain results, and organisms found. MS - This includes microbiology susceptibility test results, plus results of any other organism-related tests." },
+            {"DomainName":"MI", "DomainDescription":"Microscopic Findings. Microbiology specimen findings, including gram stain results, and organisms found." },
+            {"DomainName":"MO", "DomainDescription":"Morphology. Macroscopic results (e.g. size, shape, color, and abnormalities of body parts or specimens) that are seen by the naked eye or observed via procedures such as imaging modalities, endoscopy, or other technologies. Many morphology results are obtained from a procedure, although information about the procedure may or may not be collected." },
+            {"DomainName":"PC and PP", "DomainDescription":"Pharmacokinetics. PC - Concentrations of drugs/metabolites in fluids or tissues as a function of time. PP - Pharmacokinetic parameters derived from pharmacokinetic concentration-time (PC) data."  },
+            {"DomainName":"PE", "DomainDescription":"Physical Exam. Findings collected during a physical examination of the subject. It has findings that are discovered that are related to body systems. Does not include vital signs measurements, which are stored in the vital signs domain." },
+            {"DomainName":"QS", "DomainDescription":"Questionnaires. Questionnaires are named, stand-alone instruments designed to provide an assessment of a concept. Questionnaires have a defined standard structure, format, and content; consist of conceptually related items that are typically scored; and have documented methods for administration and analysis." },
+            {"DomainName":"RP", "DomainDescription":"Reproductive System Findings. The Reproductive System Findings domain captures all Reproductive information related to a subject." },
+            {"DomainName":"SC", "DomainDescription":"Subject Characteristics. The subject characteristics domain is for data not collected in other domains that is subject-related." },
+            {"DomainName":"SS", "DomainDescription":"Subject Status. Subject Status is for data relating to general subject characteristics that are evaluated periodically to determine if they have changed." },
+            {"DomainName":"TU, TR and RS", "DomainDescription":"Oncology Domains TU, TR, and RS. Assessment of the change in tumor burden is an important feature of the clinical evaluation of cancer therapeutics: both tumor shrinkage (objective response) and disease progression are useful endpoints in cancer clinical trials.The tumor package consists of three SDTM domains based on the SDTM Findings Observation Class. The three domains are related but each has a distinct purpose." },
+            {"DomainName":"TU", "DomainDescription":"The Tumor Identification (TU) - domain represents data that uniquely identifies tumors. The tumors are identified by an investigator and/or independent assessor and classified according to the disease assessment criteria." },
+            {"DomainName":"TR", "DomainDescription":"The Tumor Response (TR) - represents quantitative measurements and/or qualitative assessments of the tumors identified in the TU domain. These measurements are usually taken at baseline and then at each subsequent assessment to support response evaluations." },
+            {"DomainName":"SR", "DomainDescription":"The Disease Response (SR) - domain represents the response evaluation(s) determined from the data in TR. Data from other sources (in other SDTM domains) might also be used in an assessment of response." },
+        ],
 
+        "Interventions":[
+            {"DomainName":"CM", "DomainDescription":"Concomitant and Prior Medications. Case report form (CRF) data that captures the Concomitant and Prior Medications/Therapies used by the subject. Examples are the Concomitant Medications/Therapies given on an as needed basis and the usual Background Medications/Therapies given for a condition." },
+            {"DomainName":"EX", "DomainDescription":"Exposure Domains. Exposure (EX) - The Exposure domain model records the details of a subject's exposure to protocol-specified study treatment. Study treatment may be any intervention that is prospectively defined as a test material within a study, and is typically but not always supplied to the subject." },
+            {"DomainName":"EC", "DomainDescription":"Exposure Domains. Exposure as Collected (EC). The Exposure as Collected domain model reflects protocol-specified study treatment administrations, as collected." },
+            {"DomainName":"PR", "DomainDescription":"Procedures. The Procedures domain model reflects collected details describing a subject’s therapeutic and diagnostic procedures." },
+            {"DomainName":"SU", "DomainDescription":"Substance Use. The intent of the domain is to capture substance use information that may be used to assess the efficacy and/or safety of therapies that look to mitigate the effects of chronic substance use." }
+        ],
+
+        "Events":[
+            {"DomainName":"AE", "DomainDescription":"Adverse Events. Adverse events may be captured either as free text or a pre-specified list of terms." },
+            {"DomainName":"CE", "DomainDescription":"Clinical Events. A dataset used to capture clinical events of interest that would not be classified as adverse events." },
+            {"DomainName":"DS", "DomainDescription":"Disposition. A subject domain utilized for the submission of information encompassing and representing data, vocabulary or records related to disposition." },
+            {"DomainName":"DV", "DomainDescription":"Protocol Deviations. The intent of the domain is to capture protocol violations and deviations during the course of the study and will store only those criteria violation by or deviated from by the subject and not a response to each violation or deviation." },
+            {"DomainName":"HO", "DomainDescription":"Healthcare Encounters. The Healthcare Encounters dataset includes inpatient and outpatient healthcare events (e.g., hospitalizations, nursing home stay, rehabilitation facility stays, ambulatory surgery)." },
+            {"DomainName":"MH", "DomainDescription":"Medical History. The medical history dataset includes the subject's prior history at the start of the trial. Examples of subject medical history information could include general medical history, gynecological history, and primary diagnosis." }
+        ]
+    }
+});
 //mapperApp.controller('mappingFormSelectionController',function($scope){
 //    //$scope.selectedRow=null;
 //

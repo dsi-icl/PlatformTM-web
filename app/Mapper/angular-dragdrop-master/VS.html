@@ -41,7 +41,7 @@
 <div ng-controller="oneCtrl">
   <h4>Identifier</h4>
   <table class="table table-bordered ">
-    <tr ng-repeat="Identifier in standardData.indentifiers" >
+    <tr ng-repeat="Identifier in FindingStandardData.indentifiers" >
       <td > {{Identifier.label}} ({{Identifier.name}}) :</td>
       <td>
         <div class="btn btn-droppable" data-drop="true" ng-model='identifierList' jqyoui-droppable="{index: {{$index}} }">
@@ -62,7 +62,7 @@
     </div>
 
     <table class="table table-bordered ">
-    <tr ng-repeat="obsVariable in standardData.obsVariables" >
+    <tr ng-repeat="obsVariable in FindingStandardData.obsVariables" >
       <td> {{obsVariable.label}} ({{obsVariable.name}}) :</td>
       <td>
         <div class="btn btn-droppable" data-drop="true" ng-model='testsList[testIndex-1]' jqyoui-droppable="{index: {{$index}} }">

@@ -15,7 +15,7 @@ App.controller('oneCtrl', function($scope, $timeout) {
     $scope.testCount++;
     $scope.testNumberList.push($scope.testCount);
     $scope.testsList.push([]);
-    angular.forEach($scope.standardData.obsVariables, function(val, key) {
+    angular.forEach($scope.FindingStandardData.obsVariables, function(val, key) {
     $scope.testsList[$scope.testCount-1].push({});
   });
 
@@ -40,7 +40,7 @@ App.controller('oneCtrl', function($scope, $timeout) {
     { 'title': 'visit_date', 'drag': true }
   ];
 
-  $scope.standardData = {
+  $scope.FindingStandardData = {
         "domain":"VS",
 
           "indentifiers":[
@@ -65,10 +65,10 @@ App.controller('oneCtrl', function($scope, $timeout) {
 
     };
 
-angular.forEach($scope.standardData.obsVariables, function(val, key) {
+angular.forEach($scope.FindingStandardData.obsVariables, function(val, key) {
     $scope.identifierList.push({});
   });
-angular.forEach($scope.standardData.obsVariables, function(val, key) {
+angular.forEach($scope.FindingStandardData.obsVariables, function(val, key) {
     $scope.testsList[$scope.testCount-1].push({});
     
   });

@@ -16,9 +16,9 @@
 		</tr>
 		<tr>
 			<td>Study Identifier (STUDYID):</td>
-			<td ><input class="userInputBox"/></td>
+			<td ng-model="STUDYID"><input class="userInputBox"/></td>
 		</tr>
-		<tr ng-repeat="Identifier in standardData.indentifiers" >
+		<tr ng-repeat="Identifier in FindingStandardData.indentifiers" >
 			<td > {{Identifier.label}} ({{getShortName()}}{{Identifier.name}}) :</td>
 			<td>
 				<div class="btn btn-droppable" data-drop="true" ng-model='identifierList' jqyoui-droppable="{index: {{$index}} }">
@@ -32,9 +32,10 @@
 	<h3 class="domainSubName">Observation Variables</h3>
 
 	<div ng-repeat="testIndex in getTestNumber() track by $index">
+
 		<div>
 			<h4 class="newTestTitle" ng-init="newTestIndex=testIndex">Test {{newTestIndex}}</h4>
-
+			<!--<div class="seperateThinLine"></div>-->
 			<div style="text-align:right;padding-bottom: 3px;">
 			<button type="button" class="btn btn-danger" ng-click="removeNewTest(newTestIndex)" >
 				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
@@ -44,15 +45,15 @@
 
 		<table class="table table-bordered ">
 			<tr>
-				<td>{{getDomainName()}} Test Short Name ({{getShortName() }}TESTCD):</td>
-				<td ><input class="userInputBox"/></td>
+				<td>{{getDomainName()}} Test Short Name ({{getShortName()}}TESTCD):{{TESTCD}}</td>
+				<td ><input class="input" ng-model="TESTShortName"/></td>
 			</tr>
 			<tr>
 				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST):</td>
-				<td ><input type="text" class="userInputBox" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} /></td>
+				<td ><input type="text" class="userInputBox" ng-model="TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} /></td>
 			</tr>
 
-			<tr ng-repeat="obsVariable in standardData.obsVariables" >
+			<tr ng-repeat="obsVariable in FindingStandardData.obsVariables" >
 
 				<td>  {{getDomainName()}} {{obsVariable.label}} ({{getShortName()}}{{obsVariable.name}}) :
 				</td>
@@ -65,22 +66,39 @@
 
 			</tr>
 			<tr>
-				<td>{{getDomainName()}} Result Unit ({{getShortName()}}ORRESU):</td>
+				<td>{{getDomainName()}} Test Result Unit ({{getShortName()}}ORRESU):</td>
 				<td ><input style="width: 200px;"/></td>
 			</tr>
 		</table>
 	</div>
+
 	<button class="btn btn-md btn-success" ng-click="addNewTest()">
 		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Test
 	</button>
 	<div class="seperateLine" style="padding-bottom:5px"></div>
 	<div style="padding-top: 5px;"></div>
 	<div style="text-align:center">
+		<a ui-sref="Submission">
 		<button class="btn btn-md btn-success" ng-click="submitData()" style="width:150px;"  >
-			<span class="glyphicon glyphicon-send" aria-hidden="true"></span>  &nbsp Submit
+			<span class="glyphicon glyphicon-send" aria-hidden="true"></span> &nbsp Submit
 		</button>
+		</a>
 	</div>
-	<div ui-view></div>
+	<!--<h1>{{testsList}}</h1>-->
+	<!--<div ui-view>-->
+		<!--<table class="table table-bordered ">-->
+			<!--<tr>-->
+				<!--<td>DOMAIN</td>-->
+				<!--<td>STUDYID</td>-->
+				<!--<td>{{getShortName()}}USUBJID</td>-->
+				<!--<td>{{getShortName()}}SEQ</td>-->
+				<!--<td>{{getShortName()}}TESTCD</td>-->
+				<!--<td>{{getShortName()}}TEST</td>-->
+				<!--<td>{{getShortName()}}ORRES</td>-->
+				<!--<td>{{getShortName()}}ORRESU</td>-->
+			<!--</tr>-->
+		<!--</table>-->
+	<!--</div>-->
 
 </div>
 
