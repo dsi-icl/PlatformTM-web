@@ -20,15 +20,12 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.domainName='Vital Signs';
                 $scope.shortName ='VS';
             }
-            //reslove:{PlaceHolder:function(){return {
-            //            domainName:'VitalSigns',
-            //            shortName:'VS'};}}
-
             })
                 .state('mapper.VitalSigns.Submission',{
-                    url:'/DrugAccountability',
+                    url:'/Submission',
                     templateUrl:'Mapper/standardFormParts/Findings/Table.html'
                 })
+
             .state('mapper.DrugAccountability',{
                  url:'/DrugAccountability',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -727,6 +724,14 @@ mapperApp.controller('helpMenuController',function($scope){
         return $scope.photoName;
     }
 });
+
+
+
+
+
+
+
+
 //mapperApp.controller('mappingFormSelectionController',function($scope){
 //    //$scope.selectedRow=null;
 //

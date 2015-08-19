@@ -1,5 +1,5 @@
 
-<div ng-controller="dragAndDropController">
+<div ng-controller="dragAndDropController" ui-view>
 
 	<h2 class="domainTitleName">Domain : {{getDomainName()}}</h2>
 	<div class="seperateLine"></div>
@@ -78,28 +78,15 @@
 	<div class="seperateLine" style="padding-bottom:5px"></div>
 	<div style="padding-top: 5px;"></div>
 	<div style="text-align:center">
-		<a ui-sref="Submission">
+		<a ui-sref='.Submission'>
 		<button class="btn btn-md btn-success" ng-click="submitData()" style="width:150px;"  >
 			<span class="glyphicon glyphicon-send" aria-hidden="true"></span> &nbsp Submit
 		</button>
 		</a>
 	</div>
-	<!--<h1>{{testsList}}</h1>-->
-	<!--<div ui-view>-->
-		<!--<table class="table table-bordered ">-->
-			<!--<tr>-->
-				<!--<td>DOMAIN</td>-->
-				<!--<td>STUDYID</td>-->
-				<!--<td>{{getShortName()}}USUBJID</td>-->
-				<!--<td>{{getShortName()}}SEQ</td>-->
-				<!--<td>{{getShortName()}}TESTCD</td>-->
-				<!--<td>{{getShortName()}}TEST</td>-->
-				<!--<td>{{getShortName()}}ORRES</td>-->
-				<!--<td>{{getShortName()}}ORRESU</td>-->
-			<!--</tr>-->
-		<!--</table>-->
-	<!--</div>-->
 
+
+	<!--<h1>{{testsList}}</h1>-->
 </div>
 
 <!--<input type="text" ng-model="name">{{name}}-->
