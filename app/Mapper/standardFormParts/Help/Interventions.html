@@ -1,3 +1,4 @@
+
 <div ng-controller="helpMenuController">
     <div class ="col-md-8" style="width:700px;">
 
@@ -10,6 +11,8 @@
 
         </div>
     </div>
+
+    <div ui-view>
     <table class=" table table-hover">
 
         <tr>
@@ -17,8 +20,10 @@
             <td class="DomainDescription">Domain Description</td>
         </tr>
         <tr ng-repeat="intervention in details.Interventions">
-            <td class="DomainCode">{{intervention.DomainName}}</td>
+            <td class="DomainCode"><a ui-sref='.{{intervention.DomainName}}'>{{intervention.DomainName}}</a></td>
             <td class="DomainDescription">{{intervention.DomainDescription}}</td>
         </tr>
     </table>
+    </div>
+
 </div>

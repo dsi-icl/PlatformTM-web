@@ -288,21 +288,186 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             })
 
     //Help Section
+        //Findings:
             .state('mapper.FindingsHelp',{
-                url:'/mapper/FindingsHelp',
+                url:'/FindingsHelp',
                 templateUrl:'Mapper/standardFormParts/Help/Findings.html',
 
             })
+                .state('mapper.FindingsHelp.DA',{
+                    url:'/DA',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='DA';}
+                    })
+                .state('mapper.FindingsHelp.DD',{
+                    url:'/DD',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='DD';}
+                })
+                .state('mapper.FindingsHelp.EG',{
+                    url:'/EG',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='EG';}
+                })
+
+                .state('mapper.FindingsHelp.IE',{
+                    url:'/IE',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='IE';}
+                })
+                .state('mapper.FindingsHelp.IS',{
+                    url:'/IS',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='IS';}
+                })
+                .state('mapper.FindingsHelp.LB',{
+                    url:'/LB',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='LB';}
+                })
+                .state('mapper.FindingsHelp.MB and MS',{
+                    url:'/MB and MS',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='MB and MS';}
+                })
+                .state('mapper.FindingsHelp.MI',{
+                    url:'/MI',
+                     templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='MI';}
+                })
+                .state('mapper.FindingsHelp.MO',{
+                    url:'/MO',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='MO';}
+                })
+                .state('mapper.FindingsHelp.PC and PP',{
+                    url:'/PC and PP',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='PC and PP';}
+                })
+                .state('mapper.FindingsHelp.PE',{
+                    url:'/PE',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='PE';}
+                })
+                .state('mapper.FindingsHelp.QS',{
+                    url:'/QS',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='QS';}
+                })
+                .state('mapper.FindingsHelp.RP',{
+                    url:'/RP',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='RP';}
+                })
+                .state('mapper.FindingsHelp.SC',{
+                    url:'/SC',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='SC';}
+                })
+                .state('mapper.FindingsHelp.SS',{
+                    url:'/SS',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='SS';}
+                })
+                .state('mapper.FindingsHelp.TU TR and SR',{
+                    url:'/TU TR and SR',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='TU TR and SR';}
+                })
+                .state('mapper.FindingsHelp.TU',{
+                    url:'/TU',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='TU';}
+                })
+                .state('mapper.FindingsHelp.TR',{
+                    url:'/TR',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='TR';}
+                })
+                .state('mapper.FindingsHelp.SR',{
+                    url:'/SR',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='SR';}
+                })
+                .state('mapper.FindingsHelp.VS',{
+                    url:'/PE',
+                    templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
+                    controller:function($scope){$scope.photoName='VS';}
+                })
+
+
+        //Intervertions:
             .state('mapper.InterventionsHelp',{
                 url:'/mapper/InterventionsHelp',
-                templateUrl:'Mapper/standardFormParts/Help/Interventions.html',
-
+                templateUrl:'Mapper/standardFormParts/Help/Interventions.html'
             })
+
+                .state('mapper.InterventionsHelp.CM',{
+                    url:'/CM',
+                    templateUrl:'Mapper/standardFormParts/Help/Interventions/InterventionsDomain.html',
+                    controller:function($scope){$scope.photoName='CM';}
+                })
+                .state('mapper.InterventionsHelp.EX',{
+                    url:'/EX',
+                    templateUrl:'Mapper/standardFormParts/Help/Interventions/InterventionsDomain.html',
+                    controller:function($scope){$scope.photoName='EX';}
+                })
+                .state('mapper.InterventionsHelp.EC',{
+                    url:'/EC',
+                    templateUrl:'Mapper/standardFormParts/Help/Interventions/InterventionsDomain.html',
+                    controller:function($scope){$scope.photoName='EC';}
+                })
+                .state('mapper.InterventionsHelp.PR',{
+                    url:'/PR',
+                    templateUrl:'Mapper/standardFormParts/Help/Interventions/InterventionsDomain.html',
+                    controller:function($scope){$scope.photoName='PR';}
+                })
+                .state('mapper.InterventionsHelp.SU',{
+                    url:'/SU',
+                    templateUrl:'Mapper/standardFormParts/Help/Interventions/InterventionsDomain.html',
+                    controller:function($scope){$scope.photoName='SU';}
+                })
+
+
+
+        //Events:
             .state('mapper.EventsHelp',{
                 url:'/mapper/EventsHelp',
-                templateUrl:'Mapper/standardFormParts/Help/Events.html',
+                templateUrl:'Mapper/standardFormParts/Help/Events.html'
 
             })
+                .state('mapper.EventsHelp.AE',{
+                    url:'/AE',
+                    templateUrl:'Mapper/standardFormParts/Help/Events/EventsDomain.html',
+                    controller:function($scope){$scope.photoName='AE';}
+                })
+                .state('mapper.EventsHelp.CE',{
+                    url:'/CE',
+                    templateUrl:'Mapper/standardFormParts/Help/Events/EventsDomain.html',
+                    controller:function($scope){$scope.photoName='CE';}
+                })
+                .state('mapper.EventsHelp.DS',{
+                    url:'/DS',
+                    templateUrl:'Mapper/standardFormParts/Help/Events/EventsDomain.html',
+                    controller:function($scope){$scope.photoName='DS';}
+                })
+                .state('mapper.EventsHelp.DV',{
+                    url:'/DV',
+                    templateUrl:'Mapper/standardFormParts/Help/Events/EventsDomain.html',
+                    controller:function($scope){$scope.photoName='DV';}
+                })
+                .state('mapper.EventsHelp.HO',{
+                    url:'/HO',
+                    templateUrl:'Mapper/standardFormParts/Help/Events/EventsDomain.html',
+                    controller:function($scope){$scope.photoName='HO';}
+                })
+                .state('mapper.EventsHelp.MH',{
+                    url:'/MH',
+                    templateUrl:'Mapper/standardFormParts/Help/Events/EventsDomain.html',
+                    controller:function($scope){$scope.photoName='MH';}
+                })
+
 
 });
 
@@ -533,10 +698,11 @@ mapperApp.controller('helpMenuController',function($scope){
             {"DomainName":"RP", "DomainDescription":"Reproductive System Findings. The Reproductive System Findings domain captures all Reproductive information related to a subject." },
             {"DomainName":"SC", "DomainDescription":"Subject Characteristics. The subject characteristics domain is for data not collected in other domains that is subject-related." },
             {"DomainName":"SS", "DomainDescription":"Subject Status. Subject Status is for data relating to general subject characteristics that are evaluated periodically to determine if they have changed." },
-            {"DomainName":"TU, TR and RS", "DomainDescription":"Oncology Domains TU, TR, and RS. Assessment of the change in tumor burden is an important feature of the clinical evaluation of cancer therapeutics: both tumor shrinkage (objective response) and disease progression are useful endpoints in cancer clinical trials.The tumor package consists of three SDTM domains based on the SDTM Findings Observation Class. The three domains are related but each has a distinct purpose." },
+            {"DomainName":"TU TR and SR", "DomainDescription":"Oncology Domains TU, TR, and RS. Assessment of the change in tumor burden is an important feature of the clinical evaluation of cancer therapeutics: both tumor shrinkage (objective response) and disease progression are useful endpoints in cancer clinical trials.The tumor package consists of three SDTM domains based on the SDTM Findings Observation Class. The three domains are related but each has a distinct purpose." },
             {"DomainName":"TU", "DomainDescription":"The Tumor Identification (TU) - domain represents data that uniquely identifies tumors. The tumors are identified by an investigator and/or independent assessor and classified according to the disease assessment criteria." },
             {"DomainName":"TR", "DomainDescription":"The Tumor Response (TR) - represents quantitative measurements and/or qualitative assessments of the tumors identified in the TU domain. These measurements are usually taken at baseline and then at each subsequent assessment to support response evaluations." },
             {"DomainName":"SR", "DomainDescription":"The Disease Response (SR) - domain represents the response evaluation(s) determined from the data in TR. Data from other sources (in other SDTM domains) might also be used in an assessment of response." },
+            {"DomainName":"VS",   "DomainDescription":"Vital Signs. Measurements including but not limited to blood pressure, temperature, respiration, body surface area, BMI, height and weight."}
         ],
 
         "Interventions":[
@@ -555,6 +721,10 @@ mapperApp.controller('helpMenuController',function($scope){
             {"DomainName":"HO", "DomainDescription":"Healthcare Encounters. The Healthcare Encounters dataset includes inpatient and outpatient healthcare events (e.g., hospitalizations, nursing home stay, rehabilitation facility stays, ambulatory surgery)." },
             {"DomainName":"MH", "DomainDescription":"Medical History. The medical history dataset includes the subject's prior history at the start of the trial. Examples of subject medical history information could include general medical history, gynecological history, and primary diagnosis." }
         ]
+    };
+
+    $scope.getPhotoName = function(){
+        return $scope.photoName;
     }
 });
 //mapperApp.controller('mappingFormSelectionController',function($scope){

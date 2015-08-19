@@ -10,6 +10,7 @@
 
         </div>
     </div>
+    <div  ui-view>
     <table class=" table table-hover">
 
         <tr>
@@ -17,8 +18,9 @@
             <td class="DomainDescription">Domain Description</td>
         </tr>
         <tr ng-repeat="event in details.Events">
-            <td class="DomainCode">{{event.DomainName}}</td>
+            <td class="DomainCode"><a ui-sref='.{{event.DomainName}}'>{{event.DomainName}}</a></td>
             <td class="DomainDescription">{{event.DomainDescription}}</td>
         </tr>
     </table>
+    </div>
 </div>
