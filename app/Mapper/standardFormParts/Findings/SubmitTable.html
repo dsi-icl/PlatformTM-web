@@ -1,9 +1,10 @@
 <!--<h1>{{testsList}}</h1>-->
 
 <!--<h1>{{identifierList}}</h1>-->
+<div ui-view>
+<h1 class="domainTitleName">Result</h1>
+<div ng-repeat="testIndex in getTestNumber() track by $index" >
 
-<div ng-repeat="testIndex in getTestNumber() track by $index" ui-view>
-    <h1 class="domainTitleName">Result</h1>
 <table class="table table-bordered "style="width: 700px;">
     <tr>
         <th>DOMAIN</th>
@@ -42,13 +43,16 @@
     </tr>
 </table>
 
-    <div style="padding-top: 5px;"></div>
-    <div style="text-align:center">
-        <a ui-sref='.Confirm'>
-            <button class="btn btn-md btn-success" ng-click="submitData()" style="width:150px;"  >
-                <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> &nbsp Confirm
-            </button>
-        </a>
-    </div>
-    <div style="padding-top: 5px;"></div>
+
+</div>
+
+<div style="padding-top: 5px;"></div>
+<div style="text-align:center">
+    <a ui-sref='.Confirm'>
+        <button class="btn btn-md btn-success" ng-click="submitData()" style="width:150px;"  >
+            <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> &nbsp Confirm
+        </button>
+    </a>
+</div>
+<div style="padding-top: 5px;"></div>
 </div>
