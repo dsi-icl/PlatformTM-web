@@ -23,8 +23,13 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             })
                 .state('mapper.VitalSigns.Submission',{
                     url:'/Submission',
-                    templateUrl:'Mapper/standardFormParts/Findings/Table.html'
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
                 })
+
+                    .state('mapper.VitalSigns.Submission.Confirm',{
+                        url:'/Confirm',
+                        templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                    })
 
             .state('mapper.DrugAccountability',{
                  url:'/DrugAccountability',
@@ -597,101 +602,75 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
     //    $scope.testsList[testIndex-1].push({TESTCD:'input'});
     //}
 
+    $scope.getUploadEntities = function(index,name){
+        //return upLoadVariablesDetails.patient_code;
+        switch(name){
+            case "patient_code":
+                return $scope.uploadVariablesDetails[index].patient_code;
 
-    $scope.submitData = function(){
-        return {
-            "testNumber":$scope.testCount,
-            "identiferList":$scope.identifierList,
-            "testsList":$scope.testsList
+            case "systolic_blood_pressure":
+                return $scope.uploadVariablesDetails[index].systolic_blood_pressure;
+
+            case"diastolic_blood_pressure":
+                return $scope.uploadVariablesDetails[index].diastolic_blood_pressure;
+
+            case"heart_rate":
+                return $scope.uploadVariablesDetails[index].heart_rate;
+
+            case"respiratory_rate":
+                return $scope.uploadVariablesDetails[index].respiratory_rate;
+
+            case "visit_date":
+                return $scope.uploadVariablesDetails[index].visit_date;
+
+            default:
+                return {};
+
         }
     };
 
-    $scope.uploadVariables = [
-        { 'title': 'patient_code', 'drag': true },
-        { 'title': 'systolic_blood_pressure', 'drag': true },
-        { 'title': 'diastolic_blood_pressure', 'drag': true },
-        { 'title': 'heart_rate', 'drag': true },
-        { 'title': 'respiratory_rate', 'drag': true },
-        { 'title': 'visit_date', 'drag': true },
-        { 'title': 'TEST', 'drag': true },
-        { 'title': 'TE*@#$%ST', 'drag': true }
-    ];
-    $scope.upLoadVariablesDetails={
-        "patient_code":[
-            {"Value": "01-001"},
-            {"Value": "01-002"},
-            {"Value": "01-003"},
-            {"Value": "13-001"},
-            {"Value": "11-001"},
-            {"Value": "11-002"},
-            {"Value": "01-004"},
-            {"Value": "01-005"},
-            {"Value": "11-003"},
-            {"Value": "01-006"}
-        ],
-        "systolic_blood_pressure":[
-            {"Value": "182"},
-            {"Value": "112"},
-            {"Value": "127"},
-            {"Value": "100"},
-            {"Value": "134"},
-            {"Value": "135"},
-            {"Value": "128"},
-            {"Value": "125"},
-            {"Value": "132"},
-            {"Value": "132"}
-        ],
-        "diastolic_blood_pressure":[
-            {"Value": "112"},
-            {"Value": "81"},
-            {"Value": "74"},
-            {"Value": "65"},
-            {"Value": "77"},
-            {"Value": "77"},
-            {"Value": "87"},
-            {"Value": "80"},
-            {"Value": "80"},
-            {"Value": "87"}
-        ],
-        "heart_rate":[
-            {"Value": "96"},
-            {"Value": "38"},
-            {"Value": "68"},
-            {"Value": "76"},
-            {"Value": "60"},
-            {"Value": "66"},
-            {"Value": "62"},
-            {"Value": "68"},
-            {"Value": "71"},
-            {"Value": "84"}
-        ],
-        "respiratory_rate":[
-            {"Value": "10"},
-            {"Value": "10"},
-            {"Value": "11"},
-            {"Value": "20"},
-            {"Value": "13"},
-            {"Value": "8"},
-            {"Value": "12"},
-            {"Value": "14"},
-            {"Value": "12"},
-            {"Value": "13"}
-        ],
-        "visit_date":[
-            {"Value": "40665"},
-            {"Value": "40687"},
-            {"Value": "40686"},
-            {"Value": "40742"},
-            {"Value": "40759"},
-            {"Value": "40779"},
-            {"Value": "40773"},
-            {"Value": "40788"},
-            {"Value": "40812"},
-            {"Value": "40792"},
-        ]
-
-
+    $scope.getIdentifierTitle = function(){
+        return $scope.identifierList[0].title;
     };
+    //$scope.getIdentifier = function(){
+    //    var name = getIdentifierTitle();
+    //    getUplaodEntities(name);
+    //};
+
+    //$scope.submitData = function(){
+    //    return {
+    //        "testNumber":$scope.testCount,
+    //        "identiferList":$scope.identifierList,
+    //        "testsList":$scope.testsList
+    //    }
+    //};
+
+    $scope.uploadVariables = [
+        { 'title': "patient_code", 'drag': true },
+        { 'title': "systolic_blood_pressure", 'drag': true },
+        { 'title': "diastolic_blood_pressure", 'drag': true },
+        { 'title': "heart_rate", 'drag': true },
+        { 'title': "respiratory_rate", 'drag': true },
+        { 'title': "visit_date", 'drag': true },
+        { 'title': "TEST", 'drag': true },
+        { 'title': "TE*@#$%ST", 'drag': true }
+    ];
+    $scope.uploadVariablesDetails=[
+
+            {"patient_code":"01-001","systolic_blood_pressure":"182","diastolic_blood_pressure":"112","heart_rate":"96", "respiratory_rate":"10","visit_date":"1"},
+            {"patient_code":"01-002","systolic_blood_pressure":"112","diastolic_blood_pressure":"81","heart_rate":"38", "respiratory_rate":"11","visit_date":"2"},
+            {"patient_code":"01-003","systolic_blood_pressure":"127","diastolic_blood_pressure":"74","heart_rate":"68", "respiratory_rate":"12","visit_date":"3"},
+            {"patient_code":"13-001","systolic_blood_pressure":"100","diastolic_blood_pressure":"65","heart_rate":"76", "respiratory_rate":"13","visit_date":"4"},
+            {"patient_code":"11-001","systolic_blood_pressure":"134","diastolic_blood_pressure":"77","heart_rate":"60", "respiratory_rate":"14","visit_date":"5"},
+            {"patient_code":"01-002","systolic_blood_pressure":"135","diastolic_blood_pressure":"77","heart_rate":"68", "respiratory_rate":"15","visit_date":"6"},
+            {"patient_code":"01-004","systolic_blood_pressure":"128","diastolic_blood_pressure":"87","heart_rate":"62", "respiratory_rate":"16","visit_date":"7"},
+            {"patient_code":"01-005","systolic_blood_pressure":"125","diastolic_blood_pressure":"80","heart_rate":"65", "respiratory_rate":"17","visit_date":"8"},
+            {"patient_code":"11-003","systolic_blood_pressure":"132","diastolic_blood_pressure":"80","heart_rate":"76", "respiratory_rate":"18","visit_date":"9"},
+            {"patient_code":"01-006","systolic_blood_pressure":"132","diastolic_blood_pressure":"87","heart_rate":"80", "respiratory_rate":"19","visit_date":"10"},
+
+
+    ];
+
 
     $scope.FindingStandardData = {
         "indentifiers":[

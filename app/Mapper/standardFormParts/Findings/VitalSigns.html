@@ -1,5 +1,5 @@
 
-<div ng-controller="dragAndDropController">
+<div ng-controller="dragAndDropController" ui-view>
 
 	<h2 class="domainTitleName">Domain : {{getDomainName()}}</h2>
 	<div class="seperateLine"></div>
@@ -31,8 +31,6 @@
 	</table>
 	</form>
 
-<pre>getIdentifier = "{{identifierInput}}</pre>
-
 
 	<div class="seperateLine"></div>
 	<h3 class="domainSubName">Observation Variables</h3>
@@ -44,7 +42,7 @@
 			<!--<div class="seperateThinLine"></div>-->
 			<div style="text-align:right;padding-bottom: 3px;">
 			<button type="button" class="btn btn-danger" ng-click="removeNewTest(newTestIndex)" >
-				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Remove
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Remove
 			</button>
 			</div>
 		</div>
@@ -92,7 +90,7 @@
 		</button>
 		</a>
 	</div>
-	<div ui-view></div>
+
 
 </div>
 
