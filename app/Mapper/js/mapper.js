@@ -12,7 +12,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             data:{domainName:''}
         })
 
-            //findings
+            //findings -vital Signs
             .state('mapper.VitalSigns',{
                 url:'/VitalSigns',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -39,6 +39,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='DA';
             }
             })
+                .state('mapper.DrugAccountability.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                    .state('mapper.DrugAccountability.Submission.Confirm',{
+                        url:'/Confirm',
+                        templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                    })
+
             .state('mapper.DeathDetails',{
                 url:'/mapper/DeathDetails',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -47,6 +57,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='DD';
             }
             })
+                .state('mapper.DeathDetails.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.DeathDetails.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.ECGTestResults',{
                 url:'/mapper/ECGTestResults',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -55,6 +75,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='EG';
             }
             })
+                .state('mapper.ECGTestResults.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.ECGTestResults.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.InclusionExclusionCritierionNotMet',{
                 url:'/mapper/InclusionExclusionCritierionNotMet',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -63,6 +93,15 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='IE';
             }
             })
+                .state('mapper.InclusionExclusionCritierionNotMet.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.InclusionExclusionCritierionNotMet.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
 
             .state('mapper.ImmunogenicitySpecimenAccessments',{
                 url:'/mapper/ImmunogenicitySpecimenAccessments',
@@ -72,6 +111,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='IS';
             }
             })
+                .state('mapper.ImmunogenicitySpecimenAccessments.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.ImmunogenicitySpecimenAccessments.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.LaboratoryTestResults',{
                 url:'/mapper/LaboratoryTestResults',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -80,6 +129,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='LB';
             }
             })
+                .state('mapper.LaboratoryTestResults.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.LaboratoryTestResults.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.MicrobiologySpecimen',{
                 url:'/mapper/MicrobiologySpecimen',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -88,6 +147,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='MB';
             }
             })
+                .state('mapper.MicrobiologySpecimen.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.MicrobiologySpecimen.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.MicroscopicFindings',{
                 url:'/mapper/MicroscopicFindings',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -96,6 +165,15 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='MI';
             }
             })
+                .state('mapper.MicroscopicFindings.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.MicroscopicFindings.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
 
             .state('mapper.Morphology',{
                 url:'/mapper/Morphology',
@@ -105,6 +183,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='MO';
             }
             })
+                .state('mapper.Morphology.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.Morphology.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.MicrobiologySusceptibilityTest',{
                 url:'/mapper/MicrobiologySusceptibilityTest',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -113,6 +201,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='MS';
             }
             })
+                .state('mapper.MicrobiologySusceptibilityTest.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.MicrobiologySusceptibilityTest.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.PKConcentrations',{
                 url:'/mapper/PKConcentrations',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -121,6 +219,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='PC';
             }
             })
+                .state('mapper.PKConcentrations.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.PKConcentrations.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.PKParameters',{
                 url:'/mapper/PKParameters',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -129,6 +237,15 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='PP';
             }
             })
+                .state('mapper.PKParameters.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.PKParameters.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
 
             .state('mapper.PhysicalExamination',{
                 url:'/mapper/PhysicalExamination',
@@ -138,6 +255,15 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='PE';
             }
             })
+                .state('mapper.PhysicalExamination.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.PhysicalExamination.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
 
             .state('mapper.Questionnaires',{
                 url:'/mapper/Questionnaires',
@@ -147,6 +273,15 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='QS';
             }
             })
+                .state('mapper.Questionnaires.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.Questionnaires.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
 
             .state('mapper.ReproductiveSystemFindings',{
                 url:'/mapper/ReproductiveSystemFindings',
@@ -156,6 +291,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='RP';
             }
             })
+                .state('mapper.ReproductiveSystemFindings.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.ReproductiveSystemFindings.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.DiseaseResponse',{
                 url:'/mapper/DiseaseResponse',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -164,6 +309,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='RS';
             }
             })
+                .state('mapper.DiseaseResponse.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.DiseaseResponse.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.SubjectCharacteristics',{
                 url:'/mapper/SubjectCharacteristics',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -172,6 +327,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='SC';
             }
             })
+                .state('mapper.SubjectCharacteristics.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.SubjectCharacteristics.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.SubjectStatus',{
                 url:'/mapper/SubjectStatus',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -180,6 +345,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='SS';
             }
             })
+                .state('mapper.SubjectStatus.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.SubjectStatus.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.TumorIdentification',{
                 url:'/mapper/TumorIdentification',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -188,6 +363,16 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='TU';
             }
             })
+                .state('mapper.TumorIdentification.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.TumorIdentification.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
             .state('mapper.TumorResults',{
                 url:'/mapper/TumorResults',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
@@ -196,6 +381,17 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 $scope.shortName ='TR';
             }
             })
+                .state('mapper.TumorResults.Submission',{
+                    url:'/Submission',
+                    templateUrl:'Mapper/standardFormParts/Findings/SubmitTable.html'
+                })
+
+                .state('mapper.TumorResults.Submission.Confirm',{
+                    url:'/Confirm',
+                    templateUrl:'Mapper/standardFormParts/Findings/ConfirmTable.html'
+                })
+
+
 
              //Interventions
             .state('mapper.ConcomitantMedications',{
@@ -515,22 +711,7 @@ mapperApp.controller('czDropDownMenuController',function($scope){
 
     });
 
-//
-//mapperApp.controller('czUserUploadsController', function($scope){
-//
-//    $scope.userUplaodVariables =[
-//        {selected:false, label:'patient_code'},
-//        {selected:false, label: 'systolic_blood_pressure'},
-//        {selected:false, label:'diastolic_blood_pressure'},
-//        {selected:false, label:'heart_rate'},
-//        {selected:false, label:'respiratory_rate'},
-//        {selected:false, label:'visit_date'}
-//    ];
-//    //$scope.selectedRow=null;
-//    //$scope.setClickedRow = function(index){
-//    //    $scope.selectedRow = index;
-//    //};
-//});
+
 
 
 
@@ -629,13 +810,12 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         }
     };
 
-    $scope.getIdentifierTitle = function(){
+    $scope.getIdentifierFirstVar = function(){
         return $scope.identifierList[0].title;
     };
-    //$scope.getIdentifier = function(){
-    //    var name = getIdentifierTitle();
-    //    getUplaodEntities(name);
-    //};
+    $scope.getIdentifierSecondVar = function(){
+        return $scope.identifierList[1].title;
+    };
 
     //$scope.submitData = function(){
     //    return {
@@ -711,30 +891,6 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         $scope.testsList[$scope.testCount-1].push({});
     });
 
-    //$scope.startCallback = function(event, ui, title) {
-    //    console.log('You started draggin: ' + title.title);
-    //    $scope.draggedTitle = title.title;
-    //};
-    //
-    //$scope.stopCallback = function(event, ui) {
-    //
-    //};
-    //
-    //$scope.dragCallback = function(event, ui) {
-    //
-    //};
-    //
-    //$scope.dropCallback = function(event, ui) {
-    //    console.log('Drop down' , $scope.draggedTitle);
-    //};
-    //
-    //$scope.overCallback = function(event, ui) {
-    //
-    //};
-    //
-    //$scope.outCallback = function(event, ui) {
-    //  //  console.log('I`m not, hehe');
-    //};
 });
 
 
@@ -785,13 +941,6 @@ mapperApp.controller('helpMenuController',function($scope){
         return $scope.photoName;
     }
 });
-
-
-
-
-
-
-
 
 //mapperApp.controller('mappingFormSelectionController',function($scope){
 //    //$scope.selectedRow=null;
@@ -880,3 +1029,19 @@ mapperApp.controller('helpMenuController',function($scope){
 //});
 
 
+//
+//mapperApp.controller('czUserUploadsController', function($scope){
+//
+//    $scope.userUplaodVariables =[
+//        {selected:false, label:'patient_code'},
+//        {selected:false, label: 'systolic_blood_pressure'},
+//        {selected:false, label:'diastolic_blood_pressure'},
+//        {selected:false, label:'heart_rate'},
+//        {selected:false, label:'respiratory_rate'},
+//        {selected:false, label:'visit_date'}
+//    ];
+//    //$scope.selectedRow=null;
+//    //$scope.setClickedRow = function(index){
+//    //    $scope.selectedRow = index;
+//    //};
+//});
