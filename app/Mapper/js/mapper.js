@@ -817,6 +817,17 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         return $scope.identifierList[1].title;
     };
 
+    //$scope.isTestNameInput = "false";
+    ////$scope.isStudyIdentifierInput= false;
+    //$scope.reverseTestNameInput =function(){
+    //    $scope.isTestNameInput = !$scope.isTestNameInput;
+    //}
+    //$scope.setTestNameInput= function(input){
+    //    $scope.isTestNameInput = input;
+    //}
+    //$scope.showSubmitButton = function(){
+    //    return $scope.isTestNameInput;
+    //}
     //$scope.submitData = function(){
     //    return {
     //        "testNumber":$scope.testCount,

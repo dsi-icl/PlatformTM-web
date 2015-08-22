@@ -5,7 +5,7 @@
 	<div class="seperateLine"></div>
 
 	<h3 class="domainSubName">Identifier</h3>
-	<form>
+	<form name="domainForm">
 	<table class="table table-bordered ">
 		<tr>
 			<td>
@@ -29,7 +29,7 @@
 
 		</tr>
 	</table>
-	</form>
+
 
 
 	<div class="seperateLine"></div>
@@ -47,15 +47,19 @@
 			</div>
 		</div>
 
-		<form>
+
 		<table class="table table-bordered ">
+			<span class="error" ng-show="domainForm.TestShortNameInput.$error.maxlength"><p>Only 8 Characters Allowed For {{getDomainName()}} Test Short Name</p></span>
+			<span class="error" ng-show="domainForm.TestNameInput.$error.maxlength" ><p>Only 40 Characters Allowed For {{getDomainName()}} Test Name</p></span>
+
 			<tr>
 				<td>{{getDomainName()}} Test Short Name ({{getShortName()}}TESTCD):{{TESTCD}}</td>
-				<td ><input class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTShortName" /></td>
+				<td ><input name ="TestShortNameInput" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTShortName" ng-maxlength="8" /></td>
+
 			</tr>
 			<tr>
-				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST):</td>
-				<td ><input type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}}  /></td>
+				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST)*:</td>
+				<td ><input name="TestNameInput" type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} ng-maxlength="40" /></td>
 			</tr>
 
 			<tr ng-repeat="obsVariable in FindingStandardData.obsVariables" >
@@ -75,22 +79,22 @@
 				<td ><input type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTResultUnit"  /></td>
 			</tr>
 		</table>
-		</form>
-	</div>
 
-	<button class="btn btn-md btn-success" ng-click="addNewTest()">
-		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Test
-	</button>
-	<div class="seperateLine" style="padding-bottom:5px"></div>
-	<div style="padding-top: 5px;"></div>
-	<div style="text-align:center">
-		<a ui-sref='.Submission'>
-		<button class="btn btn-md btn-success" style="width:150px;"  >
-			<span class="glyphicon glyphicon-send" aria-hidden="true"></span> &nbsp Submit
+
+		<button class="btn btn-md btn-success" ng-click="addNewTest()">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Test
 		</button>
-		</a>
+		<div class="seperateLine" style="padding-bottom:5px"></div>
+		<div style="padding-top: 5px;"></div>
+		<div style="text-align:center" >
+			<a ui-sref='.Submission'>
+			<button class="btn btn-md btn-success" style="width:150px;" >
+				<span class="glyphicon glyphicon-send" aria-hidden="true" ></span> &nbsp Submit
+			</button>
+			</a>
+		</div>
 	</div>
-
+	</form>
 
 </div>
 
