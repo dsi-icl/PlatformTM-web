@@ -817,7 +817,7 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         return $scope.identifierList[1].title;
     };
 
-    //$scope.isTestNameInput = "false";
+    //$scope.isTestNameInput = false;
     ////$scope.isStudyIdentifierInput= false;
     //$scope.reverseTestNameInput =function(){
     //    $scope.isTestNameInput = !$scope.isTestNameInput;

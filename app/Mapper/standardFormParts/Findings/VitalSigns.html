@@ -49,17 +49,17 @@
 
 
 		<table class="table table-bordered ">
-			<span class="error" ng-show="domainForm.TestShortNameInput.$error.maxlength"><p>Only 8 Characters Allowed For {{getDomainName()}} Test Short Name</p></span>
-			<span class="error" ng-show="domainForm.TestNameInput.$error.maxlength" ><p>Only 40 Characters Allowed For {{getDomainName()}} Test Name</p></span>
+			<span class="error" ng-show="domainForm.TestShortNameInput.$error.maxlength"><p>*Only 8 Characters Allowed For {{getDomainName()}} Test Short Name</p></span>
+			<span class="error" ng-show="domainForm.TestNameInput.$error.maxlength" ><p>*Only 40 Characters Allowed For {{getDomainName()}} Test Name</p></span>
 
 			<tr>
-				<td>{{getDomainName()}} Test Short Name ({{getShortName()}}TESTCD):{{TESTCD}}</td>
+				<td>{{getDomainName()}} Test Short Name ({{getShortName()}}TESTCD)*:{{TESTCD}}</td>
 				<td ><input name ="TestShortNameInput" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTShortName" ng-maxlength="8" /></td>
 
 			</tr>
 			<tr>
 				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST)*:</td>
-				<td ><input name="TestNameInput" type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} ng-maxlength="40" /></td>
+				<td ><input name="TestNameInput" type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} ng-maxlength="40" required /></td>
 			</tr>
 
 			<tr ng-repeat="obsVariable in FindingStandardData.obsVariables" >
@@ -79,7 +79,8 @@
 				<td ><input type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTResultUnit"  /></td>
 			</tr>
 		</table>
-
+	</div>
+	</form>
 
 		<button class="btn btn-md btn-success" ng-click="addNewTest()">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add New Test
@@ -88,13 +89,12 @@
 		<div style="padding-top: 5px;"></div>
 		<div style="text-align:center" >
 			<a ui-sref='.Submission'>
-			<button class="btn btn-md btn-success" style="width:150px;" >
+			<button class="btn btn-md btn-success" style="width:150px;" ng-show="!domainForm.TestNameInput.$error.required && !domainForm.TestShortNameInput.$error.required ">
 				<span class="glyphicon glyphicon-send" aria-hidden="true" ></span> &nbsp Submit
 			</button>
 			</a>
 		</div>
-	</div>
-	</form>
+
 
 </div>
 

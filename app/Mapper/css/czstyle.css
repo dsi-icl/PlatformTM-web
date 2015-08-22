@@ -58,3 +58,8 @@ ul{
 .DomainImg{
     width: 800px;
 }
+
+.error{
+    color: #942a25;
+    font-size:small;
+}
