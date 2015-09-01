@@ -16,10 +16,10 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Study Identifier (STUDYID):</td>
-			<td ><input class="userInputBox" ng-model="identifierInput.STUDYID" ></td>
+			<td>Study Identifier (STUDYID)*:</td>
+			<td ><input name="StudyID" class="userInputBox" ng-model="identifierInput.STUDYID" required/></td>
 		</tr>
-		<tr ng-repeat="Identifier in FindingStandardData.indentifiers" >
+		<tr ng-repeat="Identifier in FindingStandardData.identifiers" >
 			<td > {{Identifier.label}} ({{getShortName()}}{{Identifier.name}}) :</td>
 			<td>
 				<div class="btn btn-droppable" data-drop="true" ng-model='identifierList' jqyoui-droppable="{index: {{$index}} }">
@@ -89,7 +89,7 @@
 		<div style="padding-top: 5px;"></div>
 		<div style="text-align:center" >
 			<a ui-sref='.Submission'>
-			<button class="btn btn-md btn-success" style="width:150px;" ng-show="!domainForm.TestNameInput.$error.required && !domainForm.TestShortNameInput.$error.required ">
+			<button class="btn btn-md btn-success" style="width:150px;" ng-show="!domainForm.TestNameInput.$error.required && !domainForm.TestShortNameInput.$error.required  && !domainForm.StudyID.$error.required" >
 				<span class="glyphicon glyphicon-send" aria-hidden="true" ></span> &nbsp Submit
 			</button>
 			</a>

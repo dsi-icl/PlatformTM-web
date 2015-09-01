@@ -46,10 +46,9 @@
 
     <div class="container" id="myownform">
 
-        <!-- **************************** User Upload Form *******************************-->
-        <div class ="col-md-3" style="padding-left: 0px;">
-
-
+        <!-- **************************** User Upload Data Overview *******************************-->
+        <div class ="col-md-3" style="padding-left: 20px;">
+            <h2 class="domainTitleName">Upload Data</h2>
             <div ng-controller="dragAndDropController">
                 <ul  style="padding-left: 0px;">
                     <li ng-repeat="item in uploadVariables">
@@ -65,7 +64,7 @@
         <!-- **************************** User Upload Form *******************************-->
 
 
-            <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+            <!-- THIS IS WHERE WILL INJECT A DOMAIN ============================== -->
 
         <div style="height:450px;overflow:auto;" ui-view >
 
@@ -83,7 +82,7 @@
 
 
                             <h3 class="stepNum">Step 2</h3>
-                            <p>Choose the corresponding domain in a Classto map your data.</p>
+                            <p>Choose a Domain in a Class to map your data.</p>
 
 
                             <h3 class="stepNum">Step 3</h3>

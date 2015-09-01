@@ -6,7 +6,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         // route to show our basic form (/form)
         .state('mapper', {
-            url: '/mapper',
+            url: '/Mapper',
             templateUrl: 'Mapper/main.html',
             controller: 'dragAndDropController',
             data:{domainName:''}
@@ -50,7 +50,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                     })
 
             .state('mapper.DeathDetails',{
-                url:'/mapper/DeathDetails',
+                url:'/DeathDetails',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Death Details';
@@ -68,7 +68,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.ECGTestResults',{
-                url:'/mapper/ECGTestResults',
+                url:'/ECGTestResults',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='ECG Test Results';
@@ -86,7 +86,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.InclusionExclusionCritierionNotMet',{
-                url:'/mapper/InclusionExclusionCritierionNotMet',
+                url:'/InclusionExclusionCritierionNotMet',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Inclusion/Exclusion Critierion Not Met';
@@ -104,7 +104,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.ImmunogenicitySpecimenAccessments',{
-                url:'/mapper/ImmunogenicitySpecimenAccessments',
+                url:'/ImmunogenicitySpecimenAccessments',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Immunogenicity Specimen Accessments ';
@@ -122,7 +122,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.LaboratoryTestResults',{
-                url:'/mapper/LaboratoryTestResults',
+                url:'/LaboratoryTestResults',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Laboratory Test Results';
@@ -140,7 +140,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.MicrobiologySpecimen',{
-                url:'/mapper/MicrobiologySpecimen',
+                url:'/MicrobiologySpecimen',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Microbiology Specimen';
@@ -158,7 +158,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.MicroscopicFindings',{
-                url:'/mapper/MicroscopicFindings',
+                url:'/MicroscopicFindings',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Microscopic Findings';
@@ -176,7 +176,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.Morphology',{
-                url:'/mapper/Morphology',
+                url:'/Morphology',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Morphology';
@@ -194,7 +194,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.MicrobiologySusceptibilityTest',{
-                url:'/mapper/MicrobiologySusceptibilityTest',
+                url:'/MicrobiologySusceptibilityTest',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Microbiology Susceptibility Test';
@@ -212,7 +212,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.PKConcentrations',{
-                url:'/mapper/PKConcentrations',
+                url:'/PKConcentrations',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='PK Concentrations';
@@ -230,7 +230,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.PKParameters',{
-                url:'/mapper/PKParameters',
+                url:'/PKParameters',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='PK Parameters';
@@ -248,7 +248,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.PhysicalExamination',{
-                url:'/mapper/PhysicalExamination',
+                url:'/PhysicalExamination',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Physical Examination';
@@ -266,7 +266,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.Questionnaires',{
-                url:'/mapper/Questionnaires',
+                url:'/Questionnaires',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Questionnaires';
@@ -284,7 +284,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.ReproductiveSystemFindings',{
-                url:'/mapper/ReproductiveSystemFindings',
+                url:'/ReproductiveSystemFindings',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Reproductive System Findings';
@@ -302,7 +302,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.DiseaseResponse',{
-                url:'/mapper/DiseaseResponse',
+                url:'/DiseaseResponse',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Disease Response';
@@ -320,7 +320,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.SubjectCharacteristics',{
-                url:'/mapper/SubjectCharacteristics',
+                url:'/SubjectCharacteristics',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Subject Characteristics';
@@ -338,7 +338,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.SubjectStatus',{
-                url:'/mapper/SubjectStatus',
+                url:'/SubjectStatus',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Subject Status';
@@ -356,7 +356,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.TumorIdentification',{
-                url:'/mapper/TumorIdentification',
+                url:'/TumorIdentification',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Tumor Identification';
@@ -374,7 +374,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                 })
 
             .state('mapper.TumorResults',{
-                url:'/mapper/TumorResults',
+                url:'/TumorResults',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Tumor Results';
@@ -395,7 +395,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
 
              //Interventions
             .state('mapper.ConcomitantMedications',{
-                url:'ConcomitantMedications',
+                url:'/ConcomitantMedications',
                 templateUrl:'Mapper/standardFormParts/Interventions/ConcomitantMedications.html',
                 controller:function($scope){
                 $scope.domainName='Concomitant Medications';
@@ -403,7 +403,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.ExposureasCollected',{
-                url:'ExposureasCollected',
+                url:'/ExposureasCollected',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Exposureas Collected';
@@ -411,7 +411,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.Exposure',{
-                url:'Exposure',
+                url:'/Exposure',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Exposure';
@@ -419,7 +419,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.SubstanceUse',{
-                url:'SubstanceUse',
+                url:'/SubstanceUse',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Substance Use';
@@ -427,7 +427,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.Procedures',{
-                url:'Procedures',
+                url:'/Procedures',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Procedures';
@@ -437,7 +437,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
 
             //Events
             .state('mapper.AdverseEvents',{
-                url:'/mapper/AdverseEvents',
+                url:'/AdverseEvents',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Adverse Events';
@@ -445,7 +445,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.ClinicalEvents',{
-                url:'/mapper/ClinicalEvents',
+                url:'/ClinicalEvents',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Clinical Events';
@@ -453,7 +453,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.Disposition',{
-                url:'/mapper/Disposition',
+                url:'/Disposition',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Disposition';
@@ -461,7 +461,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.ProtocolDeviations',{
-                url:'/mapper/ProtocolDeviations',
+                url:'/ProtocolDeviations',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Protocol Deviations';
@@ -469,7 +469,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.HealthcareEncounters',{
-                url:'/mapper/HealthcareEncounters',
+                url:'/HealthcareEncounters',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='Healthcare Encounters';
@@ -477,7 +477,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
             }
             })
             .state('mapper.MedicalHistory',{
-                url:'/mapper/MedicalHistory',
+                url:'/MedicalHistory',
                 templateUrl:'Mapper/standardFormParts/Findings/VitalSigns.html',
                 controller:function($scope){
                 $scope.domainName='MedicalHistory';
@@ -589,7 +589,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
                     controller:function($scope){$scope.photoName='SR';}
                 })
                 .state('mapper.FindingsHelp.VS',{
-                    url:'/PE',
+                    url:'/VS',
                     templateUrl:'Mapper/standardFormParts/Help/Findings/FindingsDomain.html',
                     controller:function($scope){$scope.photoName='VS';}
                 })
@@ -753,10 +753,9 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
 
     $scope.removeNewTest = function(index){
         $scope.testNumberList.splice(index-1,1);
-
         $scope.testCount--;
 
-    }
+    };
     $scope.getTestNumber = function() {
         return $scope.testNumberList;
     };
@@ -835,17 +834,18 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
     //        "testsList":$scope.testsList
     //    }
     //};
-
+    //titles of uploade data file
     $scope.uploadVariables = [
         { 'title': "patient_code", 'drag': true },
         { 'title': "systolic_blood_pressure", 'drag': true },
         { 'title': "diastolic_blood_pressure", 'drag': true },
         { 'title': "heart_rate", 'drag': true },
         { 'title': "respiratory_rate", 'drag': true },
-        { 'title': "visit_date", 'drag': true },
-        { 'title': "TEST", 'drag': true },
-        { 'title': "TE*@#$%ST", 'drag': true }
+        { 'title': "visit_date", 'drag': true }//,
+        //{ 'title': "TEST", 'drag': true },
+        //{ 'title': "TE*@#$%ST", 'drag': true }
     ];
+    //STATIC PREDEIFNED user upload data
     $scope.uploadVariablesDetails=[
 
             {"patient_code":"01-001","systolic_blood_pressure":"182","diastolic_blood_pressure":"112","heart_rate":"96", "respiratory_rate":"10","visit_date":"1"},
@@ -862,9 +862,9 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
 
     ];
 
-
+    //Droppable variables in identifiers and observation variables.
     $scope.FindingStandardData = {
-        "indentifiers":[
+        "identifiers":[
             //{"name":"STUDYID",
             //    "label":"Study Identifier"
             //},
@@ -886,14 +886,14 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
         ]
     };
 
-    $scope.InterventionStandardData={
-        "identifiers":[
-            {"name":"USUBJID",
-                "label":"Unique Subject Identifier"},
-            {"name":"SEQ",
-                "label":"Sequence Number"}
-        ]
-    }
+    //$scope.InterventionStandardData={
+    //    "identifiers":[
+    //        {"name":"USUBJID",
+    //            "label":"Unique Subject Identifier"},
+    //        {"name":"SEQ",
+    //            "label":"Sequence Number"}
+    //    ]
+    //}
 
     angular.forEach($scope.FindingStandardData.obsVariables, function(val, key) {
         $scope.identifierList.push({});
@@ -904,7 +904,7 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
 
 });
 
-
+//HelpMenu controller to show descriptions of all domains
 mapperApp.controller('helpMenuController',function($scope){
     $scope.details={
         "Findings":[
@@ -947,7 +947,7 @@ mapperApp.controller('helpMenuController',function($scope){
             {"DomainName":"MH", "DomainDescription":"Medical History. The medical history dataset includes the subject's prior history at the start of the trial. Examples of subject medical history information could include general medical history, gynecological history, and primary diagnosis." }
         ]
     };
-
+    //get the example photo file of a selected domain
     $scope.getPhotoName = function(){
         return $scope.photoName;
     }
