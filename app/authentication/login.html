@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<div class="center-block mt-xl" style="margin: 5em;">
+    <div class="panel">
+        <div class="panel-body">
+            <p class="pv text-bold">LOGIN CREDENTIALS</p>
+            <form role="form" class="mb-lg">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group has-feedback mb">
+                            <input id="exampleInputEmail1" type="email" placeholder="Your email" autocomplete="off" class="form-control"><span class="fa fa-envelope form-control-feedback text-muted"></span>
+                        </div><br>
+                        <div class="form-group has-feedback">
+                            <input id="exampleInputPassword1" type="password" placeholder="Your password" class="form-control"><span class="fa fa-lock form-control-feedback text-muted"></span>
+                        </div>
+                        <div class="checkbox c-checkbox pull-left mt0">
+                            <label>
+                                <input type="checkbox" value=""><span class="fa fa-check"></span> Remember me
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-block btn-info mb">Login</button>
+                        <p class="text-muted mb0">Don't have an account yet?</p><a ui-sref="signup" class="btn btn-block btn-default"><strong>Register</strong></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="text-center mt"><a href="page.recover.html" class="text-muted">Forgot your password?</a></div>
+</div>

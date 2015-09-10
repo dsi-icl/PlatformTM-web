@@ -6,9 +6,8 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
         "ui.router",
         "eTRIKSdata.studyDesign",
         "eTRIKSdata.explorer",
-        "eTRIKSdata.loader"
-
-
+        "eTRIKSdata.loader",
+        "eTRIKSdata.userAuth"
     ]);
 
 eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider){
@@ -19,7 +18,7 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider){
         $stateProvider
             .state('home',{
                 url: "/home",
-                templateUrl:"home.html"
+                templateUrl:"authentication/login.html"
             })
 
 
