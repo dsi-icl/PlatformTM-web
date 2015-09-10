@@ -1,0 +1,25 @@
+<div ng-controller="helpMenuController">
+    <div class ="col-md-8" style="width:700px;">
+
+        <!--<h1>Show:  {{$scope.domainName}} and {{$scope.shortName}}</h1>-->
+        <div class="helpHeading">
+        <div class="jumbotron" >
+
+            <h1 style="margin:0px;">Events Class</h1>
+        </div>
+        </div>
+    </div>
+    <div  ui-view>
+    <table class=" table table-hover">
+
+        <tr>
+            <td class="DomainCode">Domain Code</td>
+            <td class="DomainDescription">Domain Description</td>
+        </tr>
+        <tr ng-repeat="event in details.Events">
+            <td class="DomainCode"><a ui-sref='.{{event.DomainName}}'>{{event.DomainName}}</a></td>
+            <td class="DomainDescription">{{event.DomainDescription}}</td>
+        </tr>
+    </table>
+    </div>
+</div>

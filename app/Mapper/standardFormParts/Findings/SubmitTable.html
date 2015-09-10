@@ -1,0 +1,58 @@
+<!--<h1>{{testsList}}</h1>-->
+
+<!--<h1>{{identifierList}}</h1>-->
+<div ui-view>
+<h1 class="domainTitleName">Result</h1>
+<div ng-repeat="testIndex in getTestNumber() track by $index" >
+
+<table class="table table-bordered "style="width: 700px;">
+    <tr>
+        <th>DOMAIN</th>
+        <th>STUDYID</th>
+        <th>USUBJID</th>
+        <th>{{getShortName()}}SEQ</th>
+        <th>{{getShortName()}}TESTCD</th>
+        <th>{{getShortName()}}TEST</th>
+        <th>{{getShortName()}}ORRES</th>
+        <th>{{getShortName()}}ORRESU</th>
+    </tr>
+    <!--repeat-->
+    <!--<h2>{{getSubjectIDEntities()}}</h2>-->
+    <!--title :{{getIdentifier()}}-->
+    <!--<h1>Title 1: {{getUplaodEntities(identifierList[0].title)}}</h1>-->
+    <!--<h1>Title 2: {{getUplaodEntities(identifierList[1].title)}}</h1>-->
+
+    <tr ng-repeat="uniqueSubjectID in uploadVariablesDetails">
+        <td>{{getShortName()}}</td>
+        <td>{{getIdentifierInput().STUDYID}}</td>
+        <td> {{identifierList[0].title}}</td>
+        <td> {{identifierList[1].title}}</td>
+        <td>{{getTestByIndex(testIndex)[0].TESTShortName}}</td>
+        <td>{{getTestByIndex(testIndex)[0].TESTName}}</td>
+        <td>{{getTestByIndex(testIndex)[0].title}}</td>
+        <td>{{getTestByIndex(testIndex)[0].TESTResultUnit}}</td>
+        <!--<div ng-repeat="secquenceNum in getUplaodEntities(identifierList[1].title)"></div>-->
+        <!--<td>{{getShortName()}}</td>-->
+        <!--</td>-->
+        <!--<td>{{uniqueSubjectID.Value}}</td>-->
+        <!--<td>{{secquenceNum.Value}}</td>-->
+        <!--  ng-repeat="SequenceNum in upLoadVariablesDetails(identifierList[1].title) -->
+        <!--<td>SequenceNum.Value</td>-->
+
+
+    </tr>
+</table>
+
+
+</div>
+
+<div style="padding-top: 5px;"></div>
+<div style="text-align:center">
+    <a ui-sref='.Confirm'>
+        <button class="btn btn-md btn-success" ng-click="submitData()" style="width:150px;"  >
+            <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> &nbsp Confirm
+        </button>
+    </a>
+</div>
+<div style="padding-top: 5px;"></div>
+</div>
