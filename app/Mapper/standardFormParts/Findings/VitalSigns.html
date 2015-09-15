@@ -54,12 +54,11 @@
 
 			<tr>
 				<td>{{getDomainName()}} Test Short Name ({{getShortName()}}TESTCD)*:{{TESTCD}}</td>
-				<td ><input name ="TestShortNameInput" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTShortName" ng-maxlength="8" /></td>
-
+				<td ><input name ="TestShortNameInput" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTShortName" ng-maxlength="8" required /></td>
 			</tr>
 			<tr>
 				<td>{{getDomainName()}} Test Name ({{getShortName() }}TEST)*:</td>
-				<td ><input name="TestNameInput" type="text" class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} ng-maxlength="40" required /></td>
+				<td ><input name="TestNameInput"  class="userInputBox" ng-model="getTestByIndex(testIndex)[0].TESTName" placeholder={{getStandardName(getTestByIndex(testIndex)[0].title)}} ng-maxlength="40" required /></td>
 			</tr>
 
 			<tr ng-repeat="obsVariable in FindingStandardData.obsVariables" >
@@ -89,7 +88,8 @@
 		<div style="padding-top: 5px;"></div>
 		<div style="text-align:center" >
 			<a ui-sref='.Submission'>
-			<button class="btn btn-md btn-success" style="width:150px;" ng-show="!domainForm.TestNameInput.$error.required && !domainForm.TestShortNameInput.$error.required  && !domainForm.StudyID.$error.required" >
+			<button class="btn btn-md btn-success" style="width:150px;" ng-show="!domainForm.TestNameInput.$error.required && !domainForm.TestShortNameInput.$error.required && !domainForm.StudyID.$error.required " >
+				<!---->
 				<span class="glyphicon glyphicon-send" aria-hidden="true" ></span> &nbsp Submit
 			</button>
 			</a>

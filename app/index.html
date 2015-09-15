@@ -6,11 +6,16 @@
     <title>eTRIKS | Study</title>
     <link type='text/css' rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans' >
     <!--<link type="text/css" rel="stylesheet" href="lib/onepage-scroll-master/onepage-scroll.css">-->
+
+    <!--Test-->
     <link type="text/css" rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+    <!--Test-->
     <link type="text/css" rel="stylesheet" href="lib/nvd3/nv.d3.min.css">
     <link type="text/css" rel="stylesheet" href="lib/dc/dc.css">
     <link type="text/css" rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" type="text/css" href="css/flaticon/flaticon.css">
+    <link type="text/css" rel="stylesheet" href="Mapper/css/czstyle.css">
+
     <!--<link rel="stylesheet" type="text/css" href="lib/fullpage/jquery.fullPage.css" />-->
 </head>
 
@@ -33,12 +38,13 @@
             <ul>
                 <li><a ui-sref="explore">Explore</a></li>
                 <li><a ui-sref="loader.uploadFiles">Populate</a></li>
+                <li><a ui-sref="mapper">Mapper</a></li>
                 <li><a ui-sref="manager({ studyId: 'STD-BVS-01' })">Setup</a></li>
             </ul>
         </div>
 
         <div class="pull-right login">
-            Logged in as <span class="username">iemam</span>
+            Logged in as <span class="username">ZE CHEN</span>
         </div>
     </div>
 
@@ -63,7 +69,7 @@
 <!-- MAIN CONTENT -->
 <div class="container-fluid">
 
-    <div ui-view>Something should show up here</div>
+    <div ui-view ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">Something should show up here</div>
 
     <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
 
@@ -128,6 +134,16 @@
 
 <script src="loader/loader.js"></script>
 <script src="lib/angular-file-upload/angular-file-upload.min.js"></script>
+<!--CZ scripts-->
+<script src="Mapper/js/mapper.js"></script>
+<script src="Mapper/angular-dragdrop-master/src/angular-dragdrop.min.js"></script>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<!--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.min.css" rel="stylesheet">-->
+<!--CZ scripts-->
 
 <script src="manager/studyManager-module.js"></script>
 <script src="manager/studyManager-controller.js"></script>
@@ -155,7 +171,29 @@
     <!--}-->
 
 <!--</script>-->
+<!--<style>-->
+    <!--.ng-enter{-->
+        <!--transition: 0.75s;-->
+        <!--opacity: 0;-->
+    <!--}-->
+    <!--.ng-enter-active{-->
+        <!--opacity:1;-->
+    <!--}-->
+    <!--.ng-leave{-->
+        <!--transition: 0.75s;-->
+        <!--opacity: 1;-->
+    <!--}-->
+    <!--.ng-leave-active{-->
+        <!--opacity: 0;-->
+    <!--}-->
+<!--</style>-->
 
+<!--<div ng-controller="theController">-->
+    <!--<button ng-click="addItem()">Add</button>-->
+    <!--<button ng-click="clear()">Clear</button>-->
+    <!--<hr/>-->
+    <!--<button ng-repeat="item in items" ng-click="removeItem($index)">{{item.title}}</button>-->
+<!--</div>-->
 
 
 </body>

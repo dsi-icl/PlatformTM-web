@@ -858,8 +858,6 @@ mapperApp.controller('dragAndDropController', function($scope, $timeout) {
             {"patient_code":"01-005","systolic_blood_pressure":"125","diastolic_blood_pressure":"80","heart_rate":"65", "respiratory_rate":"17","visit_date":"8"},
             {"patient_code":"11-003","systolic_blood_pressure":"132","diastolic_blood_pressure":"80","heart_rate":"76", "respiratory_rate":"18","visit_date":"9"},
             {"patient_code":"01-006","systolic_blood_pressure":"132","diastolic_blood_pressure":"87","heart_rate":"80", "respiratory_rate":"19","visit_date":"10"},
-
-
     ];
 
     //Droppable variables in identifiers and observation variables.
