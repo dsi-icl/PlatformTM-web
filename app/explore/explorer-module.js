@@ -6,14 +6,18 @@ angular.module('eTRIKSdata.explorer',[
         'biospeak.clinical',
         'biospeak.assays',
         'eTRIKSdata.dcPlots',
-        'eTRIKSdata.exporter',
-        'duScroll'])
+        'eTRIKSdata.exporter'])
 
     .config(function($stateProvider){
 
         $stateProvider
             .state('explore', {
+                abstract : true,
                 url: "/explore",
+                templateUrl:"layout/content.html"
+            })
+            .state('explore.main', {
+                url: "/{studyId}",
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
@@ -38,15 +42,15 @@ angular.module('eTRIKSdata.explorer',[
                             });*/
                         }
                     },
-                    'subjects@explore':{
+                    'subjects@explore.main':{
                         templateUrl: 'explore/subjects/study_subjects.html',
                         controller: 'SubjectsCtrl'
                     },
-                    'assessments@explore':{
+                    'assessments@explore.main':{
                         templateUrl: 'explore/clinical/study_clinical.html',
                         controller: 'ClinicalCtrl'
                     },
-                    'assays@explore':{
+                    'assays@explore.main':{
                         templateUrl: 'explore/assays/study_assays.html',
                         controller: 'AssayCtrl'
                     },

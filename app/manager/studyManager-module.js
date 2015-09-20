@@ -8,8 +8,13 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
    /* $urlRouterProvider.otherwise('/manager');*/
 
         $stateProvider
-            .state('manager',{
-                url:'/manager/{studyId}',
+            .state('manager', {
+                abstract : true,
+                url: "/manager",
+                templateUrl:"layout/content.html"
+            })
+            .state('manager.main',{
+                url:'/main/{studyId}',
                 views:{
                     '':{
                         templateUrl:"manager/studyManager.html"
@@ -24,13 +29,13 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                 }
             })
 
-            .state('manager.activities',{
+            .state('manager.main.activities',{
                 abstract:true,
                 url:"/activities",
                 template: '<ui-view/>'
             })
 
-            .state('manager.activities.detail',{
+            .state('manager.main.activities.detail',{
                 url:'/{activityId}',
                 views:{
                     'activities.detail@manager':{
@@ -41,19 +46,19 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                 }
             })
 
-            .state('manager.activities.detail.dataset',{
+            .state('manager.main.activities.detail.dataset',{
                 url:'/dataset?domainId/{datasetId}',
                 templateUrl:'manager/activities/dataset-detail.html',
                 controller: 'DatasetController'
             })
 
-            .state('manager.activities.detail.newdataset',{
+            .state('manager.main.activities.detail.newdataset',{
                 url:'/selectTemplate',
                 templateUrl: 'manager/activities/dataset-templates.html',
                 controller: 'DatasetTemplatesCtrl'
             })
 
-            .state('manager.activities.detail.dataset.variable',{
+            .state('manager.main.activities.detail.dataset.variable',{
                 url:'/variable/:variableId',
                 templateUrl:'manager/activities/variable-detail.html',
                 controller:'VariableController'
@@ -61,8 +66,8 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
 
     })
 
-    .run(function(editableOptions) {
+    /*.run(function(editableOptions) {
 
         editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 
-    });
+    });*/

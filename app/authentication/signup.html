@@ -1,9 +1,127 @@
-<div class="center-block mt-xl">
-    <!-- START panel-->
-    <div class="panel">
-        <div class="panel-body">
-            <p class="pv text-bold">REGISTER NEW ACCOUNT</p>
-            <form role="form" class="mb-lg">
+<div class="row border-bottom">
+
+    <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+        <div class="logo">
+            <a href="index.html">
+                <img src="img/etriks-logo.svg" width="30px" class="pull-left"/>
+                <span>eHS</span>
+            </a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li > <a href="#/login">Login</a></li>
+            <li > <a href="#/signup">Sign Up</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div id="wrapper">
+<div class="loginColumns animated fadeInDown  text-center loginscreen" style="margin-top: 80px">
+    <div>
+        <!--<div>
+
+            <h1 class="logo-name">IN+</h1>
+
+        </div>-->
+        <h3>Register to IN+</h3>
+        <p>Create account to see it in action.</p>
+        <form class="m-t" role="form" action="login.html">
+            <div class="row">
+                <div class="col-md-1">
+                    &nbsp;
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <input type="text" placeholder="First Name" class="form-control" data-ng-model="registration.firstName" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Last Name" class="form-control" data-ng-model="registration.lastName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" class="form-control" data-ng-model="registration.email" required> <span
+                                class="help-block m-b-none">Example block-level help text here.</span>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control" data-ng-model="registration.password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Confirm Password" class="form-control" data-ng-model="registration.confirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary block full-width m-b" data-ng-click="signUp()" data-ng-disabled="savedSuccessfully">Register</button>
+
+                    <p class="text-muted text-center"><small>Already have an account?</small></p>
+                    <a class="btn btn-sm btn-white btn-block" href="login.html">Login</a>
+
+                    <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                        {{message}}
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <h2>Authenticator Code</h2>
+                    <div class="text-info" ng-show="qrCode==''">Your Google Authenticator QR code will be displayed here after successful Signup!</div>
+                    <div ng-show="qrCode!=''">
+                        <p class="text-success">Authenticator Code: <strong>{{qrCode}}</strong></p>
+                        <div class="form-group">
+                            <img ng-src="{{qrCodeSrc}}" />
+                        </div>
+                        &lt;!&ndash;<a href="#/transhistory" class="btn btn-primary btn-md btn-block">View Transactions History</a>&ndash;&gt;
+                    </div>
+
+                </div>
+                <div class="col-md-1">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+        <p class="m-t"> <small>Data Science Institute, Imperial College &copy; 2015</small> </p>
+    </div>
+</div>
+</div>
+<!--<div id="wrapper">
+
+    &lt;!&ndash; Page wraper &ndash;&gt;
+    &lt;!&ndash; ng-class with current state name give you the ability to extended customization your view &ndash;&gt;
+    <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
+
+        &lt;!&ndash; Page wrapper &ndash;&gt;
+        &lt;!&ndash;<div ng-include="'layout/topnavbar.html'"></div>&ndash;&gt;
+        <div class="row border-bottom">
+
+            <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="img/etriks-logo.svg" width="30px" class="pull-left"/>
+                        <span>eHS</span>
+                    </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li > <a href="#/login">Login</a></li>
+                    <li > <a href="#/signup">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        &lt;!&ndash; Main view  &ndash;&gt;
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+
+                    <div class="class="middle-box text-center loginscreen   animated fadeInDown">
+                        <div class="ibox-title">
+                            <h5>REGISTER NEW ACCOUNT
+                            </h5>
+
+                        </div>
+                        <div class="ibox-content">
+                                <form role="form">
+
+                                </form>
+
+                                &lt;!&ndash;<form role="form" class="mb-lg">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group has-feedback">
@@ -28,11 +146,15 @@
                         <p class="pt-lg text-center mt-sm">Already registerd?</p><a ui-sref="login" class="btn btn-block btn-default"><strong>Login</strong></a>
                     </div>
                 </div>
-            </form>
+            </form>&ndash;&gt;
+
+
+                        </div>
+                    </div>
+
+            </div>
         </div>
-    </div>
-    <!-- END panel-->
-    <div class="p-lg text-center">
-        <hr><span class="mr-sm">&copy; </span><span class="mr-sm">2015</span><span>eTRIKS</span><br>eHS
-    </div>
-</div>
+        &lt;!&ndash; Footer &ndash;&gt;
+        <div ng-include="'layout/footer.html'"></div>
+    </div>-->
+        <!-- END panel-->

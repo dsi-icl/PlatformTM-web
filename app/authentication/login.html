@@ -1,29 +1,119 @@
-<div class="center-block mt-xl" style="margin: 5em;">
-    <div class="panel">
-        <div class="panel-body">
-            <p class="pv text-bold">LOGIN CREDENTIALS</p>
-            <form role="form" class="mb-lg">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group has-feedback mb">
-                            <input id="exampleInputEmail1" type="email" placeholder="Your email" autocomplete="off" class="form-control"><span class="fa fa-envelope form-control-feedback text-muted"></span>
-                        </div><br>
-                        <div class="form-group has-feedback">
-                            <input id="exampleInputPassword1" type="password" placeholder="Your password" class="form-control"><span class="fa fa-lock form-control-feedback text-muted"></span>
+<div id="wrapper">
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
+
+        <!-- Page wrapper -->
+        <!--<div ng-include="'layout/topnavbar.html'"></div>-->
+        <div class="row border-bottom">
+
+            <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="img/etriks-logo.svg" width="30px" class="pull-left"/>
+                        <span>eHS</span>
+                    </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li > <a href="#/login">Login</a></li>
+                    <li > <a href="#/signup">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main view  -->
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="ibox float-e-margins">
+                        <!--<div class="ibox-title">
+                            <h5>Basic form
+                                <small>Simple login form example</small>
+                            </h5>
+                            <div ibox-tools></div>
+                        </div>-->
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Sign in</h3>
+
+                                    <!--<p>Sign in</p>-->
+
+                                    <form role="form" ng-submit="login()">
+                                        <div class="form-group">
+                                            <label>Username</label>
+                                            <input type="text"
+                                                   placeholder="Username"
+                                                   class="form-control"
+                                                   data-ng-model="loginData.userName" required autofocus>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password"
+                                                   placeholder="Password"
+                                                   class="form-control"
+                                                   data-ng-model="loginData.password" required>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                    type="submit">
+                                                <strong>Login</strong>
+                                            </button>
+                                            <label> <input icheck type="checkbox" ng-model="main.unCheck"> Remember me </label>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-6"><h4>Not a member?</h4>
+
+                                    <p>You can create an account:</p>
+
+                                    <p class="text-center">
+                                        <a ui-sref="signup"><i class="fa fa-sign-in big-icon"></i></a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="checkbox c-checkbox pull-left mt0">
-                            <label>
-                                <input type="checkbox" value=""><span class="fa fa-check"></span> Remember me
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-block btn-info mb">Login</button>
-                        <p class="text-muted mb0">Don't have an account yet?</p><a ui-sref="signup" class="btn btn-block btn-default"><strong>Register</strong></a>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
+
+        <!--<div class="center-block mt-xl" style="margin: 5em;">
+            <div class="panel">
+                <div class="panel-body">
+                    <p class="pv text-bold">LOGIN CREDENTIALS</p>
+                    <form role="form" class="mb-lg">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback mb">
+                                    <input id="exampleInputEmail1" type="email" placeholder="Your email" autocomplete="off" class="form-control"><span class="fa fa-envelope form-control-feedback text-muted"></span>
+                                </div><br>
+                                <div class="form-group has-feedback">
+                                    <input id="exampleInputPassword1" type="password" placeholder="Your password" class="form-control"><span class="fa fa-lock form-control-feedback text-muted"></span>
+                                </div>
+                                <div class="checkbox c-checkbox pull-left mt0">
+                                    <label>
+                                        <input type="checkbox" value=""><span class="fa fa-check"></span> Remember me
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-block btn-info mb">Login</button>
+                                <p class="text-muted mb0">Don't have an account yet?</p><a ui-sref="signup" class="btn btn-block btn-default"><strong>Register</strong></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center mt"><a href="page.recover.html" class="text-muted">Forgot your password?</a></div>
+        </div>-->
+
+        <!-- Footer -->
+        <div ng-include="'layout/footer.html'"></div>
+
     </div>
-    <div class="text-center mt"><a href="page.recover.html" class="text-muted">Forgot your password?</a></div>
+
+
+
 </div>

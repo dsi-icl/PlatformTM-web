@@ -37,7 +37,7 @@ angular.module('eTRIKSdata.dcPlots')
                         scope.$apply(function(){
                             angular.element(document.getElementById(scope.container))
                                 .append(
-                                    $compile('<div id="'+elemId+'">' +
+                                    $compile('<div  id="'+elemId+'">' +
                                         '<dc-chart></dc-chart>'+
                                         '</div>')(scope)
                                 )

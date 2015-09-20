@@ -489,7 +489,7 @@ mapperApp.config(function($stateProvider, $urlRouterProvider) {
         //Findings:
             .state('mapper.FindingsHelp',{
                 url:'/FindingsHelp',
-                templateUrl:'Mapper/standardFormParts/Help/Findings.html',
+                templateUrl:'Mapper/standardFormParts/Help/Findings.html'
 
             })
                 .state('mapper.FindingsHelp.DA',{

@@ -1,61 +1,39 @@
 /**
  * Created by iemam on 10/09/2015.
  */
-var app = angular.module('eTRIKSdata.userAuth', []);
 
-app.config(function ($stateProvider, $urlRouterProvider) {
+(function () {
+    angular.module('bioSpeak.userAuth', ['ui.router','LocalStorageModule'])
 
+    /*app.run(['authService', function (authService) {
+        authService.fillAuthData();
+    }]);*/
+
+
+})();
+
+
+function config($stateProvider, $urlRouterProvider, $httpProvider){
     $stateProvider
         .state('login',{
             url: "/login",
-            templateUrl:"authentication/login.html"
+            templateUrl: "authentication/login.html",
+            controller: "loginController"
         })
 
         .state('signup',{
             url: "/signup",
-            templateUrl:"authentication/signup.html"
+            templateUrl:"authentication/signup.html",
+            controller : "signupController"
         })
 
-/*    /!*$routeProvider.when("/home", {
-        controller: "homeController",
-        templateUrl: "/app/views/home.html"
-    });*!/
-
-    $routeProvider.when("/login", {
-        controller: "loginController",
-        templateUrl: "/app/views/login.html"
-    });
-
-    $routeProvider.when("/signup", {
-        controller: "signupController",
-        templateUrl: "/app/views/signup.html"
-    });
-
-    $routeProvider.when("/transhistory", {
-        controller: "moneyTransController",
-        templateUrl: "/app/views/transhistory.html"
-    });
-
-    $routeProvider.when("/transfermoney", {
-        controller: "transferMoneyController",
-        templateUrl: "/app/views/transferMoney.html"
-    });
+    $httpProvider.interceptors.push('authInterceptorService');
+}
 
 
-    $routeProvider.otherwise({ redirectTo: "/home" });*/
-
-});
-
-//var serviceBase = 'http://localhost:55435/';
-//var serviceBase = 'https://ngtfaapi.azurewebsites.net/';
-//app.constant('ngAuthSettings', {
-//    apiServiceBaseUri: serviceBase
-//});
-
-//app.config(function ($httpProvider) {
-//    $httpProvider.interceptors.push('authInterceptorService');
-//});
-
-//app.run(['authService', function (authService) {
-//    authService.fillAuthData();
-//}]);
+angular
+    .module('bioSpeak.userAuth')
+    .config(config)
+    .constant('ngAuthSettings', {
+        apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
+    })
