@@ -3,12 +3,14 @@
  */
 angular.module('biospeak.assays')
 
-    .factory('assayDataService',['$http','$q', function($http,$q) {
+    .factory('assayDataService',['$http','$q','ngAppConfig', function($http,$q,ngAppConfig) {
+        var serviceBase = ngAppConfig.apiServiceBaseUri;
+
         return {
             getSubjData: function(studyId,characs) {
                 //var domainCode = "VS"
                 return $http({
-                    url:'http://rachmaninoff.local:8080/api/studies/'+studyId+'/data/assays/characteristics',
+                    url:serviceBase+'api/studies/'+studyId+'/data/assays/characteristics',
                     method:'POST',
                     data: angular.toJson(characs)
                 }).then(

@@ -8,13 +8,14 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
    /* $urlRouterProvider.otherwise('/manager');*/
 
         $stateProvider
-            .state('manager', {
+/*            .state('manager', {
                 abstract : true,
-                url: "/manager",
-                templateUrl:"layout/content.html"
-            })
-            .state('manager.main',{
-                url:'/main/{studyId}',
+                url: "",
+                templateUrl:"layout/content.html",
+                controller: "logOutController"
+            })*/
+            .state('manager',{
+                url:'/{studyId}/configure',
                 views:{
                     '':{
                         templateUrl:"manager/studyManager.html"
@@ -29,13 +30,13 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                 }
             })
 
-            .state('manager.main.activities',{
+            .state('manager.activities',{
                 abstract:true,
                 url:"/activities",
                 template: '<ui-view/>'
             })
 
-            .state('manager.main.activities.detail',{
+            .state('manager.activities.detail',{
                 url:'/{activityId}',
                 views:{
                     'activities.detail@manager':{
@@ -46,25 +47,29 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                 }
             })
 
-            .state('manager.main.activities.detail.dataset',{
+            .state('manager.activities.detail.dataset',{
                 url:'/dataset?domainId/{datasetId}',
                 templateUrl:'manager/activities/dataset-detail.html',
                 controller: 'DatasetController'
             })
 
-            .state('manager.main.activities.detail.newdataset',{
+            .state('manager.activities.detail.newdataset',{
                 url:'/selectTemplate',
                 templateUrl: 'manager/activities/dataset-templates.html',
                 controller: 'DatasetTemplatesCtrl'
             })
 
-            .state('manager.main.activities.detail.dataset.variable',{
+            .state('manager.activities.detail.dataset.variable',{
                 url:'/variable/:variableId',
                 templateUrl:'manager/activities/variable-detail.html',
                 controller:'VariableController'
             })
 
-    })
+    })/*.constant('ngAPISettings', {
+        apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
+        //apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+    });*/
+
 
     /*.run(function(editableOptions) {
 

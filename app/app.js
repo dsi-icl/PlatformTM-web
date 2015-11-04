@@ -5,38 +5,56 @@
 var eTRIKSdataApp = angular.module('eTRIKSdata', [
         "bioSpeak.layout",
         "ui.router",
+        'oc.lazyLoad',
+        'LocalStorageModule',                  // ocLazyLoad
         "eTRIKSdata.studyDesign",
         "eTRIKSdata.explorer",
-        "eTRIKSdata.loader",
-        "eTRIKSdata.mapper",
         "bioSpeak.userAuth",
-        "bioSpeak.fileManager"
+        "bioSpeak.DataStager",
+        "bioSpeak.import"
     ]);
 
-eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider){
+eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
 
-       /*$urlRouterProvider.otherwise('/home');*/
+       $urlRouterProvider.otherwise('/home');
 
     //$urlRouterProvider.when('', '/explore/P-BVS}');
-    $urlRouterProvider.when('', '/login');
+    $urlRouterProvider.when('', '/home');
+
+    $ocLazyLoadProvider.config({
+        // Set to true if you want to see what and when is dynamically loaded
+        debug: true
+    });
 
     $stateProvider
 
         .state('main',{
             abstract:true,
-            url: "/main",
-            templateUrl:"layout/content.html"
+            url: "",
+            templateUrl:"layout/content.html",
+            controller:"logOutController"
         })
         .state('main.home',{
             url: "/home",
-            templateUrl:"home.html"
+            templateUrl:"landing/dashboard.html"
         })
-        .state('main.dashboard',{
+        .state('main.landing',{
             url: "/landing",
-            templateUrl:"home.html"
+            templateUrl:"../temp/home.html"
         })
 
 
 
 
     });
+
+eTRIKSdataApp.run(function($rootScope){
+    $rootScope.$on('$stateChangeSuccess', function() {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+    });
+})
+
+eTRIKSdataApp.constant('ngAppConfig', {
+    apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+    //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
+})

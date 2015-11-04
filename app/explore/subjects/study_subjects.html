@@ -12,7 +12,7 @@
                 <tab-heading>
                     <p class="model-icon">
                         <span class="flaticon-standing55"></span>
-                        <dc-count-widget cf="cf" chartgroup="{{chartGroup}}"></dc-count-widget>
+                        <dc-count-widget cf="cf" chartservice="chartservice" chartgroup="{{chartGroup}}"></dc-count-widget>
                     </p>
                     <p class="model-name">
                         Human subjects
@@ -36,7 +36,8 @@
                                        container="{{subjChartContainerId}}"
                                        section="{{section}}"
                                        grp="{{chartGroup}}"
-                                       chart-service="{{chartService}}"
+                                       chart-service="{{DCchartService}}"
+                                       xfilter-service="{{xfilterService}}"
                                        project-id="{{projectId}}"
                                        ng-class="{'active': isActive}"
                                        ng-init="isActive = false"
@@ -56,7 +57,8 @@
                                        container="{{subjChartContainerId}}"
                                        section="{{section}}"
                                        grp="{{chartGroup}}"
-                                       chart-service="{{chartService}}"
+                                       chart-service="{{DCchartService}}"
+                                       xfilter-service="{{xfilterService}}"
                                        project-id="{{projectId}}"
                                        ng-class="{'hide': isActive}"
                                        ng-init="isActive = false"

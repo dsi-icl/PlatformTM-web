@@ -3,17 +3,30 @@
  */
 angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
 
-    .controller('ClinicalCtrl', ['$scope','clinicalDataService','ClinicalCf','$timeout',function($scope,clinicalDataService,ClinicalCf,$timeout) {
+    .controller('ClinicalCtrl', ['$rootScope','$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService','$timeout',
+        function($rootScope,$scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService,$timeout) {
 
         $scope.chartGroup = "clinical";
-        $scope.projectId = "P-BVS";
+        $scope.projectId = $stateParams.studyId;//"P-BVS";
+
+            $rootScope.currentProject={'id':$stateParams.studyId};
+            console.log($rootScope.currentProject)
+
+
+            $scope.chartContainerId = "clinical-plots";
+
+        /*$scope.chartService = "DCchartingService";
+        $scope.xfilterService = "ClinicalCf";*/
+
+        //TEMP
         $scope.cf = ClinicalCf;
-        $scope.chartContainerId = "clinical-plots";
-        $scope.chartService = "ClinicalCf";
+        $scope.chartservice = DCchartingService;
+        //////////////////////
+
 
         $timeout(function() {
             console.log("calling clinical tree")
-            clinicalDataService.getClinicalDataTree(1)
+            clinicalDataService.getClinicalDataTree($scope.projectId)
                 .then(function(data){
                     $scope.clinicalData = data.treeData;
                     //console.log(data)
@@ -21,9 +34,9 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
 
                 })
         },3000)
-        $scope.filterByStudy = function(){
+        /*$scope.filterByStudy = function(){
             ClinicalCf.filterClinicalData('CRC305C','study');
-        }
+        }*/
 
         $scope.showVisits = function(){
 
@@ -69,8 +82,11 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
         $scope.getChartingOpts = function(){
             var chartingOpts = {}
             chartingOpts.container = $scope.chartContainerId
-            chartingOpts.chartingServiceName = $scope.chartService
+            //chartingOpts.chartingServiceName = $scope.chartService
             chartingOpts.chartGroup = $scope.chartGroup
+            chartingOpts.DCchartService = "DCchartingService";
+            chartingOpts.xfilterService = "ClinicalCf";
+            chartingOpts.projectId = $stateParams.studyId;//"P-BVS";
             return chartingOpts;
         }
     }])

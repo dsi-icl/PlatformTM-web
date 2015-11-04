@@ -29,7 +29,7 @@
     <link type="text/css" rel="stylesheet" href="css/app.css" />
 
     <link rel="stylesheet" type="text/css" href="css/flaticon/flaticon.css">
-    <!--<link rel="stylesheet" type="text/css" href="lib/fullpage/jquery.fullPage.css" />-->
+    <link rel="stylesheet" type="text/css" href="lib/plugins/pace/pace-flash.css" />
 
 
 </head>
@@ -112,9 +112,7 @@
 
 <!-- jQuery and Bootstrap -->
 <script src="lib/jquery/jquery.min.js"></script>
-<!--
 <script src="lib/plugins/jquery-ui/jquery-ui.js"></script>
--->
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 
 
@@ -128,19 +126,22 @@
 <script src="lib/plugins/pace/pace.min.js"></script>
 
 <!--JsonQ-->
-<script src="../bower_components/jsonq/jsonQ.min.js"></script>
+<!--<script src="../bower_components/jsonq/jsonQ.min.js"></script>-->
 
 
 <!--Angular scripts-->
 <script src="lib/angular/angular.min.js"></script>
 <script src="lib/angular/angular-ui-router.min.js"></script>
+<script src="lib/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="lib/angular-bootstrap/ui-bootstrap.min.js"></script>
 <script src="lib/angular/angular-resource.min.js"></script>
 <script src="lib/bootstrap/js/ui-bootstrap-tpls-0.12.0.min.js"></script>
 <script src="lib/angular-xeditable/xeditable.min.js"></script>
 <script src="lib/angular-ngAnimate/angular-animate.min.js"></script>
-<script src="lib/angular-dragdrop/angular-dragdrop.min.js"></script>
+<script src="lib/plugins/angular-dragdrop/angular-dragdrop.min.js"></script>
+<script src="lib/angular-file-upload/angular-file-upload.min.js"></script>
 <script src="lib/plugins/angular-local-storage/angular-local-storage.min.js"></script>
+
 
 
 <!--Plotting scripts, Crossfilter, D3 & DC-->
@@ -165,6 +166,8 @@
 <script src="layout/layout-module.js"></script>
 <script src="layout/directives/minimalizeSideBar.js"></script>
 <script src="layout/directives/sideNavigation.js"></script>
+<script src="layout/directives/iboxTools.js"></script>
+<script src="layout/directives/icheck.js"></script>
 
 <script src="authentication/authentication-module.js"></script>
 <script src="authentication/loginController.js"></script>
@@ -172,13 +175,23 @@
 <script src="authentication/authService.js"></script>
 <script src="authentication/authInterceptorService.js"></script>
 
-<script src="fileManager/fileManager-module.js"></script>
+<script src="dataStage/dataStage-module.js"></script>
+<script src="dataStage/fileManager/fileManager-service.js"></script>
+<script src="dataStage/fileManager/file-directive.js"></script>
+
+<!--<script src="dataStage/upload/upload-controller.js"></script>-->
+
+<script src="dataStage/wizard/wizard-module.js"></script>
+<!--<script src="dataStage/wizard/wizard-service.js"></script>-->
+<!--<script src="dataStage/wizard/stepOne-controller.js"></script>-->
+<!--<script src="dataStage/wizard/stepTwo-controller.js"></script>-->
 
 
 
 <script src="explore/export/exportCriteria-service.js"></script>
 <script src="explore/crossFilter-service.js"></script>
-<script src="explore/dc-directives.js"></script>
+<script src="explore/dc/dc-service.js"></script>
+<script src="explore/dc/dc-directives.js"></script>
 
 
 <script src="explore/subjects/subjects-controller.js"></script>
@@ -198,8 +211,7 @@
 
 <script src="common/utils-service.js"></script>
 
-<script src="loader/loader.js"></script>
-<script src="lib/angular-file-upload/angular-file-upload.min.js"></script>
+<!--<script src="../temp/loader/loader.js"></script>-->
 
 <script src="manager/studyManager-module.js"></script>
 <script src="manager/studyManager-controller.js"></script>
@@ -209,10 +221,10 @@
 
 <script src="manager/study-plan/study-plan-directives.js"></script>
 
-<script src="Mapper/js/mapper.js"></script>
+<!--<script src="../temp/Mapper/js/mapper.js"></script>-->
 
 <script src="app.js"></script>
-<script src="../temp/functions.js"></script>
+<script src="scripts/functions.js"></script>
 
 <!--<script>-->
     <!--//defaults-->

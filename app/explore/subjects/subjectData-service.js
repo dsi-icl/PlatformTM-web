@@ -3,18 +3,20 @@
  */
 angular.module('biospeak.subjects')
 
-    .factory('subjectDataService',['$http','$q', function($http,$q) {
+    .factory('subjectDataService',['$http','$q','ngAppConfig', function($http,$q,ngAppConfig) {
+        var serviceBase = ngAppConfig.apiServiceBaseUri;
+
         return {
             getSubjData: function(studyId,characs) {
                 //var domainCode = "VS"
                 return $http({
-                    url:'http://rachmaninoff.local:8080/api/studies/'+studyId+'/data/subjects/characteristics',
+                    url:serviceBase+'api/studies/'+studyId+'/data/subjects/characteristics',
                     method:'POST',
                     data: angular.toJson(characs)
                 }).then(
                     function (response) {
                         return {
-                            scs: (response.data.scs),
+                            header: (response.data.header),
                             data: (response.data.data)
                         }
                     },
@@ -28,7 +30,7 @@ angular.module('biospeak.subjects')
             getSubjCharacteristics: function(projectId){
 
                     return $http({
-                        url:'http://rachmaninoff.local:8080/api/projects/'+projectId+'/subjects/characteristics',
+                        url:serviceBase+'api/projects/'+projectId+'/subjects/characteristics',
                         method:'GET'
                     }).then(
                         function (response){

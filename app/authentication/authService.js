@@ -3,26 +3,39 @@
  */
 'use strict';
 
-function authService($http, $q, localStorageService, ngAuthSettings){
+function authService($http, $q, localStorageService, ngAppConfig){
 
 //app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', function ($http, $q, localStorageService, ngAuthSettings) {
 
-    var serviceBase = ngAuthSettings.apiServiceBaseUri;
+    var serviceBase = ngAppConfig.apiServiceBaseUri;
     var authServiceFactory = {};
 
     var _authentication = {
         isAuth: false,
-        userName: ""
+        userName: "",
+        firstName: "",
+        lastName: ""
     };
 
 
     var _saveRegistration = function (registration) {
 
-        _logOut();
+        //_logOut();
 
-        return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
-            return response;
-        });
+        var deferred = $q.defer();
+
+        $http.post(serviceBase + 'api/accounts/signup', registration)
+            .success(function (response) {
+                console.log("Inside http post succes")
+                deferred.resolve(response);
+            })
+
+            .error(function (err, status) {
+                _logOut();
+                deferred.reject(err);
+            });
+
+        return deferred.promise;
 
     };
 
@@ -35,21 +48,23 @@ function authService($http, $q, localStorageService, ngAuthSettings){
         var deferred = $q.defer();
 
         $http.post(serviceBase + 'token',
-                    data,
-                    { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+            data,
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
             .success(function (response) {
 
-            localStorageService.set('authorizationTFAData', { token: response.access_token, userName: loginData.userName});
+                console.log(response);
 
-            _authentication.isAuth = true;
-            _authentication.userName = loginData.userName;
+                localStorageService.set('authorizationTFAData', { token: response.access_token, userName: loginData.userName});
 
-            deferred.resolve(response);
+                _authentication.isAuth = true;
+                _authentication.userName = loginData.userName;
 
-        }).error(function (err, status) {
-            _logOut();
-            deferred.reject(err);
-        });
+                deferred.resolve(response);
+
+            }).error(function (err, status) {
+                _logOut();
+                deferred.reject(err);
+            });
 
         return deferred.promise;
 
@@ -57,11 +72,13 @@ function authService($http, $q, localStorageService, ngAuthSettings){
 
     var _logOut = function () {
 
+        var deferred = $q.defer();
         localStorageService.remove('authorizationTFAData');
 
         _authentication.isAuth = false;
         _authentication.userName = "";
-
+        deferred.resolve(_authentication);
+        return deferred.promise;
     };
 
     var _fillAuthData = function () {
@@ -86,6 +103,6 @@ function authService($http, $q, localStorageService, ngAuthSettings){
 
 angular
     .module('bioSpeak.userAuth')
-    .factory('authService',['$http', '$q', 'localStorageService', 'ngAuthSettings', authService])
-    //.controller('MainCtrl, ['$scope', 'SomeFactory', MainCtrl]);
+    .factory('authService',['$http', '$q', 'localStorageService', 'ngAppConfig', authService])
+//.controller('MainCtrl, ['$scope', 'SomeFactory', MainCtrl]);
 

@@ -14,18 +14,22 @@
         $scope.qrCode = "";
 
         $scope.registration = {
-            userName: "",
+            firstName: "",
+            lastName: "",
+            organization: "",
+            email: "",
             password: "",
             confirmPassword: ""
         };
 
         $scope.signUp = function () {
 
+            $scope.registration.userName = $scope.registration.email
             authService.saveRegistration($scope.registration).then(function (response) {
 
                     $scope.savedSuccessfully = true;
                     $scope.message = "User registered successfully, generating QR code...";
-                    $scope.qrCode = response.data.psk;
+                    $scope.qrCode = response.psk;
                     $scope.qrCodeSrc = "https://chart.googleapis.com/chart?chs=260x260&chld=M|0&cht=qr&chl=otpauth://totp/" + $scope.registration.userName + "%3Fsecret%3D" + $scope.qrCode;
 
                     $scope.registration.userName= "";
@@ -34,10 +38,11 @@
 
                 },
                 function (response) {
+                    console.log(response)
                     var errors = [];
-                    for (var key in response.data.modelState) {
-                        for (var i = 0; i < response.data.modelState[key].length; i++) {
-                            errors.push(response.data.modelState[key][i]);
+                    for (var key in response.modelState) {
+                        for (var i = 0; i < response.modelState[key].length; i++) {
+                            errors.push(response.modelState[key][i]);
                         }
                     }
                     $scope.savedSuccessfully = false;

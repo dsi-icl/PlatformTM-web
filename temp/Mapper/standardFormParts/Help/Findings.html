@@ -1,0 +1,27 @@
+<div ng-controller="helpMenuController">
+
+    <div class ="col-md-8" style="width:700px;">
+
+        <!--<h1>Show:  {{$scope.domainName}} and {{$scope.shortName}}</h1>-->
+        <div class="helpHeading">
+        <div class="jumbotron">
+
+            <h3 style="margin:0px;">Findings Class</h3>
+
+        </div>
+        </div>
+    </div>
+    <div ui-view>
+    <table class=" table table-hover">
+
+        <tr>
+            <td class="DomainCode">Domain Code</td>
+            <td class="DomainDescription">Domain Description</td>
+        </tr>
+        <tr ng-repeat="finding in details.Findings">
+            <td class="DomainCode"><a ui-sref='.{{finding.DomainName}}'> {{finding.DomainName}}</a></td>
+            <td class="DomainDescription">{{finding.DomainDescription}}</td>
+        </tr>
+    </table>
+    </div>
+</div>

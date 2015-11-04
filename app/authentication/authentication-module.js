@@ -3,7 +3,7 @@
  */
 
 (function () {
-    angular.module('bioSpeak.userAuth', ['ui.router','LocalStorageModule'])
+    angular.module('bioSpeak.userAuth', ['ui.router'])
 
     /*app.run(['authService', function (authService) {
         authService.fillAuthData();
@@ -18,7 +18,14 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
         .state('login',{
             url: "/login",
             templateUrl: "authentication/login.html",
-            controller: "loginController"
+            controller: "loginController",
+            resolve: {
+                loadPlugin: ['$ocLazyLoad',function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        'lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js'
+                    ]);
+                }]
+            }
         })
 
         .state('signup',{
@@ -34,6 +41,4 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
 angular
     .module('bioSpeak.userAuth')
     .config(config)
-    .constant('ngAuthSettings', {
-        apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-    })
+

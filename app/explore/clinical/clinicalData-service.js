@@ -13,15 +13,15 @@ angular.module('biospeak.clinical')
     })
 
 
-    .factory('clinicalDataService',['$http','$q', function($http,$q) {
+    .factory('clinicalDataService',['$http','$q','ngAppConfig', function($http,$q,ngAppConfig) {
+        var serviceBase = ngAppConfig.apiServiceBaseUri;
 
         return {
             getObservations: function(studyId,observations) {
                 console.log(angular.toJson(observations))
 
                 return $http({
-                    url:'http://rachmaninoff.local:8080/api/studies/'+studyId+'/data/clinical/observations',
-                    //url:'http://rachmaninoff.local:8080/api/studies/'+studyId+'/data/clinical/'+domainCode+'/observations',
+                    url:serviceBase+'api/studies/'+studyId+'/data/clinical/observations',
                     method:'POST',
                     data: angular.toJson(observations)
                 })
@@ -29,7 +29,7 @@ angular.module('biospeak.clinical')
                     function (response) {
                         return {
                             observations: (response.data.data),
-                            columns: (response.data.columns)
+                            columns: (response.data.header)
                         }
                     },
                     function (httpError) {
@@ -39,9 +39,9 @@ angular.module('biospeak.clinical')
                     });
             },
 
-            getClinicalDataTree: function(studyId){
+            getClinicalDataTree: function(projectId){
                 return $http({
-                    url:'http://rachmaninoff.local:8080/api/DataVisulaiser/'+studyId,
+                    url: serviceBase+'api/visualise/clinicalTree/'+projectId,
                     method:'GET'
                 }).then(
                         function (response){

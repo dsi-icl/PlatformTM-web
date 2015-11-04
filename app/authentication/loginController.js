@@ -2,10 +2,10 @@
  * Created by iemam on 15/09/2015.
  */
 
-(function(){
+
 
     'use strict'
-    function loginController($scope, $location, authService, ngAuthSettings){
+    function loginController($scope, $location, authService){
 
         //var vm = this;
         $scope.loginData = {
@@ -29,6 +29,5 @@
     }
 
     angular.module('bioSpeak.userAuth')
-        .controller('loginController',['$scope', '$location', 'authService', 'ngAuthSettings',loginController])
+        .controller('loginController',['$scope', '$location', 'authService',loginController])
 
-})();

@@ -70,6 +70,7 @@ angular.module('biospeak.clinical')
                         'ng-init="isActive = false"'+
                         'ng-click="isActive = !isActive"' +
                         'chart-service="{{chartService}}"'+
+                        'xfilter-service="{{xfilterService}}"'+
                         'project-id="{{projectId}}"'+
                         'container="{{chartContainerId}}">'+
                         '<span>{{group.name}}</span>'+' <span>({{group.count}})</span>'+
@@ -82,9 +83,11 @@ angular.module('biospeak.clinical')
 
 
                     //console.log(scope.getChartingOpts())
-                    scope.chartContainerId = scope.getChartingOpts().container
-                    scope.chartService = scope.getChartingOpts().chartingServiceName
-                    scope.chartGroup = scope.getChartingOpts().chartGroup
+                    scope.chartContainerId = scope.getChartingOpts().container;
+                    scope.chartService = scope.getChartingOpts().DCchartService;
+                    scope.chartGroup = scope.getChartingOpts().chartGroup;
+                    scope.xfilterService = scope.getChartingOpts().xfilterService;
+                    scope.projectId = scope.getChartingOpts().projectId;
                 //var medraterm =scope.group.code;
                 //console.log('scope inside link function of cltreeobsgrp',scope.group.groupTerm)
                     //scope.ids = scope.getObsIdsForMeddra({ medraterm: medraterm })
@@ -110,8 +113,9 @@ angular.module('biospeak.clinical')
                     'obsrv="{{obs.code}}"'+
                     'active="{{isActive}}"'+
                     'container="{{chartContainerId}}"'+
-                    'grp="{{chartGroup}}"'+
-                    'chart-service="{{chartService}}"'+
+                    'grp="{{chartGroup}}"' +
+                    'chart-service="{{chartService}}"' +
+                    'xfilter-service="{{xfilterService}}"'+
                     'project-id="{{projectId}}"'+
                     //'ng-class="{'': !isActive, 'active': isActive}"
                     'ng-init="isActive = false"'+
@@ -129,8 +133,10 @@ angular.module('biospeak.clinical')
                 }else{
                     //console.log(scope.getChartingOpts())
                     scope.chartContainerId = scope.getChartingOpts().container
-                    scope.chartService = scope.getChartingOpts().chartingServiceName
+                    scope.chartService = scope.getChartingOpts().DCchartService
                     scope.chartGroup = scope.getChartingOpts().chartGroup
+                    scope.xfilterService = scope.getChartingOpts().xfilterService
+                    scope.projectId = scope.getChartingOpts().projectId;
                 }
             }
         }

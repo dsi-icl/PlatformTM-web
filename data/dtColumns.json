@@ -1,0 +1,22 @@
+[
+  {
+    "data": "studyid",
+    "title": "STUDYID"
+  },
+  {
+    "data": "usubjid",
+    "title": "USUBJID"
+  },
+  {
+    "data": "vstestcd",
+    "title": "VSTESTCD"
+  },
+  {
+    "data": "vsorres",
+    "title": "VSORRES"
+  },
+  {
+    "data": "vsdtc",
+    "title": "VSDTC"
+  }
+]

@@ -161,7 +161,7 @@ h5 {
 }
 .nav-header {
     padding: 33px 25px;
-    background: url("patterns/header-profile.png") no-repeat;
+    background: url("img/header-profile.png") no-repeat;
 }
 .pace-done .nav-header {
     transition: all 0.5s;
@@ -382,10 +382,10 @@ body.canvas-menu.mini-navbar .footer {
 body.fixed-sidebar .navbar-static-side,
 body.canvas-menu .navbar-static-side {
     position: fixed;
-    width: 220px;
+    width: 180px;
     z-index: 2001;
     height: 100%;
-    font-size: 0.6em;
+    /*font-size: 0.6em;*/
 }
 body.fixed-sidebar.mini-navbar .navbar-static-side {
     width: 0px;
@@ -394,10 +394,10 @@ body.fixed-sidebar.mini-navbar #page-wrapper {
     margin: 0 0 0 0px;
 }
 body.body-small.fixed-sidebar.mini-navbar #page-wrapper {
-    margin: 0 0 0 220px;
+    margin: 0 0 0 180px;
 }
 body.body-small.fixed-sidebar.mini-navbar .navbar-static-side {
-    width: 220px;
+    width: 180px;
 }
 .fixed-sidebar.mini-navbar .nav li:focus > .nav-second-level,
 .canvas-menu.mini-navbar .nav li:focus > .nav-second-level {
@@ -456,7 +456,7 @@ body.canvas-menu nav.navbar-static-side {
 }
 body.canvas-menu.mini-navbar nav.navbar-static-side {
     display: block;
-    width: 220px;
+    width: 180px;
 }
 .top-navigation #page-wrapper {
     margin-left: 0;
@@ -602,8 +602,8 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     color: #fff;
 }
 .btn-primary {
-    background-color: #1ab394;
-    border-color: #1ab394;
+    background-color: #00afbc;;
+    border-color: #00afbc;
     color: #FFFFFF;
 }
 .btn-primary:hover,
@@ -952,9 +952,9 @@ fieldset[disabled] .btn-white.active {
     height: 90px;
     font-size: 42px;
 }
-button.dim {
+.btn.dim {
     display: inline-block;
-    color: #fff;
+    /*color: #fff;*/
     text-decoration: none;
     text-transform: uppercase;
     text-align: center;
@@ -963,10 +963,10 @@ button.dim {
     position: relative;
     cursor: pointer;
     border-radius: 5px;
-    font-weight: 600;
-    margin-bottom: 20px !important;
+    font-weight: 100;
+    margin-bottom: 10px !important;
 }
-button.dim:active {
+.btn.dim:active {
     top: 3px;
 }
 button.btn-primary.dim {
@@ -987,10 +987,10 @@ button.btn-warning.dim {
 button.btn-warning.dim:active {
     box-shadow: inset 0px 0px 0px #f79d3c, 0px 2px 0px 0px #f79d3c, 0px 5px 3px #999999;
 }
-button.btn-info.dim {
-    box-shadow: inset 0px 0px 0px #1eacae, 0px 5px 0px 0px #1eacae, 0px 10px 5px #999999;
+.btn.btn-info.dim {
+    box-shadow: inset 0px 0px 0px #1eacae, 0px 2px 0px 0px #1eacae, 0px 5px 5px #999999;
 }
-button.btn-info.dim:active {
+.btn.btn-info.dim:active {
     box-shadow: inset 0px 0px 0px #1eacae, 0px 2px 0px 0px #1eacae, 0px 5px 3px #999999;
 }
 button.btn-success.dim {
@@ -3340,11 +3340,19 @@ video {
     padding: 20px 30px 30px 30px;
 }
 .inmodal .modal-body {
-    background: #f8fafb;
+    /*background: #f8fafb;*/
+    /*background-color: #00afbc;*/
+    /*background-color: #2b9cc7;*/
+    /*background-colot: #39C2D7;*/
+    /*background-color:#39b3d7;*/
+    background-color:#f3f3f4;
+
 }
 .inmodal .modal-header {
     padding: 30px 15px;
     text-align: center;
+    /*background-color: #2C3E50;*/
+    background: #222f3f;
 }
 .animated.modal.fade .modal-dialog {
     -webkit-transform: none;
@@ -3353,10 +3361,10 @@ video {
     transform: none;
 }
 .inmodal .modal-title {
-    font-size: 26px;
+    font-size: 20px;
 }
 .inmodal .modal-icon {
-    font-size: 84px;
+    font-size: 54px;
     color: #e2e3e3;
 }
 .modal-footer {
@@ -3439,7 +3447,7 @@ ol.unstyled {
     padding: 10px 20px;
     background: white;
     border-top: 1px solid #e7eaec;
-    margin-left: 220px;
+    margin-left: 180px;
 }
 body.mini-navbar .footer.fixed,
 body.body-small.mini-navbar .footer.fixed {
@@ -3450,7 +3458,7 @@ body.canvas-menu .footer.fixed {
     margin: 0 !important;
 }
 body.fixed-sidebar.body-small.mini-navbar .footer.fixed {
-    margin: 0 0 0 220px;
+    margin: 0 0 0 180px;
 }
 body.body-small .footer.fixed {
     margin-left: 0px;
@@ -4664,6 +4672,7 @@ ul.notes li div {
     padding: 10px;
     background-color: #f8f8f8;
     border-top: 1px solid #e7eaec;
+    word-wrap: break-word;
 }
 .file-name small {
     color: #676a6c;
@@ -7680,7 +7689,7 @@ body.md-skin {
     background-color: #ffffff;
 }
 .md-skin .nav-header {
-    background: url("patterns/4.png") no-repeat;
+    background: url("img/header-profile.png") no-repeat;
 }
 .md-skin .label,
 .md-skin .badge {
@@ -7976,7 +7985,7 @@ body.md-skin {
     margin: 0 0 0 0;
 }
 .md-skin.body-small.fixed-sidebar.mini-navbar .navbar-static-side {
-    width: 220px;
+    width: 180px;
     background-color: #ffffff;
 }
 .md-skin.canvas-menu nav.navbar-static-side {
@@ -7989,13 +7998,13 @@ body.md-skin {
 @media (min-width: 768px) {
     #page-wrapper {
         position: inherit;
-        margin: 0 0 0 220px;
+        margin: 0 0 0 180px;
         min-height: 1200px;
     }
     .navbar-static-side {
         z-index: 2001;
         position: absolute;
-        width: 220px;
+        width: 180px;
     }
     .navbar-top-links .dropdown-messages,
     .navbar-top-links .dropdown-tasks,
@@ -8042,7 +8051,7 @@ body.md-skin {
         display: none;
         z-index: 2001;
         position: fixed;
-        width: 220px;
+        width: 180px;
     }
     .fixed-sidebar.body-small.mini-navbar .navbar-static-side {
         display: block;

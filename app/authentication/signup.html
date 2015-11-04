@@ -15,32 +15,35 @@
 </div>
 
 <div id="wrapper">
-<div class="loginColumns animated fadeInDown  text-center loginscreen" style="margin-top: 80px">
+<div class="loginColumns animated fadeInDown loginscreen" style="margin-top: 80px">
     <div>
         <!--<div>
 
             <h1 class="logo-name">IN+</h1>
 
         </div>-->
-        <h3>Register to IN+</h3>
-        <p>Create account to see it in action.</p>
-        <form class="m-t" role="form" action="login.html">
+
+        <form class="m-t" role="form" ng-submit="signUp()">
             <div class="row">
                 <div class="col-md-1">
                     &nbsp;
                 </div>
                 <div class="col-md-5">
+                    <h3>eHS Signup</h3>
+                    <p>Create account to see it in action.</p>
                     <div class="form-group">
                         <input type="text" placeholder="First Name" class="form-control" data-ng-model="registration.firstName" required autofocus>
                     </div>
                     <div class="form-group">
                         <input type="text" placeholder="Last Name" class="form-control" data-ng-model="registration.lastName" required>
                     </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Organization" class="form-control" data-ng-model="registration.organization" required>
+                    </div>
 
                     <div class="form-group">
-                        <input type="email" placeholder="Email" class="form-control" data-ng-model="registration.email" required> <span
-                                class="help-block m-b-none">Example block-level help text here.</span>
-
+                        <input type="email" placeholder="Email" class="form-control" data-ng-model="registration.email" required>
+                        <!--<span class="help-block m-b-none">Example block-level help text here.</span>-->
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Password" class="form-control" data-ng-model="registration.password" required>
@@ -51,25 +54,30 @@
                     <div class="form-group">
                         <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
                     </div>
-                    <button type="submit" class="btn btn-primary block full-width m-b" data-ng-click="signUp()" data-ng-disabled="savedSuccessfully">Register</button>
-
-                    <p class="text-muted text-center"><small>Already have an account?</small></p>
-                    <a class="btn btn-sm btn-white btn-block" href="login.html">Login</a>
+                    <button type="submit" class="btn btn-primary block full-width m-b" data-ng-disabled="savedSuccessfully">Register</button>
 
                     <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
                         {{message}}
                     </div>
+
+
+
+
                 </div>
                 <div class="col-md-5">
-                    <h2>Authenticator Code</h2>
+                    <h3>Authenticator Code</h3>
                     <div class="text-info" ng-show="qrCode==''">Your Google Authenticator QR code will be displayed here after successful Signup!</div>
                     <div ng-show="qrCode!=''">
                         <p class="text-success">Authenticator Code: <strong>{{qrCode}}</strong></p>
                         <div class="form-group">
                             <img ng-src="{{qrCodeSrc}}" />
                         </div>
-                        &lt;!&ndash;<a href="#/transhistory" class="btn btn-primary btn-md btn-block">View Transactions History</a>&ndash;&gt;
+                        <a ui-sref="login" class="btn btn-primary btn-md btn-block">Continue to login</a>
                     </div>
+                    <br>
+                    <br>
+                    <p class="text-muted text-center"><small>Already have an account?</small></p>
+                    <a class="btn btn-sm btn-white btn-block" ui-sref="login">Login</a>
 
                 </div>
                 <div class="col-md-1">

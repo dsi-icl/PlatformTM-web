@@ -13,11 +13,12 @@ angular.module('eTRIKSdata.explorer',[
         $stateProvider
             .state('explore', {
                 abstract : true,
-                url: "/explore",
-                templateUrl:"layout/content.html"
+                url: "",
+                templateUrl:"layout/content.html",
+                controller: "logOutController"
             })
             .state('explore.main', {
-                url: "/{studyId}",
+                url: "/{studyId}/explore/",
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
@@ -62,3 +63,8 @@ angular.module('eTRIKSdata.explorer',[
             })
 
     })
+
+    /*.constant('ngAuthSettings', {
+        //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
+        apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+    })*/

@@ -3,16 +3,29 @@
  */
 angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
-    .controller('SubjectsCtrl', ['$scope','subjectDataService','SubjCf','$timeout',function($scope,subjectDataService, SubjCf,$timeout) {
+    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','XFilterLinker','DCchartingService','$timeout',
+        function($scope,$stateParams,subjectDataService, SubjCf,XFilterLinker,DCchartingService,$timeout) {
 
-        var projectId = "P-BVS";
+        var projectId = $stateParams.studyId;//"P-BVS";
         $scope.title = "Subjects";
         $scope.subjChartContainerId = 'subject-plots';
         //$scope.section="Subjects";
         $scope.projectId = projectId;
-        $scope.cf = SubjCf;
-        $scope.chartService = "SubjCf";
+
+            //TEMP
+            $scope.cf = SubjCf;
+            $scope.chartservice = DCchartingService;
+            //////////////////////
+
+        $scope.DCchartService = "DCchartingService";
+        $scope.xfilterService = "SubjCf";
+
         $scope.chartGroup = "subject";
+
+        $scope.propagateFilter = function(){
+            XFilterLinker.propagateFilter($scope.chartService)
+        }
+        //$scope.XFilterLinker =
 
 
 
@@ -21,19 +34,21 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
             .then(function(data){
                 $scope.subjCharsDB = data.SCs;
 
-                SubjCf.initialize(projectId).then(
+                SubjCf.refreshCf(projectId).then(
                     function(subjChars){
-                        console.log(subjChars)
+                        //console.log(subjChars)
 
                         $scope.initSCs = subjChars
                         $timeout(function() {
                             angular.forEach(subjChars, function(sc) {
-                                console.log('#isc_'+sc)
-                                SubjCf.createChart(sc,'subject')
+                                //console.log('#isc_'+sc)
+                                DCchartingService.createChart(sc,'subject',SubjCf)
                                 angular.element('#isc_'+sc).trigger('click');
                             });
                         },500)
                     }
                 )
             })
+
+
     }])
