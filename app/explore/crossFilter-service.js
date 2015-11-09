@@ -543,7 +543,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
         subjCfService.filterBySubjects = function(filteredSubjectIds){
             subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-            //dc.renderAll("subject");
+            dc.renderAll("subject");
         }
 
         /*subjCfService.propagateFilter = function(){
@@ -1086,7 +1086,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         cfservice.filterBySubjects = function(filteredSubjectIds){
             if(!angular.isUndefined(subjectDim))
                 subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-            //dc.renderAll("clinical");
+            dc.renderAll("clinical");
         }
 
         cfservice.getCurrentSubjectIds = function(){

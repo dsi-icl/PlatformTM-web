@@ -19,12 +19,11 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
         $scope.DCchartService = "DCchartingService";
         $scope.xfilterService = "SubjCf";
-
         $scope.chartGroup = "subject";
 
-        $scope.propagateFilter = function(){
+        /*$scope.propagateFilter = function(){
             XFilterLinker.propagateFilter($scope.chartService)
-        }
+        }*/
         //$scope.XFilterLinker =
 
 

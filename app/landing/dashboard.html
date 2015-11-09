@@ -14,20 +14,16 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-3">
-            <div class=" contact-box center-version">
-
-                <span class="label label-danger pull-right">PROTECTED</span>
-
-                    <a href="">
-                        <img src="img/bvs_image.png"  alt="profile">
-                        <h3 class="m-b-xs"><strong>BioVacSafe</strong></h3>
-                   </a>
-
-                   <!-- <p>
-                        It is a long established fact that a reader will be distracted by the readable content
-                        of a page when looking at its layout. The point of using Lorem Ipsum is that it has.
-                    </p>
-                    <div>
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="label label-danger pull-right">PROTECTED</span>
+                    <h5>BioVacSafe</h5>
+                </div>
+                <div class="ibox-content text-center">
+                    <a ui-sref="explore.main({studyId:'P-BVS'})">
+                        <img class="img-dashboard" src="img/bvs_image.png"  alt="profile">
+                    </a>
+                    <div class="m-t-md">
                         <span>Status of current project:</span>
                         <div class="stat-percent">48%</div>
                         <div class="progress progress-mini">
@@ -35,120 +31,180 @@
                         </div>
                     </div>
                     <div class="row  m-t-sm">
-                        <div class="col-sm-4">
-                            <div class="font-bold">PROJECTS</div>
-                            12
+                        <div class="col-sm-3">
+                            <div class="font-bold">STUDIES</div>
+                            4
                         </div>
-                        <div class="col-sm-4">
-                            <div class="font-bold">RANKING</div>
-                            4th
+                        <div class="col-sm-3">
+                            <div class="font-bold">SUBJECTS</div>
+                            363
                         </div>
-                        <div class="col-sm-4 text-right">
-                            <div class="font-bold">BUDGET</div>
-                            $200,913 <i class="fa fa-level-up text-navy"></i>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold">OBSERVATIONS</div>
+                            --
                         </div>
-                    </div>-->
-
-                <div class="contact-box-footer" style="padding: 5px 5px;">
-                    <div class="btn-group">
-                        <a ui-sref="explore.main({studyId:'P-BVS'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
-                        <a ui-sref="manager({studyId:'STD-BVS-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
-                        <a ui-sref="datastage.files({studyId:'P-BVS'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold">SAMPLES</div>
+                            --
+                        </div>
                     </div>
-                </div>
+                    <div class="ibox-footer">
+                        <div class="text-center" style="padding: 5px 5px;">
+                            <div class="btn-group">
+                                <a ui-sref="explore.main({studyId:'P-BVS'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
+                                <a ui-sref="manager({studyId:'STD-BVS-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
+                                <a ui-sref="datastage.files({studyId:'P-BVS'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
         <div class="col-lg-3">
-            <div class="contact-box center-version">
-                <!--<span class="label label-primary pull-right">NEW</span>-->
-
-                <a href="">
-
-                    <img alt="image" class="img" src="img/ubiop_img.jpg">
-
-
-                    <h3 class="m-b-xs"><strong>UBIOPRED</strong></h3>
-
-                    <!--<div class="font-bold">CEO</div>
-                    <address class="m-t-md">
-                        <strong>Twitter, Inc.</strong><br>
-                        795 Folsom Ave, Suite 600<br>
-                        San Francisco, CA 94107<br>
-                        <abbr title="Phone">P:</abbr> (123) 456-7890
-                    </address>-->
-
-                </a>
-                <div class="contact-box-footer "style="padding: 5px 5px;">
-                    <div class="btn-group">
-                        <a ui-sref="explore.main({studyId:'S-UBIOP-01'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
-                        <a ui-sref="manager({studyId:'S-UBIOP-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
-                        <a ui-sref="datastage.files({studyId:'S-UBIOP-01'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
-                    </div>
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="label label-info pull-right">NEW</span>
+                    <h5>UBIOPRED</h5>
                 </div>
+                <div class="ibox-content text-center">
+                    <a ui-sref="explore.main({studyId:'S-UBIOP-01'})">
+                        <img class="img-dashboard" src="img/ubiop_img.jpg"  alt="profile">
+                    </a>
+                    <div class="m-t-md">
+                        <span>Status of current project:</span>
+                        <div class="stat-percent">5%</div>
+                        <div class="progress progress-mini">
+                            <div style="width: 5%;" class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div class="row  m-t-sm">
+                        <div class="col-sm-3">
+                            <div class="font-bold">STUDIES</div>
+                            1
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="font-bold">SUBJECTS</div>
+                            --
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold">OBSERVATIONS</div>
+                            --
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold">SAMPLES</div>
+                            --
+                        </div>
+                    </div>
+                    <div class="ibox-footer">
+                        <div class="text-center" style="padding: 5px 5px;">
+                            <div class="btn-group">
+                                <a ui-sref="explore.main({studyId:'S-UBIOP-01'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
+                                <a ui-sref="manager({studyId:'S-UBIOP-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
+                                <a ui-sref="datastage.files({studyId:'S-UBIOP-01'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                        </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
         <div class="col-lg-3">
-            <div class="contact-box center-version">
-                <span class="label label-primary pull-right">NEW</span>
-
-                <a href="">
-
-                    <img alt="image" class="img" src="img/cdisc_img.png">
-
-
-                    <h3 class="m-b-xs"><strong>CDISC dataset</strong></h3>
-
-                    <!--<div class="font-bold">CEO</div>
-                    <address class="m-t-md">
-                        <strong>Twitter, Inc.</strong><br>
-                        795 Folsom Ave, Suite 600<br>
-                        San Francisco, CA 94107<br>
-                        <abbr title="Phone">P:</abbr> (123) 456-7890
-                    </address>-->
-
-                </a>
-                <div class="contact-box-footer" style="padding: 5px 5px;">
-                    <div class=" btn-group">
-                        <a ui-sref="explore.main({studyId:'P-CDSK'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
-                        <a ui-sref="manager({studyId:'S-CDSK-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
-                        <a ui-sref="datastage.files({studyId:'S-CDSK-01'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
-                    </div>
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">PUBLIC</span>
+                    <h5>CDISC 01</h5>
                 </div>
+                <div class="ibox-content text-center">
+                    <a ui-sref="explore.main({studyId:'P-CDSK'})">
+                        <img class="img-dashboard" src="img/cdisc_img.png"  alt="profile">
+                    </a>
+                    <div class="m-t-md">
+                        <span>Status of current project:</span>
+                        <div class="stat-percent">5%</div>
+                        <div class="progress progress-mini">
+                            <div style="width: 5%;" class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div class="row  m-t-sm">
+                        <div class="col-sm-3">
+                            <div class="font-bold">STUDIES</div>
+                            1
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="font-bold">SUBJECTS</div>
+                            5
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold">OBSERVATIONS</div>
+                            --
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold">SAMPLES</div>
+                            0
+                        </div>
+                    </div>
+                    <div class="ibox-footer">
+                        <div class="text-center" style="padding: 5px 5px;">
+                            <div class=" btn-group">
+                                <a ui-sref="explore.main({studyId:'P-CDSK'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
+                                <a ui-sref="manager({studyId:'S-CDSK-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
+                                <a ui-sref="datastage.files({studyId:'S-CDSK-01'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
         <div class="col-lg-3">
-            <div class="contact-box center-version">
-                <span class="label label-primary pull-right">NEW</span>
-
-                <a href="">
-
-                    <img alt="image" class="img" src="img/predicttb.jpeg">
-
-
-                    <h3 class="m-b-xs"><strong>PreDiCT-TB</strong></h3>
-
-                    <!--<div class="font-bold">CEO</div>
-                    <address class="m-t-md">
-                        <strong>Twitter, Inc.</strong><br>
-                        795 Folsom Ave, Suite 600<br>
-                        San Francisco, CA 94107<br>
-                        <abbr title="Phone">P:</abbr> (123) 456-7890
-                    </address>-->
-
-                </a>
-                <div class="contact-box-footer" style="padding: 5px 5px;">
-                    <div class=" btn-group">
-                        <a ui-sref="explore.main({studyId:'P-PTB'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
-                        <a ui-sref="manager({studyId:'S-PTB-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
-                        <a ui-sref="datastage.files({studyId:'S-PTB-01'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
-                    </div>
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="label label-danger pull-right">PROTECTED</span>
+                    <h5>PreDiCT-TB</h5>
                 </div>
+                <div class="ibox-content text-center">
+                    <a ui-sref="explore.main({studyId:'P-PTB'})">
+                        <img class="img-dashboard" src="img/predicttb.jpeg"  alt="profile">
+                    </a>
+                    <div class="m-t-md">
+                        <span>Status of current project:</span>
+                        <div class="stat-percent">5%</div>
+                        <div class="progress progress-mini">
+                            <div style="width: 5%;" class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div class="row  m-t-sm">
+                        <div class="col-sm-3">
+                            <div class="font-bold">STUDIES</div>
+                            1
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="font-bold">SUBJECTS</div>
+                            100
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold">OBSERVATIONS</div>
+                            --
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold">SAMPLES</div>
+                            --
+                        </div>
+                    </div>
+                    <div class="ibox-footer">
+                        <div class="text-center" style="padding: 5px 5px;">
+                            <div class=" btn-group">
+                                <a ui-sref="explore.main({studyId:'P-PTB'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
+                                <a ui-sref="manager({studyId:'S-PTB-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
+                                <a ui-sref="datastage.files({studyId:'S-PTB-01'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
-
     </div>
+
 </div>

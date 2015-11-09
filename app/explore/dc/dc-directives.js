@@ -118,6 +118,15 @@ angular.module('eTRIKSdata.dcPlots')
                     .then(
                     function(chart){
                         $scope.chartToPlot = chart;
+                        $scope.chartToPlot.on('filtered', function(chart, filter){
+
+                            console.log('Filter Event', filter)
+                            console.log('Chart', chart.id)
+                            //console.log(scope.chartCFservice.getCountGroup())
+                            //scope.chartCFservice.filterClinicalCF(filter,scope.val)
+                            $scope.chartservice.propagateFilter($scope.xfilterService);
+                            //dc.renderAll("Clinical");
+                        })
                     },
                     function(result){
                         console.log("Failed to create DC chart",result);
@@ -138,22 +147,16 @@ angular.module('eTRIKSdata.dcPlots')
 
                 //console.log(scope.val)
 
+
+
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
-                        //console.log(scope.chartToPlot)
+                        console.log(newVal)
                         scope.chartToPlot.anchor(element[0],scope.grp);
 
                         //if(scope.val == 'arm' || scope.val == 'site'){
                             /*scope.chartToPlot.on('filtered',scope.chartCFservice.filterClinicalCF(filter,scope.val))*/
-                            scope.chartToPlot.on('filtered', function(chart, filter){
 
-                                //console.log('Filter Event', filter)
-                                //console.log(scope)
-                                //console.log(scope.chartCFservice.getCountGroup())
-                                //scope.chartCFservice.filterClinicalCF(filter,scope.val)
-                                scope.chartservice.propagateFilter(scope.xfilterService);
-                                //dc.renderAll("Clinical");
-                            })
                         //}
 
 

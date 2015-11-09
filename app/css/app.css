@@ -697,3 +697,8 @@ nav a {
     font-size: .7em;
     padding-left: 10px;
 }
+
+.img-dashboard{
+    width: 100px;
+    height: 100px;
+}

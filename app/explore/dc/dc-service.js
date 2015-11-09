@@ -322,7 +322,7 @@ angular.module('eTRIKSdata.dcPlots')
 
         DCservice.propagateFilter = function(xfilterServiceName){
             XFilterLinker.propagateFilter(xfilterServiceName);
-            dc.renderAll();
+            //dc.renderAll();
         }
 
         return DCservice;
