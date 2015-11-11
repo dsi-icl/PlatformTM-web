@@ -463,9 +463,17 @@ nav a {
 /*Subject Panel*/
 .plots-view {
     min-height: 280px;
-    background-color: #F1F2F2;
+    /*background-color: #F1F2F2;*/
     padding:20px;
     overflow: scroll;
+}
+.table-view {
+    max-height: 280px;
+    padding: 20px;
+    overflow: scroll;
+    border-top: 1px solid #ABDDE9;
+    margin: 10px;
+    border-bottom: 10px solid white;
 }
 
 .models-list {
@@ -678,8 +686,11 @@ nav a {
 
 .dc-data-table {
     color: #666;
-    font-size: 0.6em;
-
+    font-size: 0.8em;
+}
+.dc-data-table .dc-table-head{
+    padding: 10px;
+    background-color: rgba(0, 153, 188, 0.33)
 }
 .dc-data-table .dc-table-group
 {

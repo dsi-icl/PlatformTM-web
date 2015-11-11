@@ -6,48 +6,42 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
     .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','XFilterLinker','DCchartingService','$timeout',
         function($scope,$stateParams,subjectDataService, SubjCf,XFilterLinker,DCchartingService,$timeout) {
 
-        var projectId = $stateParams.studyId;//"P-BVS";
-        $scope.title = "Subjects";
-        $scope.subjChartContainerId = 'subject-plots';
-        //$scope.section="Subjects";
-        $scope.projectId = projectId;
+            var projectId = $stateParams.studyId;
+            $scope.title = "Subjects";
+            $scope.subjChartContainerId = 'subject-plots';
+            $scope.projectId = projectId;
 
             //TEMP
-            $scope.cf = SubjCf;
-            $scope.chartservice = DCchartingService;
+            //$scope.cf = SubjCf;
+            //$scope.chartservice = DCchartingService;
             //////////////////////
 
-        $scope.DCchartService = "DCchartingService";
-        $scope.xfilterService = "SubjCf";
-        $scope.chartGroup = "subject";
-
-        /*$scope.propagateFilter = function(){
-            XFilterLinker.propagateFilter($scope.chartService)
-        }*/
-        //$scope.XFilterLinker =
+            $scope.DCchartService = "DCchartingService";
+            $scope.xfilterService = "SubjCf";
+            $scope.chartGroup = "subject";
+            $scope.show='plots';
 
 
+            //Gets data for StudyId, Arm and Site
+            subjectDataService.getSubjCharacteristics(projectId)
+                .then(function(data){
+                    $scope.subjCharsDB = data.SCs;
 
-        //Gets data for StudyId, Arm and Site
-        subjectDataService.getSubjCharacteristics(projectId)
-            .then(function(data){
-                $scope.subjCharsDB = data.SCs;
+                    SubjCf.refreshCf(projectId).then(
+                        function(subjChars){
+                            //console.log(subjChars)
 
-                SubjCf.refreshCf(projectId).then(
-                    function(subjChars){
-                        //console.log(subjChars)
-
-                        $scope.initSCs = subjChars
-                        $timeout(function() {
-                            angular.forEach(subjChars, function(sc) {
-                                //console.log('#isc_'+sc)
-                                DCchartingService.createChart(sc,'subject',SubjCf)
-                                angular.element('#isc_'+sc).trigger('click');
-                            });
-                        },500)
-                    }
-                )
-            })
+                            $scope.initSCs = subjChars
+                            $timeout(function() {
+                                angular.forEach(subjChars, function(sc) {
+                                    //console.log('#isc_'+sc)
+                                    DCchartingService.createChart(sc,'subject',SubjCf)
+                                    angular.element('#isc_'+sc).trigger('click');
+                                });
+                            },500)
+                        }
+                    )
+                })
 
 
-    }])
+        }])

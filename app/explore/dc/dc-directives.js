@@ -30,7 +30,6 @@ angular.module('eTRIKSdata.dcPlots')
             link:
             function(scope, element, attrs){
                 element.bind("click", function(){
-
                     var elemId = attrs.id+'-chart';
                     var isActive = scope.isActive === 'true'
                     console.log(isActive)
@@ -44,11 +43,9 @@ angular.module('eTRIKSdata.dcPlots')
                                 )
                         })
                     }
-
                     else{
                         angular.element(document.getElementById(elemId)).remove();
                     }
-
                 });
             }
         }
@@ -58,34 +55,35 @@ angular.module('eTRIKSdata.dcPlots')
         return{
             restrict:'E',
             scope:{
-                cf:'=',
-                chartservice: '=',
-                chartgroup: '@'
+                grp: '@',
+                chartService: '@',
+                xfilterService: '@',
+                projectId:'@'
             },
+            controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
+
+                var chartService = $injector.get($scope.chartService);
+                $scope.chartservice = chartService
+
+                var xfilterService = $injector.get($scope.xfilterService);
+                $scope.xfService = xfilterService
+            }],
             template:
-                '<span id="{{chartgroup}}_Counter" class="filter-count model-count number-display"></span>',
+                '<span id="{{grp}}_Counter" class="filter-count model-count number-display"></span>',
                 /*'<span class="filter-count"></span> selected out of <span class="total-count"></span> subjects | ' +
                 '<a href="javascript:dc.filterAll();dc.renderAll();">Reset filters</a>',*/
             link: function(scope, element, attrs){
                 scope.$watch(
-                    function($scope) { return $scope.cf.cfReady(); },
+                    function($scope) { return $scope.xfService.cfReady(); },
                     function(newval, oldval){
                         if(newval){
 
                             //TODO: need to add dc-count-widget to the list of charts in CF to be refreshed when Xfilter is refreshed
                             //cf.createChart('subjects',$scope.obsid,$scope.grp)
-                            var chart = scope.chartservice.createDCcounter(scope.cf)
+                            var chart = scope.chartservice.createDCcounter(scope.xfService)
                             //console.log('inside dc-count-widget chartgroup',scope.chartgroup)
-                            chart.anchor(element[0],scope.chartgroup);
-                            //var groupChart = chart.chartGroup()
-                            //console.log(groupChart)
-                            //console.log(cf.getCountData())
-                            //console.log(cf.getCountGroup())
-                            //chartOptions["dimension"] = cf.getCountData()
-                            //chartOptions["group"] =  cf.getCountGroup()
-                            //chart.options(chartOptions);
+                            chart.anchor(element[0],scope.grp);
                             chart.render();
-                            //dc.renderAll();
                         }
                 })
             }
@@ -99,10 +97,10 @@ angular.module('eTRIKSdata.dcPlots')
             /*scope: {
                 val: '='
             },*/
-            controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
+            controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
 
                 //console.log($scope.chartService)
-                //console.log($scope)
+                console.log('dcChart scope ',$scope)
 
                 var chartService = $injector.get($scope.chartService);
                 $scope.chartservice = chartService
@@ -191,48 +189,39 @@ angular.module('eTRIKSdata.dcPlots')
     return {
         restrict: 'E',
         replace:true,
-        /*scope: {
-         val: '='
-         },*/
-        /*controller: ['$scope','$attrs','$injector','ExportCriteria',function($scope,$attrs,$injector, exportCriteria) {
+        scope: { // attributes bound to the scope of the directive
+            grp: '@',
+            chartService: '@',
+            xfilterService: '@',
+            projectId:'@'
+        },
+        controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
+
+            //console.log($scope.chartService)
+            console.log($scope)
+
             var chartService = $injector.get($scope.chartService);
-            chartService.getTableData()
-                .then(
-                // success function
-                function(data) {
-//                            console.log("GOT BACK from getChartData...")
-//                            console.log(data)
-                    $scope.tableData = data;
-
-                },
-                // error function
-                function(result) {
-                    console.log("Failed to get chart data " + result);
-                });
-
-        }],*/
+            $scope.chartservice = chartService
+            //
+            var xfilterService = $injector.get($scope.xfilterService);
+            $scope.xfService = xfilterService
+        }],
         template:
-
                      '<table class="table table-hover" id="dc-table-graph">'+
-                            '<thead>'+
-                                /*'<tr class="header">'+
-                                    '<th ng-repeat="header in tableHeaders">{{header}}</th>'+
-                                '</tr>'+*/
-                            '</thead>'+
-                     '</table>'
-                 ,
+                     '</table>',
         link: function (scope, element, attrs) {
-
             scope.$watch(
-                function($scope) { return $scope.cf.cfReady(); },
+                function($scope) { return $scope.xfService.cfReady(); },
                 function(newval, oldval){
 
                     if(newval){
                         console.log(newval)
-                        var chart = scope.cf.createDCtable()
-                        console.log(chart.columns());
-                        chart.anchor(element[0],'clinical');
-                        chart.render();
+                        var chart = scope.chartservice.createDCtable(scope.xfService)
+                        chart.anchor(element[0],scope.grp);
+                        //var chart = scope.cf.createDCtable()
+                        //console.log(chart.columns());
+                        //chart.anchor(element[0],'clinical');
+                        chart.render()
                     }
                 })
         }

@@ -125,6 +125,7 @@ angular.module('eTRIKSdata.dcPlots')
             var chartFactory = dc[chartData.chartType];
             var chart = chartFactory();
             chart.options(chartData.chartOptions);
+            chart.chartType = chartData.chartType;
             //chart.chartGroup(chartGrp);
             //dc.registerChart(chart,chartGrp)
 
@@ -163,11 +164,18 @@ angular.module('eTRIKSdata.dcPlots')
                         })
                     }
 
-                    if(chart.chartID() == tableWidgetId){
-                        //console.log('refreshing table')
+                    if(chart.chartType == 'dataTable'){
+                   // if(chart.chartID() == tableWidgetId){
+
+                        console.log('refreshing table')
                         chart.dimension(xfilterService.getTableDimension())
                         chart.group(xfilterService.getTableGroup());
-                        chart.columns(columns);
+                        chart.columns(xfilterService.getTableHeaders());
+
+                        //oldFilters.forEach(function(filter) {
+                        //    chart.filter(filter)
+                        //})
+                        chart.render();
                     }
                     if(chart.chartID() == counterWidgetId){
                         //console.log('refreshing counter')
@@ -186,39 +194,36 @@ angular.module('eTRIKSdata.dcPlots')
             chartOptions["dimension"] = xfilterService.getCountData()
             chartOptions["group"] =  xfilterService.getCountGroup()
             chart.options(chartOptions);
-            counterWidgetId = chart.chartID();
+            chart.chartType = 'dataCount';
+            //counterWidgetId = chart.chartID();
 
-            /*console.log('dimension size ', cfservice.getCountData().size())
-             console.log('group size ', cfservice.getCountGroup().value())
-
-             chart.options(chartData.chartOptions);
-             chart.chartGroup(chartGrp);
-             dc.registerChart(chart,chartGrp)
-
-
-             obsToChartId[countObj] = chart.chartID();
-             chartIdToObs[chart.chartID()] = countObj;*/
             return chart
         }
 
         DCservice.createDCtable = function(xfilterService){
+
+            if(!xfilterService.cfReady())
+                return false;
             var chartFactory = dc['dataTable'];
             var chart = chartFactory();
             var chartOptions = {};
             chartOptions["dimension"] = xfilterService.getTableDimension();//subjectDim;//cfservice.getCountData()
-            chartOptions["group"] =  xfilterService.getTableGroup();//function(d) {return d[subjectColumnName]}//cfservice.getCountGroup()
+            chartOptions["group"] =  function(d) {return "booo"}//xfilterService.getTableGroup();
             chartOptions["columns"] = xfilterService.getTableHeaders();//columns //observationCodes
             chartOptions["width"] = "960"
             chartOptions["height"] = "800"
+            chartOptions["showGroups"] = 'false';
             chartOptions["sortBy"] = function(d){
                 return d[xfilterService.getSubjectHeader()];
-                //return d[subjectColumnName];
             }
 
             chart.options(chartOptions);
-            /*chart.chartGroup('clinical');
-             dc.registerChart(chart,'clinical')*/
-            tableWidgetId = chart.chartID();
+            chart.chartType = 'dataTable';
+            chart.on('renderlet', function (table) {
+                // each time table is rendered remove nasty extra row dc.js insists on adding
+                table.select('tr.dc-table-group').remove();
+            });
+
 
             return chart
         }
@@ -322,7 +327,6 @@ angular.module('eTRIKSdata.dcPlots')
 
         DCservice.propagateFilter = function(xfilterServiceName){
             XFilterLinker.propagateFilter(xfilterServiceName);
-            //dc.renderAll();
         }
 
         return DCservice;

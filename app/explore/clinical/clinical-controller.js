@@ -15,8 +15,8 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
 
             $scope.chartContainerId = "clinical-plots";
 
-        /*$scope.chartService = "DCchartingService";
-        $scope.xfilterService = "ClinicalCf";*/
+        $scope.chartService = "DCchartingService";
+        $scope.xfilterService = "ClinicalCf";
 
         //TEMP
         $scope.cf = ClinicalCf;
