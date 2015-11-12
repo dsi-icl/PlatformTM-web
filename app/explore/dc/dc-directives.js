@@ -119,10 +119,22 @@ angular.module('eTRIKSdata.dcPlots')
                         $scope.chartToPlot.on('filtered', function(chart, filter){
 
                             console.log('Filter Event', filter)
-                            console.log('Chart', chart.id)
+                            console.log('Chart', chart.dimName)
+                            console.log('filters',chart.filters())
+
+                            // A possible solution
+                            //TODO: pass dimName and filters to the scope of the parent controller
+                            //TODO: could be one of three : subjects-controller or clinical-controller or assay-controller
+                            //TODO: the best way to do this is to create a new service 'exportService' and then
+                            //TODO: dc-directives and subject-controller/clinical-controller/assay-controller can share and watch.
+                            //TODO: in this method the filters/dimension name are ADDED/REMOVED to the service WHILE in the controller
+                            //GOOGLE angularjs controller watching service
+
                             //console.log(scope.chartCFservice.getCountGroup())
                             //scope.chartCFservice.filterClinicalCF(filter,scope.val)
                             $scope.chartservice.propagateFilter($scope.xfilterService);
+
+
                             //dc.renderAll("Clinical");
                         })
                     },

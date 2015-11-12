@@ -207,4 +207,55 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="label label-danger pull-right"></span>
+                    <h5>TEST PROJECT</h5>
+                </div>
+                <div class="ibox-content text-center">
+                    <a ui-sref="explore.main({studyId:'P-TST'})">
+                        <img class="img-dashboard" src="img/test.png"  alt="profile">
+                    </a>
+                    <div class="m-t-md">
+                        <span>Status of current project:</span>
+                        <div class="stat-percent">0%</div>
+                        <div class="progress progress-mini">
+                            <div style="width: 2%;" class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div class="row  m-t-sm">
+                        <div class="col-sm-3">
+                            <div class="font-bold small">STUDIES</div>
+                            0
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="font-bold small">SUBJECTS</div>
+                            0
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold small">OBSERVATIONS</div>
+                            --
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <div class="font-bold small">SAMPLES</div>
+                            --
+                        </div>
+                    </div>
+                    <div class="ibox-footer">
+                        <div class="text-center" style="padding: 5px 5px;">
+                            <div class="btn-group">
+                                <a ui-sref="explore.main({studyId:'P-TST'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
+                                <a ui-sref="manager({studyId:'S-TST-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
+                                <a ui-sref="datastage.files({studyId:'P-TST'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+
 </div>

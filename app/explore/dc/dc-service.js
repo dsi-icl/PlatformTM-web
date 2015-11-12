@@ -126,6 +126,7 @@ angular.module('eTRIKSdata.dcPlots')
             var chart = chartFactory();
             chart.options(chartData.chartOptions);
             chart.chartType = chartData.chartType;
+            chart.dimName = obsName;
             //chart.chartGroup(chartGrp);
             //dc.registerChart(chart,chartGrp)
 
@@ -287,8 +288,8 @@ angular.module('eTRIKSdata.dcPlots')
                 chartOptions["width"] = "300"
                 chartOptions["height"] = "170"
                 chartOptions["xUnits"] = dc.units.fp.precision(0.05)
-                chartOptions["yAxisLabel"] = "No. of Observations"
-                chartOptions["xAxisLabel"] = "Values"
+                chartOptions["yAxisLabel"] = "Frequency"
+                chartOptions["xAxisLabel"] = val //+ " values"
                 //chartOptions["margins"] = "{top: 10, right: 10, bottom: 40, left: 20}"
                 //chartOptions[".xAxis().tickFormat"] = "2"
                 //d3.extent(data, function(d) { return d.TC; })

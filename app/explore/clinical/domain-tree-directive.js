@@ -13,11 +13,11 @@ angular.module('biospeak.clinical')
             },
             template:
                 '<div class="clinicalTree row ">'+
-                    '<div class="col-md-12">'+
+                    /*'<div class="col-md-12">'+
                         '<button class="btn btn-sm btn-block">'+
                             '<span>Clinical Observations</span>'+
                         '</button>'+
-                    '</div>'+
+                    '</div>'+*/
                     '<cl-tree-class ng-repeat="class in observations" ' +
                         'class="class" get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })" ></cl-tree-class>'+
                 '</div>',
@@ -30,15 +30,21 @@ angular.module('biospeak.clinical')
         return{
             restrict:'EA',
             template:
-                '<div class="col-md-5">'+
-                    '<div class="connecting-line"></div>'+
-                        '<button type="button" class="btn btn-sm btn-block" style="background-color: #00afbc;border-radius:30px">{{class.class}}</button>'+
-                    '<div class="connecting-line"></div>'+
-                    '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
-                        'group="domain"  ' +
-                        'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
-                        'get-charting-opts="getChartingOpts()">' +
-                    '</cl-tree-obs-grp>'+
+                '<div class="col-md-6">'+
+                    //'<div class="connecting-line"></div>'+
+                    '<div class="ibox">'+
+                        '<div class="ibox-title">'+
+                            //'<button type="button" class="btn btn-sm btn-block" style="background-color: #00afbc;border-radius:30px">{{class.class}}</button>'+
+                            '<h3>{{class.class}}</h3>'+
+                        '</div>'+
+                    //'<div class="connecting-line"></div>'+
+                    '<div class="ibox-content">'+
+                        '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
+                            'group="domain"  ' +
+                            'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
+                            'get-charting-opts="getChartingOpts()">' +
+                        '</cl-tree-obs-grp>'+
+                    '</div>'+
                 '</div>'
         }
     })
@@ -56,7 +62,7 @@ angular.module('biospeak.clinical')
              //console.log('inside cltreeobsgrouo controller ',$scope)
              },
             template:
-                '<div class="btn-group btn-block">'+
+                '<div class="btn-group btn-block" style="margin-top: 3px;">'+
                     '<button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#{{group.code}}">'+
                         '<span class="caret"></span>'+
                     '</button>'+

@@ -29,12 +29,12 @@
 }
 
 .tree-node, .tree-leaf{
-    -moz-border-radius-topright: 15px;
+    /*-moz-border-radius-topright: 15px;
     -webkit-border-top-right-radius: 15px;
     border-top-right-radius: 15px;
     -moz-border-radius-bottomright: 15px;
     -webkit-border-bottom-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 15px;*/
 }
 .tree-node {
     margin-left: 0 !important;
@@ -50,8 +50,9 @@
     text-align: left;
     width: 100%;
     font-weight: normal;
-    margin-top: 0px;
+    margin-top: 2px;
     text-indent: 10px;
+    background-color: ghostwhite;
 
 }
 

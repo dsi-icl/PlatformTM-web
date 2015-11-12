@@ -21,6 +21,8 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
             $scope.chartGroup = "subject";
             $scope.show='plots';
 
+            $scope.filters =[];
+
 
             //Gets data for StudyId, Arm and Site
             subjectDataService.getSubjCharacteristics(projectId)

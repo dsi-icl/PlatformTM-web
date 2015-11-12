@@ -580,7 +580,18 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         }
 
         cfservice.getTableGroup = function(){
-            return function(d) {return d[subjectColumnName]}
+            return function(d) {return "booo"}
+            //return function(d) {return d[subjectColumnName]}
+        }
+
+        cfservice.getTableHeaders = function(){
+            var header = [subjectColumnName];
+            header = header.concat(columns)
+            return columns;
+        }
+
+        cfservice.getSubjectHeader = function(){
+            return subjectColumnName
         }
 
         cfservice.filterBySubjects = function(filteredSubjectIds){

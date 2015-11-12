@@ -173,9 +173,9 @@ nav a {
 /***********************************/
 
 .panel {
-    /*background-color: #F1F2F2;*/
+    background-color: #F1F2F2;
     margin-bottom: 19px;
-    background-color: #fff;
+    /*background-color: #fff;*/
     /*float: left;*/
     /*margin: .5%;*/
     /*margin-top: .5em;*/
@@ -462,9 +462,9 @@ nav a {
 
 /*Subject Panel*/
 .plots-view {
-    min-height: 280px;
-    /*background-color: #F1F2F2;*/
-    padding:20px;
+    /*min-height: 280px;*/
+    background-color: #F1F2F2;
+    /*padding:20px;*/
     overflow: scroll;
 }
 .table-view {
