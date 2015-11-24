@@ -21,10 +21,10 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             var deferred = $q.defer();
 
             /*assayDataService.getObservations('CRC305C',observations)
-                .then(function(data){
-                    dataToPlot = data.observations;
-                    deferred.resolve(dataToPlot)
-                })*/
+             .then(function(data){
+             dataToPlot = data.observations;
+             deferred.resolve(dataToPlot)
+             })*/
 
             // 1- Get the data
             // 2- Preprocess if needed (coerce, round, format...etc)
@@ -101,7 +101,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 })
 
                 EFs.forEach(function(ef){
-                   // console.log((ef))
+                    // console.log((ef))
 
                     var dim = cfdata.dimension(function (d) {
                         return d[ef];
@@ -131,99 +131,99 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
         /*cfservice.getDCchart = function(projectId,scName, scID,chartGrp){
 
-            var deferred = $q.defer();
-            var chart;
+         var deferred = $q.defer();
+         var chart;
 
-            console.log('Inside getDC chart',projectId,scName,scID)
-            //Checks if a chart had been previously selected for this observation
-            if (angular.isDefined(obsToChartId[scName])) {
-                console.log('Chart found ', scName)
-                chartId = obsToChartId[scName];
+         console.log('Inside getDC chart',projectId,scName,scID)
+         //Checks if a chart had been previously selected for this observation
+         if (angular.isDefined(obsToChartId[scName])) {
+         console.log('Chart found ', scName)
+         chartId = obsToChartId[scName];
 
-                dc.chartRegistry.list().forEach(function(c){
-                    if(c.chartID() == chartId)
-                        chart = c
-                })
-                deferred.resolve(chart)
-            } else {
-                console.log("Subject Characteristic NOT FOUND IN CF")
+         dc.chartRegistry.list().forEach(function(c){
+         if(c.chartID() == chartId)
+         chart = c
+         })
+         deferred.resolve(chart)
+         } else {
+         console.log("Subject Characteristic NOT FOUND IN CF")
 
-                /!**
-                 * *********************************************
-                 *!/
-                    //observation
-                ScIdToSCNameMap[scID] = scName //this is coming from charting buttons
-                //i.e. the SCchars from SQL DB
-                //they should have the same name that would be
-                //returned from NOSQL
+         /!**
+         * *********************************************
+         *!/
+         //observation
+         ScIdToSCNameMap[scID] = scName //this is coming from charting buttons
+         //i.e. the SCchars from SQL DB
+         //they should have the same name that would be
+         //returned from NOSQL
 
-                subjChars.push(scName); //used for building CF dimensions,
-                                        // should be the same as column name in the CF table
-                subjCharsIds.push(scID); //used for querying new and old SCs
+         subjChars.push(scName); //used for building CF dimensions,
+         // should be the same as column name in the CF table
+         subjCharsIds.push(scID); //used for querying new and old SCs
 
-                /!**
-                 * ******************************************
-                 *!/
-                this.initialize(projectId).then(function () {
+         /!**
+         * ******************************************
+         *!/
+         this.initialize(projectId).then(function () {
 
-                    subjCfService.refreshCharts();
+         subjCfService.refreshCharts();
 
-                    //TODO: could replace obsCode with obsId if both obsCode and obsID
-                    //TODO: are grouped together in a map
-                    chart = subjCfService.createChart(scName,chartGrp)
-                    //console.log(chart)
+         //TODO: could replace obsCode with obsId if both obsCode and obsID
+         //TODO: are grouped together in a map
+         chart = subjCfService.createChart(scName,chartGrp)
+         //console.log(chart)
 
-                    //chartData.group = groups[obsCode];
-                    //chartData.dimension = dimensions[obsCode];
-                    //chartData.requiresBoxplot = boxplots.indexOf(obsCode)!= -1
-                    deferred.resolve(chart)
-                })
-            }
-            return deferred.promise
-        }*/
+         //chartData.group = groups[obsCode];
+         //chartData.dimension = dimensions[obsCode];
+         //chartData.requiresBoxplot = boxplots.indexOf(obsCode)!= -1
+         deferred.resolve(chart)
+         })
+         }
+         return deferred.promise
+         }*/
 
 
         /*cfservice.getChartData = function(key){
 
-            var deferred = $q.defer();
-            var chartData = {}
+         var deferred = $q.defer();
+         var chartData = {}
 
 
-            if(angular.isDefined(dimensions[key])){
-                chartData.group = groups[key];
-                chartData.dimension = dimensions[key];
-                deferred.resolve(chartData)
-            }else{
-                //console.log("DATA NOT FOUND IN CF")
-                EFs.push(key)
-                this.setup().then(function(){
-                    //console.log("GOT UPDATED DATA")
-                    chartData.group = groups[key];
-                    chartData.dimension = dimensions[key];
-                    deferred.resolve(chartData)
-                })
-            }
+         if(angular.isDefined(dimensions[key])){
+         chartData.group = groups[key];
+         chartData.dimension = dimensions[key];
+         deferred.resolve(chartData)
+         }else{
+         //console.log("DATA NOT FOUND IN CF")
+         EFs.push(key)
+         this.setup().then(function(){
+         //console.log("GOT UPDATED DATA")
+         chartData.group = groups[key];
+         chartData.dimension = dimensions[key];
+         deferred.resolve(chartData)
+         })
+         }
 
-            return deferred.promise;
-        }*/
+         return deferred.promise;
+         }*/
 
         /*cfservice.getDimension = function(key){
 
-            return dimensions[key];
-        }
+         return dimensions[key];
+         }
 
-        cfservice.getGroup = function(key){
-//            console.log(key)
-            return groups[key];
-        }
+         cfservice.getGroup = function(key){
+         //            console.log(key)
+         return groups[key];
+         }
 
-        cfservice.getCountData = function(){
-            return cfdata
-        }
-        cfservice.getCountGroup = function(){
-            return all
-        }
-*/
+         cfservice.getCountData = function(){
+         return cfdata
+         }
+         cfservice.getCountGroup = function(){
+         return all
+         }
+         */
         return cfservice
     }])
 
@@ -282,16 +282,20 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
                 dimensions[subjectColumnName] = subjectDim
 
+
+
                 subjChars.forEach(function(sc){
-                    //console.log((sc.value))
                     var dim = cfdata.dimension(function (d) {
                         return d[sc];
                     });
                     dimensions[sc] = dim
-                    //console.log('adding dimension',sc, ' ',dim.top(1))
-                    var grp = dim.group().reduceCount();
+                    //var grp = dim.group().reduceCount();
+                    var grp = dim.group();
+                    var reducer = reductio()
+                        .filter(function(d) { return  d[sc] != "" })
+                        .count(true)
+                    reducer(grp);
                     groups[sc] = grp;
-                    //console.log('adding group',sc, ' ',dim.groupAll())
                 })
                 cfReady = true
                 deferred.resolve(subjChars)
@@ -357,11 +361,15 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
         var columns;
         var subjectDim,
-            subjectColumnName = "subjectId";
+            subjectColumnName = "subjectId",
+            visitColumnName = "visit";
         var allGroup;
 
 
-        var dimensions = [], groups = [];
+        var dimensions = [],
+            groups = [],
+            timeGroups = [],
+            timeDimension;
 
         var cfData;
         var dataToPlot;
@@ -436,128 +444,203 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             function reduceInit(key) {
                 return null;
             }
+            function reduceToArrayAdd(key){
+                return function(p,v){
+                    p.push(+v[key]);
+                    return p;
+                }
+            }
+            function reduceToArrayRemove(key){
+                return function(p,v) {
+                    p.splice(p.indexOf(v[key]), 1);
+                    return p;
+                }
+            }
+            function reduceToArrayInit(){
+                return [];
+            }
+            function remove_empty_bins(source_group) {
+                return {
+                    all:function () {
+                        return source_group.all().filter(function(d) {
+                            return d.value != 0;
+                        });
+                    }
+                };
+            }
 
             this.getData(studyId,requestedObsvs)
                 .then(function(data){
+                    console.log('inside refresh data')
+/*
+                    //d3.csv("../data/morley.csv", function(error, experiments) {
+                    d3.csv("../data/diabp.csv", function(error, experiments) {
+                     console.log('doing wbc')
+                     ndx = crossfilter(experiments);
+                     //console.log(experiments)
+                     //runDimension = ndx.dimension(function(d) {return [d.USUBJID, +d.VISITNUM]; });
+                     //runGroup = runDimension.group().reduceSum(function(d) { return +d.WBC; });
+                     //runDimension = ndx.dimension(function(d) {return [+d.Expt, +d.Run]; });
+                     //runGroup = runDimension.group().reduceSum(function(d) { return +d.Speed; });
+                        visitDimension = ndx.dimension(function(d) {return [ d.visit]; });
+                        //sysbpGroup = visitDimension.group().reduceCount(function(d) { return +d.sysbp; });
 
 
-                //TODO:do a different plot for multiple points/subject charts
-                /* var jsonQobj=jsonQ(data);
-                 var subjects = jsonQobj.find('subjectId').unique()
-                 noOfSubj = subjects.length
-
-                 observationCodes.forEach(function(obs){
-                 var nonnull = jsonQobj.find(obs, function () {
-                 //return this != ""
-                 return  !isNaN(this)
-                 });
-                 noOfObservations = nonnull.value().length
-                 console.log('number of observations',noOfObservations)
-                 console.log('number of subjects',noOfSubj);
-
-                 if(noOfObservations > noOfSubj)
-                 boxplots.push(obs)
-                 })*/
-
-
-
-                // format our data
-                //TODO: add DataType to data and use it to coerce dimensions
-                data.forEach(function(d) {
-                    d.bmi   = d3.round(+d.bmi,1);
-                    d.height   = d3.round(+d.height,2);
-                    d.weight = d3.round(+d.weight,1);
-                    d.diabp = +d.diabp;
-                    d.sysbp = +d.sysbp;
-                    d.hr = +d.hr;
-                    d.temp = +d.temp;
-                    //d.date_e = dateFormat.parse(d.date_entered);
-                    //d.date_i = dateFormat.parse(d.date_issued);
-                });
-
-                cfData = crossfilter(data);  // Gets 'observations' into crossfilter
-
-                //number of subject Observations
-                allGroup= cfData.groupAll()
-
-                subjectDim = cfData.dimension(function(d) {return d[subjectColumnName]})
-                uniqueSubjGrp = subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
-                uniqueSubjGrpM = {value: function() {
-                    return uniqueSubjGrp.value().count;
-                } };
-
-
-                /*visitDim = cfData.dimension(function(d) {return d[visitColumn]})
-                visitGrp = visitDim.group()
-                dimensions[visitColumn] = visitDim
-                groups[visitColumn] = visitGrp;*/
-
-                /*studyDim = cfData.dimension(function(d) {return d[studyColumn]})
-                studyGrp = studyDim.group()
-                dimensions[studyColumn] = studyDim
-                groups[studyColumn] = studyGrp;*/
-
-                /*siteDim = cfData.dimension(function(d) {return d[siteColumn]})
-                siteGrp = siteDim.group()
-                dimensions[siteColumn] = siteDim
-                groups[siteColumn] = siteGrp;*/
-
-                /*armDim = cfData.dimension(function(d) {return d[armColumn]})
-                armGrp = armDim.group()
-                dimensions[armColumn] = armDim
-                groups[armColumn] = armGrp;*/
-
-
-                //console.log('observationCodes inside refresh cf', columns)
-
-                /**
-                 * Create Dimensions for each column in the data
-                 */
-                columns.forEach(function(obs){
-                    //console.log('Adding ',obs, ' to crossfilter');
-                    if(boxplots.indexOf(obs)!= -1){
-                        console.log("doing boxplot for ",obs)
-                        dim = cfData.dimension(function(d) {return d['visit']})
-                        dimensions[obs] = dim;
-                        grp = dim.group().reduce(
+                        sysbpGroup     = visitDimension.group().reduce(
                             function(p,v) {
-                                p.push(v[obs]);
+                                p.push(+v.sysbp);
                                 return p;
                             },
                             function(p,v) {
-                                p.splice(p.indexOf(v[obs]), 1);
+                                p.splice(p.indexOf(+v.sysbp), 1);
                                 return p;
                             },
                             function() {
                                 return [];
                             }
-                        )
-                        groups[obs] = grp;
-                    }
-                    else{
-                        var dim = cfData.dimension(function (d) {return d[obs]});
-                        //console.log(obs,' created dimension ',dim.top(1), ' in crossfilter');
-                        dimensions[obs] = dim
-                        var grp = dim.group().reduce(reduceAdd(obs),reduceRemove(obs),reduceInit);
-                        //console.log(obs,' created group ',grp.all(), ' in crossfilter');
-                        /*var grpF = {
-                         all: function () {
-                         return grp.all().filter(function(d) { return +d.key > 0; })
-                         },
-                         size: function(){
-                         return grp.all().filter(function(d) { return +d.key > 0; }).size()
-                         }
-                         }*/
-                        groups[obs] = grp;
-                    }
-                })
+                        );
+                     dimensions['sysbp'] = visitDimension
+                     groups['sysbp'] = sysbpGroup
 
-                cfReady = true;
-                deferred.resolve(cfReady)
-            });
+                     cfReady = true;
+                     deferred.resolve(cfReady)
+                     });*/
+
+
+/*
+                    //TODO:do a different plot for multiple points/subject charts
+                    var jsonQobj=jsonQ(data);
+                    var subjects = jsonQobj.find('subjectId').unique()
+                    noOfSubj = subjects.length
+                    columns.forEach(function(obs){
+                        var nonnull = jsonQobj.find(obs, function () {
+                            //return this != ""
+                            return  !isNaN(this)
+                        });
+                        noOfObservations = nonnull.value().length
+                        //console.log('number of observations',noOfObservations)
+                        //console.log('number of subjects',noOfSubj);
+
+                        if(noOfObservations > noOfSubj)
+                            boxplots.push(obs)
+                    })*/
+
+
+
+                    // format our data
+                    //TODO: add DataType to data and use it to coerce dimensions
+                    data.forEach(function(d) {
+                        d.bmi   = d3.round(+d.bmi,1);
+                        d.height   = d3.round(+d.height,2);
+                        d.weight = d3.round(+d.weight,1);
+                        d.diabp = +d.diabp;
+                        d.sysbp = +d.sysbp;
+                        d.hr = +d.hr;
+                        d.temp = +d.temp;
+                        //d.date_e = dateFormat.parse(d.date_entered);
+                        //d.date_i = dateFormat.parse(d.date_issued);
+                    });
+
+                    // Gets 'observations' into crossfilter
+                    cfData = crossfilter(data);
+
+                    //number of subject Observations
+                    allGroup= cfData.groupAll()
+
+                    subjectDim = cfData.dimension(function(d) {return d[subjectColumnName]})
+                    uniqueSubjGrp = subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
+                    uniqueSubjGrpM = {value: function() {
+                        return uniqueSubjGrp.value().count;
+                    } };
+
+                    timeDimension = cfData.dimension(function(d) {return d[visitColumnName]; });
+
+
+
+
+
+                    /**
+                     * Create Dimensions for each column in the data
+                     */
+                    columns.forEach(function(obs){
+                        if(obs==visitColumnName)
+                        return;
+
+                        //console.log('Adding ',obs, ' to crossfilter');
+                        if(boxplots.indexOf(obs)!= -1){
+                            console.log("doing boxplot for ",obs)
+                            dim = cfData.dimension(function(d) {return d['visit']})
+                            dimensions[obs] = dim;
+                            grp = dim.group().reduce(
+                                function(p,v) {
+                                    p.push(v[obs]);
+                                    return p;
+                                },
+                                function(p,v) {
+                                    p.splice(p.indexOf(v[obs]), 1);
+                                    return p;
+                                },
+                                function() {
+                                    return [];
+                                }
+                            )
+                            groups[obs] = grp;
+                        }
+                        else{
+
+                            /**
+                             * Creating histogram count groups
+                             */
+                            var dim = cfData.dimension(function (d) {return d[obs]});
+                            dimensions[obs] = dim
+                            var grp = dim.group();
+                            //var grp1 = dim.group().reduce(reduceAdd(obs),reduceRemove(obs),reduceInit);
+                            var reducer = reductio()
+                                .filter(function(d) { return  d[obs] != "" })
+                                .count(true)
+                            reducer(grp);
+                            //console.log('reductio',obs,grp2.orderNatural().top(Infinity))
+                            //console.log('my group',obs, grp1.top(3))
+                            //console.log('cf group',obs, dim.group().top(3))
+                            groups[obs] = grp;
+
+                            /**
+                             * Creating boxplot array groups for time-based observations
+                             */
+
+
+                            var timeGroup = timeDimension.group();
+                            var timeDimReducer = reductio()
+                                .filter(function(d) { return  d[obs] != "" ; })
+                                .count(true)
+                                .dataList(true)
+                                .valueList(function (d) { return d[obs]; });
+                            timeDimReducer(timeGroup)
+                            timeGroups[obs] = timeGroup;
+
+                            /*var grpF = {
+                             all: function () {
+                             return grp.all().filter(function(d) { return +d.key > 0; })
+                             },
+                             size: function(){
+                             return grp.all().filter(function(d) { return +d.key > 0; }).size()
+                             }
+                             }*/
+                        }
+                    })
+
+                    //dimensions['sysbp'] = timeDimension
+                    //groups['sysbp'] = sysbpGroup
+
+                    console.log(timeGroups)
+                    cfReady = true;
+                    deferred.resolve(cfReady)
+                });
 
             return deferred.promise
         }
+
+
 
         cfservice.getDimension = function(key){
             return dimensions[key];
@@ -565,6 +648,14 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
         cfservice.getGroup = function(key){
             return groups[key];
+        }
+
+        cfservice.getTimeDimension = function(){
+            return timeDimension
+        }
+
+        cfservice.getGroupByTime = function(key){
+            return timeGroups[key]
         }
 
         cfservice.getCountData = function(){
@@ -605,14 +696,14 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         }
 
 
-        cfservice.getVisitchart = function(projectId,val,grp){
+        /*cfservice.getVisitchart = function(projectId,val,grp){
             var deferred = $q.defer();
             var chart;
 
             chart = cfservice.createChart(val,grp)
             deferred.resolve(chart)
             return deferred.promise
-        }
+        }*/
 
         cfservice.cfReady = function(){
             return cfReady;
@@ -658,14 +749,15 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         return XFilterLinker;
     }])
 
+/*
     .factory('xFilterService',['$injector','$q',function($injector,$q){
 
 
-        /**
+        /!**
          * maintains the xfilter data for subject, clinical and assay data
          * gets data, sets dimensions
          * @type {{}}
-         */
+         *!/
 
         var xfService = {}
 
@@ -679,9 +771,9 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
         var chartGroup = '';
 
-        /**
+        /!**
          * Cross filter methods
-         */
+         *!/
 
         xfService.getData = function(){
             var deferred = $q.defer();
@@ -753,7 +845,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
 
                 //TODO:do a different plot for multiple points/subject charts
-                /* var jsonQobj=jsonQ(data);
+                /!* var jsonQobj=jsonQ(data);
                  var subjects = jsonQobj.find('subjectId').unique()
                  noOfSubj = subjects.length
 
@@ -768,7 +860,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
                  if(noOfObservations > noOfSubj)
                  boxplots.push(obs)
-                 })*/
+                 })*!/
 
 
 
@@ -821,9 +913,9 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
                 console.log('observationCodes inside refresh cf', observationCodes)
 
-                /**
+                /!**
                  * Create Dimensions for each column in the data
-                 */
+                 *!/
                 observationCodes.forEach(function(obs){
                     console.log('Adding ',obs, ' to crossfilter');
                     if(boxplots.indexOf(obs)!= -1){
@@ -862,10 +954,10 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return deferred.promise
         }
 
-        /**
+        /!**
          * Charting methods
          *
-         * **/
+         * **!/
 
         xfService.createChart = function(obsName,chartGrp){
 
@@ -959,9 +1051,9 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             } else {
                 console.log("Subject Characteristic NOT FOUND IN CF")
 
-                /**
+                /!**
                  * *********************************************
-                 */
+                 *!/
                     //observation
                 ScIdToSCNameMap[scID] = scName //this is coming from charting buttons
                 //i.e. the SCchars from SQL DB
@@ -969,12 +1061,12 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 //returned from NOSQL
 
                 observationCodes.push(scName); //used for building CF dimensions,
-                                        // should be the same as column name in the CF table
+                // should be the same as column name in the CF table
                 observationIds.push(scID); //used for querying new and old SCs
 
-                /**
+                /!**
                  * ******************************************
-                 */
+                 *!/
                 this.initialize(projectId).then(function () {
 
                     subjCfService.refreshCharts();
@@ -993,9 +1085,9 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return deferred.promise
         }
 
-        /**********************
+        /!**********************
          * private methods
-         */
+         *!/
 
 
         xfService.getCountData = function(){
@@ -1072,12 +1164,12 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 //chartOptions[".xAxis().tickFormat"] = "2"
                 //d3.extent(data, function(d) { return d.TC; })
                 // bar width Keep increasing to get right then back off.
-                /* .x(d3.scale.linear()
+                /!* .x(d3.scale.linear()
                  .domain(d3.extent(data, function(d) { return d.TC; }))
                  )
                  .y(d3.scale.linear().domain([0, d3.max(data, function(d) { return d.close; })]))
                  .xAxis().tickFormat(function(v) {return v;});
-                 */
+                 *!/
             }
 
 
@@ -1105,3 +1197,4 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         }
 
     }])
+*/

@@ -189,6 +189,8 @@ nav a {
     /*background-color: #304A54;*/
     background-color: #2C3E50;
     height: 45px;
+    text-transform: uppercase;
+    color: white;
 }
 
 .panel-header h3 {
@@ -204,7 +206,7 @@ nav a {
     /*min-height: 430px;*/
     /*font-size: .8em;*/
     font-size: .9em;
-    //font-family: helvetica;
+    /*//font-family: helvetica;*/
 }
 
 .subject-panel {
@@ -464,7 +466,7 @@ nav a {
 .plots-view {
     /*min-height: 280px;*/
     background-color: #F1F2F2;
-    /*padding:20px;*/
+    padding:20px;
     overflow: scroll;
 }
 .table-view {
@@ -480,9 +482,8 @@ nav a {
     padding-top: 5px;
 }
 
-.models-list ul{
+.models-list ul:first-child{
     list-style: none;
-    color: #39b3d7;
     display: table;
     width: 100%;
     padding-left:0;
@@ -664,6 +665,10 @@ nav a {
 
 }
 
+.dc-chart{
+    margin-right: 50px;
+}
+
 .dc-chart .x.axis text {
     text-anchor: end !important;
     font-size: 0.8em;
@@ -699,17 +704,45 @@ nav a {
 .chart-title {
     text-transform: uppercase;
     font-size: .9em;
+    padding-top: 5px;
     font-family: sans-serif;
     font-weight: 900;
     color: #35495E;
+    padding-left: 10px;
 }
 
 .chart-title .reset, .chart-title .filter {
     font-size: .7em;
     padding-left: 10px;
+    /*display: none;*/
 }
 
 .img-dashboard{
     width: 100px;
     height: 100px;
+}
+
+
+.chart-options{
+    margin-right: 10px;
+    display: none;
+}
+.chart-options ul{
+    list-style: none;
+    /*color: #39b3d7;*/
+    display: table;
+    width: 100%;
+    padding-left:0;
+}
+.chart-options ul li{
+    float: none;
+    margin: .5em;
+    text-align: center;
+    display: table-cell;
+}
+.chart-options a{
+    font-size: 15px;
+    font-weight: normal;
+    color: #2C3E50;
+    -webkit-padding-start: 10px;
 }

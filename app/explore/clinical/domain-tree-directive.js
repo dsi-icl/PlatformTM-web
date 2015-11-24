@@ -33,17 +33,19 @@ angular.module('biospeak.clinical')
                 '<div class="col-md-6">'+
                     //'<div class="connecting-line"></div>'+
                     '<div class="ibox">'+
-                        '<div class="ibox-title">'+
+                        //'<div class="ibox-title">'+
                             //'<button type="button" class="btn btn-sm btn-block" style="background-color: #00afbc;border-radius:30px">{{class.class}}</button>'+
-                            '<h3>{{class.class}}</h3>'+
-                        '</div>'+
+
+                       /* '</div>'+*/
                     //'<div class="connecting-line"></div>'+
-                    '<div class="ibox-content">'+
-                        '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
-                            'group="domain"  ' +
-                            'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
-                            'get-charting-opts="getChartingOpts()">' +
-                        '</cl-tree-obs-grp>'+
+                        '<div class="ibox-content">'+
+                            '<h3>{{class.class}}</h3>'+
+                            '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
+                                'group="domain"  ' +
+                                'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
+                                'get-charting-opts="getChartingOpts()">' +
+                            '</cl-tree-obs-grp>'+
+                        '</div>'+
                     '</div>'+
                 '</div>'
         }
@@ -77,6 +79,7 @@ angular.module('biospeak.clinical')
                         'ng-click="isActive = !isActive"' +
                         'chart-service="{{chartService}}"'+
                         'xfilter-service="{{xfilterService}}"'+
+                        'export-service="{{exportService}}"'+
                         'project-id="{{projectId}}"'+
                         'container="{{chartContainerId}}">'+
                         '<span>{{group.name}}</span>'+' <span>({{group.count}})</span>'+
@@ -93,6 +96,7 @@ angular.module('biospeak.clinical')
                     scope.chartService = scope.getChartingOpts().DCchartService;
                     scope.chartGroup = scope.getChartingOpts().chartGroup;
                     scope.xfilterService = scope.getChartingOpts().xfilterService;
+                    scope.exportService = scope.getChartingOpts().exportService;
                     scope.projectId = scope.getChartingOpts().projectId;
                 //var medraterm =scope.group.code;
                 //console.log('scope inside link function of cltreeobsgrp',scope.group.groupTerm)
@@ -122,6 +126,7 @@ angular.module('biospeak.clinical')
                     'grp="{{chartGroup}}"' +
                     'chart-service="{{chartService}}"' +
                     'xfilter-service="{{xfilterService}}"'+
+                    'export-service="{{exportService}}"'+
                     'project-id="{{projectId}}"'+
                     //'ng-class="{'': !isActive, 'active': isActive}"
                     'ng-init="isActive = false"'+
@@ -142,6 +147,7 @@ angular.module('biospeak.clinical')
                     scope.chartService = scope.getChartingOpts().DCchartService
                     scope.chartGroup = scope.getChartingOpts().chartGroup
                     scope.xfilterService = scope.getChartingOpts().xfilterService
+                    scope.exportService = scope.getChartingOpts().exportService;
                     scope.projectId = scope.getChartingOpts().projectId;
                 }
             }

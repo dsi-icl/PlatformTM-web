@@ -114,10 +114,12 @@ angular.module('eTRIKSdata.dcPlots')
 
                 //$scope.propagateFilter()
 
+                var chartDataType = 'Count';//$scope.role;
+
                 //console.log('inside dc-chart controller')
                 //console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp)
 
-                chartService.getDCchart($scope.projectId,$scope.val,$scope.obsid,$scope.grp,xfilterService)
+                chartService.getDCchart($scope.projectId,$scope.val,$scope.obsid,$scope.grp,xfilterService, chartDataType)
                     .then(
                     function(chart){
                         $scope.chartToPlot = chart;
@@ -157,30 +159,70 @@ angular.module('eTRIKSdata.dcPlots')
 
             }],
             template:'<div style="padding-top: 20px;/*float: left;max-height: 200px; overflow: scroll*/">'+
-                '<div class="chart-title" id="returnsLabel">'+
-                '<span>{{val}}</span>'+
-                '<span class="filter"></span> <a class="reset">reset</a> '+
+                '<div  id="returnsLabel">'+
+                    '<div class="pull-left chart-title">'+
+                        '<span>{{val}}</span>'+
+                        '<span class="filter"></span> <a class="reset">reset</a> '+
+                    '</div>'+
+                    '<div class="pull-right chart-options">'+
+                        '<ul>'+
+                            '<li> <a class="count-chart"> <i class="fa fa-bar-chart-o"></i></a></li>'+
+                            '<li> <a class="box-chart"> <i class="flat-icon flaticon-candlestick"></i></a></li>'+
+                            '<li> <a class="zoom"> <i class="fa fa-search-plus"></i></a></li>'+
+                        '</ul>'+
+                    '</div>'+
                 '</div>'+
                 '<div class="clearfix"></div>'+
-                //'<div><img src="img/icons/spinner.gif"></div>'+
                 '</div>'
             ,
             link: function (scope, element, attrs) {
-
-                //console.log(scope.val)
-
-
-
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
-                        console.log(newVal)
-                        scope.chartToPlot.anchor(element[0],scope.grp);
+                        scope.chartToPlot.anchor(element[0], scope.grp);
+                        var groupChart = scope.chartToPlot.chartGroup()
 
-                        //if(scope.val == 'arm' || scope.val == 'site'){
-                            /*scope.chartToPlot.on('filtered',scope.chartCFservice.filterClinicalCF(filter,scope.val))*/
+                        var d = angular.element(element[0].querySelector('div.chart-options'));
+                        d.css('display', 'inherit');
 
-                        //}
+                        //Set reset link
+                        var a = angular.element(element[0].querySelector('a.reset'));
+                        a.attr('href', 'javascript:;');
+                        a.css('display', 'none');
+                        a.on('click', function () {
+                            scope.chartToPlot.filterAll(groupChart);
+                            dc.redrawAll(groupChart);
+                        });
 
+                        //Set alt link
+                        var a1 = angular.element(element[0].querySelector('a.box-chart'));
+                        a1.attr('href', 'javascript:;');
+                        a1.on('click', function () {
+                            scope.chartservice.getDCchart(scope.projectId, scope.val, scope.obsid, scope.grp, scope.xfService, 'GroupedByTime')
+                                .then(
+                                function (chart) {
+                                    scope.chartToPlot = chart;
+                                });
+
+                            //scope.chartToPlot.anchor(element[0],scope.grp);
+                            //scope.chartToPlot.filterAll(groupChart);
+                            //dc.redrawAll(groupChart);
+                        });
+
+                        var a2 = angular.element(element[0].querySelector('a.count-chart'));
+                        a2.attr('href', 'javascript:;');
+                        a2.on('click', function () {
+                            scope.chartservice.getDCchart(scope.projectId, scope.val, scope.obsid, scope.grp, scope.xfService, 'Count')
+                                .then(
+                                function (chart) {
+                                    scope.chartToPlot = chart;
+                                });
+
+                            //scope.chartToPlot.anchor(element[0],scope.grp);
+                            //scope.chartToPlot.filterAll(groupChart);
+                            //dc.redrawAll(groupChart);
+                        });
+
+                        scope.chartToPlot.render()
 
                         //console.log('chartId',scope.chartToPlot.chartID())
                         //console.log('chart group inside directive',scope.chartToPlot.chartGroup())
@@ -188,19 +230,7 @@ angular.module('eTRIKSdata.dcPlots')
                         //console.log('subject group',scope.chartCFservice.subjDimension().group())
                         //console.log('subject groupAll',scope.chartCFservice.subjDimension().group().all())
                         //console.log('subject dimension groupAll value',scope.chartCFservice.subjDimension().groupAll().value())
-                        var groupChart = scope.chartToPlot.chartGroup()
-                          //console.log('Group chart ', groupChart)
-
-                          //Set reset link
-                            var a = angular.element(element[0].querySelector('a.reset'));
-                            a.attr('href', 'javascript:;');
-                            a.css('display', 'none');
-                            a.on('click', function () {
-                                scope.chartToPlot.filterAll(groupChart);
-                                dc.redrawAll(groupChart);
-                            });
-                        scope.chartToPlot.render()
-
+                        //console.log('Group chart ', groupChart)
                         //dc.renderAll(groupChart);
                         //dc.redrawAll();
                     }

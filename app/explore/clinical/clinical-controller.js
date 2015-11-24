@@ -3,8 +3,9 @@
  */
 angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
 
-    .controller('ClinicalCtrl', ['$rootScope','$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService','$timeout',
-        function($rootScope,$scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService,$timeout) {
+    .controller('ClinicalCtrl', ['$rootScope','$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService',
+        'exportService', 'toaster','$timeout',
+        function($rootScope,$scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService,exportService, toaster,$timeout) {
 
             $scope.chartGroup = "clinical";
             $scope.projectId = $stateParams.studyId;//"P-BVS";
@@ -17,6 +18,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
 
             $scope.DCchartService = "DCchartingService";
             $scope.xfilterService = "ClinicalCf";
+            $scope.exportService = "exportService";
             $scope.show = 'plots';
 
             //TEMP
@@ -34,7 +36,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                         //$scope.getObsForAll();
 
                     })
-            },3000)
+            },2000)
             /*$scope.filterByStudy = function(){
              ClinicalCf.filterClinicalData('CRC305C','study');
              }*/
@@ -87,6 +89,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 chartingOpts.chartGroup = $scope.chartGroup
                 chartingOpts.DCchartService = "DCchartingService";
                 chartingOpts.xfilterService = "ClinicalCf";
+                chartingOpts.exportService = "exportService";
                 chartingOpts.projectId = $stateParams.studyId;//"P-BVS";
                 return chartingOpts;
             }
