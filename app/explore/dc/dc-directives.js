@@ -18,6 +18,7 @@ angular.module('eTRIKSdata.dcPlots')
                 section: '@',
                 chartService: '@',
                 xfilterService: '@',
+                exportService: '@',
                 projectId:'@'
             },
 
@@ -107,6 +108,10 @@ angular.module('eTRIKSdata.dcPlots')
 
                 var xfilterService = $injector.get($scope.xfilterService);
                 $scope.xfService = xfilterService
+
+                var expService = $injector.get($scope.exportService);
+                $scope.expService = expService
+
                 //$scope.propagateFilter()
 
                 //console.log('inside dc-chart controller')
@@ -116,12 +121,16 @@ angular.module('eTRIKSdata.dcPlots')
                     .then(
                     function(chart){
                         $scope.chartToPlot = chart;
+
                         $scope.chartToPlot.on('filtered', function(chart, filter){
 
                             console.log('Filter Event', filter)
                             console.log('Chart', chart.dimName)
                             console.log('filters',chart.filters())
 
+
+                            //$scope.subjectFilter[chart.dimName] = chart.filters()
+                            //console.log("selectedFilter" + $scope.subjectFilter.abc)
                             // A possible solution
                             //TODO: pass dimName and filters to the scope of the parent controller
                             //TODO: could be one of three : subjects-controller or clinical-controller or assay-controller
@@ -133,6 +142,9 @@ angular.module('eTRIKSdata.dcPlots')
                             //console.log(scope.chartCFservice.getCountGroup())
                             //scope.chartCFservice.filterClinicalCF(filter,scope.val)
                             $scope.chartservice.propagateFilter($scope.xfilterService);
+
+                            $scope.expService.updateSubjectFilter(chart.dimName,chart.filters())
+                            console.log("filters " + $scope.expService.getSubjectFilter())
 
 
                             //dc.renderAll("Clinical");

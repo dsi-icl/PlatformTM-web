@@ -3,8 +3,8 @@
  */
 angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
-    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','XFilterLinker','DCchartingService','$timeout',
-        function($scope,$stateParams,subjectDataService, SubjCf,XFilterLinker,DCchartingService,$timeout) {
+    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','XFilterLinker','DCchartingService','exportService','toaster','$timeout',
+        function($scope,$stateParams,subjectDataService, SubjCf,XFilterLinker,DCchartingService,exportService, toaster, $timeout) {
 
             var projectId = $stateParams.studyId;
             $scope.title = "Subjects";
@@ -18,11 +18,30 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
             $scope.DCchartService = "DCchartingService";
             $scope.xfilterService = "SubjCf";
+            $scope.exportService = "exportService";
+
             $scope.chartGroup = "subject";
             $scope.show='plots';
 
-            $scope.filters =[];
+            $scope.subjectFilter = exportService.getSubjectFilter();
+            $scope.cart = [];
 
+            $scope.addToCart = function(type) {
+
+                exportService.addToCart(type, function(){
+                    toaster.pop({
+                        type: 'success',
+                        title: 'Data Saved',
+                        body: '',
+                        showCloseButton: false,
+                        timeout: 2000
+                    })
+                })
+
+
+
+                //console.log(exportService.getCart());
+            };
 
             //Gets data for StudyId, Arm and Site
             subjectDataService.getSubjCharacteristics(projectId)

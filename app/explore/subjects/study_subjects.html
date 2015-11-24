@@ -33,7 +33,15 @@
 
                 <div id="subject-plots" ng-hide="show =='table'" class="plots-view animated fadeIn"></div>
                 <div id="subject-datatable" ng-hide="show =='plots'" class="table-view animated fadeIn">
-                    <div style="min-height: 50px;">Filters selected go here and a button to add to cart</div>
+                    <div style="display:inline;float:right">
+                        <button ng-click="addToCart('subject')" class="btn-xs btn-success " type="button"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<span class="bold">Save to Cart</span></button>
+                    </div>
+                    <div style="display:inline;">
+                        <div ng-repeat="(key, values) in subjectFilter" style="display:inline;">
+                            <button type="button" class="btn-xs btn-outline btn-default">{{key}} : {{values}}</button>
+                        </div>
+                    </div>
+                    <div style="min-height:10px"></div>
                     <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
                                   chart-service="{{DCchartService}}"
                                   xfilter-service="{{xfilterService}}"
@@ -63,6 +71,7 @@
                                    grp="{{chartGroup}}"
                                    chart-service="{{DCchartService}}"
                                    xfilter-service="{{xfilterService}}"
+                                   export-service="{{exportService}}"
                                    project-id="{{projectId}}"
                                    ng-class="{'active': isActive}"
                                    ng-init="isActive = false"
@@ -84,6 +93,7 @@
                                    grp="{{chartGroup}}"
                                    chart-service="{{DCchartService}}"
                                    xfilter-service="{{xfilterService}}"
+                                   export-service="{{exportService}}"
                                    project-id="{{projectId}}"
                                    ng-class="{'hide': isActive}"
                                    ng-init="isActive = false"
@@ -215,4 +225,6 @@
 </div>-->
 
 <div class="clearfix"></div>
+<toaster-container></toaster-container>
+
 

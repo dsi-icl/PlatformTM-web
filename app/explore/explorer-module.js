@@ -22,6 +22,17 @@ angular.module('eTRIKSdata.explorer',[
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
+                        resolve: {
+                            loadPlugin: function ($ocLazyLoad) {
+                                return $ocLazyLoad.load([
+                                    {
+                                        insertBefore: '#loadBefore',
+                                        name: 'toaster',
+                                        files: ['lib/plugins/toastr/toastr.min.js', 'lib/plugins/toastr/toastr.min.css']
+                                    }
+                                ]);
+                            }
+                        },
                         controller:function(){
 /*                            angular.element(document).ready(function () {
                                 $(".main").onepage_scroll({
@@ -54,6 +65,10 @@ angular.module('eTRIKSdata.explorer',[
                     'assays@explore.main':{
                         templateUrl: 'explore/assays/study_assays.html',
                         controller: 'AssayCtrl'
+                    },
+                    'datacart@explore.main':{
+                        templateUrl: 'explore/export/right_sidebar.html',
+                        controller: 'DatacartCtrl'
                     },
                     'design@explore':{
                         templateUrl: 'explore/partials/study_design.html'
