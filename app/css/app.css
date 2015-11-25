@@ -468,7 +468,29 @@ nav a {
     background-color: #F1F2F2;
     padding:20px;
     overflow: scroll;
+
+    /*height: 300px;*/
+    /*margin: 20px;*/
+    /*width: 300px;*/
+    /*position: relative;*/
+    /*resize: vertical;*/
+    /*overflow: auto;*/
 }
+
+.plots-flex-container{
+    background-color: #F1F2F2;
+    padding:20px;
+    overflow: scroll;
+    display: -webkit-flex;
+    display: inline-flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap:         wrap;
+    -webkit-justify-content: space-between;
+    justify-content:         space-between;
+    -webkit-align-items: center;
+    align-items:         center;
+}
+
 .table-view {
     max-height: 280px;
     padding: 20px;

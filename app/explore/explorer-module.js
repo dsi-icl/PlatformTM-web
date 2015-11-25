@@ -29,6 +29,13 @@ angular.module('eTRIKSdata.explorer',[
                                         insertBefore: '#loadBefore',
                                         name: 'toaster',
                                         files: ['lib/plugins/toastr/toastr.min.js', 'lib/plugins/toastr/toastr.min.css']
+                                    },
+                                    {
+                                        files: ['lib/plugins/slick/css/slick.css','lib/plugins/slick/css/slick-theme.css','lib/plugins/slick/js/slick.min.js']
+                                    },
+                                    {
+                                        name: 'slick',
+                                        files: ['lib/plugins/slick/js/angular-slick.min.js']
                                     }
                                 ]);
                             }

@@ -38,8 +38,8 @@ angular.module('eTRIKSdata.dcPlots')
                         scope.$apply(function(){
                             angular.element(document.getElementById(scope.container))
                                 .append(
-                                    $compile('<div  id="'+elemId+'">' +
-                                        '<dc-chart></dc-chart>'+
+                                    $compile('<div  style=" padding: 0px 30px 0px 30px;" id="'+elemId+'"> ' +
+                                        '<dc-chart-group></dc-chart-group>'+
                                         '</div>')(scope)
                                 )
                         })
@@ -87,6 +87,33 @@ angular.module('eTRIKSdata.dcPlots')
                             chart.render();
                         }
                 })
+            }
+        }
+    })
+
+    .directive('dcChartGroup',function(){
+        return {
+            restrict: 'E',
+            replace:true,
+            template:
+                '<div style="width:320px">'+
+                '<slick dots="true" slides-to-show="1" center-mode="false" variable-width="true">' +
+                '<dc-chart></dc-chart> ' +
+                '<div> <div class="ibox-content"> <h2>Slide 1</h2> <p> ' +
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. LoremIpsum has been the industrys standard dummy text ever since the 1500s, when anunknown printer took a galley of type and scrambled it to make a type specimenbook. It has survived not only five centuries, but also the leap. ' +
+                '</p> </div> </div>'+
+                '<div> <div class="ibox-content"> <h2>Slide 1</h2> <p> ' +
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. LoremIpsum has been the industrys standard dummy text ever since the 1500s, when anunknown printer took a galley of type and scrambled it to make a type specimenbook. It has survived not only five centuries, but also the leap. ' +
+                '</p> </div> </div>'+
+                '<div> <div class="ibox-content"> <h2>Slide 1</h2> <p> ' +
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. LoremIpsum has been the industrys standard dummy text ever since the 1500s, when anunknown printer took a galley of type and scrambled it to make a type specimenbook. It has survived not only five centuries, but also the leap. ' +
+                '</p> </div> </div>'+
+                '<div> <div class="ibox-content"> <h2>Slide 1</h2> <p> ' +
+                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. LoremIpsum has been the industrys standard dummy text ever since the 1500s, when anunknown printer took a galley of type and scrambled it to make a type specimenbook. It has survived not only five centuries, but also the leap. ' +
+                '</p> </div> </div>'+
+                '</slick>'+
+                '</div>',
+            link : function(scope,element){
             }
         }
     })

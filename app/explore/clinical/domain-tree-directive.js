@@ -131,7 +131,7 @@ angular.module('biospeak.clinical')
                     //'ng-class="{'': !isActive, 'active': isActive}"
                     'ng-init="isActive = false"'+
                     'ng-click="isActive = !isActive">' +
-                    '<span>{{obs.name}}</span>'+
+                    '<span>{{obs.name}}</span> '+
                 '</button>',
             link: function (scope, element, attrs) {
 
