@@ -13,11 +13,11 @@ angular.module('biospeak.clinical')
             },
             template:
                 '<div class="clinicalTree row ">'+
-                    '<div class="col-md-12">'+
+                    /*'<div class="col-md-12">'+
                         '<button class="btn btn-sm btn-block">'+
                             '<span>Clinical Observations</span>'+
                         '</button>'+
-                    '</div>'+
+                    '</div>'+*/
                     '<cl-tree-class ng-repeat="class in observations" ' +
                         'class="class" get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })" ></cl-tree-class>'+
                 '</div>',
@@ -30,15 +30,23 @@ angular.module('biospeak.clinical')
         return{
             restrict:'EA',
             template:
-                '<div class="col-md-5">'+
-                    '<div class="connecting-line"></div>'+
-                        '<button type="button" class="btn btn-sm btn-block" style="background-color: #00afbc;border-radius:30px">{{class.class}}</button>'+
-                    '<div class="connecting-line"></div>'+
-                    '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
-                        'group="domain"  ' +
-                        'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
-                        'get-charting-opts="getChartingOpts()">' +
-                    '</cl-tree-obs-grp>'+
+                '<div class="col-md-6">'+
+                    //'<div class="connecting-line"></div>'+
+                    '<div class="ibox">'+
+                        //'<div class="ibox-title">'+
+                            //'<button type="button" class="btn btn-sm btn-block" style="background-color: #00afbc;border-radius:30px">{{class.class}}</button>'+
+
+                       /* '</div>'+*/
+                    //'<div class="connecting-line"></div>'+
+                        '<div class="ibox-content">'+
+                            '<h3>{{class.class}}</h3>'+
+                            '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
+                                'group="domain"  ' +
+                                'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
+                                'get-charting-opts="getChartingOpts()">' +
+                            '</cl-tree-obs-grp>'+
+                        '</div>'+
+                    '</div>'+
                 '</div>'
         }
     })
@@ -56,7 +64,7 @@ angular.module('biospeak.clinical')
              //console.log('inside cltreeobsgrouo controller ',$scope)
              },
             template:
-                '<div class="btn-group btn-block">'+
+                '<div class="btn-group btn-block" style="margin-top: 3px;">'+
                     '<button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#{{group.code}}">'+
                         '<span class="caret"></span>'+
                     '</button>'+
@@ -70,6 +78,8 @@ angular.module('biospeak.clinical')
                         'ng-init="isActive = false"'+
                         'ng-click="isActive = !isActive"' +
                         'chart-service="{{chartService}}"'+
+                        'xfilter-service="{{xfilterService}}"'+
+                        'export-service="{{exportService}}"'+
                         'project-id="{{projectId}}"'+
                         'container="{{chartContainerId}}">'+
                         '<span>{{group.name}}</span>'+' <span>({{group.count}})</span>'+
@@ -82,9 +92,12 @@ angular.module('biospeak.clinical')
 
 
                     //console.log(scope.getChartingOpts())
-                    scope.chartContainerId = scope.getChartingOpts().container
-                    scope.chartService = scope.getChartingOpts().chartingServiceName
-                    scope.chartGroup = scope.getChartingOpts().chartGroup
+                    scope.chartContainerId = scope.getChartingOpts().container;
+                    scope.chartService = scope.getChartingOpts().DCchartService;
+                    scope.chartGroup = scope.getChartingOpts().chartGroup;
+                    scope.xfilterService = scope.getChartingOpts().xfilterService;
+                    scope.exportService = scope.getChartingOpts().exportService;
+                    scope.projectId = scope.getChartingOpts().projectId;
                 //var medraterm =scope.group.code;
                 //console.log('scope inside link function of cltreeobsgrp',scope.group.groupTerm)
                     //scope.ids = scope.getObsIdsForMeddra({ medraterm: medraterm })
@@ -110,13 +123,15 @@ angular.module('biospeak.clinical')
                     'obsrv="{{obs.code}}"'+
                     'active="{{isActive}}"'+
                     'container="{{chartContainerId}}"'+
-                    'grp="{{chartGroup}}"'+
-                    'chart-service="{{chartService}}"'+
+                    'grp="{{chartGroup}}"' +
+                    'chart-service="{{chartService}}"' +
+                    'xfilter-service="{{xfilterService}}"'+
+                    'export-service="{{exportService}}"'+
                     'project-id="{{projectId}}"'+
                     //'ng-class="{'': !isActive, 'active': isActive}"
                     'ng-init="isActive = false"'+
                     'ng-click="isActive = !isActive">' +
-                    '<span>{{obs.name}}</span>'+
+                    '<span>{{obs.name}}</span> '+
                 '</button>',
             link: function (scope, element, attrs) {
 
@@ -129,8 +144,11 @@ angular.module('biospeak.clinical')
                 }else{
                     //console.log(scope.getChartingOpts())
                     scope.chartContainerId = scope.getChartingOpts().container
-                    scope.chartService = scope.getChartingOpts().chartingServiceName
+                    scope.chartService = scope.getChartingOpts().DCchartService
                     scope.chartGroup = scope.getChartingOpts().chartGroup
+                    scope.xfilterService = scope.getChartingOpts().xfilterService
+                    scope.exportService = scope.getChartingOpts().exportService;
+                    scope.projectId = scope.getChartingOpts().projectId;
                 }
             }
         }

@@ -7,12 +7,12 @@
 }
 
 .node-toggle {
-    -moz-border-radius-topleft: 15px;
-    -webkit-border-top-left-radius: 15px;
-    border-top-left-radius: 15px;
-    -moz-border-radius-bottomleft: 15px;
-    -webkit-border-bottom-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     -moz-border-radius-topright: 0;
     -webkit-border-top-right-radius: 0;
     border-top-right-radius: 0;
@@ -29,12 +29,12 @@
 }
 
 .tree-node, .tree-leaf{
-    -moz-border-radius-topright: 15px;
+    /*-moz-border-radius-topright: 15px;
     -webkit-border-top-right-radius: 15px;
     border-top-right-radius: 15px;
     -moz-border-radius-bottomright: 15px;
     -webkit-border-bottom-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 15px;*/
 }
 .tree-node {
     margin-left: 0 !important;
@@ -50,8 +50,9 @@
     text-align: left;
     width: 100%;
     font-weight: normal;
-    margin-top: 0px;
+    margin-top: 2px;
     text-indent: 10px;
+    background-color: ghostwhite;
 
 }
 

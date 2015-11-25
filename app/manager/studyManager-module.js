@@ -8,8 +8,14 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
    /* $urlRouterProvider.otherwise('/manager');*/
 
         $stateProvider
+/*            .state('manager', {
+                abstract : true,
+                url: "",
+                templateUrl:"layout/content.html",
+                controller: "logOutController"
+            })*/
             .state('manager',{
-                url:'/manager/{studyId}',
+                url:'/{studyId}/configure',
                 views:{
                     '':{
                         templateUrl:"manager/studyManager.html"
@@ -59,10 +65,14 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                 controller:'VariableController'
             })
 
-    })
+    })/*.constant('ngAPISettings', {
+        apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
+        //apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+    });*/
 
-    .run(function(editableOptions) {
+
+    /*.run(function(editableOptions) {
 
         editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 
-    });
+    });*/

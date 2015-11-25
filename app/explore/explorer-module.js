@@ -6,17 +6,40 @@ angular.module('eTRIKSdata.explorer',[
         'biospeak.clinical',
         'biospeak.assays',
         'eTRIKSdata.dcPlots',
-        'eTRIKSdata.exporter',
-        'duScroll'])
+        'eTRIKSdata.exporter'])
 
     .config(function($stateProvider){
 
         $stateProvider
             .state('explore', {
-                url: "/explore",
+                abstract : true,
+                url: "",
+                templateUrl:"layout/content.html",
+                controller: "logOutController"
+            })
+            .state('explore.main', {
+                url: "/{studyId}/explore/",
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
+                        resolve: {
+                            loadPlugin: function ($ocLazyLoad) {
+                                return $ocLazyLoad.load([
+                                    {
+                                        insertBefore: '#loadBefore',
+                                        name: 'toaster',
+                                        files: ['lib/plugins/toastr/toastr.min.js', 'lib/plugins/toastr/toastr.min.css']
+                                    },
+                                    {
+                                        files: ['lib/plugins/slick/css/slick.css','lib/plugins/slick/css/slick-theme.css','lib/plugins/slick/js/slick.min.js']
+                                    },
+                                    {
+                                        name: 'slick',
+                                        files: ['lib/plugins/slick/js/angular-slick.min.js']
+                                    }
+                                ]);
+                            }
+                        },
                         controller:function(){
 /*                            angular.element(document).ready(function () {
                                 $(".main").onepage_scroll({
@@ -38,17 +61,21 @@ angular.module('eTRIKSdata.explorer',[
                             });*/
                         }
                     },
-                    'subjects@explore':{
+                    'subjects@explore.main':{
                         templateUrl: 'explore/subjects/study_subjects.html',
                         controller: 'SubjectsCtrl'
                     },
-                    'assessments@explore':{
+                    'assessments@explore.main':{
                         templateUrl: 'explore/clinical/study_clinical.html',
                         controller: 'ClinicalCtrl'
                     },
-                    'assays@explore':{
+                    'assays@explore.main':{
                         templateUrl: 'explore/assays/study_assays.html',
                         controller: 'AssayCtrl'
+                    },
+                    'datacart@explore.main':{
+                        templateUrl: 'explore/export/right_sidebar.html',
+                        controller: 'DatacartCtrl'
                     },
                     'design@explore':{
                         templateUrl: 'explore/partials/study_design.html'
@@ -58,3 +85,8 @@ angular.module('eTRIKSdata.explorer',[
             })
 
     })
+
+    /*.constant('ngAuthSettings', {
+        //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
+        apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+    })*/

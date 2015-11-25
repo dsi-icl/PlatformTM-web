@@ -11,74 +11,87 @@
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
 	font-family: Flaticon;
-font-style: normal;
-/*margin-left: 5px;*/
-}.flaticon-arrow397:before {
+	font-size: inherit;
+	font-style: normal;
+	/*margin-left: 20px;*/
+}.flaticon-bars10:before {
 	content: "\e000";
 }
-.flaticon-cells:before {
+.flaticon-bed39:before {
 	content: "\e001";
 }
-.flaticon-chart11:before {
+.flaticon-candlestick:before {
 	content: "\e002";
 }
-.flaticon-chart15:before {
+.flaticon-cells:before {
 	content: "\e003";
 }
-.flaticon-checkbox4:before {
+.flaticon-chemical:before {
 	content: "\e004";
 }
-.flaticon-checkbox5:before {
+.flaticon-chemistry20:before {
 	content: "\e005";
 }
-.flaticon-cloud302:before {
+.flaticon-clinic2:before {
 	content: "\e006";
 }
-.flaticon-dna:before {
+.flaticon-clinic3:before {
 	content: "\e007";
 }
-.flaticon-dna9:before {
+.flaticon-clock7:before {
 	content: "\e008";
 }
-.flaticon-download107:before {
+.flaticon-csv:before {
 	content: "\e009";
 }
-.flaticon-download164:before {
+.flaticon-gardiogram:before {
 	content: "\e00a";
 }
-.flaticon-female206:before {
+.flaticon-heartbeat:before {
 	content: "\e00b";
 }
-.flaticon-little14:before {
+.flaticon-hospital86:before {
 	content: "\e00c";
 }
-.flaticon-male209:before {
+.flaticon-lifeline5:before {
 	content: "\e00d";
 }
-.flaticon-man412:before {
+.flaticon-mark6:before {
 	content: "\e00e";
 }
-.flaticon-medicine13:before {
+.flaticon-medical34:before {
 	content: "\e00f";
 }
-.flaticon-molecules1:before {
+.flaticon-medicine41:before {
 	content: "\e010";
 }
-.flaticon-mouse33:before {
+.flaticon-notepad51:before {
 	content: "\e011";
 }
-.flaticon-pie14:before {
+.flaticon-rat2:before {
 	content: "\e012";
 }
-.flaticon-rat2:before {
+.flaticon-standing55:before {
 	content: "\e013";
 }
-.flaticon-standing55:before {
+.flaticon-test10:before {
 	content: "\e014";
 }
-.flaticon-surgeon1:before {
+.flaticon-testtube8:before {
 	content: "\e015";
 }
-.flaticon-women13:before {
+.flaticon-tired5:before {
 	content: "\e016";
+}
+.flaticon-txt:before {
+	content: "\e017";
+}
+.flaticon-warning2:before {
+	content: "\e018";
+}
+.flaticon-write3:before {
+	content: "\e019";
+}
+.flaticon-xls2:before {
+	content: "\e01a";
 }

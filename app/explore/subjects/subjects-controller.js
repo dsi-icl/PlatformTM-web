@@ -3,37 +3,66 @@
  */
 angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
-    .controller('SubjectsCtrl', ['$scope','subjectDataService','SubjCf','$timeout',function($scope,subjectDataService, SubjCf,$timeout) {
+    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','XFilterLinker','DCchartingService','exportService','toaster','$timeout',
+        function($scope,$stateParams,subjectDataService, SubjCf,XFilterLinker,DCchartingService,exportService, toaster, $timeout) {
 
-        var projectId = "P-BVS";
-        $scope.title = "Subjects";
-        $scope.subjChartContainerId = 'subject-plots';
-        //$scope.section="Subjects";
-        $scope.projectId = projectId;
-        $scope.cf = SubjCf;
-        $scope.chartService = "SubjCf";
-        $scope.chartGroup = "subject";
+            var projectId = $stateParams.studyId;
+            $scope.title = "Subjects";
+            $scope.subjChartContainerId = 'subject-plots';
+            $scope.projectId = projectId;
+
+            //TEMP
+            //$scope.cf = SubjCf;
+            //$scope.chartservice = DCchartingService;
+            //////////////////////
+
+            $scope.DCchartService = "DCchartingService";
+            $scope.xfilterService = "SubjCf";
+            $scope.exportService = "exportService";
+
+            $scope.chartGroup = "subject";
+            $scope.show='plots';
+
+            $scope.subjectFilter = exportService.getSubjectFilter();
+            $scope.cart = [];
+
+            $scope.addToCart = function(type) {
+
+                exportService.addToCart(type, function(){
+                    toaster.pop({
+                        type: 'success',
+                        title: 'Data Saved',
+                        body: '',
+                        showCloseButton: false,
+                        timeout: 2000
+                    })
+                })
 
 
 
-        //Gets data for StudyId, Arm and Site
-        subjectDataService.getSubjCharacteristics(projectId)
-            .then(function(data){
-                $scope.subjCharsDB = data.SCs;
+                //console.log(exportService.getCart());
+            };
 
-                SubjCf.initialize(projectId).then(
-                    function(subjChars){
-                        console.log(subjChars)
+            //Gets data for StudyId, Arm and Site
+            subjectDataService.getSubjCharacteristics(projectId)
+                .then(function(data){
+                    $scope.subjCharsDB = data.SCs;
 
-                        $scope.initSCs = subjChars
-                        $timeout(function() {
-                            angular.forEach(subjChars, function(sc) {
-                                console.log('#isc_'+sc)
-                                SubjCf.createChart(sc,'subject')
-                                angular.element('#isc_'+sc).trigger('click');
-                            });
-                        },500)
-                    }
-                )
-            })
-    }])
+                    SubjCf.refreshCf(projectId).then(
+                        function(subjChars){
+                            //console.log(subjChars)
+
+                            $scope.initSCs = subjChars
+                            $timeout(function() {
+                                angular.forEach(subjChars, function(sc) {
+                                    //console.log('#isc_'+sc)
+                                    DCchartingService.createChart(sc,'subject',SubjCf)
+                                    angular.element('#isc_'+sc).trigger('click');
+                                });
+                            },500)
+                        }
+                    )
+                })
+
+
+        }])

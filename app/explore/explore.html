@@ -1,38 +1,19 @@
-<!--<nav>
-    <ul>
-        <li><a href="#section-1" du-smooth-scroll du-scrollspy>Section 1</a></li>
-        <li><a href="#section-2" du-smooth-scroll du-scrollspy>Section 2</a></li>
-        <li><a href="#section-3" du-smooth-scroll du-scrollspy>Section 3</a></li>
-    </ul>
-</nav>-->
 
-
-<!--<div class="breadcrumbs">
-    <div class="content">
-        <div class="pull-left">
-            <ul>
-                <li><a href="explore">ETRIKS ></a></li>
-                <li><a href="help">STUDIES ></a></li>
-                <li class="active"><a href="contact">BioVacSafe</a></li>
-            </ul>
-        </div>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <h2>Explore</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="main.home">Home</a>
+            </li>
+            <li class="active">
+                <strong>Explore</strong>
+            </li>
+        </ol>
     </div>
 </div>
 
-<div class="clearfix"></div>
-
-<div class="description">
-    <div class="content">
-        <h3>Biomarkers for enhanced vaccines immunosafety</h3>
-
-        <p>The overall objective of the project is to develop cutting edge tools to speed up and improve the testing and monitoring of vaccine safety, both before and after release to the market - See more at:</p><a href="http://www.biovacsafe.eu/home#sthash.6mEz5DlV.dpuf">www.biovacsafe.eu</a> </p>
-    </div>
-</div>
-
-<div class="clearfix"></div>-->
-
-
-<div class="main">
+<div class="wrapper wrapper-content animated fadeInRight">
 
     <section ui-view="subjects" id="section-1">
         <i>Subject panel should load here!</i>
@@ -40,11 +21,11 @@
     <section ui-view="assessments" id="section-2">
         <i>Clinical Assessments panel should load here!</i>
     </section>
-
-
-    <section ui-view="assays" id="section-3">
-        <i>Assays  panel should load here!</i>
-    </section>
+    <!--<section ui-view="assays" id="section-3">-->
+        <!--<i>Assays  panel should load here!</i>-->
+    <!--</section>-->
 </div>
 <!--
 <div ui-view="design"><i>Study design panel should load here!</i></div>-->
+
+<div ui-view="datacart" id="datacart"></div>

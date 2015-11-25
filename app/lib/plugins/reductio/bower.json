@@ -1,0 +1,23 @@
+{
+  "name": "reductio",
+  "main": "reductio.js",
+  "version": "0.5.0",
+  "homepage": "https://github.com/esjewett/reductio",
+  "authors": [
+    "Ethan Jewett"
+  ],
+  "description": "Reductio: Crossfilter groupings",
+  "keywords": [
+    "crossfilter"
+  ],
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "dependencies": {
+    "crossfilter2": "v2.0.0-alpha.03"
+  }
+}

@@ -3,14 +3,26 @@
  */
 angular.module('eTRIKSdata.studyDesign')
 
-    .controller('StudyPlanCtrl', function ($scope, $http) {
+    .controller('StudyPlanCtrl',['$scope','$state','$stateParams','$http','ngAppConfig',
+        function($scope,$state,$stateParams,$http,ngAppConfig){
+            console.log(ngAppConfig.apiServiceBaseUri);
 
-    $http.get('../data/study-plan-BVS.json').success(function(data){
-        //if(data.size == 0)
+    if($stateParams.studyId == 'S-UBIOP-01')
+    {
+        $http.get('tempData/study-plan.json').success(function(data) {
+            //if(data.size == 0)
 
-        $scope.Arms = data;
+            $scope.Arms = data;
+        })
+    }else{
+        $http.get('tempData/study-plan-BVS.json').success(function(data) {
+            //if(data.size == 0)
+            $scope.Arms = data;
+        })
 
-    });
+    }
+
+
 
     /*$http.get('../data/cdisc-domains.json').success(function(data){
         //if(data.size == 0)
@@ -35,4 +47,4 @@ angular.module('eTRIKSdata.studyDesign')
 
 
 
-});
+}]);

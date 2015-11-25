@@ -1,0 +1,27 @@
+[
+    {"armName": "Adult",
+     "epochs": [
+                 {"name" : "Screening",
+                  "cells":[{"name":"Screening"}]
+                 },
+                 {"name" : "Treatment",
+                  "cells": [{"name":"Day 1"},
+                            {"name":"Day 2"},
+                            {"name":"Day 3"},
+                            {"name":"Day 4"},
+                            {"name":"Day 5"},
+                            {"name":"Day 6"},
+                            {"name":"Day 7"}]
+                 },
+                 {"name" : "Follow up",
+                  "cells": [{"name": "FW 1"},
+                            {"name":"FW 2"},
+                            {"name":"FW 3"},
+                            {"name":"FW 4"},
+                            {"name":"FW 5"}]
+                 }
+               ]
+    }
+
+]
+

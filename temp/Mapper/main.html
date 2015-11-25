@@ -1,0 +1,134 @@
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <div ng-include="'layout/navigation.html'"></div>
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
+
+        <!-- Page wrapper -->
+        <div ng-include="'layout/topnavbar.html'"></div>
+
+        <!-- Main view  -->
+        <div class="container" >
+            <!-- **************************** Navigation Bar ****************************** -->
+            <ul class="nav nav-tabs" id="navigationbar" ng-controller="czDropDownMenuController">
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h3>Findings</h3> <span class="caret"></span></a>
+                    <ul class="dropdown-menu"   style="vertical-align: middle;">
+                        <li ng-repeat="finding in findings| orderBy:finding.name"><a ui-sref={{finding.link}}> {{finding.name}} </a></li>
+                    </ul>
+                </li>
+
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h3>Interventions</h3> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                        <li ng-repeat="intervention in interventions |orderBy:intervention.name"><a ui-sref={{intervention.link}}>{{intervention.name}}</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h3>Events</h3> <span class="caret"></span></a>
+                    <ul  class="dropdown-menu"  >
+                        <li ng-repeat="event in events |orderBy:event.name"><a ui-sref={{event.link}}>{{event.name}}</a></li>
+
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><h3>Help</h3> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ui-sref='.FindingsHelp'>Findings</a></li>
+                        <li><a ui-sref='.InterventionsHelp'>Interventions</a></li>
+                        <li><a ui-sref='.EventsHelp'>Events</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- **************************** Navigation Bar ****************************** -->
+
+
+        <div class="container" id="myownform">
+
+            <!-- **************************** User Upload Data Overview *******************************-->
+            <div class ="col-md-3" style="padding-left: 20px;">
+                <h3 class="domainTitleName">Uploaded Data</h3>
+                <div ng-controller="dragAndDropController">
+                    <ul  style="padding-left: 0px;">
+                        <li ng-repeat="item in uploadVariables">
+                            <div class="btn btn-droppable"  data-drop="true" ng-model='uploadVariables' jqyoui-droppable="{index: {{$index}}}">
+                                <div class="btn btn-info btn-draggable"
+                                     data-drag="{{item.drag}}"
+                                     data-jqyoui-options="{revert: 'invalid'}"
+                                     ng-model="uploadVariables"
+                                     jqyoui-draggable="{index: {{$index}},placeholder:true,animate:false}"
+                                     ng-hide="!item.title">{{item.title}}</div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- **************************** User Upload Form *******************************-->
+
+
+            <!-- THIS IS WHERE WILL INJECT A DOMAIN ============================== -->
+
+            <div style="height:450px;overflow:auto;" ui-view >
+
+                <div class ="col-md-8" style="width:850px;">
+
+                    <!--<h1>Show:  {{$scope.domainName}} and {{$scope.shortName}}</h1>-->
+                    <div class="jumbotron" >
+                        <div class="row">
+                            <h3 class="stepNum">Step 1</h3>
+                            <p>Select a Class of Observations: Findings, Intervention or Event.</p>
+
+
+                            <h3 class="stepNum">Step 2</h3>
+                            <p>Choose a Domain from the class to map your data.</p>
+
+
+                            <h3 class="stepNum">Step 3</h3>
+                            <p>Drag and drop your upload data to map of a domain.</p>
+                            <p style="color:#AAAAAA">Check <span style="color:#39C2D7;font-weight: bold;">HELP</span> for more information</p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- Footer -->
+        <div ng-include="'layout/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+    <!-- Right Sidebar -->
+    <!--<div ng-include="'layout/right_sidebar.html'"></div>-->
+
+</div>
+<!-- End wrapper-->
+
+
+
+
+
+
+<div class="container">
+
+
+
+
+
+</div>
+

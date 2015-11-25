@@ -8,6 +8,7 @@ angular.module('eTRIKSdata.studyDesign')
     .controller('ActivityListController', ['$scope','$stateParams', 'ActivityResource','model', function ($scope, $stateParams, ActivityResource, model) {
         $scope.vmodel = {};
         console.log("List Controller requested")
+        console.log($stateParams);
         //Retrieves list of study activities
         ActivityResource.getActivitiesForStudy({studyId:$stateParams.studyId},function(response){
             model.activities = response;
@@ -46,12 +47,15 @@ angular.module('eTRIKSdata.studyDesign')
             if(model.activity.isNew){
                 $scope.vmodel.activity.$save(function(response) {
                     console.log("Activity created")
-                    if(model.dataset.isNew){
-                        model.dataset.activityId = response.oid
-                        model.dataset.$save(function(){
-                            console.log("Dataset created")
-                        })
+                    if(model.dataset) {
+                        if (model.dataset.isNew) {
+                            model.dataset.activityId = response.oid
+                            model.dataset.$save(function () {
+                                console.log("Dataset created")
+                            })
+                        }
                     }
+                    //$state.go('manager',{studyId:$stateParams.studyId})
                 });
             }
             else{
@@ -76,11 +80,11 @@ angular.module('eTRIKSdata.studyDesign')
                     }
                 });
             }
-            /*$state.transitionTo($state.current, $stateParams, {
+            $state.transitionTo('manager', $stateParams, {
              reload: true,
              inherit: false,
              notify: true
-             });*/
+             });
             //console.log($stateParams)
             //$state.go('manager.activities.detail',$stateParams,{
             //    reload: true,

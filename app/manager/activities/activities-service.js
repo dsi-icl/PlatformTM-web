@@ -3,15 +3,17 @@
  */
 angular.module('eTRIKSdata.studyDesign')
 
-    .factory('ActivityResource',function($resource){
-        return $resource('http://rachmaninoff.local:8080/api/activities/:activityId',{},{
+    .factory('ActivityResource',function($resource,ngAppConfig){
+        var serviceBase = ngAppConfig.apiServiceBaseUri;
+
+        return $resource(serviceBase+'api/activities/:activityId',{},{
             update:{
                 method: 'PUT',
                 params: {activityId: '@id'}
             },
             getActivitiesForStudy:{
                 method: 'GET',
-                url : 'http://rachmaninoff.local:8080/api/studies/:studyId/activities',
+                url : serviceBase+'api/studies/:studyId/activities',
                 isArray : true
                 /*params:{studyId}*/
             }/*,
@@ -30,8 +32,9 @@ angular.module('eTRIKSdata.studyDesign')
             { 'query': { method: 'GET', isArray: false } })
     })*/
 
-    .factory('DatasetResource',function($resource){
-        return $resource('http://rachmaninoff.local:8080/api/Dataset/:datasetId',{},{
+    .factory('DatasetResource',function($resource,ngAppConfig){
+        var serviceBase = ngAppConfig.apiServiceBaseUri;
+        return $resource(serviceBase+'api/Dataset/:datasetId',{},{
             update:{
                 method: 'PUT',
                 params: {datasetId: '@id'}
@@ -42,7 +45,7 @@ angular.module('eTRIKSdata.studyDesign')
             },
             getDatasetForActivity:{
                 method: 'GET',
-                url : 'http://rachmaninoff.local:8080/api/activities/:activityId/datasets/:datasetId',
+                url : serviceBase+'api/activities/:activityId/datasets/:datasetId',
                 isArray : false
                 /*params:{studyId}*/
             }
