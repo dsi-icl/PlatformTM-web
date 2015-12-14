@@ -171,10 +171,12 @@ angular.module('eTRIKSdata.dcPlots')
                             //console.log(scope.chartCFservice.getCountGroup())
                             //scope.chartCFservice.filterClinicalCF(filter,scope.val)
                             $scope.chartservice.propagateFilter($scope.xfilterService);
-
-                            $scope.expService.updateSubjectFilter(chart.dimName,chart.filters())
-                            console.log("filters " + $scope.expService.getSubjectFilter())
-
+                            if($scope.grp == "subject"){
+                                $scope.expService.updateSubjectFilter(chart.dimName,chart.filters())
+                            }
+                            if($scope.grp == "clinical"){
+                                $scope.expService.updateClinicalFilter(chart.dimName,chart.filters())
+                            }
 
                             //dc.renderAll("Clinical");
                         })

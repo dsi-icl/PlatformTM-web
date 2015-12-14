@@ -146,7 +146,7 @@
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>
-            <li>
+            <li ng-show="isExplore()">
                 <a ng-click="$root.rightSidebar = !$root.rightSidebar">
                     <i class="fa fa-shopping-cart"></i> Data cart
                 </a>
@@ -155,3 +155,4 @@
 
     </nav>
 </div>
+<toaster-container></toaster-container>

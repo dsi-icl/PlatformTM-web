@@ -170,7 +170,14 @@
 
                     <div id="{{chartContainerId}}" ng-hide="show =='table'" style="display: -webkit-box;" class=" plots-view animated fadeIn"></div>
                     <div id="clinical-datatable" ng-hide="show =='plots'" class="table-view animated fadeIn">
-                        <div style="min-height: 50px;">Filters selected go here and a button to add to cart</div>
+                        <div style="display:inline;float:right">
+                            <button ng-click="addToCart('clinical')" class="btn-xs btn-success " type="button"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<span class="bold">Save to Cart</span></button>
+                        </div>
+                        <div ng-repeat="(key, values) in clinicalFilter" style="display:inline;">
+                            <div ng-if="values.length != 0" style="display:inline;">
+                                <button type="button" class="btn-xs btn-outline btn-default">{{key}} : {{values}}</button>
+                            </div>
+                        </div>
                         <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
                                       chart-service="{{DCchartService}}"
                                       xfilter-service="{{xfilterService}}"

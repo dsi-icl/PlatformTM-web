@@ -42,10 +42,6 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
             url: "/landing",
             templateUrl:"../temp/home.html"
         })
-
-
-
-
     });
 
 eTRIKSdataApp.run(function($rootScope){

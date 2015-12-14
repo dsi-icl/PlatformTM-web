@@ -3,8 +3,7 @@
  */
 angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
 
-    .controller('ClinicalCtrl', ['$rootScope','$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService',
-        'exportService', 'toaster','$timeout',
+    .controller('ClinicalCtrl', ['$rootScope','$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService', 'exportService', 'toaster','$timeout',
         function($rootScope,$scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService,exportService, toaster,$timeout) {
 
             $scope.chartGroup = "clinical";
@@ -21,11 +20,29 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
             $scope.exportService = "exportService";
             $scope.show = 'plots';
 
+            $scope.clinicalFilter = exportService.getClinicalFilter();
+
             //TEMP
             $scope.cf = ClinicalCf;
             $scope.chartservice = DCchartingService;
             //////////////////////
 
+            $scope.addToCart = function(type) {
+
+                var count = ClinicalCf.getCountGroup().value()
+
+                exportService.addToCart(type, count, $scope.projectId, function(){
+                    toaster.pop({
+                        type: 'success',
+                        title: 'Data Saved',
+                        body: '',
+                        showCloseButton: true,
+                        timeout: 1000
+                    })
+                })
+
+                //console.log(exportService.getCart());
+            };
 
             $timeout(function() {
                 console.log("calling clinical tree")
