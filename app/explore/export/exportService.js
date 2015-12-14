@@ -87,10 +87,11 @@ angular.module('eTRIKSdata.explorer')
                 })
                     .then(
                         function (response) {
-                            return {
-                                observations: (response.data.data),
-                                columns: (response.data.header)
-                            }
+
+                            var blob = new Blob([angular.toJson(response.data)], {type: "text/csv"});
+                            var objectUrl = URL.createObjectURL(blob);
+                            window.open(objectUrl);
+                            return response.data
                         },
                         function (httpError) {
                             // translate the error

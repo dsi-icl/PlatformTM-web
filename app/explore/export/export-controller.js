@@ -56,17 +56,9 @@ angular.module('eTRIKSdata.explorer')
                     }
                 }
 
-                //data['subjectCriteria']['exactfilters'] = []
-                //data['subjectCriteria']['exactfilters'].push({"field":"STUDYID", "values":["CRC305C","CRC305A"]})
-                //data['subjectCriteria']['exactfilters'].push({"field":"ARMCD", "values":["PLACEBO"]})
-                //
-                //data['subjectCriteria']['rangefilters'] = []
-                //data['subjectCriteria']['rangefilters'].push({"field":"AGE", "range":{"upperbound":34,"lowerbound":23}})
-                //data['subjectCriteria']['projection'] = []
 
-                exportDataService.getDownloads(data, $scope.cart['projectId']);
+                return exportDataService.getDownloads(data, $scope.cart['projectId']);
 
-                return true;
             }
 
 
