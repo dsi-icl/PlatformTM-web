@@ -10,19 +10,46 @@
         $scope.vm.selectedFiles={};
         $scope.vm.selectedFilesCount=0;
 
+        $scope.vm.dir = $stateParams.dir
 
 
 
-        fileService.getFiles($stateParams.studyId)
+
+
+
+        fileService.getDirectories($stateParams.studyId)
             .then(function(data){
-                vm.files = data.files;
-                console.log(data)
-                $scope.vm = vm;
+                vm.dirs = data.files;
+               // console.log(data.files);
+                $scope.vm.dirs = data.files;
 
-            })
+                fileService.getContent($stateParams.studyId,$stateParams.dir)
+                    .then(function(data){
+                        vm.files = data.files;
+                        //console.log(data)
+                        $scope.vm = vm;
+
+                    })
+
+
+            }).then(
+
+        )
+
+
+
+        $scope.createDirectory = function(){
+            console.log($scope.vm.newdir)
+            fileService.createDirectory($stateParams.studyId,$scope.vm.newdir)
+             .then(function(data){
+             $scope.vm.dirs = data;
+                    $state.go('datastage.files',{dir:$scope.vm.newdir});
+             })
+        }
+
 
         $scope.openUpload = function(){
-            $state.go('datastage.upload'/*,{studyId:$stateParams.studyId}*/)
+            $state.go('datastage.upload',{dir:$stateParams.dir})
 
             /*var modalInstance = $modal.open({
                 templateUrl: 'dataStage/upload/upload.html',

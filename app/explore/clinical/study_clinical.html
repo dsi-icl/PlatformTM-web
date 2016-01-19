@@ -163,18 +163,18 @@
 -->
                     <div>
                         <div class="btn-group">
-                            <label class="btn btn-xs btn-white" ng-model="show" btn-radio="'plots'">Data Plots</label>
-                            <label class="btn btn-xs btn-white" ng-model="show" btn-radio="'table'">Data Table</label>
+                            <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'plots'">Data Plots</label>
+                            <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'table'">Data Table</label>
                         </div>
                     </div>
 
-                    <div id="{{chartContainerId}}" ng-hide="show =='table'" style="display: -webkit-box;" class=" plots-view animated fadeIn"></div>
-                    <div id="clinical-datatable" ng-hide="show =='plots'" class="table-view animated fadeIn">
+                    <div id="{{chartingOpts.chartContainerId}}" ng-hide="vm.show =='table'" style="display: -webkit-box;" class=" plots-view animated fadeIn"></div>
+                    <div id="clinical-datatable" ng-hide="vm.show =='plots'" class="table-view animated fadeIn">
                         <div style="min-height: 50px;">Filters selected go here and a button to add to cart</div>
                         <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
-                                      chart-service="{{DCchartService}}"
-                                      xfilter-service="{{xfilterService}}"
-                                      grp="{{chartGroup}}">Choose observations from the tree below</dc-datatable>
+                                      chart-service="{{chartingOpts.DCchartService}}"
+                                      xfilter-service="{{chartingOpts.xfilterService}}"
+                                      grp="{{chartingOpts.chartGroup}}">Choose observations from the tree below</dc-datatable>
                     </div>
                 </div>
 
@@ -182,7 +182,9 @@
                     <!--
                     <dc-chart-visit chart-service='ClinicalCf' val="visit" grp="clinical"></dc-chart-visit>
                     -->
-                    <cl-tree  observations="clinicalData" get-obs-ids-for-meddra="getObsIdsForMeddra(medraterm)" get-charting-opts="getChartingOpts()"></cl-tree>
+                    <!--<cl-tree  observations="clinicalData" get-obs-ids-for-meddra="getObsIdsForMeddra(medraterm)" get-charting-opts="getChartingOpts()"></cl-tree>-->
+                    <div clinical-obs-browser ></div>
+
                 </div>
 
             </div>

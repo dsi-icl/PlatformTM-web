@@ -3,25 +3,19 @@
  */
 angular.module('biospeak.clinical')
 
-    .directive('clTree',function(){
+    .directive('clinicalObsBrowser',function(){
         return{
-            restrict:'E',
-            scope:{
-                observations:'=',
-                getChartingOpts:'&',
-                getObsIdsForMeddra: '&'
+            restrict:'EA',
+            scope:true,
+            controller: function($scope){
+              //console.log("obs browser",$scope)
             },
             template:
-                '<div class="clinicalTree row ">'+
-                    /*'<div class="col-md-12">'+
-                        '<button class="btn btn-sm btn-block">'+
-                            '<span>Clinical Observations</span>'+
-                        '</button>'+
-                    '</div>'+*/
-                    '<cl-tree-class ng-repeat="class in observations" ' +
-                        'class="class" get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })" ></cl-tree-class>'+
-                '</div>',
+            '<div class="clinical-tree row ">'+
+                '<cl-tree-class ng-repeat="class in clinicalObservations" class="class" ></cl-tree-class>'+
+            '</div>',
             link: function(scope, element, attrs){
+                console.log(scope)
             }
         }
     })
@@ -29,25 +23,28 @@ angular.module('biospeak.clinical')
     .directive('clTreeClass', function(){
         return{
             restrict:'EA',
+            scope:true,
+            controller: function($scope){
+                //console.log("obs class",$scope.chartingOpts)
+            },
             template:
-                '<div class="col-md-6">'+
-                    //'<div class="connecting-line"></div>'+
-                    '<div class="ibox">'+
-                        //'<div class="ibox-title">'+
-                            //'<button type="button" class="btn btn-sm btn-block" style="background-color: #00afbc;border-radius:30px">{{class.class}}</button>'+
+            '<div class="col-md-6">'+
+                '<div class="ibox">'+
+                    '<div class="ibox-content">'+
+            '<button ng-click="open2()" class="pull-right btn btn-outline btn-success dim" type="button"><i class="fa fa-plus-circle"></i></button>'+
+                        '<h3>{{class.class}}</h3>'+
 
-                       /* '</div>'+*/
-                    //'<div class="connecting-line"></div>'+
-                        '<div class="ibox-content">'+
-                            '<h3>{{class.class}}</h3>'+
+                        '<ul class="list-group ">'+
                             '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
                                 'group="domain"  ' +
-                                'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
-                                'get-charting-opts="getChartingOpts()">' +
+                                'charting-opts = "chartingOpts"'+
+                                //'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
+                                /*'get-charting-opts="getChartingOpts()"*/'>' +
                             '</cl-tree-obs-grp>'+
-                        '</div>'+
+                        '</ul>'+
                     '</div>'+
-                '</div>'
+                '</div>'+
+            '</div>'
         }
     })
 
@@ -56,24 +53,25 @@ angular.module('biospeak.clinical')
             restrict:'EA',
             scope:{
                 group:'=',
-                getChartingOpts:'&',
-                getObsIdsForMeddra: '&'
+                chartingOpts:'='
             },
+
+            //scope:true,
             controller: function($scope) {
-             // $scope is the appropriate scope for the directive
-             //console.log('inside cltreeobsgrouo controller ',$scope)
-             },
+                //console.log("obs group",$scope.group)
+            },
             template:
-                '<div class="btn-group btn-block" style="margin-top: 3px;">'+
-                    '<button class="col-md-1 btn btn-sm node-toggle" data-toggle="collapse" href="#{{group.code}}">'+
-                        '<span class="caret"></span>'+
+            '<li class="list-group-node">'+
+                '<div class="btn-group btn-block">'+
+                    '<button class="btn btn-sm node-toggle" data-toggle="collapse" href="#{{group.code}}">'+
+                    '<span class="caret"></span>'+
                     '</button>'+
-                    '<button class="tree-node col-md-11 btn btn-sm tree-node" ' +
+                    '<div class="list-group-item-text col-md-11" ' +
                         'id="grp_{{group.code}}"'+
-                        'val="{{group.groupTerm}}"'+
+                        /*'val="{{group.groupTerm}}"'+
                         'obsid = "{{group.termIds}}"'+
                         'grp="{{chartGroup}}"'+
-                        'charting-button ' +
+                        //'charting-button ' +
                         'active="{{isActive}}"'+
                         'ng-init="isActive = false"'+
                         'ng-click="isActive = !isActive"' +
@@ -81,26 +79,30 @@ angular.module('biospeak.clinical')
                         'xfilter-service="{{xfilterService}}"'+
                         'export-service="{{exportService}}"'+
                         'project-id="{{projectId}}"'+
-                        'container="{{chartContainerId}}">'+
-                        '<span>{{group.name}}</span>'+' <span>({{group.count}})</span>'+
-                    '</button>'+
+                        'container="{{chartContainerId}}"*/'>'+
+                        '<span>{{group.name}}</span>'+//' <span>({{group.count}})</span>'+
+                    '</div>'+
                 '</div>'+
-                '<div id="{{group.code}}"  class="collapse col-md-offset-1">'+
-                    '<cl-tree-obs ng-repeat="obs in group.terms" <!--observation="obs" plot-obs="plotObs({obs:obs})"-->></cl-tree-obs>'+
-                '</div>',
+                '<ul id="{{group.code}}"  class="list-group collapse">'+
+                    '<li cl-tree-obs class="list-group-item" ng-repeat="obs in group.terms"' +
+                    'obs="obs"  ' +
+                    //'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
+                    'charting-opts="chartingOpts">'+'</li>'+
+                '</ul>'+
+            '</li>',
             link: function (scope, element, attrs) {
 
 
-                    //console.log(scope.getChartingOpts())
-                    scope.chartContainerId = scope.getChartingOpts().container;
-                    scope.chartService = scope.getChartingOpts().DCchartService;
-                    scope.chartGroup = scope.getChartingOpts().chartGroup;
-                    scope.xfilterService = scope.getChartingOpts().xfilterService;
-                    scope.exportService = scope.getChartingOpts().exportService;
-                    scope.projectId = scope.getChartingOpts().projectId;
+                //console.log(scope.getChartingOpts())
+                //scope.chartContainerId = scope.getChartingOpts().container;
+                //scope.chartService = scope.getChartingOpts().DCchartService;
+                //scope.chartGroup = scope.getChartingOpts().chartGroup;
+                //scope.xfilterService = scope.getChartingOpts().xfilterService;
+                //scope.exportService = scope.getChartingOpts().exportService;
+                //scope.projectId = scope.getChartingOpts().projectId;
                 //var medraterm =scope.group.code;
                 //console.log('scope inside link function of cltreeobsgrp',scope.group.groupTerm)
-                    //scope.ids = scope.getObsIdsForMeddra({ medraterm: medraterm })
+                //scope.ids = scope.getObsIdsForMeddra({ medraterm: medraterm })
 
             }
         }
@@ -109,48 +111,82 @@ angular.module('biospeak.clinical')
     .directive('clTreeObs',function($compile){
         return{
             restrict:'EA',
+
             /*scope:{
-              observation:'=',
-              plotObs:'&'
+               // group:'=',
+               // getChartingOpts:'&',
+               // getObsIdsForMeddra: '&',
+                chartingOpts:'=',
+                obs:'='
             },*/
+            scope:true,
             template:
-                '<button id="obs_{{obs.code}}" ' +
-                    'class="btn btn-sm tree-leaf"  '+
-                    'charting-button ' +
-                    'val="{{obs.code}}" ' +
-                    'obsid="{{obs.id}}" ' +
-                    'domain="{{obs.domainCode}}"'+
-                    'obsrv="{{obs.code}}"'+
-                    'active="{{isActive}}"'+
-                    'container="{{chartContainerId}}"'+
-                    'grp="{{chartGroup}}"' +
-                    'chart-service="{{chartService}}"' +
-                    'xfilter-service="{{xfilterService}}"'+
-                    'export-service="{{exportService}}"'+
-                    'project-id="{{projectId}}"'+
-                    //'ng-class="{'': !isActive, 'active': isActive}"
-                    'ng-init="isActive = false"'+
-                    'ng-click="isActive = !isActive">' +
-                    '<span>{{obs.name}}</span> '+
-                '</button>',
+            '<div>' +
+                //'val="{{obs.code}}" ' +
+                //'obsid="{{obs.id}}" ' +
+                //'domain="{{obs.domainCode}}"'+
+                //'active="{{isActive}}"'+
+                //'obs="obs"  '+
+                //'charting-opts="chartingOpts">'+
+                '<a charting-button id="obs_{{obs.id}}" ' +
+                    'obs="obs.defaultObservation" charting-opts="chartingOpts" style="color: #222f3f;" ' +
+                    'ng-init="obs.defaultObservation.isActive = false" ng-click="obs.defaultObservation.isActive = !obs.defaultObservation.isActive"> ' +
+                    '<i class="fa fa-toggle-off p-xs" ></i> <span>{{obs.defaultObservation.o3}}</span>' +
+                '</a>'+
+
+                '<cl-option-menu obs="obs" charting-opts="chartingOpts"  class="pull-right"></cl-option-menu>'+
+            '</div>',
+
             link: function (scope, element, attrs) {
+                //console.log('clTreeObs scope',scope.chartingOpts)
 
                 if (angular.isArray(scope.obs.terms)) {
                     $compile("<cl-tree-obs-grp group='obs' " +
-                             'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
-                             "get-charting-opts='getChartingOpts()'></cl-tree-obs-grp>")(scope, function(cloned, scope){
+                    //'get-obs-ids-for-meddra="getObsIdsForMeddra({ medraterm: medraterm })"'+
+                    "charting-opts='chartingOpts'></cl-tree-obs-grp>")(scope, function(cloned, scope){
                         element.replaceWith(cloned);
                     });
-                }else{
-                    //console.log(scope.getChartingOpts())
-                    scope.chartContainerId = scope.getChartingOpts().container
-                    scope.chartService = scope.getChartingOpts().DCchartService
-                    scope.chartGroup = scope.getChartingOpts().chartGroup
-                    scope.xfilterService = scope.getChartingOpts().xfilterService
-                    scope.exportService = scope.getChartingOpts().exportService;
-                    scope.projectId = scope.getChartingOpts().projectId;
                 }
             }
+        }
+    })
+
+    .directive('clOptionMenu', function() {
+        return {
+            restrict: 'EA',
+            scope: {
+                obs: '=',
+                chartingOpts: '='
+            },
+            scope:true,
+            controller: function ($scope, $element) {
+                //console.log('menu scope',$scope.obs)
+            },
+            template:
+            '<div class="dropdown slider-control" dropdown>'+
+                '<a class="dropdown-toggle" href dropdown-toggle>'+
+                    '<i class="fa fa-ellipsis-v"></i>'+
+                '</a>'+
+                '<ul class=" dropdown-menu dropdown-menu-right plotting-options"> ' +
+                    '<li class="dropdown-header">Chart Value for {{obs.code}}</li>'+
+                    /*'<li ng-repeat="q in obs.qualifiers">' +
+                        '<div class="checkbox">' +
+                            '<input id="checkbox1" dc-chart-slider-control qualifier={{q}} type="checkbox" checked>' +
+                            '<label for="checkbox1">Original Results</label>' +
+                        '</div>' +
+                    '</li>' +*/
+                    '<li>' +
+                        '<div ng-repeat="var in obs.qualifiers" class="checkbox">'+
+                            '<input id="checkbox_{{var.id}}" type="checkbox" ' +
+                                    'charting-button  obs="var"  ' +
+                                    'charting-opts="chartingOpts" >' +
+                            '<label for="checkbox_{{var.id}}">{{var.qO2}}</label>' +
+                        '</div>' +
+                    '</li> ' +
+                    '<li role="separator" class="divider"></li>'+
+                    '<li><a href><i class="fa fa-arrow-circle-o-down"></i>&nbsp; Add to cart</a></li>'+
+                '</ul>'+
+            '</div>'
         }
     })
 

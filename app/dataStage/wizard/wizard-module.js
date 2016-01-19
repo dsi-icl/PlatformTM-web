@@ -44,7 +44,7 @@ function config($stateProvider){
             }
         })
         .state('datastage.wizard.step_two', {
-            url: '/step_two/:activityId/:datasetId',
+            url: '/step_two/:activityId/:datasetId/:fileId',
             controller: 'stepTwoController',
             templateUrl: 'dataStage/wizard/stepTwo.html',
             params: {
@@ -60,7 +60,7 @@ function config($stateProvider){
             }
         })
         .state('datastage.wizard.step_three', {
-            url: '/step_three/:activityId/:datasetId',
+            url: '/step_three/:activityId/:datasetId/:standardFileId',
             templateUrl: 'dataStage/wizard/stepThree.html',
             /*params: {
                 map: null
@@ -96,7 +96,7 @@ function config($stateProvider){
             }
         })
         .state('datastage.wizard.step_four', {
-            url: '/step_four/:activityId/:datasetId',
+            url: '/step_four/:activityId/:datasetId/:standardFileId',
             templateUrl: 'dataStage/wizard/stepFour.html',
             controller: 'stepFourController',
             resolve:{
@@ -108,7 +108,7 @@ function config($stateProvider){
             }
         })
         .state('datastage.wizard.step_five', {
-            url: '/step_five/:activityId/:datasetId',
+            url: '/step_five/:activityId/:datasetId/:standardFileId',
             templateUrl: 'dataStage/wizard/stepFive.html',
             controller: 'stepFiveController',
             resolve:{

@@ -8,23 +8,33 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
             var projectId = $stateParams.studyId;
             $scope.title = "Subjects";
-            $scope.subjChartContainerId = 'subject-plots';
-            $scope.projectId = projectId;
+            //$scope.subjChartContainerId = 'subject-plots';
+            //$scope.projectId = projectId;
 
             //TEMP
             //$scope.cf = SubjCf;
             //$scope.chartservice = DCchartingService;
             //////////////////////
 
-            $scope.DCchartService = "DCchartingService";
-            $scope.xfilterService = "SubjCf";
-            $scope.exportService = "exportService";
+            //$scope.DCchartService = "DCchartingService";
+            //$scope.xfilterService = "SubjCf";
+            //$scope.exportService = "exportService";
 
-            $scope.chartGroup = "subject";
+            //$scope.chartGroup = "subject";
             $scope.show='plots';
 
             $scope.subjectFilter = exportService.getSubjectFilter();
             $scope.cart = [];
+
+            $scope.chartingOpts = {
+                projectId : $stateParams.studyId,
+                chartContainerId : "subject-plots",
+                chartGroup : "subject",
+                DCchartService : "DCchartingService",
+                xfilterService : "SubjCf",
+                exportService : "exportService"
+
+            };
 
             $scope.addToCart = function(type) {
 
@@ -47,17 +57,18 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
             subjectDataService.getSubjCharacteristics(projectId)
                 .then(function(data){
                     $scope.subjCharsDB = data.SCs;
+                    console.log('all scs',$scope.subjCharsDB)
 
                     SubjCf.refreshCf(projectId).then(
                         function(subjChars){
-                            //console.log(subjChars)
+                            console.log('default scs',subjChars)
 
                             $scope.initSCs = subjChars
                             $timeout(function() {
                                 angular.forEach(subjChars, function(sc) {
                                     //console.log('#isc_'+sc)
-                                    DCchartingService.createChart(sc,'subject',SubjCf)
-                                    angular.element('#isc_'+sc).trigger('click');
+                                    DCchartingService.createChart(sc,'subject',SubjCf,'Count')
+                                    angular.element('#sc_'+sc).trigger('click');
                                 });
                             },500)
                         }

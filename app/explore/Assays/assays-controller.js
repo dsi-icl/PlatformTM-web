@@ -3,11 +3,13 @@
  */
 angular.module('biospeak.assays',[])
 
-    .controller('AssayCtrl', ['$scope','AssayCf','ExportCriteria','$timeout',function($scope,AssayCf,ExportCriteria,$timeout) {
+    .controller('AssayCtrl', ['$scope','$stateParams','AssayCf','ExportCriteria','$timeout',function($scope,$stateParams,AssayCf,ExportCriteria,$timeout) {
 
         $scope.isSamplesCollapsed = true;
         $scope.isFactorsCollapsed = true;
-        $scope.sampleCharacteristics = ['class','sampleType','batch'];
+        $scope.GEXsampleCharacteristics = ['class','sampleType','batch'];
+        $scope.luminexSampleChars = [];
+        $scope.cytofSampleChars = ['Count','% Total'];
         $scope.expFactors = ['Treatment','DaysAfterVaccination'];
 
         var initEFs = ['Treatment','DaysAfterVaccination'];
@@ -16,6 +18,19 @@ angular.module('biospeak.assays',[])
         $scope.sampleChartContainerId = "samplePlots";
         $scope.TP = "Transcription Profiling";
         $scope.chartGroup = "assay";
+
+        $scope.vm = {}
+        $scope.vm.show="table";
+
+        $scope.chartingOpts = {
+            projectId : $stateParams.studyId,
+            chartContainerId : "assay-plots",
+            chartGroup : "assay",
+            DCchartService : "DCchartingService",
+            xfilterService : "AssayCf",
+            exportService : "exportService"
+
+        };
 
 
         //AssayCf.setup($scope).then(

@@ -28,8 +28,10 @@ angular.module('biospeak.clinical')
                     .then(
                     function (response) {
                         return {
-                            observations: (response.data.data),
-                            columns: (response.data.header)
+                            findingsTbl: (response.data.findingsTbl),
+                            eventsTbl: (response.data.eventsTbl),
+                            findingsTblHeader: (response.data.findingsTblHeader),
+                            eventsTblHeader: (response.data.eventsTblHeader)
                         }
                     },
                     function (httpError) {

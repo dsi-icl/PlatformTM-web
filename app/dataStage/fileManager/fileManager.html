@@ -6,7 +6,10 @@
                 <a ui-sref="main.home">Home</a>
             </li>
             <li class="active">
-                <strong>Data Stage</strong>
+                <a ui-sref="datastage.files({dir:''})"><strong>Data Stage</strong></a>
+            </li>
+            <li class="active">
+                <strong>{{vm.dir}}</strong>
             </li>
         </ol>
     </div>
@@ -17,6 +20,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
                     <div class="file-manager">
+
                         <h5>Show:</h5>
                         <a href="" class="file-control active">All</a>
                         <a href="" class="file-control">Clinical</a>
@@ -26,15 +30,19 @@
                         <div class="hr-line-dashed"></div>
                         <button class="btn btn-primary btn-block" ng-click="openUpload()">Upload Files</button>
                         <div class="hr-line-dashed"></div>
+
+
                         <h5>Folders</h5>
-                        <span style="margin-bottom: 5px"><a  ng-click="createFolder"><i class="fa fa-folder-o"></i> &nbsp;&nbsp; New Folder</a></span>
+                        <span style="margin-bottom: 5px">
+                            <a href="#" e-ng-model="vmodel.activity.name" editable-text="vm.newdir" onaftersave="createDirectory()" buttons="no" blur="submit">
+                                <i class="fa fa-folder-o"></i> &nbsp;&nbsp; New Folder
+                            </a>
+                        </span>
                         <ul class="folder-list" style="padding: 0">
-                            <li><a href=""><i class="fa fa-folder"></i> Clinical</a></li>
-                            <li><a href=""><i class="fa fa-folder"></i> Surrey Trials</a></li>
-                            <li><a href=""><i class="fa fa-folder"></i> Ghent Trial</a></li>
-                            <li><a href=""><i class="fa fa-folder"></i> Mapped</a></li>
-                            <li><a href=""><i class="fa fa-folder"></i> Other</a></li>
+                            <li ng-repeat="dir in vm.dirs"><a ui-sref="datastage.files({ dir: dir})" href=""><i class="fa fa-folder"></i> {{dir}}</a></li>
                         </ul>
+
+
                         <h5 class="tag-title">Tags</h5>
                         <ul class="tag-list" style="padding: 0">
                             <li><a href="">Vital Signs</a></li>
@@ -52,14 +60,14 @@
                         <ul class="list-unstyled file-list" ng-show="vm.selectedFilesCount >= 1">
                             <h5>Selected Files</h5>
                             <li ng-repeat="selFile in vm.selectedFiles">
-                                <a href=""><i class="fa fa-file"></i>&nbsp;{{selFile.fileName}}</a></li>
+                                <a href="">
+                                    <i class="fa fa-file"></i>
+                                    &nbsp;{{selFile.fileName}}</a></li>
                             <!--<li><a href=""><i class="fa fa-file"></i>&nbsp;Logo_zender_company.jpg</a></li>
                             <li><a href=""><i class="fa fa-file"></i>&nbsp;Email_from_Alex.mln</a></li>
                             <li><a href=""><i class="fa fa-file"></i>&nbsp;Contract_20_11_2014.docx</a></li>-->
                         </ul>
-                            <button class="btn btn-primary btn-block"
-                                    ng-click="goToNextStep()"
-                                    data-ng-disabled="vm.selectedFilesCount ==0">Load to DB</button>
+                        <button class="btn btn-primary btn-block" ng-click="goToNextStep()" data-ng-disabled="vm.selectedFilesCount ==0">Load to DB</button>
                     </div>
                 </div>
             </div>
@@ -69,274 +77,7 @@
                 <div class="col-lg-12" style="    max-height: 590px;
     overflow: scroll;
     border: #F3F3F4 10px solid;">
-
                     <file-directive ng-repeat="fileInfo in vm.files" update-fn="updateFn(fileInfo)" file-info="fileInfo" ></file-directive>
-                   <!-- <form method="get" class="form-horizontal">
-                        <div class="form-group"><label class="col-sm-2 control-label">Normal</label>
-
-                            <div class="col-sm-10"><input type="text" class="form-control"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Help text</label>
-
-                            <div class="col-sm-10"><input type="text" class="form-control"> <span
-                                    class="help-block m-b-none">A block of help text that breaks onto a new line and may extend beyond one line.</span>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Password</label>
-
-                            <div class="col-sm-10"><input type="password" class="form-control" name="password"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Placeholder</label>
-
-                            <div class="col-sm-10"><input type="text" placeholder="placeholder" class="form-control">
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-lg-2 control-label">Disabled</label>
-
-                            <div class="col-lg-10"><input type="text" disabled="" placeholder="Disabled input here..."
-                                                          class="form-control"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-lg-2 control-label">Static control</label>
-
-                            <div class="col-lg-10"><p class="form-control-static">email@example.com</p></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Checkboxes and radios <br/>
-                            <small class="text-navy">Normal Bootstrap elements</small>
-                        </label>
-
-                            <div class="col-sm-10">
-                                <div><label> <input type="checkbox" value=""> Option one is this and that&mdash;be sure to include why it's great </label></div>
-                                <div><label> <input type="radio" checked="" value="option1" id="optionsRadios1" name="optionsRadios"> Option one is this and that&mdash;be sure to
-                                    include why it's great </label></div>
-                                <div><label> <input type="radio" value="option2" id="optionsRadios2" name="optionsRadios"> Option two can be something else and selecting it will
-                                    deselect option one </label></div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Inline checkboxes</label>
-
-                            <div class="col-sm-10">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" value="option1" id="inlineCheckbox1"> a </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" value="option2" id="inlineCheckbox2"> b </label>
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" value="option3" id="inlineCheckbox3"> c </label>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Checkboxes &amp; radios <br/>
-                            <small class="text-navy">Custom elements</small>
-                        </label>
-
-                            <div class="col-sm-10">
-                                <div><label> <input icheck type="checkbox" ng-model="main.check2">
-                                    Option one </label></div>
-                                <div><label> <input icheck type="checkbox" ng-model="main.checkThree">
-                                    Option two checked </label></div>
-                                <div><label> <input icheck type="checkbox" ng-model="main.checkTwo"
-                                                    disabled> Option three checked and disabled
-                                </label></div>
-                                <div><label> <input icheck type="checkbox" ng-model="main.check4"
-                                                    disabled> Option four disabled </label></div>
-                                <div><label> <input icheck type="radio" name="radioTest"
-                                                    ng-model="main.checkFour"> Option one </label></div>
-                                <div><label> <input icheck type="radio" name="radioTest"
-                                                    ng-model="main.check8"> Option two checked </label>
-                                </div>
-                                <div><label> <input icheck type="radio" name="radioTestNext"
-                                                    ng-model="main.check8" disabled> Option four disabled
-                                </label></div>
-                                <div><label> <input icheck type="radio" name="radioTestNext"
-                                                    ng-model="main.check9" disabled> Option three checked
-                                    and disabled</label></div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Inline checkboxes</label>
-
-                            <div class="col-sm-10">
-                                <label class="checkbox-inline"> <input icheck type="checkbox" ng-model="main.unCheck"> a
-                                </label>
-                                <label class="checkbox-inline"> <input icheck type="checkbox" ng-model="main.unCheck"> b
-                                </label>
-                                <label class="checkbox-inline"> <input icheck type="checkbox" ng-model="main.unCheck"> c
-                                </label></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Select</label>
-
-                            <div class="col-sm-10"><select class="form-control m-b" name="account">
-                                <option>option 1</option>
-                                <option>option 2</option>
-                                <option>option 3</option>
-                                <option>option 4</option>
-                            </select>
-
-                                <div class="col-lg-4 m-l-n"><select class="form-control" multiple="">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                </select></div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group has-success"><label class="col-sm-2 control-label">Input with
-                            success</label>
-
-                            <div class="col-sm-10"><input type="text" class="form-control"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group has-warning"><label class="col-sm-2 control-label">Input with
-                            warning</label>
-
-                            <div class="col-sm-10"><input type="text" class="form-control"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group has-error"><label class="col-sm-2 control-label">Input with error</label>
-
-                            <div class="col-sm-10"><input type="text" class="form-control"></div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Control sizing</label>
-
-                            <div class="col-sm-10"><input type="text" placeholder=".input-lg"
-                                                          class="form-control input-lg m-b">
-                                <input type="text" placeholder="Default input" class="form-control m-b"> <input
-                                        type="text" placeholder=".input-sm" class="form-control input-sm">
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Column sizing</label>
-
-                            <div class="col-sm-10">
-                                <div class="row">
-                                    <div class="col-md-2"><input type="text" placeholder=".col-md-2"
-                                                                 class="form-control"></div>
-                                    <div class="col-md-3"><input type="text" placeholder=".col-md-3"
-                                                                 class="form-control"></div>
-                                    <div class="col-md-4"><input type="text" placeholder=".col-md-4"
-                                                                 class="form-control"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Input groups</label>
-
-                            <div class="col-sm-10">
-                                <div class="input-group m-b"><span class="input-group-addon">@</span> <input type="text"
-                                                                                                             placeholder="Username"
-                                                                                                             class="form-control">
-                                </div>
-                                <div class="input-group m-b"><input type="text" class="form-control"> <span
-                                        class="input-group-addon">.00</span></div>
-                                <div class="input-group m-b"><span class="input-group-addon">$</span> <input type="text"
-                                                                                                             class="form-control">
-                                    <span class="input-group-addon">.00</span></div>
-                                <div class="input-group m-b"><span class="input-group-addon"> <input
-                                        type="checkbox"> </span> <input type="text" class="form-control"></div>
-                                <div class="input-group"><span class="input-group-addon"> <input type="radio"> </span>
-                                    <input type="text" class="form-control"></div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Button addons</label>
-
-                            <div class="col-sm-10">
-                                <div class="input-group m-b"><span class="input-group-btn">
-                                            <button type="button" class="btn btn-primary">Go!</button> </span> <input
-                                        type="text" class="form-control">
-                                </div>
-                                <div class="input-group"><input type="text" class="form-control"> <span
-                                        class="input-group-btn"> <button type="button" class="btn btn-primary">Go!
-                                </button> </span></div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">With dropdowns</label>
-
-                            <div class="col-sm-10">
-                                <div class="input-group m-b">
-                                    <div class="input-group-btn" dropdown>
-                                        <button class="btn btn-white dropdown-toggle" dropdown-toggle type="button">
-                                            Action <span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="">Action</a></li>
-                                            <li><a href="">Another action</a></li>
-                                            <li><a href="">Something else here</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="">Separated link</a></li>
-                                        </ul>
-                                    </div>
-                                    <input type="text" class="form-control"></div>
-                                <div class="input-group"><input type="text" class="form-control">
-
-                                    <div class="input-group-btn" dropdown>
-                                        <button class="btn btn-white dropdown-toggle" dropdown-toggle type="button">
-                                            Action <span class="caret"></span></button>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="">Action</a></li>
-                                            <li><a href="">Another action</a></li>
-                                            <li><a href="">Something else here</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="">Separated link</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group"><label class="col-sm-2 control-label">Segmented</label>
-
-                            <div class="col-sm-10">
-                                <div class="input-group m-b">
-                                    <div class="input-group-btn" dropdown>
-                                        <button tabindex="-1" class="btn btn-white" type="button">Action</button>
-                                        <button class="btn btn-white dropdown-toggle" dropdown-toggle type="button">
-                                            <span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="">Action</a></li>
-                                            <li><a href="">Another action</a></li>
-                                            <li><a href="">Something else here</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="">Separated link</a></li>
-                                        </ul>
-                                    </div>
-                                    <input type="text" class="form-control"></div>
-                                <div class="input-group"><input type="text" class="form-control">
-
-
-                                    <div class="input-group-btn" dropdown>
-                                        <button tabindex="-1" class="btn btn-white" type="button">Action</button>
-                                        <button class="btn btn-white dropdown-toggle" dropdown-toggle type="button">
-                                            <span class="caret"></span></button>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="">Action</a></li>
-                                            <li><a href="">Another action</a></li>
-                                            <li><a href="">Something else here</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="">Separated link</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group">
-                            <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-white" type="submit">Cancel</button>
-                                <button class="btn btn-primary" type="submit">Save changes</button>
-                            </div>
-                        </div>
-                    </form>-->
-
                 </div>
             </div>
         </div>

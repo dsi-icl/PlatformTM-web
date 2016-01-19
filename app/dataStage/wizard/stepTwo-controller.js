@@ -8,11 +8,13 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
     var activityId = $stateParams.activityId;
     var datasetId = $stateParams.datasetId;
     var fileName = $stateParams.file;
+    var fileId = $stateParams.fileId;
+    var standardFileId;
 
     $scope.vm = {
         datasetId: datasetId,
         activityId: activityId,
-        fileName: fileName,
+        //fileName: fileName,
         mapSaved: false,
         fileMatched: false,
         dataIsloaded: false
@@ -21,9 +23,10 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
     console.log('Controller Two scope',$scope.vm)
     console.log('inside step two controller',$stateParams)
 
-    wizardService.getOriFileInfo(datasetId)
+    wizardService.getOriFileInfo(datasetId,fileId)
         .then(function(fileInfo){
             $scope.fileInfo = fileInfo
+            if($scope.fileInfo.isStandard)  standardFileId = fileInfo.dataFileId;
             $scope.vm.dataIsloaded = true
             //if(!fileInfo.templateMatched)
                 return wizardService.getTemplateMap(datasetId)
@@ -78,16 +81,21 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
     }
 
     $scope.saveMapping = function(){
-        wizardService.mapFileToTemplate(datasetId,$scope.vm.template).then(function(success){
-            if(success)
+        //TODO: should return the id of the standard datafile created to pass on to next step
+        wizardService.mapFileToTemplate(datasetId,fileId,$scope.vm.template).then(function(fileID){
+            //if(success)
                 $scope.vm.mapSaved = true;
-            console.log("File transformed successfully");
+            standardFileId = fileID;
+            console.log("File transformed successfully", fileID);
 
         })
         /*wizardService.saveMap(datasetId,$scope.vm.template)*/
         console.log($scope.vm.template);
         //TODO:check something about the map to see if its been changed
 
+    }
+    $scope.cancel = function(){
+        $state.go('datastage.files',{studyId:$stateParams.studyId, dir:''})
     }
 
     $scope.goToStep3 = function(){
@@ -99,7 +107,7 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
         //        activityId: $scope.vm.selectedActivity.id, datasetId: $scope.vm.selectedDataset.id });
         //})
 
-        $state.go('datastage.wizard.step_three',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId });
+        $state.go('datastage.wizard.step_three',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, standardFileId: standardFileId });
     }
 
     $scope.inputChanged = function(elem){

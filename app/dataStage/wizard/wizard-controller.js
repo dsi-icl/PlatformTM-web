@@ -13,8 +13,7 @@
         console.log('inside wizard controller',$stateParams.selFiles, 'service')
 
         $scope.selectFile = function(file){
-            $scope.vm.fileSelected = file.fileName;
-
+            $scope.vm.fileSelected = file;
         }
 
         $scope.getActivities = function(){

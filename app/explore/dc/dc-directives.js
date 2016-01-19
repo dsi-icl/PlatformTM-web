@@ -4,149 +4,315 @@
 angular.module('eTRIKSdata.dcPlots')
 
 
+    /*.directive('dcChartControl',function($compile){
+        return{
+
+        }
+    })*/
+
+    /**
+     * chartingButton requires obs.o3id, obs.isActive, obs.id
+     */
     .directive('chartingButton', function($compile){
         return {
-            scope: { // attributes bound to the scope of the directive
-                val: '@',
-                obsid: '@',
-                obsids:'=',
-                domain:'@',
-                grp: '@',
-                isActive: '@active',
-                isGroupBtn: '@',
-                container: '@',
-                section: '@',
-                chartService: '@',
-                xfilterService: '@',
-                exportService: '@',
-                projectId:'@'
+            restrict: 'EA',
+            scope:{
+                obs:'=',
+                chartingOpts:'='
             },
+            //require: '?slickSlider',
+            controller: function($scope, $compile, $http) {
+                /*this.cs = ['ibrahim','emam','assem','zeinab','adel'];
+                this.sliderElementId = $scope.obs.code+"_slider";
+                this.sliderElementId = $scope.obs.code+"_slider";
+                this.obs = $scope.obs
+                this.addChart = function(c){
+                    $scope.cs.push('MEME');
+                    console.log('inside add chart', this.sliderElementId)
+                    //angular.element(document.getElementById(this.sliderElementId)).slick('slickAdd','<div>MEMEMEMEME</div>');
+                }*/
+            },
+            //controllerAs: 'chartingButton',
 
-            /*controller: function($scope, $compile, $http) {
-                // $scope is the appropriate scope for the directive
-                this.addChild = function(nestedDirective) { // this refers to the controller
-                    console.log('Got the message from nested directive:' + nestedDirective.message);
-                }
-            },*/
-            link:
-            function(scope, element, attrs){
+            link: function(scope, element, attrs, slickCtrl){
+
+                //var control = element.parent().find('.slider-control:first')
+                //scope.chartingButton = chartingButton;
+
+                //console.log('slider control ',scope.obs.code)
+                /*scope.$watch('charts', function(newVal) {
+                    if (newVal) {
+
+                    }
+                })*/
+
+                //console.log(element)
+
+                //element.find('a:first').bind("click", function(){
                 element.bind("click", function(){
-                    var elemId = attrs.id+'-chart';
-                    var isActive = scope.isActive === 'true'
+
+                    console.log(scope.obs,' CLICKED')
+                    //console.log(scope)
+
+                    var icon = element.find('i:first');
+                    icon.toggleClass('fa-toggle-off').toggleClass('fa-toggle-on');
+
+                    //var elemId = attrs.id+'-chart';
+                    var isActive = scope.obs.isActive === true
+
+                    console.log(scope.chartingOpts.chartContainerId)
                     console.log(isActive)
-                    if(isActive){
-                        scope.$apply(function(){
-                            angular.element(document.getElementById(scope.container))
-                                .append(
-                                    $compile('<div  style=" padding: 0px 30px 0px 30px;" id="'+elemId+'"> ' +
-                                        '<dc-chart-group></dc-chart-group>'+
+
+                    var sliderElementId = scope.obs.o3id+"_slider";
+                    console.log(sliderElementId)
+                    //console.log(!document.getElementById(sliderElementId))
+
+
+                    if(!document.getElementById(sliderElementId)){
+                        //if(isActive){
+                            //console.log(scope.obs.code+"_slider")
+                            scope.$apply(function(){
+                                angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
+                                    .append(
+                                    $compile(
+                                        '<div style="width: 300px; margin-left:10px;" id="'+sliderElementId+'" ' +
+                                        'slick-slider="{dots: true, arrows: true, draggable:false, slidesToShow:1, infinite:false, variableWidth:true}" '+
+                                        'style=" padding: 0px 30px 0px 30px;">' +
+                                            '<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>'+
+                                        //'<div style="width: 250px;" ng-repeat="c in chartingButton.cs">{{c}}</div>'+
                                         '</div>')(scope)
                                 )
-                        })
+                            })
+                       // }
                     }
+
                     else{
-                        angular.element(document.getElementById(elemId)).remove();
+                        console.log("slider exists already")
+                        //if(!isActive){
+                        //    console.log('Removing chart')
+                        //    angular.element(document.getElementById(sliderElementId)).remove();
+                        //}
+                        //else{
+                            console.log('adding chart to obs', scope.obs.id)
+
+                            //scope.$apply(function(){
+                            //    angular.element(document.getElementById(sliderElementId))
+                            //        .slick('slickAdd','<div>{{obs.code}}</div>');
+                            //})
+                            //var charthtml = $compile('<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>')
+                            //angular.element(document.getElementById(sliderElementId)).slick('unslick');
+                            //scope.$apply(function(){
+
+                        if(!angular.element(document.getElementById(sliderElementId))){
+                            scope.$apply(function(){
+                                angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
+                                    .append(
+                                    $compile(
+                                        '<div style="width: 300px; margin-left:10px;" id="'+sliderElementId+'" ' +
+                                        'slick-slider="{dots: true, arrows: true, draggable:false, slidesToShow:1, infinite:false, variableWidth:true}" '+
+                                        'style=" padding: 0px 30px 0px 30px;">' +
+                                        '<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>'+
+                                            //'<div style="width: 250px;" ng-repeat="c in chartingButton.cs">{{c}}</div>'+
+                                        '</div>')(scope)
+                                )
+                            })
+                        }
+                        else
+                                angular.element(document.getElementById(sliderElementId))
+                                    .slick('slickAdd',$compile('<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>')(scope));
+                        /*angular.element(document.getElementById(sliderElementId))
+                            .slick('changeSlide','next');*/
+                            //})
+                            //angular.element(document.getElementById(sliderElementId)).slick('reinit');
+                            //console.log(slickCtrl);
+                        //}
+
                     }
+
+
+                    //console.log(element.select(i).class)
+
+
                 });
+
+
             }
         }
     })
 
-    .directive('dcCountWidget',function(){
-        return{
-            restrict:'E',
-            scope:{
-                grp: '@',
-                chartService: '@',
-                xfilterService: '@',
-                projectId:'@'
-            },
+
+    .directive('dcChartSlider',function($timeout){
+        return {
+            restrict: 'EA',//add a control here and
+            scope:true,
+           /* template:
+            '<div style="width: 250px;">' +
+            '<slick id="{{val}}_slider" ' +
+            'dots="true" slides-to-show="1" center-mode="false" ' +
+            'variable-width="true"> ' +
+                //'<dc-chart ng-repeat="chart in charts"></dc-chart>'+
+                '<div style="width: 250px;" ng-repeat="c in cs">{{c}}</div>'+
+            '</slick>' +
+            '</div>',*/
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
+                var charts = [];
 
-                var chartService = $injector.get($scope.chartService);
-                $scope.chartservice = chartService
+                this.addSlide = function(chart){
 
-                var xfilterService = $injector.get($scope.xfilterService);
-                $scope.xfService = xfilterService
+                }
+                //$scope.chartOptions
+                //$scope.addChart = function(){
+                //    $('.add-remove').slick('slickAdd','<dc-chart></dc-chart>');
+                //}
+                //
+                //$scope.addChart = function(chartRequestParams){
+                //    charts.push(chartRequestParams)
+                //}
             }],
-            template:
-                '<span id="{{grp}}_Counter" class="filter-count model-count number-display"></span>',
-                /*'<span class="filter-count"></span> selected out of <span class="total-count"></span> subjects | ' +
-                '<a href="javascript:dc.filterAll();dc.renderAll();">Reset filters</a>',*/
-            link: function(scope, element, attrs){
-                scope.$watch(
-                    function($scope) { return $scope.xfService.cfReady(); },
-                    function(newval, oldval){
-                        if(newval){
+            link : function(scope,element,attrs){
+                //console.log('slider scope ',scope);
 
-                            //TODO: need to add dc-count-widget to the list of charts in CF to be refreshed when Xfilter is refreshed
-                            //cf.createChart('subjects',$scope.obsid,$scope.grp)
-                            var chart = scope.chartservice.createDCcounter(scope.xfService)
-                            //console.log('inside dc-count-widget chartgroup',scope.chartgroup)
-                            chart.anchor(element[0],scope.grp);
-                            chart.render();
-                        }
+                $timeout(function() {
+                    $(element).slick(scope.$eval(attrs.dcChartSlider));
+                });
+
+                function addSlide(chart) {
+                    element.slick('slickAdd',chart)
+                }
+
+                function removeSlide(chart){
+
+                }
+
+
+            }
+        }
+    })
+
+    .directive('dcChartSliderControl',function(){
+        return {
+
+            //scope:{
+            //    target: '@',
+            //    obs: '@',
+            //    value: '='
+            //},
+            scope: true,
+            restrict: 'EA',
+
+
+
+
+            /*transclude: true,*/
+            //require:'^chartingButton',
+            //templateUrl:'explore/dc/partials/chart_slider.html',
+            controller: function($scope){
+
+            },
+            controllerAs: 'dcChartSliderControl',
+            //require: '^chartingButton',
+            link : function(scope,element,attrs,chartCtrl){
+                //var optionsKey = attrs.gridsterItem,
+                //    options;
+
+               // var plotter = controllers[0],
+               //     slidercontrol = controllers[1];
+
+                //console.log(plotter)
+                //console.log(slidercontrol)
+
+                //scope.plotter = plotter;
+                //console.log('HERE');
+                element.bind("change", function(){
+                    console.log('slider control',scope)
+                    console.log('slider element ',element)
+                    //console.log('required controeller ')
+                    console.log(scope)
+                    chartCtrl.addChart(scope.obs.code)
+
+                    //targEle = angular.element(document.getElementById(scope.target))
+
+                    if(element.checked){
+                        console.log('element checked')
+                        //Add a slide to the dc-chartscroll-panel add dc-chart to
+                        //will need from the scope:
+                        //the qualifier , the slide panel and basically add dc-chart with the qualifier
+
+                        chartControl.addChart(element.value)
+                        /*targEle.slick('slickAdd','<dc-chart></dc-chart>');
+
+                        //selecting the parent slickslider element
+                        scope.$apply(function(){
+                            angular.element(document.getElementById(scope.container))
+                                .append(
+                                $compile(
+                                    '<div  style=" padding: 0px 30px 0px 30px;" id="'+elemId+'"> ' +
+                                    '<dc-chart-scroll-panel></dc-chart-scroll-panel>'+
+                                    '</div>')(scope)
+                            )
+                        })*/
+
+                    }
                 })
             }
         }
     })
 
-    .directive('dcChartGroup',function(){
+    .directive('slickSlider',function($timeout){
         return {
-            restrict: 'E',
-            replace:true,
-            template:
-                '<div style="width:320px">'+
-                '<slick dots="true" slides-to-show="1" center-mode="false" variable-width="true">' +
-                '<dc-chart></dc-chart> ' +
-                '<div> <div class="ibox-content"> <h2>Slide 1</h2> <p> ' +
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. LoremIpsum has been the industrys standard dummy text ever since the 1500s, when anunknown printer took a galley of type and scrambled it to make a type specimenbook. It has survived not only five centuries, but also the leap. ' +
-                '</p> </div> </div>'+
-                '<div> <div class="ibox-content"> <h2>Slide 1</h2> <p> ' +
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. LoremIpsum has been the industrys standard dummy text ever since the 1500s, when anunknown printer took a galley of type and scrambled it to make a type specimenbook. It has survived not only five centuries, but also the leap. ' +
-                '</p> </div> </div>'+
-                '<div> <div class="ibox-content"> <h2>Slide 1</h2> <p> ' +
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. LoremIpsum has been the industrys standard dummy text ever since the 1500s, when anunknown printer took a galley of type and scrambled it to make a type specimenbook. It has survived not only five centuries, but also the leap. ' +
-                '</p> </div> </div>'+
-                '<div> <div class="ibox-content"> <h2>Slide 1</h2> <p> ' +
-                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. LoremIpsum has been the industrys standard dummy text ever since the 1500s, when anunknown printer took a galley of type and scrambled it to make a type specimenbook. It has survived not only five centuries, but also the leap. ' +
-                '</p> </div> </div>'+
-                '</slick>'+
-                '</div>',
-            link : function(scope,element){
+            restrict: 'A',
+            scope:true,
+            controller: function($scope){
+                this.test = function(){
+                    console.log('here')
+                    console.log(this)
+                    console.log($scope.obs, $scope.chartingOpts)
+
+                }
+            },
+            controllerAs: 'slickSlider',
+            link: function(scope,element,attrs) {
+                $timeout(function() {
+                    $(element).slick(scope.$eval(attrs.slickSlider));
+                });
             }
         }
     })
 
+    /**
+     *
+     *  scope params: chartService, xfilterService, exportService,
+     *  projectId, val, obsid, grp, returnValue
+     */
     .directive('dcChart', function () {
         return {
-            restrict: 'E',
+            restrict: 'EA',
             replace:true,
-            /*scope: {
-                val: '='
+            /*scope:{
+                obs:'=',
+                chartingOpts:'=',
+                variable: '@'
             },*/
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
 
-                //console.log($scope.chartService)
-                console.log('dcChart scope ',$scope)
+                //console.log($scop)
+                console.log('dcChart scope ',$scope);
 
-                var chartService = $injector.get($scope.chartService);
-                $scope.chartservice = chartService
+                var chartService = $injector.get($scope.chartingOpts.DCchartService);
+                $scope.chartservice = chartService;
 
-                var xfilterService = $injector.get($scope.xfilterService);
-                $scope.xfService = xfilterService
+                var xfilterService = $injector.get($scope.chartingOpts.xfilterService);
+                $scope.xfService = xfilterService;
 
-                var expService = $injector.get($scope.exportService);
-                $scope.expService = expService
-
-                //$scope.propagateFilter()
+                var expService = $injector.get($scope.chartingOpts.exportService);
+                $scope.expService = expService;
 
                 var chartDataType = 'Count';//$scope.role;
 
                 //console.log('inside dc-chart controller')
                 //console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp)
 
-                chartService.getDCchart($scope.projectId,$scope.val,$scope.obsid,$scope.grp,xfilterService, chartDataType)
+                chartService.getDCchart($scope.chartingOpts.projectId,$scope.obs.code,$scope.obs.id,$scope.chartingOpts.chartGroup,xfilterService, chartDataType,$scope.obs)
                     .then(
                     function(chart){
                         $scope.chartToPlot = chart;
@@ -170,7 +336,7 @@ angular.module('eTRIKSdata.dcPlots')
 
                             //console.log(scope.chartCFservice.getCountGroup())
                             //scope.chartCFservice.filterClinicalCF(filter,scope.val)
-                            $scope.chartservice.propagateFilter($scope.xfilterService);
+                            $scope.chartservice.propagateFilter($scope.chartingOpts.xfilterService);
 
                             $scope.expService.updateSubjectFilter(chart.dimName,chart.filters())
                             console.log("filters " + $scope.expService.getSubjectFilter())
@@ -188,10 +354,10 @@ angular.module('eTRIKSdata.dcPlots')
             template:'<div style="padding-top: 20px;/*float: left;max-height: 200px; overflow: scroll*/">'+
                 '<div  id="returnsLabel">'+
                     '<div class="pull-left chart-title">'+
-                        '<span>{{val}}</span>'+
+                        '<span>{{obs.o3}}</span>'+
                         '<span class="filter"></span> <a class="reset">reset</a> '+
                     '</div>'+
-                    '<div class="pull-right chart-options">'+
+                    '<div ng-hide="chartingOpts.chartGroup == \'subject\'" class="pull-right chart-options">'+
                         '<ul>'+
                             '<li> <a class="count-chart"> <i class="fa fa-bar-chart-o"></i></a></li>'+
                             '<li> <a class="box-chart"> <i class="flat-icon flaticon-candlestick"></i></a></li>'+
@@ -205,8 +371,10 @@ angular.module('eTRIKSdata.dcPlots')
             link: function (scope, element, attrs) {
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
-                        scope.chartToPlot.anchor(element[0], scope.grp);
-                        var groupChart = scope.chartToPlot.chartGroup()
+                        var groupChart = scope.chartingOpts.chartGroup
+                        console.log()
+                        scope.chartToPlot.anchor(element[0], groupChart);
+
 
                         var d = angular.element(element[0].querySelector('div.chart-options'));
                         d.css('display', 'inherit');
@@ -224,7 +392,8 @@ angular.module('eTRIKSdata.dcPlots')
                         var a1 = angular.element(element[0].querySelector('a.box-chart'));
                         a1.attr('href', 'javascript:;');
                         a1.on('click', function () {
-                            scope.chartservice.getDCchart(scope.projectId, scope.val, scope.obsid, scope.grp, scope.xfService, 'GroupedByTime')
+                            //$scope.obs.code,$scope.obs.id,$scope.chartingOpts.chartGroup,xfilterService, chartDataType,$scope.obs
+                            scope.chartservice.getDCchart(scope.chartingOpts.projectId, scope.val, scope.obs.id, scope.chartingOpts.chartGroup, scope.xfService, 'GroupedByTime')
                                 .then(
                                 function (chart) {
                                     scope.chartToPlot = chart;
@@ -238,7 +407,7 @@ angular.module('eTRIKSdata.dcPlots')
                         var a2 = angular.element(element[0].querySelector('a.count-chart'));
                         a2.attr('href', 'javascript:;');
                         a2.on('click', function () {
-                            scope.chartservice.getDCchart(scope.projectId, scope.val, scope.obsid, scope.grp, scope.xfService, 'Count')
+                            scope.chartservice.getDCchart(scope.chartingOpts.projectId, scope.val, scope.obs.id, scope.chartingOpts.chartGroup, scope.xfService, 'Count')
                                 .then(
                                 function (chart) {
                                     scope.chartToPlot = chart;
@@ -279,7 +448,7 @@ angular.module('eTRIKSdata.dcPlots')
         controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
 
             //console.log($scope.chartService)
-            console.log($scope)
+            //console.log($scope)
 
             var chartService = $injector.get($scope.chartService);
             $scope.chartservice = chartService
@@ -377,6 +546,45 @@ angular.module('eTRIKSdata.dcPlots')
 
         }
 
+        }
+    })
+
+    .directive('dcCountWidget',function(){
+        return{
+            restrict:'E',
+            scope:{
+                grp: '@',
+                chartService: '@',
+                xfilterService: '@',
+                projectId:'@'
+            },
+            controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
+
+                var chartService = $injector.get($scope.chartService);
+                $scope.chartservice = chartService
+
+                var xfilterService = $injector.get($scope.xfilterService);
+                $scope.xfService = xfilterService
+            }],
+            template:
+                '<span id="{{grp}}_Counter" class="filter-count model-count number-display"></span>',
+            /*'<span class="filter-count"></span> selected out of <span class="total-count"></span> subjects | ' +
+             '<a href="javascript:dc.filterAll();dc.renderAll();">Reset filters</a>',*/
+            link: function(scope, element, attrs){
+                scope.$watch(
+                    function($scope) { return $scope.xfService.cfReady(); },
+                    function(newval, oldval){
+                        if(newval){
+
+                            //TODO: need to add dc-count-widget to the list of charts in CF to be refreshed when Xfilter is refreshed
+                            //cf.createChart('subjects',$scope.obsid,$scope.grp)
+                            var chart = scope.chartservice.createDCcounter(scope.xfService)
+                            //console.log('inside dc-count-widget chartgroup',scope.chartgroup)
+                            chart.anchor(element[0],scope.grp);
+                            chart.render();
+                        }
+                    })
+            }
         }
     })
 

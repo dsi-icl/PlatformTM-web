@@ -4,10 +4,10 @@
         var serviceBase = ngAppConfig.apiServiceBaseUri;
         var studyId = $stateParams.studyId
 
-        console.log(serviceBase+'api/files/study/'+studyId+'/upload')
+        console.log(serviceBase+'api/files/project/'+studyId+'/upload/'+$stateParams.dir)
 
         var uploader = $scope.uploader = new FileUploader({
-            url: serviceBase+'api/files/study/'+studyId+'/upload'
+            url: serviceBase+'api/files/project/'+studyId+'/upload/'+$stateParams.dir
         });
 
         $scope.ok = function () {

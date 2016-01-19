@@ -180,7 +180,7 @@ nav a {
     /*margin: .5%;*/
     /*margin-top: .5em;*/
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-    border-radius: 0;
+    border-radius: 10px;
     border: 0;
 }
 
@@ -224,7 +224,7 @@ nav a {
     padding: 8px;
     padding-top: 15px;
     font-size: .6em;
-    border-bottom: 1px solid #35495E;
+    /*border-bottom: 1px solid #35495E;*/
 }
 
 .export{

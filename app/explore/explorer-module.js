@@ -36,6 +36,9 @@ angular.module('eTRIKSdata.explorer',[
                                     {
                                         name: 'slick',
                                         files: ['lib/plugins/slick/js/angular-slick.min.js']
+                                    },
+                                    {
+                                        files: ['lib/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
                                     }
                                 ]);
                             }
