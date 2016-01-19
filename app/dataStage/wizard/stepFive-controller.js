@@ -16,7 +16,9 @@
             selectedDataset:null,
             selectedActivity:null,
             datasetId: $stateParams.datasetId,
-            activityId:$stateParams.activityId
+            activityId:$stateParams.activityId,
+            standardFileId: $stateParams.standardFileId
+
         };
 
         $scope.loadedDataset = false;
@@ -28,7 +30,7 @@
         console.log(datasetId);
         //var filename = "ProjectIdVitalSigns";
 
-        wizardService.loadDataset(datasetId).then(function(success){
+        wizardService.loadDataset(datasetId, standardFileId).then(function(success){
             if(success){
                 $scope.loadedDataset = true;
                 return wizardService.extractObs(datasetId)

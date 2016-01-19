@@ -3,22 +3,22 @@
  */
 angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
 
-    .controller('ClinicalCtrl', ['$rootScope','$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService', 'exportService', 'toaster','$timeout',
-        function($rootScope,$scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService,exportService, toaster,$timeout) {
+    .controller('ClinicalCtrl', ['$rootScope','$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService',
+        'exportService', 'toaster','$timeout','$modal',
+        function($rootScope,$scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService,exportService, toaster,$timeout,$modal) {
 
-            $scope.chartGroup = "clinical";
-            $scope.projectId = $stateParams.studyId;//"P-BVS";
+            $scope.vm = {};
+            //$scope.vm.projectId = $stateParams.studyId;//"P-BVS";
+            //$scope.vm.chartContainerId = "clinical-plots";
+            //$scope.vm.DCchartService = "DCchartingService";
+            //$scope.vm.xfilterService = "ClinicalCf";
+            $scope.vm.show = 'plots';
 
-            $rootScope.currentProject={'id':$stateParams.studyId};
-            console.log($rootScope.currentProject)
-
-
-            $scope.chartContainerId = "clinical-plots";
-
-            $scope.DCchartService = "DCchartingService";
-            $scope.xfilterService = "ClinicalCf";
-            $scope.exportService = "exportService";
-            $scope.show = 'plots';
+            //$rootScope.currentProject={'id':$stateParams.studyId};
+            //console.log($rootScope.currentProject)
+            //$scope.chartContainerId = "clinical-plots";
+            //$scope.DCchartService = "DCchartingService";
+            //$scope.xfilterService = "ClinicalCf";
 
             $scope.clinicalFilter = exportService.getClinicalFilter();
 
@@ -27,11 +27,12 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
             $scope.chartservice = DCchartingService;
             //////////////////////
 
+
             $scope.addToCart = function(type) {
 
                 var count = ClinicalCf.getCountGroup().value()
 
-                exportService.addToCart(type, count, $scope.projectId, function(){
+                exportService.addToCart(type, count, $scope.projectId, function () {
                     toaster.pop({
                         type: 'success',
                         title: 'Data Saved',
@@ -44,23 +45,102 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 //console.log(exportService.getCart());
             };
 
+            $scope.chartingOpts = {
+                projectId : $stateParams.studyId,
+                chartContainerId : "clinical-plots",
+                chartGroup : "clinical",
+                DCchartService : "DCchartingService",
+                xfilterService : "ClinicalCf",
+                exportService : "exportService"
+
+            };
+
+            $scope.open2 = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: 'explore/clinical/modal_example2.html',
+                    controller: ModalInstanceCtrl,
+                    windowClass: "animated fadeIn"
+                });
+            };
+
+            function ModalInstanceCtrl ($scope, $modalInstance) {
+
+                $scope.ok = function () {
+                    $modalInstance.close();
+                };
+
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+
+
+                $scope.states = [
+                    'Alabama',
+                    'Alaska',
+                    'Arizona',
+                    'Arkansas',
+                    'California',
+                    'Colorado',
+                    'Connecticut',
+                    'Delaware',
+                    'Florida',
+                    'Georgia',
+                    'Hawaii',
+                    'Idaho',
+                    'Illinois',
+                    'Indiana',
+                    'Iowa',
+                    'Kansas',
+                    'Kentucky',
+                    'Louisiana',
+                    'Maine',
+                    'Maryland',
+                    'Massachusetts',
+                    'Michigan',
+                    'Minnesota',
+                    'Mississippi',
+                    'Missouri',
+                    'Montana',
+                    'Nebraska',
+                    'Nevada',
+                    'New Hampshire',
+                    'New Jersey',
+                    'New Mexico',
+                    'New York',
+                    'North Carolina',
+                    'North Dakota',
+                    'Ohio',
+                    'Oklahoma',
+                    'Oregon',
+                    'Pennsylvania',
+                    'Rhode Island',
+                    'South Carolina',
+                    'South Dakota',
+                    'Tennessee',
+                    'Texas',
+                    'Utah',
+                    'Vermont',
+                    'Virginia',
+                    'Washington',
+                    'West Virginia',
+                    'Wisconsin',
+                    'Wyoming'
+                ];
+                
+            };
+
             $timeout(function() {
                 console.log("calling clinical tree")
-                clinicalDataService.getClinicalDataTree($scope.projectId)
+                clinicalDataService.getClinicalDataTree($scope.chartingOpts.projectId)
                     .then(function(data){
-                        $scope.clinicalData = data.treeData;
-                        //console.log(data)
+                        console.log("back")
+                        $scope.clinicalObservations = data.treeData;
+                        //console.log($scope.clinicalObservations)
                         //$scope.getObsForAll();
 
                     })
-            },2000)
-            /*$scope.filterByStudy = function(){
-             ClinicalCf.filterClinicalData('CRC305C','study');
-             }*/
+            },3000)
 
-            $scope.showVisits = function(){
-
-            }
             $scope.getObsIdsForMeddra = function(medraterm){
                 var jsonQobj=jsonQ($scope.clinicalData);
 
@@ -99,15 +179,19 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 return allterms
             }
 
-            $scope.getChartingOpts = function(){
+/*            $scope.getChartingOpts = function(){
                 var chartingOpts = {}
                 chartingOpts.container = $scope.chartContainerId
-                //chartingOpts.chartingServiceName = $scope.chartService
                 chartingOpts.chartGroup = $scope.chartGroup
                 chartingOpts.DCchartService = "DCchartingService";
                 chartingOpts.xfilterService = "ClinicalCf";
                 chartingOpts.exportService = "exportService";
                 chartingOpts.projectId = $stateParams.studyId;//"P-BVS";
                 return chartingOpts;
-            }
+            }*/
+
+
         }])
+
+
+

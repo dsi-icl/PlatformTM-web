@@ -7,12 +7,12 @@
 }
 
 .node-toggle {
-    -moz-border-radius-topleft: 5px;
-    -webkit-border-top-left-radius: 5px;
-    border-top-left-radius: 5px;
-    -moz-border-radius-bottomleft: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    -moz-border-radius-topleft: 2px;
+    -webkit-border-top-left-radius: 2px;
+    border-top-left-radius: 2px;
+    -moz-border-radius-bottomleft: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    border-bottom-left-radius: 2px;
     -moz-border-radius-topright: 0;
     -webkit-border-top-right-radius: 0;
     border-top-right-radius: 0;
@@ -20,12 +20,13 @@
     -webkit-border-bottom-right-radius: 0;
     border-bottom-right-radius: 0;
     /*margin: 4px 3px 0 0;*/
-    padding: 2px 7px;
+    padding: 2px 5px;
     position: absolute;
     top: 0px;
     left: 0px;
-    border-right: 2px solid #fff;
+    /*border-right: 2px solid #fff;*/
     z-index: 5 !important;
+    float: left;
 }
 
 .tree-node, .tree-leaf{
@@ -36,23 +37,62 @@
     -webkit-border-bottom-right-radius: 15px;
     border-bottom-right-radius: 15px;*/
 }
-.tree-node {
+.tree-node-old {
     margin-left: 0 !important;
     padding: 2px 0;
     text-align: left;
     text-indent: 7px;
     font-weight: bold;
+    /*border: 1px grey solid;*/
+    background-color: #f3f3f4;
 }
 
+.clinical-tree .list-group-node  {
+    background-color: inherit;
+    display: block;
+    margin-bottom: -1px;
+    padding: 1px 1px 1px 17px;
+    position: relative;
+    border: none;
+    font-size: 12px;
+
+    /*font-weight: bold;*/
+}
+.clinical-tree .list-group-item  {
+    background-color: inherit;
+    display: block;
+    /*margin-bottom: 5px;*/
+    padding: 1px 17px;
+    position: relative;
+    border: none;
+
+    /*font-weight: bold;*/
+}
+
+.clinical-tree .list-group-item-text {
+    margin: 0 0 0px;
+    color: inherit;
+    font-size: 12px;
+    line-height: 23px;
+    text-align: left;
+    text-indent: 2px;
+    border-bottom: 1px aliceblue solid;
+}
+
+.plotting-options li{
+    padding: 0px 15px;
+}
+
+
 .tree-leaf {
-    display: inline-block;
+    /*display: inline-block;*/
     padding: 2px 0;
     text-align: left;
     width: 100%;
     font-weight: normal;
     margin-top: 2px;
     text-indent: 10px;
-    background-color: ghostwhite;
+    /*background-color: ghostwhite;*/
 
 }
 

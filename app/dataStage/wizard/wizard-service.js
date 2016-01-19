@@ -12,10 +12,10 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var DTdata;
 
 
-    var _getOriFileInfo = function(datasetId){
+    var _getOriFileInfo = function(datasetId,fileId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'api/datasets/'+datasetId+'/OriFileInfo/')
+        $http.get(serviceBase + 'api/datasets/'+datasetId+'/OriFileInfo/'+fileId)
             .success(function (response) {
                 console.log("Inside http get success",response)
 
@@ -48,7 +48,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     }
 
-    var _getFileHeader = function(datasetId){
+    /*var _getFileHeader = function(datasetId){
         var deferred = $q.defer();
         $http.get(serviceBase + 'api/datasets/'+datasetId+'/dataFile/header')
             .success(function (response) {
@@ -57,17 +57,17 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
             })
 
             .error(function (err, status) {
-                /*_logOut();*/
+                /!*_logOut();*!/
                 deferred.reject(err);
             });
 
         return deferred.promise;
 
-    }
+    }*/
 
     var _getTemplateMap = function(datasetId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/Dataset/'+datasetId+'/templateMap/')
+        $http.get(serviceBase + 'api/datasets/'+datasetId+'/templateMap/')
             .success(function (response) {
                 console.log("Inside http get success",response)
                 deferred.resolve(response);
@@ -81,10 +81,10 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     }
 
-    var _getDataTablePreview = function(datasetId){
-
+    var _getDataTablePreview = function(datasetId, standardfileId){
+        console.log(datasetId,standardfileId);
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/datasets/'+datasetId+'/preview/')
+        $http.get(serviceBase + 'api/datasets/'+datasetId+'/preview/file/'+standardfileId)
             .success(function (response) {
                 tableHeaders = response.header
                 DTdata = response.data
@@ -98,9 +98,9 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     }
 
-    var _mapFileToTemplate = function(datasetId,map){
+    var _mapFileToTemplate = function(datasetId,fileId,map){
         var deferred = $q.defer();
-        $http.post(serviceBase + 'api/Datasets/'+datasetId+'/mapToTemplate/',map)
+        $http.post(serviceBase + 'api/Datasets/'+datasetId+'/mapToTemplate/file/'+fileId,map)
             //$http.get('../data/dt.json')
             .success(function (response) {
                 //tableHeaders = response.header
@@ -143,9 +143,9 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     }
 
-    var _loadDataset = function(datasetId){
+    var _loadDataset = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/Datasets/'+datasetId+'/loadDataFile/')
+        $http.get(serviceBase + 'api/Datasets/'+datasetId+'/loadDataFile/file/'+fileId)
             .success(function (response) {
                 console.log("Inside http get success",response)
                 deferred.resolve(response);
@@ -153,7 +153,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     }
 
-    var _extractObs = function(datasetId){
+    var _extractObs = function(datasetId, fileId){
         var deferred = $q.defer();
         $http.get(serviceBase + 'api/Datasets/'+datasetId+'/loadObservations/')
             .success(function (response) {
@@ -204,7 +204,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     wizardServiceFactory.getOriFileInfo = _getOriFileInfo;
     wizardServiceFactory.getActivities = _getActivities;
-    wizardServiceFactory.getFileHeader = _getFileHeader;
+    //wizardServiceFactory.getFileHeader = _getFileHeader;
     wizardServiceFactory.getTemplateMap = _getTemplateMap;
     wizardServiceFactory.mapFileToTemplate = _mapFileToTemplate;
     wizardServiceFactory.getDataTablePreview = _getDataTablePreview;

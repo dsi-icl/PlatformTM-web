@@ -11,7 +11,7 @@ function config($stateProvider, $urlRouterProvider) {
             templateUrl: "layout/content.html"
         })
         .state('datastage.files', {
-            url: "/datastage/files",
+            url: "/datastage/files/{dir}",
             templateUrl: "datastage/fileManager/fileManager.html",
             controller: "fileController",
             resolve: {
@@ -61,7 +61,7 @@ function config($stateProvider, $urlRouterProvider) {
                 }]
             }
         })*/.state("datastage.upload", {
-            url: "/upload",
+            url: "/upload/{dir}",
             onEnter: ['$stateParams', '$state', '$modal', 'fileService',function($stateParams, $state, $modal, fileService) {
                 $modal.open({
                     templateUrl: "dataStage/upload/upload.html",
@@ -73,13 +73,13 @@ function config($stateProvider, $urlRouterProvider) {
                         }]
                     },
                     controller: 'uploadController'
-                }).result.finally(function($statParams) {
+                }).result.finally(function($stateParams) {
                         fileService.getFiles()
                             .then(function(data){
                                 //vm.files = data.files;
                                 //console.log(data)
                                 //$scope.vm = vm;
-                            $state.go('datastage.files',{studyId:$stateParams.studyId})
+                            $state.go('datastage.files',{studyId:$stateParams.studyId, dir:$stateParams.dir})
                             })
                     }, function () {
                         console.info('Modal dismissed at: ' + new Date());

@@ -30,10 +30,11 @@
 
 
         $scope.goToStep2 = function(){
-            $scope.vm.selectedDataset.dataFile = $scope.$parent.vm.fileSelected
+            $scope.vm.selectedDataset.dataFileDTO = $scope.$parent.vm.fileSelected //fileDTO
+
             wizardService.updateDatasetFile($scope.vm.selectedDataset).then(function(){
                 $state.go('datastage.wizard.step_two',{ file: $scope.$parent.vm.fileSelected,
-                    activityId: $scope.vm.selectedActivity.id, datasetId: $scope.vm.selectedDataset.id });
+                    activityId: $scope.vm.selectedActivity.id, datasetId: $scope.vm.selectedDataset.id , fileId: $scope.$parent.vm.fileSelected.dataFileId});
             })
             //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
 

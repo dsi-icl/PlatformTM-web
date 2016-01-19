@@ -7,6 +7,7 @@ angular.module('eTRIKSdata.studyDesign')
 
     .controller('ActivityListController', ['$scope','$stateParams', 'ActivityResource','model', function ($scope, $stateParams, ActivityResource, model) {
         $scope.vmodel = {};
+
         console.log("List Controller requested")
         console.log($stateParams);
         //Retrieves list of study activities
@@ -22,12 +23,23 @@ angular.module('eTRIKSdata.studyDesign')
         console.log($stateParams.activityId);
 
         if($stateParams.activityId==0){
+
+
+
+
             console.log("New Activity")
             model.activity = new ActivityResource();
-            model.activity.StudyID = $stateParams.studyId;//"Study1"
+            model.activity.ProjectId = $stateParams.studyId;//"Study1"
             model.activity.isNew = true;
             model.activityId = 0;
             $scope.vmodel.activity = model.activity;
+
+            //TEMP ***************************** TO CREATE ASSAYS
+            //model.activity.isAssay = true;
+            //model.activity.AssayTechnologyPlatform = "CL-ASYTP-1";
+            //model.activity.AssayTechnology = "CL-ASYTT-T-1";
+            //model.activity.AssayMeasurementType = "CL-ASYMT-1";
+
         }
 
         else if($stateParams.activityId){
@@ -55,6 +67,11 @@ angular.module('eTRIKSdata.studyDesign')
                             })
                         }
                     }
+                    $state.transitionTo('manager', $stateParams, {
+                        reload: true,
+                        inherit: false,
+                        notify: true
+                    });
                     //$state.go('manager',{studyId:$stateParams.studyId})
                 });
             }
@@ -68,23 +85,29 @@ angular.module('eTRIKSdata.studyDesign')
                             model.dataset.activityId = response.id
                             model.dataset.$save(function(){
                                 console.log("Dataset created")
+                                $state.transitionTo('manager', $stateParams, {
+                                    reload: true,
+                                    inherit: false,
+                                    notify: true
+                                });
                             })
                         }
                         else{
                             if(response.datasets != null ){
                                 model.dataset.$update(function(){
                                     console.log("Dataset updated")
+                                    $state.transitionTo('manager', $stateParams, {
+                                        reload: true,
+                                        inherit: false,
+                                        notify: true
+                                    });
                                 })
                             }
                         }
                     }
                 });
             }
-            $state.transitionTo('manager', $stateParams, {
-             reload: true,
-             inherit: false,
-             notify: true
-             });
+
             //console.log($stateParams)
             //$state.go('manager.activities.detail',$stateParams,{
             //    reload: true,
