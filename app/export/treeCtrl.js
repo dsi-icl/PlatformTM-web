@@ -2,18 +2,19 @@
     'use strict';
 
     //// JavaScript Code ////
-    function treeCtrl($log,$timeout) {
+    function treeCtrl($log,$timeout,treeService) {
         var vm = this;
 
         var newId = 1;
         vm.ignoreChanges = false;
         vm.newNode = {};
-        vm.originalData = [
-            { id : 'ajson1', parent : '#', text : 'Simple root node', state: { opened: true} },
-            { id : 'ajson2', parent : '#', text : 'Root node 2', state: { opened: true} },
-            { id : 'ajson3', parent : 'ajson2', text : 'Child 1', state: { opened: true} },
-            { id : 'ajson4', parent : 'ajson2', text : 'Child 2' , state: { opened: true}}
-        ];
+        vm.originalData = treeService.getData()
+        //    [
+        //    { id : 'ajson1', parent : '#', text : 'Simple root node', state: { opened: true} },
+        //    { id : 'ajson2', parent : '#', text : 'Root node 2', state: { opened: true} },
+        //    { id : 'ajson3', parent : 'ajson2', text : 'Child 1', state: { opened: true} },
+        //    { id : 'ajson4', parent : 'ajson2', text : 'Child 2' , state: { opened: true}}
+        //];
         vm.treeData = [];
         angular.copy(vm.originalData,vm.treeData);
         vm.treeConfig = {
@@ -82,6 +83,6 @@
 
     //// Angular Code ////
 
-    angular.module('eTRIKSdata.export').controller('treeCtrl', treeCtrl);
+    angular.module('eTRIKSdata.export').controller('treeCtrl', ['$log', '$timeout', 'treeService', treeCtrl]);
 
 })(angular);
