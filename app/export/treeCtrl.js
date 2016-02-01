@@ -8,7 +8,7 @@
         var newId = 1;
         vm.ignoreChanges = false;
         vm.newNode = {};
-        vm.originalData = treeService.getData()
+        vm.originalData = treeService.getData([], "P-BVS")
         //    [
         //    { id : 'ajson1', parent : '#', text : 'Simple root node', state: { opened: true} },
         //    { id : 'ajson2', parent : '#', text : 'Root node 2', state: { opened: true} },

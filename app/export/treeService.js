@@ -3,7 +3,7 @@
  */
 'use strict';
 
-function treeService(){
+function treeService($http, ngAppConfig){
 
     var treeService = {}
 
@@ -14,8 +14,42 @@ function treeService(){
         { id : 'ajson4', parent : 'ajson2', text : 'Child 2' , state: { opened: true}}
     ]
 
-    treeService.getData = function(){
+    var serviceBase = ngAppConfig.apiServiceBaseUri;
+
+    treeService.getData = function(observations, projectId){
+
         return data
+        //return $http({
+        //    url:serviceBase+'api/projects/'+projectId+'/subjects/characteristics',
+        //    method:'GET'
+        //}).then(
+        //    function (response){
+        //        return
+        //        {
+        //            SCs: (response.data)
+        //        }
+        //    }
+        //)
+    }
+
+    //provision for re-arranged tree
+    treeService.sendData = function(observations, projectId){
+        return $http({
+            url:serviceBase+'api/studies/'+projectId+'/data/subjects/characteristics',
+            method:'POST',
+            data: angular.toJson(characs)
+        }).then(
+            function (response) {
+                return {
+                    header: (response.data.header),
+                    data: (response.data.data)
+                }
+            },
+            function (httpError) {
+                // translate the error
+                throw httpError.status + " : " +
+                httpError.data;
+            });
     }
 
     return treeService
@@ -23,7 +57,7 @@ function treeService(){
 
 angular
     .module('eTRIKSdata.export')
-    .factory('treeService',treeService)
+    .factory('treeService',['$http', 'ngAppConfig', treeService])
 
 
 

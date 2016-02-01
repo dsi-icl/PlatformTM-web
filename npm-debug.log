@@ -1,0 +1,168 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'jsonplaceholder' ]
+2 info using npm@2.14.3
+3 info using node@v4.1.0
+4 verbose install initial load of /usr/local/lib/package.json
+5 verbose readDependencies loading dependencies from /usr/local/lib/package.json
+6 silly cache add args [ 'jsonplaceholder', null ]
+7 verbose cache add spec jsonplaceholder
+8 silly cache add parsed spec Result {
+8 silly cache add   raw: 'jsonplaceholder',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'jsonplaceholder',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: '*',
+8 silly cache add   type: 'range' }
+9 silly addNamed jsonplaceholder@*
+10 verbose addNamed "*" is a valid semver range for jsonplaceholder
+11 silly addNameRange { name: 'jsonplaceholder', range: '*', hasData: false }
+12 silly mapToRegistry name jsonplaceholder
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry uri https://registry.npmjs.org/jsonplaceholder
+16 verbose addNameRange registry:https://registry.npmjs.org/jsonplaceholder not in flight; fetching
+17 verbose request uri https://registry.npmjs.org/jsonplaceholder
+18 verbose request no auth needed
+19 info attempt registry request try #1 at 1:46:37 PM
+20 verbose request id 33d37d0a544cc04a
+21 http request GET https://registry.npmjs.org/jsonplaceholder
+22 http 200 https://registry.npmjs.org/jsonplaceholder
+23 silly get cb [ 200,
+23 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+23 silly get     etag: '"CHSLTSBCJ5CR7Z3M9GMCMON2O"',
+23 silly get     'content-type': 'application/json',
+23 silly get     'cache-control': 'max-age=300',
+23 silly get     'content-length': '15276',
+23 silly get     'accept-ranges': 'bytes',
+23 silly get     date: 'Thu, 28 Jan 2016 13:46:38 GMT',
+23 silly get     via: '1.1 varnish',
+23 silly get     age: '0',
+23 silly get     connection: 'keep-alive',
+23 silly get     'x-served-by': 'cache-lcy1121-LCY',
+23 silly get     'x-cache': 'MISS',
+23 silly get     'x-cache-hits': '0',
+23 silly get     'x-timer': 'S1453988798.062885,VS0,VE455',
+23 silly get     vary: 'Accept' } ]
+24 verbose get saving jsonplaceholder to /Users/superkillball/.npm/registry.npmjs.org/jsonplaceholder/.cache.json
+25 silly addNameRange number 2 { name: 'jsonplaceholder', range: '*', hasData: true }
+26 silly addNameRange versions [ 'jsonplaceholder',
+26 silly addNameRange   [ '0.0.1',
+26 silly addNameRange     '0.1.0',
+26 silly addNameRange     '0.2.0',
+26 silly addNameRange     '0.2.1',
+26 silly addNameRange     '0.2.2',
+26 silly addNameRange     '0.2.3',
+26 silly addNameRange     '0.2.4',
+26 silly addNameRange     '0.3.0',
+26 silly addNameRange     '0.3.1' ] ]
+27 silly addNamed jsonplaceholder@0.3.1
+28 verbose addNamed "0.3.1" is a plain semver version for jsonplaceholder
+29 silly mapToRegistry name jsonplaceholder
+30 silly mapToRegistry using default registry
+31 silly mapToRegistry registry https://registry.npmjs.org/
+32 silly mapToRegistry uri https://registry.npmjs.org/jsonplaceholder
+33 verbose addRemoteTarball https://registry.npmjs.org/jsonplaceholder/-/jsonplaceholder-0.3.1.tgz not in flight; adding
+34 verbose addRemoteTarball [ 'https://registry.npmjs.org/jsonplaceholder/-/jsonplaceholder-0.3.1.tgz',
+34 verbose addRemoteTarball   'f13f9013e4758babd091fd169b47838b6cdda18a' ]
+35 info retry fetch attempt 1 at 1:46:38 PM
+36 info attempt registry request try #1 at 1:46:38 PM
+37 http fetch GET https://registry.npmjs.org/jsonplaceholder/-/jsonplaceholder-0.3.1.tgz
+38 http fetch 200 https://registry.npmjs.org/jsonplaceholder/-/jsonplaceholder-0.3.1.tgz
+39 silly fetchAndShaCheck shasum f13f9013e4758babd091fd169b47838b6cdda18a
+40 verbose addTmpTarball /var/folders/5c/q63tc94s46z1sc2mrmhznrm40000gn/T/npm-1250-5fd9282a/registry.npmjs.org/jsonplaceholder/-/jsonplaceholder-0.3.1.tgz not in flight; adding
+41 verbose addTmpTarball already have metadata; skipping unpack for jsonplaceholder@0.3.1
+42 silly cache afterAdd jsonplaceholder@0.3.1
+43 verbose afterAdd /Users/superkillball/.npm/jsonplaceholder/0.3.1/package/package.json not in flight; writing
+44 verbose afterAdd /Users/superkillball/.npm/jsonplaceholder/0.3.1/package/package.json written
+45 silly install resolved [ { name: 'jsonplaceholder',
+45 silly install resolved     version: '0.3.1',
+45 silly install resolved     description: 'A simple fake REST API server for testing and prototyping.',
+45 silly install resolved     keywords:
+45 silly install resolved      [ 'fake',
+45 silly install resolved        'JSON',
+45 silly install resolved        'server',
+45 silly install resolved        'REST',
+45 silly install resolved        'dummy',
+45 silly install resolved        'data',
+45 silly install resolved        'API',
+45 silly install resolved        'testing',
+45 silly install resolved        'prototyping' ],
+45 silly install resolved     homepage: 'http://jsonplaceholder.typicode.com',
+45 silly install resolved     repository:
+45 silly install resolved      { type: 'git',
+45 silly install resolved        url: 'https://github.com/typicode/jsonplaceholder.git' },
+45 silly install resolved     bin: { jsonplaceholder: './cli.js' },
+45 silly install resolved     dependencies: { clone: '^0.2.0', express: '^4.11.2', 'json-server': '^0.6.0' },
+45 silly install resolved     devDependencies: { Faker: '~0.5.11', rosie: '~0.2.0', underscore: '~1.5.2' },
+45 silly install resolved     engines: { node: '0.10.x' },
+45 silly install resolved     license: 'MIT',
+45 silly install resolved     gitHead: '58a3ccf3553d5472a263261ebe4f45c137e8066f',
+45 silly install resolved     bugs: { url: 'https://github.com/typicode/jsonplaceholder/issues' },
+45 silly install resolved     _id: 'jsonplaceholder@0.3.1',
+45 silly install resolved     scripts: {},
+45 silly install resolved     _shasum: 'f13f9013e4758babd091fd169b47838b6cdda18a',
+45 silly install resolved     _from: 'jsonplaceholder@*',
+45 silly install resolved     _npmVersion: '1.4.28',
+45 silly install resolved     _npmUser: { name: 'typicode', email: 'typicode@gmail.com' },
+45 silly install resolved     maintainers: [ [Object] ],
+45 silly install resolved     dist:
+45 silly install resolved      { shasum: 'f13f9013e4758babd091fd169b47838b6cdda18a',
+45 silly install resolved        tarball: 'http://registry.npmjs.org/jsonplaceholder/-/jsonplaceholder-0.3.1.tgz' },
+45 silly install resolved     directories: {},
+45 silly install resolved     _resolved: 'https://registry.npmjs.org/jsonplaceholder/-/jsonplaceholder-0.3.1.tgz' } ]
+46 info install jsonplaceholder@0.3.1 into /usr/local/lib
+47 info installOne jsonplaceholder@0.3.1
+48 verbose installOne of jsonplaceholder to /usr/local/lib not in flight; installing
+49 verbose lock using /Users/superkillball/.npm/_locks/jsonplaceholder-241f4160f20d0c44.lock for /usr/local/lib/node_modules/jsonplaceholder
+50 warn engine jsonplaceholder@0.3.1: wanted: {"node":"0.10.x"} (current: {"node":"4.1.0","npm":"2.14.3"})
+51 silly install write writing jsonplaceholder 0.3.1 to /usr/local/lib/node_modules/jsonplaceholder
+52 verbose unbuild lib/node_modules/jsonplaceholder
+53 silly gentlyRm /usr/local/lib/node_modules/jsonplaceholder is being purged from base /usr/local
+54 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/jsonplaceholder
+55 verbose tar unpack /Users/superkillball/.npm/jsonplaceholder/0.3.1/package.tgz
+56 verbose tar unpacking to /usr/local/lib/node_modules/jsonplaceholder
+57 silly gentlyRm /usr/local/lib/node_modules/jsonplaceholder is being purged
+58 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/jsonplaceholder
+59 silly gunzTarPerm modes [ '755', '644' ]
+60 error tar.unpack untar error /Users/superkillball/.npm/jsonplaceholder/0.3.1/package.tgz
+61 verbose unlock done using /Users/superkillball/.npm/_locks/jsonplaceholder-241f4160f20d0c44.lock for /usr/local/lib/node_modules/jsonplaceholder
+62 verbose fstream_path /usr/local/lib/node_modules/jsonplaceholder
+63 verbose fstream_type Directory
+64 verbose fstream_class DirWriter
+65 verbose stack Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/jsonplaceholder'
+65 verbose stack     at Error (native)
+66 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:35:25
+66 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:47:53
+66 verbose fstream_stack FSReqWrap.oncomplete (fs.js:82:15)
+67 verbose cwd /Users/superkillball/Documents/Code/biospeak
+68 error Darwin 15.3.0
+69 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g" "jsonplaceholder"
+70 error node v4.1.0
+71 error npm  v2.14.3
+72 error path /usr/local/lib/node_modules/jsonplaceholder
+73 error code EACCES
+74 error errno -13
+75 error syscall mkdir
+76 error Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/jsonplaceholder'
+76 error     at Error (native)
+76 error  { [Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/jsonplaceholder']
+76 error   errno: -13,
+76 error   code: 'EACCES',
+76 error   syscall: 'mkdir',
+76 error   path: '/usr/local/lib/node_modules/jsonplaceholder',
+76 error   fstream_type: 'Directory',
+76 error   fstream_path: '/usr/local/lib/node_modules/jsonplaceholder',
+76 error   fstream_class: 'DirWriter',
+76 error   fstream_stack:
+76 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:35:25',
+76 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:47:53',
+76 error      'FSReqWrap.oncomplete (fs.js:82:15)' ] }
+77 error Please try running this command again as root/Administrator.
+78 verbose exit [ -13, true ]
+79 verbose unbuild lib/node_modules/jsonplaceholder
+80 silly gentlyRm /usr/local/lib/node_modules/jsonplaceholder is being purged from base /usr/local
+81 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/jsonplaceholder
