@@ -16,20 +16,20 @@ function treeService($http, ngAppConfig){
 
     var serviceBase = ngAppConfig.apiServiceBaseUri;
 
-    treeService.getData = function(observations, projectId){
+    treeService.getData = function(observations, projectId, callback){
 
-        return data
-        //return $http({
-        //    url:serviceBase+'api/projects/'+projectId+'/subjects/characteristics',
-        //    method:'GET'
-        //}).then(
-        //    function (response){
-        //        return
-        //        {
-        //            SCs: (response.data)
-        //        }
-        //    }
-        //)
+        return $http({
+            url:serviceBase+'api/export/sample',
+            method:'GET'
+        }).then(
+            function (response){
+                console.log(response.data)
+                return callback(response.data)
+                //{
+                //    SCs: (response.data)
+                //}
+            }
+        )
     }
 
     //provision for re-arranged tree
