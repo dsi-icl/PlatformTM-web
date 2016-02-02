@@ -1,5 +1,6 @@
 <div class="container" ng-controller="treeCtrl as vm">
     <br/><br/>
     <div js-tree="vm.treeConfig" should-apply="vm.applyModelChanges()" ng-model="vm.treeData" tree="vm.treeInstance" tree-events="ready:vm.readyCB;create_node:vm.createCB"></div>
+    <a ng-click="vm.updateTree()"><i class="fa fa-times"></i></a>
 </div>
 

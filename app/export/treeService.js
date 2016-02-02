@@ -25,19 +25,16 @@ function treeService($http, ngAppConfig){
             function (response){
                 console.log(response.data)
                 return callback(response.data)
-                //{
-                //    SCs: (response.data)
-                //}
             }
         )
     }
 
     //provision for re-arranged tree
-    treeService.sendData = function(observations, projectId){
+    treeService.sendData = function(observations, projectId, data){
         return $http({
-            url:serviceBase+'api/studies/'+projectId+'/data/subjects/characteristics',
+            url:serviceBase+'api/export/sample',
             method:'POST',
-            data: angular.toJson(characs)
+            data: angular.toJson(data)
         }).then(
             function (response) {
                 return {
