@@ -20,6 +20,6 @@
         </div>
     </div>
 <div class="row">
-    <a ui-sref="datastage.wizard.step_four" class="btn btn-default">Previous</a>
-    <a ui-sref="datastage.files({ file: vm.fileName, map: vm.template, activityId: vm.activityId, datasetId: vm.datasetId })" class="btn btn-primary">Finish</a>
+    <a ng-click="goToStep4()" class="btn btn-default">Previous</a>
+    <a ng-click="goToStart()" class="btn btn-primary">Finish</a>
 </div>

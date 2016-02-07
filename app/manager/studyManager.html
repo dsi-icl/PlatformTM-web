@@ -1,19 +1,39 @@
 <link rel="stylesheet" href="lib/angular-xeditable/xeditable.css" >
 
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <h2>Explore</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="main.home">Home</a>
+            </li>
+            <li class="active">
+                <strong>Configure</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight" ng-controller="StudyPlanCtrl">
+
+    <div ui-view="study-activities">Activities should go in here</div>
+</div>
+
 <!-- Wrapper-->
+<!--
 <div id="wrapper">
 
-    <!-- Navigation -->
+    &lt;!&ndash; Navigation &ndash;&gt;
     <div ng-include="'layout/navigation.html'"></div>
 
-    <!-- Page wraper -->
-    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    &lt;!&ndash; Page wraper &ndash;&gt;
+    &lt;!&ndash; ng-class with current state name give you the ability to extended customization your view &ndash;&gt;
     <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
 
-        <!-- Page wrapper -->
+        &lt;!&ndash; Page wrapper &ndash;&gt;
         <div ng-include="'layout/topnavbar.html'"></div>
 
-        <!-- Main view  -->
+        &lt;!&ndash; Main view  &ndash;&gt;
         <div class="wrapper wrapper-content animated fadeInRight" ng-controller="StudyPlanCtrl">
 
             <div class="row wrapper border-bottom white-bg page-heading">
@@ -31,19 +51,20 @@
             </div>
             <div ui-view="study-plan">Study Plan should go in here</div>
             <div ui-view="study-activities">Activities should go in here</div>
-            <!--<div ui-view="planned-activities">Planned activities should go here</div>-->
+            &lt;!&ndash;<div ui-view="planned-activities">Planned activities should go here</div>&ndash;&gt;
         </div>
 
-        <!-- Footer -->
+        &lt;!&ndash; Footer &ndash;&gt;
         <div ng-include="'layout/footer.html'"></div>
 
     </div>
-    <!-- End page wrapper-->
+    &lt;!&ndash; End page wrapper&ndash;&gt;
 
-    <!-- Right Sidebar -->
-    <!--<div ng-include="'layout/right_sidebar.html'"></div>-->
+    &lt;!&ndash; Right Sidebar &ndash;&gt;
+    &lt;!&ndash;<div ng-include="'layout/right_sidebar.html'"></div>&ndash;&gt;
 
 </div>
+-->
 <!-- End wrapper-->
 
 

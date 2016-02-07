@@ -88,10 +88,11 @@ angular.module('eTRIKSdata.dcPlots')
 
                     else{
                         console.log("slider exists already")
-                        //if(!isActive){
-                        //    console.log('Removing chart')
-                        //    angular.element(document.getElementById(sliderElementId)).remove();
-                        //}
+                        if(!isActive){
+                            console.log('Removing chart')
+                            angular.element(document.getElementById(sliderElementId)).remove();
+                            return;
+                        }
                         //else{
                             console.log('adding chart to obs', scope.obs.id)
 
@@ -108,7 +109,7 @@ angular.module('eTRIKSdata.dcPlots')
                                 angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
                                     .append(
                                     $compile(
-                                        '<div style="width: 300px; margin-left:10px;" id="'+sliderElementId+'" ' +
+                                        '<div style="width: 300px; margin-left:30px;margin-right:30px;" id="'+sliderElementId+'" ' +
                                         'slick-slider="{dots: true, arrows: true, draggable:false, slidesToShow:1, infinite:false, variableWidth:true}" '+
                                         'style=" padding: 0px 30px 0px 30px;">' +
                                         '<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>'+
@@ -304,8 +305,11 @@ angular.module('eTRIKSdata.dcPlots')
                 var xfilterService = $injector.get($scope.chartingOpts.xfilterService);
                 $scope.xfService = xfilterService;
 
-                var expService = $injector.get($scope.chartingOpts.exportService);
-                $scope.expService = expService;
+                /*var expService = $injector.get($scope.chartingOpts.exportService);
+                $scope.expService = expService;*/
+
+                var filtersServ = $injector.get($scope.chartingOpts.filtersService);
+                $scope.filtersService = filtersServ;
 
                 var chartDataType = 'Count';//$scope.role;
 
@@ -319,9 +323,9 @@ angular.module('eTRIKSdata.dcPlots')
 
                         $scope.chartToPlot.on('filtered', function(chart, filter){
 
-                            console.log('Filter Event', filter)
-                            console.log('Chart', chart.dimName)
-                            console.log('filters',chart.filters())
+                            //console.log('Filter Event', filter)
+                            //console.log('Chart', chart.dimName)
+                            //console.log('filters',chart.filters())
 
 
                             //$scope.subjectFilter[chart.dimName] = chart.filters()
@@ -338,8 +342,8 @@ angular.module('eTRIKSdata.dcPlots')
                             //scope.chartCFservice.filterClinicalCF(filter,scope.val)
                             $scope.chartservice.propagateFilter($scope.chartingOpts.xfilterService);
 
-                            $scope.expService.updateSubjectFilter(chart.dimName,chart.filters())
-                            console.log("filters " + $scope.expService.getSubjectFilter())
+                            $scope.filtersService.updateFilters($scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
+                            //console.log("filters for " + $scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
 
 
                             //dc.renderAll("Clinical");

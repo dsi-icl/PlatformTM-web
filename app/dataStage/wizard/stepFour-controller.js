@@ -14,11 +14,20 @@
         $scope.vm = {
             datasetId: $stateParams.datasetId,
             activityId:$stateParams.activityId,
-            selectedFiles: $stateParams.selFiles,
+            standardFileId: $stateParams.standardFileId,
             selectedDataset:null,
             selectedActivity:null
 
+
+
         };
+
+        $scope.goToStep3 = function(){
+            $state.go('datastage.wizard.step_three',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, standardFileId: $scope.vm.standardFileId });
+        }
+        $scope.goToStep5 = function(){
+            $state.go('datastage.wizard.step_five',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, standardFileId: $scope.vm.standardFileId });
+        }
         /*console.log('stepOne controllern scope',$scope)
 
         console.log('inside stepOne controller',$stateParams.selFiles)*/

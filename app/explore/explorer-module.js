@@ -11,13 +11,13 @@ angular.module('eTRIKSdata.explorer',[
     .config(function($stateProvider){
 
         $stateProvider
-            .state('explore', {
+            /*.state('explore', {
                 abstract : true,
                 url: "",
-                templateUrl:"layout/content.html",
+                //templateUrl:"layout/content.html",
                 controller: "logOutController"
-            })
-            .state('explore.main', {
+            })*/
+            .state('explore', {
                 url: "/{studyId}/explore/",
                 views:{
                     '':{
@@ -64,21 +64,25 @@ angular.module('eTRIKSdata.explorer',[
                             });*/
                         }
                     },
-                    'subjects@explore.main':{
+                    'subjects@explore':{
                         templateUrl: 'explore/subjects/study_subjects.html',
                         controller: 'SubjectsCtrl'
                     },
-                    'assessments@explore.main':{
+                    'assessments@explore':{
                         templateUrl: 'explore/clinical/study_clinical.html',
                         controller: 'ClinicalCtrl'
                     },
-                    'assays@explore.main':{
+                    'assays@explore':{
                         templateUrl: 'explore/assays/study_assays.html',
                         controller: 'AssayCtrl'
                     },
-                    'datacart@explore.main':{
+                    /*'datacart@explore':{
                         templateUrl: 'explore/export/right_sidebar.html',
                         controller: 'DatacartCtrl'
+                    },*/
+                    'filters@explore':{
+                        templateUrl: 'explore/filters/filters.html',
+                        controller: 'filtersCtrl as vm'
                     },
                     'design@explore':{
                         templateUrl: 'explore/partials/study_design.html'

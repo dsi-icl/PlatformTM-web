@@ -1,9 +1,9 @@
-<nav class="navbar-default navbar-static-side " style="margin-top: 0;" role="navigation" >
+<nav class="navbar-default navbar-static-side " style="margin-top: 0; height: 70%;" role="navigation" >
     <div class="sidebar-collapse">
         <ul side-navigation class="nav metismenu" id="side-menu">
             <li style="    padding: 10px;
     color: white;">
-                <h4><i class="fa fa-bars"></i> Filters on <a class="pull-right" ng-click="closebox()"><i class="fa fa-power-off"></i> Reset All</a></h4>
+                <h4><i class="fa fa-bars"></i> Filters on <a class="pull-right" ng-click="vm.resetAllFilters()"><i class="fa fa-power-off"></i> Reset All</a></h4>
 
             </li>
             <li style="padding: 10px;color: white;">
@@ -13,13 +13,9 @@
                         <div>SUBJECTS</div>
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
-                        <li>
-                            AGE (24 - 54)
-                            <a class="pull-right" ng-click="closebox()"><i class="fa fa-times"></i></a>
-                        </li>
-                        <li>
-                            ARM (FLUAD OR PLACEBO OR VARILIX OR BLABLABLA)
-                            <a class="pull-right" ng-click="closebox()"><i class="fa fa-times"></i></a>
+                        <li ng-repeat="(key, filters) in vm.subjFilters">
+                                {{key}} (<span ng-repeat="filter in filters">{{filter}} {{!$last ? ',':''}}</span>)
+                            <a class="pull-right" ng-click="vm.removeFilter('subject',key)"><i class="fa fa-times"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -31,19 +27,15 @@
                         <div>CLINICAL OBSERVATIONS</div>
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
-                        <li>
-                            AGE (24 - 54)
-                            <a class="pull-right" ng-click="closebox()"><i class="fa fa-times"></i></a>
-                        </li>
-                        <li>
-                            ARM (FLUAD OR PLACEBO)
-                            <a class="pull-right" ng-click="closebox()"><i class="fa fa-times"></i></a>
+                        <li ng-repeat="(key, filters) in vm.clinicalFilters">
+                            {{key}} (<span ng-repeat="filter in filters">{{filter}} {{!$last ? ',':''}}</span>)
+                            <a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>
                         </li>
                     </ul>
                 </div>
             </li>
 
-            <li style="padding: 10px;color: white;">
+            <li style="padding: 10px;">
                 <div id="filters" >
 <!--                    <div class=" no-padding" data-toggle="collapse" data-parent="#filters" data-target="#filters-content" style="background-color: #2C3E50;">
                         <a class="btn btn-sm btn-default " href="" style="background-color: #2C3E50;border-color: #2C3E50;"><i class="fa fa-bars"></i> Filters on</a>
@@ -61,11 +53,11 @@
 
 
                     </div>-->
-                    <div class="pull-right" style="border-top: solid 1px #f1f1f1">
-                        <a class="btn btn-sm btn-default " href="" ng-click="minimalize()"
+                    <div  style="border-top: solid 1px #f1f1f1">
+                        <a class="btn btn-sm btn-default " href="" ng-click="vm.saveFilters()"
                            style="background-color: #2C3E50;border-color: #2C3E50;">
                             <i class="fa fa-save"></i> Save Current filters</a>
-                        <a href="#" e-ng-model="vmodel.activity.name" editable-text="vm.activity.name" buttons="no" blur="submit">{{vm.activity.name || "Activity Name"}}</a>
+                        <a href="#" e-ng-model="vm.query.name" editable-text="vm.query.name" buttons="no" blur="submit">{{vm.query.name || "Name"}}</a>
 
                     </div>
 

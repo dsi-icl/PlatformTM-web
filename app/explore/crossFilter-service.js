@@ -262,6 +262,12 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return cfReady;
         }
 
+        subjCfService.removeFilters = function(obs){
+            console.log('inside remove filter',obs, dimensions[obs])
+            dimensions[obs].filterAll();
+            dc.renderAll("subject");
+        }
+
         return subjCfService
     }])
 
@@ -725,6 +731,11 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return cfReady;
         }
 
+        cfservice.removeFilters = function(obs){
+            console.log('inside remove filter ',obs, cfservice.getDimension(obs))
+            cfservice.getDimension(obs).filterAll();
+        }
+
         return cfservice
 
     }])
@@ -744,15 +755,15 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             //console.log(xfFiltered)
 
             if(xfilterServiceName == 'SubjCf'){
-                console.log("subjects filtered")
+                //console.log("subjects filtered")
                 ClinicalCf.filterBySubjects(filteredIds);
                 //AssayCf.filterBySubjects(filteredIds);
             }else if(xfilterServiceName == 'ClinicalCf'){
-                console.log("clinical filtered")
+                //console.log("clinical filtered")
                 SubjCf.filterBySubjects(filteredIds);
                 //AssayCf.filterBySubjects(filteredIds);
             }else if(xfilterServiceName == 'AssayCf'){
-                console.log("assays filtered")
+                //console.log("assays filtered")
                 SubjCf.filterBySubjects(filteredIds);
                 ClinicalCf.filterBySubjects(filteredIds);
             }
@@ -760,6 +771,22 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             //SubjCf.filterBySubjects(filteredIds);
             //ClinicalCf.filterBySubjects(filteredIds);
             //AssayCf.filterBySubjects(filteredIds);
+        }
+
+        XFilterLinker.removeFilter = function(chartGroup,obs){
+            if(chartGroup == 'clinical'){
+                //console.log("subjects filtered")
+                ClinicalCf.removeFilters(obs);
+                //AssayCf.filterBySubjects(filteredIds);
+            }else if(chartGroup == 'subject'){
+                //console.log("clinical filtered")
+                SubjCf.removeFilters(obs);
+                //AssayCf.filterBySubjects(filteredIds);
+            }else if(chartGroup == 'AssayCf'){
+                //console.log("assays filtered")
+                //SubjCf.filterBySubjects(filteredIds);
+                //ClinicalCf.filterBySubjects(filteredIds);
+            }
         }
 
         return XFilterLinker;

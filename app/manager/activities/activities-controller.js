@@ -7,39 +7,55 @@ angular.module('eTRIKSdata.studyDesign')
 
     .controller('ActivityListController', ['$scope','$stateParams', 'ActivityResource','model', function ($scope, $stateParams, ActivityResource, model) {
         $scope.vmodel = {};
+        //$scope.vmodel.studyId = $stateParams.studyId
+
+        var vm = this;
+        vm.studyId = $stateParams.studyId
 
         console.log("List Controller requested")
         console.log($stateParams);
         //Retrieves list of study activities
         ActivityResource.getActivitiesForStudy({studyId:$stateParams.studyId},function(response){
             model.activities = response;
-            $scope.vmodel.activities = model.activities;
+            vm.activities = model.activities;
         });
     }])
 
-    .controller('ActivityCtrl', ['$state','$scope', '$stateParams', 'ActivityResource','model', function ($state, $scope, $stateParams, ActivityResource, model) {
+    .controller('ActivityCtrl', ['$state','$scope', '$stateParams', 'ActivityResource','DatasetResource','ISAconfigResource','model','$timeout', function
+        ($state, $scope, $stateParams, ActivityResource,DatasetResource,ISAconfigResource, model,$timeout) {
         $scope.vmodel = {};
+
+        var vm = this;
         console.log("Activity Controller requested")
         console.log($stateParams.activityId);
 
+        vm.selectTemplate=false;
+
+        ISAconfigResource.query(function(response){
+            vm.isaconfigs = response;
+        });
+
+
+
         if($stateParams.activityId==0){
-
-
-
-
             console.log("New Activity")
             model.activity = new ActivityResource();
-            model.activity.ProjectId = $stateParams.studyId;//"Study1"
+            model.activity.ProjectAcc = $stateParams.studyId;//"Study1"
             model.activity.isNew = true;
+            model.activity.status = "New";
+            model.activity.datasets = [];
             model.activityId = 0;
             $scope.vmodel.activity = model.activity;
+            vm.activity = model.activity;
+            DatasetResource.query(function(response){
+                vm.clinicaldomains = response;
+            })
 
             //TEMP ***************************** TO CREATE ASSAYS
             //model.activity.isAssay = true;
             //model.activity.AssayTechnologyPlatform = "CL-ASYTP-1";
             //model.activity.AssayTechnology = "CL-ASYTT-T-1";
             //model.activity.AssayMeasurementType = "CL-ASYMT-1";
-
         }
 
         else if($stateParams.activityId){
@@ -47,7 +63,16 @@ angular.module('eTRIKSdata.studyDesign')
                 model.activity = response;
                 model.activity.isNew = false;
 
-                $scope.vmodel.activity = model.activity;
+                //$scope.vmodel.activity = model.activity;
+                vm.activity = model.activity;
+                $timeout(function(){
+                    //console.log($('#ds_template_tbl'))
+                    $('#ds_template_tbl').trigger('footable_redraw');
+                }, 1000);
+                DatasetResource.query(function(response){
+                    vm.clinicaldomains = response;
+                })
+
             });
             //temp
             /*$http.get('../data/activity.json').success(function(response){
@@ -55,24 +80,31 @@ angular.module('eTRIKSdata.studyDesign')
              })*/
         }
 
+
         $scope.saveActivity = function(){
             if(model.activity.isNew){
-                $scope.vmodel.activity.$save(function(response) {
+                vm.activity.$save(function(response) {
                     console.log("Activity created")
-                    if(model.dataset) {
-                        if (model.dataset.isNew) {
-                            model.dataset.activityId = response.oid
-                            model.dataset.$save(function () {
-                                console.log("Dataset created")
-                            })
-                        }
-                    }
-                    $state.transitionTo('manager', $stateParams, {
-                        reload: true,
-                        inherit: false,
-                        notify: true
-                    });
-                    //$state.go('manager',{studyId:$stateParams.studyId})
+                    //if(model.dataset) {
+                    //    if (model.dataset.isNew) {
+                    //        model.dataset.activityId = response.id
+                    //        model.dataset.$save(function () {
+                    //            console.log("Dataset created")
+                    //            $state.transitionTo('manager', $stateParams, {
+                    //                reload: true,
+                    //                inherit: false,
+                    //                notify: true
+                    //            });
+                    //        })
+                    //    }
+                    //}
+                    //else{
+                        $state.transitionTo('manager.main', $stateParams, {
+                            reload: true,
+                            inherit: false,
+                            notify: true
+                        });
+                    //}
                 });
             }
             else{
@@ -115,13 +147,28 @@ angular.module('eTRIKSdata.studyDesign')
             //    });
         }
 
+        vm.selectTemplate = function(domainId){
+            DatasetResource.get({datasetId:domainId}, function(response) {
+                model.dataset = response;
+                model.dataset.isNew = true;
+                model.dataset.activityId = 0;
+                model.dataset.ProjectStrAcc = $stateParams.studyId;
+                vm.activity.datasets.push(model.dataset);
+                $timeout(function(){
+                    //console.log($('#ds_template_tbl'))
+                    $('#ds_template_tbl').trigger('footable_redraw');
+                }, 1000);
+                vm.selectTemplate=false;
+            })
+        }
+
 
 
 
     }])
 
-    .controller('DatasetController',['$http','$scope', '$stateParams', '$state','DatasetResource','model',
-        function ($http, $scope, $stateParams,$state, DatasetResource,model) {
+    .controller('DatasetController',['$http','$scope', '$stateParams', '$state','$timeout','DatasetResource','model',
+        function ($http, $scope, $stateParams,$state,$timeout, DatasetResource,model) {
             $scope.vmodel = {};
             console.log("Dataset Controller requested")
             console.log($stateParams.datasetId);
@@ -132,7 +179,7 @@ angular.module('eTRIKSdata.studyDesign')
                 DatasetResource.get({datasetId:$stateParams.domainId}, function(response){
                     model.dataset = response;
                     model.dataset.isNew = true;
-                    model.dataset.studyId = $stateParams.studyId;
+                    model.dataset.ProjectStrAcc = $stateParams.studyId;
                     $scope.vmodel.dataset = model.dataset;
                     //$scope.model = model.dataset
                 });
@@ -147,8 +194,13 @@ angular.module('eTRIKSdata.studyDesign')
                     model.dataset = response;
                     model.dataset.isNew = false
                     $scope.vmodel.dataset = model.dataset;
+                    $timeout(function(){
+                        $('.table').trigger('footable_redraw');
+                    }, 100);
                 });
             }
+            //setTimeout(function() {$('#tblOrders').trigger('footable_redraw');}, 1000)
+
         }])
 
     .controller('VariableController',['$scope','$stateParams', 'utils', function($scope, $stateParams, utils){

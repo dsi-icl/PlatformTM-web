@@ -20,7 +20,7 @@ function sideNavigation($timeout) {
             var sidebar = element.parent();
             sidebar.slimScroll({
                 height: '100%',
-                railOpacity: 0.9
+                railOpacity: 0.5
             });
         }
     };

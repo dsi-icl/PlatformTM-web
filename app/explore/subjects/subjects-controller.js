@@ -3,27 +3,14 @@
  */
 angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
-    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','XFilterLinker','DCchartingService','exportService','toaster','$timeout',
-        function($scope,$stateParams,subjectDataService, SubjCf,XFilterLinker,DCchartingService,exportService, toaster, $timeout) {
+    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','XFilterLinker','DCchartingService','filtersService','toaster','$timeout',
+        function($scope,$stateParams,subjectDataService, SubjCf,XFilterLinker,DCchartingService,filtersService, toaster, $timeout) {
 
             var projectId = $stateParams.studyId;
             $scope.title = "Subjects";
-            //$scope.subjChartContainerId = 'subject-plots';
-            //$scope.projectId = projectId;
-
-            //TEMP
-            //$scope.cf = SubjCf;
-            //$scope.chartservice = DCchartingService;
-            //////////////////////
-
-            //$scope.DCchartService = "DCchartingService";
-            //$scope.xfilterService = "SubjCf";
-            //$scope.exportService = "exportService";
-
-            //$scope.chartGroup = "subject";
             $scope.show='plots';
 
-            $scope.subjectFilter = exportService.getSubjectFilter();
+            //$scope.subjectFilter = exportService.getSubjectFilter();
             $scope.cart = [];
 
             $scope.chartingOpts = {
@@ -32,13 +19,14 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
                 chartGroup : "subject",
                 DCchartService : "DCchartingService",
                 xfilterService : "SubjCf",
-                exportService : "exportService"
+                //exportService : "exportService",
+                filtersService: "filtersService"
 
             };
 
             $scope.addToCart = function(type) {
 
-                exportService.addToCart(type, function(){
+                /*exportService.addToCart(type, function(){
                     toaster.pop({
                         type: 'success',
                         title: 'Data Saved',
@@ -46,7 +34,7 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
                         showCloseButton: false,
                         timeout: 2000
                     })
-                })
+                })*/
 
 
 
