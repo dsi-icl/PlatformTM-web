@@ -32,6 +32,11 @@ function logOutController($scope, $location, authService){
                 $scope.message = err.error_description;
             });
     }
+
+    $scope.isExplore = function (){
+        var param = $location.path().split(/[\s/]+/)[2];
+        return param == 'explore';
+    }
 }
 
 angular.module('bioSpeak.layout')

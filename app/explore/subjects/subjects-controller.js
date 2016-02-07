@@ -26,13 +26,15 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
 
             $scope.addToCart = function(type) {
 
-                /*exportService.addToCart(type, function(){
+                /*var count = SubjCf.getCountGroup().value()
+
+                exportService.addToCart(type, count, $scope.projectId, function(){
                     toaster.pop({
                         type: 'success',
                         title: 'Data Saved',
                         body: '',
-                        showCloseButton: false,
-                        timeout: 2000
+                        showCloseButton: true,
+                        timeout: 1000
                     })
                 })*/
 

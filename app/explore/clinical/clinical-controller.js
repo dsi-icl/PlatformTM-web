@@ -16,6 +16,24 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
             $scope.chartservice = DCchartingService;
             //////////////////////
 
+
+            $scope.addToCart = function(type) {
+
+                var count = ClinicalCf.getCountGroup().value()
+
+                exportService.addToCart(type, count, $scope.projectId, function () {
+                    toaster.pop({
+                        type: 'success',
+                        title: 'Data Saved',
+                        body: '',
+                        showCloseButton: true,
+                        timeout: 1000
+                    })
+                })
+
+                //console.log(exportService.getCart());
+            };
+
             $scope.chartingOpts = {
                 projectId : $stateParams.studyId,
                 chartContainerId : "clinical-plots",
@@ -96,7 +114,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                     'Wisconsin',
                     'Wyoming'
                 ];
-
+                
             };
 
             $timeout(function() {

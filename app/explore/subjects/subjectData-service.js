@@ -40,7 +40,6 @@ angular.module('biospeak.subjects')
                         }
                     )
 
-
             }
         }
     }])

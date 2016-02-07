@@ -28,6 +28,8 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
 
     $stateProvider
 
+
+
         .state('main',{
             abstract:true,
             url: "",
@@ -42,10 +44,6 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
             url: "/landing",
             templateUrl:"../temp/home.html"
         })
-
-
-
-
     });
 
 eTRIKSdataApp.run(function($rootScope){
@@ -55,6 +53,7 @@ eTRIKSdataApp.run(function($rootScope){
 })
 
 eTRIKSdataApp.constant('ngAppConfig', {
-    //apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+   // apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
     apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
+    //apiServiceBaseUri: 'http://localhost:2483/'
 })
