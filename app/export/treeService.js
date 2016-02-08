@@ -53,7 +53,7 @@ function treeService($http, ngAppConfig){
 }
 
 angular
-    .module('eTRIKSdata.export')
+    .module('bioSpeak.export')
     .factory('treeService',['$http', 'ngAppConfig', treeService])
 
 

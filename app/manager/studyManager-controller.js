@@ -7,6 +7,9 @@ angular.module('eTRIKSdata.studyDesign')
         function($scope,$state,$stateParams,$http,ngAppConfig){
             console.log(ngAppConfig.apiServiceBaseUri);
 
+            $scope.vm = {};
+            $scope.vm.projectId = $stateParams.studyId;
+
     if($stateParams.studyId == 'S-UBIOP-01')
     {
         $http.get('tempData/study-plan.json').success(function(data) {

@@ -10,6 +10,8 @@
 
         $scope.vm.selectedFiles = $stateParams.selFiles;
 
+        $scope.vm.projectId = $stateParams.studyId;
+
         console.log('inside wizard controller',$stateParams.selFiles, 'service')
 
         $scope.selectFile = function(file){
@@ -19,6 +21,7 @@
         $scope.getActivities = function(){
 
         }
+
 
         /*fileService.getFiles()
             .then(function(data){

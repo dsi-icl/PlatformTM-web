@@ -9,6 +9,6 @@
 
     //// Angular Code ////
 
-    angular.module('eTRIKSdata.export').controller('datasetCtrl', ['$scope', '$log', '$timeout', 'datasetService', datasetCtrl]);
+    angular.module('bioSpeak.export').controller('datasetCtrl', ['$scope', '$log', '$timeout', 'datasetService', datasetCtrl]);
 
 })(angular);

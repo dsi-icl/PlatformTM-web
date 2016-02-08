@@ -265,6 +265,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         subjCfService.removeFilters = function(obs){
             console.log('inside remove filter',obs, dimensions[obs])
             dimensions[obs].filterAll();
+            dc.redrawAll("subject");
             dc.renderAll("subject");
         }
 
