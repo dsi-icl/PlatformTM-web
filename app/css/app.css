@@ -5,13 +5,13 @@ body {
 }
 
 a {
-    color: #39C2D7;
+    color: #23C6C8;
     text-decoration: none;
     cursor: pointer;
 }
 
 a:hover {
-    color: #2b9cc7;
+    color: #39C2D7;
     text-decoration: none;
 }
 
@@ -375,7 +375,7 @@ nav a {
     color:#39b3d7;
 }
 
-#study-design, #clinical-data, #molecular-data, #subject-data{
+#study-design, #clinical-data, #molecular-data{
     margin-top: 30px;
 }
 

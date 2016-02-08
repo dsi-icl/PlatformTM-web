@@ -4,23 +4,12 @@
 angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
 
     .controller('ClinicalCtrl', ['$rootScope','$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService',
-        'exportService', 'toaster','$timeout','$modal',
-        function($rootScope,$scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService,exportService, toaster,$timeout,$modal) {
+        'filtersService', 'toaster','$timeout','$modal',
+        function($rootScope,$scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService,filtersService, toaster,$timeout,$modal) {
 
             $scope.vm = {};
-            //$scope.vm.projectId = $stateParams.studyId;//"P-BVS";
-            //$scope.vm.chartContainerId = "clinical-plots";
-            //$scope.vm.DCchartService = "DCchartingService";
-            //$scope.vm.xfilterService = "ClinicalCf";
             $scope.vm.show = 'plots';
 
-            //$rootScope.currentProject={'id':$stateParams.studyId};
-            //console.log($rootScope.currentProject)
-            //$scope.chartContainerId = "clinical-plots";
-            //$scope.DCchartService = "DCchartingService";
-            //$scope.xfilterService = "ClinicalCf";
-
-            $scope.clinicalFilter = exportService.getClinicalFilter();
 
             //TEMP
             $scope.cf = ClinicalCf;
@@ -51,8 +40,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 chartGroup : "clinical",
                 DCchartService : "DCchartingService",
                 xfilterService : "ClinicalCf",
-                exportService : "exportService"
-
+                filtersService: "filtersService"
             };
 
             $scope.open2 = function () {
@@ -178,17 +166,6 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 //console.log(allterms);
                 return allterms
             }
-
-/*            $scope.getChartingOpts = function(){
-                var chartingOpts = {}
-                chartingOpts.container = $scope.chartContainerId
-                chartingOpts.chartGroup = $scope.chartGroup
-                chartingOpts.DCchartService = "DCchartingService";
-                chartingOpts.xfilterService = "ClinicalCf";
-                chartingOpts.exportService = "exportService";
-                chartingOpts.projectId = $stateParams.studyId;//"P-BVS";
-                return chartingOpts;
-            }*/
 
 
         }])

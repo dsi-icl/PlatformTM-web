@@ -31,7 +31,7 @@ angular.module('biospeak.clinical')
             '<div class="col-md-6">'+
                 '<div class="ibox">'+
                     '<div class="ibox-content">'+
-            '<button ng-click="open2()" class="pull-right btn btn-outline btn-success dim" type="button"><i class="fa fa-plus-circle"></i></button>'+
+           // '<button ng-click="open2()" class="pull-right btn btn-outline btn-success dim" type="button"><i class="fa fa-plus-circle"></i></button>'+
                         '<h3>{{class.class}}</h3>'+
 
                         '<ul class="list-group ">'+

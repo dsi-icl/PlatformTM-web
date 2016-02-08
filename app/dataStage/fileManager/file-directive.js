@@ -18,7 +18,7 @@ function fileDirective(){
                     '<div ng-hide="fileInfo.isDirectory" class="pull-right" ">'+
                         '<input  icheck type="checkbox" ng-change="updateFn(fileInfo)" ng-model="fileInfo.selected" >' +
                     '</div>'+
-                    '<span ng-hide="fileInfo.isDirectory" class="label label-info pull-left" ng-class="{\'label-warning\': fileInfo.state==\'Modified\'}" >{{fileInfo.state}}</span>'+
+                    '<span ng-hide="fileInfo.isDirectory" class="label pull-left" ng-class="{\'label-warning\': fileInfo.state==\'Modified\'}" >{{fileInfo.state}}</span>'+
                     '<span class="corner"></span> ' +
                     '<div class="icon"> ' +
 
@@ -26,7 +26,7 @@ function fileDirective(){
                         '<i ng-hide="!fileInfo.isDirectory"class="fa fa-folder"></i> '+
                     '</div> ' +
                     '<div class="file-name small">{{fileInfo.fileName}}<br/> ' +
-                        '<small>Last modified: {{fileInfo.dateAdded}}</small> ' +
+                        '<small>Last modified: {{fileInfo.dateLastModified}}</small> ' +
                     '</div> ' +
                 '</a> ' +
             '</div> ' +

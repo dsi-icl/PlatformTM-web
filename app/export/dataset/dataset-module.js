@@ -5,14 +5,14 @@
 
 function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-        .state('datasetView', {
+        .state('datasets', {
             abstract: true,
             url: "/{studyId}",
             templateUrl: "layout/content.html"
         })
-        .state('datasetView.test', {
-            url: "/dataset/dataview",
-            templateUrl: "dataset/dataView.html",
+        .state('datasets.test', {
+            url: "/datasets/dataview",
+            templateUrl: "export/dataset/dataView.html",
             controller: "datasetCtrl"/*,
              resolve: {
              loadPlugin: function ($ocLazyLoad) {
@@ -122,5 +122,5 @@ function config($stateProvider, $urlRouterProvider) {
 }
 
 angular
-    .module('eTRIKSdata.export')
+    .module('bioSpeak.export',[])
     .config(config)

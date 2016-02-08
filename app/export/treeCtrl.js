@@ -106,6 +106,6 @@
 
     //// Angular Code ////
 
-    angular.module('eTRIKSdata.export').controller('treeCtrl', ['$scope', '$log', '$timeout', 'treeService', treeCtrl]);
+    angular.module('bioSpeak.export').controller('treeCtrl', ['$scope', '$log', '$timeout', 'treeService', treeCtrl]);
 
 })(angular);

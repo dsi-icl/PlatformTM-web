@@ -1,31 +1,53 @@
+<div id="wrapper">
 
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-9">
-        <h2>Explore</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="main.home">Home</a>
-            </li>
-            <li class="active">
-                <strong>Explore</strong>
-            </li>
-        </ol>
+    <!-- Navigation -->
+    <div ng-include="'layout/topnavbar.html'"></div>
+
+    <div id="top-page-wrapper" class="gray-bg {{$state.current.name}}">
+
+        <!-- Page Header-->
+        <div class="row wrapper border-bottom white-bg page-heading" style="margin-top: 60px;padding-left: 25px;">
+            <div class="col-lg-9">
+                <h2>Explore</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a ui-sref="main.home">Home</a>
+                    </li>
+                    <li>
+                        <a>{{vm.projectId}}</a>
+                    </li>
+                    <li class="active">
+                        <strong>Explore</strong>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Filter Menu-->
+        <div ng-include="'explore/filters/filters.html'"></div>
+        <div ui-view="filters" id="filters"></div>
+
+        <div class="page-wrapper wrapper-content animated fadeInRight" style="margin-top: 0;" id="page-wrapper">
+
+            <section ui-view="subjects" id="section-1">
+                <i>Subject panel should load here!</i>
+            </section>
+            <section ui-view="assessments" id="section-2">
+                <i>Clinical Assessments panel should load here!</i>
+            </section>
+            <section ui-view="assays" id="section-3">
+                <i>Assays  panel should load here!</i>
+            </section>
+        </div>
+        <!--<div ui-view="design"><i>Study design panel should load here!</i></div>-->
+
+        <!--<div ui-view="datacart" id="datacart"></div>-->
+
+
+
+
+
+
     </div>
+
 </div>
-
-<div class="wrapper wrapper-content animated fadeInRight">
-
-    <section ui-view="subjects" id="section-1">
-        <i>Subject panel should load here!</i>
-    </section>
-    <section ui-view="assessments" id="section-2">
-        <i>Clinical Assessments panel should load here!</i>
-    </section>
-    <section ui-view="assays" id="section-3">
-        <i>Assays  panel should load here!</i>
-    </section>
-</div>
-<!--
-<div ui-view="design"><i>Study design panel should load here!</i></div>-->
-
-<div ui-view="datacart" id="datacart"></div>

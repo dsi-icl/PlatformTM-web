@@ -12,7 +12,7 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
         "bioSpeak.userAuth",
         "bioSpeak.DataStager",
         "bioSpeak.import",
-        "eTRIKSdata.export"
+        "bioSpeak.export"
     ]);
 
 eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
@@ -28,9 +28,6 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
     });
 
     $stateProvider
-
-
-
         .state('main',{
             abstract:true,
             url: "",
@@ -55,6 +52,6 @@ eTRIKSdataApp.run(function($rootScope){
 
 eTRIKSdataApp.constant('ngAppConfig', {
    // apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
-//    apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-    apiServiceBaseUri: 'http://localhost:2483/'
+    apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
+    //apiServiceBaseUri: 'http://localhost:2483/'
 })

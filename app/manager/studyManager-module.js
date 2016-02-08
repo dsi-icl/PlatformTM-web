@@ -8,15 +8,37 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
    /* $urlRouterProvider.otherwise('/manager');*/
 
         $stateProvider
-/*            .state('manager', {
+            .state('manager', {
                 abstract : true,
-                url: "",
+                url: "/{studyId}/setup",
                 templateUrl:"layout/content.html",
-                controller: "logOutController"
-            })*/
-            .state('manager',{
-                url:'/{studyId}/configure',
-                views:{
+                controller: "logOutController",
+                resolve: {
+                    loadDependency: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load([
+                            {
+                                files: ['lib/plugins/footable/js/footable.all.min.js', 'lib/plugins/footable/css/footable.core.css']
+                            },
+                            {
+                                name: 'ui.footable',
+                                files: ['lib/plugins/footable/js/angular-footable.js']
+                            }
+                        ]);
+                    },
+                    loadPlugin: function ($ocLazyLoad) {
+                        return $ocLazyLoad.load([
+                            {
+                                files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
+                            }
+                        ]);
+                    }
+                }
+            })
+            .state('manager.main',{
+                url:'/dashboard',
+                templateUrl: 'manager/activities/activities_m.html',
+                controller: 'ActivityListController as vm'
+                /*views:{
                     '':{
                         templateUrl:"manager/studyManager.html"
                     },
@@ -27,14 +49,43 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                         templateUrl: "manager/activities/activities.html",
                         controller:'ActivityListController'
                     }
-                }
+                }*/
+            })
+            .state('manager.activity',{
+                url:'/activities/{activityId}',
+                templateUrl: "manager/activities/activity_detail.html",
+                controller: "ActivityCtrl as vm"
+                /*views:{
+                 '':{
+                 templateUrl:"manager/studyManager.html"
+                 },
+                 'study-plan@manager':{
+                 templateUrl:"manager/study-plan/study-plan.html"
+                 },
+                 'study-activities@manager':{
+                 templateUrl: "manager/activities/activities.html",
+                 controller:'ActivityListController'
+                 }
+                 }*/
             })
 
-            .state('manager.activities',{
-                abstract:true,
-                url:"/activities",
-                template: '<ui-view/>'
+            .state('manager.datasets', {
+                url: '/{studyId}/manage/datasets/{datasetId}',
+                templateUrl: "manager/activities/datasets.html",
+                controller: "DatasetController"
             })
+
+            //.state('datasets',{
+            //    //abstract:true,
+            //    url:"/{studyId}/configure/datasets",
+            //    templateUrl: "manager/activities/datasets.html"
+            //})
+            //
+            //.state('manager.activities',{
+            //    abstract:true,
+            //    url:"/activities",
+            //    template: '<ui-view/>'
+            //})
 
             .state('manager.activities.detail',{
                 url:'/{activityId}',

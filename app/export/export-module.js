@@ -122,5 +122,5 @@ function config($stateProvider, $urlRouterProvider) {
 }
 
 angular
-    .module('eTRIKSdata.export', ['ngJsTree'])
+    .module('bioSpeak.export', ['ngJsTree'])
     .config(config)

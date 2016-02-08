@@ -45,6 +45,13 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
             $scope.vm.showDT = true
         })
 
+    $scope.goToStep2 = function(){
+        $state.go('datastage.wizard.step_two',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, standardFileId: $scope.vm.standardFileId });
+    }
+    $scope.goToStep4 = function(){
+        $state.go('datastage.wizard.step_four',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, standardFileId: $scope.vm.standardFileId });
+    }
+
     $scope.vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
         return wizardService.getDataTableData()
         //return $resource('../data/dt.json').query().$promise;

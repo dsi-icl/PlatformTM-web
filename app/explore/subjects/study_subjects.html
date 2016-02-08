@@ -23,7 +23,7 @@
             </tab-heading>
             <div>
                 <div class="ibox-title">
-                    <div class="pull-left">
+                    <div class="pull-right">
                         <div class="btn-group">
                             <label class="btn btn-xs btn-white" ng-model="show" btn-radio="'plots'">Data Plots</label>
                             <label class="btn btn-xs btn-white" ng-model="show" btn-radio="'table'">Data Table</label>
@@ -33,14 +33,15 @@
 
                 <div id="subject-plots" ng-hide="show =='table'" class="plots-flex-container animated fadeIn"></div>
                 <div id="subject-datatable" ng-hide="show =='plots'" class="table-view animated fadeIn">
-                    <div style="display:inline;float:right">
+ <!--                   <div style="display:inline;float:right">
                         <button ng-click="addToCart('subject')" class="btn-xs btn-success " type="button"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<span class="bold">Save to Cart</span></button>
                     </div>
-                    <div ng-repeat="(key, values) in subjectFilter" style="display:inline;">
-                        <div ng-if="values.length != 0" style="display:inline;">
+                    <div style="display:inline;">
+                        <div ng-repeat="(key, values) in subjectFilter" style="display:inline;">
                             <button type="button" class="btn-xs btn-outline btn-default">{{key}} : {{values}}</button>
                         </div>
-                    </div>
+                    </div>-->
+                    <!--<div style="min-height:10px"></div>-->
                     <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
                                   chart-service="{{chartingOpts.DCchartService}}"
                                   xfilter-service="{{chartingOpts.xfilterService}}"
@@ -208,5 +209,6 @@
 </div>-->
 
 <div class="clearfix"></div>
+<toaster-container></toaster-container>
 
 

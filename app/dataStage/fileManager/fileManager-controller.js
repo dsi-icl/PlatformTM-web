@@ -11,6 +11,7 @@
         $scope.vm.selectedFilesCount=0;
 
         $scope.vm.dir = $stateParams.dir
+        $scope.vm.projectId = $stateParams.studyId
 
 
 

@@ -9,7 +9,7 @@ function datasetService($http, ngAppConfig){
 }
 
 angular
-    .module('eTRIKSdata.export')
+    .module('bioSpeak.export')
     .factory('datasetService',['$http', 'ngAppConfig', datasetService])
 
 
