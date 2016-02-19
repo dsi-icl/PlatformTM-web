@@ -1,0 +1,93 @@
+
+
+<fieldset>
+
+    <div class="row">
+        <div  class="">
+            <div class="">
+                <!--<p class="small text-muted"><i class="fa fa-hand-o-right"></i>&nbsp;Use drag'n drop to map column headers to template variables or enter a value</p>-->
+                <!--<p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>-->
+                <div class="row">
+                    <!-- **************************** User Upload Data Overview *******************************-->
+                    <div class="col-lg-4" style="padding-left: 20px;">
+                        <h3 class="domainTitleName">Fields</h3>
+                        <div class="well">
+                            <div>
+                                <div js-tree="step2vm.treeConfig" ng-model="step2vm.treeData" tree="step2vm.treeInstance" tree-events="changed:step2vm.treeChanged;select_node:step2vm.nodeSelected;deselect_node:step2vm.nodeDeselected" ></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- **************************** User Upload Form *******************************-->
+
+
+                    <!-- THIS IS WHERE WILL INJECT A DOMAIN ============================== -->
+                    <div class="col-lg-8">
+                        <div ui-view>
+                            <h3 class="domainTitleName">Query Terms</h3>
+                            <div class="ibox-content">
+
+
+                                <!-- REPEAT VARIABLE SECTION FOR EACH VARIABLE TYPE-->
+                                <div class="ibox float-e-margins collapsed" style="margin-bottom: 1px;border-top: 1px solid white;">
+                                    <div class="ibox-title" style="
+                                                        background-color: #2C3E50;
+                                                        color: #FBFBFC;">
+                                        <h5>Age between 18 and 45</h5>
+                                        <div ibox-tools></div>
+                                    </div>
+                                    <div class="ibox-content" style="">
+                                        <form role="form" class="form-inline">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail2" class="sr-only">From</label>
+                                                <input type="email" placeholder="From" id="exampleInputEmail3"
+                                                       class="form-control">
+                                                <label for="exampleInputEmail2" class="sr-only">To</label>
+                                                <input type="email" placeholder="To" id="exampleInputEmail2"
+                                                       class="form-control">
+                                            </div>
+                                        </form>
+
+                                            <div ion-range-slider range-options="step2vm.ionSliderOptions1"></div>
+
+                                        <div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="ibox float-e-margins collapsed" style="margin-bottom: 1px;border-top: 1px solid white;">
+                                    <div class="ibox-title" style="
+                                                        background-color: #2C3E50;
+                                                        color: #FBFBFC;">
+                                        <h5>Arm : FLUAD, STAMARIL</h5>
+                                        <div ibox-tools></div>
+                                    </div>
+                                    <div class="ibox-content" style="">
+                                        <ui-select multiple ng-model="step2vm.multipleDemo.colors" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                                            <ui-select-match style="height: 29px;" placeholder="Select colors...">{{$item}}</ui-select-match>
+                                            <ui-select-choices repeat="color in step2vm.availableColors | filter:$select.search" position="down">
+                                                {{color}}
+                                            </ui-select-choices>
+                                        </ui-select>
+
+                                        <div>
+                                            <div class="hr-line-dashed"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- END REPEAT VARIABLE TYPE-->
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a ui-sref="datastage.wizard.step_one" class="btn btn-default">Previous</a>
+    <a ng-click="goToStep3()"  data-ng-disabled="!vm.mapSaved && !fileInfo.templateMatched"  class="btn btn-primary">Next</a>
+</fieldset>

@@ -11,9 +11,9 @@ function config($stateProvider, $urlRouterProvider) {
             templateUrl: "layout/content.html"
         })
         .state('datastage.files', {
-            url: "/datastage/files/{dir}",
+            url: "/datastage/files",
             templateUrl: "datastage/fileManager/fileManager.html",
-            controller: "fileController",
+            controller: "fileController as vm",
             resolve: {
                 loadDirective: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
@@ -30,16 +30,6 @@ function config($stateProvider, $urlRouterProvider) {
                        }
                    )
                 }],
-                /*loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-
-                    ]);
-                }],
-                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        'dataStage/fileManager/fileManager-controller.js'
-                    ]);
-                }],*/
                 loadPlugin: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
@@ -49,18 +39,55 @@ function config($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-        /*.state('datastage.upload', {
-            url: "/upload",
-            templateUrl: "/upload.html",
-            controller : "uploadController",
+
+        .state('datastage.files.list', {
+            url: "/{dir}",
+            templateUrl: "dataStage/fileManager/fileList.html",
+            controller : "fileListController as fileListCtrl",
             resolve: {
                 loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
-                        'dataStage/upload/upload-controller.js'
+                        'dataStage/fileManager/fileList-controller.js'
                     ]);
                 }]
             }
-        })*/.state("datastage.upload", {
+        })
+
+        .state('datastage.files.view', {
+            url: "/files/{fileId}",
+            templateUrl: "dataStage/fileManager/fileViewer.html",
+            controller : "fileViewController",
+            resolve: {
+                loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
+                                'lib/plugins/dataTables/css/dataTables.bootstrap.css',
+                                'lib/plugins/dataTables/css/dataTables.tableTools.css']
+                        },
+                        {
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/dataTables.bootstrap.js',
+                                'lib/plugins/dataTables/js/dataTables.tableTools.js']
+                        },
+                        {
+                            name: 'datatables',
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/angular-datatables.min.js',
+                                'lib/plugins/dataTables/js/angular-datatables.tabletools.js']
+                        }
+                    ]);
+                }],
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        'dataStage/fileManager/fileViewer-controller.js'
+                    ]);
+                }]
+            }
+        })
+
+        .state("datastage.upload", {
             url: "/upload/{dir}",
             onEnter: ['$stateParams', '$state', '$modal', 'fileService',function($stateParams, $state, $modal, fileService) {
                 $modal.open({

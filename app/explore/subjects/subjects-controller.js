@@ -60,7 +60,7 @@ angular.module('biospeak.subjects',['eTRIKSdata.dcPlots'])
                                     DCchartingService.createChart(sc,'subject',SubjCf,'Count')
                                     angular.element('#sc_'+sc).trigger('click');
                                 });
-                            },500)
+                            },8000)
                         }
                     )
                 })

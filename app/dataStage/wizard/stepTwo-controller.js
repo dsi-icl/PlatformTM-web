@@ -28,7 +28,7 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
             $scope.fileInfo = fileInfo
             if($scope.fileInfo.isStandard)  standardFileId = fileInfo.dataFileId;
             $scope.vm.dataIsloaded = true
-            //if(!fileInfo.templateMatched)
+            if(!fileInfo.templateMatched)
                 return wizardService.getTemplateMap(datasetId)
         })
         .then(function(template) {

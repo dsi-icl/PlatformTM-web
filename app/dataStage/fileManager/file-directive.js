@@ -8,12 +8,13 @@ function fileDirective(){
         replace: true,
         scope: {
             fileInfo: '=',
-            updateFn: '&'
+            updateFn: '&',
+            clickFn: '&'
         },
         template:
         '<div class="file-box"> ' +
             '<div class="file"> ' +
-                '<a ui-sref="datastage.files({ dir: fileInfo.fileName})">' +
+                '<a ng-click="clickFn(fileInfo)">' +
 
                     '<div ng-hide="fileInfo.isDirectory" class="pull-right" ">'+
                         '<input  icheck type="checkbox" ng-change="updateFn(fileInfo)" ng-model="fileInfo.selected" >' +
@@ -34,6 +35,6 @@ function fileDirective(){
 
     }
 }
-
+//ui-sref="datastage.files({ dir: fileInfo.fileName})"
 angular.module('bioSpeak.DataStager')
     .directive('fileDirective',[fileDirective])

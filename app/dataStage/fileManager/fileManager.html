@@ -9,7 +9,7 @@
                 <a>{{vm.projectId}}</a>
             </li>
             <li>
-                <a ui-sref="datastage.files({dir:''})"><strong>Data Stage</strong></a>
+                <a ui-sref="datastage.files.list({dir:''})"><strong>Data Stage</strong></a>
             </li>
             <li class="active">
                 <strong>{{vm.dir}}</strong>
@@ -31,7 +31,7 @@
                         <a href="" class="file-control">Biospecimens</a>
 
                         <div class="hr-line-dashed"></div>
-                        <button class="btn btn-primary btn-block" ng-click="openUpload()">Upload Files</button>
+                        <button class="btn btn-primary btn-block" ng-click="vm.openUpload()">Upload Files</button>
                         <div class="hr-line-dashed"></div>
 
 
@@ -70,19 +70,15 @@
                             <li><a href=""><i class="fa fa-file"></i>&nbsp;Email_from_Alex.mln</a></li>
                             <li><a href=""><i class="fa fa-file"></i>&nbsp;Contract_20_11_2014.docx</a></li>-->
                         </ul>
-                        <button class="btn btn-primary btn-block" ng-click="goToNextStep()" data-ng-disabled="vm.selectedFilesCount ==0">Load to DB</button>
+                        <button class="btn btn-primary btn-block" ng-click="vm.goToNextStep()" data-ng-disabled="vm.selectedFilesCount ==0">Load to DB</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-lg-9 animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12" style="    max-height: 590px;
-    overflow: scroll;
-    border: #F3F3F4 10px solid;">
-                    <file-directive ng-repeat="fileInfo in vm.files" update-fn="updateFn(fileInfo)" file-info="fileInfo" ></file-directive>
-                </div>
-            </div>
+
+
+            <div ui-view=""></div>
         </div>
     </div>
 </div>

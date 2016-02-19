@@ -1,0 +1,5 @@
+<div class="row">
+    <div class="col-lg-12" style="max-height: 590px;overflow: scroll;border: #F3F3F4 10px solid;">
+        <file-directive ng-repeat="fileInfo in fileListCtrl.files" update-fn="fileListCtrl.updateFn(fileInfo)" file-info="fileInfo" click-fn="fileListCtrl.clickFn(fileInfo)"></file-directive>
+    </div>
+</div>

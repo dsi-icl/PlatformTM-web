@@ -113,6 +113,7 @@
                                 var name = evMap[i].split(':')[0];
                                 var evt = name + '.jstree',
                                     cb = evMap[i].split(':')[1];
+
                                 s.tree.on(evt, s.$parent.$eval(cb));
                             }
                         }

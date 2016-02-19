@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h4>{{vm.fileName}}</h4>
+
+                <!--<div ibox-tools></div>-->
+            </div>
+            <div class="ibox-content">
+                <table ng-if="vm.showDT" datatable="" dt-options="vm.dtOptions" dt-columns="vm.dtColumns"
+                       class="table table-striped table-bordered table-hover">
+
+                </table>
+
+            </div>
+
+            <hr>
+            <!--<a ng-click="goToStep2()" class="btn btn-default">Previous</a>-->
+            <!--<a ng-click="goToStep4()" class="btn btn-primary">Next</a>-->
+        </div>
+    </div>
+</div>

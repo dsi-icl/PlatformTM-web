@@ -23,13 +23,13 @@
                     <a ui-sref="explore.main({studyId:'P-BVS'})">
                         <img class="img-dashboard" src="img/bvs_image.png"  alt="profile">
                     </a>
-                    <div class="m-t-md">
+                    <!--<div class="m-t-md">
                         <span>Status of current project:</span>
                         <div class="stat-percent">48%</div>
                         <div class="progress progress-mini">
                             <div style="width: 48%;" class="progress-bar"></div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row  m-t-sm">
                         <div class="col-sm-3">
                             <div class="font-bold small">STUDIES</div>
@@ -41,11 +41,11 @@
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">OBSERVATIONS</div>
-                            --
+                            121,731
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">SAMPLES</div>
-                            --
+                            23,730
                         </div>
                     </div>
                     <div class="ibox-footer">
@@ -53,7 +53,7 @@
                             <div class="btn-group">
                                 <a ui-sref="explore({studyId:'P-BVS'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
                                 <a ui-sref="manager.main({studyId:'P-BVS'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
-                                <a ui-sref="datastage.files({studyId:'P-BVS'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                                <a ui-sref="datastage.files.list({studyId:'P-BVS'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
                             </div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                 <!--</div>-->
             <!--</div>-->
         <!--</div>-->
-        <div class="col-lg-4">
+        <!--<div class="col-lg-4">
             <div class="ibox">
                 <div class="ibox-title">
                     <span class="label label-primary pull-right">PROTECTED</span>
@@ -137,7 +137,7 @@
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">OBSERVATIONS</div>
-                            --
+                            &#45;&#45;
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">SAMPLES</div>
@@ -149,15 +149,15 @@
                             <div class=" btn-group">
                                 <a ui-sref="explore({studyId:'P-CDSK'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
                                 <a ui-sref="manager({studyId:'S-CDSK-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
-                                <a ui-sref="datastage.files({studyId:'S-CDSK-01'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                                <a ui-sref="datastage.files.list({studyId:'S-CDSK-01'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4">
+        </div>-->
+        <!--<div class="col-lg-4">
             <div class="ibox">
                 <div class="ibox-title">
                     <span class="label label-danger pull-right">PROTECTED</span>
@@ -185,11 +185,11 @@
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">OBSERVATIONS</div>
-                            --
+                            &#45;&#45;
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">SAMPLES</div>
-                            --
+                            &#45;&#45;
                         </div>
                     </div>
                     <div class="ibox-footer">
@@ -197,19 +197,19 @@
                             <div class=" btn-group">
                                 <a ui-sref="explore({studyId:'P-PTB'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
                                 <a ui-sref="manager.main({studyId:'P-PTB'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Setup </a>
-                                <a ui-sref="datastage.files({studyId:'P-PTB'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                                <a ui-sref="datastage.files.list({studyId:'P-PTB'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
+        </div>-->
 
 
     </div>
 
-    <div class="row">
+   <!-- <div class="row">
         <div class="col-lg-4">
             <div class="ibox">
                 <div class="ibox-title">
@@ -238,11 +238,11 @@
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">OBSERVATIONS</div>
-                            --
+                            &#45;&#45;
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">SAMPLES</div>
-                            --
+                            &#45;&#45;
                         </div>
                     </div>
                     <div class="ibox-footer">
@@ -250,7 +250,7 @@
                             <div class="btn-group">
                                 <a ui-sref="explore.main({studyId:'P-TST'})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore </a>
                                 <a ui-sref="manager({studyId:'S-TST-01'})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure </a>
-                                <a ui-sref="datastage.files({studyId:'P-TST'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
+                                <a ui-sref="datastage.files.list({studyId:'P-TST'})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage Data </a>
                             </div>
                         </div>
                     </div>
@@ -258,6 +258,6 @@
                 </div>
             </div>
         </div>
-        </div>
+        </div>-->
 
 </div>

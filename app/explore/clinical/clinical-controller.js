@@ -127,7 +127,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                         //$scope.getObsForAll();
 
                     })
-            },3000)
+            },20000)
 
             $scope.getObsIdsForMeddra = function(medraterm){
                 var jsonQobj=jsonQ($scope.clinicalData);

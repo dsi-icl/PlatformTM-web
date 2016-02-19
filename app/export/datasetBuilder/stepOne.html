@@ -1,0 +1,32 @@
+<fieldset>
+
+
+        <h4>Select fields to add to dataset</h4>
+
+
+    <div class="row">
+
+
+        <div class="col-lg-6">
+            <h5>Available Fields</h5>
+            <div class="well">
+                <div>
+                    <div js-tree="fldCtrl.treeConfig" ng-model="fldCtrl.treeData" tree="fldCtrl.treeInstance" tree-events="changed:fldCtrl.treeChanged;select_node:fldCtrl.nodeSelected;deselect_node:fldCtrl.nodeDeselected" ></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h5>Selected Fields</h5>
+            <div class="well">
+                <h3>
+                   <!--{{fldCtrl.selFields}}-->
+                </h3>
+                <ul>
+                    <li ng-repeat="selField in fldCtrl.selFields track by selField.id">{{selField.text}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <a ng-click="goToStep2()" data-ng-disabled="!fldCtrl.selFields" class="btn btn-primary">Next</a>
+</fieldset>

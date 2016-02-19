@@ -272,21 +272,21 @@ nav a {
     overflow: scroll;
     font-weight: bolder;
     -webkit-padding-start: 0px;
-    height: 120px;
+    height: 136px;
     border: 0;
 }
 
 .assay-panel > ul li {
     background-color: #2C3E50;
     float: left;
-    width: 22%;
-    height: 121px;
+    width: 20%;
+    /*height: 121px;*/
 }
 
 .assay-panel > ul li.odd {
     background-color: #35495E;
     float: left;
-    width: 25%
+    width: 20%
 }
 
 .assay-panel ul li > a {
@@ -296,7 +296,7 @@ nav a {
 }
 
 .assay-panel ul li > a:hover {
-    background-color: #256e93;
+    background-color: #00bfcd;
     border: 0;
 }
 
@@ -329,7 +329,7 @@ nav a {
 
 .assay-panel .assay-info .assay-count {
     color:#CDFF3B;
-    font-size: 1.4em;
+    font-size: 1em;
     font-weight: bold;
     margin: 0px;
 }
@@ -371,8 +371,8 @@ nav a {
     cursor: pointer;
 }
 .assay-sample-header .assay-factor-header a.selected{
-    background-color: white;
-    color:#39b3d7;
+    background-color: #019baa;
+    color: #eeede9;
 }
 
 #study-design, #clinical-data, #molecular-data{

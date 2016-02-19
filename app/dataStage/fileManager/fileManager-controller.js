@@ -5,13 +5,20 @@
     'use strict'
     function fileController($scope, $state, $stateParams, $modal, fileService){
 
-        var vm = {}
-        $scope.vm = vm;
-        $scope.vm.selectedFiles={};
-        $scope.vm.selectedFilesCount=0;
+        //var vm = {}
+        //$scope.vm = vm;
+        //$scope.vm.selectedFiles={};
+        //$scope.vm.selectedFilesCount=0;
+        //
+        //$scope.vm.dir = $stateParams.dir
+        //$scope.vm.projectId = $stateParams.studyId
 
-        $scope.vm.dir = $stateParams.dir
-        $scope.vm.projectId = $stateParams.studyId
+        var vm = this;
+
+        vm.projectId = $stateParams.studyId;
+        vm.dir = $stateParams.dir;
+        vm.selectedFiles={};
+        vm.selectedFilesCount=0;
 
 
 
@@ -24,13 +31,13 @@
                // console.log(data.files);
                 $scope.vm.dirs = data.files;
 
-                fileService.getContent($stateParams.studyId,$stateParams.dir)
-                    .then(function(data){
-                        vm.files = data.files;
-                        //console.log(data)
-                        $scope.vm = vm;
+        //        fileService.getContent($stateParams.studyId,$stateParams.dir)
+        //            .then(function(data){
+        //                vm.files = data.files;
+        //                //console.log(data)
+        //                $scope.v                //m = vm;
 
-                    })
+        //            })
 
 
             }).then(
@@ -39,7 +46,7 @@
 
 
 
-        $scope.createDirectory = function(){
+        vm.createDirectory = function(){
             console.log($scope.vm.newdir)
             fileService.createDirectory($stateParams.studyId,$scope.vm.newdir)
              .then(function(data){
@@ -49,7 +56,7 @@
         }
 
 
-        $scope.openUpload = function(){
+        vm.openUpload = function(){
             $state.go('datastage.upload',{dir:$stateParams.dir})
 
             /*var modalInstance = $modal.open({
@@ -68,25 +75,9 @@
             }, function () {
                 console.info('Modal dismissed at: ' + new Date());
             });*/
-        }
+          }
 
-        $scope.updateFn = function(fileInfo){
-            if(fileInfo.selected){
-                $scope.vm.selectedFiles[fileInfo.fileName] = fileInfo
-                $scope.vm.selectedFilesCount++
-            }
-            else{
-                /*index = selectedFiles.indexOf(fileInfo.fileName);
-                $scope.bdays.splice(index, 1);
-*/
-                delete $scope.vm.selectedFiles[fileInfo.fileName]
-                $scope.vm.selectedFilesCount--
-            }
-
-            console.log($scope.vm.selectedFilesCount,$scope.vm.selectedFiles)
-        }
-
-        $scope.goToNextStep = function(){
+        vm.goToNextStep = function(){
             //TODO: consider storing these files in localstorage
             //console.log($scope)
             //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})

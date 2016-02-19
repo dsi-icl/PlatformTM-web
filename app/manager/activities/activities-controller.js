@@ -109,34 +109,40 @@ angular.module('eTRIKSdata.studyDesign')
             }
             else{
                 console.log("Activity Edited")
-                $scope.vmodel.activity.$update(function(response) {
+                vm.activity.$update(function(response) {
                     console.log("Activity Updated")
 
-                    if(model.dataset){
-                        if(model.dataset.isNew){
-                            model.dataset.activityId = response.id
-                            model.dataset.$save(function(){
-                                console.log("Dataset created")
-                                $state.transitionTo('manager', $stateParams, {
-                                    reload: true,
-                                    inherit: false,
-                                    notify: true
-                                });
-                            })
-                        }
-                        else{
-                            if(response.datasets != null ){
-                                model.dataset.$update(function(){
-                                    console.log("Dataset updated")
-                                    $state.transitionTo('manager', $stateParams, {
-                                        reload: true,
-                                        inherit: false,
-                                        notify: true
-                                    });
-                                })
-                            }
-                        }
-                    }
+                    $state.transitionTo('manager.main', $stateParams, {
+                        reload: true,
+                        inherit: false,
+                        notify: true
+                    });
+
+                    //if(model.dataset){
+                    //    if(model.dataset.isNew){
+                    //        model.dataset.activityId = response.id
+                    //        model.dataset.$save(function(){
+                    //            console.log("Dataset created")
+                    //            $state.transitionTo('manager', $stateParams, {
+                    //                reload: true,
+                    //                inherit: false,
+                    //                notify: true
+                    //            });
+                    //        })
+                    //    }
+                    //    else{
+                    //        if(response.datasets != null ){
+                    //            model.dataset.$update(function(){
+                    //                console.log("Dataset updated")
+                    //                $state.transitionTo('manager', $stateParams, {
+                    //                    reload: true,
+                    //                    inherit: false,
+                    //                    notify: true
+                    //                });
+                    //            })
+                    //        }
+                    //    }
+                    //}
                 });
             }
 

@@ -227,9 +227,11 @@ angular.module('eTRIKSdata.dcPlots')
                 allCharts.forEach(function(chart){
                     //console.log('got chart ',chart.chartID(),' ',chart.chartGroup())
                     if(chart.chartGroup() == chartGroup){
-                        oldFilters = chart.filters(); // Get current filters
-                        chart.filter(null); // Reset all filters on current chart
-                        chart.expireCache();
+
+
+                        //oldFilters = chart.filters(); // Get current filters
+                        //chart.filter(null); // Reset all filters on current chart
+                        //chart.expireCache();
 
                         //I need to know which observations this id was associated with so that I can query for
                         // the new dimensions created for this observation
@@ -238,9 +240,11 @@ angular.module('eTRIKSdata.dcPlots')
                             //console.log('refreshing ',obs)
                             chart.dimension(xfilterService.getDimension(obs))
                             chart.group(xfilterService.getGroup(obs));
-                            oldFilters.forEach(function(filter){
-                                chart.filter(filter)
-                            })
+
+
+                            //oldFilters.forEach(function(filter){
+                            //    chart.filter(filter)
+                            //})
                         }
 
                         if(chart.chartType == 'dataTable'){
@@ -329,7 +333,7 @@ angular.module('eTRIKSdata.dcPlots')
                     //.group(cfGroup)
 
                 }
-                else if(isNaN(cfGroup.all()[0].key)){
+                else if(isNaN(cfGroup.all()[1].key)){
                     //Ordinal chart (rowChart or PieChart)
 
                     var noOfGroups = cfGroup.size();
@@ -402,7 +406,7 @@ angular.module('eTRIKSdata.dcPlots')
                     chartOptions["group"] = cfGroup
                     chartOptions["valueAccessor"] = function(p) { return p.value.valueList; }
                 }
-                chartOptions["title"] = function(d){return d.value;}
+                chartOptions["title"] = function(d){console.log(d.value); return d.value.count;}
                 chartOptions["colors"] = etriks.myColors();
 
                 var chartData = {}

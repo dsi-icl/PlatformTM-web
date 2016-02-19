@@ -8,6 +8,10 @@
         var serviceBase = ngAppConfig.apiServiceBaseUri;
         console.log(serviceBase);
 
+        var tableHeaders;
+        var DTdata;
+        var fileName;
+
         var _getDirContent = function (projectId,dir) {
             if(dir=='')dir="top"
             return $http({
@@ -59,10 +63,40 @@
             )
         };
 
+        var _getDataTablePreview = function(fileId){
+            console.log(fileId);
+            var deferred = $q.defer();
+            $http.get(serviceBase + 'api/files/project/'+fileId+'/preview/'+fileId)
+                .success(function (response) {
+                    tableHeaders = response.header;
+                    DTdata = response.data;
+                    fileName = response.fileInfo;
+                    //console.log("Inside http get success",tableHeaders)
+                    deferred.resolve(tableHeaders);
+                })
+                .error(function (err, code) {
+                    deferred.reject(err);
+                    console.log(err, code);
+                });
+            return deferred.promise;
+        }
+
+        var _getDataTableData = function(){
+            var deferred = $q.defer();
+            deferred.resolve(DTdata);
+            return deferred.promise;
+        }
+
+        var _getFileInfo = function(){
+            return fileName;
+        }
+
         fileServiceFactory.getContent = _getDirContent;
         fileServiceFactory.getDirectories = _getDirectories;
         fileServiceFactory.createDirectory = _createDirectory;
-
+        fileServiceFactory.getDataTablePreview = _getDataTablePreview;
+        fileServiceFactory.getDataTableData = _getDataTableData;
+        fileServiceFactory.getFileInfo = _getFileInfo;
 
 
         return fileServiceFactory

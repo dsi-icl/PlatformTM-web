@@ -306,14 +306,19 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             // format our data
             //TODO: add DataType to data and use it to coerce dimensions
             data.forEach(function(d) {
-                d.bmi   = d3.round(+d.bmi,1);
-                d.height   = d3.round(+d.height,2);
+                //d.bmi   = d3.round(+d.bmi,1);
+                //d.height   = d3.round(+d.height,2);
                 d['weight [VSORRES]'] = d3.round(+d['weight [VSORRES]'],1);
                 d['hcrp [LBORRES]'] = d3.round(+d['hcrp [LBORRES]'],1);
                 d['diabp [VSORRES]'] = +d['diabp [VSORRES]']
                 d['sysbp [VSORRES]'] = +d['sysbp [VSORRES]'];
-                d.hr = +d.hr;
-                d.temp = +d.temp;
+                d['crp [LBORRES]'] = +d['crp [LBORRES]'];//d3.round(+d['crp [LBORRES]'],1);
+
+                d['hr [LBORRES]'] = +d['hr [LBORRES]'];
+                d['temp [LBORRES]'] = +d['temp [LBORRES]'];
+                d['bmi [LBORRES]'] = d3.round(+d['bmi [VSORRES]'],1);
+                d['height [LBORRES]'] = d3.round(+d['height [VSORRES]'],1);
+
                 //d.date_e = dateFormat.parse(d.date_entered);
                 //d.date_i = dateFormat.parse(d.date_issued);
             });
