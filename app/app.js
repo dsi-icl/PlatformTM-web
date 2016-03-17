@@ -17,10 +17,11 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
 
 eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
 
-       $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/home');
 
     //$urlRouterProvider.when('', '/explore/P-BVS}');
-    $urlRouterProvider.when('', '/home');
+    $urlRouterProvider.when('', '/login');
+    $urlRouterProvider.when('/{studyId}/export/datasets/{datasetId}/wizard/3-preview', '/{studyId}/export/datasets/{datasetId}/wizard/3-preview/table');
 
     $ocLazyLoadProvider.config({
         // Set to true if you want to see what and when is dynamically loaded

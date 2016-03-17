@@ -11,7 +11,7 @@ function config($stateProvider, $urlRouterProvider) {
             templateUrl: "layout/content.html"
         })
         .state('datastage.files', {
-            url: "/datastage/files",
+            url: "/datastage/files/{dir:[a-zA-Z /]*}",
             templateUrl: "datastage/fileManager/fileManager.html",
             controller: "fileController as vm",
             resolve: {
@@ -40,21 +40,21 @@ function config($stateProvider, $urlRouterProvider) {
             }
         })
 
-        .state('datastage.files.list', {
-            url: "/{dir}",
-            templateUrl: "dataStage/fileManager/fileList.html",
-            controller : "fileListController as fileListCtrl",
-            resolve: {
-                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        'dataStage/fileManager/fileList-controller.js'
-                    ]);
-                }]
-            }
-        })
+        //.state('datastage.files.list', {
+        //    url: "/{dir}",
+        //    templateUrl: "dataStage/fileManager/fileList.html",
+        //    controller : "fileListController as fileListCtrl",
+        //    resolve: {
+        //        loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //            return $ocLazyLoad.load([
+        //                'dataStage/fileManager/fileList-controller.js'
+        //            ]);
+        //        }]
+        //    }
+        //})
 
         .state('datastage.files.view', {
-            url: "/files/{fileId}",
+            url: "/view/{fileId}",
             templateUrl: "dataStage/fileManager/fileViewer.html",
             controller : "fileViewController",
             resolve: {

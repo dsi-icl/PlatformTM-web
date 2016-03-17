@@ -301,14 +301,14 @@ nav a {
 }
 
 .assay-panel ul li.active a {
-    background-color: #00afbc; /*#2BAFC7;*/
+    background-color: #23C6C8; /*#2BAFC7;*/
     border: 0;
 }
 /*.assay-panel ul li.active a:focus {
     background-color: #256e93;
 }*/
 .assay-panel ul li.active a:hover {
-    background-color: #00afbc; /*#2BAFC7;*/
+    background-color: #00bfcd; /*#2BAFC7;*/
     border: 0;
 }
 
@@ -329,7 +329,7 @@ nav a {
 
 .assay-panel .assay-info .assay-count {
     color:#CDFF3B;
-    font-size: 1em;
+    font-size: 1.5em;
     font-weight: bold;
     margin: 0px;
 }
@@ -540,13 +540,13 @@ nav a {
     color: #2C3E50;
 }
 .models-list .model-count{
-    font-size: .6em;
+    font-size: 1em;
     /* margin-left: -20px; */
     /* border: 1px solid; */
     /* padding: 2px; */
     font-weight: bold;
     font-family: sans-serif;
-    color: #39b3d7;
+    color: #23c6c8;
 }
 
 
@@ -688,7 +688,7 @@ nav a {
 }
 
 .dc-chart{
-    margin-right: 50px;
+    /*margin-right: 50px;*/
 }
 
 .dc-chart .x.axis text {

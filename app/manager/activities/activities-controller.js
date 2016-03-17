@@ -31,9 +31,9 @@ angular.module('eTRIKSdata.studyDesign')
 
         vm.selectTemplate=false;
 
-        ISAconfigResource.query(function(response){
-            vm.isaconfigs = response;
-        });
+        //ISAconfigResource.query(function(response){
+        //    vm.isaconfigs = response;
+        //});
 
 
 
@@ -63,8 +63,12 @@ angular.module('eTRIKSdata.studyDesign')
                 model.activity = response;
                 model.activity.isNew = false;
 
+
                 //$scope.vmodel.activity = model.activity;
                 vm.activity = model.activity;
+
+                console.log(vm.activity)
+                console.log(model.activity)
                 $timeout(function(){
                     //console.log($('#ds_template_tbl'))
                     $('#ds_template_tbl').trigger('footable_redraw');
@@ -85,31 +89,18 @@ angular.module('eTRIKSdata.studyDesign')
             if(model.activity.isNew){
                 vm.activity.$save(function(response) {
                     console.log("Activity created")
-                    //if(model.dataset) {
-                    //    if (model.dataset.isNew) {
-                    //        model.dataset.activityId = response.id
-                    //        model.dataset.$save(function () {
-                    //            console.log("Dataset created")
-                    //            $state.transitionTo('manager', $stateParams, {
-                    //                reload: true,
-                    //                inherit: false,
-                    //                notify: true
-                    //            });
-                    //        })
-                    //    }
-                    //}
-                    //else{
-                        $state.transitionTo('manager.main', $stateParams, {
+                    $state.transitionTo('manager.main', $stateParams, {
                             reload: true,
                             inherit: false,
                             notify: true
-                        });
-                    //}
+                    });
                 });
             }
             else{
                 console.log("Activity Edited")
-                vm.activity.$update(function(response) {
+                console.log(vm.activity)
+                console.log(model.activity)
+                model.activity.$update(function(response) {
                     console.log("Activity Updated")
 
                     $state.transitionTo('manager.main', $stateParams, {
@@ -157,17 +148,25 @@ angular.module('eTRIKSdata.studyDesign')
             DatasetResource.get({datasetId:domainId}, function(response) {
                 model.dataset = response;
                 model.dataset.isNew = true;
-                model.dataset.activityId = 0;
-                model.dataset.ProjectStrAcc = $stateParams.studyId;
+                model.dataset.activityId = $stateParams.activityId;
+                model.dataset.projectStrAcc = $stateParams.studyId;
+                model.dataset.projectId = model.activity.projectId;
+                console.log(model.dataset)
                 vm.activity.datasets.push(model.dataset);
                 $timeout(function(){
                     //console.log($('#ds_template_tbl'))
                     $('#ds_template_tbl').trigger('footable_redraw');
-                }, 1000);
+                }, 4000);
                 vm.selectTemplate=false;
             })
         }
 
+
+        vm.mouseOverDataset = function(domain) {
+
+            vm.clinicaldomains.preview = domain;
+
+        }
 
 
 

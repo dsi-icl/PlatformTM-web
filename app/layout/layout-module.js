@@ -26,7 +26,7 @@ function logOutController($scope, $location, authService){
         console.log("Logging out")
         authService.logOut().then(function (response) {
 
-                $location.path('/home');
+                $location.path('/login');
             },
             function (err) {
                 $scope.message = err.error_description;

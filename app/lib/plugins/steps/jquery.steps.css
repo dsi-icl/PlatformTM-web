@@ -27,7 +27,7 @@
 .wizard ul > li,
 .tabcontrol ul > li
 {
-    display: block;
+    /*display: block;*/
     padding: 0;
 }
 

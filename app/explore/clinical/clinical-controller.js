@@ -17,7 +17,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
             //////////////////////
 
 
-            $scope.addToCart = function(type) {
+            /*$scope.addToCart = function(type) {
 
                 var count = ClinicalCf.getCountGroup().value()
 
@@ -32,7 +32,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 })
 
                 //console.log(exportService.getCart());
-            };
+            };*/
 
             $scope.chartingOpts = {
                 projectId : $stateParams.studyId,
@@ -43,7 +43,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 filtersService: "filtersService"
             };
 
-            $scope.open2 = function () {
+            /*$scope.open2 = function () {
                 var modalInstance = $modal.open({
                     templateUrl: 'explore/clinical/modal_example2.html',
                     controller: ModalInstanceCtrl,
@@ -115,7 +115,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                     'Wyoming'
                 ];
                 
-            };
+            };*/
 
             $timeout(function() {
                 console.log("calling clinical tree")
@@ -129,7 +129,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                     })
             },20000)
 
-            $scope.getObsIdsForMeddra = function(medraterm){
+            /*$scope.getObsIdsForMeddra = function(medraterm){
                 var jsonQobj=jsonQ($scope.clinicalData);
 
                 //var allterm = jsonQobj.find('terms').filter({
@@ -165,7 +165,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 // .find('name')
                 //console.log(allterms);
                 return allterms
-            }
+            }*/
 
 
         }])

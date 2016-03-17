@@ -22,7 +22,7 @@ angular.module('biospeak.assays')
                     function (httpError) {
                         // translate the error
                         throw httpError.status + " : " +
-                            httpError.data;
+                        httpError.data;
                     });
             },
 
@@ -31,29 +31,48 @@ angular.module('biospeak.assays')
             },
 
 
-                getSampleData: function(studyId) {
-                    //console.log(angular.toJson(observations))
+            getSampleData: function(studyId,assayId,reqObs) {
+                //console.log(angular.toJson(observations))
+                return $http({
+                    url:serviceBase+'api/projects/'+studyId+'/assays/'+assayId+'/samples',
+                    method:'GET'//,
+                    //data: angular.toJson(observations)
+                }).then(
+                    function (response) {
+                        return {
+                            data: (response.data.data),
+                            //eventsTbl: (response.data.eventsTbl),
+                            header: (response.data.header)
+                            //eventsTblHeader: (response.data.eventsTblHeader)
+                        }
+                    },
+                    function (httpError) {
+                        // translate the error
+                        throw httpError.status + " : " +
+                        httpError.data;
+                    }
+                );
+            },
 
-                    return $http({
-                        url:serviceBase+'api/projects/'+studyId+'/data/samples',
-                        method:'GET'//,
-                        //data: angular.toJson(observations)
-                    })
-                        .then(
-                        function (response) {
-                            return {
-                                findingsTbl: (response.data.findingsTbl),
-                                eventsTbl: (response.data.eventsTbl),
-                                findingsTblHeader: (response.data.findingsTblHeader),
-                                eventsTblHeader: (response.data.eventsTblHeader)
-                            }
-                        },
-                        function (httpError) {
-                            // translate the error
-                            throw httpError.status + " : " +
-                            httpError.data;
-                        });
-                }
+            getAssays: function(studyId){
+                return $http({
+                    url:serviceBase+'api/projects/'+studyId+'/assays',
+                    method:'GET'//,
+                    //data: angular.toJson(observations)
+                }).then(
+                    function (response) {
+                        return {
+                            assays: (response.data)
+                        }
+                    },
+                    function (httpError) {
+                        // translate the error
+                        throw httpError.status + " : " +
+                        httpError.data;
+                    }
+                );
+
+            }
 
 
         }

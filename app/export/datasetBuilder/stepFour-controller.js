@@ -6,47 +6,30 @@
 
     'use strict';
 
-    function stepFourController($scope,$state,$stateParams,wizardService){
+    function stepFourController($scope,$state,$stateParams,datasetService){
 
-        var step4vm = this;
-        //$scope.vm = vm;
+        var vm = this;
+        var projectId = $stateParams.studyId
 
-        //$scope.vm = {
-        //    datasetId: $stateParams.datasetId,
-        //    activityId:$stateParams.activityId,
-        //    standardFileId: $stateParams.standardFileId,
-        //    selectedDataset:null,
-        //    selectedActivity:null
-        //
-        //
-        //
-        //};
+        vm.availableTags = ['CyTOF','Microarray','Luminex','Samples','FACS','Adverse Events','Chemistry','Cytokines'];
+        vm.multipleDemo = {};
+        vm.selectedTags = [];
 
-        step4vm.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
-        step4vm.multipleDemo = {};
-        step4vm.multipleDemo.colors = ['Blue','Red'];
-
-        $scope.goToStep3 = function(){
-            $state.go('datastage.wizard.step_three',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, standardFileId: $scope.vm.standardFileId });
+        vm.cancel = function(){
+            datasetService.clearCriteria();
+            $state.go('export.datasets',{studyId:projectId})
         }
-        $scope.goToStep5 = function(){
-            $state.go('datastage.wizard.step_five',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, standardFileId: $scope.vm.standardFileId });
+        vm.prev = function(){
+            //datasetService.clearCriteria();
+            $state.go('export.wizard.preview.table',{studyId:projectId})
         }
-        /*console.log('stepOne controllern scope',$scope)
-
-        console.log('inside stepOne controller',$stateParams.selFiles)*/
-        //$scope.vm.selectedFiles = $stateParams.selFiles;
-        //var projectId = $stateParams.projectId
-        /*var projectId = "STD-BVS-01";
-
-        wizardService.getActivities(projectId).then(function(activities){
-                $scope.activities = activities;
-        })*/
-
-        //$scope.activities = [{'name':'ibrahim'},{'name':'assem'},{'name':'emam'},{'name':'nelly'}]
+        vm.finish = function(){
+            //do something
+            $state.go('export.datasets',{studyId:projectId})
+        }
 
 
     }
 
     angular.module('bioSpeak.import')
-        .controller('stepFourController',['$scope','$state','$stateParams','wizardService',stepFourController]);
+        .controller('stepFourController',['$scope','$state','$stateParams','datasetService',stepFourController]);

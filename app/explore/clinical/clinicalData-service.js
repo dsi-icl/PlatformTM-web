@@ -21,7 +21,7 @@ angular.module('biospeak.clinical')
                 console.log(angular.toJson(observations))
 
                 return $http({
-                    url:serviceBase+'api/studies/'+studyId+'/data/clinical/observations',
+                    url:serviceBase+'api/projects/'+studyId+'/data/clinical/observations',
                     method:'POST',
                     data: angular.toJson(observations)
                 })

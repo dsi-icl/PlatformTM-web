@@ -36,7 +36,7 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
             })
             .state('manager.main',{
                 url:'/dashboard',
-                templateUrl: 'manager/activities/activities_m.html',
+                templateUrl: 'manager/activities/activity-list.html',
                 controller: 'ActivityListController as vm'
                 /*views:{
                     '':{
@@ -46,14 +46,14 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                         templateUrl:"manager/study-plan/study-plan.html"
                     },
                     'study-activities@manager':{
-                        templateUrl: "manager/activities/activities.html",
+                        templateUrl: "manager/activities/activity-list.html",
                         controller:'ActivityListController'
                     }
                 }*/
             })
             .state('manager.activity',{
                 url:'/activities/{activityId}',
-                templateUrl: "manager/activities/activity_detail.html",
+                templateUrl: "manager/activities/activity-detail.html",
                 controller: "ActivityCtrl as vm"
                 /*views:{
                  '':{
@@ -63,17 +63,17 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                  templateUrl:"manager/study-plan/study-plan.html"
                  },
                  'study-activities@manager':{
-                 templateUrl: "manager/activities/activities.html",
+                 templateUrl: "manager/activities/activity-list.html",
                  controller:'ActivityListController'
                  }
                  }*/
             })
 
-            .state('manager.datasets', {
-                url: '/{studyId}/manage/datasets/{datasetId}',
-                templateUrl: "manager/activities/datasets.html",
-                controller: "DatasetController"
-            })
+            //.state('manager.datasets', {
+            //    url: '/{studyId}/manage/datasets/{datasetId}',
+            //    templateUrl: "manager/activities/datasets.html",
+            //    controller: "DatasetController"
+            //})
 
             //.state('datasets',{
             //    //abstract:true,
@@ -87,34 +87,34 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
             //    template: '<ui-view/>'
             //})
 
-            .state('manager.activities.detail',{
-                url:'/{activityId}',
-                views:{
-                    'activities.detail@manager':{
-                        url:'',
-                        templateUrl:'manager/activities/activities-detail.html',
-                        controller: 'ActivityCtrl'
-                    }
-                }
-            })
-
-            .state('manager.activities.detail.dataset',{
-                url:'/dataset?domainId/{datasetId}',
-                templateUrl:'manager/activities/dataset-detail.html',
-                controller: 'DatasetController'
-            })
-
-            .state('manager.activities.detail.newdataset',{
-                url:'/selectTemplate',
-                templateUrl: 'manager/activities/dataset-templates.html',
-                controller: 'DatasetTemplatesCtrl'
-            })
-
-            .state('manager.activities.detail.dataset.variable',{
-                url:'/variable/:variableId',
-                templateUrl:'manager/activities/variable-detail.html',
-                controller:'VariableController'
-            })
+            //.state('manager.activities.detail',{
+            //    url:'/{activityId}',
+            //    views:{
+            //        'activities.detail@manager':{
+            //            url:'',
+            //            templateUrl:'manager/activities/activities-detail.html',
+            //            controller: 'ActivityCtrl'
+            //        }
+            //    }
+            //})
+            //
+            //.state('manager.activities.detail.dataset',{
+            //    url:'/dataset?domainId/{datasetId}',
+            //    templateUrl:'manager/activities/dataset-detail.html',
+            //    controller: 'DatasetController'
+            //})
+            //
+            //.state('manager.activities.detail.newdataset',{
+            //    url:'/selectTemplate',
+            //    templateUrl: 'manager/activities/dataset-templates.html',
+            //    controller: 'DatasetTemplatesCtrl'
+            //})
+            //
+            //.state('manager.activities.detail.dataset.variable',{
+            //    url:'/variable/:variableId',
+            //    templateUrl:'manager/activities/variable-detail.html',
+            //    controller:'VariableController'
+            //})
 
     })/*.constant('ngAPISettings', {
         apiServiceBaseUri: 'http://rachmaninoff.local:8080/'

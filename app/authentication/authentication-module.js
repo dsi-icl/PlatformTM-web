@@ -24,7 +24,17 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
                     return $ocLazyLoad.load([
                         'lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js'
                     ]);
+                }],
+                loadPlugin2: ['$ocLazyLoad',function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            serie: true,
+                            name: 'angular-ladda',
+                            files: ['lib/plugins/ladda/js/spin.min.js', 'lib/plugins/ladda/js/ladda.min.js', 'lib/plugins/ladda/css/ladda-themeless.min.css','lib/plugins/ladda/js/angular-ladda.min.js']
+                        }
+                    ]);
                 }]
+
             }
         })
 

@@ -3,38 +3,21 @@
  */
 
 'use strict';
-function stepTwoController($scope,$state,$stateParams,wizardService){
+function stepTwoController($scope,$state,$stateParams,datasetService){
 
-    var activityId = $stateParams.activityId;
-    var datasetId = $stateParams.datasetId;
-    var fileName = $stateParams.file;
-    var fileId = $stateParams.fileId;
-    var standardFileId;
+    var vm = this;
+    vm.dataLoaded = false;
+    var projectId = $stateParams.studyId;
 
-    var step2vm = this;
 
-    step2vm.ionSliderOptions1 = {
-        min: 0,
-        max: 5000,
-        type: 'double',
-        prefix: "$",
-        maxPostfix: "+",
-        prettify: false,
-        hasGrid: true
-    };
+    datasetService.getDataFields(projectId).then(function(data){
+        vm.treeData = data.fields;
+        vm.dataLoaded = true
+        vm.treeConfig.version++;
+    })
 
-    step2vm.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
-    step2vm.multipleDemo = {};
-    step2vm.multipleDemo.colors = ['Blue','Red'];
-
-    step2vm.treeData =   [
-        { id : 'ajson1', parent : '#', text : 'Simple root node', state: { opened: true} },
-        { id : 'ajson2', parent : '#', text : 'Root node 2', state: { opened: true} },
-        { id : 'ajson3', parent : 'ajson2', text : 'Child 1', state: { opened: true} },
-        { id : 'ajson4', parent : 'ajson2', text : 'Child 2' , state: { opened: true}}
-    ]
-
-    step2vm.treeConfig = {
+    vm.filters = []
+    vm.treeConfig = {
         core : {
             multiple : true,
             animation: true,
@@ -69,19 +52,113 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
         plugins : ['checkbox','changed']
     };
 
-    step2vm.nodeSelected = function (node,selected,event) {
-        filters.push();
-        $scope.$apply();
+    vm.treeChanged = function (event,data){
+        //var i, j;
+        //vm.filters = []
+        //for(i = 0, j = data.selected.length; i < j; i++) {
+        //    vm.filters.push(data.instance.get_node(data.selected[i]).original.field);
+        //}
+        //$scope.$apply();
+        //
+        ////vm.selFields = _selFields;
+        //console.log('selectChanged',vm.selFields);
+    }
+    vm.nodeSelected = function (event,data) {
+        //console.log(data.node)
+        var field = data.node.original.field;
+        //console.log(field)
+        datasetService.getFieldFilter(projectId,field).then(function(data){
+            //console.log(data.filter)
+            var filter = data.filter;
+            //console.log(filter);
+            //console.log(filter.valueSet.isNumeric);
+            filter.update = function(slider){
+                filter.valueSet.from = slider.fromNumber;
+                filter.valueSet.to = slider.toNumber;
+                $scope.$apply();
+            }
 
+            if(filter.valueSet.isNumeric)
+                filter.ionSliderOptions = {
+                    min: filter.valueSet.min,
+                    max: filter.valueSet.max,
+                    from: filter.valueSet.from,
+                    to: filter.valueSet.to,
+                    type: 'double',
+                    postfix: ' '+filter.valueSet.unit,
+                    maxPostfix: "+",
+                    prettify: false,
+                    hasGrid: true,
+                    onChange: filter.update
+                }
+            vm.filters.push(filter);
+        })
+        console.log(vm.filters)
     };
-
-    step2vm.nodeDeselected = function (node,selected,event) {
+    vm.nodeDeselected = function (node,selected,event) {
         //console.log('node deselected',node,selected,event);
     };
+
+    vm.next = function(){
+        datasetService.getCriteria().then(function(criteria){
+            console.log(criteria)
+
+            angular.forEach(vm.filters,function(filter){
+                console.log(filter)
+                var criterion=null;
+                angular.forEach(criteria,function(c){
+                    console.log(c)
+                    if(c.o3 == filter.o3Id)
+                    criterion = c
+                })
+
+                if(!criterion){
+                    console.log("field not added in the previous step")
+                    criterion = {}
+                    criterion.o3 = filter.o3Id
+                    criterion.exactFilters = [];
+                    criterion.rangeFilters = [];
+                    criterion.projection = [];
+                    criterion.exactFilters.push({"field": filter.o3VarName, "values":[filter.o3Name]})
+                    criterion.exactFilters.push({"field": "DOMAIN", "values":[filter.domainCode]})
+                    if(filter.groupName)
+                        criterion.exactFilters.push({"field": filter.groupVarName, "values":[filter.groupName]})
+                    criteria.push(criterion);
+                }
+
+                if(filter.valueSet.isNumeric){
+                    var nRange = {}
+                    nRange.field = filter.qO2Name;
+                    nRange.range = {};
+                    nRange.range.upperBound = filter.valueSet.to;
+                    nRange.range.lowerBound = filter.valueSet.from;
+                    criterion.rangeFilters.push(nRange);
+                }
+                else{
+                    criterion.exactFilters.push({"field": filter.qO2Name, "values":filter.valueSet.filterValues})
+                }
+
+            })
+
+            console.log(criteria)
+
+            datasetService.saveCriteria('ibrahim',criteria);
+            $state.go('export.wizard.preview.table',{studyId:projectId})
+        })
+
+    }
+    vm.cancel = function(){
+        datasetService.clearCriteria();
+        $state.go('export.datasets',{studyId:projectId})
+    }
+    vm.prev = function(){
+        //datasetService.clearCriteria();
+        $state.go('export.wizard.fields',{studyId:projectId})
+    }
 }
 
 
 angular.module('bioSpeak.export')
-    .controller('stepTwoController',['$scope','$state','$stateParams','wizardService',stepTwoController])
+    .controller('stepTwoController',['$scope','$state','$stateParams','datasetService',stepTwoController])
 
 

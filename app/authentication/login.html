@@ -16,8 +16,8 @@
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
-                    <li > <a>Login</a></li>
-                    <li > <a>Sign Up</a></li>
+                    <li> <a ui-sref="login">Login</a></li>
+                    <li> <a ui-sref="signup">Sign Up</a></li>
                 </ul>
             </nav>
         </div>
@@ -56,11 +56,13 @@
                                                    data-ng-model="loginData.password" required>
                                         </div>
                                         <div>
-                                            <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
-                                                    type="submit">
-                                                <strong>Login</strong>
+                                            <!--<button class="btn btn-sm btn-primary pull-right m-t-n-xs"-->
+                                                    <!--type="submit">-->
+
+                                                <button type="submit" ladda="loginData.signIn"  class="ladda-button btn btn-primary pull-right m-t-n-xs" data-style="zoom-in">Login</button>
+                                                <!--<strong>Login</strong>-->
                                             </button>
-                                            <label> <input icheck type="checkbox" ng-model="main.unCheck"> Remember me </label>
+                                            <!--<label> <input icheck type="checkbox" ng-model="main.unCheck"> Remember me </label>-->
                                         </div>
                                     </form>
                                 </div>

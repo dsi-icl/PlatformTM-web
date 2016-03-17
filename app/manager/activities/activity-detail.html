@@ -3,10 +3,13 @@
         <h2>{{vm.activity.isNew ? 'New Activity' :'Activity detail'}}</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="index.html">Home</a>
+                <a ui-sref="main.home">Home</a>
+            </li>
+            <li ui-sref="manager.main">
+                <a>List of Activities</a>
             </li>
             <li class="active">
-                <strong>Activity</strong>
+                <a>{{vm.activity.isNew ? 'New Activity' : vm.activity.name}}</a>
             </li>
         </ol>
     </div>
@@ -423,11 +426,16 @@
                                             <div>
                                                 <h5>Select dataset template</h5>
                                             </div>
-                                            <div id="data-accordion" style="float:left; width: 35%; margin-right: .5%">
+                                            <div style="border: 1px solid white; padding: 10px; margin-left: 1%" >
+                                                <span>Class:</span><span>{{vm.clinicaldomains.preview.class}}</span>
+                                                <p>{{vm.clinicaldomains.preview.description}}</p>
+                                            </div>
+                                            <div class=""></div>
+                                            <div id="data-accordion" style="margin: 1.5%">
                                                 <!--<div class="panel" style="border: 0; width:100%">-->
 
                                                 <div class="section-block-header" style="cursor: pointer" id="clinicaldata" data-toggle="collapse" data-parent="#data-accordion" data-target="#clinicadata-content">
-                                                    Clinical Data
+                                                    Data Templates
                                                 </div>
                                                 <div id="clinicadata-content" class="assessment-list collapse in" >
 
@@ -438,7 +446,7 @@
                                                         <ul>
                                                             <li ng-click="vm.selectTemplate(domain.domainId)"
                                                                 ng-repeat="domain in vm.clinicaldomains | filter:{name: searchText}"
-                                                                ng-mouseover="mouseOverDataset(domain)">
+                                                                ng-mouseover="vm.mouseOverDataset(domain)">
                                                                 {{domain.name}} - ({{domain.code}})
                                                             </li>
                                                         </ul>
@@ -447,7 +455,7 @@
 
 
 
-                                                <div class="section-block-header" style="cursor: pointer" id="moleculardata" data-toggle="collapse" data-parent="#data-accordion" data-target="#moleculardata-content">
+                                                <!--<div class="section-block-header" style="cursor: pointer" id="moleculardata" data-toggle="collapse" data-parent="#data-accordion" data-target="#moleculardata-content">
                                                     Molecular Assays
                                                 </div>
                                                 <div id="moleculardata-content" class="assessment-list collapse">
@@ -460,10 +468,10 @@
                                                         </ul>
                                                     </div>
 
-                                                </div>
+                                                </div>-->
 
 
-                                                <div class="section-block-header" id="subjectdata" style="cursor: pointer" data-toggle="collapse" data-parent="#data-accordion" data-target="#subjectdata-content">
+                                                <!--<div class="section-block-header" id="subjectdata" style="cursor: pointer" data-toggle="collapse" data-parent="#data-accordion" data-target="#subjectdata-content">
                                                     Subject Characteristics
                                                 </div>
                                                 <div id="subjectdata-content" class="assessment-list collapse">
@@ -476,15 +484,9 @@
                                                             <li>Subject Characteristics</li>
                                                         </ul>
                                                     </div>
-                                                </div>
+                                                </div>-->
                                                 <!-- </div>-->
 
-
-                                            </div>
-
-                                            <div style="float: left; width:63%; border: 1px solid white; padding: 10px; margin-left: 1%" >
-                                                <span>Class:</span><span>{{templates.preview.class}}</span>
-                                                <p>{{templates.preview.description}}</p>
                                             </div>
                                         </div>
                                     </tab>
@@ -526,10 +528,10 @@
             </ul>-->
             <h5>Associated Data files</h5>
             <ul class="list-unstyled project-files">
-                <li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>
-                <li><a href=""><i class="fa fa-file-picture-o"></i> Logo_zender_company.jpg</a></li>
-                <li><a href=""><i class="fa fa-stack-exchange"></i> Email_from_Alex.mln</a></li>
-                <li><a href=""><i class="fa fa-file"></i> Contract_20_11_2014.docx</a></li>
+                <li><a href=""><i class="fa fa-file"></i> P-BVS_1.csv</a></li>
+                <li><a href=""><i class="fa fa-file"></i> P-BVS_2.csv</a></li>
+                <li><a href=""><i class="fa fa-file"></i> Sample_protocol.doc</a></li>
+                <li><a href=""><i class="fa fa-file"></i> Contact_20_11_2014.docx</a></li>
             </ul>
 <!--            <div class="text-center m-t-md">
                 <a href="" class="btn btn-xs btn-primary">Add files</a>

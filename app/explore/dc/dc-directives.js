@@ -323,23 +323,7 @@ angular.module('eTRIKSdata.dcPlots')
 
                         $scope.chartToPlot.on('filtered', function(chart, filter){
 
-                            //console.log('Filter Event', filter)
-                            //console.log('Chart', chart.dimName)
-                            //console.log('filters',chart.filters())
-
-
-                            //$scope.subjectFilter[chart.dimName] = chart.filters()
-                            //console.log("selectedFilter" + $scope.subjectFilter.abc)
-                            // A possible solution
-                            //TODO: pass dimName and filters to the scope of the parent controller
-                            //TODO: could be one of three : subjects-controller or clinical-controller or assay-controller
-                            //TODO: the best way to do this is to create a new service 'exportService' and then
-                            //TODO: dc-directives and subject-controller/clinical-controller/assay-controller can share and watch.
-                            //TODO: in this method the filters/dimension name are ADDED/REMOVED to the service WHILE in the controller
-                            //GOOGLE angularjs controller watching service
-
-                            //console.log(scope.chartCFservice.getCountGroup())
-                            //scope.chartCFservice.filterClinicalCF(filter,scope.val)
+                            console.log("===EVENT===CHART===FILTERED",chart.chartID(),'FILTER:',filter)
                             $scope.chartservice.propagateFilter($scope.chartingOpts.xfilterService);
 
                             $scope.filtersService.updateFilters($scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
@@ -422,6 +406,18 @@ angular.module('eTRIKSdata.dcPlots')
                             //dc.redrawAll(groupChart);
                         });
 
+                        /*element.on('filtered',function(chart, filter){
+
+                            console.log("===EVENT===CHART===FILTERED",chart.chartID())
+                            scope.chartservice.propagateFilter(scope.chartingOpts.xfilterService);
+
+                            scope.filtersService.updateFilters(scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
+                            //console.log("filters for " + $scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
+
+
+                            //dc.renderAll("Clinical");
+                        })*/
+
                         scope.chartToPlot.render()
 
                         //console.log('chartId',scope.chartToPlot.chartID())
@@ -447,30 +443,22 @@ angular.module('eTRIKSdata.dcPlots')
             grp: '@',
             chartService: '@',
             xfilterService: '@',
-            projectId:'@'
+            projectId:'@',
+            module:'@'
         },
         controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
-
-            //console.log($scope.chartService)
-            //console.log($scope)
-
-            var chartService = $injector.get($scope.chartService);
-            $scope.chartservice = chartService
-            //
-            var xfilterService = $injector.get($scope.xfilterService);
-            $scope.xfService = xfilterService
+            $scope.chartservice = $injector.get($scope.chartService);
+            $scope.xfService = $injector.get($scope.xfilterService);
         }],
         template:
-                     '<table class="table table-hover" id="dc-table-graph">'+
-                     '</table>',
-        link: function (scope, element, attrs) {
+            '<table class="table table-hover" id="dc-table-graph"></table>',
+        link: function (scope, element) {
             scope.$watch(
-                function($scope) { return $scope.xfService.cfReady(); },
+                function($scope) { return $scope.xfService.cfReady(scope.module); },
                 function(newval, oldval){
-
                     if(newval){
                         console.log(newval)
-                        var chart = scope.chartservice.createDCtable(scope.xfService)
+                        var chart = scope.chartservice.createDCtable(scope.xfService,scope.module)
                         chart.anchor(element[0],scope.grp);
                         //var chart = scope.cf.createDCtable()
                         //console.log(chart.columns());
@@ -560,30 +548,22 @@ angular.module('eTRIKSdata.dcPlots')
                 grp: '@',
                 chartService: '@',
                 xfilterService: '@',
-                projectId:'@'
+                projectId:'@',
+                module:'@'
             },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
-
-                var chartService = $injector.get($scope.chartService);
-                $scope.chartservice = chartService
-
-                var xfilterService = $injector.get($scope.xfilterService);
-                $scope.xfService = xfilterService
+                $scope.chartservice = $injector.get($scope.chartService);
+                $scope.xfService = $injector.get($scope.xfilterService);
             }],
             template:
-                '<span id="{{grp}}_Counter" class="filter-count model-count number-display"></span>',
-            /*'<span class="filter-count"></span> selected out of <span class="total-count"></span> subjects | ' +
-             '<a href="javascript:dc.filterAll();dc.renderAll();">Reset filters</a>',*/
+                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count model-count number-display"></span>',//+
+                //' from(<span class="total-count"></span>)',
             link: function(scope, element, attrs){
                 scope.$watch(
-                    function($scope) { return $scope.xfService.cfReady(); },
+                    function($scope) { return $scope.xfService.cfReady(scope.module); },
                     function(newval, oldval){
                         if(newval){
-
-                            //TODO: need to add dc-count-widget to the list of charts in CF to be refreshed when Xfilter is refreshed
-                            //cf.createChart('subjects',$scope.obsid,$scope.grp)
-                            var chart = scope.chartservice.createDCcounter(scope.xfService)
-                            //console.log('inside dc-count-widget chartgroup',scope.chartgroup)
+                            var chart = scope.chartservice.createDCcounter(scope.xfService,scope.module)
                             chart.anchor(element[0],scope.grp);
                             chart.render();
                         }

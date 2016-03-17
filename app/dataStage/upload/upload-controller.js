@@ -18,6 +18,7 @@
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+            $state.go('datastage.files',{dir:$stateParams.dir});
         };
 
         // FILTERS

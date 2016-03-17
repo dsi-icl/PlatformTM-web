@@ -1,22 +1,65 @@
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Preview of Dataset</h5>
+<div class="wrapper wrapper-content">
+<div class="row">
+        <div class="col-md-12">
 
-
+            <div class="ibox-title">
+                <div class="btn-group">
+                    <label class="btn btn-md btn-outline btn-primary" ui-sref="export.wizard.preview.table"> Data Table </label>
+                    <label class="btn btn-md btn-outline btn-primary" ui-sref="export.wizard.preview.tree"> Tree View </label>
                 </div>
-                <div class="ibox-content">
-                    <table ng-if="vm.showDT" datatable="" dt-options="vm.dtOptions" dt-columns="vm.dtColumns"
-                           class="table table-striped table-bordered table-hover">
+            </div>
 
+            <div class="ibox float-e-margins">
+                <!--<div class="ibox-title">
+                    <h5>Preview Dataset</h5>
+                </div>-->
+                <div class="ibox-content">
+                    <div ui-view=""></div>
+
+
+                   <!-- <table ng-if="step3vm.dataLoaded" ng-hide="step3vm.show =='tree'" datatable="" dt-options="step3vm.dtOptions" dt-columns="step3vm.dtColumns"
+                           class="table table-striped table-bordered table-hover">
                     </table>
 
+                    <div ng-hide="step3vm.dataLoaded" >
+                        <p class="text-center" >Retrieving data...</p>
+                        <div>
+                            <div class="sk-spinner sk-spinner-fading-circle">
+                                <div class="sk-circle1 sk-circle"></div>
+                                <div class="sk-circle2 sk-circle"></div>
+                                <div class="sk-circle3 sk-circle"></div>
+                                <div class="sk-circle4 sk-circle"></div>
+                                <div class="sk-circle5 sk-circle"></div>
+                                <div class="sk-circle6 sk-circle"></div>
+                                <div class="sk-circle7 sk-circle"></div>
+                                <div class="sk-circle8 sk-circle"></div>
+                                <div class="sk-circle9 sk-circle"></div>
+                                <div class="sk-circle10 sk-circle"></div>
+                                <div class="sk-circle11 sk-circle"></div>
+                                <div class="sk-circle12 sk-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-hide="step3vm.show =='table'">
+                        <br/><br/>
+                        <div js-tree="step3vm.treeConfig" should-apply="step3vm.applyModelChanges()" ng-model="step3vm.treeData" tree="step3vm.treeInstance" tree-events="ready:step3vm.readyCB;create_node:step3vm.createCB"></div>
+                        <a ng-click="step3vm.updateTree()"><i class="fa fa-times"></i></a>
+                    </div>-->
                 </div>
 
-                <hr>
-                <a ng-click="goToStep2()" class="btn btn-default">Previous</a>
-                <a ng-click="goToStep4()" class="btn btn-primary">Next</a>
+                <!--<hr>-->
+                <!--<a ng-click="goToStep2()" class="btn btn-default btn-xs">Previous</a>-->
+                <!--<a ng-click="goToStep4()" class="btn btn-primary btn-xs">Next</a>-->
             </div>
         </div>
+    </div>
+
+    <div class="pull-left">
+        <a ng-click="step3vmm.cancel()"  class="btn btn-primary btn-sm ">Cancel</a>
+    </div>
+    <div class="pull-right">
+        <a ng-click="step3vmm.prev()" class="btn btn-default btn-sm">Previous</a>
+        <a ng-click="step3vmm.next()"  class="btn btn-primary btn-sm">Next</a>
+    </div>
     </div>

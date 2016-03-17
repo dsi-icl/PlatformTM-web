@@ -5,15 +5,15 @@
 
 function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-        .state('datasets', {
+        .state('export', {
             abstract: true,
-            url: "/{studyId}",
+            url: "/{studyId}/export",
             templateUrl: "layout/content.html"
         })
-        .state('datasets.test', {
-            url: "/datasets/dataview",
-            templateUrl: "export/dataset/dataView.html",
-            controller: "datasetCtrl"/*,
+        .state('export.datasets', {
+            url: "/datasets",
+            templateUrl: "export/dataset/dataset-list.html",
+            controller: "datasetCtrl as vm"/*,
              resolve: {
              loadPlugin: function ($ocLazyLoad) {
              return $ocLazyLoad.load([
@@ -46,8 +46,8 @@ function config($stateProvider, $urlRouterProvider) {
              }*/
         })
 
-        .state('datasets.wizard',{
-            url: "/export/datasets/{datasetId}/",
+        .state('export.wizard',{
+            url: "/datasets/{datasetId}/wizard",
             templateUrl: "export/datasetBuilder/wizard.html",
             controller: "wizardController",
             //params:{selFiles: null},
@@ -69,7 +69,7 @@ function config($stateProvider, $urlRouterProvider) {
                             'lib/plugins/ngJsTree/js/ngJsTree.js',
                             'lib/plugins/jstree/css/themes/default/style.css',
                             'lib/plugins/ionRangeSlider/css/ion.rangeSlider.css',
-                            'lib/plugins/ionRangeSlider/css/ion.rangeSlider.skinNice.css',
+                            'lib/plugins/ionRangeSlider/css/ion.rangeSlider.skinSimple.css',
                             'lib/plugins/ionRangeSlider/js/ion.rangeSlider.min.js',
                             'layout/directives/ionRangeSlider.js',
                             'lib/plugins/ui-select/js/select.min.js', 'lib/plugins/ui-select/css/select.css'
@@ -79,12 +79,11 @@ function config($stateProvider, $urlRouterProvider) {
             }
         })
 
-        .state('datasets.wizard.step_one', {
-            url: '/step_one',
+        .state('export.wizard.fields', {
+            url: '/1-fields',
             templateUrl: 'export/datasetBuilder/stepOne.html',
             controller: 'stepOneController as fldCtrl',
             resolve:{
-
             loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
@@ -102,8 +101,8 @@ function config($stateProvider, $urlRouterProvider) {
                 }]*/
             }
         })
-        .state('datasets.wizard.step_two', {
-            url: '/step_two/:activityId/:datasetId/:fileId',
+        .state('export.wizard.filters', {
+            url: '/2-filters',
             controller: 'stepTwoController as step2vm',
             templateUrl: 'export/datasetBuilder/stepTwo.html',
             resolve:{
@@ -120,13 +119,17 @@ function config($stateProvider, $urlRouterProvider) {
                 }]
             }
         })
-        .state('datasets.wizard.step_three', {
-            url: '/step_three/:activityId/:datasetId/:standardFileId',
+
+        .state('export.wizard.preview',{
+            url: '/3-preview',
             templateUrl: 'export/datasetBuilder/stepThree.html',
-            /*params: {
-             map: null
-             },*/
-            controller: 'stepThreeController',
+            controller: 'stepThreeControllerM as step3vmm',
+            abstract:true
+        })
+        .state('export.wizard.preview.table', {
+            url: '/table',
+            templateUrl: 'export/datasetBuilder/stepThree-table.html',
+            controller: 'stepThreeController as step3vm',
             resolve: {
                 loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([
@@ -156,8 +159,32 @@ function config($stateProvider, $urlRouterProvider) {
                 }]
             }
         })
-        .state('datasets.wizard.step_four', {
-            url: '/step_four/:activityId/:datasetId/:standardFileId',
+
+        .state('export.wizard.preview.tree', {
+            url: '/tree',
+            templateUrl: 'export/datasetBuilder/stepThree-tree.html',
+            controller: 'stepThreeTreeController as step3TreeVM',
+            resolve:{
+                //loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
+                //    return $ocLazyLoad.load([
+                //        {
+                //            serie: true,
+                //            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
+                //                'lib/plugins/jstree/js/jstree.min.js',
+                //                'lib/plugins/ngJsTree/js/ngJsTree.js']
+                //        }
+                //    ]);
+                //}],
+                loadController: ['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        'export/datasetBuilder/stepThreeTree-controller.js'
+                    ]);
+                }]
+            }
+        })
+
+        .state('export.wizard.info', {
+            url: '/4-info',
             templateUrl: 'export/datasetBuilder/stepFour.html',
             controller: 'stepFourController as step4vm',
             resolve:{

@@ -10,7 +10,8 @@
         //var vm = this;
         $scope.loginData = {
             userName: "",
-            password: ""
+            password: "",
+            signIn:false
         };
 
         $scope.message = "";
@@ -18,9 +19,18 @@
         $scope.login = function () {
             /*console.log($scope.loginData)
             $location.path('/explore/P-BVS');*/
-            authService.login($scope.loginData).then(function (response) {
 
-                    $location.path('/explore/P-BVS');
+            $scope.loginData.signIn = true;
+
+            //$timeout(function(){
+            //    // Simulate some service
+            //    $scope.loadingDemo = false;
+            //},2000)
+            authService.login($scope.loginData).then(function (response) {
+                    console.log(response)
+                    $scope.loginData.signIn = false;
+
+                    $location.path('/home');
                 },
                 function (err) {
                     $scope.message = err.error_description;

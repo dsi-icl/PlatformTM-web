@@ -16,7 +16,7 @@
     ];
 }*/
 
-function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder,datasetService){
+function stepThreeControllerM($scope, $state, $stateParams,datasetService){
 
     //$scope.vm = {
     //    datasetId: $stateParams.datasetId,
@@ -44,6 +44,7 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder,data
     //$scope.vm.dtColumns = wizardService.getDTheader();
 
     //$scope.vm.dtColumns = res.header//wizardService.getDataTablePreview($scope.vm.fileName,$scope.vm.map).$promise
+/*
 
     datasetService.previewData(projectId)
         .then(function(headers){
@@ -51,9 +52,10 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder,data
             vm.dtColumns = headers;
             vm.dataLoaded = true
         })
+*/
 
 
-    vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
+    /*vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
         return datasetService.getDataTableData()
         //return $resource('../data/dt.json').query().$promise;
     })
@@ -70,7 +72,7 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder,data
         .withOption('scrollX', true)
         //res.header////$resource('/angular-datatables/dtColumns.json').query().$promise;
     //$scope.vm.dtColumns = $resource('../data/dtColumns.json').query().$promise;
-
+*/
 
 
     /*$scope.vm.dtOptions = DTOptionsBuilder.fromSource('../data/dt.json')
@@ -113,4 +115,4 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder,data
 }
 
 angular.module('bioSpeak.export')
-    .controller('stepThreeController',['$scope','$state','$stateParams','DTOptionsBuilder','datasetService', stepThreeController]);
+    .controller('stepThreeControllerM',['$scope','$state','$stateParams','datasetService', stepThreeControllerM]);

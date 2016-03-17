@@ -9,11 +9,14 @@
                 <a>{{vm.projectId}}</a>
             </li>
             <li>
-                <a ui-sref="datastage.files.list({dir:''})"><strong>Data Stage</strong></a>
+                <a ui-sref="datastage.files({dir:''})">Data Stage</a>
             </li>
             <li class="active">
-                <strong>{{vm.dir}}</strong>
+                <a ui-sref="datastage.files({dir:vm.dir})"><strong>{{vm.dir}}</strong></a>
             </li>
+            <!--<li>-->
+                <!--{{$state.current.name}}-->
+            <!--</li>-->
         </ol>
     </div>
 </div>
@@ -36,13 +39,16 @@
 
 
                         <h5>Folders</h5>
-                        <span style="margin-bottom: 5px">
-                            <a href="#" e-ng-model="vmodel.activity.name" editable-text="vm.newdir" onaftersave="createDirectory()" buttons="no" blur="submit">
+                        <div style="margin-bottom: 5px">
+                            <a href="#" e-ng-model="vmodel.activity.name" editable-text="vm.newdir" onaftersave="vm.createDirectory()" buttons="no" blur="submit">
                                 <i class="fa fa-folder-o"></i> &nbsp;&nbsp; New Folder
                             </a>
-                        </span>
+                        </div>
                         <ul class="folder-list" style="padding: 0">
-                            <li ng-repeat="dir in vm.dirs"><a ui-sref="datastage.files({ dir: dir})" href=""><i class="fa fa-folder"></i> {{dir}}</a></li>
+                            <li ng-repeat="dir in vm.dirs">
+                                <a href="#/{{vm.projectId}}/datastage/files/{{dir}}">
+                                    <i class="fa fa-folder"></i> {{dir}}</a>
+                            </li>
                         </ul>
 
 
@@ -78,7 +84,12 @@
         <div class="col-lg-9 animated fadeInRight">
 
 
-            <div ui-view=""></div>
+            <div ui-view="">
+                <div class="row">
+                <div class="col-lg-12" style="max-height: 590px;overflow: scroll;border: #F3F3F4 10px solid;">
+                    <file-directive ng-repeat="fileInfo in vm.files" update-fn="vm.updateFn(fileInfo)" file-info="fileInfo" click-fn="vm.clickFn(fileInfo)"></file-directive>
+                </div>
+            </div></div>
         </div>
     </div>
 </div>

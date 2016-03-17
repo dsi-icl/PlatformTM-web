@@ -11,124 +11,29 @@
             <div class="ibox-content plots-view">
 
 
-
-                <div class="">
-
-
-                    <!--<div class="col-lg-1">
-                        <div class="widget style1 lazur-bg">
-                            <div class="row vertical-align">
-                                <div class="col-xs-3">
-                                    &lt;!&ndash;<img src="img/icons/svg/standing55.svg" style="width: 50px; height: 50px; fill: white"> </img>&ndash;&gt;
-                                   <h1><i class="flaticon-heartbeat" style="color: #39b3d7;"></i> 365 </h1>
-                                </div>
-            &lt;!&ndash;                    <div class="col-xs-9 text-right">
-                                    <h2 class="font-bold">120</h2>
-                                </div>&ndash;&gt;
-                            </div>
-                        </div>
-                    </div>-->
-                    <!--<div class="col-lg-3">
-                                &lt;!&ndash;<span class="pull-right text-right">
-                                <small>Average value of sales in the past month in: <strong>United states</strong></small>
-                                    <br/>
-                                    All sales: 162,862
-                                </span>&ndash;&gt;
-                        <span class="label label-primary"><i class="flaticon-standing55"></i> 365</span>
-
-                        <h1 class="m-b-xs">
-                            <dc-count-widget
-                                xfilter-service="{{xfilterService}}"
-                                chart-service="{{DCchartService}}"
-                                grp="{{chartGroup}}">
-                            </dc-count-widget>
-                        </h1>
-
-                        <h3 class="font-bold no-margins">
-                            SUBJECTS
-                        </h3>
-                       &lt;!&ndash; <small>Sales marketing.</small>&ndash;&gt;
-                    </div>-->
-                    <!--<div class="col-lg-3">
-                        &lt;!&ndash;<span class="pull-right text-right">
-                        <small>Average value of sales in the past month in: <strong>United states</strong></small>
-                            <br/>
-                            All sales: 162,862
-                        </span>&ndash;&gt;
-
-                        <h1 class="m-b-xs">
-                            <dc-count-widget
-                                    xfilter-service="{{xfilterService}}"
-                                    chart-service="{{DCchartService}}"
-                                    grp="{{chartGroup}}">
-                            </dc-count-widget>
-                        </h1>
-
-                        <h3 class="font-bold no-margins">
-                            OBSERVATIONS
-                        </h3>
-                        &lt;!&ndash; <small>Sales marketing.</small>&ndash;&gt;
-                    </div>
-                    <div class="col-lg-3">
-                        &lt;!&ndash;<span class="pull-right text-right">
-                        <small>Average value of sales in the past month in: <strong>United states</strong></small>
-                            <br/>
-                            All sales: 162,862
-                        </span>&ndash;&gt;
-
-                        <h1 class="m-b-xs">
-                            <dc-count-widget
-                                    xfilter-service="{{xfilterService}}"
-                                    chart-service="{{DCchartService}}"
-                                    grp="{{chartGroup}}">
-                            </dc-count-widget>
-                        </h1>
-
-                        <h3 class="font-bold no-margins">
-                            VISITS
-                        </h3>
-                        &lt;!&ndash; <small>Sales marketing.</small>&ndash;&gt;
-                    </div>-->
-                    <!--<p class="model-icon">-->
-                    <!--<span class="flaticon-standing55"></span>-->
-
-                    <!--<dc-number-display cf="cf"></dc-number-display>-->
-                    <!--<dc-count-widget cf="cf" chartservice="chartservice" chartgroup="{{chartGroup}}"></dc-count-widget>-->
-                    <!-- <div><button ng-click="showVisits()">Show visits</button></div>-->
-
-                    <!--</p>-->
-
-                    <!--<div class="col-lg-2">
-                        <div class="widget style1 navy-bg">
-                            <div class="row vertical-align">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-user fa-3x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <h2 class="font-bold">217</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
-                </div>
-
-                <!--<h4>Explorer</h4>-->
-
                 <div class="ibox-content">
                     <div>
                         <div class="btn-group">
                             <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'plots'">Data Plots</label>
-                            <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'table'">Data Table</label>
+                            <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'findingsTable'">Findings Table</label>
+                            <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'eventsTable'">Events Table</label>
                         </div>
                     </div>
 
-                    <div id="{{chartingOpts.chartContainerId}}" ng-hide="vm.show =='table'" style="display: -webkit-box;" class=" plots-view animated fadeIn"></div>
-                    <div id="clinical-datatable" ng-hide="vm.show =='plots'" class="table-view animated fadeIn">
-                        <!--<div style="min-height: 50px;">Filters selected go here and a button to add to cart</div>-->
+                    <div id="{{chartingOpts.chartContainerId}}" ng-hide="vm.show =='eventsTable' || vm.show =='findingsTable'" style="display: -webkit-box;" class=" plots-view animated fadeIn"></div>
+                    <div id="findings-datatable" ng-hide="vm.show =='plots' || vm.show=='eventsTable'" class="table-view animated fadeIn">
                         <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
                                       chart-service="{{chartingOpts.DCchartService}}"
                                       xfilter-service="{{chartingOpts.xfilterService}}"
-                                      grp="{{chartingOpts.chartGroup}}">Choose observations from the tree below</dc-datatable>
+                                      grp="{{chartingOpts.chartGroup}}"
+                                      module="findings">Choose observations from the tree below</dc-datatable>
+                    </div>
+                    <div id="events-datatable" ng-hide="vm.show =='plots' || vm.show=='findingsTable'" class="table-view animated fadeIn">
+                        <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
+                                      chart-service="{{chartingOpts.DCchartService}}"
+                                      xfilter-service="{{chartingOpts.xfilterService}}"
+                                      grp="{{chartingOpts.chartGroup}}"
+                                      module="events">Choose observations from the tree below</dc-datatable>
                     </div>
                 </div>
 

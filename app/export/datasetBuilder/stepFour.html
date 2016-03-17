@@ -1,7 +1,5 @@
-<fieldset>
-    <h5>Validation Report</h5>
 
-    <div class="ibox-content">
+
         <div class="row">
             <div class="col-sm-6">
                 <!--<h3 class="m-t-none m-b">Sign in</h3>-->
@@ -14,33 +12,32 @@
                     </div>
                     <div class="form-group"><label>Dataset Description</label>
                         <textarea class="form-control"></textarea></div>
-                    <div>
-                        <h3>Simple String Tags</h3>
-                        <h4>(With Custom Tag Label / Sort Enabled)</h4>
-                        <ui-select multiple tagging tagging-label="(custom 'new' label)" ng-model="step4vm.multipleDemo.colors" theme="bootstrap" sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a color">
-                            <ui-select-match placeholder="Select colors...">{{$item}}</ui-select-match>
-                            <ui-select-choices repeat="color in step4vm.availableColors | filter:$select.search">
-                                {{color}}
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <ui-select multiple tagging tagging-label="(custom 'new' label)" ng-model="step4vm.selectedTags" theme="bootstrap" sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a tag">
+                            <ui-select-match placeholder="Select tags...">{{$item}}</ui-select-match>
+                            <ui-select-choices repeat="tag in step4vm.availableTags | filter:$select.search">
+                                {{tag}}
                             </ui-select-choices>
                         </ui-select>
-                        <p>Selected: {{step4vm.multipleDemo.colors}}</p>
                         <hr>
-
-                        <h3>Simple String Tags </h3>
-                        <h4>(Predictive Search Model / No Labels)</h4>
-                        <ui-select multiple tagging tagging-label="false" ng-model="step4vm.multipleDemo.colors2" theme="bootstrap" ng-disabled="disabled" style="width: 300px;" title="Choose a color">
-                            <ui-select-match placeholder="Select colors...">{{$item}}</ui-select-match>
-                            <ui-select-choices repeat="color in step4vm.availableColors | filter:$select.search">
-                                {{color}}
-                            </ui-select-choices>
-                        </ui-select>
-                        <p>Selected: {{step4vm.multipleDemo.colors2}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Permissions</label>
+                        <a class="btn btn-white btn-bitbucket btn-xs">
+                            <i class="fa fa-group"></i>
+                        </a>
                     </div>
                 </form>
             </div>
-
         </div>
-    </div>
-    <a ng-click="goToStep3()" class="btn btn-default">Previous</a>
-    <a ng-click="goToStep5()" class="btn btn-primary">Next</a>
+<div class="m-b-sm pull-right">
+    <a ng-click="step4vm.prev()" class="btn btn-default btn-sm">Previous</a>
+    <a ng-click="step4vm.finish()" class="btn btn-primary btn-sm">Save</a>
+    <a ng-click="step4vm.finish()" class="btn btn-primary btn-sm">Save and Download</a>
+</div>
+
+
+
+
 </fieldset>

@@ -39,7 +39,7 @@
         wizardService.loadDataset(datasetId, standardFileId).then(function(success){
             if(success){
                 $scope.loadedDataset = true;
-                //return wizardService.extractObs(datasetId,standardFileId)
+                return wizardService.extractObs(datasetId,standardFileId)
             }
             else
                 $scope.loadingFailed = true;

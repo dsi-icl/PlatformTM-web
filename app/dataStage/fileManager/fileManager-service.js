@@ -13,7 +13,11 @@
         var fileName;
 
         var _getDirContent = function (projectId,dir) {
-            if(dir=='')dir="top"
+            console.log(!dir)
+            if(!dir) dir="top"
+
+            dir = dir.replace("/","_")
+            console.log(dir);
             return $http({
                 url: serviceBase + 'api/files/project/'+projectId+'/uploadedFiles/'+dir,
                 method: 'GET'

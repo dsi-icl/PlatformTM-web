@@ -49,7 +49,9 @@ function authService($http, $q, localStorageService, ngAppConfig){
 
         $http.post(serviceBase + 'token',
             data,
-            { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded',
+                         'Access-Control-Allow-Origin' : 'http://localhost:63342'
+            } })
             .success(function (response) {
 
                 console.log(response);
