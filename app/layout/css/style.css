@@ -7776,6 +7776,7 @@ body.md-skin {
 .md-skin .nav > li.active > a {
     color: #5b5d5f;
     font-weight: 700;
+    margin-right: 0;
 }
 .md-skin .navbar-default .nav > li > a:hover,
 .md-skin .navbar-default .nav > li > a:focus {

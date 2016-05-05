@@ -20,7 +20,7 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
     $urlRouterProvider.otherwise('/home');
 
     //$urlRouterProvider.when('', '/explore/P-BVS}');
-    $urlRouterProvider.when('', '/login');
+    $urlRouterProvider.when('', '/home');
     $urlRouterProvider.when('/{studyId}/export/datasets/{datasetId}/wizard/3-preview', '/{studyId}/export/datasets/{datasetId}/wizard/3-preview/table');
 
     $ocLazyLoadProvider.config({

@@ -26,7 +26,7 @@ function filtersService($rootScope, $http, $q, ngAppConfig) {
             filter[0][1] = Math.round(filter[0][1])
             console.log(filters[chartGroup][obs],filter)
         }
-            $rootScope.$apply();
+            //$rootScope.$apply();
             //console.log(filtersServiceFactory.getSubjFilters());
         //}
         //if(chartGroup == 'clinical'){
