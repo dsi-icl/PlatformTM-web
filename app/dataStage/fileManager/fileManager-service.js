@@ -17,7 +17,10 @@
             if(!dir) dir="top"
 
             dir = dir.replace("/","_")
-            console.log(dir);
+
+
+
+            console.log(window.encodeURIComponent(serviceBase + 'api/files/project/'+projectId+'/uploadedFiles/'+dir));
             return $http({
                 url: serviceBase + 'api/files/project/'+projectId+'/uploadedFiles/'+dir,
                 method: 'GET'
