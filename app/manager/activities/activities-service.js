@@ -1,7 +1,7 @@
 /**
  * Created by iemam on 22/07/2014.
  */
-angular.module('eTRIKSdata.studyDesign')
+angular.module('bioSpeak.config')
 
     .factory('ActivityResource',function($resource,ngAppConfig){
         var serviceBase = ngAppConfig.apiServiceBaseUri;
@@ -25,6 +25,31 @@ angular.module('eTRIKSdata.studyDesign')
         /*return $resource('../data/activities.json',{ }, {
             getData: {method:'GET', isArray: false}
         });*/
+    })
+
+
+    .factory('AssayResource',function($resource,ngAppConfig){
+        var serviceBase = ngAppConfig.apiServiceBaseUri;
+
+        return $resource(serviceBase+'api/assays/:assayId',{},{
+            update:{
+                method: 'PUT',
+                params: {assayId: '@id'}
+            }/*,
+            getActivitiesForStudy:{
+                method: 'GET',
+                url : serviceBase+'api/studies/:studyId/activities',
+                isArray : true
+                params:{studyId}
+            },
+             get:{
+             method:'GET',
+             url: 'http://rachmaninoff.local:8080/api/activities/:activityId'
+             }*/
+        });
+        /*return $resource('../data/activities.json',{ }, {
+         getData: {method:'GET', isArray: false}
+         });*/
     })
 
 /*    .factory('DatasetResource',function($resource){

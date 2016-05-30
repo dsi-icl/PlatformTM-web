@@ -1,7 +1,7 @@
 /**
  * Created by iemam on 03/07/2014.
  */
-angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource",'eTRIKSdata.utils.service'])
+angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.service'])
 
     .config(function($stateProvider, $urlRouterProvider){
 
@@ -17,7 +17,12 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                     loadDependency: function ($ocLazyLoad) {
                         return $ocLazyLoad.load([
                             {
-                                files: ['lib/plugins/footable/js/footable.all.min.js', 'lib/plugins/footable/css/footable.core.css']
+                                serie:true,
+                                files: ['lib/plugins/footable/js/footable.all.min.js', 'lib/plugins/footable/css/footable.core.css',
+
+                                    'lib/plugins/ui-select/js/select.min.js', 'lib/plugins/ui-select/css/select.css',
+                                    'lib/plugins/angular-ui-select/js/select.min.js', 'lib/plugins/angular-ui-select/css/select.css',
+                                    'lib/plugins/angular-xeditable/js/xeditable.min.js','lib/plugins/angular-xeditable/css/xeditable.css']
                             },
                             {
                                 name: 'ui.footable',
@@ -55,6 +60,29 @@ angular.module('eTRIKSdata.studyDesign',["xeditable","ui.bootstrap","ngResource"
                 url:'/activities/{activityId}',
                 templateUrl: "manager/activities/activity-detail.html",
                 controller: "ActivityCtrl as vm"
+                /*views:{
+                 '':{
+                 templateUrl:"manager/studyManager.html"
+                 },
+                 'study-plan@manager':{
+                 templateUrl:"manager/study-plan/study-plan.html"
+                 },
+                 'study-activities@manager':{
+                 templateUrl: "manager/activities/activity-list.html",
+                 controller:'ActivityListController'
+                 }
+                 }*/
+            })
+            .state('manager.assay',{
+                url:'/assays/{assayId}',
+                templateUrl: "manager/activities/assay-detail.html",
+                controller: "AssayConfigCtrl as vm",
+                resolve: {
+                    loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        console.log("loading service");
+                        return $ocLazyLoad.load('manager/activities/assayConfig-service.js');
+                    }]
+                }
                 /*views:{
                  '':{
                  templateUrl:"manager/studyManager.html"

@@ -1,7 +1,7 @@
 /**
  * Created by iemam on 03/07/2014.
  */
-angular.module('eTRIKSdata.studyDesign')
+angular.module('bioSpeak.config')
 
     .directive('cdzArm', function(){
         return{

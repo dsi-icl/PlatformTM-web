@@ -7,7 +7,7 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
         "ui.router",
         'oc.lazyLoad',
         'LocalStorageModule',                  // ocLazyLoad
-        "eTRIKSdata.studyDesign",
+        "bioSpeak.config",
         "eTRIKSdata.explorer",
         "bioSpeak.userAuth",
         "bioSpeak.DataStager",
@@ -49,10 +49,12 @@ eTRIKSdataApp.run(function($rootScope){
     $rootScope.$on('$stateChangeSuccess', function() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
+
+    
 })
 
 eTRIKSdataApp.constant('ngAppConfig', {
-    apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+    //apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-    //apiServiceBaseUri: 'http://localhost:2483/'
+    apiServiceBaseUri: 'http://155.198.188.216:2483/'
 })

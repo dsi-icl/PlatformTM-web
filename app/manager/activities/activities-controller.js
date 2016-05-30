@@ -1,11 +1,11 @@
 /**
  * Created by iemam on 22/07/2014.
  */
-angular.module('eTRIKSdata.studyDesign')
+angular.module('bioSpeak.config')
 
     //Create a controller for each state
 
-    .controller('ActivityListController', ['$scope','$stateParams', 'ActivityResource','model', function ($scope, $stateParams, ActivityResource, model) {
+    .controller('ActivityListController', ['$scope','$state','$stateParams', 'ActivityResource','model', function ($scope, $state, $stateParams, ActivityResource, model) {
         $scope.vmodel = {};
         //$scope.vmodel.studyId = $stateParams.studyId
 
@@ -19,6 +19,13 @@ angular.module('eTRIKSdata.studyDesign')
             model.activities = response;
             vm.activities = model.activities;
         });
+
+        vm.goToActivity = function(activity){
+            if(activity.isAssay)
+                $state.go('manager.assay',{ assayId: activity.id})
+            else
+                $state.go('manager.activity',{ activityId: activity.id})
+        }
     }])
 
     .controller('ActivityCtrl', ['$state','$scope', '$stateParams', 'ActivityResource','DatasetResource','ISAconfigResource','model','$timeout', function

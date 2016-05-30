@@ -1,7 +1,7 @@
 /**
  * Created by iemam on 03/07/2014.
  */
-angular.module('eTRIKSdata.studyDesign')
+angular.module('bioSpeak.config')
 
     .controller('StudyPlanCtrl',['$scope','$state','$stateParams','$http','ngAppConfig',
         function($scope,$state,$stateParams,$http,ngAppConfig){

@@ -117,7 +117,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                 
             };*/
 
-            $timeout(function() {
+            //$timeout(function() {
                 console.log("calling clinical tree")
                 clinicalDataService.getClinicalDataTree($scope.chartingOpts.projectId)
                     .then(function(data){
@@ -127,7 +127,7 @@ angular.module('biospeak.clinical',['eTRIKSdata.dcPlots'])
                         //$scope.getObsForAll();
 
                     })
-            },20000)
+            //},20000)
 
             /*$scope.getObsIdsForMeddra = function(medraterm){
                 var jsonQobj=jsonQ($scope.clinicalData);
