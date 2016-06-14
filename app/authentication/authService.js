@@ -42,7 +42,7 @@ function authService($http, $q, localStorageService, ngAppConfig){
     var _login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
-        console.log(data)
+        //console.log(data)
         console.log(serviceBase + 'token')
 
         var deferred = $q.defer();

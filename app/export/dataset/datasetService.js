@@ -68,7 +68,7 @@ function datasetService($http, $q,ngAppConfig,localStorageService){
         }).then(
             function (response) {
                 return {
-                    filter: (response.data)
+                    field: (response.data)
 
                 }
             }

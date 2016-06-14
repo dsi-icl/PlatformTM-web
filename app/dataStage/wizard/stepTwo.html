@@ -34,28 +34,7 @@
             </div>
         </div>
     </div>
-<!--    <div class="thumb">
-        <progress><bar ng-repeat="varType in vm.template.varTypes track by $index" value="30" type="{{bar.type}}">
-            <span ng-hide="30 < 3">{{60}}%</span>
-        </bar></progress>
-        <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th ng-repeat="var in vm.template.varTypes[0].vars"></th>
-                <th ng-repeat="var in vm.template.varTypes[1].vars"></th>
-                <th ng-repeat="var in vm.template.varTypes[2].vars"></th>
 
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="n in [1,2,3,4,5,6,7,8]">
-                <td ng-repeat="var in vm.template.varTypes[0].vars"></td>
-                <td ng-repeat="var in vm.template.varTypes[1].vars"></td>
-                <td ng-repeat="var in vm.template.varTypes[2].vars"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>-->
     <div class="row" ng-hide="fileInfo.templateMatched || !vm.dataIsloaded">
         <div  class="ibox float-e-margins">
             <div class="ibox-content ">
@@ -192,7 +171,7 @@
 
                             </div>
                         </div>
-                        <button type="button" ng-click="saveMapping()" class="pull-right btn btn-primary btn-xs">Save Changes</button>
+                        <button type="button" ng-click="saveMap()" class="pull-right btn btn-primary btn-xs">Save Changes</button>
                         <button type="button" ng-click="cancel()" class="pull-right btn btn-primary btn-xs">Cancel</button>
                     </div>
                 </div>

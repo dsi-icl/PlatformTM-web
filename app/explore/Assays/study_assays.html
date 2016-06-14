@@ -86,7 +86,7 @@
                             xfilter-service="{{chartingOpts.xfilterService}}"
                             chart-service="{{chartingOpts.DCchartService}}"
                             grp="{{chartingOpts.chartGroup}}"
-                            module="{{assay.assayId}}"></dc-count-widget> Samples
+                            module="{{assay.id}}"></dc-count-widget> Samples
                        </span>
                     </p>
                 </div>
@@ -100,15 +100,15 @@
                     </div>
                 </div>
 
-                <div id="{{chartingOpts.chartContainerId}}_{{assay.assayId}}" ng-hide="vm.show =='table'" style="display: -webkit-box;"
+                <div id="{{chartingOpts.chartContainerId}}_{{assay.id}}" ng-hide="vm.show =='table'" style="display: -webkit-box;"
                      class=" plots-view animated fadeIn"></div>
-                <div id="{{assay.assayId}}-datatable" ng-hide="vm.show =='plots'" class="table-view animated fadeIn">
+                <div id="{{assay.id}}-datatable" ng-hide="vm.show =='plots'" class="table-view animated fadeIn">
 
                     <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
                                   chart-service="{{chartingOpts.DCchartService}}"
                                   xfilter-service="{{chartingOpts.xfilterService}}"
                                   grp="{{chartingOpts.chartGroup}}"
-                                  module="{{assay.assayId}}">Choose observations from the tree below
+                                  module="{{assay.id}}">Choose observations from the tree below
                     </dc-datatable>
                 </div>
             </div>

@@ -47,9 +47,9 @@ function config($stateProvider){
             url: '/step_two/:activityId/:datasetId/:fileId',
             controller: 'stepTwoController',
             templateUrl: 'dataStage/wizard/stepTwo.html',
-            params: {
+            /*params: {
                 file: null
-            },
+            },*/
             resolve:{
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([

@@ -41,25 +41,37 @@
                     </div>-->
 
 
-                    <div class="row">
+<!--                    <div class="row">
                         <div class="col-lg-12">
                             <div class="m-b-md">
-                                <!--<a href="" class="btn btn-white btn-xs pull-right">Edit activity</a>-->
+                                &lt;!&ndash;<a href="" class="btn btn-white btn-xs pull-right">Edit activity</a>&ndash;&gt;
                                 <a ng-click="saveActivity()" class="btn btn-primary btn-xs pull-right">Save Changes</a>
                                 <h3><a href="#" e-ng-model="vmodel.activity.name" editable-text="vm.activity.name" buttons="no" blur="submit">{{vm.activity.name || "Activity Name"}}</a></h3>
                             </div>
                             <dl class="dl-horizontal">
                                 <dt>Status:</dt>
                                 <dd><span class="label label-primary">{{vm.activity.status}}</span></dd>
-                                <!--<dt>Contributors:</dt>
+                                &lt;!&ndash;<dt>Contributors:</dt>
                                 <dd class="project-people">
                                     <a href=""><img alt="image" class="img-circle" src="img/temp/a1.jpg"></a>
                                     <a href=""><img alt="image" class="img-circle" src="img/temp/a2.jpg"></a>
-                                </dd>-->
+                                </dd>&ndash;&gt;
+                            </dl>
+                        </div>
+                    </div>-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <dl class="dl-horizontal">
+                                <dt>Activity Title</dt>
+                                <dd>
+                                    <div class="col-md-6">
+                                        <a href="#" e-ng-model="vm.activity.name" editable-text="vm.activity.name" buttons="no" blur="submit">{{vm.activity.name|| "Activity Name"}}</a>
+                                    </div>
+                                </dd>
                             </dl>
                         </div>
                     </div>
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-lg-5">
                             <dl class="dl-horizontal">
 
@@ -67,10 +79,10 @@
                                 <dd>Ibrahim Emam</dd>
                                 <dt>Subjects:</dt>
                                 <dd> <a href="#" e-ng-model="vmodel.activity.size" editable-text="vm.activity.size" buttons="no" blur="submit">{{vm.activity.size || "Expected No. of subjects"}}</a></dd>
-                                <!--<dt>Client:</dt>
-                                <dd><a href="" class="text-navy"> Zender Company</a></dd>-->
-                                <!--<dt>Version:</dt>
-                                <dd> v1.4.2</dd>-->
+                                &lt;!&ndash;<dt>Client:</dt>
+                                <dd><a href="" class="text-navy"> Zender Company</a></dd>&ndash;&gt;
+                                &lt;!&ndash;<dt>Version:</dt>
+                                <dd> v1.4.2</dd>&ndash;&gt;
                             </dl>
                         </div>
                         <div ng-if="!vm.activity.isNew" class="col-lg-7" id="cluster_info">
@@ -83,8 +95,8 @@
 
                             </dl>
                         </div>
-                    </div>
-                    <div class="row" ng-if="!vm.activity.isNew">
+                    </div>-->
+                    <!--<div class="row" ng-if="!vm.activity.isNew">
                         <div class="col-lg-12">
                             <dl class="dl-horizontal">
                                 <dt>Completed:</dt>
@@ -92,12 +104,12 @@
                                     <div class="progress progress-striped m-b-sm">
                                         <div style="width: 60%;" class="progress-bar"></div>
                                     </div>
-                                    <!-- <small>Project completed in <strong>60%</strong>. Remaining close the project, sign a contract and invoice.</small>-->
+                                    &lt;!&ndash; <small>Project completed in <strong>60%</strong>. Remaining close the project, sign a contract and invoice.</small>&ndash;&gt;
                                 </dd>
                             </dl>
                         </div>
-                    </div>
-                    <div class="row m-t-sm">
+                    </div>-->
+                    <!--<div class="row m-t-sm">
                         <div class="col-lg-12">
                             <h3>Associated Dataset Templates</h3>
                             <div class="panel blank-panel ui-tab">
@@ -125,9 +137,9 @@
                                                 </div>
                                             </div>
 
-                                            <!--<div class="row">-->
+                                            &lt;!&ndash;<div class="row">&ndash;&gt;
 
-                                            <!--</div>-->
+                                            &lt;!&ndash;</div>&ndash;&gt;
 
                                         </div>
                                         <div class="ibox">
@@ -150,16 +162,16 @@
                                                     <tr>
 
                                                         <th data-toggle="true">Column</th>
-                                                        <th>Variable Name</th>
+                                                        <th> Variable Name</th>
                                                         <th>Include</th>
                                                         <th data-hide="phone">Mandatory</th>
                                                         <th data-hide="all">Description</th>
                                                         <th data-hide="all">Controlled Vocabulary</th>
                                                         <th data-hide="all">Order</th>
                                                         <th data-hide="all">Key Sequence</th>
-                                                        <!--<th>Quantity</th>-->
-                                                        <!--<th>Status</th>-->
-                                                        <!--<th class="text-right" data-sort-ignore="true">Action</th>-->
+                                                        &lt;!&ndash;<th>Quantity</th>&ndash;&gt;
+                                                        &lt;!&ndash;<th>Status</th>&ndash;&gt;
+                                                        &lt;!&ndash;<th class="text-right" data-sort-ignore="true">Action</th>&ndash;&gt;
 
                                                     </tr>
                                                     </thead>
@@ -175,7 +187,7 @@
                                                             <button type="button" class="btn btn-xs btn-primary" ng-model="var.isSelected" btn-checkbox>
                                                                 {{var.isSelected ? 'Included' : 'Excluded'}}
                                                             </button>
-                                                            <!--<input id="mandatoryCHK" type="checkbox" ng-model="var.isRequired">-->
+                                                            &lt;!&ndash;<input id="mandatoryCHK" type="checkbox" ng-model="var.isRequired">&ndash;&gt;
                                                         </td>
                                                         <td>
                                                             <input  icheck type="checkbox"  ng-model="var.isRequired" >
@@ -191,18 +203,18 @@
                                                         </td>
                                                         <td><input class="input-sm" style="width:25px" id="seq" type="text" ng-model="var.sequence">
                                                         </td>
-                                                        <!--<td>-->
-                                                        <!--1000-->
-                                                        <!--</td>-->
-                                                        <!--<td>-->
-                                                        <!--<span class="label label-primary">Enable</span>-->
-                                                        <!--</td>-->
-                                                        <!--<td class="text-right">-->
-                                                        <!--<div class="btn-group">-->
-                                                        <!--<button class="btn-white btn btn-xs">View</button>-->
-                                                        <!--<button class="btn-white btn btn-xs">Edit</button>-->
-                                                        <!--</div>-->
-                                                        <!--</td>-->
+                                                        &lt;!&ndash;<td>&ndash;&gt;
+                                                        &lt;!&ndash;1000&ndash;&gt;
+                                                        &lt;!&ndash;</td>&ndash;&gt;
+                                                        &lt;!&ndash;<td>&ndash;&gt;
+                                                        &lt;!&ndash;<span class="label label-primary">Enable</span>&ndash;&gt;
+                                                        &lt;!&ndash;</td>&ndash;&gt;
+                                                        &lt;!&ndash;<td class="text-right">&ndash;&gt;
+                                                        &lt;!&ndash;<div class="btn-group">&ndash;&gt;
+                                                        &lt;!&ndash;<button class="btn-white btn btn-xs">View</button>&ndash;&gt;
+                                                        &lt;!&ndash;<button class="btn-white btn btn-xs">Edit</button>&ndash;&gt;
+                                                        &lt;!&ndash;</div>&ndash;&gt;
+                                                        &lt;!&ndash;</td>&ndash;&gt;
                                                     </tr>
 
 
@@ -223,204 +235,8 @@
                                             </div>
                                         </div>
                                     </tab>
-                                    <!--<tab heading="Last activity">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th>Status</th>
-                                                <th>Title</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Comments</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
-                                                </td>
-                                                <td>
-                                                    Create project in webapp
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                                </td>
-                                                <td>
-                                                    Various versions
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                </td>
-                                                <td>
-                                                    There are many variations
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                                </td>
-                                                <td>
-                                                    Latin words
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        Latin words, combined with a handful of model sentence structures
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
-                                                </td>
-                                                <td>
-                                                    The generated Lorem
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                </td>
-                                                <td>
-                                                    The first line
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
-                                                </td>
-                                                <td>
-                                                    The standard chunk
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
-                                                </td>
-                                                <td>
-                                                    Lorem Ipsum is that
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
-                                                </td>
-                                                <td>
-                                                    Contrary to popular
-                                                </td>
-                                                <td>
-                                                    12.07.2014 10:10:1
-                                                </td>
-                                                <td>
-                                                    14.07.2014 10:16:36
-                                                </td>
-                                                <td>
-                                                    <p class="small">
-                                                        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                                                    </p>
-                                                </td>
-
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </tab>-->
                                     <tab heading="New Dataset" >
-                                        <!--<tab-heading><i class="fa fa-plus-circle"></i>New Dataset</tab-heading>-->
+                                        &lt;!&ndash;<tab-heading><i class="fa fa-plus-circle"></i>New Dataset</tab-heading>&ndash;&gt;
 
                                         <div class="dataset-container">
                                             <div>
@@ -432,7 +248,7 @@
                                             </div>
                                             <div class=""></div>
                                             <div id="data-accordion" style="margin: 1.5%">
-                                                <!--<div class="panel" style="border: 0; width:100%">-->
+                                                &lt;!&ndash;<div class="panel" style="border: 0; width:100%">&ndash;&gt;
 
                                                 <div class="section-block-header" style="cursor: pointer" id="clinicaldata" data-toggle="collapse" data-parent="#data-accordion" data-target="#clinicadata-content">
                                                     Data Templates
@@ -452,63 +268,161 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-
-
-
-                                                <!--<div class="section-block-header" style="cursor: pointer" id="moleculardata" data-toggle="collapse" data-parent="#data-accordion" data-target="#moleculardata-content">
-                                                    Molecular Assays
-                                                </div>
-                                                <div id="moleculardata-content" class="assessment-list collapse">
-                                                    <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
-                                                        Search: <input ng-model="searchText">
-                                                    </div>
-                                                    <div style="height: 200px; overflow-y: scroll;">
-                                                        <ul >
-                                                            <li ng-repeat="isaconf in vm.isaconfigs | filter:{name: searchText}">{{isaconf.name}}</li>
-                                                        </ul>
-                                                    </div>
-
-                                                </div>-->
-
-
-                                                <!--<div class="section-block-header" id="subjectdata" style="cursor: pointer" data-toggle="collapse" data-parent="#data-accordion" data-target="#subjectdata-content">
-                                                    Subject Characteristics
-                                                </div>
-                                                <div id="subjectdata-content" class="assessment-list collapse">
-                                                    <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
-                                                        Search: <input ng-model="searchText">
-                                                    </div>
-                                                    <div style="height: 200px; overflow-y: scroll;">
-                                                        <ul>
-                                                            <li>Demographics</li>
-                                                            <li>Subject Characteristics</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>-->
-                                                <!-- </div>-->
-
                                             </div>
                                         </div>
                                     </tab>
-
                                 </tabset>
-
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-
-                        </div>
-                    </div>
+                    </div>-->
                 </div>
+            </div>
+
+            <div>
+                <tabset>
+                    <tab ng-repeat="ds in vm.activity.datasets" heading="{{ds.name}}" active="$first">
+                        <!--<tab-heading>
+                            <p class="tab-info">Sample Annotation Template</p>
+                            <p class="tab-info">
+                                <img class="img-dashboard" src="img/blood-sample.png"  alt="profile">
+                            </p>
+                            <p class="tab-info text-left" >
+                                <small>A template for loading sample data such as sample characteristics, timepoints, replicates and subject to sample mapping</small>
+                            </p>
+                        </tab-heading>-->
+
+                        <div class="tab-content">
+                            <div id="sampleTemplate" class="animated">
+                                <div class="m-t-sm ibox animated fadeIn" >
+                                    <div class="ibox-content m-b-sm border-bottom">
+
+                                        <!--TITLE AND CONTROLS-->
+
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="m-b-md">
+                                                    <h2><a editable-select="vm.assay.samplesDataset" onshow="vm.loadAssaySampleTemplates()"
+                                                           e-ng-change="vm.showTemplate($data.domainId,'sample')"
+                                                           e-ng-options="template as template.name for template in vm.templates.sample"
+                                                           e-form="sampleBtnForm"
+                                                           onaftersave="vm.saveTemplateToAssay('sample')">
+                                                        {{ vm.assay.samplesDataset.name || 'No Template Selected' }}
+                                                    </a></h2>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-7">
+                                                <div class="text-right">
+                                                    <button class="btn btn-primary btn-sm" ng-click="sampleBtnForm.$show()" ng-hide="sampleBtnForm.$visible">
+                                                        {{ds.name ? 'Change Template':'Choose Template'}}
+                                                    </button>
+                                                    <span ng-show="ds.name">
+                                                        <!--<a href="" class="btn btn-primary btn-sm">Add new Variable</a>-->
+                                                        <a href="" class="btn btn-primary btn-sm">Preview Template</a>
+                                                        <a href="" class="btn btn-primary btn-sm">Download Template</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!--SUMMARY DATA-->
+                                        <div class="row" ng-show="ds.name">
+                                            <div class="col-lg-12">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Class</dt>
+                                                    <dd>{{ds.class}}</dd>
+                                                    <dt>Description</dt>
+                                                    <dd>{{ds.description}}</dd>
+                                                    <dt>Structure</dt>
+                                                    <dd>{{ds.structure}}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--<div class="ibox float-e-margins" ng-repeat="varType in vm.varTypes">
+                                        <div class="ibox-title" style="
+                                                        background-color: #2C3E50;
+                                                        color: #FBFBFC;">
+                                            <h5>{{varType.name}}</h5>
+                                            <div ibox-tools></div>
+                                        </div>
+                                        <div class="ibox-content" style="max-height: 400px;overflow: scroll;border: white 15px solid;">
+                                        </div>
+                                    </div>-->
+
+                                    <!--VARIABLES TABLE-->
+                                    <div class="ibox" ng-show="ds.variables">
+                                        <div class="ibox-title">
+                                            <h5>Select columns to include in this template</h5>
+                                        </div>
+
+                                        <div class="ibox-content">
+                                            <!--FOO TABLE-->
+                                            <table id="bs_template_tbl" class="footable table table-stripped toggle-arrow-tiny" load-when="vm.loaded" data-page-size="15">
+                                                <thead>
+
+                                                <tr>
+                                                    <th data-toggle="true">Column</th>
+                                                    <th>Variable Name</th>
+                                                    <th>Include</th>
+                                                    <th data-group="group1" data-hide="phone">Mandatory</th>
+                                                    <th data-group="group1" data-hide="all">Description</th>
+                                                    <th data-hide="all">Controlled Vocabulary</th>
+                                                    <th data-hide="all">Order</th>
+                                                    <th data-hide="all">Key Sequence</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="var in ds.variables">
+                                                    <td>
+                                                        {{var.name}}
+                                                    </td>
+                                                    <td>
+                                                        {{var.label}}
+                                                    </td>
+                                                    <td>
+                                                        <input  icheck type="checkbox"  ng-model="var.isSelected" >
+                                                    </td>
+                                                    <td>
+                                                        <input  icheck type="checkbox"  ng-model="var.isRequired" >
+                                                    </td>
+                                                    <td>
+                                                        {{var.description}}
+                                                    </td>
+                                                    <td>
+                                                        {{var.dictionaryName}}
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" e-ng-model="var.order" editable-text="var.order" buttons="no" blur="submit">{{var.order || "Undefined"}}</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" e-ng-model="var.sequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.sequence || "Undefined"}}</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                <tr>
+                                                    <td colspan="6">
+                                                        <ul class="pagination pull-right"></ul>
+                                                    </td>
+                                                </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tab>
+                </tabset>
             </div>
         </div>
     </div>
-    <div class="col-lg-3">
+    <!--<div class="col-lg-3">
         <div class="wrapper wrapper-content project-manager">
-<!--            <h4>Project description</h4>
+&lt;!&ndash;            <h4>Project description</h4>
             <img src="img/zender_logo.png" class="img-responsive">
 
             <p class="small">
@@ -525,7 +439,7 @@
                 <li><a href=""><i class="fa fa-tag"></i> Lorem ipsum</a></li>
                 <li><a href=""><i class="fa fa-tag"></i> Passages</a></li>
                 <li><a href=""><i class="fa fa-tag"></i> Variations</a></li>
-            </ul>-->
+            </ul>&ndash;&gt;
             <h5>Associated Data files</h5>
             <ul class="list-unstyled project-files">
                 <li><a href=""><i class="fa fa-file"></i> P-BVS_1.csv</a></li>
@@ -533,11 +447,11 @@
                 <li><a href=""><i class="fa fa-file"></i> Sample_protocol.doc</a></li>
                 <li><a href=""><i class="fa fa-file"></i> Contact_20_11_2014.docx</a></li>
             </ul>
-<!--            <div class="text-center m-t-md">
+&lt;!&ndash;            <div class="text-center m-t-md">
                 <a href="" class="btn btn-xs btn-primary">Add files</a>
                 <a href="" class="btn btn-xs btn-primary">Report contact</a>
 
-            </div>-->
+            </div>&ndash;&gt;
         </div>
-    </div>
+    </div>-->
 </div>

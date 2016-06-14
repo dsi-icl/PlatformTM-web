@@ -33,28 +33,28 @@
                 </div>
             </div>
 
-            <div class="row">
+            <!--<div class="row">
                 <h3 class="domainTitleName">Saved Filters</h3>
                 <div class="well">
                     <ul class="list-group clear-list">
                         <li class="list-group-item fist-item">
-                            <!--<span class="pull-right"> 09:00 pm </span>-->
+                            &lt;!&ndash;<span class="pull-right"> 09:00 pm </span>&ndash;&gt;
                             BMI between 20 and 25
                             Arm (Stamaril, Boostrix)
                         </li>
                         <li class="list-group-item">
-                            <!--<span class="pull-right"> 10:16 am </span>-->
+                            &lt;!&ndash;<span class="pull-right"> 10:16 am </span>&ndash;&gt;
                            CRP between 0.3 and 9.0
                         </li>
                         <li class="list-group-item">
-                            <!--<span class="pull-right"> 08:22 pm </span>-->
+                            &lt;!&ndash;<span class="pull-right"> 08:22 pm </span>&ndash;&gt;
                             Arm (Placebo) Age > 50
                         </li>
                         
                     </ul>
                 </div>
 
-            </div>
+            </div>-->
 
 
         </div>
@@ -63,13 +63,13 @@
         <div class="col-md-7">
             <div ui-view>
                 <h3 class="domainTitleName">Filters</h3>
-                <div ng-repeat="filter in step2vm.filters">
+                <div ng-repeat="field in step2vm.filters">
 
-                    <div ng-if="filter.valueSet.isNumeric" class="ibox float-e-margins" style="margin-bottom: 1px;border-top: 1px solid white;">
+                    <div ng-if="field.filter.isNumeric" class="ibox float-e-margins" style="margin-bottom: 1px;border-top: 1px solid white;">
                         <div class="ibox-title" style="
                                                         background-color: #2C3E50;
                                                         color: #FBFBFC;">
-                            <h5>{{filter.o3Name}} between <span style="color: #CDFF3B">{{filter.valueSet.from}} {{filter.valueSet.unit}}</span> and <span style="color: #CDFF3B">{{filter.valueSet.to}} {{filter.valueSet.unit}}</span></h5>
+                            <h5>{{field.displayName}} between <span style="color: #CDFF3B">{{field.filter.from}} {{field.filter.unit}}</span> and <span style="color: #CDFF3B">{{field.filter.to}} {{field.filter.unit}}</span></h5>
                             <div ibox-tools></div>
                         </div>
                         <div class="ibox-content" style="">
@@ -91,21 +91,21 @@
                                  min="filter.valueSet.min" max="filter.valueSet.max"
                                  to="filter.valueSet.to" from="filter.valueSet.from"
                                  on-change="filter.update"></div>-->
-                            <div ion-range-slider range-options="filter.ionSliderOptions"></div>
+                            <div ion-range-slider range-options="field.ionSliderOptions"></div>
                         </div>
                     </div>
 
-                    <div ng-if="!filter.valueSet.isNumeric" class="ibox float-e-margins" style="margin-bottom: 1px;border-top: 1px solid white;">
+                    <div ng-if="!field.filter.isNumeric" class="ibox float-e-margins" style="margin-bottom: 1px;border-top: 1px solid white;">
                         <div class="ibox-title" style="background-color: #2C3E50;color: #FBFBFC;">
-                            <h5 ng-show="filter.valueSet.filterValues">{{filter.o3Name}} : (<span style="color:#00bfcd" ng-repeat="val in filter.valueSet.filterValues">{{val}}{{!$last ? ',':''}}</span>)</h5>
-                            <h5 ng-hide="filter.valueSet.filterValues">{{filter.o3Name}}</h5>
-                            <div ibox-tools></div>
+                            <h5 ng-show="field.filter.filterValues">{{field.displayName}} : (<span style="color:#00bfcd" ng-repeat="val in field.filter.filterValues">{{val}}{{!$last ? ',':''}}</span>)</h5>
+                            <h5 ng-hide="field.filter.filterValues">{{field.displayName}}</h5>
+                            <div ibox-tools ></div>
                         </div>
                         <div class="ibox-content" style="">
                             <b>Values: </b>
-                            <ui-select multiple ng-model="filter.valueSet.filterValues" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                            <ui-select multiple ng-model="field.filter.filterValues" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
                                 <ui-select-match style="height: 29px;" placeholder="Select filter terms...">{{$item}}</ui-select-match>
-                                <ui-select-choices repeat="term in filter.valueSet.valueSet | filter:$select.search" position="down">
+                                <ui-select-choices repeat="term in field.filter.valueSet | filter:$select.search" position="down">
                                     {{term}}
                                 </ui-select-choices>
                             </ui-select>

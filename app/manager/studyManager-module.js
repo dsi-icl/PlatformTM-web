@@ -75,7 +75,7 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.
             })
             .state('manager.assay',{
                 url:'/assays/{assayId}',
-                templateUrl: "manager/activities/assay-detail.html",
+                templateUrl: "manager/activities/assayConfig.html",
                 controller: "AssayConfigCtrl as vm",
                 resolve: {
                     loadService: ['$ocLazyLoad', function ($ocLazyLoad) {

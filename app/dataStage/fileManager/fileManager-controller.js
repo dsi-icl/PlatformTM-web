@@ -24,15 +24,13 @@
         fileService.getDirectories($stateParams.studyId)
             .then(function(data){
                 vm.dirs = data.files;
-               // console.log(data.files);
+                //console.log(data.files);
                 //$scope.vm.dirs = data.files;
 
                 fileService.getContent($stateParams.studyId,$stateParams.dir)
                     .then(function(data){
                         vm.files = data.files;
                     })
-
-
             })
 
 
@@ -51,7 +49,6 @@
                         $state.go('datastage.files',{dir:$scope.vm.newdir});
                     })
         }
-
 
         vm.openUpload = function(){
             console.log($stateParams)
@@ -77,7 +74,7 @@
 
         vm.updateFn = function(fileInfo){
             if(fileInfo.selected){
-                $scope.vm.selectedFiles[fileInfo.fileName] = fileInfo
+                $scope.vm.selectedFiles[fileInfo.fileName] = fileInfo//.dataFileId
                 $scope.vm.selectedFilesCount++
             }
             else{

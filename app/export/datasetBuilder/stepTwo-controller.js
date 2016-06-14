@@ -34,9 +34,10 @@ function stepTwoController($scope,$state,$stateParams,datasetService){
         },
         defaults: {},
         checkbox:{
-            three_state:false//,
+            three_state:true//,
             //visible:false
         },
+        state : { key : "step1" },
         types : {
             default : {
                 icon : 'glyphicon glyphicon-flash'
@@ -49,7 +50,7 @@ function stepTwoController($scope,$state,$stateParams,datasetService){
             }
         },
         version : 1,
-        plugins : ['checkbox','changed']
+        plugins : ['checkbox','changed','state']
     };
 
     vm.treeChanged = function (event,data){
@@ -68,30 +69,30 @@ function stepTwoController($scope,$state,$stateParams,datasetService){
         var field = data.node.original.field;
         //console.log(field)
         datasetService.getFieldFilter(projectId,field).then(function(data){
-            //console.log(data.filter)
-            var filter = data.filter;
+            console.log(data)
+            var field = data.field;
             //console.log(filter);
             //console.log(filter.valueSet.isNumeric);
-            filter.update = function(slider){
-                filter.valueSet.from = slider.fromNumber;
-                filter.valueSet.to = slider.toNumber;
+            field.update = function(slider){
+                field.filter.from = slider.fromNumber;
+                field.filter.to = slider.toNumber;
                 $scope.$apply();
             }
 
-            if(filter.valueSet.isNumeric)
-                filter.ionSliderOptions = {
-                    min: filter.valueSet.min,
-                    max: filter.valueSet.max,
-                    from: filter.valueSet.from,
-                    to: filter.valueSet.to,
+            if(field.filter.isNumeric)
+                field.ionSliderOptions = {
+                    min: field.filter.min,
+                    max: field.filter.max,
+                    from: field.filter.from,
+                    to: field.filter.to,
                     type: 'double',
-                    postfix: ' '+filter.valueSet.unit,
+                    postfix: ' '+field.filter.unit,
                     maxPostfix: "+",
                     prettify: false,
                     hasGrid: true,
-                    onChange: filter.update
+                    onChange: field.update
                 }
-            vm.filters.push(filter);
+            vm.filters.push(field);
         })
         console.log(vm.filters)
     };

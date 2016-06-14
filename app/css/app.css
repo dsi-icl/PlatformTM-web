@@ -798,7 +798,7 @@ a.editable-select {
 }
 
 .tab-panel > ul {
-    background-color: #eeede9;
+    background-color: #254154;
     /*margin-top: -2px;*/
     list-style: none;
     /*overflow: scroll;*/
@@ -808,18 +808,20 @@ a.editable-select {
     border: 0;
     /*display: table;*/
     width: 100%;
+    color:white;
 }
 
 .tab-panel > ul li {
-    background-color: #eeede9;
+    background-color: #2C3E50;
     text-align: center;
     display: table-cell;
     float: none;
     width:33%;
+
 }
 
 .tab-panel > ul li.odd {
-    background-color: #ded2db;
+    background-color: #25495c;
     /*float: left;*/
     /*width: 20%*/
 }
@@ -833,28 +835,28 @@ a.editable-select {
 }
 
 .tab-panel ul li > a:hover {
-    background-color: #f5e8f2;
+    background-color: #2C3E50;
     border: 0;
     margin:0
 }
 
 .tab-panel ul li.active a {
-    background-color: #f8f8f9; /*#2BAFC7;*/
+    background-color: #00bfcd; /*#2BAFC7;*/
     border: 0;
     margin-right: 0;
 }
 .tab-panel ul li.active a:focus {
-    background-color: #f8f8f9;
+    background-color: #00bfcd;
     margin-right:0;
 }
 .tab-panel ul li.active a:hover {
-    background-color: #f8f8f9;
+    background-color: #00bfcd;
     border: 0;
 }
 
 .tab-panel .tab-info {
     padding-top: 10px;
-    color: #254154;
+    color: #F3F3F4;
     /*font-size: .5em;*/
 }
 .tab-panel .tab-info img {

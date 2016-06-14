@@ -20,7 +20,7 @@ angular.module('bioSpeak.config')
             vm.activities = model.activities;
         });
 
-        vm.goToActivity = function(activity){
+        vm.goToActivity = function(activity,editFlag){
             if(activity.isAssay)
                 $state.go('manager.assay',{ assayId: activity.id})
             else
@@ -73,7 +73,13 @@ angular.module('bioSpeak.config')
 
                 //$scope.vmodel.activity = model.activity;
                 vm.activity = model.activity;
-
+                vm.varTypes = []
+                vm.varTypes.push({"name":"Sample Identifier Fields"})
+                vm.varTypes.push({"name":"Sample Characteristics Fields"})
+                vm.varTypes.push({"name":"Assay Identifiers Fields"})
+                vm.varTypes.push({"name":"Data File Fields"})
+console.log(vm.varTypes)
+                
                 console.log(vm.activity)
                 console.log(model.activity)
                 $timeout(function(){

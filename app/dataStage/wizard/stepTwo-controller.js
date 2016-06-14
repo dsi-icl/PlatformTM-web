@@ -80,7 +80,7 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
         variable.mapToColList[index] = null;
     }
 
-    $scope.saveMapping = function(){
+    $scope.saveMap = function(){
         //TODO: should return the id of the standard datafile created to pass on to next step
         wizardService.mapFileToTemplate(datasetId,fileId,$scope.vm.template).then(function(fileID){
             //if(success)
@@ -99,15 +99,10 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
     }
 
     $scope.goToStep3 = function(){
-        //TODO:ADD map to FILE object and save to database
-        //go to step 3 with only datasetId and activityId
-        //$scope.vm.selectedDataset.dataFile = $scope.$parent.vm.fileSelected
-        //wizardService.updateDatasetFile($scope.vm.selectedDataset).then(function(){
-        //    $state.go('datastage.wizard.step_two',{ file: $scope.$parent.vm.fileSelected,
-        //        activityId: $scope.vm.selectedActivity.id, datasetId: $scope.vm.selectedDataset.id });
-        //})
-
-        $state.go('datastage.wizard.step_three',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, standardFileId: standardFileId });
+        $state.go('datastage.wizard.step_three',{
+            activityId: $scope.vm.activityId,
+            datasetId: $scope.vm.datasetId,
+            standardFileId: standardFileId });
     }
 
     $scope.inputChanged = function(elem){

@@ -33,25 +33,13 @@ function config($stateProvider, $urlRouterProvider) {
                 loadPlugin: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
+                            files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js',
+                                'lib/plugins/angular-xeditable/js/xeditable.min.js','lib/plugins/angular-xeditable/css/xeditable.css']
                         }
                     ]);
                 }
             }
         })
-
-        //.state('datastage.files.list', {
-        //    url: "/{dir}",
-        //    templateUrl: "dataStage/fileManager/fileList.html",
-        //    controller : "fileListController as fileListCtrl",
-        //    resolve: {
-        //        loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-        //            return $ocLazyLoad.load([
-        //                'dataStage/fileManager/fileList-controller.js'
-        //            ]);
-        //        }]
-        //    }
-        //})
 
         .state('datastage.files.view', {
             url: "/view/{fileId}",
@@ -115,41 +103,6 @@ function config($stateProvider, $urlRouterProvider) {
 
             }]
         });
-
-        /*.state('datastage.wizard',{
-         url: "/wizard",
-         templateUrl: "/import_wizard.html",
-         controller: "/wizard/importController"//,
-         /!*resolve: {
-         loadPlugin: function ($ocLazyLoad) {
-         return $ocLazyLoad.load([
-         {
-         files: ['lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js']
-         }
-         ]);
-         }
-         }*!/
-         })
-
-         .state('datastage.wizard.step_one', {
-         url: '/step_one',
-         templateUrl: '/step_one.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })
-         .state('wizard.step_two', {
-         url: '/step_two',
-         templateUrl: '/step_two.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })
-         .state('wizard.step_three', {
-         url: '/step_three',
-         templateUrl: '/step_three.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })*/
-
-
-
-
 }
 
 angular

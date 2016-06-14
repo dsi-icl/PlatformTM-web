@@ -40,7 +40,7 @@
             <h5>Selected Fields</h5>
             <div class="well">
                 <ul>
-                    <li ng-repeat="selField in fldCtrl.selFields track by selField.id">{{selField.displayName}}</li>
+                    <li ng-repeat="selField in fldCtrl.selFields track by $index">{{selField.displayName}}</li>
                 </ul>
             </div>
         </div>

@@ -38,11 +38,11 @@ angular.module('biospeak.assays',[])
         assayDataService.getAssays(projectId).then(function(data){
             var assays = data.assays
 
-            console.log(assays=='null')
+            console.log(assays)
 
             if(assays!='null'){
                 angular.forEach(assays, function(assay) {
-                    AssayCf.initializeXf(assay.assayId);
+                    AssayCf.initializeXf(assay.id);
                 });
 
                 var promise = $q.all(null);
@@ -50,7 +50,7 @@ angular.module('biospeak.assays',[])
 
                 angular.forEach(assays, function(assay){
                     promise = promise.then(function(){
-                        return AssayCf.refreshCf(projectId, assay.assayId).then(function (sampleCols){
+                        return AssayCf.refreshCf(projectId, assay.id).then(function (sampleCols){
                             console.log('default scs', sampleCols)
                             //$scope.responses.push(sampleCols);
                             //$scope.luminexSampleChars = sampleCols

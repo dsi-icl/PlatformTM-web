@@ -19,14 +19,6 @@
             vm.treeConfig.version++;
         })
 
-
-        //vm.treeData =   [
-        //    { id : 'ajson1', parent : '#', text : 'Simple root node', state: { opened: true} },
-        //    { id : 'ajson2', parent : '#', text : 'Root node 2', state: { opened: true} },
-        //    { id : 'ajson3', parent : 'ajson2', text : 'Child 1', state: { opened: true} },
-        //    { id : 'ajson4', parent : 'ajson2', text : 'Child 2' , state: { opened: true}}
-        //]
-
         vm.treeConfig = {
             core : {
                 multiple : true,
@@ -43,8 +35,9 @@
                 worker : true
             },
             defaults: {},
+            state : { key : "step1", ttl: 1800000},
             checkbox:{
-                three_state:false//,
+                three_state:true//,
                 //visible:false
             },
             types : {
@@ -59,23 +52,8 @@
                 }
             },
             version : 1,
-            plugins : ['checkbox','changed']
+            plugins : ['checkbox','changed','state']
         };
-
-
-
-
-/*        vm.treeEventsObj = {
-            'ready': readyCB,
-            'select_node': nodeSelected,
-            'changed.jstree':selectChanged
-        }*/
-
-
-        //datasetService.getCriteria().then(function(c){
-        //    vm.selFields = c;
-        //})
-
         vm.selFields = [];
 
 
@@ -100,88 +78,14 @@
             var i, j;
             vm.selFields = []
             for(i = 0, j = data.selected.length; i < j; i++) {
-                vm.selFields.push(data.instance.get_node(data.selected[i]).original.field);
+                var field = data.instance.get_node(data.selected[i]).original.field;
+                field.isSelected = true
+                vm.selFields.push(field);
             }
             $scope.$apply();
 
-            //vm.selFields = _selFields;
             console.log('selectChanged',vm.selFields);
         }
-
-        //$('#html1').jstree(vm.treeConfig);
-
-        //vm.categories = [
-        //    {
-        //        title: 'Computers',
-        //        id:'1',
-        //        categories: [
-        //            {
-        //                title: 'Laptops',
-        //                id:'1.1',
-        //                categories: [
-        //                    {
-        //                        id:'1.1.1',
-        //                        title: 'Ultrabooks'
-        //                    },
-        //                    {
-        //                        id:'1.1.2',
-        //                        title: 'Macbooks'
-        //                    }
-        //                ]
-        //            },
-        //
-        //            {
-        //                id:'1.2',
-        //                title: 'Desktops'
-        //            },
-        //
-        //            {
-        //                title: 'Tablets',
-        //                id:'1.3',
-        //                categories: [
-        //                    {
-        //                       id:'1.3.1',
-        //                        title: 'Apple'
-        //                    },
-        //                    {
-        //                        id:'1.3.2',
-        //                        title: 'Android'
-        //                    }
-        //                ]
-        //            }
-        //        ]
-        //    },
-        //
-        //    {
-        //        id:'2',
-        //        title: 'Printers'
-        //    }
-        //
-        //];
-        //
-        //
-        //$timeout(function(){
-        //
-        //    $('#html2').on('changed.jstree',function(event,data){
-        //            var i, j;
-        //            vm.selFields = []
-        //            for(i = 0, j = data.selected.length; i < j; i++) {
-        //
-        //                var fn = data.instance.get_node(data.selected[i])//.a_attr.field
-        //                console.log(fn)
-        //                //vm.nodeSelected(fn)
-        //
-        //
-        //                vm.selFields.push(data.instance.get_node(data.selected[i]));
-        //            }
-        //            $scope.$apply();
-        //            //vm.selFields = _selFields;
-        //            console.log('selectChanged',vm.selFields);
-        //        }).jstree(vm.treeConfig);
-        //},1000)
-
-
-
 
         vm.next = function(){
 

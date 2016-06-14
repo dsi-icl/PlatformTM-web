@@ -22,7 +22,7 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
         datasetId: $stateParams.datasetId,
         activityId:$stateParams.activityId,
         standardFileId: $stateParams.standardFileId,
-        map: $stateParams.map,
+        //map: $stateParams.map,
         showDT: false,
         dtColumns:[]
     }
@@ -35,9 +35,6 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
 
     //$scope.vm.dtColumns = res.header//wizardService.getDataTablePreview($scope.vm.fileName,$scope.vm.map).$promise
 
-    //TODO: change that to only send datasetId as parameter ... in the backend
-    //TODO: ...iin the backend the preview is of the datafile that was either the result of the mapping
-    //TODO: or the same datafile which was detected to match the template
     wizardService.getDataTablePreview($scope.vm.datasetId, $scope.vm.standardFileId)
         .then(function(headers){
             //console.log(headers)
@@ -96,36 +93,6 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
     //
     // });
 
-    /**
-     * persons - Data used in Tables view for Data Tables plugin
-     */
-   /* $scope.persons = [
-        {
-            id: '1',
-            firstName: 'Monica',
-            lastName: 'Smith'
-        },
-        {
-            id: '2',
-            firstName: 'Sandra',
-            lastName: 'Jackson'
-        },
-        {
-            id: '3',
-            firstName: 'John',
-            lastName: 'Underwood'
-        },
-        {
-            id: '4',
-            firstName: 'Chris',
-            lastName: 'Johnatan'
-        },
-        {
-            id: '5',
-            firstName: 'Kim',
-            lastName: 'Rosowski'
-        }
-    ];*/
 }
 
 angular.module('bioSpeak.import')
