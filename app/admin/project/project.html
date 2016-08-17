@@ -1,0 +1,339 @@
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Projects</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="main.home">Home</a>
+            </li>
+            <li class="active">
+                <strong>{{vm.project.isNew ? 'New Project' : vm.project.accession}}</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+        <div class="title-action">
+            <a ng-click="vm.saveProject()" class="btn btn-primary">{{vm.project.isNew ? 'Create Project' : 'Save'}}</a>
+            <a ng-click="vm.dontSaveProject()" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn">
+
+
+    <div class="row m-t-sm m-b-md">
+        <div class="col-md-9">
+
+            <div class="profile-image">
+                <div class="text-center">
+                    <div style="font-size: 5em;"><i class="fa fa-camera"></i></div>
+                    <div><a>Upload project logo</a></div>
+                </div>
+
+                <!--<img src="img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">-->
+            </div>
+            <div class="profile-info">
+                <div class="">
+                    <div>
+                        <p>
+                        <h2 class="no-margins">
+                            <!--<span class="title">Project Title: </span>-->
+                            <a  editable-text="vm.project.name" e-placeholder="Enter Project Name">
+                                {{vm.project.name ||'Project Short Name / Acronym'}}
+                            </a>
+                        </h2>
+                        </p>
+                        <p>
+                        <h3>
+                            <!--<span class="title">Project Name: </span>-->
+                            <a  editable-text="vm.project.title" e-style="color: green" e-required e-placeholder="Enter Project Title" e-formclass="class1 class2">
+                                {{vm.project.title || 'Project Title'}}
+                            </a>
+                        </h3>
+                        </p>
+
+                        <h3>
+                          <label class="label label-warning label-lg">{{ (vm.project.accession || 'P-XXX')  }}</label>
+
+
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <table class="table small m-b-xs">
+                <tbody>
+                <tr>
+                    <td>
+                        <strong>142</strong> Projects
+                    </td>
+                    <td>
+                        <strong>22</strong> Followers
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <strong>61</strong> Comments
+                    </td>
+                    <td>
+                        <strong>54</strong> Articles
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>154</strong> Tags
+                    </td>
+                    <td>
+                        <strong>32</strong> Friends
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--<div class="col-md-3" ng-controller="dashboardFive as chart">-->
+        <!--<small>Sales in last 24h</small>-->
+        <!--<h2 class="no-margins">206 480</h2>-->
+        <!--<div sparkline spark-data="chart.sparkline1" spark-options="chart.sparkline1Options"></div>-->
+        <!--</div>-->
+
+
+    </div>
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h3>About {{vm.project.isNew ? ' the project': vm.project.name}}</h3>
+
+                    <p class="small">
+                        There are many variations of passages of Lorem Ipsum available, but the majority have
+                        suffered alteration in some form, by injected humour, or randomised words which don't.
+                        <br/>
+                        <br/>
+                        If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
+                        anything embarrassing
+                    </p>
+
+                    <!--<form data-editable-form name="uiSelectForm">
+                        <div editable-ui-select="vm.project.ta" data-e-form="uiSelectForm" data-e-name="ta" name="ta"  theme="bs3" data-e-ng-model="vm.project.ta" data-e-style="min-width:300px;">
+                            {{vm.project.ta}}
+                            <editable-ui-select-match placeholder="ta">
+                                {{$select.selected}}
+                            </editable-ui-select-match>
+                            <editable-ui-select-choices repeat="ta in vm.tas | filter: $select.search track by $index">
+                                {{ta}}
+                            </editable-ui-select-choices>
+                        </div>
+                        <div class="buttons">
+                            &lt;!&ndash; button to show form &ndash;&gt;
+                            <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
+                                Edit
+                            </button>
+                            &lt;!&ndash; buttons to submit / cancel form &ndash;&gt;
+                              <span ng-show="uiSelectForm.$visible">
+                                <br/>
+                                <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
+                                  Save
+                                </button>
+                                <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
+                                  Cancel
+                                </button>
+                              </span>
+                        </div>
+                    </form>-->
+
+                    <!--<p class="small font-bold">-->
+                    <!--<span><i class="fa fa-circle text-navy"></i> Online status</span>-->
+                    <!--</p>-->
+
+                </div>
+            </div>
+
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h3>Members and Users</h3>
+                    <p class="small">
+                        If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
+                        anything embarrassing
+                    </p>
+                    <div class="user-friends">
+                        <a href=""><img alt="image" class="img-circle" src="img/icon-user.png"></a>
+                        <a href=""><img alt="image" class="img-circle" src="img/icon-user.png"></a>
+                        <a href=""><img alt="image" class="img-circle" src="img/icon-user.png"></a>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="ibox">-->
+            <!--<div class="ibox-content">-->
+            <!--<h3>Personal friends</h3>-->
+            <!--<ul class="list-unstyled file-list">-->
+            <!--<li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>-->
+            <!--<li><a href=""><i class="fa fa-file-picture-o"></i> Logo_zender_company.jpg</a></li>-->
+            <!--<li><a href=""><i class="fa fa-stack-exchange"></i> Email_from_Alex.mln</a></li>-->
+            <!--<li><a href=""><i class="fa fa-file"></i> Contract_20_11_2014.docx</a></li>-->
+            <!--<li><a href=""><i class="fa fa-file-powerpoint-o"></i> Presentation.pptx</a></li>-->
+            <!--<li><a href=""><i class="fa fa-file"></i> 10_08_2015.docx</a></li>-->
+            <!--</ul>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="ibox">-->
+            <!--<div class="ibox-content">-->
+            <!--<h3>Private message</h3>-->
+
+            <!--<p class="small">-->
+            <!--Send private message to Alex Smith-->
+            <!--</p>-->
+
+            <!--<div class="form-group">-->
+            <!--<label>Subject</label>-->
+            <!--<input type="email" class="form-control" placeholder="Message subject">-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+            <!--<label>Message</label>-->
+            <!--<textarea class="form-control" placeholder="Your message" rows="3"></textarea>-->
+            <!--</div>-->
+            <!--<button class="btn btn-primary btn-block">Send</button>-->
+
+            <!--</div>-->
+            <!--</div>-->
+
+        </div>
+
+        <div class="col-lg-5">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3>Activities
+                        <span class="pull-right">
+                            <div ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
+                                <a class="dropdown-toggle" href uib-dropdown-toggle>
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </a>
+                                <ul class=" dropdown-menu dropdown-menu-right plotting-options">
+                                    <li> <a ui-sref="admin.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</a></li>
+
+                                    <li><a ui-sref="admin.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</a></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </h3>
+                </div>
+                <div class="ibox-content">
+                    <!--<div class="row m-b-sm m-t-sm">
+                        <div class="col-md-1">
+                            <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Refresh</button>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+                        </div>
+                    </div>-->
+                    <div class="activities-list" full-scroll>
+                        <div class="full-height-scroll" >
+                            <ul class="list-group clear-list">
+                                <li class="list-group-item fist-item" ng-repeat="activity in vm.activities">
+                                    <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
+                                    <a ng-click="vm.goToActivity(activity)">{{activity.name}}</a>
+                                    <br/>
+                                    <small>Last updated 03.02.2016</small>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <!--<table class="table table-hover">
+                            <tbody>
+                            <tr ng-repeat="activity in vm.activities">
+                                <td class="project-status">
+                                    <span class="label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
+                                </td>
+                                <td class="project-title">
+                                    <a ui-sref="admin.activity({projectId:vm.projectId,activityId:activity.id})">{{activity.name}}</a>
+                                    <br/>
+                                    <small>Last updated 03.02.2016</small>
+                                </td>
+                                &lt;!&ndash; <td class="project-completion">
+                                     <small>Completion: 100%</small>
+                                     <div class="progress progress-mini">
+                                         <div style="width: 100%;" class="progress-bar"></div>
+                                     </div>
+                                 </td>&ndash;&gt;
+                                &lt;!&ndash;    <td class="project-people">
+                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
+                                        <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
+                                        <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
+                                        <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
+                                        <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
+                                    </td>&ndash;&gt;
+                                &lt;!&ndash;<td class="project-actions">&ndash;&gt;
+                                    &lt;!&ndash;<a ng-click="vm.goToActivity(activity,false)" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> View </a>&ndash;&gt;
+                                    &lt;!&ndash;<a ng-click="vm.goToActivity(activity,true)" class="btn btn-white btn-sm"><i class="fa fa-edit"></i> Edit </a>&ndash;&gt;
+                                    &lt;!&ndash;<a ng-click="vm.removeActivity(activity)" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Delete </a>&ndash;&gt;
+                                &lt;!&ndash;</td>&ndash;&gt;
+                            </tr>
+
+                            </tbody>
+                        </table>-->
+                    </div>
+                    <div uib-alert class=" alert-info" ng-if="!vm.activities.length>0">
+                        <h4>No Activities added
+                            <div class=" btn-group pull-right">
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>
+
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
+                            </div>
+                        </h4>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3>Studies
+                    <span class="pull-right">
+                        <button data-ng-disabled="vm.project.isNew" ui-sref="admin.study({projectId:vm.projectId,studyId:0})" class="btn btn-primary btn-xs"><i class="fa fa-plus"/> New Study</button>
+                        </span>
+                    </h3>
+
+                </div>
+                <div class="ibox-content ">
+                    <ul class="elements-list list-group clear-list">
+                        <li class="list-group-item first-item">
+                            <span class="badge badge-primary">16</span>
+                            <strong>CRC305A</strong>
+                        </li>
+                        <li class="list-group-item ">
+                            <span class="badge badge-info">12</span>
+                            CRC305B
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge badge-danger">10</span>
+                            CRC305C
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge badge-success">10</span>
+                            CRC305D
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

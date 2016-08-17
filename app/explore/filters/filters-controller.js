@@ -2,7 +2,7 @@
  * Created by superkillball on 19/11/2015.
  */
 
-angular.module('eTRIKSdata.explorer')
+angular.module('biospeak.explorer')
 
     .controller('filtersCtrl', ['$scope','$stateParams','filtersService','XFilterLinker','$timeout',
         function($scope,$stateParams,filtersService,XFilterLinker,$timeout) {

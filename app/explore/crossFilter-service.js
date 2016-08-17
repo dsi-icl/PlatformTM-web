@@ -3,7 +3,7 @@
  */
 
 //Include a dependency service which will request the cfdata as well as list of SCs and EFs
-angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
+angular.module('eTRIKSdata.dcPlots',[])
 
     .factory('AssayCf',['assayDataService','$q', function(assayDataService,$q){
 
@@ -374,6 +374,12 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 d['temp [VSORRES]'] = +d['temp [VSORRES]'];
                 d['bmi [VSORRES]'] = d3.round(+d['bmi [VSORRES]'],1);
                 d['height [VSORRES]'] = d3.round(+d['height [VSORRES]'],1);
+
+                d['fvcpp [REORRES]'] = +d['fvcpp [REORRES]'];
+                d['fev1pp [REORRES]'] = +d['fev1pp [REORRES]'];
+                d['pefpp [REORRES]'] = +d['pefpp [REORRES]'];
+
+
 
                 //d.date_e = dateFormat.parse(d.date_entered);
                 //d.date_i = dateFormat.parse(d.date_issued);

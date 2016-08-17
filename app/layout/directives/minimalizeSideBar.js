@@ -14,7 +14,7 @@ function minimalizaSidebar($timeout) {
             $scope.minimalize = function () {
 
                 $("body").toggleClass("mini-navbar");
-                if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
+                /*if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
                     // Hide menu in order to smoothly turn on when maximize menu
                     $('#side-menu').hide();
                     // For smoothly turn on menu
@@ -31,7 +31,7 @@ function minimalizaSidebar($timeout) {
                 } else {
                     // Remove all inline style from jquery fadeIn function to reset menu state
                     $('#side-menu').removeAttr('style');
-                }
+                }*/
             }
         }
     };

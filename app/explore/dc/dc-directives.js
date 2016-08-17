@@ -326,7 +326,7 @@ angular.module('eTRIKSdata.dcPlots')
                             console.log("===EVENT===CHART===FILTERED",chart.chartID(),'FILTER:',filter)
                             $scope.chartservice.propagateFilter($scope.chartingOpts.xfilterService);
 
-                            $scope.filtersService.updateFilters($scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
+                            //$scope.filtersService.updateFilters($scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
                             //console.log("filters for " + $scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
 
 

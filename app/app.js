@@ -3,17 +3,19 @@
 
 // Declare app level module which depends on filters, and services
 var eTRIKSdataApp = angular.module('eTRIKSdata', [
-        "bioSpeak.layout",
-        "ui.router",
-        'oc.lazyLoad',
-        'LocalStorageModule',                  // ocLazyLoad
-        "bioSpeak.config",
-        "eTRIKSdata.explorer",
-        "bioSpeak.userAuth",
-        "bioSpeak.DataStager",
-        "bioSpeak.import",
-        "bioSpeak.export"
-    ]);
+    "ui.bootstrap",
+    "toaster", "ngAnimate",
+    "ui.router",
+    'oc.lazyLoad',
+    'LocalStorageModule',                  // ocLazyLoad
+    "bioSpeak.layout",
+    "bioSpeak.config",
+    "biospeak.explorer",
+    "bioSpeak.userAuth",
+    "bioSpeak.DataStager",
+    "bioSpeak.import",
+    "bioSpeak.export"
+]);
 
 eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
 
@@ -25,7 +27,7 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
 
     $ocLazyLoadProvider.config({
         // Set to true if you want to see what and when is dynamically loaded
-        debug: true
+        debug: false
     });
 
     $stateProvider
@@ -43,18 +45,19 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
             url: "/landing",
             templateUrl:"../temp/home.html"
         })
-    });
+});
 
 eTRIKSdataApp.run(function($rootScope){
     $rootScope.$on('$stateChangeSuccess', function() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
 
-    
+
+
 })
 
 eTRIKSdataApp.constant('ngAppConfig', {
-    apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+    //apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-    //apiServiceBaseUri: 'http://155.198.188.216:2483/'
+    apiServiceBaseUri: 'http://155.198.188.216:2483/'
 })

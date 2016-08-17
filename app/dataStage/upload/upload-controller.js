@@ -1,8 +1,9 @@
 'use strict'
-    function uploadController($scope,$state, $stateParams, FileUploader, $modalInstance, ngAppConfig){
+    function uploadController($scope,$state, $stateParams, FileUploader, $uibModalInstance, ngAppConfig){
 
         var serviceBase = ngAppConfig.apiServiceBaseUri;
         var studyId = $stateParams.studyId
+
 
         console.log(serviceBase+'api/files/project/'+studyId+'/upload/'+$stateParams.dir)
 
@@ -12,12 +13,12 @@
 
         $scope.ok = function () {
 
-            $modalInstance.close();
+            $uibModalInstance.close();
             $state.go('datastage.files',{dir:$stateParams.dir});
         };
 
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
             $state.go('datastage.files',{dir:$stateParams.dir});
         };
 
@@ -71,6 +72,6 @@
     }
 
     angular.module('bioSpeak.DataStager')
-        .controller('uploadController',['$scope','$state','$stateParams','FileUploader','$modalInstance','ngAppConfig',uploadController])
+        .controller('uploadController',['$scope','$state','$stateParams','FileUploader','$uibModalInstance','ngAppConfig',uploadController])
 
 

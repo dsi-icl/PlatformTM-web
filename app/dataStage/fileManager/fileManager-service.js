@@ -14,7 +14,7 @@
 
         var _getDirContent = function (projectId,dir) {
             console.log(!dir)
-            if(!dir) dir="top"
+            //if(!dir) dir="top"
 
             dir = dir.replace("/","_")
             console.log(dir);

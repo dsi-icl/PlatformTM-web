@@ -162,8 +162,10 @@ angular.module('eTRIKSdata.dcPlots')
                 var cfDimension,cfGroup;
 
                 if(chartDataType == 'Count' || angular.isUndefined(chartDataType)){
+                    console.log('FETCHING XF dimension and group for ', obsName);
                     cfDimension = xfilterService.getDimension(obsName)
                     cfGroup = xfilterService.getGroup(obsName)
+                    console.log('FETCHED dim,group', cfGroup.all()[0],cfGroup.all()[1]);
                 }
                 if(chartDataType == 'GroupedByTime'){
                     cfDimension = xfilterService.getTimeDimension()
@@ -344,7 +346,7 @@ angular.module('eTRIKSdata.dcPlots')
                     //.group(cfGroup)
 
                 }
-                else if(isNaN(cfGroup.all()[1].key)){
+                else if(isNaN(cfGroup.all()[0].key)){
                     //Ordinal chart (rowChart or PieChart)
 
                     var noOfGroups = cfGroup.size();

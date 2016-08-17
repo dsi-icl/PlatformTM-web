@@ -33,8 +33,11 @@ function config($stateProvider, $urlRouterProvider) {
                 loadPlugin: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js',
-                                'lib/plugins/angular-xeditable/js/xeditable.min.js','lib/plugins/angular-xeditable/css/xeditable.css']
+                            serie:true,
+                            files: ['lib/plugins/iCheck/custom.css',
+                                'lib/plugins/iCheck/icheck.min.js',
+                                'lib/plugins/angular-xeditable/js/xeditable.min.js',
+                                'lib/plugins/angular-xeditable/css/xeditable.css']
                         }
                     ]);
                 }
@@ -77,8 +80,8 @@ function config($stateProvider, $urlRouterProvider) {
 
         .state("datastage.upload", {
             url: "/upload/{dir}",
-            onEnter: ['$stateParams', '$state', '$modal', 'fileService',function($stateParams, $state, $modal, fileService) {
-                $modal.open({
+            onEnter: ['$stateParams', '$state', '$uibModal', 'fileService',function($stateParams, $state, $uibModal, fileService) {
+                $uibModal.open({
                     templateUrl: "dataStage/upload/upload.html",
                     resolve: {
                         loadController:['$ocLazyLoad',function($ocLazyLoad){

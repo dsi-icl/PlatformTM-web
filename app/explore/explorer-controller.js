@@ -5,7 +5,7 @@
 
 /* Controllers */
 
-angular.module('eTRIKSdata.explorer')
+angular.module('biospeak.explorer')
 
 
     .controller('ExplorerCtrl',['$scope','$state','$stateParams',function($scope,$state,$stateParams) {
