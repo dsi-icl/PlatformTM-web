@@ -6,7 +6,7 @@
                 <a ui-sref="main.home">Home</a>
             </li>
             <li>
-                <a>{{parentCtrl.projectId}}</a>
+                <a ui-sref="admin.project({projectId:parentCtrl.projectId})">{{parentCtrl.projectId}}</a>
             </li>
             <li class="active">
                 <strong>New Dataset</strong>

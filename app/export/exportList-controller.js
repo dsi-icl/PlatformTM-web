@@ -5,6 +5,13 @@
 
         var vm = this;
         vm.projectId = $stateParams.studyId;
+        vm.loaded = false;
+        
+        exportService.getUserDatasetsForProject(vm.projectId).then(function(response){
+            vm.datasets = response.datasets;
+            console.log(vm.datasets)
+            vm.loaded = true;
+        })
 
     }
 

@@ -20,7 +20,7 @@ function stepTwoController($scope,$state,$stateParams,exportService){
     // if(!$scope.$parent.parentCtrl.filters.dataLoaded){
     //
         exportService.getDataFields(projectId).then(function(data){
-            vm.treeConfig = {
+          /*  vm.treeConfig = {
                 core : {
                     multiple : true,
                     animation: true,
@@ -54,14 +54,14 @@ function stepTwoController($scope,$state,$stateParams,exportService){
                 },
                 version : 1,
                 plugins : ['checkbox','changed','state','search']
-            };
+            };*/
 
             vm.treeData = data.fields;
 
 
             vm.dataLoaded = true;
 
-            vm.treeConfig.version++;
+            // vm.treeConfig.version++;
 
         })
     // }
@@ -92,14 +92,45 @@ function stepTwoController($scope,$state,$stateParams,exportService){
             };
         return filter
     };
-
     vm.filters = [];
+    /*vm.filters = [];
     var filters = $scope.parentCtrl.DS.filters;
     for(var i=0; i<filters.length; i++){
         vm.filters.push(prepareFilterControl(filters[i]))
+    }*/
+    var currDS;
+    exportService.fetchDataset(datasetId,projectId).then(function(ds){
+        currDS = ds
+        console.log("Back and setting filters to ", ds.filters)
+        for(var i=0; i<ds.filters.length; i++){
+            vm.filters.push(prepareFilterControl(filters[i]))
+        }
+
+    })
+
+    vm.toggleNode = function(node){
+        console.log("I made it",node)
+        if(node.selected){
+            exportService.getFieldFilter(projectId,node.field).then(function(data){
+                //console.log(data)
+                var filter = data.field;
+                //console.log(filter);
+                //console.log(filter.valueSet.isNumeric);
+                // $scope.parentCtrl.DS.filters.push(filter);
+                filter = prepareFilterControl(filter);
+                vm.filters.push(filter);
+            });
+        }else{
+            var pos;
+            for(var i=0; i< vm.filters.length;i++) {
+                if(node.field.fieldName == vm.filters[i].field.fieldName){
+                    pos = i;
+                    break;
+                }
+            }
+            vm.filters.splice(pos,1);
+        }
     }
-
-
 
 
     vm.nodeSelected = function (event,data) {
@@ -141,71 +172,6 @@ function stepTwoController($scope,$state,$stateParams,exportService){
                 projectId: projectId
             });
         });
-        
-        // angular.forEach(vm.filters,function(filter){
-        //             console.log(filter)
-        //
-        //             if(filter.isNumeric){
-        //                 var nRange = {}
-        //                 nRange.field = filter.qO2Name;
-        //                 nRange.range = {};
-        //                 nRange.range.upperBound = filter.valueSet.to;
-        //                 nRange.range.lowerBound = filter.valueSet.from;
-        //                 criterion.rangeFilters.push(nRange);
-        //             }
-        //             else{
-        //                 criterion.exactFilters.push({"field": filter.qO2Name, "values":filter.valueSet.filterValues})
-        //             }
-        //
-        //         })
-
-        //update parentDS filters with vm.filters
-        // datasetService.getCriteria().then(function(criteria){
-        //     console.log(criteria)
-        //
-        //     angular.forEach(vm.filters,function(filter){
-        //         console.log(filter)
-        //         var criterion=null;
-        //         angular.forEach(criteria,function(c){
-        //             console.log(c)
-        //             if(c.o3 == filter.o3Id)
-        //             criterion = c
-        //         })
-        //
-        //         if(!criterion){
-        //             console.log("field not added in the previous step")
-        //             criterion = {}
-        //             criterion.o3 = filter.o3Id
-        //             criterion.exactFilters = [];
-        //             criterion.rangeFilters = [];
-        //             criterion.projection = [];
-        //             criterion.exactFilters.push({"field": filter.o3VarName, "values":[filter.o3Name]})
-        //             criterion.exactFilters.push({"field": "DOMAIN", "values":[filter.domainCode]})
-        //             if(filter.groupName)
-        //                 criterion.exactFilters.push({"field": filter.groupVarName, "values":[filter.groupName]})
-        //             criteria.push(criterion);
-        //         }
-        //
-        //         if(filter.valueSet.isNumeric){
-        //             var nRange = {}
-        //             nRange.field = filter.qO2Name;
-        //             nRange.range = {};
-        //             nRange.range.upperBound = filter.valueSet.to;
-        //             nRange.range.lowerBound = filter.valueSet.from;
-        //             criterion.rangeFilters.push(nRange);
-        //         }
-        //         else{
-        //             criterion.exactFilters.push({"field": filter.qO2Name, "values":filter.valueSet.filterValues})
-        //         }
-        //
-        //     })
-        //
-        //     console.log(criteria)
-        //
-        //     datasetService.saveCriteria('ibrahim',criteria);
-        //     $state.go('export.wizard.preview.table',{studyId:projectId})
-        // })
-
     };
 
     vm.cancel = function(){
@@ -218,8 +184,8 @@ function stepTwoController($scope,$state,$stateParams,exportService){
     };
 
     var _updateField = function(filterField){
-        console.log('updating',$scope.$parent.parentCtrl.DS.fields);
-        angular.forEach($scope.$parent.parentCtrl.DS.fields,function(field){
+        console.log('updating',currDS.fields);
+        angular.forEach(currDS.fields,function(field){
             console.log( field);
            if(field.fieldName == filterField.fieldName && field.property == filterField.property){
                console.log( "filterered true");

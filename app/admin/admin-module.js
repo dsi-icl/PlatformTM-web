@@ -28,7 +28,10 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.
                            {
                                serie:true,
                                insertBefore: '#load_css_before',
-                               files:['lib/plugins/ui-select/css/select.css','lib/plugins/angular-ui-select/css/select.css','lib/plugins/angular-xeditable/css/xeditable.css']
+                               files:['lib/plugins/ui-select/css/select.css',
+                                   'lib/plugins/angular-ui-select/css/select.css',
+                                   'lib/plugins/angular-xeditable/css/xeditable.css',
+                                   'lib/plugins/ngSweetAlert/css/sweetalert.css']
                            }
 
                        ])
@@ -40,7 +43,9 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.
                                 files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js',
                                     'lib/plugins/footable/js/footable.all.min.js', 'lib/plugins/footable/css/footable.core.css',
                                     'lib/plugins/ui-select/js/select.min.js',
-                                    'lib/plugins/angular-ui-select/js/select.min.js'
+                                    'lib/plugins/angular-ui-select/js/select.min.js',
+                                    'lib/plugins/ngSweetAlert/js/sweetalert.min.js',
+                                    'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js'
                                     ]
                             },
                             {
@@ -52,6 +57,23 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.
 
                 }
                 
+            })
+            .state('admin.projects',{
+                url:"/projects",
+                templateUrl:"admin/project/project-list.html",
+                controller: "ProjectsCtrl as vm",
+                resolve: {
+
+
+                    loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        console.log("loading project service");
+                        return $ocLazyLoad.load('admin/project/project-service.js');
+                    }],
+                    loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        console.log("loading project list controller");
+                        return $ocLazyLoad.load('admin/project/projectList-controller.js');
+                    }]
+                }
             })
             .state('admin.project', {
                 url: "/projects/{projectId}",
@@ -78,7 +100,7 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.
             .state('admin.activity',{
                 url:'/projects/{projectId}/activities/{activityId}',
                 templateUrl: "admin/activities/activityConfig.html",
-                controller: "ActivityConfigCtrl as ActivityCtrl",
+                controller: "ActivityConfigCtrl as vm",
                 resolve: {
                     loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                         console.log("loading service");

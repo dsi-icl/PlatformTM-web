@@ -8,13 +8,19 @@ function config($stateProvider, $urlRouterProvider) {
         .state('export', {
             abstract: true,
             url: "/{studyId}/export",
-            templateUrl: "layout/content.html"
+            templateUrl: "layout/content.html",
+            resolve: {
+                loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    console.log("loading service");
+                    return $ocLazyLoad.load('export/export-service.js');
+                }]
+            }
         })
         .state('export.datasets', {
             url: "/mydatasets",
             templateUrl: "export/export-list.html",
             controller: "exportListCtrl as vm",
-             resolve: {
+            resolve: {
                  loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                      console.log("loading service");
                      return $ocLazyLoad.load('export/export-service.js');
@@ -23,6 +29,39 @@ function config($stateProvider, $urlRouterProvider) {
                      return $ocLazyLoad.load(['export/exportList-controller.js'])
                  }]
              }
+        })
+        .state('export.datasets.preview',{
+            url:"/mydatasets/{datasetId}/download",
+            controller: 'previewController as prevCtrl',
+            templateUrl: 'export/dataset/preview.html',
+            resolve: {
+                loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
+                                'lib/plugins/dataTables/css/dataTables.bootstrap.css',
+                                'lib/plugins/dataTables/css/dataTables.tableTools.css']
+                        },
+                        {
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/dataTables.bootstrap.js',
+                                'lib/plugins/dataTables/js/dataTables.tableTools.js']
+                        },
+                        {
+                            name: 'datatables',
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/angular-datatables.min.js',
+                                'lib/plugins/dataTables/js/angular-datatables.tabletools.js']
+                        }
+                    ]);
+                }],
+                loadController: ['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        'export/dataset/preview-controller.js'
+                    ]);
+                }]
+            }
         })
 
         .state('export.wizard',{
@@ -103,13 +142,6 @@ function config($stateProvider, $urlRouterProvider) {
                 }]
             }
         })
-
-        // .state('export.wizard.preview',{
-        //     url: '/3-preview',
-        //     templateUrl: 'export/dataset/preview.html',
-        //     controller: 'previewController as prevCtrl',
-        //     abstract:true
-        // })
         .state('export.wizard.preview', {
             url: '/3-preview',
             templateUrl: 'export/dataset/preview.html',

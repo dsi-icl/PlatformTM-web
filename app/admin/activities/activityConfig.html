@@ -1,22 +1,22 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>{{ActivityCtrl.activity.isNew ? 'New Activity' :'Activity detail'}}</h2>
+        <h2>{{vm.activity.isNew ? 'New Activity' :'Activity detail'}}</h2>
         <ol class="breadcrumb">
             <li>
                 <a ui-sref="main.home">Home</a>
             </li>
-            <li ui-sref="admin.project">
-                <a>{{ActivityCtrl.studyId}}</a>
+            <li>
+               <a ui-sref="admin.project({projectId:vm.projectId})">{{vm.projectId}}</a>
             </li>
             <li class="active">
-                <a>{{ActivityCtrl.activity.isNew ? 'New Activity' : vm.activity.name}}</a>
+                <a>{{vm.activity.isNew ? 'New Activity' : vm.activity.name}}</a>
             </li>
         </ol>
     </div>
     <div class="col-sm-8">
         <div class="title-action">
-            <a ng-click="ActivityCtrl.saveActivity()" class="btn btn-primary">Save</a>
-            <a ng-click="ActivityCtrl.dontSaveActivity()" class="btn btn-primary">Cancel</a>
+            <a ng-click="vm.saveActivity()" class="btn btn-primary">Save</a>
+            <a ng-click="vm.dontSaveActivity()" class="btn btn-primary">Go Back</a>
         </div>
     </div>
 </div>
@@ -32,109 +32,129 @@
                                 <dt>Activity Title</dt>
                                 <dd>
                                     <div class="col-md-6">
-                                        <a href="#" e-ng-model="ActivityCtrl.activity.name" editable-text="vm.activity.name" buttons="no" blur="submit">{{ActivityCtrl.activity.name || "Unnamed"}}</a>
+                                        <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'empty'}}</a>
                                     </div>
                                 </dd>
                             </dl>
                         </div>
                     </div>
-                    <!--<div class="row">-->
-
-                        <!--<div class="col-md-6">-->
-
-                            <!--<dl class="dl-horizontal">-->
-                                <!--<dt>Class</dt>-->
-                                <!--<dd>-->
-                                    <!--<div>-->
-                                        <!--<select class="form-control m-b" name="activitySelect" id="assayMeasType"-->
-                                                <!--ng-model="vm.assay.type" ng-change="vm.updateAssayTerms()">-->
-                                            <!--<option ng-repeat="option in vm.assayTypes" value="{{option.assayTypeTerm.id}}">{{option.assayTypeTerm.name}}</option>-->
-                                        <!--</select>-->
-                                    <!--</div>-->
-                                <!--</dd>-->
-                                <!--<dt>Domain</dt>-->
-                                <!--<dd>-->
-                                    <!--<div>-->
-                                        <!--<select class="form-control m-b" name="activitySelect" id="assayDesignType"-->
-                                                <!--ng-model="vm.assay.design" >-->
-                                            <!--<option ng-repeat="option in vm.assayDesigns" value="{{option.id}}">{{option.name}}</option>-->
-                                        <!--</select>-->
-                                    <!--</div>-->
-                                <!--</dd>-->
-                            <!--</dl>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<div class="col-md-6">-->
-                            <!--<dl class="dl-horizontal">-->
-
-                                <!--<dt>Technology Type</dt>-->
-                                <!--<dd>-->
-                                    <!--<div>-->
-                                        <!--<select class="form-control m-b" name="activitySelect" id="assayTechSelect"-->
-                                                <!--data-ng-model="vm.assay.technology">-->
-                                            <!--<option ng-repeat="option in vm.assayTechTerms" value="{{option.id}}">{{option.name}}</option>-->
-                                        <!--</select>-->
-                                    <!--</div>-->
-                                <!--</dd>-->
-
-                                <!--<dt>Technology Platform</dt>-->
-                                <!--<dd>-->
-                                    <!--<div>-->
-                                        <!--<select class="form-control m-b" name="activitySelect" id="assayPlatSelect"-->
-                                                <!--data-ng-model="vm.assay.platform">-->
-                                            <!--<option ng-repeat="option in vm.assayPlatTerms" value="{{option.id}}">{{option.name}}</option>-->
-                                        <!--</select>-->
-                                    <!--</div>-->
-                                <!--</dd>-->
-                            <!--</dl>-->
-                        <!--</div>&ndash;&gt;-->
-                    <!--</div>-->
-                    <!-- <div class="row">
-                        <div class="col-lg-5">
-                            <dl class="dl-horizontal">
-
-                                <dt>Created by:</dt>
-                                <dd>Ibrahim Emam</dd>
-                                <dt>Subjects:</dt>
-                                <dd> <a href="#" e-ng-model="vmodel.activity.size" editable-text="vm.activity.size" buttons="no" blur="submit">{{vm.activity.size || "Expected No. of subjects"}}</a></dd>
-                                <dt>Client:</dt>
-                                <dd><a href="" class="text-navy"> Zender Company</a></dd>
-                                <dt>Version:</dt>
-                                <dd> v1.4.2</dd>
-                            </dl>
-                        </div>
-                        &lt;!&ndash;<div ng-if="!vm.activity.isNew" class="col-lg-7" id="cluster_info">
-                            <dl class="dl-horizontal">
-
-                                <dt>Last Updated:</dt>
-                                <dd>16.08.2014 12:15:57</dd>
-                                <dt>Created:</dt>
-                                <dd> 10.07.2014 23:36:57</dd>
-
-                            </dl>
-                        </div>&ndash;&gt;
-                    </div>-->
-                    <!--<div class="row" ng-if="!vm.activity.isNew">
-                        <div class="col-lg-12">
-                            <dl class="dl-horizontal">
-                                <dt>Completed:</dt>
-                                <dd>
-                                    <div class="progress progress-striped m-b-sm">
-                                        <div style="width: 60%;" class="progress-bar"></div>
-                                    </div>
-                                    &lt;!&ndash; <small>Project completed in <strong>60%</strong>. Remaining close the project, sign a contract and invoice.</small>&ndash;&gt;
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>-->
                 </div>
             </div>
 
             <div>
                 <div class="ibox-title panel-header">
-                    <span style="color: #39b3d7;"></span> Associated Templates
+                    <span>Associated Templates</span>
+                     <span style="font-size:16px;margin-top:-5px;" class="pull-right">
+                         <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
+                         <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
+                            | <a ng-init="vm.creatingNewDS = false" ng-click="vm.creatingNewDS = !vm.creatingNewDS"><i uib-tooltip="Add Dataset" class="p-xs fa fa-plus"></i></a>
+                        </span>
                 </div>
-                <uib-tabset class="tab-panel">
-                    <uib-tab ng-repeat="ds in ActivityCtrl.activity.datasets"  active="$first">
+                <div uib-collapse="!vm.creatingNewDS" class="ibox-content" style="min-height: 50px;margin: 0px;border: 10px solid white;background-color: rgb(243, 243, 244);">
+                    <form role="form">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h3>Add New Dataset Template</h3>
+                            </div>
+                            <div class="col-md-1"> <span class="pull-right"><a ng-click="vm.creatingNewDS=false" class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="row m-b-sm m-t-sm">
+
+                                    <div class="col-md-12">
+                                        <div class="">
+                                            <input ng-model="searchTemplate" type="text" placeholder="Search"
+                                                   class="input-sm form-control"></div>
+                                    </div>
+                                </div>
+
+                                <div class="ibox-content">
+
+
+                                    <div class="activities-list" full-scroll>
+                                        <div class="full-height-scroll">
+                                            <div class="feed-activity-list elements-list">
+
+                                                <div class="feed-element"
+                                                     ng-repeat="ds in vm.clinicaldomains | filter:{name: searchTemplate}">
+                                                   <!-- <div class="row">
+
+                                                        <div class="col-md-11">-->
+                                                            <a ng-click="vm.showDSvars(ds)">
+                                                                <div>
+                                                                    <small class="pull-right text-navy">{{ds.class}}</small>
+                                                                    <strong>{{ds.name}} - ({{ds.code}})</strong>
+
+                                                                    <div>{{ds.description}}</div>
+                                                                    <small class="text-muted"><strong>Structure: </strong>{{ds.structure}}</small>
+                                                                </div>
+
+                                                            </a>
+                                                        <!--</div>-->
+                                                        <!--<div class="col-md-1">
+                                                            <a> <i class="fa fa-info"></i></a><a><i class="fa fa-plus-square-o"></i></a>
+                                                        </div>-->
+                                                    <!--</div>-->
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--FIELD INFO-->
+                            <div ng-show="vm.showDS" style="border-left: white 1px solid;" class=" m-b-sm m-t-sm col-md-5">
+                                <div class="ibox-title"><strong>{{vm.showDS.name}} Template Columns</strong>
+                                <span class="pull-right"><a ng-click="vm.selectTemplate(vm.showDS);vm.creatingNewDS=false" class="btn btn-xs btn-primary">Add Dataset</a></span>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="activities-list" full-scroll>
+                                        <div class="full-height-scroll">
+                                            <table class="table table-hover no-margins">
+                                        <thead>
+                                            <tr>
+                                                <th>Column</th>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="var in vm.showDS.variables">
+                                                <td class="text-navy">
+                                                    <small>{{var.name}}</small>
+                                                </td>
+                                                <td>{{var.label}}</td>
+                                                <td >{{var.description}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-sm-4">
+                                <button class="btn btn-white btn-sm" ng-click="vm.cancelAddVariableToDS()"
+                                        type="submit">Cancel
+                                </button>
+                                <button class="btn btn-primary btn-sm" ng-click="vm.addVariableToDS()" type="submit">Add
+                                    Field
+                                </button>
+                            </div>-->
+
+
+                        </div>
+
+
+                    </form>
+                </div>
+                <uib-tabset class="tab-panel" active="vm.activeTabIndex" >
+                    <uib-tab  ng-repeat="ds in vm.activity.datasets" select="vm.tabSelected(ds)">
                         <uib-tab-heading>
                             <p class="tab-info">{{ds.domainId}} : {{ds.name}}</p>
                             <p class="tab-info">
@@ -150,19 +170,19 @@
                                 <div class="ibox-title">
                                     <div class="ibox-tools">
                                         <a class="btn btn-primary btn-xs" ng-init="vm.creatingCfield = false" ng-click="vm.creatingCfield = !vm.creatingCfield;vm.createNewCfield()">New Template Variable</a>
-                                        <a href="" class="btn btn-primary btn-xs">Preview Template</a>
-                                        <a href="" class="btn btn-primary btn-xs">Download Template</a>
+                                        <!--<a href="" class="btn btn-primary btn-xs">Preview Template</a>
+                                        <a href="" class="btn btn-primary btn-xs">Download Template</a>-->
                                     </div>
                                 </div>
 
                                 <!--ADD FIELD DIV-->
-                                <div uib-collapse="!vm.creatingCfield" class="ibox-content" style="min-height: 50px;margin: 10px;border: 1px solid white;background-color: rgb(243, 243, 244);">
+                                <div uib-collapse="!vm.creatingCfield" class="ibox-content" style="min-height: 50px;margin: 0px;border: 10px solid white;background-color: rgb(243, 243, 244);">
                                     <form role="form">
                                         <div class="row">
                                             <div class="col-md-11">
                                                 <h3>Add New Field</h3>
                                             </div>
-                                            <div class="col-md-1"> <span class="pull-right"><a ng-click="vm.cancelAddField()" class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>
+                                            <div class="col-md-1"> <span class="pull-right"><a ng-click="vm.cancelAddVariableToDS()" class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>
 
                                         </div>
                                         <div class="row">
@@ -597,15 +617,15 @@
                         </div>
                     </uib-tab>
 
-                    <uib-tab class="odd">
+                    <!--<uib-tab class="odd">
                         <uib-tab-heading>
                             <p class="tab-info">Add New Dataset</p>
                             <p class="tab-info">
                                 <i class="fa fa-plus-circle"></i>
                             </p>
-                            <!--<p class="tab-info text-left" >
+                            &lt;!&ndash;<p class="tab-info text-left" >
                                 <small>{{ds.description}}</small>
-                            </p>-->
+                            </p>&ndash;&gt;
                         </uib-tab-heading>
                         <div class="tab-content">
                             <div>
@@ -617,7 +637,7 @@
                             </div>
 
                             <div id="data-accordion" style="margin: 1.5%">
-                                <!--<div class="panel" style="border: 0; width:100%">-->
+                                &lt;!&ndash;<div class="panel" style="border: 0; width:100%">&ndash;&gt;
 
                                 <div class="section-block-header" style="cursor: pointer" id="clinicaldata" data-toggle="collapse" data-parent="#data-accordion" data-target="#clinicadata-content">
                                     Data Templates
@@ -639,7 +659,7 @@
                                 </div>
                             </div>
                         </div>
-                    </uib-tab>
+                    </uib-tab>-->
 
                 </uib-tabset>
             </div>

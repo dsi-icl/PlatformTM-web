@@ -6,7 +6,7 @@
                 <a ui-sref="main.home">Home</a>
             </li>
             <li>
-                <a>{{vm.projectId}}</a>
+                <a ui-sref="admin.project({projectId:vm.projectId})">{{vm.projectId}}</a>
             </li>
             <li>
                 <a ui-sref="datastage.files({dir:''})">Data Stage</a>
@@ -49,7 +49,7 @@
 <div class="row">
     <div class="col-lg-2" style="position:fixed;margin-top: 95px;">
         <div class=" float-e-margins">
-            <div class="p-sm">
+            <div class="">
                 <div class="file-manager">
 
                     <!--<h5>Show:</h5>-->
@@ -59,18 +59,18 @@
                     <!--<a href="" class="file-control">Biospecimens</a>-->
 
                     <!--<div class="hr-line-dashed"></div>-->
-                    <div class="text-center">
+                    <div class="m-t-sm m-b-xs text-center">
                         <button class="btn btn-primary btn-sm" ng-click="vm.openUpload()">Upload Files</button>
 
                     </div>
 
 
 
-                    <h3 style="padding-top:5px; border-bottom: 1px solid #2c3e50;"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Files</h3>
+                    <h3 style="padding-top:5px; border-bottom: 1px solid #2c3e50;"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;Files</h3>
 
                     <div style="margin: 5px">
                         <a href="#" e-ng-model="vmodel.activity.name" editable-text="vm.newdir" onaftersave="vm.createDirectory()" buttons="no" blur="submit">
-                            <i class="fa fa-folder-o"></i> &nbsp;&nbsp; New Folder
+                            <i class="fa fa-folder-o"></i> &nbsp;&nbsp;&nbsp; New Folder
                         </a>
                     </div>
                     <ul class="folder-list" style="padding: 10px">
@@ -81,9 +81,9 @@
                     </ul>
 
 
-                    <h3 style="border-bottom: 1px solid #2c3e50;"><i class="fa fa-table"></i>&nbsp;&nbsp;Datasets</h3>
+                    <!--<h3 style="border-bottom: 1px solid #2c3e50;"><i class="fa fa-table"></i>&nbsp;&nbsp;Datasets</h3>-->
 
-                    <h5 class="tag-title">Tags</h5>
+                    <!--<h5 class="tag-title">Tags</h5>
                     <ul class="tag-list" style="padding: 0px">
                         <li><a href="">Vital Signs</a></li>
                         <li><a href="">Advserse Events</a></li>
@@ -93,7 +93,7 @@
                         <li><a href="">Laboratory</a></li>
                         <li><a href="">Medications</a></li>
                         <li><a href="">Proteomics</a></li>
-                    </ul>
+                    </ul>-->
 
                     <div class="clearfix"></div>
                     <div class="hr-line-dashed"></div>
@@ -117,7 +117,7 @@
         <div ng-click="vm.clickFn($event)" class="section-content outer  col-lg-10 animated fadeInRight">
             <div ui-view="">
                 <div class="row outer">
-                    <div class="section-content col-lg-12 outer" >
+                    <div class=" col-lg-12 outer" >
                         <file-directive ng-repeat="fileInfo in vm.files" dbl-click-fn="vm.openF(fileInfo)" file-info="fileInfo" click-fn="vm.fileClickFn(fileInfo)"></file-directive>
                     </div>
 

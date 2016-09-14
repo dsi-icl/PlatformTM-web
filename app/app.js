@@ -19,15 +19,17 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
 
 eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
 
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/admin/projects');
 
     //$urlRouterProvider.when('', '/explore/P-BVS}');
     $urlRouterProvider.when('', '/login');
-    $urlRouterProvider.when('/{studyId}/export/datasets/{datasetId}/wizard/3-preview', '/{studyId}/export/datasets/{datasetId}/wizard/3-preview/table');
+    $urlRouterProvider.when('/home', '/admin/projects');
+    //$urlRouterProvider.when('main.home', 'admin.projects');
+
 
     $ocLazyLoadProvider.config({
         // Set to true if you want to see what and when is dynamically loaded
-        debug: false
+        debug: true
     });
 
     $stateProvider
@@ -38,11 +40,12 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
             controller:"logOutController"
         })
         .state('main.home',{
-            url: "/home",
-            templateUrl:"landing/dashboard.html"
+            url: "/admin/projects",
+            //templateUrl:"admin/project/project-list.html"
+            /*templateUrl:"dashboard/dashboard.html"*/
         })
         .state('main.landing',{
-            url: "/landing",
+            url: "/dashboard",
             templateUrl:"../temp/home.html"
         })
 });
@@ -57,7 +60,7 @@ eTRIKSdataApp.run(function($rootScope){
 })
 
 eTRIKSdataApp.constant('ngAppConfig', {
-    //apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
+    apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-    apiServiceBaseUri: 'http://155.198.188.216:2483/'
+    //apiServiceBaseUri: 'http://155.198.188.216:2483/'
 })

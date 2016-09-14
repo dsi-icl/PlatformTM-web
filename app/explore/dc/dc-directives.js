@@ -345,13 +345,13 @@ angular.module('eTRIKSdata.dcPlots')
                         '<span>{{obs.o3}}</span>'+
                         '<span class="filter"></span> <a class="reset">reset</a> '+
                     '</div>'+
-                    '<div ng-hide="chartingOpts.chartGroup == \'subject\'" class="pull-right chart-options">'+
+                    /*'<div ng-hide="chartingOpts.chartGroup == \'subject\'" class="pull-right chart-options">'+
                         '<ul>'+
                             '<li> <a class="count-chart"> <i class="fa fa-bar-chart-o"></i></a></li>'+
                             '<li> <a class="box-chart"> <i class="flat-icon flaticon-candlestick"></i></a></li>'+
                             '<li> <a class="zoom"> <i class="fa fa-search-plus"></i></a></li>'+
                         '</ul>'+
-                    '</div>'+
+                    '</div>'+*/
                 '</div>'+
                 '<div class="clearfix"></div>'+
                 '</div>'

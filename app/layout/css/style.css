@@ -13,6 +13,7 @@ h4,
 h5,
 h6 {
     font-weight: 100;
+    font-family: 'Questrial';
 }
 h1 {
     font-size: 30px;
@@ -574,6 +575,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 }
 .btn {
     border-radius: 3px;
+    font-family: 'Questrial';
 }
 .float-e-margins .btn {
     margin-bottom: 5px;

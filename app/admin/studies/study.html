@@ -6,7 +6,7 @@
                 <a ui-sref="main.home">Home</a>
             </li>
             <li>
-                <a ui-sref="admin.project">{{vm.projectId}}</a>
+                <a ui-sref="admin.project({projectId:vm.projectId})">{{vm.projectId}}</a>
             </li>
             <li class="active">
                 <strong>{{vm.study.isNew ? 'New Study' : vm.study.name}}</strong>
@@ -16,7 +16,7 @@
     <div class="col-lg-2">
         <div class="title-action">
             <a ng-click="vm.saveStudy()" class="btn btn-primary">Save</a>
-            <a ng-click="vm.dontSaveStudy()" class="btn btn-primary">Cancel</a>
+            <a ng-click="vm.dontSaveStudy()" class="btn btn-primary">Go Back</a>
         </div>
     </div>
 </div>
@@ -147,7 +147,7 @@
             </div>
             <div class="ibox">
                 <div class=" panel-header">
-                    <h3> <a ng-init="vm.TOPisCollapsed=false" ng-click="vm.TOPisCollapsed = !vm.TOPisCollapsed">
+                    <h3> <a ng-init="vm.TOPisCollapsed=true" ng-click="vm.TOPisCollapsed = !vm.TOPisCollapsed">
                         <i ng-if="vm.TOPisCollapsed" class="fa fa-plus-square"></i>
                         <i ng-if="!vm.TOPisCollapsed"class="fa fa-minus-square"></i></a>
                         &nbsp;Trial Objective and Purpose</h3>
@@ -193,7 +193,7 @@
             </div>
             <div class="ibox">
                 <div class=" panel-header">
-                    <h3> <a ng-init="vm.TDisCollapsed=false" ng-click="vm.TDisCollapsed = !vm.TDisCollapsed">
+                    <h3> <a ng-init="vm.TDisCollapsed=true" ng-click="vm.TDisCollapsed = !vm.TDisCollapsed">
                         <i ng-if="vm.TDisCollapsed" class="fa fa-plus-square"></i>
                         <i ng-if="!vm.TDisCollapsed"class="fa fa-minus-square"></i></a>
                         &nbsp; Trial Design</h3>
@@ -335,7 +335,7 @@
             </div>
             <div class="ibox">
                 <div class=" panel-header">
-                    <h3> <a ng-init="vm.SSisCollapsed=false" ng-click="vm.SSisCollapsed = !vm.SSisCollapsed">
+                    <h3> <a ng-init="vm.SSisCollapsed=true" ng-click="vm.SSisCollapsed = !vm.SSisCollapsed">
                         <i ng-if="vm.SSisCollapsed" class="fa fa-plus-square"></i>
                         <i ng-if="!vm.SSisCollapsed"class="fa fa-minus-square"></i></a>
                         &nbsp;Selection of Subjects</h3>
@@ -446,7 +446,7 @@
             </div>
             <div class="ibox">
                 <div class=" panel-header">
-                    <h3><a ng-init="vm.SisCollapsed=false"  ng-click="vm.SisCollapsed = !vm.SisCollapsed">
+                    <h3><a ng-init="vm.SisCollapsed=true"  ng-click="vm.SisCollapsed = !vm.SisCollapsed">
                         <i ng-if="vm.SisCollapsed" class="fa fa-plus-square"></i>
                         <i ng-if="!vm.SisCollapsed"class="fa fa-minus-square"></i></a>
                         &nbsp;Statistics</h3>
@@ -495,35 +495,35 @@
         <div class="col-lg-4 m-b-lg">
             <div id="vertical-timeline" class="vertical-timeline vertical-container light-timeline no-margins">
                 <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon navy-bg">
+                    <div class="vertical-timeline-icon lazur-bg">
                         <i class="fa fa-calendar"></i>
                     </div>
 
                     <div class="vertical-timeline-content">
                         <h2>VISIT 1</h2>
                         <p>Study Day: 1</p>
-                        DateTime:
+
                                     <span class="vertical-date">
-                                        Today <br>
+                                        DateTime <br>
                                         <small>Dec 24</small>
                                     </span>
                     </div>
                 </div>
 
                 <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon blue-bg">
+                    <div class="vertical-timeline-icon lazur-bg">
                         <i class="fa fa-calendar"></i>
                     </div>
 
                     <div class="vertical-timeline-content">
                         <div id="vertical-timeline2" class="vertical-timeline vertical-container dark-timeline no-margins">
                             <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon navy-bg">
+                                <div class="vertical-timeline-icon yellow-bg">
                                     <i class="fa fa-clock-o"></i>
                                 </div>
 
                                 <div class="vertical-timeline-content">
-                                    <h2>VISIT 1</h2>
+                                    <h2>Time point 1</h2>
                                     <p>Study Day: 1</p>
                                     DateTime:
                                     <span class="vertical-date">
@@ -533,12 +533,12 @@
                                 </div>
                             </div>
                             <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon navy-bg">
+                                <div class="vertical-timeline-icon yellow-bg">
                                     <i class="fa fa-clock-o"></i>
                                 </div>
 
                                 <div class="vertical-timeline-content">
-                                    <h2>VISIT 1</h2>
+                                    <h2>Time point 2</h2>
                                     <p>Study Day: 1</p>
                                     DateTime:
                                     <span class="vertical-date">
@@ -557,34 +557,34 @@
                     </div>
 
                     <div class="vertical-timeline-content">
-                        <h2>Coffee Break</h2>
-                        <p>Go to shop and find some products. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's. </p>
-                        <a href="#" class="btn btn-sm btn-info">Read more</a>
-                        <span class="vertical-date"> Yesterday <br><small>Dec 23</small></span>
+                        <h2>VISIT 2</h2>
+                        <p>Study day 4</p>
+
+                        <span class="vertical-date"> DateTime <br><small>Dec 27</small></span>
                     </div>
                 </div>
 
                 <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon yellow-bg">
-                        <i class="fa fa-phone"></i>
+                    <div class="vertical-timeline-icon lazur-bg">
+                        <i class="fa fa-calendar"></i>
                     </div>
 
                     <div class="vertical-timeline-content">
-                        <h2>Phone with Jeronimo</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
-                        <span class="vertical-date">Yesterday <br><small>Dec 23</small></span>
+                        <h2>VISIT 3</h2>
+                        <p>Study day 8</p>
+                        <span class="vertical-date">DateTime <br><small>Dec 31</small></span>
                     </div>
                 </div>
 
                 <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon navy-bg">
-                        <i class="fa fa-comments"></i>
+                    <div class="vertical-timeline-icon lazur-bg">
+                        <i class="fa fa-calendar"></i>
                     </div>
 
                     <div class="vertical-timeline-content">
-                        <h2>Chat with Monica and Sandra</h2>
-                        <p>Web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). </p>
-                        <span class="vertical-date">Yesterday <br><small>Dec 23</small></span>
+                        <h2>Visit 4</h2>
+                        <p>Study day 12</p>
+                        <span class="vertical-date">DateTime <br><small>Jan 01</small></span>
                     </div>
                 </div>
             </div>

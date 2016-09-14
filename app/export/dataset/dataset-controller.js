@@ -3,7 +3,7 @@
  */
 
  'use strict'
-    function datasetController($scope, $state, $stateParams,exportService){
+    function datasetController($rootScope,$scope, $state, $stateParams,exportService){
 
         var vm = this;
         vm.fields = {};
@@ -14,9 +14,34 @@
 
         var projectId = $stateParams.studyId;
         var datasetId = $stateParams.datasetId;
+        vm.dsRetrieved = false;
 
         vm.projectId = projectId;
-
+        vm.DS ={}
+        
+        /*if(datasetId == 0){
+            console.log("new dataset")
+            vm.DS = new exportService.getMyDatasetResource();
+            vm.DS.fields = [];
+            vm.DS.filters = [];
+            vm.DS.id=0;
+            vm.DS.projectAcc = projectId
+            vm.DS.type = "Clinical Data";
+            vm.DS.isNew = true;
+        }else{
+            exportService.getMyDatasetResource.get({datasetId:datasetId},function(response) {
+                vm.DS = response;
+                vm.DS.isNew = false;
+                vm.dsRetrieved = true
+                console.log("Retrieved User Dataset",vm.DS.id);
+                exportService.updateLocalDS(vm.DS).then(function () {
+                    /!*$state.go('export.wizard.filters', {
+                        datasetId: datasetId,
+                        projectId: projectId
+                    });*!/
+                });
+            })
+        }*/
         
         // exportService.getDataFields(projectId).then(function(data){
         //     vm.fields.treeConfig = {
@@ -95,26 +120,7 @@
         //     vm.fields.treeConfig.version++;
         //     vm.filters.treeConfig.version++;
         // })
-
-       
-
-
-        
-
-
-        if(datasetId == 0){
-            console.log("new dataset")
-            vm.DS = {}
-            vm.DS.fields = [];
-            vm.DS.filters = [];
-            vm.DS.id=0;
-        }else{
-            exportService.getUserDataset(datasetId).then(function(data){
-                vm.DS = data.ds;
-            })
-        }
-        
     }
 
     angular.module('bioSpeak.export')
-        .controller('datasetController',['$scope','$state','$stateParams','exportService',datasetController]);
+        .controller('datasetController',['$rootScope','$scope','$state','$stateParams','exportService',datasetController]);

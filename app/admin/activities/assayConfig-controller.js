@@ -185,6 +185,13 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService,$timeo
         //    inherit: false
         //    });
     }
+
+    vm.dontSaveAssay = function(){
+        vm.assay = {}
+        $state.go('admin.project',{
+            projectId: vm.projectId}
+            );
+    }
 }
 
 angular.module('bioSpeak.config')

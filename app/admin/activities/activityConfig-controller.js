@@ -3,9 +3,9 @@
  */
 
 'use strict';
-function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, DatasetResource,$timeout,$q,toaster) {
+function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, DatasetResource,$timeout,SweetAlert,toaster) {
     var vm = this;
-    vm.studyId = $stateParams.projectId;
+    vm.projectId = $stateParams.projectId;
     //vm.scope = $scope
 
     //console.log("Activity Controller requested")
@@ -70,7 +70,7 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
     if($stateParams.activityId==0){
         console.log("New Activity");
         activity = new ActivityResource();
-        activity.ProjectAcc = $stateParams.studyId;//"Study1"
+        activity.ProjectAcc = $stateParams.projectId;//"Study1"
         activity.isNew = true;
         activity.status = "New";
         activity.datasets = [];
@@ -78,6 +78,7 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
 
         vm.activity = activity;
         DatasetResource.query(function(response){
+            console.log("querying for datasets", response)
             vm.clinicaldomains = response;
         })
     }
@@ -331,61 +332,105 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
 
 
 
-    vm.saveActivity = function(){
-        if(vm.activity.isNew){
-            vm.activity.$save(function(response) {
-                console.log("Activity created");
-                $state.transitionTo('manager.main', $stateParams, {
-                    reload: true,
-                    inherit: false,
-                    notify: true
-                });
-            });
-        }
-        else{
-            console.log("Activity Edited");
-            // console.log(vm.activity);
-            // console.log(model.activity);
-            vm.activity.$update(function(response) {
-                console.log("Activity Updated");
+    vm.saveActivity = function() {
+        if (vm.activity.name != null && vm.activity.name != ''){
 
-                $state.transitionTo('manager.main', $stateParams, {
-                    reload: true,
-                    inherit: false,
-                    notify: true
+            if (vm.activity.isNew) {
+                vm.activity.$save(function (response) {
+                    toaster.pop('success', "SUCCESS", vm.activity.name," was successfully CREATED.",8000);
+                    $state.transitionTo('admin.project', $stateParams, {
+                        reload: true,
+                        inherit: false,
+                        notify: true
+                    });
                 });
-            });
-        }
+            }
+            else {
+                vm.activity.$update(function (response) {
+                    toaster.pop('success', "SUCCESS", vm.activity.name," was successfully UPDATED.",8000);
+                    $state.transitionTo('admin.project', $stateParams, {
+                        reload: true,
+                        inherit: false,
+                        notify: true
+                    });
+                });
+            }
+        }else
+            toaster.warning("Warning","Activity has no name!")
     };
 
     vm.dontSaveActivity = function(){
-
+        vm.activity = {}
+        $state.go('admin.project',{
+            projectId: vm.projectId}
+        );
     }
 
-    vm.selectTemplate = function(domainId){
-        DatasetResource.get({datasetId:domainId}, function(response) {
-            var dataset = response;
+    vm.selectTemplate = function(dataset){
+        console.log("CHOSE TEAMPLATE", dataset.name)
+        /*DatasetResource.get({datasetId:domainId}, function(response) {
+            var dataset = response;*/
             dataset.isNew = true;
             dataset.activityId = $stateParams.activityId;
             //dataset.projectStrAcc = $stateParams.studyId;
             //console.log(vm.activity)
-                console.log(dataset);
+            //     console.log(dataset);
             vm.activity.datasets.push(dataset);
+
+        $timeout(function(){
+            vm.activeTabIndex = (vm.activity.datasets.length - 1);
+        });
             //console.log(vm.activity)
 
             $timeout(function(){
                 //console.log($('#ds_template_tbl'))
                 $('#ds_template_tbl').trigger('footable_redraw');
-            }, 4000);
+            });
 
-            vm.selectTemplate=false;
-        })
+            //vm.selectTemplate=false;
+        // })
     };
 
-    vm.mouseOverDataset = function(domain) {
-        vm.clinicaldomains.preview = domain;
+    vm.showDSvars = function(domain) {
+        vm.showDS = domain;
+    }
+
+
+    vm.tabSelected = function(ds){
+        vm.currDS = ds;
+    };
+
+    vm.deleteDS = function(){
+
+        SweetAlert.swal({
+                title: "Are you sure you want to delete "+vm.currDS.name+"?",
+                text: "All associated data files will be deleted and all loaded data attached to this data will be permanently deleted! ",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false },
+            function (isConfirm) {
+                if (isConfirm) {
+                    var pos;
+                    for(var i=0; i< vm.activity.datasets.length;i++) {
+                        console.log(i)
+                        if(vm.currDS.id == vm.activity.datasets[i].id){
+                            console.log(i, 'for',vm.currDS.name)
+                            pos = i;
+                            break;
+                        }
+                    }
+                    vm.activity.datasets.splice(pos,1)
+                    SweetAlert.swal("Deleted!", "Dataset "+vm.currDS.name+" has been deleted.", "success");
+                } else {
+                    SweetAlert.swal("Cancelled", "", "error");
+                }
+            });
     }
 }
 
 angular.module('bioSpeak.config')
-    .controller('ActivityConfigCtrl',['$scope', '$state','$stateParams','ActivityResource','DatasetResource','$timeout','$q','toaster',ActivityConfigCtrl]);
+    .controller('ActivityConfigCtrl',['$scope', '$state','$stateParams','ActivityResource','DatasetResource','$timeout','SweetAlert','toaster',ActivityConfigCtrl]);

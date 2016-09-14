@@ -6,6 +6,7 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster) 
 
 
     var project;
+    vm.projectId = $stateParams.projectId
     if($stateParams.projectId=='new'){
         console.log("New Project");
         project = new ProjectService.getProjectResource();
@@ -29,21 +30,9 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster) 
     }
 
 
-    /*vm.project.isNew = false
 
-    vm.project.name = "BioVacSafe"
-    vm.project.title = "Biomarkers for enhanced vaccines immunosafety"
-    vm.project.accession = "P-BVS";
 
-    vm.studyId = $stateParams.studyId*/
-    
-    vm.projectId = $stateParams.projectId
 
-    /*console.log("List Controller requested")
-    console.log($stateParams);*/
-
-    vm.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-    vm.project.state = "Alabama"
     //Retrieves list of study activities
     ProjectService.getProjectResource.getActivitiesForProject({projectId:vm.projectId},function(response){
         vm.activities = response;
@@ -93,9 +82,12 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster) 
         }
     };
 
-    vm.dontSaveActivity = function(){
-
+    vm.dontSaveProject = function(){
+        vm.project = {}
+        project = null
+        $state.go('admin.projects');
     }
+    
 }
 angular.module('bioSpeak.config')
     .controller('ProjectCtrl',['$scope', '$state','$stateParams','ProjectService','toaster',projectController])

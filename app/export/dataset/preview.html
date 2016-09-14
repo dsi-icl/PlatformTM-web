@@ -49,11 +49,14 @@
         </div>
     </div>
 
-    <div class="pull-left">
-        <a ng-click="prevCtrl.cancel()"  class="btn btn-primary btn-sm ">Cancel</a>
+    <div class="m-t-md" ng-hide="$state.current.name == 'export.datasets.preview'">
+        <div class="pull-left">
+            <a ng-click="prevCtrl.cancel()"  class="btn btn-primary btn-sm ">Cancel</a>
+        </div>
+        <div class=" pull-right">
+            <a ng-click="prevCtrl.prev()" class="btn btn-default btn-sm">Previous</a>
+            <a ng-click="prevCtrl.next()"  class="btn btn-primary btn-sm">Next</a>
+        </div>
     </div>
-    <div class="pull-right">
-        <a ng-click="prevCtrl.prev()" class="btn btn-default btn-sm">Previous</a>
-        <a ng-click="prevCtrl.next()"  class="btn btn-primary btn-sm">Next</a>
-    </div>
+
     </div>

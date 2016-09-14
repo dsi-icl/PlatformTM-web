@@ -1,5 +1,8 @@
 body {
     /*font-family: "Open Sans";*/
+    font-family: 'Lato', sans-serif;
+    /*font-family: 'Questrial', sans-serif;*/
+    /*font-family: 'PT Sans', sans-serif;*/
     /*font-size: 2.0em;*/
     background-color: #f0f0f0;
     -webkit-tap-highlight-color: transparent;
@@ -207,6 +210,10 @@ nav a {
     text-transform: uppercase;
     color: white;
     padding: 15px;
+}
+
+.panel-header a{
+    color: inherit;
 }
 
 .panel-content{
@@ -1097,7 +1104,7 @@ a.editable-select {
     cursor: default;
     /*border:0;*/
     outline:none;
-    padding: 20px 80px 40px;
+    padding: 20px 20px 20px 30px
 
 }
 .section-content:focus {
@@ -1208,6 +1215,18 @@ a.editable-click {
     border-bottom: dashed 1px #dd7a2a;
 }
 
+/*Custom css*/
+.feed-element div:hover{
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+.feed-element a{
+    color: inherit;
+}
+.feed-element a.selected{
+    background-color: #0095a2;
+    color: white;
+}
 
 /*STUDY PLANNER*/
 

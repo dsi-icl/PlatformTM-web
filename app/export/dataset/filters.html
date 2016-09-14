@@ -8,13 +8,15 @@
                 <div class="well">
 
                     <div ng-show="filterCtrl.dataLoaded">
-                        <div js-tree="filterCtrl.treeConfig"
+                        <!--<div js-tree="filterCtrl.treeConfig"
                              ng-model="filterCtrl.treeData"
                              tree="filterCtrl.treeInstance"
                              tree-events="changed:filterCtrl.treeChanged;
                                 select_node:filterCtrl.nodeSelected;
                                 deselect_node:filterCtrl.nodeDeselected" >
-                        </div>
+                        </div>-->
+
+                        <div draggable-tree tree-data="filterCtrl.treeData" nclick="filterCtrl.toggleNode(node)" search-tree="searchTree" ></div>
                     </div>
 
                     <div ng-hide="filterCtrl.dataLoaded" >
@@ -41,40 +43,44 @@
 
         <!--APPLIED FILTERS-->
         <div class="col-md-7">
-            <div ui-view>
-                <h3 class="domainTitleName">Filters</h3>
-                <div ng-repeat="filter in filterCtrl.filters">
+            <h3 class="domainTitleName">Filters</h3>
+            <div class="well">
+                <div ui-view>
+                    <div ng-hide="filterCtrl.filters.length>0">No filters added</div>
+                    <div ng-repeat="filter in filterCtrl.filters">
 
-                    <div ng-if="filter.isNumeric" class="ibox float-e-margins" style="margin-bottom: 1px;border-top: 1px solid white;">
-                        <div class="ibox-title" style="
+                        <div ng-if="filter.isNumeric" class="ibox float-e-margins" style="margin-bottom: 1px;border-top: 1px solid white;">
+                            <div class="ibox-title" style="
                                                         background-color: #2C3E50;
                                                         color: #FBFBFC;">
-                            <h5>{{filter.field.displayName}} between <span style="color: #CDFF3B">{{filter.from}} {{filter.unit}}</span> and <span style="color: #CDFF3B">{{filter.to}} {{filter.unit}}</span></h5>
-                            <div ibox-tools ></div>
+                                <h5>{{filter.field.displayName}} between <span style="color: #CDFF3B">{{filter.from}} {{filter.unit}}</span> and <span style="color: #CDFF3B">{{filter.to}} {{filter.unit}}</span></h5>
+                                <div ibox-tools ></div>
+                            </div>
+                            <div class="ibox-content" style="">
+                                <div ion-range-slider range-options="filter.ionSliderOptions"></div>
+                            </div>
                         </div>
-                        <div class="ibox-content" style="">
-                            <div ion-range-slider range-options="filter.ionSliderOptions"></div>
-                        </div>
-                    </div>
 
-                    <div ng-if="!filter.isNumeric" class="ibox float-e-margins" style="margin-bottom: 1px;border-top: 1px solid white;">
-                        <div class="ibox-title" style="background-color: #2C3E50;color: #FBFBFC;">
-                            <h5 ng-show="filter.filterValues">{{filter.field.displayName}} : (<span style="color:#00bfcd" ng-repeat="val in filter.filterValues">{{val}}{{!$last ? ',':''}}</span>)</h5>
-                            <h5 ng-hide="filter.filterValues">{{filter.field.displayName}}</h5>
-                            <div ibox-tools ></div>
-                        </div>
-                        <div class="ibox-content" style="">
-                            <b>Values: </b>
-                            <ui-select multiple ng-model="filter.filterValues" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
-                                <ui-select-match style="height: 29px;" placeholder="Select filter terms...">{{$item}}</ui-select-match>
-                                <ui-select-choices repeat="term in filter.valueSet | filter:$select.search" position="down">
-                                    {{term}}
-                                </ui-select-choices>
-                            </ui-select>
+                        <div ng-if="!filter.isNumeric" class="ibox float-e-margins" style="margin-bottom: 1px;border-top: 1px solid white;">
+                            <div class="ibox-title" style="background-color: #2C3E50;color: #FBFBFC;">
+                                <h5 ng-show="filter.filterValues">{{filter.field.displayName}} : (<span style="color:#00bfcd" ng-repeat="val in filter.filterValues">{{val}}{{!$last ? ',':''}}</span>)</h5>
+                                <h5 ng-hide="filter.filterValues">{{filter.field.displayName}}</h5>
+                                <div ibox-tools ></div>
+                            </div>
+                            <div class="ibox-content" style="">
+                                <b>Values: </b>
+                                <ui-select multiple ng-model="filter.filterValues" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+                                    <ui-select-match style="height: 29px;" placeholder="Select filter terms...">{{$item}}</ui-select-match>
+                                    <ui-select-choices repeat="term in filter.valueSet | filter:$select.search" position="down">
+                                        {{term}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>

@@ -1,6 +1,10 @@
 body.md-skin {
     /*font-family: 'Ruda', sans-serif;*/
-    font-family: "Ruda","Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /*font-family: "Ruda","Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    /*font-family: "Open Sans";*/
+    font-family: 'Lato', sans-serif;
+    /*font-family: 'Questrial', sans-serif;*/
+    /*font-family: 'PT Sans', sans-serif;*/
     background-color: #ffffff;
 }
 .md-skin .nav-header {
@@ -8,7 +12,7 @@ body.md-skin {
 }
 .md-skin .label,
 .md-skin .badge {
-    font-family: 'Ruda';
+    font-family: 'Questrial';
 }
 .md-skin .font-bold {
     font-weight: 500;
@@ -421,7 +425,8 @@ body.md-skin {
 }
 
 .md-skin .btn .btn-primary{
-    background-color: #39b3d7 ;
+    background-color: #019baa;
+    font-family: 'Questrial';
 }
 
 .md-skin .alternateFieldBkg:nth-child(even)

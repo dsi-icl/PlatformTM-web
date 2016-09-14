@@ -82,7 +82,7 @@ angular.module('bioSpeak.config')
 
     .factory('DatasetResource',function($resource,ngAppConfig){
         var serviceBase = ngAppConfig.apiServiceBaseUri;
-        return $resource(serviceBase+'api/Dataset/:datasetId',{},{
+        return $resource(serviceBase+'api/templates/clinical/:datasetId',{},{
             update:{
                 method: 'PUT',
                 params: {datasetId: '@id'}

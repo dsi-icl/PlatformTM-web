@@ -51,7 +51,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var _getActivities = function(projectId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'api/studies/'+projectId+'/activities/')
+        $http.get(serviceBase + 'api/projects/'+projectId+'/activities/')
             .success(function (response) {
                 console.log("Inside http get success",response)
 
@@ -173,7 +173,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _extractObs = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/Datasets/'+datasetId+'/loadData/file/'+fileId)
+        $http.get(serviceBase + 'api/datasets/'+datasetId+'/loadData/file/'+fileId)
             .success(function (response) {
                 console.log("EXTRACT OBSERVATIONS Inside http get success",response)
                 deferred.resolve(response);

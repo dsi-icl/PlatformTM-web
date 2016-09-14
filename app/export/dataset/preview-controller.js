@@ -37,17 +37,16 @@ function previewController($scope, $state, $stateParams, DTOptionsBuilder,export
 
     vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
         return exportService.getDataTableData()
-        //return $resource('../data/dt.json').query().$promise;
     })
-        //.withTableTools('lib/plugins/dataTables/copy_csv_xls_pdf.swf')
-        //.withTableToolsButtons([
-        //    'copy',
-        //    'print', {
-        //        'sExtends': 'collection',
-        //        'sButtonText': 'Save',
-        //        'aButtons': ['csv', 'xls', 'pdf']
-        //    }
-        //])
+        .withTableTools('lib/plugins/dataTables/copy_csv_xls_pdf.swf')
+        .withTableToolsButtons([
+           'copy',
+           'print', {
+               'sExtends': 'collection',
+               'sButtonText': 'Save',
+               'aButtons': ['csv', 'xls', 'pdf']
+           }
+        ])
         .withPaginationType('simple')
         .withOption('scrollX', true)
         //res.header////$resource('/angular-datatables/dtColumns.json').query().$promise;

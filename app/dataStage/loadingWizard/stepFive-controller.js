@@ -39,12 +39,12 @@
         wizardService.loadDataset(datasetId, fileId).then(function(success){
             console.log(success)
 
-            // if(success){
-            //     $scope.loadedDataset = true;
-            //     return wizardService.extractObs(datasetId,standardFileId)
-            // }
-            // else
-            //     $scope.loadingFailed = true;
+            if(success){
+                $scope.loadedDataset = true;
+                return wizardService.extractObs(datasetId,fileId)
+            }
+            else
+                $scope.loadingFailed = true;
         }).then(function(success){
             console.log('BACK from mysql')
             if(success)

@@ -1,14 +1,20 @@
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-9">
+    <div class="col-lg-8">
         <h2>Projects</h2>
-        <!--<ol class="breadcrumb">
+        <ol class="breadcrumb">
             <li>
-                <a ui-sref="main.home">Home</a>
+                <a ui-sref="main.home">Projects</a>
             </li>
-            <li class="active">
+            <!--<li class="active">
                 <strong>Data Stage</strong>
-            </li>
-        </ol>-->
+            </li>-->
+        </ol>
+    </div>
+    <div class="col-lg-4">
+        <div class="title-action">
+            <a ui-sref="admin.project({projectId:'new'})" class="btn btn-primary">New Project</a>
+
+        </div>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -65,9 +71,94 @@
              </div>
          </div>-->
 
+    <!--<div masonry="{ gutter: 25 }" load-images="false" preserve-order column-width="300" reload-on-resize>
+
+        <div class="masonry-brick">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h4 class="font-bold">
+                        Example masonary box
+                    </h4>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </div>
+            </div>
+        </div>
+        <div class="masonry-brick">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h4 class="font-bold">
+                        Example masonary box
+                    </h4>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </div>
+            </div>
+        </div>
+        <div class="masonry-brick">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h4 class="font-bold">
+                        Example masonary box
+                    </h4>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </div>
+            </div>
+        </div>
+    </div>-->
 
     <div class="row">
-        <div class="col-lg-4">
+            <div ng-repeat="p in vm.projects" class="col-lg-3">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <span class="label label-warning pull-right">PRIVATE</span>
+                        <h5>{{p.name}}</h5>
+                    </div>
+                    <div class="ibox-content text-center">
+                        <a ui-sref="admin.project({projectId: p.accession})">
+                            <img class="img-dashboard" src="img/nologo2.png"  alt="profile">
+                        </a>
+                        <!--<div class="m-t-md">
+                            <span>Status of current project:</span>
+                            <div class="stat-percent">48%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 48%;" class="progress-bar"></div>
+                            </div>
+                        </div>-->
+                        <div class="row  m-t-sm m-b-sm">
+                            <div class="col-sm-3">
+                                <div class="font-bold small">STUDIES</div>
+                                {{p.studyCount || '0'}}
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="font-bold small">SUBJECTS</div>
+                                {{p.subjectCount || '0'}}
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="font-bold small">COHORTS</div>
+                                {{p.cohortCount || '0'}}
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="font-bold small">SAMPLES</div>
+                                {{p.sampleCount || '0'}}
+                            </div>
+                        </div>
+                        <div class="p-xs">
+                            <div class="text-center">
+                                <div class="btn-group">
+                                    <a ui-sref="explore({studyId:p.accession})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore</a>
+                                    <a ui-sref="admin.project({projectId: p.accession})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Admin</a>
+                                    <a ui-sref="datastage.files({studyId: p.accession})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Import</a>
+                                    <a ui-sref="export.datasets({studyId: p.accession})" class="btn btn-xs btn-white"><i class="fa fa-table"></i> Export</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        <!--<div class="col-lg-4">
             <div class="ibox">
                 <div class="ibox-title">
                     <span class="label label-danger pull-right">PROTECTED</span>
@@ -77,13 +168,13 @@
                     <a ui-sref="admin.project({projectId:'P-BVS'})">
                         <img class="img-dashboard" src="img/test.png"  alt="profile">
                     </a>
-                    <!--<div class="m-t-md">
+                    &lt;!&ndash;<div class="m-t-md">
                         <span>Status of current project:</span>
                         <div class="stat-percent">48%</div>
                         <div class="progress progress-mini">
                             <div style="width: 48%;" class="progress-bar"></div>
                         </div>
-                    </div>-->
+                    </div>&ndash;&gt;
                     <div class="row  m-t-sm m-b-sm">
                         <div class="col-sm-3">
                             <div class="font-bold small">STUDIES</div>
@@ -126,13 +217,13 @@
                     <a ui-sref="admin.project({projectId:'P-UBP'})">
                         <img class="img-dashboard" src="img/ubiop_img.jpg"  alt="profile">
                     </a>
-                    <!--<div class="m-t-md">-->
-                        <!--<span>Status of current project:</span>-->
-                        <!--<div class="stat-percent">5%</div>-->
-                        <!--<div class="progress progress-mini">-->
-                            <!--<div style="width: 5%;" class="progress-bar"></div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    &lt;!&ndash;<div class="m-t-md">&ndash;&gt;
+                        &lt;!&ndash;<span>Status of current project:</span>&ndash;&gt;
+                        &lt;!&ndash;<div class="stat-percent">5%</div>&ndash;&gt;
+                        &lt;!&ndash;<div class="progress progress-mini">&ndash;&gt;
+                            &lt;!&ndash;<div style="width: 5%;" class="progress-bar"></div>&ndash;&gt;
+                        &lt;!&ndash;</div>&ndash;&gt;
+                    &lt;!&ndash;</div>&ndash;&gt;
                     <div class="row  m-t-sm">
                         <div class="col-sm-3">
                             <div class="font-bold">STUDIES</div>
@@ -148,7 +239,7 @@
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold">SAMPLES</div>
-                            --
+                            &#45;&#45;
                         </div>
                     </div>
                     <div class="ibox-footer">
@@ -175,13 +266,13 @@
                     <a ui-sref="admin.project({projectId:'P-PTB'})">
                         <img class="img-dashboard" src="img/predicttb.jpeg"  alt="profile">
                     </a>
-                    <!-- <div class="m-t-md">
+                    &lt;!&ndash; <div class="m-t-md">
                          <span>Status of current project:</span>
                          <div class="stat-percent">5%</div>
                          <div class="progress progress-mini">
                              <div style="width: 5%;" class="progress-bar"></div>
                          </div>
-                     </div>-->
+                     </div>&ndash;&gt;
                     <div class="row  m-t-sm">
                         <div class="col-sm-3">
                             <div class="font-bold small">STUDIES</div>
@@ -193,11 +284,11 @@
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">OBSERVATIONS</div>
-                            --
+                            &#45;&#45;
                         </div>
                         <div class="col-sm-3 text-right">
                             <div class="font-bold small">SAMPLES</div>
-                            --
+                            &#45;&#45;
                         </div>
                     </div>
                     <div class="ibox-footer">
@@ -212,27 +303,27 @@
 
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
-    <div class="row">
+    <!--<div class="row">
 
         <div class="col-lg-4">
             <div class="ibox">
                 <div class="ibox-title">
-                    <!--<span class="label label-danger pull-right">PROTECTED</span>-->
+                    &lt;!&ndash;<span class="label label-danger pull-right">PROTECTED</span>&ndash;&gt;
                     <h5>AIRPROM-DEMO</h5>
                 </div>
                 <div class="ibox-content text-center">
                     <a ui-sref="admin.project({projectId:'P-PRM'})">
                         <img class="img-dashboard" src="img/airprom.png"  alt="profile">
                     </a>
-                    <!--<div class="m-t-md">
+                    &lt;!&ndash;<div class="m-t-md">
                         <span>Status of current project:</span>
                         <div class="stat-percent">48%</div>
                         <div class="progress progress-mini">
                             <div style="width: 48%;" class="progress-bar"></div>
                         </div>
-                    </div>-->
+                    </div>&ndash;&gt;
                     <div class="row  m-t-sm m-b-sm">
                         <div class="col-sm-3">
                             <div class="font-bold small">STUDIES</div>
@@ -266,6 +357,6 @@
             </div>
         </div>
 
-    </div>
+    </div>-->
 
 </div>

@@ -31,6 +31,10 @@ function ProjectService($resource, ngAppConfig) {
             url : serviceBase+'api/projects/id/:projectId/',
             // isArray : true
             /*params:{studyId}*/
+        },
+        get:{
+            method:'GET',
+            isArray : true
         }
     });
 

@@ -1,7 +1,7 @@
 
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
+    <div class="col-lg-8">
         <h2>Projects</h2>
         <ol class="breadcrumb">
             <li>
@@ -12,10 +12,10 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-4">
         <div class="title-action">
             <a ng-click="vm.saveProject()" class="btn btn-primary">{{vm.project.isNew ? 'Create Project' : 'Save'}}</a>
-            <a ng-click="vm.dontSaveProject()" class="btn btn-primary">Cancel</a>
+            <a ng-click="vm.dontSaveProject()" class="btn btn-primary">Go Back</a>
         </div>
     </div>
 </div>
@@ -23,7 +23,7 @@
 
 
     <div class="row m-t-sm m-b-md">
-        <div class="col-md-9">
+        <div class="col-sm-4">
 
             <div class="profile-image">
                 <div class="text-center">
@@ -39,7 +39,7 @@
                         <p>
                         <h2 class="no-margins">
                             <!--<span class="title">Project Title: </span>-->
-                            <a  editable-text="vm.project.name" e-placeholder="Enter Project Name">
+                            <a required editable-text="vm.project.name" e-placeholder="Enter Project Name">
                                 {{vm.project.name ||'Project Short Name / Acronym'}}
                             </a>
                         </h2>
@@ -47,7 +47,7 @@
                         <p>
                         <h3>
                             <!--<span class="title">Project Name: </span>-->
-                            <a  editable-text="vm.project.title" e-style="color: green" e-required e-placeholder="Enter Project Title" e-formclass="class1 class2">
+                            <a required editable-text="vm.project.title" e-style="color: green" e-required e-placeholder="Enter Project Title" e-formclass="class1 class2">
                                 {{vm.project.title || 'Project Title'}}
                             </a>
                         </h3>
@@ -62,8 +62,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <table class="table small m-b-xs">
+        <!--<div class="col-sm-2">
+            <div class="widget style1 lazur-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-phone fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h2 class="font-bold">120</h2>
+                    </div>
+                </div>
+
+            </div>
+            &lt;!&ndash;<table class="table small m-b-xs">
                 <tbody>
                 <tr>
                     <td>
@@ -91,8 +102,44 @@
                     </td>
                 </tr>
                 </tbody>
-            </table>
+            </table>&ndash;&gt;
         </div>
+        <div class="col-sm-2">
+            <div class="widget style1 lazur-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-euro fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h2 class="font-bold">462</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="widget style1 lazur-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-euro fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h2 class="font-bold">462</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="widget style1 lazur-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-euro fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h2 class="font-bold">462</h2>
+                    </div>
+                </div>
+            </div>
+        </div>-->
         <!--<div class="col-md-3" ng-controller="dashboardFive as chart">-->
         <!--<small>Sales in last 24h</small>-->
         <!--<h2 class="no-margins">206 480</h2>-->
@@ -110,16 +157,37 @@
                     <h3>About {{vm.project.isNew ? ' the project': vm.project.name}}</h3>
 
                     <p class="small">
-                        There are many variations of passages of Lorem Ipsum available, but the majority have
-                        suffered alteration in some form, by injected humour, or randomised words which don't.
-                        <br/>
-                        <br/>
-                        If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                        anything embarrassing
+                        <a href="#" editable-textarea="vm.project.desc" e-rows="7" e-cols="20">
+                            <pre>{{ vm.project.desc || 'No description' }}</pre>
+                        </a>
                     </p>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select data-ng-model="vm.project.type" class="form-control" name="type">
+                            <option value="Single study">Single Study</option>
+                            <option value="Multiple study">Multiple Study</option>
+                            <option value="Meta study">Meta study</option>
+                        </select>
+                    </div>
+
+                    <!--<div class="form-group">
+                        <div class="row">
+                            <label class="col-sm-2 control-label">Type</label>
+
+                            <div class="col-sm-10">
+                                <select data-ng-model="vm.project.type" class="form-control" name="type">
+                                    <option value="Single study">Single Study</option>
+                                    <option value="Multiple study">Multiple Study</option>
+                                    <option value="Meta study">Meta study</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>-->
 
                     <!--<form data-editable-form name="uiSelectForm">
-                        <div editable-ui-select="vm.project.ta" data-e-form="uiSelectForm" data-e-name="ta" name="ta"  theme="bs3" data-e-ng-model="vm.project.ta" data-e-style="min-width:300px;">
+                        <div editable-ui-select="vm.project.ta" data-e-form="uiSelectForm" data-e-name="ta" name="ta"  theme="bs3" data-e-ng-model="vm.project.ta" data-e-style="min-width:150px;">
                             {{vm.project.ta}}
                             <editable-ui-select-match placeholder="ta">
                                 {{$select.selected}}
@@ -129,11 +197,11 @@
                             </editable-ui-select-choices>
                         </div>
                         <div class="buttons">
-                            &lt;!&ndash; button to show form &ndash;&gt;
+                            &lt;!&ndash; button to show form
                             <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
                                 Edit
                             </button>
-                            &lt;!&ndash; buttons to submit / cancel form &ndash;&gt;
+                             buttons to submit / cancel form
                               <span ng-show="uiSelectForm.$visible">
                                 <br/>
                                 <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
@@ -144,7 +212,7 @@
                                 </button>
                               </span>
                         </div>
-                    </form>-->
+                    </form>&ndash;&gt;-->
 
                     <!--<p class="small font-bold">-->
                     <!--<span><i class="fa fa-circle text-navy"></i> Online status</span>-->
@@ -156,14 +224,8 @@
             <div class="ibox">
                 <div class="ibox-content">
                     <h3>Members and Users</h3>
-                    <p class="small">
-                        If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't
-                        anything embarrassing
-                    </p>
                     <div class="user-friends">
-                        <a href=""><img alt="image" class="img-circle" src="img/icon-user.png"></a>
-                        <a href=""><img alt="image" class="img-circle" src="img/icon-user.png"></a>
-                        <a href=""><img alt="image" class="img-circle" src="img/icon-user.png"></a>
+                        <a style="padding-left:5px" uib-tooltip="{{u}}" ng-repeat="u in vm.project.users"><img alt="image" class="img-circle" src="img/icon-user.png">{{u}}</a>
                     </div>
                 </div>
             </div>
@@ -206,7 +268,6 @@
         </div>
 
         <div class="col-lg-5">
-
             <div class="ibox">
                 <div class="ibox-title">
                     <h3>Activities
@@ -237,7 +298,7 @@
                     <div class="activities-list" full-scroll>
                         <div class="full-height-scroll" >
                             <ul class="list-group clear-list">
-                                <li class="list-group-item fist-item" ng-repeat="activity in vm.activities">
+                                <li class="list-group-item" ng-repeat="activity in vm.activities" ng-class="{'first-item':$first}">
                                     <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
                                     <a ng-click="vm.goToActivity(activity)">{{activity.name}}</a>
                                     <br/>
@@ -293,13 +354,8 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
+
         <div class="col-lg-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -312,21 +368,14 @@
                 </div>
                 <div class="ibox-content ">
                     <ul class="elements-list list-group clear-list">
-                        <li class="list-group-item first-item">
-                            <span class="badge badge-primary">16</span>
-                            <strong>CRC305A</strong>
-                        </li>
-                        <li class="list-group-item ">
-                            <span class="badge badge-info">12</span>
-                            CRC305B
-                        </li>
-                        <li class="list-group-item">
-                            <span class="badge badge-danger">10</span>
-                            CRC305C
-                        </li>
-                        <li class="list-group-item">
-                            <span class="badge badge-success">10</span>
-                            CRC305D
+                        <li ng-repeat="study in vm.project.studies" class="list-group-item" ng-class="{'first-item':$first}">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a ui-sref="admin.study({studyId:study.id, projectId:study.projectAcc})"><strong>{{study.name}}</strong></a>
+                                </div>
+                                <div class="col-md-6">{{study.title}}</div>
+                                <div class="col-md-3"><span uib-tooltip="{{study.armNames}}" tooltip-placement="left" class="badge badge-info">{{study.armCount}} Cohorts</span></div>
+                            </div>
                         </li>
                     </ul>
                 </div>
