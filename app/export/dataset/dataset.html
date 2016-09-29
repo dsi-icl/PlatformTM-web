@@ -1,0 +1,65 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Create New Dataset</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="main.home">Home</a>
+            </li>
+            <li>
+                <a ui-sref="admin.project({projectId:parentCtrl.projectId})">{{parentCtrl.projectId}}</a>
+            </li>
+            <li>
+                <a ui-sref="export.datasets({projectId:parentCtrl.projectId})">My Datasets</a>
+            </li>
+            <li class="active">
+                <strong>New Dataset</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+
+
+    <div class="row">
+        <div class="col-md-12" style="padding-left:0">
+            <div class="ibox">
+                <div class="ibox-content wizard">
+
+                    <div class="steps clearfix">
+                        <ul>
+
+                            <li ui-sref-active="current">
+                                <a ui-sref=".fields" class="btn-default btn btn-xs"><span>1</span> Fields</a>
+                            </li>
+                            <li ui-sref-active="current">
+                                <a ui-sref=".filters" class="btn-default "><span>2</span> Filters</a>
+                            </li>
+                            <li ui-sref-active="current">
+                                <a ui-sref=".preview" class="btn-default"><span>3</span> Preview Data</a>
+                            </li>
+                            <li ui-sref-active="current">
+                                <a ui-sref=".info" class="btn-default"><span>4</span> Information</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="wizard">
+                        <div class="content"  >
+
+                            <form name="signupForm" ng-submit="processForm()" class="p-lg">
+
+                                <!-- our nested state views will be injected here -->
+                                <div id="form-views" ui-view></div>
+                            </form>
+                        </div>
+                    </div>
+                   <!-- <pre>
+                        {{parentCtrl.DS}}
+                    </pre>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

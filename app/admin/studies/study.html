@@ -1,0 +1,596 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Studies</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="main.home">Home</a>
+            </li>
+            <li>
+                <a ui-sref="admin.project({projectId:vm.projectId})">{{vm.projectId}}</a>
+            </li>
+            <li class="active">
+                <strong>{{vm.study.isNew ? 'New Study' : vm.study.name}}</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+        <div class="title-action">
+            <a ng-click="vm.saveStudy()" class="btn btn-primary">Save</a>
+            <a ng-click="vm.dontSaveStudy()" class="btn btn-primary">Go Back</a>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row m-b-md m-t-sm">
+        <div class="col-md-9">
+
+
+            <div class="">
+
+                <h2 class="no-margins">
+                    <!--<span class="title">Project Title: </span>-->
+                    <a  editable-text="vm.study.name" e-placeholder="Enter Study Short Name / Acronym">
+                        {{vm.study.name ||'Study Short Name / Acronym'}}
+                    </a>
+                </h2>
+
+
+                <h3>
+                    <!--<span class="title">Project Name: </span>-->
+                    <a  editable-text="vm.study.title" e-style="color: green" e-required e-placeholder="Enter Study Title">
+                        {{vm.study.title || 'Study Title'}}
+                    </a>
+                </h3>
+
+
+                <h3>
+                    <label class="label label-warning label-lg">{{ (vm.study.accession || 'S-XXX-00')  }}</label>
+
+
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="row m-b-md m-t-sm">
+        <div class="col-md-12">
+            <div  class="ibox"   style="background-color: #F1F2F2;">
+                <div class="panel-header">
+                    <h3><span class="glyphicon glyphicon-plus" style="color: #39b3d7; margin-right: 3px"></span>Study Design
+                    </h3>
+                </div>
+
+                <div class="ibox-content planContainer" cdz-study-planner arms="vm.Arms"></div>
+
+                <div style="margin-top: 15px">
+                    <button style="float: right" ng-click="toggleControls()" type="button" class="btn btn-info" ng-init="btnText = 'Edit Plan'">{{ btnText }}</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>-->
+
+    <div class="row m-b-md m-t-md">
+        <div class="col-md-8">
+
+            <div class="ibox">
+                <div class=" panel-header">
+                    <h3><a ng-init="vm.GIisCollapsed=false" ng-click="vm.GIisCollapsed = !vm.GIisCollapsed">
+                        <i ng-if="vm.GIisCollapsed" class="fa fa-plus-square"></i>
+                        <i ng-if="!vm.GIisCollapsed"class="fa fa-minus-square"></i></a>
+                        &nbsp;General Information</h3>
+                </div>
+                <div class="ibox-content" uib-collapse="vm.GIisCollapsed">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Protocol Identification Number</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="protocol_sections_general_information_protocol_identification_number" name="protocol[sections][general_information][protocol_identification_number]" size="30" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Sponsor</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="protocol_sections_general_information_sponsor" name="protocol[sections][general_information][sponsor]" size="30" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Phase</label>
+                            <div class="col-lg-10">
+                                <select class="form-control m-b" id="protocol_sections_general_information_phase" name="protocol[sections][general_information][phase]"><option value="">Choose an Item</option>
+                                    <option value="I">I</option>
+                                    <option value="I/II">I/II</option>
+                                    <option value="II">II</option>
+                                    <option value="II/III">II/III</option>
+                                    <option value="IIa">IIa</option>
+                                    <option value="IIb">IIb</option>
+                                    <option value="III">III</option>
+                                    <option value="IIIa">IIIa</option>
+                                    <option value="IIIb">IIIb</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Indication</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="protocol_sections_general_information_indication" name="protocol[sections][general_information][indication]" size="30" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Multicenter</label>
+                            <div class="col-lg-10">
+                                <div><label> <input icheck type="radio" name="protocol[sections][general_information][multicenter]"
+                                                    ng-model="vm.study.multicenter"> Yes </label></div>
+                                <div><label> <input icheck type="radio" name="protocol[sections][general_information][multicenter]"
+                                                    ng-model="vm.study.multicenter"> No </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Planned Countries</label>
+                            <div class="col-lg-10">
+                                <ui-select multiple ng-model="vm.study.countries"   style="width: 300px;">
+                                    <ui-select-match placeholder="Select countries...">{{$item}}</ui-select-match>
+                                    <ui-select-choices repeat="country in vm.studyForm.countries | filter:$select.search">
+                                            {{country}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="ibox">
+                <div class=" panel-header">
+                    <h3> <a ng-init="vm.TOPisCollapsed=true" ng-click="vm.TOPisCollapsed = !vm.TOPisCollapsed">
+                        <i ng-if="vm.TOPisCollapsed" class="fa fa-plus-square"></i>
+                        <i ng-if="!vm.TOPisCollapsed"class="fa fa-minus-square"></i></a>
+                        &nbsp;Trial Objective and Purpose</h3>
+                </div>
+                <div class="ibox-content" uib-collapse="vm.TOPisCollapsed">
+
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Trial Purpose Summary</label>
+                            <div class="col-lg-10">
+                                <textarea class="form-control" cols="45" id="protocol_sections_trial_objective_and_purpose_trial_purpose_summary" name="protocol[sections][trial_objective_and_purpose][trial_purpose_summary]" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Primary Objective</label>
+                            <div class="col-lg-10">
+                                <textarea class="form-control" cols="45" id="protocol_sections_trial_objective_and_purpose_primary_objective" name="protocol[sections][trial_objective_and_purpose][primary_objective]" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Other Objective</label>
+                            <div class="col-lg-10">
+                                <ul class="elements-list list-group clear-list">
+                                    <li class="list-group-item" ng-repeat="oo in vm.study.oObjectives">
+                                        {{oo}}
+                                    </li>
+                                </ul>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <textarea ng-model="vm.oo" class='form-control' cols='45' id='other_objective_textarea' rows='2'></textarea>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class='btn btn-primary btn-xs' ng-click="vm.addOobjective()" type='button'>Add Other Objective</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class=" panel-header">
+                    <h3> <a ng-init="vm.TDisCollapsed=true" ng-click="vm.TDisCollapsed = !vm.TDisCollapsed">
+                        <i ng-if="vm.TDisCollapsed" class="fa fa-plus-square"></i>
+                        <i ng-if="!vm.TDisCollapsed"class="fa fa-minus-square"></i></a>
+                        &nbsp; Trial Design</h3>
+                </div>
+                <div class="ibox-content" uib-collapse="vm.TDisCollapsed">
+                    <table border='0' cellpadding='2' cellspacing='2' width='100%'>
+                        <tr>
+                            <td class='label'>Description of Study Design</td>
+                        </tr>
+                        <tr>
+                            <td class='field_cell'>
+                                <label for='textarea'></label>
+<textarea cols="45" id="protocol_sections_trial_design_description_of_study_design" name="protocol[sections][trial_design][description_of_study_design]" rows="5">
+</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Description of Interventions</td>
+                        </tr>
+                        <tr>
+                            <td>
+<textarea cols="45" id="protocol_sections_trial_design_description_of_interventions" name="protocol[sections][trial_design][description_of_interventions]" rows="5">
+</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Randomized Study?</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="randomized_yes" name="protocol[sections][trial_design][randomized_study]" type="radio" value="Yes" />
+                                <label for='randomized_yes'>Yes</label>
+                                <input id="randomized_no" name="protocol[sections][trial_design][randomized_study]" type="radio" value="No" />
+                                <label for='randomized_no'>No</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Blinding</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for='select'></label>
+                                <select id="protocol_sections_trial_design_blinding" name="protocol[sections][trial_design][blinding]"><option value="">Choose an Item</option>
+                                    <option value="Double Blind">Double Blind</option>
+                                    <option value="Open Label">Open Label</option>
+                                    <option value="Single Blind">Single Blind</option></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Control</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for='select'></label>
+                                <select id="protocol_sections_trial_design_control" name="protocol[sections][trial_design][control]"><option value="">Choose an Item</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Placebo">Placebo</option>
+                                    <option value="None">None</option></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Study Configuration</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for='select'></label>
+                                <select id="protocol_sections_trial_design_study_configuration" name="protocol[sections][trial_design][study_configuration]"><option value="">Choose an Item</option>
+                                    <option value="Expanded Access">Expanded Access</option>
+                                    <option value="Interventional">Interventional</option>
+                                    <option value="Observational">Observational</option></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Subject Participation Duration</td>
+                        </tr>
+                        <tr>
+                            <td class='compositeFieldsSection'>
+                                <input class='ageText integer_field' compositeCount id='subject_participation_duration' maxlength='3' size='3' type='text'>
+                                <select class='durationSelect' compositeWord id='subject_participation_duration_select'>
+                                    <option value="">Choose an Item</option>
+                                    <option value="Years">Years</option>
+                                    <option value="Months">Months</option>
+                                    <option value="Weeks">Weeks</option>
+                                    <option value="Days">Days</option>
+                                </select>
+                                <input composite_target="true" id="protocol_sections_trial_design_subject_participation_duration" name="protocol[sections][trial_design][subject_participation_duration]" type="hidden" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Primary Endpoint</td>
+                        </tr>
+                        <tr>
+                            <td class='listTableSection' id='primary_endpoint'>
+                                <table cellpadding='4' cellspacing='1' class='listTable'>
+                                    <tr>
+                                        <th width='70%'>Description</th>
+                                        <th width='25%'>Type</th>
+                                        <th class='delete_col'></th>
+                                    </tr>
+                                </table>
+                                <div class='addItem'>
+                                    <textarea cols='25' id='primary_endpoint_description' name='primary_endpoint' rows='2'></textarea>
+                                    <select class='ageSelect' id='primary_endpoint_type' name='primary_endpoint_type'>
+                                        <option value="">Choose an Item</option>
+                                        <option value="Bio-Availability">Bio-Availability</option>
+                                        <option value="Bio-Equivalence">Bio-Equivalence</option>
+                                        <option value="Efficacy">Efficacy</option>
+                                        <option value="Pharmacodynamic">Pharmacodynamic</option>
+                                        <option value="Pharmacoeconomic">Pharmacoeconomic</option>
+                                        <option value="Pharmacogenomic">Pharmacogenomic</option>
+                                        <option value="Pharmacokinetic">Pharmacokinetic</option>
+                                        <option value="Safety">Safety</option>
+                                        <option value="Food Effect">Food Effect</option>
+                                        <option value="Tolerability">Tolerability</option>
+                                    </select>
+                                    <button class='buttonAdd' type='button'>Add Primary Endpoint</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Other Endpoints</td>
+                        </tr>
+                        <tr>
+                            <td class='listTableSection' id='other_endpoints'>
+                                <table cellpadding='4' cellspacing='1' class='listTable'>
+                                    <tr>
+                                        <th class='main_col'>&nbsp;</th>
+                                        <th class='delete_col'></th>
+                                    </tr>
+                                </table>
+                                <div class='addItem'>
+                                    <textarea class='textareaAdd' cols='45' id='other_endpoint_textarea' rows='2'></textarea>
+                                    <button class='buttonAdd' type='button'>Add Other Endpoint</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class=" panel-header">
+                    <h3> <a ng-init="vm.SSisCollapsed=true" ng-click="vm.SSisCollapsed = !vm.SSisCollapsed">
+                        <i ng-if="vm.SSisCollapsed" class="fa fa-plus-square"></i>
+                        <i ng-if="!vm.SSisCollapsed"class="fa fa-minus-square"></i></a>
+                        &nbsp;Selection of Subjects</h3>
+                </div>
+                <div class="ibox-content" uib-collapse="vm.SSisCollapsed">
+                    <table border='0' cellpadding='2' cellspacing='2' width='100%'>
+                        <tr>
+                            <td class='label'>Subject Age</td>
+                        </tr>
+                        <tr>
+                            <td class='field_cell'>
+                                <table>
+                                    <tr>
+                                        <td>Minimum</td>
+                                        <td> </td>
+                                        <td>Maximum</td>
+                                    </tr>
+                                    <tr>
+                                        <td class='compositeFieldsSection'>
+                                            <input class='ageText integer_field' compositeCount id='minimum_age' maxlength='3' size='3' type='text'>
+                                            <select class='ageSelect' compositeWord id='minimum_age_select'>
+                                                <option value="">Choose an Item</option>
+                                                <option value="Years">Years</option>
+                                                <option value="Months">Months</option>
+                                                <option value="Weeks">Weeks</option>
+                                                <option value="Days">Days</option>
+                                            </select>
+                                            <input composite_target="true" id="protocol_sections_selection_of_subjects_minimum_age" name="protocol[sections][selection_of_subjects][minimum_age]" type="hidden" />
+                                        </td>
+                                        <td valign='middle' width='30'>
+                                            <b>To</b>
+                                        </td>
+                                        <td class='compositeFieldsSection'>
+                                            <input class='ageText integer_field' compositeCount id='maximum_age' maxlength='3' size='3' type='text'>
+                                            <select class='ageSelect' compositeWord id='maximum_age_select'>
+                                                <option value="">Choose an Item</option>
+                                                <option value="Years">Years</option>
+                                                <option value="Months">Months</option>
+                                                <option value="Weeks">Weeks</option>
+                                                <option value="Days">Days</option>
+                                            </select>
+                                            <input composite_target="true" id="protocol_sections_selection_of_subjects_maximum_age" name="protocol[sections][selection_of_subjects][maximum_age]" type="hidden" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Study uses Healthy Subjects?</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="healthy_yes" name="protocol[sections][selection_of_subjects][study_uses_healthy_subjects]" type="radio" value="Yes" />
+                                <label for='healthy_yes'>Yes</label>
+                                <input id="healthy_no" name="protocol[sections][selection_of_subjects][study_uses_healthy_subjects]" type="radio" value="No" />
+                                <label for='healthy_no'>No</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Subject Gender</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="Both" name="protocol[sections][selection_of_subjects][subject_gender]" type="radio" value="Both" />
+                                <label for='Both'>Both</label>
+                                <input id="Female" name="protocol[sections][selection_of_subjects][subject_gender]" type="radio" value="Female" />
+                                <label for='Female'>Female</label>
+                                <input id="Male" name="protocol[sections][selection_of_subjects][subject_gender]" type="radio" value="Male" />
+                                <label for='Male'>Male</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Inclusion Criteria</td>
+                        </tr>
+                        <tr>
+                            <td class='listTableSection' id='inclusion_criteria'>
+                                <table cellpadding='4' cellspacing='1' class='listTable'>
+                                    <tr>
+                                        <th class='main_col'>&nbsp;</th>
+                                        <th class='delete_col'></th>
+                                    </tr>
+                                </table>
+                                <div class='addItem'>
+                                    <textarea class='textareaAdd' cols='45' id='inclusion_criteria_textarea' rows='2'></textarea>
+                                    <button class='buttonAdd' type='button'>Add Inclusion Criteria</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Exclusion Criteria</td>
+                        </tr>
+                        <tr>
+                            <td class='listTableSection' id='exclusion_criteria'>
+                                <table cellpadding='4' cellspacing='1' class='listTable'>
+                                    <tr>
+                                        <th class='main_col'>&nbsp;</th>
+                                        <th class='delete_col'></th>
+                                    </tr>
+                                </table>
+                                <div class='addItem'>
+                                    <textarea class='textareaAdd' cols='45' id='exclusion_criteria_textarea' rows='2'></textarea>
+                                    <button class='buttonAdd' type='button'>Add Exclusion Criteria</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class=" panel-header">
+                    <h3><a ng-init="vm.SisCollapsed=true"  ng-click="vm.SisCollapsed = !vm.SisCollapsed">
+                        <i ng-if="vm.SisCollapsed" class="fa fa-plus-square"></i>
+                        <i ng-if="!vm.SisCollapsed"class="fa fa-minus-square"></i></a>
+                        &nbsp;Statistics</h3>
+                </div>
+                <div class="ibox-content" uib-collapse="vm.SisCollapsed">
+                    <table border='0' cellpadding='2' cellspacing='2' width='100%'>
+                        <tr>
+                            <td class='label'>Number of Subjects</td>
+                        </tr>
+                        <tr>
+                            <td class='field_cell'>
+                                <input class="integer_field" id="number_of_subjects" name="protocol[sections][statistics][number_of_subjects]" size="5" type="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Statistical Method Descriptions</td>
+                        </tr>
+                        <tr>
+                            <td>
+<textarea cols="45" id="protocol_sections_statistics_statistical_method_descriptions" name="protocol[sections][statistics][statistical_method_descriptions]" rows="5">
+</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Statement of the Proposed Statistical Model(s)</td>
+                        </tr>
+                        <tr>
+                            <td>
+<textarea cols="45" id="protocol_sections_statistics_statement_of_the_proposed_statistical_models" name="protocol[sections][statistics][statement_of_the_proposed_statistical_models]" rows="5">
+</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class='label'>Description of Interim Analyses</td>
+                        </tr>
+                        <tr>
+                            <td>
+<textarea cols="45" id="protocol_sections_statistics_description_of_interim_analyses" name="protocol[sections][statistics][description_of_interim_analyses]" rows="5">
+</textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 m-b-lg">
+            <div id="vertical-timeline" class="vertical-timeline vertical-container light-timeline no-margins">
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon lazur-bg">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+
+                    <div class="vertical-timeline-content">
+                        <h2>VISIT 1</h2>
+                        <p>Study Day: 1</p>
+
+                                    <span class="vertical-date">
+                                        DateTime <br>
+                                        <small>Dec 24</small>
+                                    </span>
+                    </div>
+                </div>
+
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon lazur-bg">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+
+                    <div class="vertical-timeline-content">
+                        <div id="vertical-timeline2" class="vertical-timeline vertical-container dark-timeline no-margins">
+                            <div class="vertical-timeline-block">
+                                <div class="vertical-timeline-icon yellow-bg">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+
+                                <div class="vertical-timeline-content">
+                                    <h2>Time point 1</h2>
+                                    <p>Study Day: 1</p>
+                                    DateTime:
+                                    <span class="vertical-date">
+                                        Today <br>
+                                        <small>Dec 24</small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="vertical-timeline-block">
+                                <div class="vertical-timeline-icon yellow-bg">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+
+                                <div class="vertical-timeline-content">
+                                    <h2>Time point 2</h2>
+                                    <p>Study Day: 1</p>
+                                    DateTime:
+                                    <span class="vertical-date">
+                                        Today <br>
+                                        <small>Dec 24</small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon lazur-bg">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+
+                    <div class="vertical-timeline-content">
+                        <h2>VISIT 2</h2>
+                        <p>Study day 4</p>
+
+                        <span class="vertical-date"> DateTime <br><small>Dec 27</small></span>
+                    </div>
+                </div>
+
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon lazur-bg">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+
+                    <div class="vertical-timeline-content">
+                        <h2>VISIT 3</h2>
+                        <p>Study day 8</p>
+                        <span class="vertical-date">DateTime <br><small>Dec 31</small></span>
+                    </div>
+                </div>
+
+                <div class="vertical-timeline-block">
+                    <div class="vertical-timeline-icon lazur-bg">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+
+                    <div class="vertical-timeline-content">
+                        <h2>Visit 4</h2>
+                        <p>Study day 12</p>
+                        <span class="vertical-date">DateTime <br><small>Jan 01</small></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

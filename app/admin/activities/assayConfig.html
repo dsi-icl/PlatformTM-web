@@ -1,0 +1,746 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>{{vm.assay.isNew ? 'New Assay' :'Assay detail'}}</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="main.home">Home</a>
+            </li>
+            <li>
+                <a ui-sref="admin.project({projectId:vm.projectId})">{{vm.projectId}}</a>
+            </li>
+            <li class="active">
+                <a>{{vm.assay.isNew ? 'New Assay' : vm.assay.name}}</a>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+            <a ng-click="vm.saveAssay()" class="btn btn-primary">Save</a>
+            <a ng-click="vm.dontSaveAssay()" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox">
+
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <dl class="dl-horizontal">
+                                <dt>Assay Title</dt>
+                                <dd>
+                                    <div class="col-md-6">
+                                        <a href="#" e-ng-model="vm.assay.name" editable-text="vm.assay.name" buttons="no" blur="submit">{{vm.assay.name || "Unnamed"}}</a>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <dl class="dl-horizontal">
+
+
+                                <dt>Measurement Type</dt>
+                                <dd>
+                                    <div>
+                                        <select class="form-control m-b" name="activitySelect" id="assayMeasType"
+                                                ng-model="vm.assay.type" ng-change="vm.updateAssayTerms()">
+                                            <option ng-repeat="option in vm.assayTypes" value="{{option.assayTypeTerm.id}}">{{option.assayTypeTerm.name}}</option>
+                                        </select>
+                                    </div>
+                                </dd>
+                                <dt>Design Type</dt>
+                                <dd>
+                                    <div>
+                                        <select class="form-control m-b" name="activitySelect" id="assayDesignType"
+                                                ng-model="vm.assay.design" >
+                                            <option ng-repeat="option in vm.assayDesigns" value="{{option.id}}">{{option.name}}</option>
+                                        </select>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="dl-horizontal">
+
+                                <dt>Technology Type</dt>
+                                <dd>
+                                    <div>
+                                        <select class="form-control m-b" name="activitySelect" id="assayTechSelect"
+                                                data-ng-model="vm.assay.technology">
+                                            <option ng-repeat="option in vm.assayTechTerms" value="{{option.id}}">{{option.name}}</option>
+                                        </select>
+                                    </div>
+                                </dd>
+
+                                <dt>Technology Platform</dt>
+                                <dd>
+                                    <div>
+                                        <select class="form-control m-b" name="activitySelect" id="assayPlatSelect"
+                                                data-ng-model="vm.assay.platform">
+                                            <option ng-repeat="option in vm.assayPlatTerms" value="{{option.id}}">{{option.name}}</option>
+                                        </select>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-lg-5">
+                            <dl class="dl-horizontal">
+
+                                <dt>Created by:</dt>
+                                <dd>Ibrahim Emam</dd>
+                                <dt>Subjects:</dt>
+                                <dd> <a href="#" e-ng-model="vmodel.activity.size" editable-text="vm.activity.size" buttons="no" blur="submit">{{vm.activity.size || "Expected No. of subjects"}}</a></dd>
+                                <dt>Client:</dt>
+                                <dd><a href="" class="text-navy"> Zender Company</a></dd>
+                                <dt>Version:</dt>
+                                <dd> v1.4.2</dd>
+                            </dl>
+                        </div>
+                        &lt;!&ndash;<div ng-if="!vm.activity.isNew" class="col-lg-7" id="cluster_info">
+                            <dl class="dl-horizontal">
+
+                                <dt>Last Updated:</dt>
+                                <dd>16.08.2014 12:15:57</dd>
+                                <dt>Created:</dt>
+                                <dd> 10.07.2014 23:36:57</dd>
+
+                            </dl>
+                        </div>&ndash;&gt;
+                    </div>-->
+                    <!--<div class="row" ng-if="!vm.activity.isNew">
+                        <div class="col-lg-12">
+                            <dl class="dl-horizontal">
+                                <dt>Completed:</dt>
+                                <dd>
+                                    <div class="progress progress-striped m-b-sm">
+                                        <div style="width: 60%;" class="progress-bar"></div>
+                                    </div>
+                                    &lt;!&ndash; <small>Project completed in <strong>60%</strong>. Remaining close the project, sign a contract and invoice.</small>&ndash;&gt;
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+
+            <div>
+                <div class="ibox-title panel-header">
+                    <span class="flaticon-man412" style="color: #39b3d7;"></span> Associated Templates
+                </div>
+                <uib-tabset class="tab-panel">
+                    <uib-tab>
+                        <uib-tab-heading>
+                            <p class="tab-info">Sample Annotation Template</p>
+                            <p class="tab-info">
+                                <img class="img-dashboard" src="img/blood-sample.png"  alt="profile">
+                            </p>
+                            <p class="tab-info text-left" >
+                                <small>A template for loading sample data such as sample characteristics, timepoints, replicates and subject to sample mapping</small>
+                            </p>
+                        </uib-tab-heading>
+
+                        <div class="tab-content">
+                            <div id="sampleTemplate" class="animated">
+                                <div class="m-t-sm ibox animated fadeIn" >
+                                    <div class="ibox-content m-b-sm border-bottom">
+
+                                        <!--TITLE AND CONTROLS-->
+
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="m-b-md">
+                                                    <h2><a editable-select="vm.assay.samplesDataset" onshow="vm.loadAssaySampleTemplates()"
+                                                           e-ng-change="vm.showTemplate($data.domainId,'sample')"
+                                                           e-ng-options="template as template.name for template in vm.templates.sample"
+                                                           e-form="sampleBtnForm"
+                                                           onaftersave="vm.saveTemplateToAssay('sample')">
+                                                        {{ vm.assay.samplesDataset.name || 'No Template Selected' }}
+                                                    </a></h2>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-7">
+                                                <div class="text-right">
+                                                    <button class="btn btn-primary btn-sm" ng-click="sampleBtnForm.$show()" ng-hide="sampleBtnForm.$visible">
+                                                        {{vm.assay.samplesDataset ? 'Change Template':'Choose Template'}}
+                                                    </button>
+                                                    <span ng-show="vm.assay.samplesDataset">
+                                                        <!--<a href="" class="btn btn-primary btn-sm">Add new Variable</a>-->
+                                                        <a href="" class="btn btn-primary btn-sm">Preview Template</a>
+                                                        <a href="" class="btn btn-primary btn-sm">Download Template</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!--SUMMARY DATA-->
+                                        <div class="row" ng-show="vm.assay.samplesDataset || vm.selectedDatasets['sample']">
+                                            <div class="col-lg-12">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Class</dt>
+                                                    <dd>{{vm.selectedDatasets['sample'].class}}</dd>
+                                                    <dt>Description</dt>
+                                                    <dd>{{vm.selectedDatasets['sample'].description}}</dd>
+                                                    <dt>Structure</dt>
+                                                    <dd>{{vm.selectedDatasets['sample'].structure}}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--VARIABLES TABLE-->
+                                    <div class="ibox" ng-show="vm.assay.samplesDataset || vm.selectedDatasets['sample']">
+                                        <div class="ibox-title">
+                                            <h5>Select columns to include in this template</h5>
+                                        </div>
+
+                                        <div class="ibox-content">
+                                            <!--FOO TABLE-->
+                                            <table id="bs_template_tbl" class="footable table table-stripped toggle-arrow-tiny" load-when="vm.loaded" data-page-size="15">
+                                                <thead>
+
+                                                    <tr>
+                                                        <th data-toggle="true">Column</th>
+                                                        <th>Variable Name</th>
+                                                        <th>Include</th>
+                                                        <th data-group="group1" data-hide="phone">Mandatory</th>
+                                                        <th data-group="group1" data-hide="all">Description</th>
+                                                        <th data-hide="all">Controlled Vocabulary</th>
+                                                        <th data-hide="all">Order</th>
+                                                        <th data-hide="all">Key Sequence</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="var in vm.selectedDatasets['sample'].variables">
+                                                        <td>
+                                                            {{var.name}}
+                                                        </td>
+                                                        <td>
+                                                            {{var.label}}
+                                                        </td>
+                                                        <td>
+                                                            <!--<button type="button" class="btn btn-xs btn-primary" ng-model="var.isSelected" btn-checkbox>
+                                                                {{var.isSelected ? 'Included' : 'Excluded'}}
+                                                            </button>-->
+                                                            <input  icheck type="checkbox"  ng-model="var.isSelected" >
+                                                        </td>
+                                                        <td>
+                                                            <input  icheck type="checkbox"  ng-model="var.isRequired" >
+                                                        </td>
+                                                        <td>
+                                                            {{var.description}}
+                                                        </td>
+                                                        <td>
+                                                            {{var.dictionaryName}}
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" e-ng-model="var.order" editable-text="var.order" buttons="no" blur="submit">{{var.order || "Undefined"}}</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" e-ng-model="var.sequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.sequence || "Undefined"}}</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab class="odd">
+                        <uib-tab-heading>
+                            <p class="tab-info">
+                                Feature Annotation Template
+                            </p>
+                            <p class="tab-info">
+                                <img class="img-dashboard" src="img/dna.png"  alt="profile">
+                            </p>
+                            <p class="tab-info text-left">
+                                <small>A template for loading feature metadata such as gene names, chromosome location and probset to gene mapping</small>
+                            </p>
+                        </uib-tab-heading>
+                        <div class="tab-content">
+                            <div id="featureTemplate" class="animated fadeIn">
+                                <div class="m-t-sm ibox animated fadeIn" >
+                                    <div class="ibox-content m-b-sm border-bottom">
+
+                                        <!--TITLE AND CONTROLS-->
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="m-b-md">
+                                                    <h2><a editable-select="vm.assay.featuresDataset" onshow="vm.loadAssayFeatureTemplates()"
+                                                           e-ng-change="vm.showTemplate($data.domainId,'feature')"
+                                                           e-ng-options="template as template.name for template in vm.templates.feature"
+                                                           e-form="featBtnForm"
+                                                           onaftersave="vm.saveTemplateToAssay('feature')">
+                                                        {{ vm.assay.featuresDataset || 'No Template Selected' }}
+                                                    </a></h2>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-7">
+                                                <div class="text-right">
+                                                    <button class="btn btn-primary btn-sm" ng-click="featBtnForm.$show()" ng-hide="featBtnForm.$visible">
+                                                        {{vm.assay.featuresDataset ? 'Change Template':'Choose Template'}}
+                                                    </button>
+                                                    <span ng-show="vm.assay.featuresDataset || vm.selectedDatasets['feature']">
+                                                        <!--<a href="" class="btn btn-primary btn-sm">Add new Variable</a>-->
+                                                        <a href="" class="btn btn-primary btn-sm">Preview Template</a>
+                                                        <a href="" class="btn btn-primary btn-sm">Download Template</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--DATASET SUMMARY SECTION-->
+                                        <div class="row" ng-show="vm.assay.featuresDataset || vm.selectedDatasets['feature']">
+                                            <div class="col-lg-12">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Class</dt>
+                                                    <dd>{{vm.selectedDatasets['feature'].class}}</dd>
+                                                    <dt>Description</dt>
+                                                    <dd>{{vm.selectedDatasets['feature'].description}}</dd>
+                                                    <dt>Structure</dt>
+                                                    <dd>{{vm.selectedDatasets['feature'].structure}}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--DATASET VARIABLES-->
+                                    <div class="ibox" ng-show="vm.assay.featuresDataset || vm.selectedDatasets['feature']">
+                                        <div class="ibox-title">
+                                            <h5>Select columns to include in this template</h5>
+                                        </div>
+
+                                        <div class="ibox-content">
+                                            <!--FOO TABLE-->
+                                            <table id="fe_template_tbl" class="footable table table-stripped toggle-arrow-tiny" load-when="vm.loaded" data-page-size="15">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-toggle="true">Column</th>
+                                                        <th>Variable Name</th>
+                                                        <th>Include</th>
+                                                        <th data-hide="phone">Mandatory</th>
+                                                        <th data-hide="all">Description</th>
+                                                        <th data-hide="all">Controlled Vocabulary</th>
+                                                        <th data-hide="all">Order</th>
+                                                        <th data-hide="all">Key Sequence</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="var in vm.selectedDatasets['feature'].variables">
+                                                        <td>
+                                                            {{var.name}}
+                                                        </td>
+                                                        <td>
+                                                            {{var.label}}
+                                                        </td>
+                                                        <td>
+                                                            <!--<button type="button" class="btn btn-xs btn-primary" ng-model="var.isSelected" btn-checkbox>
+                                                                {{var.isSelected ? 'Included' : 'Excluded'}}
+                                                            </button>-->
+                                                            <input  icheck type="checkbox"  ng-model="var.isSelected" >
+                                                        </td>
+                                                        <td>
+                                                            <input  icheck type="checkbox"  ng-model="var.isRequired" >
+                                                        </td>
+                                                        <td>
+                                                            {{var.description}}
+                                                        </td>
+                                                        <td>
+                                                            {{var.dictionaryName}}
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" e-ng-model="var.order" editable-text="var.order" buttons="no" blur="submit">{{var.order || "Undefined"}}</a>
+                                                            <!--<input class="input-sm" style="width:25px" type="text" ng-model="var.order">-->
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" e-ng-model="var.sequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.sequence || "Undefined"}}</a>
+                                                            <!--<input class="input-sm" style="width:25px" type="text" ng-model="var.sequence">-->
+                                                        </td>
+                                                    <!--<td>-->
+                                                    <!--1000-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                    <!--<span class="label label-primary">Enable</span>-->
+                                                    <!--</td>-->
+                                                    <!--<td class="text-right">-->
+                                                    <!--<div class="btn-group">-->
+                                                    <!--<button class="btn-white btn btn-xs">View</button>-->
+                                                    <!--<button class="btn-white btn btn-xs">Edit</button>-->
+                                                    <!--</div>-->
+                                                    <!--</td>-->
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab>
+                        <uib-tab-heading>
+                            <p class="tab-info">
+                                Measured Observations Template
+                            </p>
+                            <p class="tab-info">
+                                <img class="img-dashboard" src="img/computer.png"  alt="profile">
+                            </p>
+                            <p class="tab-info text-left" >
+                                <small>A template for loading the assay measure data such as a data matrix for single measurements (e.g. normalized log ratio) or a data table for multiple measurements (e.g. CyTOF data)</small>
+                            </p>
+                        </uib-tab-heading>
+                        <div class="tab-content">
+                            <div id="dataTemplate" class="animated fadeIn">
+                                <div class="m-t-sm ibox animated fadeIn" >
+                                    <div class="ibox-content m-b-sm border-bottom">
+
+                                        <!--TITLE AND CONTROLS-->
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="m-b-md">
+                                                    <h2><a editable-select="vm.assay.observationsDataset" onshow="vm.loadAssayDataTemplates()"
+                                                           e-ng-change="vm.showTemplate($data.domainId,'data')"
+                                                           e-ng-options="template as template.name for template in vm.templates.data"
+                                                           e-form="dataBtnForm"
+                                                           onaftersave="vm.saveTemplateToAssay('data')">
+                                                        {{ vm.assay.observationsDataset.name || 'No Template Selected' }}
+                                                    </a></h2>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-7">
+                                                <div class="text-right">
+                                                    <button class="btn btn-primary btn-sm" ng-click="dataBtnForm.$show()" ng-hide="dataBtnForm.$visible">
+                                                        {{vm.assay.observationsDataset ? 'Change Template':'Choose Template'}}
+                                                    </button>
+                                                    <span ng-show="vm.assay.observationsDataset || vm.selectedDatasets['data']">
+                                                        <a href="" class="btn btn-primary btn-sm">Preview Template</a>
+                                                        <a href="" class="btn btn-primary btn-sm">Download Template</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <!--DATASET SUMMARY SECTION-->
+                                        <div class="row" ng-show="vm.assay.observationsDataset || vm.selectedDatasets['data']">
+                                            <div class="col-lg-12">
+                                                <dl class="dl-horizontal">
+                                                    <dt>Class</dt>
+                                                    <dd>{{vm.selectedDatasets['data'].class}}</dd>
+                                                    <dt>Description</dt>
+                                                    <dd>{{vm.selectedDatasets['data'].description}}</dd>
+                                                    <dt>Structure</dt>
+                                                    <dd>{{vm.selectedDatasets['data'].structure}}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--DATASET VARIABLES-->
+                                    <div class="ibox" ng-show="vm.assay.observationsDataset || vm.selectedDatasets['data']">
+                                        <div class="ibox-title">
+                                            <h5>Select columns to include in this template</h5>
+                                        </div>
+
+                                        <!--FOO TABLE-->
+                                        <div class="ibox-content">
+                                            <table id="data_template_tbl" class="footable table table-stripped toggle-arrow-tiny" load-when="vm.loaded" data-page-size="15">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-toggle="true">Column</th>
+                                                        <th>Variable Name</th>
+                                                        <th>Include</th>
+                                                        <th data-hide="phone">Mandatory</th>
+                                                        <th data-hide="all">Description</th>
+                                                        <th data-hide="all">Controlled Vocabulary</th>
+                                                        <th data-hide="all">Order</th>
+                                                        <th data-hide="all">Key Sequence</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="var in vm.selectedDatasets['data'].variables">
+                                                        <td>
+                                                            {{var.name}}
+                                                        </td>
+                                                        <td>
+                                                            {{var.label}}
+                                                        </td>
+                                                        <td>
+                                                            <!--<button type="button" class="btn btn-xs btn-primary" ng-model="var.isSelected" btn-checkbox>
+                                                                {{var.isSelected ? 'Included' : 'Excluded'}}
+                                                            </button>-->
+                                                            <input  icheck type="checkbox"  ng-model="var.isSelected" >
+                                                        </td>
+                                                        <td>
+                                                            <input  icheck type="checkbox"  ng-model="var.isRequired" >
+                                                        </td>
+                                                        <td>
+                                                            {{var.description}}
+                                                        </td>
+                                                        <td>
+                                                            {{var.dictionaryName}}
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" e-ng-model="var.order" editable-text="var.order" buttons="no" blur="submit">{{var.order || "Undefined"}}</a>
+                                                            <!--<input class="input-sm" style="width:25px" type="text" ng-model="var.order">-->
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" e-ng-model="var.sequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.sequence || "Undefined"}}</a>
+                                                            <!--<input class="input-sm" style="width:25px" type="text" ng-model="var.sequence">-->
+                                                        </td>
+                                                    <!--<td>-->
+                                                    <!--1000-->
+                                                    <!--</td>-->
+                                                    <!--<td>-->
+                                                    <!--<span class="label label-primary">Enable</span>-->
+                                                    <!--</td>-->
+                                                    <!--<td class="text-right">-->
+                                                    <!--<div class="btn-group">-->
+                                                    <!--<button class="btn-white btn btn-xs">View</button>-->
+                                                    <!--<button class="btn-white btn btn-xs">Edit</button>-->
+                                                    <!--</div>-->
+                                                    <!--</td>-->
+                                                </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                            <ul class="pagination pull-right"></ul>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
+
+
+                <!--<div style="background-color: #F3F3F4;">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Associated Dataset Templates</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="ibox" style="margin-bottom: 0">
+                            <div class="ibox-title" style="text-align: center">
+                                &lt;!&ndash;<button class="btn btn-outline btn-info  pull-right" type="button"><i class="fa fa-plus"></i></button>&ndash;&gt;
+                                <h4>Sample Annotation Template</h4>
+                            </div>
+                            <div class="ibox-content text-center">
+                                <img class="img-dashboard" src="img/blood-sample.png"  alt="profile">
+                                <a href="#" editable-select="vm.assay.datasets.sample" onshow="vm.loadAssaySampleTemplates()" e-ng-change="vm.doSomething()" e-ng-options="template as template.name for template in vm.templates.sample">
+                                    {{ vm.assay.datasets.sample.name || 'Not Defined' }}
+                                </a>
+                               &lt;!&ndash; <form data-editable-form name="uiSelectForm" shown=true>
+                                    <div editable-ui-select="vm.assay.datasets.samples"
+                                         data-e-form="uiSelectForm" data-e-name="state"
+                                         name="state" theme="bootstrap" data-e-ng-model="vm.assay.datasets.samples"
+                                         data-e-style="min-width:300px;" ng-change="vm.doSomething()">
+                                        {{vm.assay.datasets.samples.name}}
+                                        <editable-ui-select-match placeholder="Choose a template...">
+                                            {{$select.selected.name}}
+                                        </editable-ui-select-match>
+                                        <editable-ui-select-choices repeat="template in vm.templates.samples | filter: $select.search track by $index">
+                                            {{template.name}}
+                                        </editable-ui-select-choices>
+                                    </div>
+                                    <br/>
+                                    <div class="buttons">
+                                        &lt;!&ndash; button to show form &ndash;&gt;
+                                        <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
+                                            Edit
+                                        </button>
+                                        &lt;!&ndash; buttons to submit / cancel form &ndash;&gt;
+                                          <span ng-show="uiSelectForm.$visible">
+                                            <br/>
+                                            <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
+                                              Save
+                                            </button>
+                                            <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
+                                              Cancel
+                                            </button>
+                                          </span>
+                                    </div>
+                                </form>&ndash;&gt;
+
+                            </div>
+                            <div class="ibox-footer">
+                                <div class="text-center">
+                                    <small>A template for loading sample data such as sample characteristics, timepoints, replicates and subject to sample mapping</small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                        <div class="col-md-4">
+                        <div class="ibox" style="margin-bottom: 0">
+                            <div class="ibox-title" style="text-align: center">
+                                &lt;!&ndash;<button class="btn btn-outline btn-info  pull-right" type="button"><i class="fa fa-plus"></i></button>&ndash;&gt;
+                                <h4>Feature Annotation Template</h4>
+                            </div>
+                            <div class="ibox-content text-center">
+                                <img class="img-dashboard" src="img/dna.png"  alt="profile">
+                                <form data-editable-form name="uiSelectFeature" shown=true>
+                                    <div editable-ui-select="vm.assay.datasets.features" data-e-form="uiSelectFeature" data-e-name="state" name="state" theme="bootstrap" data-e-ng-model="vm.assay.datasets.features" data-e-style="min-width:300px;">
+                                        {{vm.user.state}}
+                                        <editable-ui-select-match placeholder="Choose a template...">
+                                            {{$select.selected}}
+                                        </editable-ui-select-match>
+                                        <editable-ui-select-choices repeat="template in vm.templates.features | filter: $select.search track by $index">
+                                            {{template.name}}
+                                        </editable-ui-select-choices>
+                                    </div>
+                                    <br/>
+                                    <div class="buttons">
+                                        &lt;!&ndash; button to show form &ndash;&gt;
+                                        <button type="button" class="btn btn-default" ng-click="uiSelectFeature.$show()" ng-show="!uiSelectFeature.$visible">
+                                            Edit
+                                        </button>
+                                        &lt;!&ndash; buttons to submit / cancel form &ndash;&gt;
+                                          <span ng-show="uiSelectFeature.$visible">
+                                            <br/>
+                                            <button type="submit" class="btn btn-primary" ng-disabled="uiSelectFeature.$waiting">
+                                              Save
+                                            </button>
+                                            <button type="button" class="btn btn-default" ng-disabled="uiSelectFeature.$waiting" ng-click="uiSelectFeature.$cancel()">
+                                              Cancel
+                                            </button>
+                                          </span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="ibox-footer">
+                                <div class="text-center">
+                                    <small>A template for loading feature metadata such as gene names, chromosome location and probset to gene mapping</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-4">
+                        <div class="ibox" style="margin-bottom: 0">
+                            <div class="ibox-title" style="text-align: center">
+                                &lt;!&ndash;<button class="btn btn-outline btn-info  pull-right" type="button"><i class="fa fa-plus"></i></button>&ndash;&gt;
+                                <h4>Measured Data Template</h4>
+                            </div>
+                            <div class="ibox-content text-center">
+                                <img class="img-dashboard" src="img/computer.png"  alt="profile">
+                                <form data-editable-form name="uiSelectData" shown=true>
+                                    <div editable-ui-select="vm.assay.datasets.data"
+                                         data-e-form="uiSelectData"
+                                         data-e-name="state" name="state"
+                                         theme="bootstrap"
+                                         data-e-ng-model="vm.assay.datasets.data"
+                                         data-e-style="min-width:300px;">
+                                        {{vm.assay.datasets.data}}
+                                        <editable-ui-select-match placeholder="Choose a template..." on-select="vm.showTemplate($item, $model)">
+                                            {{$select.selected.name}}
+                                        </editable-ui-select-match>
+                                        <editable-ui-select-choices repeat="template in vm.templates.data | filter: $select.search track by $index">
+                                            {{template.name}}
+                                        </editable-ui-select-choices>
+                                    </div>
+                                    <br/>
+                                    <div class="buttons">
+                                        &lt;!&ndash; button to show form &ndash;&gt;
+                                        <button type="button" class="btn btn-default" ng-click="uiSelectData.$show()" ng-show="!uiSelectData.$visible">
+                                            Edit
+                                        </button>
+                                        &lt;!&ndash; buttons to submit / cancel form &ndash;&gt;
+                                          <span ng-show="uiSelectData.$visible">
+                                            <br/>
+                                            <button type="submit" class="btn btn-primary" ng-disabled="uiSelectData.$waiting">
+                                              Save
+                                            </button>
+                                            <button type="button" class="btn btn-default" ng-disabled="uiSelectData.$waiting" ng-click="uiSelectData.$cancel()">
+                                              Cancel
+                                            </button>
+                                          </span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="ibox-footer">
+                                <div class="text-center">
+                                    <small>A template for loading the assay measure data such as a data matrix for single measurements (e.g. normalized log ratio) or a data table for multiple measurements (e.g. CyTOF data)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>-->
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- <div class="col-lg-3">
+        <div class="wrapper wrapper-content project-manager">
+            &lt;!&ndash;            <h4>Project description</h4>
+                        <img src="img/zender_logo.png" class="img-responsive">
+
+                        <p class="small">
+                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look
+                            even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing
+                        </p>
+
+                        <p class="small font-bold">
+                            <span><i class="fa fa-circle text-warning"></i> High priority</span>
+                        </p>
+                        <h5>Project tag</h5>
+                        <ul class="tag-list" style="padding: 0">
+                            <li><a href=""><i class="fa fa-tag"></i> Zender</a></li>
+                            <li><a href=""><i class="fa fa-tag"></i> Lorem ipsum</a></li>
+                            <li><a href=""><i class="fa fa-tag"></i> Passages</a></li>
+                            <li><a href=""><i class="fa fa-tag"></i> Variations</a></li>
+                        </ul>&ndash;&gt;
+            <h5>Associated Data files</h5>
+            <ul class="list-unstyled project-files">
+                <li><a href=""><i class="fa fa-file"></i> P-BVS_1.csv</a></li>
+                <li><a href=""><i class="fa fa-file"></i> P-BVS_2.csv</a></li>
+                <li><a href=""><i class="fa fa-file"></i> Sample_protocol.doc</a></li>
+                <li><a href=""><i class="fa fa-file"></i> Contact_20_11_2014.docx</a></li>
+            </ul>
+            &lt;!&ndash;            <div class="text-center m-t-md">
+                            <a href="" class="btn btn-xs btn-primary">Add files</a>
+                            <a href="" class="btn btn-xs btn-primary">Report contact</a>
+
+                        </div>&ndash;&gt;
+        </div>
+    </div>-->
+</div>

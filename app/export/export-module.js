@@ -5,116 +5,214 @@
 
 function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-        .state('treeView', {
+        .state('export', {
             abstract: true,
-            url: "/{studyId}",
-            templateUrl: "layout/content.html"
-        })
-        .state('treeView.test', {
-            url: "/export/treeview",
-            templateUrl: "export/treeView.html",
-            controller: "treeCtrl"/*,
+            url: "/{projectId}/export",
+            templateUrl: "layout/content.html",
             resolve: {
-                loadPlugin: function ($ocLazyLoad) {
+                loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    // console.log("loading service");
+                    return $ocLazyLoad.load('export/export-service.js');
+                }]
+            }
+        })
+        .state('export.datasets', {
+            url: "/mydatasets",
+            templateUrl: "export/export-list.html",
+            controller: "exportListCtrl as vm",
+            resolve: {
+                 loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                     // console.log("loading service");
+                     return $ocLazyLoad.load('export/export-service.js');
+                 }],
+                 loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                     return $ocLazyLoad.load(['export/exportList-controller.js'])
+                 }]
+             }
+        })
+        .state('export.datasets.preview',{
+            url:"/mydatasets/{datasetId}/download",
+            controller: 'previewController as prevCtrl',
+            templateUrl: 'export/dataset/preview.html',
+            resolve: {
+                loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([
                         {
-                            insertBefore: '#loadBefore',
-                            files: ['lib/jstree/jstree.js', '/lib/jstree/themes/default/style.min.css']
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
+                                'lib/plugins/dataTables/css/dataTables.bootstrap.css',
+                                'lib/plugins/dataTables/css/dataTables.tableTools.css']
+                        },
+                        {
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/dataTables.bootstrap.js',
+                                'lib/plugins/dataTables/js/dataTables.tableTools.js']
+                        },
+                        {
+                            name: 'datatables',
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/angular-datatables.min.js',
+                                'lib/plugins/dataTables/js/angular-datatables.tabletools.js']
                         }
                     ]);
-                },
-                loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
-                   return $ocLazyLoad.load(
-                       {
-
-                           files: ['lib/ngJsTree/ngJsTree.js'
-                           ]
-                       }
-                   )
-                }]
-                /!*loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-
-                    ]);
                 }],
-                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                loadController: ['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([
-                        'dataStage/fileManager/fileManager-controller.js'
-                    ]);
-                }],*!/
-
-            }*/
-        })
-        /*.state('datastage.upload', {
-            url: "/upload",
-            templateUrl: "/upload.html",
-            controller : "uploadController",
-            resolve: {
-                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        'dataStage/upload/upload-controller.js'
+                        'export/dataset/preview-controller.js'
                     ]);
                 }]
             }
-        })*//*.state("datastage.upload", {
-            url: "/upload/{dir}",
-            onEnter: ['$stateParams', '$state', '$modal', 'fileService',function($stateParams, $state, $modal, fileService) {
-                $modal.open({
-                    templateUrl: "dataStage/upload/upload.html",
-                    resolve: {
-                        loadController:['$ocLazyLoad',function($ocLazyLoad){
-                            return $ocLazyLoad.load([
-                                'dataStage/upload/upload-controller.js'
-                            ]);
-                        }]
-                    },
-                    controller: 'uploadController'
-                }).result.finally(function($stateParams) {
-                        fileService.getFiles()
-                            .then(function(data){
-                                //vm.files = data.files;
-                                //console.log(data)
-                                //$scope.vm = vm;
-                            $state.go('datastage.files',{studyId:$stateParams.studyId, dir:$stateParams.dir})
-                            })
-                    }, function () {
-                        console.info('Modal dismissed at: ' + new Date());
-                        $state.go('^');
+        })
+
+        .state('export.wizard',{
+            url: "/mydatasets/{datasetId}",
+            templateUrl: "export/dataset/dataset.html",
+            controller: "datasetController as parentCtrl",
+            //params:{selFiles: null},
+            resolve: {
+                // loadService:['$ocLazyLoad',function($ocLazyLoad){
+                //     console.log("parent router...loading service");
+                //     return $ocLazyLoad.load('export/wizard-service.js');
+                // }],
+                loadController:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        'export/dataset/dataset-controller.js'
+                    ]);
+                }],
+                /*loadDirective:['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(['export/dataTreeDraggable.js'])
+                }],*/
+                loadPlugin: ['$ocLazyLoad',function ($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie:true,
+                        files: ['lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js',
+                            'lib/plugins/jstree/js/jstree.js',
+                            'lib/plugins/ngJsTree/js/ngJsTree.js',
+                            'lib/plugins/jstree/css/themes/default/style.css',
+                            'lib/plugins/ionRangeSlider/css/ion.rangeSlider.css',
+                            'lib/plugins/ionRangeSlider/css/ion.rangeSlider.skinSimple.css',
+                            'lib/plugins/ionRangeSlider/js/ion.rangeSlider.min.js',
+                            'layout/directives/ionRangeSlider.js',
+                            'lib/plugins/ui-select/js/select.min.js',
+                            'lib/plugins/ui-select/css/select.css',
+                            'lib/plugins/angular-dragdrop/angular-dragdrop.min.js'
+                        ]
                     });
+                }]
+            }
+        })
 
-            }]
-        });*/
+        .state('export.wizard.fields', {
+            url: '/1-fields',
+            templateUrl: 'export/dataset/fields.html',
+            controller: 'stepOneController as fldCtrl',
+            resolve:{
+                loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load(
+                        {
+                            serie:true,
+                            files: [
+                                'export/dataset/fields-controller.js']
+                        }
+                    )
+                }]/*,
+                 loadController:['$ocLazyLoad','loadService',function($ocLazyLoad,loadService){
+                 console.log("step one router...loading controller, service:",loadService);
+                 return $ocLazyLoad.load(
 
-        /*.state('datastage.wizard',{
-         url: "/wizard",
-         templateUrl: "/import_wizard.html",
-         controller: "/wizard/importController"//,
-         /!*resolve: {
-         loadPlugin: function ($ocLazyLoad) {
-         return $ocLazyLoad.load([
-         {
-         files: ['lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js']
-         }
-         ]);
-         }
-         }*!/
-         })
+                 );
+                 }]*/
+            }
+        })
+        .state('export.wizard.filters', {
+            url: '/2-filters',
+            controller: 'stepTwoController as filterCtrl',
+            templateUrl: 'export/dataset/filters.html',
+            resolve:{
+                loadPlugin:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            name: 'nouislider',
+                            serie: true,
+                            files: [
+                                'export/dataset/filters-controller.js']
+                        }
 
-         .state('datastage.wizard.step_one', {
-         url: '/step_one',
-         templateUrl: '/step_one.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })
-         .state('wizard.step_two', {
-         url: '/step_two',
-         templateUrl: '/step_two.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })
-         .state('wizard.step_three', {
-         url: '/step_three',
-         templateUrl: '/step_three.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })*/
+                    ])
+                }]
+            }
+        })
+        .state('export.wizard.preview', {
+            url: '/3-preview',
+            templateUrl: 'export/dataset/preview.html',
+            controller: 'previewController as prevCtrl',
+            resolve: {
+                loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
+                                'lib/plugins/dataTables/css/dataTables.bootstrap.css',
+                                'lib/plugins/dataTables/css/dataTables.tableTools.css']
+                        },
+                        {
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/dataTables.bootstrap.js',
+                                'lib/plugins/dataTables/js/dataTables.tableTools.js']
+                        },
+                        {
+                            name: 'datatables',
+                            serie: true,
+                            files: ['lib/plugins/dataTables/js/angular-datatables.min.js',
+                                'lib/plugins/dataTables/js/angular-datatables.tabletools.js']
+                        }
+                    ]);
+                }],
+                loadController: ['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        'export/dataset/preview-controller.js'
+                    ]);
+                }]
+            }
+        })
+
+        .state('export.wizard.preview.tree', {
+            url: '/tree',
+            templateUrl: 'export/dataset/stepThree-tree.html',
+            controller: 'stepThreeTreeController as step3TreeVM',
+            resolve:{
+                //loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
+                //    return $ocLazyLoad.load([
+                //        {
+                //            serie: true,
+                //            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
+                //                'lib/plugins/jstree/js/jstree.min.js',
+                //                'lib/plugins/ngJsTree/js/ngJsTree.js']
+                //        }
+                //    ]);
+                //}],
+                loadController: ['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        'export/dataset/stepThreeTree-controller.js'
+                    ]);
+                }]
+            }
+        })
+
+        .state('export.wizard.info', {
+            url: '/4-info',
+            templateUrl: 'export/dataset/stepFour.html',
+            controller: 'stepFourController as step4vm',
+            resolve:{
+                loadController:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        'export/dataset/stepFour-controller.js'
+                    ]);
+                }]
+            }
+        })
+
+
 
 
 
@@ -122,5 +220,5 @@ function config($stateProvider, $urlRouterProvider) {
 }
 
 angular
-    .module('bioSpeak.export', ['ngJsTree'])
+    .module('bioSpeak.export',['draggableFieldTree'])
     .config(config)

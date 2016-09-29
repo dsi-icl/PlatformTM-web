@@ -3,7 +3,7 @@
  */
 
 //Include a dependency service which will request the cfdata as well as list of SCs and EFs
-angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
+angular.module('eTRIKSdata.dcPlots',[])
 
     .factory('AssayCf',['assayDataService','$q', function(assayDataService,$q){
 
@@ -11,6 +11,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         var cfservice = {};
 
         var subjectColumnName = "subjectId";
+        var XFserviceName = 'AssayCf'
 
         var dimensions = [], groups = [];
         var subjectDim;
@@ -41,7 +42,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         }
 
 
-        cfservice.refreshCf = function(StudyId,assayId,requestedObsvs){
+        cfservice.refreshCf = function(projectId,assayId,requestedObsvs){
             var deferred = $q.defer();
             dimensionsPerAssay[assayId] = {}
 
@@ -52,7 +53,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             XfilterAssayMap[assayId].dimensions = [];
             XfilterAssayMap[assayId].groups = [];
 
-            this.getData(StudyId, assayId,requestedObsvs).then(function(res){
+            this.getData(projectId, assayId,requestedObsvs).then(function(res){
                 //use property dataType to coerce string to numerals
                 var data = res.data;
                 var columns = res.header;
@@ -114,10 +115,10 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return deferred.promise
         }
 
-        cfservice.getData = function(StudyId,assayId,requestedObsvs){
+        cfservice.getData = function(projectId,assayId,requestedObsvs){
             var deferred = $q.defer();
 
-            assayDataService.getSampleData(StudyId,assayId,requestedObsvs)
+            assayDataService.getSampleData(projectId,assayId,requestedObsvs)
                 .then(function(response){
                     //console.log('inside getDAta',response)
                     var dataToPlot = response.data;
@@ -187,6 +188,17 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return XfilterAssayMap[assayId].xfReady;
         }
 
+        cfservice.getXFname = function(){
+            return XFserviceName;
+        }
+
+        cfservice.resetSubjectFilter = function(){
+            if(!angular.isUndefined(subjectDim))
+                subjectDim.filter(null);
+        }
+
+
+
         return cfservice
     }])
 
@@ -198,16 +210,17 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
         var cfdata;
         var all;
         var dataToPlot;
+        var XFserviceName = 'SubjCf'
 
         var subjCfService = {}
         var cfReady;
         var subjectColumnName = "subjectId";
         var subjectDim;
 
-        subjCfService.refreshCf = function(StudyId,requestedObsvs){
+        subjCfService.refreshCf = function(projectId,requestedObsvs){
             var deferred = $q.defer();
 
-            this.getData(StudyId, requestedObsvs).then(function(data){
+            this.getData(projectId, requestedObsvs).then(function(data){
                 //use property dataType to coerce string to numerals
 
                 //console.log('inside inititialize')
@@ -218,7 +231,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 data.forEach(function(d) {
                     //d.dtg   = dtgFormat.parse(d.origintime.substr(0,19));
                     //d.lat   = +d.latitude;
-                    //d['Age']  = +d['Age'];
+                    d['age']  = +d['age'];
                     //d.Race   = d.Race;
                     //d.depth = d3.round(+d.depth,0);
                 });
@@ -252,10 +265,10 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return deferred.promise
         }
 
-        subjCfService.getData = function(StudyId,requestedObsvs){
+        subjCfService.getData = function(projectId,requestedObsvs){
             var deferred = $q.defer();
 
-            subjectDataService.getSubjData(StudyId,requestedObsvs)
+            subjectDataService.getSubjData(projectId,requestedObsvs)
                 .then(function(response){
                     //console.log('inside getDAta',response)
                     dataToPlot = response.data;
@@ -325,15 +338,29 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             dc.renderAll("subject");
         }
 
+        subjCfService.resetSubjectFilter = function(){
+            subjectDim.filter(null);
+            dc.redrawAll("subject");
+        }
+
+        subjCfService.getXFname = function(){
+            return XFserviceName;
+        }
+
+        subjCfService.setActiveFilters = function(obs,filter){
+
+        }
+
         return subjCfService
     }])
 
     .factory('ClinicalCf',['clinicalDataService','$q', function(clinicalDataService,$q){
 
-        //var columns;
-        var subjectDim,
+        var subjectDim = {},
             subjectColumnName = "subjectId",
             visitColumnName = "visit";
+
+        var XFserviceName = 'ClinicalCf'
         //var allSubjObservationsGrp;
 
 
@@ -342,38 +369,55 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             timeGroups = [],
             timeDimension;
 
-        //var cfData;
-
         var xfilter = {} //"findings":xf, "events":xf
 
         var findingsXfilter,
             eventsXfilter,
             findingsColumns,
-            eventsColumns
+            eventsColumns;
 
 
         var dataToPlot = {};
+        var tableDimensions = {}, tableHeaders = {};
+        var lastFilteredObs;
+        var filteredFindings = [], filteredEvents = [];
         //var boxplots = [];
 
         var cfReady=false;
         var cfservice = {};
 
-        cfservice.formatData = function(data){
+        cfservice.formatData = function(data, requestedObsvs){
             // format our data
-            //TODO: add DataType to data and use it to coerce dimensions
             data.forEach(function(d) {
                 //d.bmi   = d3.round(+d.bmi,1);
                 //d.height   = d3.round(+d.height,2);
-                d['weight [VSORRES]'] = d3.round(+d['weight [VSORRES]'],1);
-                d['hcrp [LBORRES]'] = d3.round(+d['hcrp [LBORRES]'],1);
-                d['diabp [VSORRES]'] = +d['diabp [VSORRES]']
-                d['sysbp [VSORRES]'] = +d['sysbp [VSORRES]'];
-                d['crp [LBORRES]'] = +d['crp [LBORRES]'];//d3.round(+d['crp [LBORRES]'],1);
 
-                d['hr [VSORRES]'] = +d['hr [VSORRES]'];
-                d['temp [VSORRES]'] = +d['temp [VSORRES]'];
-                d['bmi [VSORRES]'] = d3.round(+d['bmi [VSORRES]'],1);
-                d['height [VSORRES]'] = d3.round(+d['height [VSORRES]'],1);
+                requestedObsvs.forEach(function(o){
+                    if(o.dataType != 'string'){
+                        //console.log(o.id,' is numeric')
+                        d[o.id] = +d[o.id];
+                    }
+                    if(o.dataType == "string"){
+                        if(d[o.id] == null) d[o.id] = "N/A"
+                    }
+                })
+
+                // d['weight [VSORRES]'] = d3.round(+d['weight [VSORRES]'],1);
+                // d['hcrp [LBORRES]'] = d3.round(+d['hcrp [LBORRES]'],1);
+                // d['diabp [VSORRES]'] = +d['diabp [VSORRES]']
+                // d['sysbp [VSORRES]'] = +d['sysbp [VSORRES]'];
+                // d['crp [LBORRES]'] = +d['crp [LBORRES]'];//d3.round(+d['crp [LBORRES]'],1);
+                //
+                // d['hr [VSORRES]'] = +d['hr [VSORRES]'];
+                // d['temp [VSORRES]'] = +d['temp [VSORRES]'];
+                // d['bmi [VSORRES]'] = d3.round(+d['bmi [VSORRES]'],1);
+                // d['height [VSORRES]'] = d3.round(+d['height [VSORRES]'],1);
+                //
+                // d['fvcpp [REORRES]'] = +d['fvcpp [REORRES]'];
+                // d['fev1pp [REORRES]'] = +d['fev1pp [REORRES]'];
+                // d['pefpp [REORRES]'] = +d['pefpp [REORRES]'];
+                // d['wbc [LBSTRESN]'] = +d['wbc [LBSTRESN]'];
+
 
                 //d.date_e = dateFormat.parse(d.date_entered);
                 //d.date_i = dateFormat.parse(d.date_issued);
@@ -397,7 +441,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 var grp = dim.group();
                 //var grp1 = dim.group().reduce(reduceAdd(obs),reduceRemove(obs),reduceInit);
                 var reducer = reductio()
-                    .filter(function(d) { return  d[obs] != "" })
+                    .filter(function(d) { return  d[obs] != "" && d[obs] != null })
                     .count(true)
                 reducer(grp);
                 groups[obs] = grp;
@@ -410,7 +454,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                  * Creating boxplot array groups for time-based observations
                  * ...DOING IT FOR FINDINGS ONLY FOR NOW
                  */
-                if(isFindings){
+                /*if(isFindings){
                     console.log('calculating ')
                     timeDimension = xfilter.dimension(function(d) {return d[visitColumnName]; });
                     var timeGroup = timeDimension.group();
@@ -421,16 +465,16 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                         .valueList(function (d) { return d[obs]; });
                     timeDimReducer(timeGroup)
                     timeGroups[obs] = timeGroup;
-                }
+                }*/
 
             })
 
             return xfilter
         }
 
-        cfservice.getData = function(studyId,requestedObsvs){
+        cfservice.getData = function(projectId,requestedObsvs){
             var deferred = $q.defer();
-            clinicalDataService.getObservations(studyId,requestedObsvs)
+            clinicalDataService.getObservations(projectId,requestedObsvs)
                 .then(function(data){
                     dataToPlot = data
                     //columns = data.columns;
@@ -439,7 +483,7 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             return deferred.promise
         }
 
-        cfservice.refreshCf = function(studyId,requestedObsvs){
+        cfservice.refreshCf = function(projectId,requestedObsvs){
             var deferred = $q.defer();
 
             function reduceAddSubj(p, v) {
@@ -518,20 +562,22 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                 };
             }
 
-            this.getData(studyId,requestedObsvs)
+            this.getData(projectId,requestedObsvs)
                 .then(function(data){
-                    console.log('inside refresh data')
+                    //console.log('inside refresh data')
 
                     /**
                      * Format to data types
                      */
-                    cfservice.formatData(data.findingsTbl);
+                    cfservice.formatData(data.findingsTbl, requestedObsvs);
 
                     /**
                      * Get table headers
                      */
                     findingsColumns = data.findingsTblHeader;
                     eventsColumns = data.eventsTblHeader;
+                    tableHeaders['findings'] = findingsColumns;
+                    tableHeaders['events'] = eventsColumns;
 
 
                     /**
@@ -541,17 +587,20 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
                     eventsXfilter = cfservice.generateXf(data.eventsTbl,eventsColumns,false);
 
 
+                    tableDimensions['findings'] = findingsXfilter.dimension(function(d) {return d[subjectColumnName]});
+                    tableDimensions['events'] = eventsXfilter.dimension(function(d) {return d[subjectColumnName]});
 
                     ////number of subject Observations
                     //allSubjObservationsGrp= cfData.groupAll()
 
                     //TODO: merge subject count for both events and findings xfilters
-                    //BUGGY .. will not work
-                    subjectDim = findingsXfilter.dimension(function(d) {return d[subjectColumnName]})
-                    uniqueSubjGrp = subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
+                    subjectDim['findings'] = findingsXfilter.dimension(function(d) {return d[subjectColumnName]});
+                    subjectDim['events'] = eventsXfilter.dimension(function(d) {return d[subjectColumnName]});
+
+                    /*uniqueSubjGrp = subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
                     uniqueSubjGrpM = {value: function() {
                         return uniqueSubjGrp.value().count;
-                    } };
+                    } };*/
 
                     cfReady = true;
                     deferred.resolve(cfReady)
@@ -559,7 +608,6 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
             return deferred.promise
         }
-
 
 
         cfservice.getDimension = function(key){
@@ -606,8 +654,8 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
          *!/*/
 
 
-        cfservice.getTableDimension = function(){
-            return subjectDim
+        cfservice.getTableDimension = function(obsClass){
+            return tableDimensions[obsClass]
         }
 
         cfservice.getTableGroup = function(){
@@ -615,26 +663,71 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             //return function(d) {return d[subjectColumnName]}
         }
 
-        //TODO: add parameter findings or events
-        cfservice.getTableHeaders = function(){
-            var header = [subjectColumnName];
-            header = header.concat(findingsColumns)
-            return findingsColumns;
+        cfservice.getTableHeaders = function(module){
+            return tableHeaders[module];
         }
-
 
         cfservice.getSubjectHeader = function(){
             return subjectColumnName
         }
 
         cfservice.filterBySubjects = function(filteredSubjectIds){
-            if(!angular.isUndefined(subjectDim))
-                subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+            if(!angular.isUndefined(tableDimensions['findings'])){
+                //RESET subjectDimension filters
+                //subjectDim['findings'].filter(null);
+                //subjectDim['events'].filter(null);
+
+                subjectDim['findings'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+                subjectDim['events'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+            }
+                //subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
             dc.renderAll("clinical");
         }
 
+        cfservice.syncfilters = function(){
+            /*if (findingsColumns.indexOf(lastFilteredObs) > -1) {
+                var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
+
+                subjectDim['events'].filterFunction(function(d) { return findingsSubjIds.indexOf(d) > -1;})
+            } else if (eventsColumns.indexOf(lastFilteredObs) > -1) {
+                var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
+                subjectDim['findings'].filterFunction(function(d) { return eventsSubjIds.indexOf(d) > -1;})
+            }*/
+            cfservice.resetSubjectFilter();
+
+            if(isEventsXFFiltered()){
+                var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
+                subjectDim['findings'].filterFunction(function(d) { return eventsSubjIds.indexOf(d) > -1;})
+            }
+
+            if(isFindingsXFFiltered()){
+                var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
+                subjectDim['events'].filterFunction(function(d) { return findingsSubjIds.indexOf(d) > -1;})
+            }
+        }
+
         cfservice.getCurrentSubjectIds = function(){
-            return ($.map(subjectDim.top(Infinity), function(d) {return d.subjectId }))
+            var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
+            var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
+
+            var filteredSubjectIds = [];
+
+            if(isFindingsXFFiltered()) {
+                console.log('findings filtered')
+                findingsSubjIds.forEach(function (id) {
+                    if (filteredSubjectIds.indexOf(id) == -1)
+                        filteredSubjectIds.push(id);
+                })
+            }
+            if(isEventsXFFiltered()) {
+                console.log('events filtered')
+                eventsSubjIds.forEach(function (id) {
+                    if (filteredSubjectIds.indexOf(id) == -1)
+                        filteredSubjectIds.push(id);
+                })
+            }
+            console.log(filteredSubjectIds.length);
+            return filteredSubjectIds;//($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }))
         }
 
         cfservice.getAllSubjFindingsGrp = function(){
@@ -663,6 +756,58 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
             cfservice.getDimension(obs).filterAll();
         }
 
+        cfservice.getXFname = function(){
+            return XFserviceName;
+        }
+
+        cfservice.setLastFilteredObs = function(obs){
+            lastFilteredObs = obs;
+        }
+
+
+
+
+
+        cfservice.setActiveFilters = function(obs,filter){
+
+            console.log('set active filter', obs, filter)
+
+            var activeFilteredObs;
+            if(findingsColumns.indexOf(obs) > -1)
+                activeFilteredObs = filteredFindings;
+            else if(eventsColumns.indexOf(obs) > -1)
+                activeFilteredObs = filteredEvents;
+
+            if(activeFilteredObs.indexOf(obs) != -1 && filter == null)
+                activeFilteredObs.splice(activeFilteredObs.indexOf(obs),1);
+            if(activeFilteredObs.indexOf(obs) == -1 && filter != null)
+                activeFilteredObs.push(obs);
+            console.log('active filters',activeFilteredObs,filteredFindings,filteredEvents)
+
+        }
+
+        cfservice.resetSubjectFilter = function(){
+
+            if(subjectDim['findings']) subjectDim['findings'].filter(null);
+            if(subjectDim['events']) subjectDim['events'].filter(null);
+            //dc.redrawAll("clinical");
+        }
+
+        cfservice.isFiltered = function(){
+
+            //console.log('inside isFiltered',isEventsXFFiltered(),is)
+            return isEventsXFFiltered() || isFindingsXFFiltered();
+        }
+
+        var isEventsXFFiltered = function(){
+            //console.log(filteredEvents.length, 'number of filtered event observations')
+            return filteredEvents.length >0;
+        }
+        var isFindingsXFFiltered = function(){
+            //console.log(filteredFindings.length, 'number of filtered findings observations')
+            return filteredFindings.length >0;
+        }
+
         return cfservice
 
     }])
@@ -671,26 +816,39 @@ angular.module('eTRIKSdata.dcPlots',['eTRIKSdata.exporter'])
 
         var XFilterLinker = {}
 
-        XFilterLinker.propagateFilter = function(xfilterServiceName){
+        XFilterLinker.propagateFilter = function(xfFiltered){
 
-            var xfFiltered = $injector.get(xfilterServiceName);
+            //var xfFiltered = $injector.get(xfilterServiceName);
             //console.log('filtered in ',xfFiltered);
-
             //var service = $injector.get(request);
 
-            var filteredIds = xfFiltered.getCurrentSubjectIds();
-            //console.log(xfFiltered)
 
-            if(xfilterServiceName == 'SubjCf'){
-                //console.log("subjects filtered")
+
+            var filteredIds = xfFiltered.getCurrentSubjectIds();
+            //console.log(filteredIds)
+            if(filteredIds.length == 0)return;
+
+            if(xfFiltered.getXFname() == 'SubjCf'){
+                console.log("subjects filtered");
+                ClinicalCf.resetSubjectFilter();
+                AssayCf.resetSubjectFilter();
+
                 ClinicalCf.filterBySubjects(filteredIds);
                 AssayCf.filterBySubjects(filteredIds);
-            }else if(xfilterServiceName == 'ClinicalCf'){
-                //console.log("clinical filtered")
-                SubjCf.filterBySubjects(filteredIds);
-                AssayCf.filterBySubjects(filteredIds);
-            }else if(xfilterServiceName == 'AssayCf'){
-                //console.log("assays filtered")
+            }else if(xfFiltered.getXFname()  == 'ClinicalCf'){
+                console.log("clinical filtered");
+
+                SubjCf.resetSubjectFilter();
+                AssayCf.resetSubjectFilter();
+
+                if(xfFiltered.isFiltered()){
+                    SubjCf.filterBySubjects(filteredIds);
+                    AssayCf.filterBySubjects(filteredIds);
+                }
+
+                ClinicalCf.syncfilters();
+            }else if(xfFiltered.getXFname() == 'AssayCf'){
+                console.log("assays filtered");
                 SubjCf.filterBySubjects(filteredIds);
                 ClinicalCf.filterBySubjects(filteredIds);
             }

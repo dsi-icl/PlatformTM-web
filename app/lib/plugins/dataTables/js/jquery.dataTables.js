@@ -1233,15 +1233,15 @@
 					return mSource( data, type, row, meta );
 				};
 			}
-			else if ( typeof mSource === 'string' && (mSource.indexOf('.') !== -1 ||
+			/*else if ( typeof mSource === 'string' && (mSource.indexOf('.') !== -1 ||
 				mSource.indexOf('[') !== -1 || mSource.indexOf('(') !== -1) )
 			{
-				/* If there is a . in the source string then the data source is in a
+				/!* If there is a . in the source string then the data source is in a
 				 * nested object so we loop over the data for each level to get the next
 				 * level down. On each loop we test for undefined, and if found immediately
 				 * return. This allows entire objects to be missing and sDefaultContent to
 				 * be used if defined, rather than throwing an error
-				 */
+				 *!/
 				var fetchData = function (data, type, src) {
 					var arrayNotation, funcNotation, out, innerSrc;
 
@@ -1306,7 +1306,7 @@
 				return function (data, type) { // row and meta also passed, but not used
 					return fetchData( data, type, mSource );
 				};
-			}
+			}*/
 			else
 			{
 				/* Array or flat object mapping */

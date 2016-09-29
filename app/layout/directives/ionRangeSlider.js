@@ -10,8 +10,8 @@ function ionRangeSlider($timeout) {
             onChange:'='
         },
         link: function (scope, elem, attrs) {
-            console.log(elem)
-            console.log(scope)
+            //console.log(elem)
+            //console.log(scope)
             elem.ionRangeSlider(scope.rangeOptions)
             /*elem.ionRangeSlider({
                 min: scope.min,
@@ -34,7 +34,7 @@ function ionRangeSlider($timeout) {
             });*/
 
             scope.$watch('rangeOptions', function(value) {
-                console.log("from changed",value)
+                //console.log("from changed",value)
                 //elem.data("ionRangeSlider").update({from: value});
                 //scope.$apply()
             },true);

@@ -1,0 +1,60 @@
+<link type="text/css" rel="stylesheet" href="explore/clinical/css/clinicalDataTree.css"/>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title panel-header">
+                <span class="flaticon-man412" style="color: #39b3d7;"></span> Clinical Observations
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div clinical-obs-browser></div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="ibox-title">
+                            <div>
+                                <div class="btn-group pull-right">
+                                    <label class="btn btn-xs btn-primary" ng-model="vm.show" uib-btn-radio="'plots'">Data
+                                        Plots</label>
+                                    <label class="btn btn-xs btn-primary" ng-model="vm.show"
+                                           uib-btn-radio="'findingsTable'">Findings Table</label>
+                                    <label class="btn btn-xs btn-primary" ng-model="vm.show"
+                                           uib-btn-radio="'eventsTable'">Events Table</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content plots-view">
+                            <div id="{{chartingOpts.chartContainerId}}"
+                                 ng-hide="vm.show =='eventsTable' || vm.show =='findingsTable'"
+                                 style="display: -webkit-box;" class=" plots-view  "></div>
+
+                            <div id="findings-datatable" ng-hide="vm.show =='plots' || vm.show=='eventsTable'"
+                                 class="table-view  ">
+                                <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
+                                              chart-service="{{chartingOpts.DCchartService}}"
+                                              xfilter-service="{{chartingOpts.xfilterService}}"
+                                              grp="{{chartingOpts.chartGroup}}"
+                                              module="findings">Choose observations from the tree below
+                                </dc-datatable>
+                            </div>
+                            <div id="events-datatable" ng-hide="vm.show =='plots' || vm.show=='findingsTable'"
+                                 class="table-view  ">
+                                <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
+                                              chart-service="{{chartingOpts.DCchartService}}"
+                                              xfilter-service="{{chartingOpts.xfilterService}}"
+                                              grp="{{chartingOpts.chartGroup}}"
+                                              module="events">Choose observations from the tree below
+                                </dc-datatable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

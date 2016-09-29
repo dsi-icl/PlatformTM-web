@@ -1,0 +1,225 @@
+<fieldset>
+    <h4>Select fields to add to dataset</h4>
+    <div class="row">
+
+
+        <div class="col-md-6">
+            <div class="row m-b-sm">
+                <div class="col-md-8">
+                    <h5>Available Fields</h5>
+                </div>
+            </div>
+
+
+            <div class=" well">
+                <div ng-show="fldCtrl.dataLoaded">
+                    <!--<div class="row m-b-sm">
+                        &lt;!&ndash;<div class="col-md-2">
+                            <button type="button" class="btn btn-white btn-sm" ng-click="fldCtrl.refreshTree()"><i class="fa fa-refresh"></i> Refresh</button>
+                        </div>&ndash;&gt;
+                        <div class="col-md-10">
+
+                            <input ng-model="searchTree" type="text" placeholder="Search" class="input-sm form-control"></div>
+                                &lt;!&ndash;<input ng-model="fldCtrl.treeSearchTerm" ng-change="fldCtrl.applySearch()" type="text" placeholder="Search" class="input-sm form-control">&ndash;&gt;
+                                    &lt;!&ndash;<span class="input-group-btn">&ndash;&gt;
+                                        &lt;!&ndash;<button type="button" class="btn btn-sm btn-primary"> Go!</button> &ndash;&gt;
+                                    &lt;!&ndash;</span>&ndash;&gt;
+
+                        </div>
+
+                    </div>-->
+                    <div draggable-tree tree-data="fldCtrl.treeData" nclick="fldCtrl.toggleNode(node)" search-tree="searchTree" ></div>
+                    <!--<div id="tree"
+                         js-tree="fldCtrl.treeConfig"
+                         ng-model="fldCtrl.treeData"
+                         tree="fldCtrl.treeInstance"
+                         tree-events="changed:fldCtrl.treeChanged;
+                         select_node:fldCtrl.nodeSelected;
+                         deselect_node:fldCtrl.nodeDeselected;
+                         create_node:fldCtrl.createTreeNode;" >
+                    </div>-->
+                </div>
+
+                <div ng-show="!fldCtrl.dataLoaded" >
+                    <div>
+                            <div class="sk-spinner sk-spinner-fading-circle">
+                                <div class="sk-circle1 sk-circle"></div>
+                                <div class="sk-circle2 sk-circle"></div>
+                                <div class="sk-circle3 sk-circle"></div>
+                                <div class="sk-circle4 sk-circle"></div>
+                                <div class="sk-circle5 sk-circle"></div>
+                                <div class="sk-circle6 sk-circle"></div>
+                                <div class="sk-circle7 sk-circle"></div>
+                                <div class="sk-circle8 sk-circle"></div>
+                                <div class="sk-circle9 sk-circle"></div>
+                                <div class="sk-circle10 sk-circle"></div>
+                                <div class="sk-circle11 sk-circle"></div>
+                                <div class="sk-circle12 sk-circle"></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="row m-b-sm">
+                <div class="pull-left" >
+                    <h5>Selected Fields</h5>
+                </div>
+
+                <div class="pull-right">
+                    <!--<button class="btn btn-default btn-sm btn-outline" ng-click="fldCtrl.addComputedField()">Add Computed Field</button>-->
+                    <!--<button type="button" class="btn btn-default btn-sm btn-outline" ng-init="fldCtrl.isCollapsed = true" ng-click="fldCtrl.isCollapsed = !fldCtrl.isCollapsed">Add Computed Field</button>-->
+                    <button class="btn btn-default btn-sm btn-outline" ng-click="fldCtrl.clearFields()">Clear Fields</button>
+                </div>
+            </div>
+
+            <!--COMPUTED FIELD-->
+            <!--<div class="row m-b-sm">
+                <div uib-collapse="fldCtrl.isCollapsed">
+                    <div  class="well">
+                        <form role="form">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input ng-model="fldCtrl.cField.name" type="text" placeholder="Enter Field Name" class="form-control">
+                                    </div>
+                                    <div class="form-group"><label>Description</label>
+                                        <textarea class="form-control" ng-model="fldCtrl.cField.desc"></textarea>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Source Fields</label>
+                                        <input type="text" placeholder="Drag Fields here" class="form-control">
+                                    </div>
+
+                                    &lt;!&ndash;<div class="form-group">
+                                            <label>Functions</label>
+
+                                            <ui-select ng-model="fldCtrl.computeFunction" theme="bootstrap" ng-disabled="disabled" on-select="fldCtrl.functionSelected($item, $model)">
+                                                <ui-select-match style="height: 29px;" placeholder="Select function...">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices group-by="'type'" repeat="func in fldCtrl.computeFunctions | filter:$select.search" position="down">
+                                                    {{func.name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                    </div>&ndash;&gt;
+
+
+
+                                    &lt;!&ndash;<div class="row">&ndash;&gt;
+                                    &lt;!&ndash;<div class="col-md-6"><label>Text</label>&ndash;&gt;
+                                    &lt;!&ndash;<div class="list-group">&ndash;&gt;
+                                    &lt;!&ndash;<a class="list-group-item">Sever</a>&ndash;&gt;
+                                    &lt;!&ndash;<a class="list-group-item">Moderate</a>&ndash;&gt;
+                                    &lt;!&ndash;<a class="list-group-item">Mild</a>&ndash;&gt;
+                                    &lt;!&ndash;</div>&ndash;&gt;
+                                    &lt;!&ndash;</div>&ndash;&gt;
+                                    &lt;!&ndash;<div class="col-md-6"><label>Numeric Value</label><input type="text" placeholder="Enter Mapping Value"&ndash;&gt;
+                                    &lt;!&ndash;class="form-control">&ndash;&gt;
+                                    &lt;!&ndash;</div>&ndash;&gt;
+                                    &lt;!&ndash;</div>&ndash;&gt;
+                                </div>
+                                <div class="col-md-3">
+
+                                    <div class="form-group">
+                                        <label>Functions</label>
+                                        <div class="field-list" style="background-color: white; border:1px solid lightgrey; height: 113px; overflow: scroll">
+                                            <ul >
+                                                <li ng-repeat="func in fldCtrl.computeFunctions"ng-model="fldCtrl.func" ng-click="fldCtrl.addFunc(func)">
+                                                    {{func.name}}</li>
+                                                &lt;!&ndash;ng-class="{'': !isActive, 'selected': isActive}"&ndash;&gt;
+                                                &lt;!&ndash;ng-init="isActive = false"&ndash;&gt;
+                                                &lt;!&ndash;ng-click="isActive = !isActive"&ndash;&gt;
+
+                                            </ul>
+                                        </div>
+                                        <button type="button" class="btn btn-default btn-xs pull-right m-t-xs btn-outline">Insert Function</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 form-group">
+                                    <label>Expression</label>
+                                    <div style="background-color: white; border:1px solid lightgrey; padding:2px; height: 100px;overflow: scroll">
+                                        <div style="display: inline;" ng-repeat="e in fldCtrl.cField.expressionList track by $index">
+                                            <span ng-if="e.type == 'function'" style="color: #d77329;">{{e.name}}</span>
+
+                                            &lt;!&ndash; Droppable area&ndash;&gt;
+                                            <div ng-if="e.type == 'param' || e.type=='field' " style="padding: 1px;border: 1px solid #e7eaec;border-radius: 2px;margin: 3px; display: inline;"
+                                                 data-drop="true"
+                                                 jqyoui-droppable="{index: {{$parent.$index}},onDrop:'fldCtrl.dropCallback(e,{{$parent.$index}})'}"
+                                                 data-ng-model="e.field">
+
+                                                &lt;!&ndash; Dropped element&ndash;&gt;
+                                            <span class="label label-info" style="font-size: 10px;
+                                                                  font-weight: 300;
+                                                                  text-transform: uppercase;
+                                                                  text-decoration: underline;
+                                                                  margin: 0 2px;"
+                                                  ng-show="e.field.fieldName">
+                                                <a  ng-click="fldCtrl.remFromExpression(e)" style="color: white;padding-right: 5px;" >
+                                                    <i class="fa fa-times-circle-o"></i>
+                                                </a>
+                                                <span>{{e.field.fieldName}}</span>
+                                            </span>
+                                                &lt;!&ndash; end of Dropped element&ndash;&gt;
+
+                                                &lt;!&ndash; User input if element not dropped&ndash;&gt;
+                                                <input placeholder="Insert Field here"
+                                                       ng-model="e.name"
+                                                       ng-hide="e.field.fieldName"
+                                                       ng-disabled="e.type == 'function'"
+                                                       ng-change="fldCtrl.inputChanged(this)"
+                                                       style="background-color:transparent!important; font-size:14px;
+                                                               border: none;
+                                                               outline: 0;
+                                                               /*height: 1.666666em;*/
+                                                               /*margin: 4px -10px;*/">
+                                                &lt;!&ndash; End of User input&ndash;&gt;
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button class="btn btn-white btn-sm" type="submit">Cancel</button>
+                                    <button class="btn btn-primary btn-sm" type="submit">Add Field</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>-->
+            <!--COMPUTED FIELD-->
+                <div class="well">
+                    <ul data-ng-model="parentCtrl.DS.fields" >
+                        <li ng-repeat="selField in fldCtrl.selFields track by $index" >{{selField.fieldName}}</li>
+                        <li class="placeholder" ng-hide="fldCtrl.selFields.length>0">Select fields to add to dataset</li>
+                    </ul>
+                </div>
+                <!--<div id="testarea"class="well" data-drop="true" data-jqyoui-options ng-model="fldCtrl.list2" jqyoui-droppable style='height:50px;'>
+                    <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="fldCtrl.list2" jqyoui-draggable ng-hide="!fldCtrl.list2.title">{{fldCtrl.list2.title}}</div>
+                </div>-->
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="pull-right">
+        <a ng-click="fldCtrl.cancel()" class="btn btn-primary btn-sm ">Cancel</a>
+        <a ng-click="fldCtrl.next()" class="btn btn-primary btn-sm ">Next</a>
+    </div>
+
+
+</fieldset>

@@ -1,0 +1,27 @@
+<fieldset>
+    <h5>Select an activity to load data to</h5>
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div>
+                <select class="form-control m-b" name="activitySelect" id="activitySelect"
+                        data-ng-model="vm.selectedActivity" ng-options="activity.name for activity in activities">
+                <!--<option value="" disabled selected style="display: none;">Select Activity</option>
+                <option ></option>-->
+                </select>
+            </div>
+
+            <div ng-if="vm.selectedActivity!=null">
+                <h5>Associated Datasets</h5>
+                <div ng-repeat="ds in vm.selectedActivity.datasets">
+                    <label> <input required icheck type="radio" name="radioDSselect" ng-model="vm.selectedDataset" ng-value="ds"> {{ds.name}}&nbsp;&nbsp;({{ds.domainId}}) </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a ng-click="goToStep2()" data-ng-disabled="!vm.selectedDataset || !vm.selectedActivity" class="btn btn-primary pull-right">Next</a>
+    <a ui-sref="datastage.files"  class="btn btn-primary ">Cancel</a>
+
+</fieldset>

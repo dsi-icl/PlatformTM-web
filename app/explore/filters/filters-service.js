@@ -90,7 +90,7 @@ function filtersService($rootScope, $http, $q, ngAppConfig) {
     return filtersServiceFactory;
 }
 
-angular.module('eTRIKSdata.explorer')
+angular.module('biospeak.explorer')
     .factory('filtersService',['$rootScope','$http','$q','ngAppConfig', filtersService])
 
 

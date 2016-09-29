@@ -14,7 +14,7 @@
 
         var _getDirContent = function (projectId,dir) {
             console.log(!dir)
-            if(!dir) dir="top"
+            //if(!dir) dir="top"
 
             dir = dir.replace("/","_")
 
@@ -22,7 +22,7 @@
 
             console.log(window.encodeURIComponent(serviceBase + 'api/files/project/'+projectId+'/uploadedFiles/'+dir));
             return $http({
-                url: serviceBase + 'api/files/project/'+projectId+'/uploadedFiles/'+dir,
+                url: serviceBase + 'api/files/projects/'+projectId+'/uploadedFiles/'+dir,
                 method: 'GET'
             }).then(
                 function (response) {
@@ -33,10 +33,10 @@
             )
         };
 
-        var _getDirectories= function (studyId) {
+        var _getDirectories= function (projectId) {
 
             return $http({
-                url: serviceBase + 'api/files/project/'+studyId+'/directories/',
+                url: serviceBase + 'api/files/projects/'+projectId+'/directories/',
                 method: 'GET'
             }).then(
                 function (response) {
@@ -47,17 +47,11 @@
             )
         };
 
-        var _createDirectory= function (studyId,dirname) {
+        var _createDirectory= function (projectId,dirname) {
                 console.log('inside service',dirname)
-            /*$http.post(serviceBase + 'api/files/project/'+studyId+'/createdir/',dirname)
-                .then(function (response) {
-                    console.log("Inside http get success",response)
-                    return {
-                        files: (response.data)
-                    }
-                })*/
+
             return $http({
-                url: serviceBase + 'api/files/project/'+studyId+'/createdir/',
+                url: serviceBase + 'api/files/projects/'+projectId+'/createdir/',
                 method: 'POST',
                 data: { name: dirname }
 
@@ -73,7 +67,7 @@
         var _getDataTablePreview = function(fileId){
             console.log(fileId);
             var deferred = $q.defer();
-            $http.get(serviceBase + 'api/files/project/'+fileId+'/preview/'+fileId)
+            $http.get(serviceBase + 'api/files/'+fileId+'/preview/')
                 .success(function (response) {
                     tableHeaders = response.header;
                     DTdata = response.data;

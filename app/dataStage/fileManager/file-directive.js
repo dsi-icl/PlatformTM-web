@@ -8,25 +8,25 @@ function fileDirective(){
         replace: true,
         scope: {
             fileInfo: '=',
-            updateFn: '&',
+            dblClickFn: '&',
             clickFn: '&'
         },
         template:
-        '<div class="file-box"> ' +
+        '<div class="file-box outer"> ' +
             '<div class="file"> ' +
-                '<a ng-click="clickFn(fileInfo)">' +
+                '<a ng-dblclick="dblClickFn(fileInfo)" ng-click="clickFn(fileInfo)" ng-class="{ \'active\': fileInfo.selected }">' +
 
-                    '<div ng-hide="fileInfo.isDirectory" class="pull-right" ">'+
-                        '<input  icheck type="checkbox" ng-change="updateFn(fileInfo)" ng-model="fileInfo.selected" >' +
-                    '</div>'+
-                    '<span ng-hide="fileInfo.isDirectory" class="label pull-left" ng-class="{\'label-warning\': fileInfo.state==\'Modified\'}" >{{fileInfo.state}}</span>'+
+                    // '<div ng-hide="fileInfo.isDirectory" class="pull-right" ">'+
+                    //     '<input  icheck type="checkbox" ng-change="updateFn(fileInfo)" ng-model="fileInfo.selected" >' +
+                    // '</div>'+
+                     '<span ng-hide="fileInfo.isDirectory" style="position:fixed" class="label pull-left" ng-class="{\'label-warning\': fileInfo.state==\'UPDATED\'}" >{{fileInfo.state}}</span>'+
                     '<span class="corner"></span> ' +
                     '<div class="icon"> ' +
 
                         '<i ng-hide="fileInfo.isDirectory" class="fa fa-file-text-o"></i> ' +
                         '<i ng-hide="!fileInfo.isDirectory"class="fa fa-folder"></i> '+
                     '</div> ' +
-                    '<div class="file-name small">{{fileInfo.fileName}}<br/> ' +
+                    '<div class="file-name ">{{fileInfo.fileName}}<br/> ' +
                         '<small>Last modified: {{fileInfo.dateLastModified}}</small> ' +
                     '</div> ' +
                 '</a> ' +

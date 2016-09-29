@@ -7,7 +7,7 @@ function config($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('datastage', {
             abstract: true,
-            url: "/{studyId}",
+            url: "/{projectId}",
             templateUrl: "layout/content.html"
         })
         .state('datastage.files', {
@@ -33,25 +33,16 @@ function config($stateProvider, $urlRouterProvider) {
                 loadPlugin: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
+                            serie:true,
+                            files: ['lib/plugins/iCheck/custom.css',
+                                'lib/plugins/iCheck/icheck.min.js',
+                                'lib/plugins/angular-xeditable/js/xeditable.min.js',
+                                'lib/plugins/angular-xeditable/css/xeditable.css']
                         }
                     ]);
                 }
             }
         })
-
-        //.state('datastage.files.list', {
-        //    url: "/{dir}",
-        //    templateUrl: "dataStage/fileManager/fileList.html",
-        //    controller : "fileListController as fileListCtrl",
-        //    resolve: {
-        //        loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-        //            return $ocLazyLoad.load([
-        //                'dataStage/fileManager/fileList-controller.js'
-        //            ]);
-        //        }]
-        //    }
-        //})
 
         .state('datastage.files.view', {
             url: "/view/{fileId}",
@@ -89,8 +80,8 @@ function config($stateProvider, $urlRouterProvider) {
 
         .state("datastage.upload", {
             url: "/upload/{dir}",
-            onEnter: ['$stateParams', '$state', '$modal', 'fileService',function($stateParams, $state, $modal, fileService) {
-                $modal.open({
+            onEnter: ['$stateParams', '$state', '$uibModal', 'fileService',function($stateParams, $state, $uibModal, fileService) {
+                $uibModal.open({
                     templateUrl: "dataStage/upload/upload.html",
                     resolve: {
                         loadController:['$ocLazyLoad',function($ocLazyLoad){
@@ -106,7 +97,7 @@ function config($stateProvider, $urlRouterProvider) {
                                 //vm.files = data.files;
                                 //console.log(data)
                                 //$scope.vm = vm;
-                            $state.go('datastage.files',{studyId:$stateParams.studyId, dir:$stateParams.dir})
+                            $state.go('datastage.files',{projectId:$stateParams.projectId, dir:$stateParams.dir})
                             })
                     }, function () {
                         console.info('Modal dismissed at: ' + new Date());
@@ -115,41 +106,6 @@ function config($stateProvider, $urlRouterProvider) {
 
             }]
         });
-
-        /*.state('datastage.wizard',{
-         url: "/wizard",
-         templateUrl: "/import_wizard.html",
-         controller: "/wizard/importController"//,
-         /!*resolve: {
-         loadPlugin: function ($ocLazyLoad) {
-         return $ocLazyLoad.load([
-         {
-         files: ['lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js']
-         }
-         ]);
-         }
-         }*!/
-         })
-
-         .state('datastage.wizard.step_one', {
-         url: '/step_one',
-         templateUrl: '/step_one.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })
-         .state('wizard.step_two', {
-         url: '/step_two',
-         templateUrl: '/step_two.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })
-         .state('wizard.step_three', {
-         url: '/step_three',
-         templateUrl: '/step_three.html'/!*,
-         data: { pageTitle: 'Wizard form' }*!/
-         })*/
-
-
-
-
 }
 
 angular
