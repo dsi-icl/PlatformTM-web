@@ -5,10 +5,11 @@
                     <h5>Loading Progress</h5>
                 </div>
                 <div class="ibox-content">
-                    <h2 ng-if="!loadedDataset">Loading Dataset ...</h2>
-                    <h2 ng-if="loadedDataset && !obsExtracted">Creating Descriptors ...</h2>
+                    <h2 ng-if="!loadedDataset && !loadingFailed">Loading Dataset ...</h2>
+                    <h2 ng-if="loadedDataset && !obsExtracted && !loadingFailed">Creating Descriptors ...</h2>
+                    <h2 ng-if="loadingFailed">Loading Failed!</h2>
                     <h2 ng-if="loadedDataset && obsExtracted">Done</h2>
-                    <div ng-hide="loadedDataset && obsExtracted"class="spiner-example">
+                    <div ng-hide="(loadedDataset && obsExtracted) || loadingFailed"class="spiner-example">
                         <div class="sk-spinner sk-spinner-three-bounce">
                             <div class="sk-bounce1"></div>
                             <div class="sk-bounce2"></div>

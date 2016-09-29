@@ -483,7 +483,7 @@ nav a {
 .plots-view {
     /*min-height: 280px;*/
     background-color: #F1F2F2;
-    padding:20px;
+    /*padding:20px;*/
     overflow: scroll;
 
     /*height: 300px;*/
@@ -512,16 +512,17 @@ nav a {
     max-height: 280px;
     padding: 20px;
     overflow: scroll;
-    border-top: 1px solid #ABDDE9;
-    margin: 10px;
+    /*border-top: 1px solid #ABDDE9;*/
+    /*margin: 10px;*/
     border-bottom: 10px solid white;
+
 }
 
 .models-list {
     padding-top: 5px;
 }
 
-.models-list ul:first-child{
+.models-list > ul:first-child{
     list-style: none;
     display: table;
     width: 100%;
@@ -532,7 +533,7 @@ nav a {
     display: block;;
 }
 
-.models-list ul li{
+.models-list > ul li{
     float: none;
     margin: .5em;
     text-align: center;
@@ -716,7 +717,7 @@ nav a {
 }
 
 .dc-chart .x-axis-label{
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-size: 0.8em;
     color: #35495E;
 }
@@ -724,9 +725,14 @@ nav a {
 .dc-chart .pie-slice {
     fill: white;
     cursor: pointer;
-    font-size: 0.6em;
+    font-size: 0.8em;
     font-weight: bold;
 }
+
+.fa {
+    /*font-size: 1.7em;*/
+}
+
 
 .dc-data-table {
     color: #666;
@@ -734,7 +740,7 @@ nav a {
 }
 .dc-data-table .dc-table-head{
     padding: 10px;
-    background-color: rgba(0, 153, 188, 0.33)
+    background-color: #f5f5f5
 }
 .dc-data-table .dc-table-group
 {
@@ -742,18 +748,21 @@ nav a {
 }
 .chart-title {
     text-transform: uppercase;
-    font-size: .9em;
-    padding-top: 5px;
-    font-family: sans-serif;
-    font-weight: 900;
-    color: #35495E;
-    padding-left: 10px;
+    /*font-size: .8em;*/
+    /*padding-top: 5px;*/
+    /*font-family: sans-serif;*/
+    /*font-weight: 900;*/
+    /*color: #35495E;*/
+    /*padding-left: 10px;*/
 }
 
-.chart-title .reset, .chart-title .filter {
-    font-size: .7em;
-    padding-left: 10px;
+.obs-chart .reset, .obs-chart .filter {
+    /*font-size: .7em;*/
+    /*padding-left: 10px;*/
+    /*float: right;*/
     /*display: none;*/
+    color: #d77329;
+    font-weight: 400;
 }
 
 .img-dashboard{

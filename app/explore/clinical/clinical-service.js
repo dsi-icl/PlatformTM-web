@@ -7,11 +7,9 @@ function ClinicalDataService($http,$q,ngAppConfig){
         var serviceBase = ngAppConfig.apiServiceBaseUri;
 
         return {
-            getObservations: function(studyId,observations) {
-                console.log(angular.toJson(observations))
-
+            getObservations: function(projectId,observations) {
                 return $http({
-                    url:serviceBase+'api/projects/'+studyId+'/data/clinical/observations',
+                    url:serviceBase+'api/projects/'+projectId+'/data/clinical/observations',
                     method:'POST',
                     data: angular.toJson(observations)
                 })

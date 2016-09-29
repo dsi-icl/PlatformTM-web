@@ -12,7 +12,7 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,$q){
         $scope.vm.show="table";
 
         $scope.chartingOpts = {
-            projectId : $stateParams.studyId,
+            projectId : $stateParams.projectId,
             chartContainerId : "assay-plots",
             chartGroup : "assay",
             DCchartService : "DCchartingService",
@@ -22,11 +22,11 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,$q){
         };
 
 
-        var projectId = $stateParams.studyId;
+        var projectId = $stateParams.projectId;
         assayDataService.getAssays(projectId).then(function(data){
             var assays = data.assays
 
-            console.log(assays)
+            //console.log(assays)
 
             if(assays!='null'){
                 angular.forEach(assays, function(assay) {
@@ -57,7 +57,7 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,$q){
 
                 promise.then(function(){
                     //This is run after all of your HTTP requests are done
-                    console.log("DONE")
+                    //console.log("DONE")
                 })
 
                 $scope.vm.assays = assays;

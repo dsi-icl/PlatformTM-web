@@ -2,9 +2,10 @@
  * Created by iemam on 17/05/2016.
  */
 'use strict'
-function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService,$timeout){
+function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
     var vm = this;
     vm.projectId = $stateParams.projectId
+    vm.assayId = $stateParams.assayId;
     console.log($stateParams.projectId)
 
     vm.templates={}
@@ -38,7 +39,7 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService,$timeo
     if($stateParams.assayId==0){
         console.log("New Assay")
         vm.assay = new AssayConfigService.getAssayResource();
-        vm.assay.ProjectAcc = $stateParams.projectId;//"Study1"
+        vm.assay.ProjectId = $stateParams.projectId;//"Study1"
         vm.assay.isNew = true;
         vm.assay.status = "New";
         vm.assay.datasets = {};
@@ -61,29 +62,6 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService,$timeo
             updateTerms();
 
         })
-        // ActivityResource.get({ activityId: $stateParams.activityId }, function(response){
-        //     model.activity = response;
-        //     model.activity.isNew = false;
-        //
-        //
-        //     //$scope.vmodel.activity = model.activity;
-        //     vm.activity = model.activity;
-        //
-        //     console.log(vm.activity)
-        //     console.log(model.activity)
-        //     $timeout(function(){
-        //         //console.log($('#ds_template_tbl'))
-        //         $('#ds_template_tbl').trigger('footable_redraw');
-        //     }, 1000);
-        //     DatasetResource.query(function(response){
-        //         vm.clinicaldomains = response;
-        //     })
-        //
-        // });
-        //temp
-        /*$http.get('../data/activity.json').success(function(response){
-         $scope.model.activity = response;
-         })*/
     }
     
     vm.showTemplate = function(domainId,dsType){
@@ -91,16 +69,7 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService,$timeo
             vm.selectedDatasets[dsType] = response;
             vm.selectedDatasets[dsType].isNew = true;
             vm.selectedDatasets[dsType].activityId = $stateParams.assayId;
-            vm.selectedDatasets[dsType].projectStrAcc = $stateParams.studyId;
-            //vm.sampleDS.projectId = model.activity.projectId;
-            //console.log(vm.selectedDatasets[dsType])
-            //vm.selectedDatasets[dsType] = true;
-            //vm.loaded = true;
-            // $('#bs_template_tbl').trigger('footable').redraw();
-            //vm.activity.datasets.push(model.dataset);
-            // $timeout(function(){
-            //    
-            // }, 1000);
+            vm.selectedDatasets[dsType].projectStrAcc = vm.projectId;
 
         })
     }

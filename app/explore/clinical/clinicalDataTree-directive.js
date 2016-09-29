@@ -11,7 +11,7 @@ angular.module('biospeak.explorer')
               //console.log("obs browser",$scope)
             },
             template:
-            '<div class="clinical-tree row ">'+
+            '<div class="clinical-tree ">'+
                 '<cl-tree-class ng-repeat="class in clinicalObservations" class="class" ></cl-tree-class>'+
             '</div>',
             link: function(scope, element, attrs){
@@ -28,11 +28,13 @@ angular.module('biospeak.explorer')
                 //console.log("obs class",$scope.chartingOpts)
             },
             template:
-            '<div class="col-md-6">'+
-                '<div class="ibox">'+
+            '<div class="">'+
+                '<div class="">'+
                     '<div class="ibox-content">'+
-           // '<button ng-click="open2()" class="pull-right btn btn-outline btn-success dim" type="button"><i class="fa fa-plus-circle"></i></button>'+
                         '<h3>{{class.class}}</h3>'+
+
+          /*  '<div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">'+
+           ' <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>'+*/
 
                         '<ul class="list-group ">'+
                             '<cl-tree-obs-grp ng-repeat="domain in class.domains" ' +
@@ -64,11 +66,13 @@ angular.module('biospeak.explorer')
             template:
             '<li class="list-group-node">'+
                 '<div class="btn-group btn-block">'+
-                    '<button class="btn btn-sm node-toggle" data-toggle="collapse" href="#{{group.code}}">'+
+                    '<button style="outline:none;" class="btn btn-sm node-toggle" data-toggle="collapse" href="#{{group.code}}">'+
                     '<span class="caret"></span>'+
                     '</button>'+
+           /* ' <input  icheck type="checkbox"  ng-model="var.isSelected" >'+*/
                     '<div class="list-group-item-text col-md-11" ' + 'id="grp_{{group.code}}"'+ '>'+
-                        '<span>{{group.name}}</span>'+//' <span>({{group.count}})</span>'+
+                        '<div class="pull-left" ng-if="group.isSelectable"> <input  icheck type="checkbox"  ng-model="var.isSelected" ></div>'+
+                        '<div><span>{{group.name}}</span></div>'+//' <span>({{group.count}})</span>'+
                     '</div>'+
                 '</div>'+
                 '<ul id="{{group.code}}"  class="list-group collapse">'+
@@ -97,16 +101,10 @@ angular.module('biospeak.explorer')
             scope:true,
             template:
             '<div>' +
-                //'val="{{obs.code}}" ' +
-                //'obsid="{{obs.id}}" ' +
-                //'domain="{{obs.domainCode}}"'+
-                //'active="{{isActive}}"'+
-                //'obs="obs"  '+
-                //'charting-opts="chartingOpts">'+
                 '<a  charting-button id="obs_{{obs.id}}" ' +
-                    'obs="obs.defaultObservation" charting-opts="chartingOpts" style="color: #222f3f;" ' +
+                    'obs="obs.defaultObservation" quals="obs.qualifiers" charting-opts="chartingOpts" style="color: #222f3f;" ' +
                     'ng-init="obs.defaultObservation.isActive = false" ng-click="obs.defaultObservation.isActive = !obs.defaultObservation.isActive"> ' +
-                    '<i class="fa fa-toggle-off p-xs" ></i> <span>{{obs.defaultObservation.o3}}</span>' +
+                    '<i style="color:#23c6c8" class="fa fa-toggle-off fa-2x p-xs" ></i> <span>{{obs.defaultObservation.o3}}</span>' +
                 '</a>'+
 
                 '<cl-option-menu obs="obs" charting-opts="chartingOpts"  class="pull-right"></cl-option-menu>'+
@@ -138,12 +136,12 @@ angular.module('biospeak.explorer')
                 //console.log('menu scope',$scope.obs)
             },
             template:
-            '<div class="dropdown slider-control" uib-dropdown>'+
+            '<div style="top: 10px;margin-right: 25px;" class="dropdown slider-control" uib-dropdown>'+
                 '<a class="dropdown-toggle" href uib-dropdown-toggle>'+
                     '<i class="fa fa-ellipsis-v"></i>'+
                 '</a>'+
                 '<ul class=" dropdown-menu dropdown-menu-right plotting-options"> ' +
-                    '<li class="dropdown-header">Chart Value for {{obs.code}}</li>'+
+                    '<li class="dropdown-header">Chart Value for {{obs.o3}}</li>'+
                     /*'<li ng-repeat="q in obs.qualifiers">' +
                         '<div class="checkbox">' +
                             '<input id="checkbox1" dc-chart-slider-control qualifier={{q}} type="checkbox" checked>' +
@@ -154,6 +152,7 @@ angular.module('biospeak.explorer')
                         '<div ng-repeat="var in obs.qualifiers" class="checkbox">'+
                             '<input id="checkbox_{{var.id}}" type="checkbox" ' +
                                     'charting-button  obs="var"  ' +
+                                    'ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive" ' +
                                     'charting-opts="chartingOpts" >' +
                             '<label for="checkbox_{{var.id}}">{{var.qO2}}</label>' +
                         '</div>' +

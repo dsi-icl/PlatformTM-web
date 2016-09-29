@@ -2,13 +2,13 @@
     function uploadController($scope,$state, $stateParams, FileUploader, $uibModalInstance, ngAppConfig){
 
         var serviceBase = ngAppConfig.apiServiceBaseUri;
-        var studyId = $stateParams.studyId
+        var projectId = $stateParams.projectId
 
 
-        console.log(serviceBase+'api/files/project/'+studyId+'/upload/'+$stateParams.dir)
+        console.log(serviceBase+'api/files/projects/'+projectId+'/upload/'+$stateParams.dir)
 
         var uploader = $scope.uploader = new FileUploader({
-            url: serviceBase+'api/files/project/'+studyId+'/upload/'+$stateParams.dir
+            url: serviceBase+'api/files/projects/'+projectId+'/upload/'+$stateParams.dir
         });
 
         $scope.ok = function () {

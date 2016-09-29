@@ -18,19 +18,15 @@ function ProjectService($resource, ngAppConfig) {
             method: 'GET',
             url : serviceBase+'api/projects/:projectId/activities',
             isArray : true
-            /*params:{studyId}*/
         },
         getProjectByAccession:{
             method: 'GET',
             url : serviceBase+'api/projects/accession/:projectId/',
             // isArray : true
-            /*params:{studyId}*/
         },
         getProjectById:{
             method: 'GET',
-            url : serviceBase+'api/projects/id/:projectId/',
-            // isArray : true
-            /*params:{studyId}*/
+            url : serviceBase+'api/projects/id/:projectId/'
         },
         get:{
             method:'GET',

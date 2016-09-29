@@ -45,8 +45,9 @@ function stepOneController($scope, $state, $stateParams, $timeout, exportService
 
     //console.log(vm.dataLoaded);
 
-    var projectId = $stateParams.studyId
+    var projectId = $stateParams.projectId
     var datasetId = $stateParams.datasetId
+    var dataset;
 
     // vm.selFields = $scope.$parent.parentCtrl.DS.fields;
 
@@ -67,7 +68,7 @@ function stepOneController($scope, $state, $stateParams, $timeout, exportService
     exportService.fetchDataset(datasetId,projectId).then(function(ds){
         console.log("Back and setting vm.selFields to ", ds.fields)
         vm.selFields = ds.fields;
-        
+        dataset = ds;
     })
 
     exportService.getDataFields(projectId).then(function (data) {
@@ -156,13 +157,13 @@ function stepOneController($scope, $state, $stateParams, $timeout, exportService
         }
         $scope.$apply();
     };
-
-
     vm.clearFields = function () {
-        $scope.$parent.parentCtrl.DS.fields = [];
-        $scope.$apply();
+        //$scope.$parent.parentCtrl.DS.fields = [];
+        //$scope.$apply();
         //$scope.$parent.parentCtrl.treeInstance.jstree(true).deselect_all();
-        vm.treeInstance.jstree(true).deselect_all();
+        //vm.treeInstance.jstree(true).deselect_all();
+        vm.selFields = [];
+        dataset.fields = [];
     };
 
 
@@ -171,71 +172,19 @@ function stepOneController($scope, $state, $stateParams, $timeout, exportService
 
         //$scope.$parent.parentCtrl.DS.fields = vm.selFields;
 
-        console.log($scope.$parent.parentCtrl.DS);
+        //console.log($scope.$parent.parentCtrl.DS);
 
-        exportService.updateLocalDS($scope.$parent.parentCtrl.DS).then(function () {
+        exportService.updateLocalDS(dataset).then(function () {
+            console.log("saving fields", dataset.fields);
             $state.go('export.wizard.filters', {
                 datasetId: datasetId,
                 projectId: projectId
             });
         });
-
-
-        // var criteria = [];
-        // var filters = {}
-        //
-        //
-        // /**
-        //  * *******************Create a list of Criterion for each distinct O3
-        //  */
-        //
-        // angular.forEach(vm.selFields,function(obj){
-        //     var criterion
-        //     if(filters[obj.o3Id]){
-        //         criterion = filters[obj.o3Id]
-        //     }
-        //     else{
-        //         criterion = {}
-        //         criterion.o3 = obj.o3Id
-        //         criterion.exactFilters = [];
-        //         criterion.rangeFilters = [];
-        //         criterion.projection = [];
-        //         criterion.exactFilters.push({"field": obj.o3VarName, "values":[obj.o3Name]})
-        //         criterion.exactFilters.push({"field": "DOMAIN", "values":[obj.domainCode]})
-        //         if(obj.groupName)
-        //             criterion.exactFilters.push({"field": obj.groupVarName, "values":[obj.groupName]})
-        //
-        //         filters[obj.o3Id] = criterion
-        //         criteria.push(criterion)
-        //     }
-        //
-        //
-        //     if(criterion.projection.indexOf(obj.o3Name+'_'+obj.qO2Name) == -1)
-        //         criterion.projection.push(obj.o3Name+'_'+obj.qO2Name)
-        //
-        // })
-        // console.log(criteria);
-        //
-        // /**
-        //  * *************************************************
-        //  */
-        //
-        //
-        // //datasetService.saveFields(vm.selFields);
-        //
-        // var user = "lepianiste@gmail.com"
-        // datasetService.saveCriteria(user,criteria)
-        //     .then(function(){
-        //         $state.go('export.wizard.filters',{
-        //             datasetId: 0,
-        //             projectId: 'P-BVS'
-        //         });
-        // })
-
     }
     vm.cancel = function () {
-        //datasetService.clearCriteria();
-        $state.go('export.datasets', {studyId: projectId})
+        exportService.removeLocalDS(dataset);
+        $state.go('export.datasets', {projectId: projectId})
     }
 
     /*JSTREE FUNCTIONS*/

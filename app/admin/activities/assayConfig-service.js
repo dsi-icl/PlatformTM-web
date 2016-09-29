@@ -69,17 +69,7 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
             update:{
                 method: 'PUT',
                 params: {assayId: '@id'}
-            }/*,
-             getActivitiesForStudy:{
-             method: 'GET',
-             url : serviceBase+'api/studies/:studyId/activities',
-             isArray : true
-             params:{studyId}
-             },
-             get:{
-             method:'GET',
-             url: 'http://rachmaninoff.local:8080/api/activities/:activityId'
-             }*/
+            }
         });
 
     var _activityResource = $resource(serviceBase+'api/activities/:activityId',{},{
@@ -87,16 +77,11 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
             method: 'PUT',
             params: {activityId: '@id'}
         },
-        getActivitiesForStudy:{
+        getProjectActivities:{
             method: 'GET',
-            url : serviceBase+'api/studies/:studyId/activities',
+            url : serviceBase+'api/projects/:projectId/activities',
             isArray : true
-            /*params:{studyId}*/
-        }/*,
-         get:{
-         method:'GET',
-         url: 'http://rachmaninoff.local:8080/api/activities/:activityId'
-         }*/
+        }
     });
     
     var _datasetResource = $resource(serviceBase+'api/Dataset/:datasetId',{},{

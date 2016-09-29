@@ -16,7 +16,7 @@ function previewController($scope, $state, $stateParams, DTOptionsBuilder,export
     //    dataLoaded : false,
     //    dtColumns :[]
     //}
-    var projectId = $stateParams.studyId;
+    var projectId = $stateParams.projectId;
     var datasetId = $stateParams.datasetId;
 
 
@@ -53,16 +53,23 @@ function previewController($scope, $state, $stateParams, DTOptionsBuilder,export
 
 
     vm.cancel = function(){
-        exportService.clearCriteria();
-        $state.go('export.datasets',{studyId:projectId})
+        exportService.fetchDataset(datasetId,projectId).then(function(ds) {
+            exportService.removeLocalDS(ds);
+            $state.go('export.datasets',{projectId:projectId})
+        });
+
     }
     vm.prev = function(){
-        //exportService.clearCriteria();
-        $state.go('export.wizard.filters',{studyId:projectId})
+        $state.go('export.wizard.filters',{
+            datasetId: datasetId,
+            projectId: projectId
+        });
     }
     vm.next = function(){
-        //exportService.clearCriteria();
-        $state.go('export.wizard.info',{studyId:projectId})
+        $state.go('export.wizard.info',{
+            datasetId: datasetId,
+            projectId: projectId
+        });
     }
 
 }

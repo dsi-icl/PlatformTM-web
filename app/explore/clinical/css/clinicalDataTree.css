@@ -76,7 +76,8 @@
     line-height: 23px;
     text-align: left;
     text-indent: 2px;
-    border-bottom: 1px aliceblue solid;
+    border-bottom: 1px rgba(0, 175, 188, 0.24) solid;
+    float: none;
 }
 
 .plotting-options li{

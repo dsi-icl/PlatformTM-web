@@ -7,11 +7,11 @@ function config($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('export', {
             abstract: true,
-            url: "/{studyId}/export",
+            url: "/{projectId}/export",
             templateUrl: "layout/content.html",
             resolve: {
                 loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    console.log("loading service");
+                    // console.log("loading service");
                     return $ocLazyLoad.load('export/export-service.js');
                 }]
             }
@@ -22,7 +22,7 @@ function config($stateProvider, $urlRouterProvider) {
             controller: "exportListCtrl as vm",
             resolve: {
                  loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                     console.log("loading service");
+                     // console.log("loading service");
                      return $ocLazyLoad.load('export/export-service.js');
                  }],
                  loadController: ['$ocLazyLoad', function ($ocLazyLoad) {

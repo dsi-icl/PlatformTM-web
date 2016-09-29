@@ -12,20 +12,20 @@
         vm.filters.dataLoaded = false;
 
 
-        var projectId = $stateParams.studyId;
+        var projectId = $stateParams.projectId;
         var datasetId = $stateParams.datasetId;
         vm.dsRetrieved = false;
 
         vm.projectId = projectId;
-        vm.DS ={}
+        /*vm.DS ={}
         
-        /*if(datasetId == 0){
+        if(datasetId == 0){
             console.log("new dataset")
             vm.DS = new exportService.getMyDatasetResource();
             vm.DS.fields = [];
             vm.DS.filters = [];
             vm.DS.id=0;
-            vm.DS.projectAcc = projectId
+            vm.DS.projectId = projectId
             vm.DS.type = "Clinical Data";
             vm.DS.isNew = true;
         }else{

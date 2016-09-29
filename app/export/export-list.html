@@ -23,7 +23,7 @@
                     <h5>My Datasets</h5>
 
                     <div class="ibox-tools">
-                        <a ui-sref="export.wizard.fields({studyId:vm.projectId,datasetId:0})" class="btn btn-primary btn-xs">Add New Dataset</a>
+                        <a ui-sref="export.wizard.fields({projectId:vm.projectId,datasetId:0})" class="btn btn-primary btn-xs">Add New Dataset</a>
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -51,8 +51,8 @@
                                     <!--</td>-->
                                     <td class="project-actions">
                                         <a ng-click="ds.collapse = !ds.collapse" class="btn btn-white btn-sm"><i class="fa fa-info"></i> Details </a>
-                                        <a ui-sref="export.wizard.fields({studyId:vm.projectId,datasetId:ds.id})" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
-                                        <a ui-sref="export.wizard.preview({studyId:vm.projectId,datasetId:ds.id})" class="btn btn-white btn-sm"><i class="fa fa-cloud-download"></i> Download </a>
+                                        <a ui-sref="export.wizard.fields({projectId:vm.projectId,datasetId:ds.id})" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a ui-sref="export.wizard.preview({projectId:vm.projectId,datasetId:ds.id})" class="btn btn-white btn-sm"><i class="fa fa-cloud-download"></i> Download </a>
                                     </td>
                                 </tr>
                             <tr ng-repeat-end>

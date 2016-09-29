@@ -45,35 +45,6 @@ function fileViewController($scope, $state, $stateParams, DTOptionsBuilder, file
         .withOption('scrollX', true)
 
 
-    //fileService.getDirectories($stateParams.studyId)
-    //    .then(function(data){
-    //        vm.dirs = data.files;
-    //        // console.log(data.files);
-    //        $scope.vm.dirs = data.files;
-    //
-    //        fileService.getContent($stateParams.studyId,$stateParams.dir)
-    //            .then(function(data){
-    //                vm.files = data.files;
-    //                //console.log(data)
-    //                $scope.vm = vm;
-    //
-    //            })
-    //
-    //
-    //    }).then(
-    //
-    //)
-
-
-
-    //$scope.createDirectory = function(){
-    //    console.log($scope.vm.newdir)
-    //    fileService.createDirectory($stateParams.studyId,$scope.vm.newdir)
-    //        .then(function(data){
-    //            $scope.vm.dirs = data;
-    //            $state.go('datastage.files',{dir:$scope.vm.newdir});
-    //        })
-    //}
 
 
 
@@ -82,7 +53,7 @@ function fileViewController($scope, $state, $stateParams, DTOptionsBuilder, file
         //TODO: consider storing these files in localstorage
         //console.log($scope)
         //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
-        $state.go('datastage.wizard.step_one',{studyId:$stateParams.studyId, selFiles: $scope.vm.selectedFiles})
+        $state.go('datastage.wizard.step_one',{studyId:$stateParams.projectId, selFiles: $scope.vm.selectedFiles})
     }
 
 

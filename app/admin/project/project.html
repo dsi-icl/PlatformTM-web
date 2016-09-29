@@ -371,7 +371,7 @@
                         <li ng-repeat="study in vm.project.studies" class="list-group-item" ng-class="{'first-item':$first}">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <a ui-sref="admin.study({studyId:study.id, projectId:study.projectAcc})"><strong>{{study.name}}</strong></a>
+                                    <a ui-sref="admin.study({studyId:study.id, projectId:study.projectId})"><strong>{{study.name}}</strong></a>
                                 </div>
                                 <div class="col-md-6">{{study.title}}</div>
                                 <div class="col-md-3"><span uib-tooltip="{{study.armNames}}" tooltip-placement="left" class="badge badge-info">{{study.armCount}} Cohorts</span></div>

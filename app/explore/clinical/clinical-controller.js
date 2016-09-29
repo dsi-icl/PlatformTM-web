@@ -15,7 +15,7 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
     
 
     $scope.chartingOpts = {
-        projectId : $stateParams.studyId,
+        projectId : $stateParams.projectId,
         chartContainerId : "clinical-plots",
         chartGroup : "clinical",
         DCchartService : "DCchartingService",
@@ -27,7 +27,7 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
     console.log("calling clinical tree")
     clinicalDataService.getClinicalDataTree($scope.chartingOpts.projectId)
         .then(function(data){
-            console.log("back")
+            //console.log("back")
             $scope.clinicalObservations = data.treeData;
             //console.log($scope.clinicalObservations)
             //$scope.getObsForAll();

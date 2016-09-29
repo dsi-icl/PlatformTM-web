@@ -26,20 +26,6 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
          }*/
     });
 
-    /*var _getUserDataset = function(datasetId){
-        return $http({
-            url: serviceBase + 'api/mydatasets/'+datasetId+'/',
-            method: 'GET'
-        }).then(
-            function (response) {
-                return {
-                    ds: (response.data)
-
-                }
-            }
-        );
-    }*/
-    
     var _getUserDatasets = function(projectId){
         return $http({
             url: serviceBase + 'api/mydatasets/projects/'+projectId+'/',
@@ -53,49 +39,10 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
         )
     }
 
-    /*var _saveUserDataset = function(DS){
-        return $http({
-            url: serviceBase + 'api/mydatasets',
-            method: 'POST',
-            data: angular.toJson(DS)
-        }).then(
-            function (response) {
-                return {
-                    ds: (response.data)
-                }
-            },
-            function (httpError) {
-                // translate the error
-                throw httpError.status + " : " +
-                httpError.data;
-            });
-    }*/
-
-    /*var _updateUserDataset = function(DS){
-        return $http({
-            url: serviceBase + 'api/mydatasets',
-            method: 'PUT',
-            params: {datasetId: '@id'},
-            data: angular.toJson(DS)
-        }).then(
-            function (response) {
-                return {
-                    ds: (response.data)
-                }
-            },
-            function (httpError) {
-                // translate the error
-                throw httpError.status + " : " +
-                httpError.data;
-            });
-    }*/
-
-
-
 
     var _fetchDataset = function(datasetId,projectId){
         var deferred = $q.defer();
-        localStorageService.remove('Dataset_0');localStorageService.remove('Dataset_17b12199-adec-4d6a-802b-c5372e0d7cb7');
+        //localStorageService.clearAll();
         var userDataset = localStorageService.get('Dataset_'+datasetId)
         console.log('USERDATASET',userDataset);
         if(!userDataset)
@@ -106,19 +53,19 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
                 userDataset.fields = [];
                 userDataset.filters = [];
                 userDataset.id=0;
-                userDataset.projectAcc = projectId
+                userDataset.projectId = projectId
                 userDataset.type = "Clinical Data";
                 userDataset.isNew = true;
+                userDataset.ownerId = "temp";
                 _updateLocalDS(userDataset).then(function(){
                     deferred.resolve(userDataset)
                 })
-
             }else{
                 _myDatasetResource.get({datasetId:datasetId},function(response) {
                     userDataset = response;
                     userDataset.isNew = false;
                     userDataset.dsRetrieved = true
-                    console.log("Retrieved User Dataset",userDataset.id);
+                    console.log("Retrieved User Dataset",userDataset);
                     _updateLocalDS(userDataset).then(function(){
                         deferred.resolve(userDataset)
                     })
@@ -126,10 +73,12 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
                 })
             }
         }else{
-            deferred.resolve(userDataset);
+
+            deferred.resolve(userDataset.dataset);
         }
         return deferred.promise;
-    }
+    };
+
     var _getDataFields = function(projectId){
         return $http({
             url: serviceBase + 'api/projects/'+projectId+'/export/datafields/',
@@ -145,38 +94,6 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
         return fields
     }
-
-/*    var _saveCriteria = function(user,criteria){
-        var deferred = $q.defer();
-        localStorageService.set('criteria', {
-            user: 'ibrahim',
-            criteria: criteria
-        });
-        deferred.resolve();
-        //console.log(fields);
-        return deferred.promise;
-    }
-
-    var _getCriteria = function(){
-        var deferred = $q.defer();
-        var criteria = localStorageService.get('criteria')
-        if(criteria)
-            deferred.resolve(criteria.criteria);
-        else deferred.resolve([])
-        console.log(criteria);
-        return deferred.promise;
-    }
-
-    var _clearCriteria = function(){
-        //var deferred = $q.defer();
-        localStorageService.remove('criteria')
-        console.log(localStorageService.get('criteria'))
-        //if(criteria)
-        //    deferred.resolve(criteria.criteria);
-        //else deferred.resolve([])
-        //console.log(criteria);
-        //return deferred.promise;
-    }*/
 
     var _getFieldFilter = function(projectId,field){
         return $http({
@@ -263,23 +180,93 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
     
     var _updateLocalDS = function(DS){
         var deferred = $q.defer();
-        localStorageService.set('Dataset_'+DS.id, {
-            user: 'user',
+        localStorageService.set("Dataset_"+DS.id, {
+            user: DS.ownerId,
             dataset: DS
         });
         deferred.resolve();
-        console.log("...saving ",'Dataset_'+DS.id);
+        console.log("...saving ",'Dataset_',DS);
         return deferred.promise;
     }
 
-    //exportFactory.saveFields = _saveFields;
-    //exportFactory.getUserDataset = _getUserDataset;
+    var _removeLocalDS = function(DS){
+        localStorageService.remove("Dataset_"+DS.id);
+    }
+
+    /*    var _saveCriteria = function(user,criteria){
+     var deferred = $q.defer();
+     localStorageService.set('criteria', {
+     user: 'ibrahim',
+     criteria: criteria
+     });
+     deferred.resolve();
+     //console.log(fields);
+     return deferred.promise;
+     }
+
+     var _getCriteria = function(){
+     var deferred = $q.defer();
+     var criteria = localStorageService.get('criteria')
+     if(criteria)
+     deferred.resolve(criteria.criteria);
+     else deferred.resolve([])
+     console.log(criteria);
+     return deferred.promise;
+     }
+
+     var _clearCriteria = function(){
+     //var deferred = $q.defer();
+     localStorageService.remove('criteria')
+     console.log(localStorageService.get('criteria'))
+     //if(criteria)
+     //    deferred.resolve(criteria.criteria);
+     //else deferred.resolve([])
+     //console.log(criteria);
+     //return deferred.promise;
+     }*/
+    /*    var _saveUserDataset = function(DS){
+     return $http({
+     url: serviceBase + 'api/mydatasets',
+     method: 'POST',
+     data: angular.toJson(DS)
+     }).then(
+     function (response) {
+     return {
+     ds: (response.data)
+     }
+     },
+     function (httpError) {
+     // translate the error
+     throw httpError.status + " : " +
+     httpError.data;
+     });
+     }
+
+     var _updateUserDataset = function(DS){
+     return $http({
+     url: serviceBase + 'api/mydatasets',
+     method: 'PUT',
+     params: {datasetId: '@id'},
+     data: angular.toJson(DS)
+     }).then(
+     function (response) {
+     return {
+     ds: (response.data)
+     }
+     },
+     function (httpError) {
+     // translate the error
+     throw httpError.status + " : " +
+     httpError.data;
+     });
+     }*/
+
+
     exportFactory.getUserDatasetsForProject = _getUserDatasets;
     exportFactory.getDataFields = _getDataFields;
-   /* exportFactory.saveCriteria = _saveCriteria;
-    exportFactory.getCriteria = _getCriteria;*/
+
     exportFactory.getFieldFilter = _getFieldFilter;
-    // exportFactory.clearCriteria = _clearCriteria;
+
     exportFactory.previewData = _previewData;
     exportFactory.getDataTableData = _getDataTableData;
 
@@ -287,10 +274,17 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
     exportFactory.sendTreeData = _sendTreeData;
     
     exportFactory.updateLocalDS = _updateLocalDS;
+
+    exportFactory.getMyDatasetResource = _myDatasetResource;
+    exportFactory.removeLocalDS = _removeLocalDS;
+
+    //exportFactory.saveFields = _saveFields;
+    //exportFactory.getUserDataset = _getUserDataset;
     //exportFactory.saveUserDataset = _saveUserDataset;
     //exportFactory.updateUserDataset = _updateUserDataset;
-    exportFactory.getMyDatasetResource = _myDatasetResource;
-
+    // exportFactory.clearCriteria = _clearCriteria;
+    /* exportFactory.saveCriteria = _saveCriteria;
+     exportFactory.getCriteria = _getCriteria;*/
 
 
 

@@ -8,18 +8,20 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
     var activityId = $stateParams.activityId;
     var datasetId = $stateParams.datasetId;
     var fileId = $stateParams.fileId;
+    var projectId = $stateParams.projectId;
     var standardFileId;
 
     $scope.vm = {
         datasetId: datasetId,
         activityId: activityId,
+        projectId: projectId,
         //fileName: fileName,
         mapSaved: false,
         fileMatched: false,
         dataIsloaded: false
 
     }
-    console.log('Controller Two scope',$scope.vm)
+    console.log('Controller Two scope',$scope.vm,$stateParams)
     console.log('inside step two controller',$stateParams)
 
     wizardService.getOriFileInfo(datasetId,fileId)
@@ -28,6 +30,7 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
             if($scope.fileInfo.isStandard) 
                 standardFileId = fileInfo.dataFileId;
             $scope.vm.dataIsloaded = true
+
             if(!fileInfo.templateMatched)
                 return wizardService.getTemplateMap(datasetId)
         })
@@ -84,7 +87,7 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
 
     }
     $scope.cancel = function(){
-        $state.go('datastage.files',{studyId:$stateParams.studyId, dir:''})
+        $state.go('datastage.files',{projectId:$stateParams.projectId, dir:''})
     }
 
     $scope.goToStep3 = function(){
@@ -96,6 +99,10 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
 
     $scope.inputChanged = function(elem){
         //console.log(elem)
+    }
+
+    $scope.goToActivity = function(){
+        $state.go('admin.activity',{ projectId:projectId, activityId: activityId, edit:edit})
     }
 
 

@@ -3,7 +3,7 @@
  */
 'use strict'
 function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCchartingService,filtersService, $timeout){
-    var projectId = $stateParams.studyId;
+    var projectId = $stateParams.projectId;
     $scope.title = "Subjects";
     $scope.show='plots';
 
@@ -11,7 +11,7 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
     $scope.cart = [];
 
     $scope.chartingOpts = {
-        projectId : $stateParams.studyId,
+        projectId : $stateParams.projectId,
         chartContainerId : "subject-plots",
         chartGroup : "subject",
         DCchartService : "DCchartingService",
@@ -44,17 +44,22 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
     subjectDataService.getSubjCharacteristics(projectId)
         .then(function(data){
             $scope.subjCharsDB = data.SCs;
-            console.log('all scs',$scope.subjCharsDB)
+            //console.log('all scs',$scope.subjCharsDB)
 
             SubjCf.refreshCf(projectId).then(
                 function(subjChars){
-                    console.log('default scs',subjChars)
+                    //console.log('default scs',subjChars)
+                    DCchartingService
 
                     $scope.initSCs = subjChars
                     $timeout(function() {
                         angular.forEach(subjChars, function(sc) {
                             console.log('#isc_'+sc)
-                            DCchartingService.createChart(sc,'subject',SubjCf,'Count')
+
+                            /**************TEMP HACK******************/
+                            var dt = 'string'
+                            if(sc == 'age') dt = 'positiveInteger'
+                            DCchartingService.createChart(sc,'subject',SubjCf,'Count',dt)
                             angular.element('#sc_'+sc).trigger('click');
                         });
                     },1000)

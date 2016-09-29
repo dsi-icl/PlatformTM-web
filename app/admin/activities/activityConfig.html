@@ -205,9 +205,17 @@
 
                                                         <div class="form-group">
                                                             <div class="row">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-12">
                                                                     <label>Description</label>
                                                                     <textarea class="form-control" ng-model="vm.cField.description"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label>Type</label>
+                                                                    <select class="form-control" ng-model="vm.cField.varType">
+                                                                        <option ng-repeat="t in vm.varTypes">{{t}}</option>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label>Data Type</label>

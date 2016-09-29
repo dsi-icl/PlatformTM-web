@@ -7,10 +7,10 @@ function assayDataService($http,$q,ngAppConfig){
      var serviceBase = ngAppConfig.apiServiceBaseUri;
 
         return {
-            getSubjData: function(studyId,characs) {
+            getSubjData: function(projectId,characs) {
                 //var domainCode = "VS"
                 return $http({
-                    url:serviceBase+'api/studies/'+studyId+'/data/assays/characteristics',
+                    url:serviceBase+'api/projects/'+projectId+'/data/assays/characteristics',
                     method:'POST',
                     data: angular.toJson(characs)
                 }).then(
@@ -26,15 +26,15 @@ function assayDataService($http,$q,ngAppConfig){
                     });
             },
 
-            getSubjCharacteristics: function(studyId){
+            getSubjCharacteristics: function(projectId){
 
             },
 
 
-            getSampleData: function(studyId,assayId,reqObs) {
+            getSampleData: function(projectId,assayId,reqObs) {
                 //console.log(angular.toJson(observations))
                 return $http({
-                    url:serviceBase+'api/projects/'+studyId+'/assays/'+assayId+'/samples',
+                    url:serviceBase+'api/projects/'+projectId+'/assays/'+assayId+'/samples',
                     method:'GET'//,
                     //data: angular.toJson(observations)
                 }).then(
@@ -54,9 +54,9 @@ function assayDataService($http,$q,ngAppConfig){
                 );
             },
 
-            getAssays: function(studyId){
+            getAssays: function(projectId){
                 return $http({
-                    url:serviceBase+'api/projects/'+studyId+'/assays',
+                    url:serviceBase+'api/projects/'+projectId+'/assays',
                     method:'GET'//,
                     //data: angular.toJson(observations)
                 }).then(

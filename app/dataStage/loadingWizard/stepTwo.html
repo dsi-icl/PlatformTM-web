@@ -9,18 +9,26 @@
                 <i class="fa fa-question-circle"></i>Help</a>
         </h4>
         <!-- <div class="col-lg-12">-->
-        <div class="alert alert-success" ng-hide="!fileInfo.templateMatched">
-            File header matched associated template <a class="alert-link" href="">Skip to next step</a>.
+        <div class="alert alert-success" ng-show="fileInfo.percentMatched == 100">
+            <uib-progressbar type="success" class="progress-striped" value="fileInfo.percentMatched" >{{fileInfo.percentMatched}}%</uib-progressbar>
+            File header matched associated template <a class="alert-link" ng-click="goToStep3()">Skip to next step</a>.
         </div>
-        <div class="alert alert-warning" ng-hide="fileInfo.templateMatched" close="main.closeAlert()">
+        <div class="alert alert-warning" ng-show="fileInfo.percentMatched == 0" close="main.closeAlert()">
             File header did not match associated template. Please provide mappings below.
+
+        </div>
+        <div class="alert alert-warning" ng-show="fileInfo.percentMatched > 0 && fileInfo.percentMatched < 100" close="main.closeAlert()">
+            <uib-progressbar type="warning" class="progress-striped" value="fileInfo.percentMatched" >{{fileInfo.percentMatched}}%</uib-progressbar>
+            File matched {{fileInfo.percentMatched}}% the associated template.
+            The following columns cannot be matched to the template: {{fileInfo.unmappedCols}}
+            Click <a ui-sref="admin.activity({activityId:vm.activityId, projectId: vm.projectId})">here</a> to edit the template.
 
         </div>
 
     </div>
     <div class="row" ng-hide="vm.dataIsloaded">
-        <div class="ibox">
-            <div class="ibox-content">
+        <div class="">
+            <div class="">
                 <div class="spiner-example">
                     <p class="text-center">Checking template match</p>
                     <div class="sk-spinner sk-spinner-wave">
@@ -35,7 +43,7 @@
         </div>
     </div>
 
-    <div class="row" ng-hide="fileInfo.templateMatched || !vm.dataIsloaded">
+    <div class="row" ng-hide="fileInfo.templateMatched || !vm.dataIsloaded || fileInfo.percentMatched > 0">
         <div  class="ibox float-e-margins">
             <div class="ibox-content ">
                 <p class="small text-muted"><i class="fa fa-hand-o-right"></i>&nbsp;Use drag'n drop to map column headers to template variables or enter a value</p>

@@ -7,10 +7,10 @@ function subjectDataService($http,ngAppConfig){
         var serviceBase = ngAppConfig.apiServiceBaseUri;
 
         return {
-            getSubjData: function(studyId,characs) {
+            getSubjData: function(projectId,characs) {
                 //var domainCode = "VS"
                 return $http({
-                    url:serviceBase+'api/studies/'+studyId+'/data/subjects/characteristics',
+                    url:serviceBase+'api/projects/'+projectId+'/data/subjects/characteristics',
                     method:'POST',
                     data: angular.toJson(characs)
                 }).then(

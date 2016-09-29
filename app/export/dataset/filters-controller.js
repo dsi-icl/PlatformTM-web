@@ -7,8 +7,10 @@ function stepTwoController($scope,$state,$stateParams,exportService){
 
     var vm = this;
     //vm.dataLoaded = false;
-    var projectId = $stateParams.studyId;
+    var projectId = $stateParams.projectId;
     var datasetId = $stateParams.datasetId;
+    var currDS;
+    vm.filters = [];
 
     //$scope.$parent.parentCtrl.filters.treeConfig.version++;
 
@@ -66,6 +68,13 @@ function stepTwoController($scope,$state,$stateParams,exportService){
         })
     // }
 
+    exportService.fetchDataset(datasetId,projectId).then(function(ds){
+        currDS = ds
+        console.log("Back and setting filters to ", ds.filters)
+        for(var i=0; i<ds.filters.length; i++){
+            vm.filters.push(prepareFilterControl(filters[i]))
+        }
+    })
 
     var prepareFilterControl = function(filter){
 
@@ -92,21 +101,8 @@ function stepTwoController($scope,$state,$stateParams,exportService){
             };
         return filter
     };
-    vm.filters = [];
-    /*vm.filters = [];
-    var filters = $scope.parentCtrl.DS.filters;
-    for(var i=0; i<filters.length; i++){
-        vm.filters.push(prepareFilterControl(filters[i]))
-    }*/
-    var currDS;
-    exportService.fetchDataset(datasetId,projectId).then(function(ds){
-        currDS = ds
-        console.log("Back and setting filters to ", ds.filters)
-        for(var i=0; i<ds.filters.length; i++){
-            vm.filters.push(prepareFilterControl(filters[i]))
-        }
 
-    })
+
 
     vm.toggleNode = function(node){
         console.log("I made it",node)
@@ -164,9 +160,14 @@ function stepTwoController($scope,$state,$stateParams,exportService){
         vm.treeInstance.jstree(true).refresh(true,true);
 
     }
+
     vm.next = function(){
 
-        exportService.updateLocalDS($scope.$parent.parentCtrl.DS).then(function(){
+        currDS.filters = vm.filters;
+
+        //console.log($scope.$parent.parentCtrl.DS);
+
+        exportService.updateLocalDS(currDS).then(function(){
             $state.go('export.wizard.preview',{
                 datasetId: datasetId,
                 projectId: projectId
@@ -175,12 +176,12 @@ function stepTwoController($scope,$state,$stateParams,exportService){
     };
 
     vm.cancel = function(){
-        exportService.clearCriteria();
-        $state.go('export.datasets',{studyId:projectId})
+        exportService.removeLocalDS(currDS);
+        $state.go('export.datasets',{projectId:projectId})
     };
     vm.prev = function(){
         //exportService.clearCriteria();
-        $state.go('export.wizard.fields',{studyId:projectId,datasetId:datasetId})
+        $state.go('export.wizard.fields',{projectId:projectId,datasetId:datasetId})
     };
 
     var _updateField = function(filterField){

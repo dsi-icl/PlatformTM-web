@@ -4,7 +4,7 @@
     function exportListCtrl($scope,$stateParams,exportService) {
 
         var vm = this;
-        vm.projectId = $stateParams.studyId;
+        vm.projectId = $stateParams.projectId;
         vm.loaded = false;
         
         exportService.getUserDatasetsForProject(vm.projectId).then(function(response){

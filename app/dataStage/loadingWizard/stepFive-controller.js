@@ -15,13 +15,14 @@
             datasetId: $stateParams.datasetId,
             activityId:$stateParams.activityId,
             fileId: $stateParams.fileId,
-            studyId: $stateParams.studyId
+            projectId: $stateParams.projectId
 
         };
 
         $scope.loadedDataset = false;
         $scope.loadedObs = false;
         $scope.obsExtracted = false;
+        $scope.loadingFailed = false;
 
         //var projectId = "STD-BVS-01";
         var datasetId = $stateParams.datasetId;
@@ -33,7 +34,7 @@
             $state.go('datastage.wizard.step_four',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, fileId: fileId });
         }
         $scope.finish = function(){
-            $state.go('datastage.files',{studyId:$stateParams.studyId, dir:$stateParams.dir})
+            $state.go('datastage.files',{projectId:$stateParams.projectId, dir:$stateParams.dir})
         }
 
         wizardService.loadDataset(datasetId, fileId).then(function(success){
@@ -49,6 +50,9 @@
             console.log('BACK from mysql')
             if(success)
                 $scope.obsExtracted = true;
+            else
+                $scope.loadingFailed = true;
+                
         })
 
         //$scope.activities = [{'name':'ibrahim'},{'name':'assem'},{'name':'emam'},{'name':'nelly'}]

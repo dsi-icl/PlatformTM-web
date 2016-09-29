@@ -1,213 +1,177 @@
 
 
-<div id="subject-data" class="panel">
+<!--<div id="subject-data" class="panel">
 
     <div class="panel-header">
         <h3 style="padding-left: 3px;padding-top: 3px;"><span class="flaticon-standing55" style="color: #39b3d7; margin-right: -10px;font-size: 1.4em;"></span> {{title}}</h3>
     </div>
 
-    <uib-tabset class="models-list">
-        <uib-tab>
-            <uib-tab-heading>
-                <p class="model-icon">
-                    <span class="flaticon-standing55"></span>
-                    <dc-count-widget
-                            xfilter-service="{{chartingOpts.xfilterService}}"
-                            chart-service="{{chartingOpts.DCchartService}}"
-                            grp="{{chartingOpts.chartGroup}}">
-                    </dc-count-widget>
-                </p>
-                <p class="model-name">
-                    Human subjects
-                </p>
-            </uib-tab-heading>
-            <div>
-                <div class="ibox-title">
-                    <div class="pull-right">
-                        <div class="btn-group">
-                            <label class="btn btn-xs btn-white" ng-model="show" btn-radio="'plots'">Data Plots</label>
-                            <label class="btn btn-xs btn-white" ng-model="show" btn-radio="'table'">Data Table</label>
-                        </div>
-                    </div>
-                </div>
 
-                <div id="subject-plots" ng-hide="show =='table'" class="plots-flex-container animated fadeIn"></div>
-                <div id="subject-datatable" ng-hide="show =='plots'" class="table-view animated fadeIn">
- <!--                   <div style="display:inline;float:right">
-                        <button ng-click="addToCart('subject')" class="btn-xs btn-success " type="button"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<span class="bold">Save to Cart</span></button>
-                    </div>
-                    <div style="display:inline;">
-                        <div ng-repeat="(key, values) in subjectFilter" style="display:inline;">
-                            <button type="button" class="btn-xs btn-outline btn-default">{{key}} : {{values}}</button>
-                        </div>
-                    </div>-->
-                    <!--<div style="min-height:10px"></div>-->
-                    <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
-                                  chart-service="{{chartingOpts.DCchartService}}"
-                                  xfilter-service="{{chartingOpts.xfilterService}}"
-                                  grp="{{chartingOpts.chartGroup}}">Choose observations from the tree below</dc-datatable>
-
-                </div>
-            </div>
-
-
-
-
-
-
-            <div class="clearfix"></div>
-
-            <div class="subject" style="border-top: 1px solid #72879C">
-                <div class="option-list">
-                    <ul id="subjChars">
-                        <li ng-repeat="sc in subjCharsDB" >
-                            <label id="sc_{{sc.id}}"
-                                   charting-button
-                                   obs = sc
-                                   charting-opts=chartingOpts
-                                   ng-class="{'active': sc.isActive}"
-                                   ng-init="sc.isActive = false"
-                                   ng-click="sc.isActive = !sc.isActive">
-                                {{sc.o3}}
-                            </label>
-                            <!-- <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
-                                  class="flaticon-download164"></div>-->
-                        </li>
-
-                        <!--<li ng-repeat="isc in initSCs" >
-                            <label id="isc_{{isc}}"
-                                   charting-button
-                                   obs = isc
-                                   charting-opts=chartingOpts
-                                   ng-class="{'active': isc.isActive}"
-                                   ng-init="isc.isActive = false"
-                                   ng-click="isc.isActive = !isc.isActive">
-                                {{isc}}
-                            </label>
-                            &lt;!&ndash; <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
-                                  class="flaticon-download164"></div>&ndash;&gt;
-                        </li>-->
-
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-
-            </div>
-
-        </uib-tab>
-
-
-        <uib-tab>
-            <uib-tab-heading>
-                <p class="model-icon">
-                    <span class="flaticon-rat2"></span>
-                    <span class="model-count">0</span>
-                </p>
-                <p class="model-name">
-                    Animal subjects
-                </p>
-            </uib-tab-heading>
-            <div id="xenograft-plots" style="margin-bottom: 0px;margin: 40px;border-top: 1px solid #72879C;"
-                 class="plots-view">
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="subject" style="border-top: 1px solid #72879C">
-                <!--<div class="option-list">
-                    <ul id="xenoChars" class="pull-left">
-                        <li ng-repeat="sc in subjChars" >
-                            <label id="xeno_{{$index}}"
-                                   charting-button val="{{sc}}" active="{{isActive}}"
-                                   container="{{subjChartContainerId}}"
-                                   section="{{section}}"
-                                   grp="{{section}}"
-                                   cf="cf"
-                                   ng-class="{'': !isActive, 'active': isActive}"
-                                   ng-init="isActive = false"
-                                   ng-click="isActive = !isActive">
-                                {{sc}}
-                            </label>
-                            &lt;!&ndash; <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
-                                  class="flaticon-download164"></div>&ndash;&gt;
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>-->
-            </div>
-        </uib-tab>
-        <uib-tab>
-            <uib-tab-heading>
-                <p class="model-icon">
-                    <span class="flaticon-cells"></span>
-                    <span class="model-count">0</span>
-                </p>
-                <p class="model-name">
-                    Cell Line Cultures
-                </p>
-            </uib-tab-heading>
-            <div>&nbsp;</div>
-        </uib-tab>
-    </uib-tabset>
 
 
     <div class="clearfix"></div>
 
 
-</div>
-
-<!--<div class="panel export-panel" ng-controller="ExportCtrl">
-    <div class="panel-header">
-        <h3><span class="glyphicon glyphicon-book" style="color: #39b3d7; margin-right: 3px"></span> Data export
-        </h3>
-    </div>
-
-    <div>
-        <div class="export">
-            <section  ng-show="criteria.showSubjSection">
-                <h2>Subjects</h2>
-                <ul>
-                    <li ng-repeat="scr in subjCriteria">
-                        {{scr.value}}{{scr.filter}}</li>
-                    <li>Cohort = "M"</li>
-                </ul>
-            </section>
-
-            <section  ng-show="criteria.showClinicalSection">
-                <h2>Clinical</h2>
-                <ul>
-                    <li ng-repeat="ccr in clinicCriteria">
-                        {{ccr.value}}{{ccr.filter}}</li>
-                    <li>Surgery (All)</li>
-                    <li>Days to progression > 120</li>
-                </ul>
-            </section>
-
-            <section ng-show="criteria.showAssaySection">
-            <h2>Assays</h2>
-            <ul>
-                <li ng-repeat="assayGrp in criteria.assayGrps">
-                    {{assayGrp.name}}
-                    <ul>
-                        <li ng-repeat="acr in assayGrp.assayCriteria">
-                            {{acr.value}}{{acr.filter}}
-                        </li>
-                        <li>{{select}}{{filter}}Sample Origin = Xenograft</li>
-                        <li>Tissue (All)</li>
-                        <li>Treatment (All)</li>
-                        <li>Treatement Response[TC] > 120</li>
-                    </ul>
-                </li>
-
-
-            </ul>
-            </section>
-        </div>
-
-    </div>
-</div>
 </div>-->
 
-<div class="clearfix"></div>
+<div class="row m-t-lg">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title panel-header">
+                <span class="flaticon-standing55" style="color: #39b3d7; margin-right: -10px;font-size: 1.4em;"></span>{{title}}
+            </div>
+            <div>
+                <uib-tabset class="models-list">
+                    <uib-tab>
+                        <uib-tab-heading>
+                            <p class="model-icon">
+                                <span class="flaticon-standing55"></span>
+                                <dc-count-widget
+                                        xfilter-service="{{chartingOpts.xfilterService}}"
+                                        chart-service="{{chartingOpts.DCchartService}}"
+                                        grp="{{chartingOpts.chartGroup}}">
+                                </dc-count-widget>
+                            </p>
+                            <p class="model-name">
+                                Human subjects
+                            </p>
+                        </uib-tab-heading>
+                        <div class="row">
+                            <div class="col-md-3">
+
+
+                                <div class="ibox-content">
+                                    <h3 class="m-md">Subject Characteristics</h3>
+                                    <div class="clinical-tree" style="max-height: 316px; overflow: scroll">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" ng-repeat="sc in subjCharsDB" >
+
+                                                <div  id="sc_{{sc.id}}"
+                                                       charting-button
+                                                       obs = sc
+                                                       charting-opts=chartingOpts
+                                                       ng-class="{'active': sc.isActive}"
+                                                       ng-init="sc.isActive = false"
+                                                       ng-click="sc.isActive = !sc.isActive">
+                                                    <i style="color:#23c6c8" class="fa fa-toggle-off fa-2x p-xs" ></i>
+                                                    <span class="">{{sc.o3}}</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="ibox-title">
+                                    <div class="pull-right">
+                                        <div class="btn-group">
+                                            <label class="btn btn-xs btn-primary" ng-model="show" uib-btn-radio="'plots'">Data Plots</label>
+                                            <label class="btn btn-xs btn-primary" ng-model="show" uib-btn-radio="'table'">Data Table</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="plots-view" id="subject-plots" ng-hide="show =='table'" style="display: -webkit-box; background-color: white;"></div>
+                                <div  id="subject-datatable" ng-hide="show =='plots'" class="table-view" style="background-color: white;">
+                                    <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
+                                                  chart-service="{{chartingOpts.DCchartService}}"
+                                                  xfilter-service="{{chartingOpts.xfilterService}}"
+                                                  grp="{{chartingOpts.chartGroup}}">Choose observations from the tree below</dc-datatable>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--<div class="subject" style="border-top: 1px solid #72879C">-->
+
+                        <!--<div class="row">
+                                <div class="col-md-6">
+
+
+                                    <div class="ibox-content">
+                                        <h3 class="m-md">Subject Characteristics</h3>
+                                        <div style="max-height: 180px; overflow: scroll">
+                                            <ul class="todo-list small-list">
+                                                <li ng-repeat="sc in subjCharsDB" >
+                                                    <label id="sc_{{sc.id}}"
+                                                           charting-button
+                                                           obs = sc
+                                                           charting-opts=chartingOpts
+                                                           ng-class="{'active': sc.isActive}"
+                                                           ng-init="sc.isActive = false"
+                                                           ng-click="sc.isActive = !sc.isActive">
+                                                        {{sc.o3}}
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>-->
+
+
+
+
+                    </uib-tab>
+                    <uib-tab>
+                        <uib-tab-heading>
+                            <p class="model-icon">
+                                <span class="flaticon-rat2"></span>
+                                <span class="model-count">0</span>
+                            </p>
+                            <p class="model-name">
+                                Animal subjects
+                            </p>
+                        </uib-tab-heading>
+                        <div id="xenograft-plots" style="margin-bottom: 0px;margin: 40px;border-top: 1px solid #72879C;"
+                             class="plots-view">
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="subject" style="border-top: 1px solid #72879C">
+                            <!--<div class="option-list">
+                                <ul id="xenoChars" class="pull-left">
+                                    <li ng-repeat="sc in subjChars" >
+                                        <label id="xeno_{{$index}}"
+                                               charting-button val="{{sc}}" active="{{isActive}}"
+                                               container="{{subjChartContainerId}}"
+                                               section="{{section}}"
+                                               grp="{{section}}"
+                                               cf="cf"
+                                               ng-class="{'': !isActive, 'active': isActive}"
+                                               ng-init="isActive = false"
+                                               ng-click="isActive = !isActive">
+                                            {{sc}}
+                                        </label>
+                                        &lt;!&ndash; <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
+                                              class="flaticon-download164"></div>&ndash;&gt;
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>-->
+                        </div>
+                    </uib-tab>
+                    <uib-tab>
+                        <uib-tab-heading>
+                            <p class="model-icon">
+                                <span class="flaticon-cells"></span>
+                                <span class="model-count">0</span>
+                            </p>
+                            <p class="model-name">
+                                Cell Line Cultures
+                            </p>
+                        </uib-tab-heading>
+                        <div>&nbsp;</div>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 

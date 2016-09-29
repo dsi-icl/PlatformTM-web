@@ -15,7 +15,7 @@ angular.module('biospeak.explorer',[
                 controller: "logOutController"
             })*/
             .state('explore', {
-                url: "/{studyId}/explore/",
+                url: "/{projectId}/explore/",
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
@@ -46,9 +46,17 @@ angular.module('biospeak.explorer',[
                                 )
                             }],
                             loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                console.log("loading controller");
                                 return $ocLazyLoad.load('explore/explorer-controller.js');
-                            }]
+                            }],
+
+                        loadDependency: function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    serie:true,
+                                    files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
+                                }
+                            ]);
+                        }
                         },
                         controller:'ExplorerCtrl as vm'
                     },
@@ -57,11 +65,9 @@ angular.module('biospeak.explorer',[
                         controller: 'SubjectsCtrl',
                         resolve: {
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                console.log("loading service");
                                 return $ocLazyLoad.load('explore/subjects/subjects-service.js');
                             }],
                             loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                console.log("loading controller");
                                 return $ocLazyLoad.load('explore/subjects/subjects-controller.js');
                             }]
                         }
@@ -71,15 +77,12 @@ angular.module('biospeak.explorer',[
                         controller: 'ClinicalCtrl',
                         resolve: {
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                console.log("loading service");
                                 return $ocLazyLoad.load('explore/clinical/clinical-service.js');
                             }],
                             loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                console.log("loading controller");
                                 return $ocLazyLoad.load('explore/clinical/clinical-controller.js');
                             }],
                             loadDirectives: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                console.log("loading directives");
                                 return $ocLazyLoad.load('explore/clinical/clinicalDataTree-directive.js');
                             }]
                         }
@@ -89,11 +92,9 @@ angular.module('biospeak.explorer',[
                         controller: 'AssayCtrl',
                         resolve: {
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                console.log("loading service");
                                 return $ocLazyLoad.load('explore/assays/assays-service.js');
                             }],
                             loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                console.log("loading controller");
                                 return $ocLazyLoad.load('explore/assays/assays-controller.js');
                             }]
                         }

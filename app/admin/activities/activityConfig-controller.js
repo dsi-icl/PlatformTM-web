@@ -3,7 +3,7 @@
  */
 
 'use strict';
-function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, DatasetResource,$timeout,SweetAlert,toaster) {
+function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, DatasetResource,$timeout,SweetAlert,toaster,$q) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
     //vm.scope = $scope
@@ -15,7 +15,8 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
     vm.showFieldInfo = false;
     vm.creatingCfield = false;
 
-    vm.dataTypes = ['STRING','INTEGER','DOUBLE','DATETIME']
+    vm.dataTypes = ['STRING','INTEGER','DOUBLE','DATETIME'];
+    vm.varTypes = ['SUBMITTED','DERIVED']
 
     vm.dictTerms = ['MILD','SEVERE','MODERATE'];
     vm.expressionList = [];
@@ -70,7 +71,7 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
     if($stateParams.activityId==0){
         console.log("New Activity");
         activity = new ActivityResource();
-        activity.ProjectAcc = $stateParams.projectId;//"Study1"
+        activity.projectId = $stateParams.projectId;//"Study1"
         activity.isNew = true;
         activity.status = "New";
         activity.datasets = [];
@@ -107,9 +108,10 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
         if(vm.creatingCfield){
             //vm.creatingCfield = true;
             vm.cField = {}
-            vm.cField.isComputed = true;
+
             vm.cField.isSelected = true;
             vm.cField.isRequired = false;
+            vm.cField.isCurated = false;
             //vm.cField.dictionaryName = null;
             //cField.order
         }
@@ -138,6 +140,9 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
 
             vm.cField.expressionList = vm.expressionList
             console.log(vm.cField)
+
+            if(vm.cField.varType == 'DERIVED')
+                vm.cField.isComputed = true;
             vm.activity.datasets[0].variables.push(vm.cField)
             toaster.pop('success', "SUCCESS", vm.cField.name+" has been added to dataset template successfully.",8000);
             vm.cField = {};
@@ -368,13 +373,8 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
 
     vm.selectTemplate = function(dataset){
         console.log("CHOSE TEAMPLATE", dataset.name)
-        /*DatasetResource.get({datasetId:domainId}, function(response) {
-            var dataset = response;*/
             dataset.isNew = true;
             dataset.activityId = $stateParams.activityId;
-            //dataset.projectStrAcc = $stateParams.studyId;
-            //console.log(vm.activity)
-            //     console.log(dataset);
             vm.activity.datasets.push(dataset);
 
         $timeout(function(){
@@ -433,4 +433,4 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
 }
 
 angular.module('bioSpeak.config')
-    .controller('ActivityConfigCtrl',['$scope', '$state','$stateParams','ActivityResource','DatasetResource','$timeout','SweetAlert','toaster',ActivityConfigCtrl]);
+    .controller('ActivityConfigCtrl',['$scope', '$state','$stateParams','ActivityResource','DatasetResource','$timeout','SweetAlert','toaster','$q',ActivityConfigCtrl]);

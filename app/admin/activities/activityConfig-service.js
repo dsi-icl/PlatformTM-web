@@ -14,7 +14,7 @@ function ActivityResource($resource, ngAppConfig) {
         },
         getActivitiesForProject:{
             method: 'GET',
-            url : serviceBase+'api/studies/:projectId/activities',
+            url : serviceBase+'api/projects/:projectId/activities',
             isArray : true
             /*params:{studyId}*/
         }

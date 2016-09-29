@@ -10,7 +10,6 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster) 
     if($stateParams.projectId=='new'){
         console.log("New Project");
         project = new ProjectService.getProjectResource();
-       // project.ProjectAcc = $stateParams.studyId;//"Study1"
         project.isNew = true;
         project.status = "New";
         project.studies = [];

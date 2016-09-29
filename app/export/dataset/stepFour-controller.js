@@ -9,34 +9,43 @@
     function stepFourController($scope,$state,$stateParams,exportService,toaster){
 
         var vm = this;
-        var projectId = $stateParams.studyId
-        
-        vm.DS = $scope.$parent.parentCtrl.DS;
+        var projectId = $stateParams.projectId;
+        var datasetId = $stateParams.datasetId;
+
+        exportService.fetchDataset(datasetId,projectId).then(function(ds){
+            console.log("Back and setting ds to", ds)
+            vm.DS = ds;
+        })
 
         vm.availableTags = ['CyTOF','Microarray','Luminex','Samples','FACS','Adverse Events','Chemistry','Cytokines'];
         vm.multipleDemo = {};
         vm.selectedTags = [];
 
         vm.cancel = function(){
-            datasetService.clearCriteria();
-            $state.go('export.datasets',{studyId:projectId})
-        }
+            exportService.removeLocalDS(vm.DS);
+            $state.go('export.datasets',{projectId:projectId})
+        };
+
         vm.prev = function(){
-            //datasetService.clearCriteria();
-            $state.go('export.wizard.preview.table',{studyId:projectId})
-        }
+            $state.go('export.wizard.preview',{
+                datasetId: datasetId,
+                projectId: projectId
+            });
+        };
+
         vm.finish = function(){
             console.log(vm.DS)
             if(vm.DS.isNew){
-                vm.DS.$save(function(response){
+                exportService.getMyDatasetResource.save(vm.DS,function(response) {
+                //exportService.vm.DS.$save(function(response){
                     console.log("Dataset created");
-                    toaster.pop('success', "SUCCESS", vm.DS.name," was successfully SAVED.",4000);
-                    $state.go('export.datasets',{studyId:projectId})
+                    toaster.pop('success', "SUCCESS", vm.DS.name," was successfully SAVED.",2000);
+                    $state.go('export.datasets',{projectId:projectId})
                 })
                 /*exportService.saveUserDataset(vm.DS).then(function(success){
                     if(success){
                         console.log("SAVED DATASET TO DB")
-                        $state.go('export.datasets',{studyId:projectId})
+                        $state.go('export.datasets',{projectId:projectId})
                     }
 
                     else
@@ -44,10 +53,10 @@
                 })*/
             }
             else {
-                vm.DS.$update(function(response) {
+                exportService.getMyDatasetResource.update(vm.DS,function(response) {
                     console.log("Dataset Updated");
-                    toaster.pop('success', "SUCCESS", vm.DS.name," was successfully UPDATED.",4000);
-                    $state.go('export.datasets',{studyId:projectId})
+                    toaster.pop('success', "SUCCESS", vm.DS.name," was successfully UPDATED.",2000);
+                    $state.go('export.datasets',{projectId:projectId})
                     /*$state.transitionTo($state.current, $stateParams, {
                         reload: true,
                         inherit: false,
@@ -58,11 +67,12 @@
                 /*exportService.updateUserDataset(vm.DS).then(function(success){
                     if(success){
                         console.log("User dataset UPDATED")
-                        $state.go('export.datasets',{studyId:projectId})
+                        $state.go('export.datasets',{projectId:projectId})
                     }
                 })*/
             }
-                
+
+            exportService.removeLocalDS(vm.DS);
             
         }
 

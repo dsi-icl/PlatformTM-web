@@ -15,7 +15,7 @@ function fileController($scope, $state, $stateParams, fileService){
 
     var vm = this;
 
-    vm.projectId = $stateParams.studyId;
+    vm.projectId = $stateParams.projectId;
     vm.dir = $stateParams.dir;
     vm.selectedFiles={};
     vm.selectedFilesCount=0;
@@ -25,13 +25,13 @@ function fileController($scope, $state, $stateParams, fileService){
     vm.currentFile = '';
 
 
-    fileService.getDirectories($stateParams.studyId)
+    fileService.getDirectories(vm.projectId)
         .then(function(data){
             vm.dirs = data.files;
             //console.log(data.files);
             //$scope.vm.dirs = data.files;
 
-            fileService.getContent($stateParams.studyId,$stateParams.dir)
+            fileService.getContent(vm.projectId,$stateParams.dir)
                 .then(function(data){
                     vm.files = data.files;
                 })
@@ -42,11 +42,11 @@ function fileController($scope, $state, $stateParams, fileService){
     vm.createDirectory = function(){
         console.log(vm.newdir)
         if(vm.newdir)
-            fileService.createDirectory($stateParams.studyId,$scope.vm.newdir)
+            fileService.createDirectory(vm.projectId,$scope.vm.newdir)
                 .then(function(data){
                     //$scope.vm.dirs = data;
 
-                    fileService.getDirectories($stateParams.studyId)
+                    fileService.getDirectories(vm.projectId)
                         .then(function(data){
                             vm.dirs = data.files;})
 
@@ -170,7 +170,7 @@ function fileController($scope, $state, $stateParams, fileService){
         if(vm.fileSelected)
         //console.log($scope)
         //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
-        $state.go('datastage.wizard.step_one',{studyId:$stateParams.studyId, fileId:vm.fileSelected.dataFileId})
+        $state.go('datastage.wizard.step_one',{projectId:vm.projectId, fileId:vm.fileSelected.dataFileId})
     }
 
     vm.computeFields = function(){

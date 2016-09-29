@@ -10,7 +10,7 @@
 
         //$scope.vm.selectedFiles = $stateParams.selFiles;
 
-        $scope.vm.projectId = $stateParams.studyId;
+        $scope.vm.projectId = $stateParams.projectId;
 
         //console.log('inside wizard controller',$stateParams.selFiles, 'service')
 

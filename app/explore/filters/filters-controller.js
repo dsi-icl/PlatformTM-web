@@ -10,14 +10,14 @@ angular.module('biospeak.explorer')
             //$scope.cart = exportService.getCart();
 
             var vm = this;
-            vm.studyId = $stateParams.studyId
+            vm.projectId = $stateParams.projectId
 
             vm.query = {}
 
 
             $scope.service = filtersService;
 
-            /*filtersService.getUserSavedFilters($stateParams.studyId)
+            /*filtersService.getUserSavedFilters($stateParams.projectId)
                 .then(function(data) {
                     vm.savedFilters = data.filters;
                 })*/

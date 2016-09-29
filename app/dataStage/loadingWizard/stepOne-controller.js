@@ -20,7 +20,7 @@
         
         
 
-        var projectId = $stateParams.studyId;
+        var projectId = $stateParams.projectId;
 
         wizardService.getActivities(projectId).then(function(activities){
                 $scope.activities = activities;

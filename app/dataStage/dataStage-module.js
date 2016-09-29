@@ -7,7 +7,7 @@ function config($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('datastage', {
             abstract: true,
-            url: "/{studyId}",
+            url: "/{projectId}",
             templateUrl: "layout/content.html"
         })
         .state('datastage.files', {
@@ -97,7 +97,7 @@ function config($stateProvider, $urlRouterProvider) {
                                 //vm.files = data.files;
                                 //console.log(data)
                                 //$scope.vm = vm;
-                            $state.go('datastage.files',{studyId:$stateParams.studyId, dir:$stateParams.dir})
+                            $state.go('datastage.files',{projectId:$stateParams.projectId, dir:$stateParams.dir})
                             })
                     }, function () {
                         console.info('Modal dismissed at: ' + new Date());
