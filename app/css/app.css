@@ -4,7 +4,10 @@ body {
     /*font-family: 'Questrial', sans-serif;*/
     /*font-family: 'PT Sans', sans-serif;*/
     /*font-size: 2.0em;*/
-    background-color: #f0f0f0;
+    background-color: #f3f3f5;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     min-height: 100%;
@@ -746,6 +749,10 @@ nav a {
 {
     background-color: rgba(57, 194, 215, 0.12);
 }
+
+/*div .dc-chart{
+    float: none;
+}*/
 .chart-title {
     text-transform: uppercase;
     /*font-size: .8em;*/
@@ -899,6 +906,12 @@ a.editable-select {
     font-size: 1.5em;
     font-weight: bold;
     margin: 0px;
+}
+
+.tab-content{
+    border-style: none;
+    padding: 15px 15px 10px 15px;
+    background-color: #ffffff;
 }
 
 .assay-panel .assay-info .assay-tech {
@@ -1311,5 +1324,57 @@ a.editable-click {
 .planContainer{
     padding-bottom: 10px;
     padding-top: 20px;
+}
+
+
+
+/*Flo's Css for charts*/
+.anchor {
+    width: 100%;
+    height: 100%;
+    position:relative;
+    clear:both;
+}
+#chartslock {
+    width: 100%;
+    height: 100%;
+    /*padding: 20px;*/
+    /*padding-left: 420px;*/
+    position:absolute;
+    top: 0;
+    left: 0;
+}
+.charts-container {
+    width: 100%;
+    height: 50%;
+    overflow:auto;
+}
+.cardlock {
+    background-color: #f0f0f0;
+    max-width: 660px;
+    height: 320px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    overflow-x: scroll; overflow-y:hidden;
+}
+.card {
+    /*position:absolute;*/
+    width: auto; white-space: nowrap;
+}
+.card h1 {
+    width: 100%;
+    font-size: 15px;
+    padding: 10px;
+    text-transform:uppercase;
+    color: #808080;
+    font-weight:100;
+}
+.card .chart {
+    padding:10px;
+    width: 320px;
+    text-align:center;
+    display: inline-block;
+    margin:auto;
 }
 

@@ -304,16 +304,19 @@ angular.module('eTRIKSdata.dcPlots')
                         chartType = "rowChart"
                         chartOptions["elasticX"] = "true"
                         chartOptions["xAxis"] = {"ticks":"4"}
-                        chartOptions["width"] = "320"
+                        chartOptions["width"] = "300"
                         chartOptions["height"] = noOfGroups*30+20
                         chartOptions["margins"] = {top: 10, right: 10, bottom: 20, left: 10}
                     }
                     else{
                         console.log("making a pie chart ")
                         chartType = "pieChart";
-                        chartOptions["radius"] = "80"
-                        chartOptions["width"] = "160"
-                        chartOptions["height"] = "160"
+                        chartOptions["radius"] = "110"
+                        //chartOptions["innerRadius"] = "40"
+                        chartOptions["width"] = "220"
+                        chartOptions["height"] = "220"
+                        //chartOptions["legend"] = "dc.legend()"
+                        chartOptions["slicesCap"] = "4"
                     }
                 }
 

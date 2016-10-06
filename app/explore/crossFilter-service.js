@@ -426,6 +426,32 @@ angular.module('eTRIKSdata.dcPlots',[])
 
         cfservice.generateXf = function(data,columns,isFindings){
 
+            function reduceAdd(key) {
+                //console.log(key)
+                return function(p, v){
+                    //console.log('p is ',p)
+                    //console.log('v of ',key,' is', v)
+
+                    if(v[key] === null && p === null){
+                        console.log("here")
+                        return null;
+                    }
+                    //p += v[key];
+                    //return p;
+                    return p + 1;
+                }
+            }
+            function reduceRemove(key) {
+                return function(p, v){
+                    if(v[key] === null && p === null){ return null; }
+                    //p -= v[key];
+                    //return p;
+                    return p - 1;
+                }
+            }
+            function reduceInit(key) {
+                return null;
+            }
             //TODO: return if data is null
             xfilter = crossfilter(data)
 
@@ -441,7 +467,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                 var grp = dim.group();
                 //var grp1 = dim.group().reduce(reduceAdd(obs),reduceRemove(obs),reduceInit);
                 var reducer = reductio()
-                    .filter(function(d) { return  d[obs] != "" && d[obs] != null })
+                    .filter(function(d) { return  d[obs] != "" })
                     .count(true)
                 reducer(grp);
                 groups[obs] = grp;
@@ -511,32 +537,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                 };
             }
 
-            function reduceAdd(key) {
-                //console.log(key)
-                return function(p, v){
-                    //console.log('p is ',p)
-                    //console.log('v of ',key,' is', v)
 
-                    if(v[key] === null && p === null){
-                        console.log("here")
-                        return null;
-                    }
-                    //p += v[key];
-                    //return p;
-                    return p + 1;
-                }
-            }
-            function reduceRemove(key) {
-                return function(p, v){
-                    if(v[key] === null && p === null){ return null; }
-                    //p -= v[key];
-                    //return p;
-                    return p - 1;
-                }
-            }
-            function reduceInit(key) {
-                return null;
-            }
             function reduceToArrayAdd(key){
                 return function(p,v){
                     p.push(+v[key]);

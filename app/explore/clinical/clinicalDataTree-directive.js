@@ -70,9 +70,17 @@ angular.module('biospeak.explorer')
                     '<span class="caret"></span>'+
                     '</button>'+
            /* ' <input  icheck type="checkbox"  ng-model="var.isSelected" >'+*/
-                    '<div class="list-group-item-text col-md-11" ' + 'id="grp_{{group.code}}"'+ '>'+
-                        '<div class="pull-left" ng-if="group.isSelectable"> <input  icheck type="checkbox"  ng-model="var.isSelected" ></div>'+
-                        '<div><span>{{group.name}}</span></div>'+//' <span>({{group.count}})</span>'+
+                    '<div class="list-group-item-text col-md-12" ' + 'id="grp_{{group.code}}"'+ '>'+
+                        /*'<div class="pull-left" ng-if="group.isSelectable"> ' +
+                            //'<input  icheck type="checkbox"  ng-model="var.isSelected" >' +
+                            '<a  charting-button id="obsgrp_{{group.id}}" ' +
+                            'obs="group.observationGroup"  charting-opts="chartingOpts" style="color: #222f3f;" ' +
+                            'ng-init="group.observationGroup.isActive = false" ng-click="group.observationGroup.isActive = !group.observationGroup.isActive"> ' +
+                            '<i style="color:#23c6c8" class="fa fa-toggle-off fa-2x p-xs" ></i> ' +
+                            '</a>'+
+                            '<cl-option-menu obs="group.observationGroup" charting-opts="chartingOpts"  class="pull-right"></cl-option-menu>'+
+                        '</div>'+*/
+                        '<div><span>{{group.name}}</span><span> ({{group.count}}) </span></div>'+//+
                     '</div>'+
                 '</div>'+
                 '<ul id="{{group.code}}"  class="list-group collapse">'+
@@ -154,7 +162,7 @@ angular.module('biospeak.explorer')
                                     'charting-button  obs="var"  ' +
                                     'ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive" ' +
                                     'charting-opts="chartingOpts" >' +
-                            '<label for="checkbox_{{var.id}}">{{var.qO2}}</label>' +
+                            '<label for="checkbox_{{var.id}}">{{var.qO2}}{{var.o3id}}</label>' +
                         '</div>' +
                     '</li> ' +
                     '<li role="separator" class="divider"></li>'+

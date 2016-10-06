@@ -21,10 +21,8 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
 
     $urlRouterProvider.otherwise('/admin/projects');
 
-    //$urlRouterProvider.when('', '/explore/P-BVS}');
     $urlRouterProvider.when('', '/login');
     $urlRouterProvider.when('/home', '/admin/projects');
-    //$urlRouterProvider.when('main.home', 'admin.projects');
 
 
     $ocLazyLoadProvider.config({
