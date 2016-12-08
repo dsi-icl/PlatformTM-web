@@ -11,7 +11,7 @@ function subjectDataService($http,ngAppConfig){
                 //var domainCode = "VS"
                 return $http({
                     // url:serviceBase+'api/projects/'+projectId+'/data/subjects/characteristics',
-                    url:serviceBase+'api/apps/explore/projects/'+projectId+'/subjects/search',
+                    url:serviceBase+'apps/explore/projects/'+projectId+'/subjects/search',
                     method:'POST',
                     data: angular.toJson(characs)
                 }).then(
@@ -31,7 +31,7 @@ function subjectDataService($http,ngAppConfig){
             getSubjCharacteristics: function(projectId){
                     return $http({
                         //url:serviceBase+'api/projects/'+projectId+'/subjects/characteristics',
-                        url:serviceBase+'api/apps/explore/projects/'+projectId+'/subjcharacteristics/browse',
+                        url:serviceBase+'apps/explore/projects/'+projectId+'/subjcharacteristics/browse',
                         method:'GET'
                     }).then(
                         function (response){

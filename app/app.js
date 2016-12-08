@@ -55,7 +55,7 @@ eTRIKSdataApp.run(function($rootScope){
 });
 
 eTRIKSdataApp.constant('ngAppConfig', {
-    apiServiceBaseUri: 'https://ehs.biospeak.solutions/sandbox/'
+    apiServiceBaseUri: '/api/v1/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
      //apiServiceBaseUri: 'http://155.198.188.216:2483/'
 });

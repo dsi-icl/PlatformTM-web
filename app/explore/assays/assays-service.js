@@ -10,7 +10,7 @@ function assayDataService($http,$q,ngAppConfig){
             getSubjData: function(projectId,characs) {
                 //var domainCode = "VS"
                 return $http({
-                    url:serviceBase+'api/projects/'+projectId+'/data/assays/characteristics',
+                    url:serviceBase+'projects/'+projectId+'/data/assays/characteristics',
                     method:'POST',
                     data: angular.toJson(characs)
                 }).then(
@@ -33,7 +33,7 @@ function assayDataService($http,$q,ngAppConfig){
             getSampleData: function(projectId,assayId,reqObs) {
                 //console.log(angular.toJson(observations))
                 return $http({
-                    url:serviceBase+'api/assays/'+assayId+'/samples',
+                    url:serviceBase+'assays/'+assayId+'/samples',
                     method:'GET'//,
                     //data: angular.toJson(observations)
                 }).then(
@@ -55,7 +55,7 @@ function assayDataService($http,$q,ngAppConfig){
 
             getAssays: function(projectId){
                 return $http({
-                    url:serviceBase+'api/apps/explore/projects/'+projectId+'/assays/browse',
+                    url:serviceBase+'apps/explore/projects/'+projectId+'/assays/browse',
                     method:'GET'//,
                     //data: angular.toJson(observations)
                 }).then(

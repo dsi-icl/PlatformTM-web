@@ -7,14 +7,14 @@ function ActivityResource($resource, ngAppConfig) {
     var fileServiceFactory = {};
     var serviceBase = ngAppConfig.apiServiceBaseUri;
     console.log(serviceBase);
-    return $resource(serviceBase+'api/activities/:activityId',{},{
+    return $resource(serviceBase+'activities/:activityId',{},{
         update:{
             method: 'PUT',
             params: {activityId: '@id'}
         },
         getActivitiesForProject:{
             method: 'GET',
-            url : serviceBase+'api/projects/:projectId/activities',
+            url : serviceBase+'projects/:projectId/activities',
             isArray : true
             /*params:{studyId}*/
         }
@@ -29,20 +29,20 @@ angular.module('bioSpeak.config')
     .factory('ActivityResource',function($resource,ngAppConfig){
         var serviceBase = ngAppConfig.apiServiceBaseUri;
 
-        return $resource(serviceBase+'api/activities/:activityId',{},{
+        return $resource(serviceBase+'activities/:activityId',{},{
             update:{
                 method: 'PUT',
                 params: {activityId: '@id'}
             },
             getActivitiesForStudy:{
                 method: 'GET',
-                url : serviceBase+'api/studies/:studyId/activities',
+                url : serviceBase+'studies/:studyId/activities',
                 isArray : true
                 /!*params:{studyId}*!/
             }/!*,
             get:{
                 method:'GET',
-                url: 'http://rachmaninoff.local:8080/api/activities/:activityId'
+                url: 'http://rachmaninoff.local:8080/activities/:activityId'
             }*!/
        });
         /!*return $resource('../data/activities.json',{ }, {
@@ -54,20 +54,20 @@ angular.module('bioSpeak.config')
     .factory('AssayResource',function($resource,ngAppConfig){
         var serviceBase = ngAppConfig.apiServiceBaseUri;
 
-        return $resource(serviceBase+'api/assays/:assayId',{},{
+        return $resource(serviceBase+'assays/:assayId',{},{
             update:{
                 method: 'PUT',
                 params: {assayId: '@id'}
             }/*,
             getActivitiesForStudy:{
                 method: 'GET',
-                url : serviceBase+'api/studies/:studyId/activities',
+                url : serviceBase+'studies/:studyId/activities',
                 isArray : true
                 params:{studyId}
             },
              get:{
              method:'GET',
-             url: 'http://rachmaninoff.local:8080/api/activities/:activityId'
+             url: 'http://rachmaninoff.local:8080/activities/:activityId'
              }*/
         });
         /*return $resource('../data/activities.json',{ }, {
@@ -76,13 +76,13 @@ angular.module('bioSpeak.config')
     })
 
 /*    .factory('DatasetResource',function($resource){
-        return $resource('/api/activities/:activityId/datasets',
+        return $resource('/activities/:activityId/datasets',
             { 'query': { method: 'GET', isArray: false } })
     })*/
 
     .factory('DatasetResource',function($resource,ngAppConfig){
         var serviceBase = ngAppConfig.apiServiceBaseUri;
-        return $resource(serviceBase+'api/templates/clinical/:datasetId',{},{
+        return $resource(serviceBase+'templates/clinical/:datasetId',{},{
             update:{
                 method: 'PUT',
                 params: {datasetId: '@id'}
@@ -93,7 +93,7 @@ angular.module('bioSpeak.config')
             },
             getDatasetForActivity:{
                 method: 'GET',
-                url : serviceBase+'api/activities/:activityId/datasets/:datasetId',
+                url : serviceBase+'activities/:activityId/datasets/:datasetId',
                 isArray : false
                 /*params:{studyId}*/
             }
@@ -101,7 +101,7 @@ angular.module('bioSpeak.config')
     })
 
     .factory('ISAconfigResource',function($resource){
-        /*return $resource('/api/datasets/:datasetId')*/
+        /*return $resource('/datasets/:datasetId')*/
         return $resource('../data/isaconfigs.json');
     })
 

@@ -9,24 +9,24 @@ function ProjectService($resource, ngAppConfig) {
     console.log(serviceBase);
 
     
-    var _projectResource =  $resource(serviceBase+'api/projects/:projectId',{},{
+    var _projectResource =  $resource(serviceBase+'projects/:projectId',{},{
         update:{
             method: 'PUT',
             params: {projectId: '@id'}
         },
         getActivitiesForProject:{
             method: 'GET',
-            url : serviceBase+'api/projects/:projectId/activities',
+            url : serviceBase+'projects/:projectId/activities',
             isArray : true
         },
         getProjectByAccession:{
             method: 'GET',
-            url : serviceBase+'api/projects/accession/:projectId/',
+            url : serviceBase+'projects/accession/:projectId/',
             // isArray : true
         },
         getProjectById:{
             method: 'GET',
-            url : serviceBase+'api/projects/id/:projectId/'
+            url : serviceBase+'projects/id/:projectId/'
         },
         get:{
             method:'GET',
