@@ -40,9 +40,9 @@
                 function (response) {
                     console.log(response)
                     var errors = [];
-                    for (var key in response.modelState) {
-                        for (var i = 0; i < response.modelState[key].length; i++) {
-                            errors.push(response.modelState[key][i]);
+                    for (var key in response) {
+                        for (var i = 0; i < response[key].length; i++) {
+                            errors.push(response[key][i]);
                         }
                     }
                     $scope.savedSuccessfully = false;

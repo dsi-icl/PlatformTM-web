@@ -20,7 +20,8 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
         chartGroup : "clinical",
         DCchartService : "DCchartingService",
         xfilterService : "ClinicalCf",
-        filtersService: "filtersService"
+        filtersService: "filtersService",
+        clinicalDataService: "clinicalDataService"
     };
 
 
@@ -33,6 +34,17 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
             //$scope.getObsForAll();
 
         })
+
+    $scope.getObsRequest = function(obs){
+        var deferred = $q.defer();
+
+        clinicalDataService.getObsRequestFor(obs).then(function(obsRequest){
+            deferred.resolve(obsRequest);
+        })
+
+            console.log(obs)
+        return deferred.promise
+    }
 
 }
 angular.module('biospeak.explorer')

@@ -46,7 +46,7 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
             $scope.subjCharsDB = data.SCs;
             //console.log('all scs',$scope.subjCharsDB)
 
-            SubjCf.refreshCf(projectId).then(
+            /*SubjCf.refreshCf(projectId).then(
                 function(subjChars){
                     //console.log('default scs',subjChars)
                     DCchartingService
@@ -56,7 +56,7 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
                         angular.forEach(subjChars, function(sc) {
                             console.log('#isc_'+sc)
 
-                            /**************TEMP HACK******************/
+                            /!**************TEMP HACK******************!/
                             var dt = 'string'
                             if(sc == 'age') dt = 'positiveInteger'
                             DCchartingService.createChart(sc,'subject',SubjCf,'Count',dt)
@@ -64,7 +64,7 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
                         });
                     },1000)
                 }
-            )
+            )*/
         })
 
 

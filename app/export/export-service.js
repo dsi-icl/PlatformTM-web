@@ -81,7 +81,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     var _getDataFields = function(projectId){
         return $http({
-            url: serviceBase + 'api/projects/'+projectId+'/export/datafields/',
+            url: serviceBase + 'api/apps/exportwizard/projects/'+projectId+'/datafields/',
             method: 'GET'
         }).then(
             function (response) {
@@ -97,7 +97,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     var _getFieldFilter = function(projectId,field){
         return $http({
-            url: serviceBase + 'api/projects/'+projectId+'/export/datafields/valueset',
+            url: serviceBase + 'api/apps/exportwizard/projects/'+projectId+'/datafields/valueset',
             method: 'POST',
             data: angular.toJson(field)
         }).then(
@@ -119,7 +119,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
         var dataset = userDataset.dataset;
 
 
-        $http.post(serviceBase + 'api/projects/'+projectId+'/export/table/',dataset)
+        $http.post(serviceBase + 'api/apps/exportwizard/projects/'+projectId+'/preview/',dataset)
             .success(function (response) {
                 tableHeaders = response.header
                 DTdata = response.data

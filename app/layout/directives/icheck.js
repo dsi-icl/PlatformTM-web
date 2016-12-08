@@ -16,6 +16,7 @@ function icheck($timeout) {
                     radioClass: 'iradio_square-aero'
 
                 }).on('ifChanged', function(event) {
+                    console.log("Im clicked")
                     if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
                         $scope.$apply(function() {
                             return ngModel.$setViewValue(event.target.checked);

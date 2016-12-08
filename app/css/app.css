@@ -726,10 +726,10 @@ nav a {
 }
 
 .dc-chart .pie-slice {
-    fill: white;
-    cursor: pointer;
-    font-size: 0.8em;
-    font-weight: bold;
+    /*fill: white;*/
+    /*cursor: pointer;*/
+    /*font-size: 0.8em;*/
+    /*font-weight: bold;*/
 }
 
 .fa {
@@ -750,9 +750,9 @@ nav a {
     background-color: rgba(57, 194, 215, 0.12);
 }
 
-/*div .dc-chart{
+div .dc-chart{
     float: none;
-}*/
+}
 .chart-title {
     text-transform: uppercase;
     /*font-size: .8em;*/
@@ -779,8 +779,12 @@ nav a {
 
 
 .chart-options{
-    margin-right: 10px;
-    display: none;
+    /*margin-right: 10px;*/
+    display:none;
+}
+
+.chart-options.on {
+    display: inline-block;
 }
 .chart-options ul{
     list-style: none;
@@ -1352,29 +1356,114 @@ a.editable-click {
 .cardlock {
     background-color: #f0f0f0;
     max-width: 660px;
-    height: 320px;
+    height: 340px;
     margin-right: 10px;
     margin-bottom: 10px;
     display: inline-block;
     overflow-x: scroll; overflow-y:hidden;
+    position: relative;
+}
+.cardlock.placeholder {
+    border: dashed 3px #e0e0e0;
+    background-color: transparent;
+    width:320px;
+}
+.cardholder {
+    width: 100%;
+    color: #e0e0e0;
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 100px;
+}
+.cardholder strong {
+    font-size: 40px;
 }
 .card {
     /*position:absolute;*/
     width: auto; white-space: nowrap;
 }
 .card h1 {
-    width: 100%;
+    width: 90%;
     font-size: 15px;
     padding: 10px;
     text-transform:uppercase;
     color: #808080;
     font-weight:100;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .card .chart {
-    padding:10px;
+    padding-left:10px;
+    padding-right:10px;
     width: 320px;
-    text-align:center;
-    display: inline-block;
+    text-align:left;
+    display: inline-table;
     margin:auto;
 }
 
+
+
+/*switch*/
+.menu-toggle {
+    position:absolute;
+    right: 0px;
+    top: 7px;
+}
+.switchery {
+    border: 1px solid #808080;
+    background-color: #808080;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-block;
+    height: 15px;
+    position: relative;
+    vertical-align: middle;
+    width: 30px;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.switchery > small {
+    background: #fff;
+    border-radius: 100%;
+    height: 15px;
+    position: absolute;
+    top: 0px;
+    width: 15px;
+}
+.switchery.on:hover > small {
+    background-color:#c1f9ff;
+}
+.switchery:hover > small {
+    background-color:#efefef;
+}
+.switchery.on {
+    border: 1px solid #5bb8b7;
+    background-color: #1ececc;
+    right: 0px;
+}
+.switchery.on > small {
+    right: 0px;
+    border: none
+}
+.switchery.inherit {
+    border: 1px solid #e4e4e4;
+    background-color: #e4e4e4;
+    right: 0px;
+}
+.switchery.inherit > small {
+    right: 0px;
+    border: none
+}
+
+#range-chart g.y {
+    display: none;
+}
+
+.sk-spinner-fading-circle.sk-spinner {
+    margin: 0 auto;
+    width: 20px;
+    height: 50px;
+    position: relative;
+}
