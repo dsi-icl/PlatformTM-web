@@ -81,7 +81,7 @@ angular.module('eTRIKSdata.explorer')
             getDownloads: function(observations, projectId) {
                 console.log(angular.toJson(observations))
                 return $http({
-                    url:serviceBase+'api/export/' + projectId,
+                    url:serviceBase+'export/' + projectId,
                     method:'POST',
                     data: angular.toJson(observations)
                 })

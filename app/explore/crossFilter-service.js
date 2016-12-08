@@ -882,6 +882,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
                 ClinicalCf.filterBySubjects(filteredIds);
                 AssayCf.filterBySubjects(filteredIds);
+
             }else if(xfFiltered.getXFname()  == 'ClinicalCf'){
                 console.log("clinical filtered");
 

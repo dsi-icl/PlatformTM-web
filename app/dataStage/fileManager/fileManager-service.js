@@ -17,9 +17,12 @@
             //if(!dir) dir="top"
 
             dir = dir.replace("/","_")
-            console.log(dir);
+
+
+
+            console.log(window.encodeURIComponent(serviceBase + 'files/project/'+projectId+'/uploadedFiles/'+dir));
             return $http({
-                url: serviceBase + 'api/files/projects/'+projectId+'/uploadedFiles/'+dir,
+                url: serviceBase + 'files/projects/'+projectId+'/uploadedFiles/'+dir,
                 method: 'GET'
             }).then(
                 function (response) {
@@ -33,7 +36,7 @@
         var _getDirectories= function (projectId) {
 
             return $http({
-                url: serviceBase + 'api/files/projects/'+projectId+'/directories/',
+                url: serviceBase + 'files/projects/'+projectId+'/directories/',
                 method: 'GET'
             }).then(
                 function (response) {
@@ -48,7 +51,7 @@
                 console.log('inside service',dirname)
 
             return $http({
-                url: serviceBase + 'api/files/projects/'+projectId+'/createdir/',
+                url: serviceBase + 'files/projects/'+projectId+'/createdir/',
                 method: 'POST',
                 data: { name: dirname }
 
@@ -64,7 +67,7 @@
         var _getDataTablePreview = function(fileId){
             console.log(fileId);
             var deferred = $q.defer();
-            $http.get(serviceBase + 'api/files/'+fileId+'/preview/')
+            $http.get(serviceBase + 'files/'+fileId+'/preview/')
                 .success(function (response) {
                     tableHeaders = response.header;
                     DTdata = response.data;

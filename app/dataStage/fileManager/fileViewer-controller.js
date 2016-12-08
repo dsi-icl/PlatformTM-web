@@ -32,15 +32,15 @@ function fileViewController($scope, $state, $stateParams, DTOptionsBuilder, file
         return fileService.getDataTableData()
         //return $resource('../data/dt.json').query().$promise;
     })
-        .withTableTools('lib/plugins/dataTables/copy_csv_xls_pdf.swf')
-        .withTableToolsButtons([
-            'copy',
-            'print', {
-                'sExtends': 'collection',
-                'sButtonText': 'Save',
-                'aButtons': ['csv', 'xls', 'pdf']
-            }
-        ])
+        //.withTableTools('lib/plugins/dataTables/copy_csv_xls_pdf.swf')
+        //.withTableToolsButtons([
+        //    'copy',
+        //    'print', {
+        //        'sExtends': 'collection',
+        //        'sButtonText': 'Save',
+        //        'aButtons': ['csv', 'xls', 'pdf']
+        //    }
+        //])
         .withPaginationType('simple')
         .withOption('scrollX', true)
 

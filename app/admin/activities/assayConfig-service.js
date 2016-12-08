@@ -10,7 +10,7 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
     var _getAssayTerms= function () {
 
         return $http({
-            url: serviceBase + 'api/terms/assay/measurementTypes/',
+            url: serviceBase + 'terms/assay/measurementTypes/',
             method: 'GET'
         }).then(
             function (response) {
@@ -24,7 +24,7 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
     var _getAssayFeatureTemplates= function(){
         
         return $http({
-            url: serviceBase + 'api/templates/assay/features',
+            url: serviceBase + 'templates/assay/features',
             method: 'GET'
         }).then(
             function (response) {
@@ -38,7 +38,7 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
     var _getAssaySampleTemplates= function(){
 
         return $http({
-            url: serviceBase + 'api/templates/assay/samples',
+            url: serviceBase + 'templates/assay/samples',
             method: 'GET'
         }).then(
             function (response) {
@@ -53,7 +53,7 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
     var _getAssayDataTemplates= function(){
 
         return $http({
-            url: serviceBase + 'api/templates/assay/data',
+            url: serviceBase + 'templates/assay/data',
             method: 'GET'
         }).then(
             function (response) {
@@ -65,26 +65,26 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
         )
     };
 
-    var _assayResource =  $resource(serviceBase+'api/assays/:assayId',{},{
+    var _assayResource =  $resource(serviceBase+'assays/:assayId',{},{
             update:{
                 method: 'PUT',
                 params: {assayId: '@id'}
             }
         });
 
-    var _activityResource = $resource(serviceBase+'api/activities/:activityId',{},{
+    var _activityResource = $resource(serviceBase+'activities/:activityId',{},{
         update:{
             method: 'PUT',
             params: {activityId: '@id'}
         },
         getProjectActivities:{
             method: 'GET',
-            url : serviceBase+'api/projects/:projectId/activities',
+            url : serviceBase+'projects/:projectId/activities',
             isArray : true
         }
     });
     
-    var _datasetResource = $resource(serviceBase+'api/templates/clinical/:datasetId',{},{
+    var _datasetResource = $resource(serviceBase+'templates/clinical/:datasetId',{},{
         update:{
             method: 'PUT',
             params: {datasetId: '@id'}
@@ -95,7 +95,7 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
         },
         getDatasetForActivity:{
             method: 'GET',
-            url : serviceBase+'api/activities/:activityId/datasets/:datasetId',
+            url : serviceBase+'activities/:activityId/datasets/:datasetId',
             isArray : false
             /*params:{studyId}*/
         }

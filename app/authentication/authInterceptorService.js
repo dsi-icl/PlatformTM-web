@@ -9,6 +9,7 @@ function authInterceptorService($q, $injector,$location, localStorageService){
 
     var _request = function (config) {
 
+        //console.log("HEEEEEEYYYYY",config.headers);
         config.headers = config.headers || {};
 
         var authData = localStorageService.get('authorizationTFAData');

@@ -12,7 +12,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
     var tableHeaders;
     var DTdata;
 
-    var _myDatasetResource =  $resource(serviceBase+'api/mydatasets/:datasetId',{},{
+    var _myDatasetResource =  $resource(serviceBase+'mydatasets/:datasetId',{},{
         update:{
             method: 'PUT',
             params: {datasetId: '@id'}
@@ -28,7 +28,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     var _getUserDatasets = function(projectId){
         return $http({
-            url: serviceBase + 'api/mydatasets/projects/'+projectId+'/',
+            url: serviceBase + 'mydatasets/projects/'+projectId+'/',
             method: 'GET'
         }).then(
             function(response){
@@ -81,7 +81,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     var _getDataFields = function(projectId){
         return $http({
-            url: serviceBase + 'api/apps/exportwizard/projects/'+projectId+'/datafields/',
+            url: serviceBase + 'apps/exportwizard/projects/'+projectId+'/datafields/',
             method: 'GET'
         }).then(
             function (response) {
@@ -97,7 +97,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     var _getFieldFilter = function(projectId,field){
         return $http({
-            url: serviceBase + 'api/apps/exportwizard/projects/'+projectId+'/datafields/valueset',
+            url: serviceBase + 'apps/exportwizard/projects/'+projectId+'/datafields/valueset',
             method: 'POST',
             data: angular.toJson(field)
         }).then(
@@ -119,7 +119,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
         var dataset = userDataset.dataset;
 
 
-        $http.post(serviceBase + 'api/apps/exportwizard/projects/'+projectId+'/preview/',dataset)
+        $http.post(serviceBase + 'apps/exportwizard/projects/'+projectId+'/preview/',dataset)
             .success(function (response) {
                 tableHeaders = response.header
                 DTdata = response.data
@@ -147,7 +147,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
 
         return $http({
-            url:serviceBase + 'api/projects/'+projectId+'/export/tree/',
+            url:serviceBase + 'projects/'+projectId+'/export/tree/',
             method:'POST',
             data:angular.toJson(criteria)
         }).then(
@@ -161,7 +161,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
     //provision for re-arranged tree
     var _sendTreeData = function(observations, projectId, data){
         return $http({
-            url:serviceBase+'api/export/sample',
+            url:serviceBase+'export/sample',
             method:'POST',
             data: angular.toJson(data)
         }).then(
