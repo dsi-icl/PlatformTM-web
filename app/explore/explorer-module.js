@@ -32,7 +32,14 @@ angular.module('biospeak.explorer',[
                                     },
                                     {
                                         files: ['lib/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
-                                    }
+                                    },
+                                    {
+                                        files: ['lib/plugins/moment/js/moment.min.js']
+                                    },
+                                    {
+                                        name: 'datePicker',
+                                        files: ['lib/plugins/angular-datepicker/css/angular-datepicker.css','lib/plugins/angular-datepicker/js/angular-datepicker.js']
+                                    },
                                 ]);
                             },
                             loadDependencies: ['$ocLazyLoad',function($ocLazyLoad){

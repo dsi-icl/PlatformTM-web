@@ -84,7 +84,7 @@ function AssayConfigService($http, $q, $resource, ngAppConfig) {
         }
     });
     
-    var _datasetResource = $resource(serviceBase+'api/Dataset/:datasetId',{},{
+    var _datasetResource = $resource(serviceBase+'api/templates/clinical/:datasetId',{},{
         update:{
             method: 'PUT',
             params: {datasetId: '@id'}

@@ -24,9 +24,9 @@ function authService($http, $q, localStorageService, ngAppConfig){
 
         var deferred = $q.defer();
 
-        $http.post(serviceBase + 'api/accounts/signup', registration)
+        $http.post(serviceBase + 'api/accounts/register', registration)
             .success(function (response) {
-                console.log("Inside http post succes")
+                console.log("Inside http post success")
                 deferred.resolve(response);
             })
 

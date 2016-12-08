@@ -10,9 +10,34 @@ angular.module('eTRIKSdata.dcPlots')
         }
     })*/
 
-    /**
-     * chartingButton requires obs.o3id, obs.isActive, obs.id
-     */
+/**
+ * groupChartButton
+ */
+    .directive('groupChartButton',function($compile){
+        return{
+            restrict: 'A',
+            scope:{
+                obsGrps:'=',
+                chartingOpts:'=',
+            },
+            link: function(scope, element){
+                element.bind("click", function() {
+                    console.log(scope.obsGrps, ' CLICKED')
+                    scope.obsGrps.isLocked = true;
+
+
+                })
+            }
+        }
+    })
+/**
+ * chartingButton requires obs.o3id, obs.isActive, obs.id
+ * cardId , chartId
+ * chartContainerId
+ * chartingOptions (chartService, xfService, chartGroup ...etc) only to pass to dc-chart directive
+ *
+ * o3 (Text to display as name for the observation
+ */
     .directive('chartingButton', function($compile){
         return {
             restrict: 'EA',
@@ -21,133 +46,60 @@ angular.module('eTRIKSdata.dcPlots')
                 chartingOpts:'=',
                 quals: '='
             },
-            //require: '?slickSlider',
-            controller: function($scope, $compile, $http) {
-                /*this.cs = ['ibrahim','emam','assem','zeinab','adel'];
-                this.sliderElementId = $scope.obs.code+"_slider";
-                this.sliderElementId = $scope.obs.code+"_slider";
-                this.obs = $scope.obs
-                this.addChart = function(c){
-                    $scope.cs.push('MEME');
-                    console.log('inside add chart', this.sliderElementId)
-                    //angular.element(document.getElementById(this.sliderElementId)).slick('slickAdd','<div>MEMEMEMEME</div>');
-                }*/
-            },
-            //controllerAs: 'chartingButton',
-
-            link: function(scope, element, attrs, slickCtrl){
-
-                //var control = element.parent().find('.slider-control:first')
-                //scope.chartingButton = chartingButton;
-
-                //console.log('slider control ',scope.obs.code)
-                /*scope.$watch('charts', function(newVal) {
-                    if (newVal) {
-
-                    }
-                })*/
-
-                //console.log(element)
-
-                //element.find('a:first').bind("click", function(){
+            link: function(scope, element){
                 element.bind("click", function(){
-
                     console.log(scope.obs,' CLICKED')
-                    //console.log(scope)
 
-                    var icon = element.find('i:first');
-                    icon.toggleClass('fa-toggle-off').toggleClass('fa-toggle-on');
-
-                    //var elemId = attrs.id+'-chart';
-                    var isActive = scope.obs.isActive === true
-
-                    //console.log(scope.chartingOpts.chartContainerId)
-                    //console.log(isActive)
-
-                    var sliderElementId = scope.obs.o3id+"_slider";
-                    var chartId = scope.obs.o3id+"_chart";
-                    //console.log(sliderElementId)
-                    //console.log(!document.getElementById(sliderElementId))
+                    var isActive = scope.obs.isActive === true;
+                    var chartId = scope.obs.id+"_chart";//scope.obs.o3id+"_"+scope.obs.qO2id+"_chart";
+                    var cardId = scope.obs.o3id+"_card";
 
 
-                    if(!document.getElementById(sliderElementId)){
-                        //if(isActive){
-                            //console.log(scope.obs.code+"_slider")
-                            scope.$apply(function(){
-                                angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
-                                    .prepend(
+                    if(!document.getElementById(cardId)){
+                        scope.$apply(function(){
+                            angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
+                                .prepend(
                                     $compile(
-                                        '<div id="'+chartId+'" style="width: 320px; margin-left:20px; margin-right:20px;">'+
-                                            '<h2 class="border-bottom">{{obs.o3}}</h2>'+
-                                            '<div> ' +
-                                                '<a style="font-size:12px" class="btn btn-xs btn-outline"' +
-                                                    'charting-button  obs="q" ' +
-                                                    'ng-init="q.isActive = false" ' +
-                                                    'ng-click="q.isActive = !q.isActive"  ' +
-                                                    'charting-opts="chartingOpts"'+
-                                                    'ng-repeat="q in quals">' +
-                                                    '<i class="fa fa-toggle-off"></i> {{q.qO2_label}} </a>' +
-                                            '</div>'+
-                                            '<div>' +
-                                                '<div id="'+sliderElementId+'" slick-slider="{dots: true, arrows: true, draggable:false, slidesToShow:1, infinite:false, variableWidth:true}" >' +
-                                                    '<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>'+
-                                                '</div>'+
-                                            '</div>' +
-                                        '</div>')(scope)
+                                        '<div class="cardlock" id="'+ cardId +'">'+
+                                            // '<div class="">'+
+                                                '<div class="card">'+
+                                                    '<h1 class="border-bottom">{{obs.o3}}</h1>'+
+                                                    '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  class="qualifier-menu"></dc-chart-menu>'+
+                                                '<div>' +
+                                            // '</div>' +
+                                        '</div>'
+                                    )(scope)
                                 )
-                            })
-                       // }
+                        })
                     }
 
-                    else{
-                        console.log("slider exists already")
-                        if(!isActive){
-                            console.log('Removing chart')
-                            angular.element(document.getElementById(chartId)).remove();
-                            return;
-                        }
-                        //else{
-                            console.log('adding chart to obs', scope.obs.id)
 
-                            //scope.$apply(function(){
-                            //    angular.element(document.getElementById(sliderElementId))
-                            //        .slick('slickAdd','<div>{{obs.code}}</div>');
-                            //})
-                            //var charthtml = $compile('<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>')
-                            //angular.element(document.getElementById(sliderElementId)).slick('unslick');
-                            //scope.$apply(function(){
-
-                        if(!angular.element(document.getElementById(sliderElementId))){
-                            console.log("IM HEEEERRRREEEEEE");
+                    if(!document.getElementById(chartId)){
                             scope.$apply(function(){
-                                angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
+                                angular.element(document.getElementById(cardId).querySelector('div.card'))
                                     .append(
                                     $compile(
-                                        '<div style="width: 300px; margin-left:20px;margin-right:30px;" id="'+sliderElementId+'" ' +
-                                        'slick-slider="{dots: true, arrows: true, draggable:false, slidesToShow:1, infinite:false, variableWidth:true}" '+
-                                        //'style=" padding: 0px 30px 0px 30px;">' +
-                                        '<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>'+
-                                            //'<div style="width: 250px;" ng-repeat="c in chartingButton.cs">{{c}}</div>'+
-                                        '</div>')(scope)
+                                        '<div id="'+ chartId +'"class="chart" ng-switch="obs.dataType">' +
+                                            '<dc-time-chart ng-switch-when="dateTime" charting-opts="chartingOpts" obs="obs"></dc-time-chart>'+
+                                            '<dc-chart ng-switch-default charting-opts="chartingOpts" obs="obs"></dc-chart>'+
+                                        '</div>'
+                                    )(scope)
                                 )
-                            })
-                        }
-                        else
-                                angular.element(document.getElementById(sliderElementId))
-                                    .slick('slickAdd',$compile('<dc-chart charting-opts="chartingOpts" obs="obs"></dc-chart>')(scope));
-                        /*angular.element(document.getElementById(sliderElementId))
-                            .slick('changeSlide','next');*/
-                            //})
-                            //angular.element(document.getElementById(sliderElementId)).slick('reinit');
-                            //console.log(slickCtrl);
-                        //}
-
+                            });
                     }
+                    else{
+                        console.log("chart exists already")
+                        if(!isActive){
+                            console.log('Removing chart')
+                            angular.element(document.getElementById(cardId)).remove();
 
-
-                    //console.log(element.select(i).class)
-
-
+                            //console.log(angular.element(document.getElementById(cardId).querySelector('div.card')))
+                            //console.log(angular.element(document.getElementById(cardId).querySelector('div.card').querySelector('div.chart')))
+                            /*if(!angular.element(document.getElementById(cardId).querySelector('div.card').querySelector('div.chart')))
+                                angular.element(document.getElementById(cardId)).remove();*/
+                            return;
+                        }
+                    }
                 });
 
 
@@ -155,20 +107,34 @@ angular.module('eTRIKSdata.dcPlots')
         }
     })
 
+    .directive('groupControl',function($compile){
+        return{
+            restrict:'EA',
+            scope:{
+                grp:'='
+            },
+            link: function(scope,element){
+                element.bind("ifchanged",function(){
+                    console.log(scope.grp)
+                })
+            }
+        }
+    })
 
-    .directive('dcChartSlider',function($timeout){
+
+    /*.directive('dcChartContainer',function($timeout){
         return {
             restrict: 'EA',//add a control here and
             scope:true,
-           /* template:
-            '<div style="width: 250px;">' +
-            '<slick id="{{val}}_slider" ' +
-            'dots="true" slides-to-show="1" center-mode="false" ' +
-            'variable-width="true"> ' +
-                //'<dc-chart ng-repeat="chart in charts"></dc-chart>'+
-                '<div style="width: 250px;" ng-repeat="c in cs">{{c}}</div>'+
-            '</slick>' +
-            '</div>',*/
+            template:
+                '<div class="anchor">'+
+                    '<div id="chartslock">'+
+                        '<div class="anchor">'+
+                            '<div id="charts">'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>',
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
                 var charts = [];
 
@@ -204,75 +170,6 @@ angular.module('eTRIKSdata.dcPlots')
         }
     })
 
-    .directive('dcChartSliderControl',function(){
-        return {
-
-            //scope:{
-            //    target: '@',
-            //    obs: '@',
-            //    value: '='
-            //},
-            scope: true,
-            restrict: 'EA',
-
-
-
-
-            /*transclude: true,*/
-            //require:'^chartingButton',
-            //templateUrl:'explore/dc/partials/chart_slider.html',
-            controller: function($scope){
-
-            },
-            controllerAs: 'dcChartSliderControl',
-            //require: '^chartingButton',
-            link : function(scope,element,attrs,chartCtrl){
-                //var optionsKey = attrs.gridsterItem,
-                //    options;
-
-               // var plotter = controllers[0],
-               //     slidercontrol = controllers[1];
-
-                //console.log(plotter)
-                //console.log(slidercontrol)
-
-                //scope.plotter = plotter;
-                //console.log('HERE');
-                element.bind("change", function(){
-                    console.log('slider control',scope)
-                    console.log('slider element ',element)
-                    //console.log('required controeller ')
-                    console.log(scope)
-                    chartCtrl.addChart(scope.obs.code)
-
-                    //targEle = angular.element(document.getElementById(scope.target))
-
-                    if(element.checked){
-                        console.log('element checked')
-                        //Add a slide to the dc-chartscroll-panel add dc-chart to
-                        //will need from the scope:
-                        //the qualifier , the slide panel and basically add dc-chart with the qualifier
-
-                        chartControl.addChart(element.value)
-                        /*targEle.slick('slickAdd','<dc-chart></dc-chart>');
-
-                        //selecting the parent slickslider element
-                        scope.$apply(function(){
-                            angular.element(document.getElementById(scope.container))
-                                .append(
-                                $compile(
-                                    '<div  style=" padding: 0px 30px 0px 30px;" id="'+elemId+'"> ' +
-                                    '<dc-chart-scroll-panel></dc-chart-scroll-panel>'+
-                                    '</div>')(scope)
-                            )
-                        })*/
-
-                    }
-                })
-            }
-        }
-    })
-
     .directive('slickSlider',function($timeout){
         return {
             restrict: 'A',
@@ -292,7 +189,7 @@ angular.module('eTRIKSdata.dcPlots')
                 });
             }
         }
-    })
+    })*/
 
     /**
      *
@@ -303,11 +200,10 @@ angular.module('eTRIKSdata.dcPlots')
         return {
             restrict: 'EA',
             replace:true,
-            /*scope:{
+            scope:{
                 obs:'=',
-                chartingOpts:'=',
-                variable: '@'
-            },*/
+                chartingOpts:'='
+            },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
 
                 var chartService = $injector.get($scope.chartingOpts.DCchartService);
@@ -324,58 +220,143 @@ angular.module('eTRIKSdata.dcPlots')
 
                 var chartDataType = 'Count';//$scope.role;
 
+                var from,to;
+                var plot;
+
+                $scope.done = false;
+
                 //console.log('inside dc-chart controller')
                 //console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp)
 
-                chartService.getDCchart($scope.chartingOpts.projectId,$scope.obs.code,$scope.obs.id,$scope.chartingOpts.chartGroup,xfilterService, chartDataType,$scope.obs)
+                //obs.id is a unique id for the requested observation and the qualifier requested to chart
+                //(e.g. HEADACHE [AEOCCUR] , HEADHACHE [AESEV] ... it's a combination of the object of observation and a qualifier
+                // could replace with o3id_qo2id
+                //used for uniquely identifying charts for erquested observations AND also used as xfilter dimension key
+                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,chartDataType,$scope.obs)
                     .then(
                     function(chart){
-                        $scope.chartToPlot = chart;
+
+                        plot = chart
+                        $scope.done = true;
+
+
+                        if(plot.chartType == 'barChart'){
+                            console.log("calling the reangeChart")
+                            chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,"rangeChart",$scope.obs)
+                                .then(function(chart2){
+                                    $scope.rangeChart = chart2
+
+                                    $scope.chartToPlot = plot;
+
+                                    //console.log("back from both charts", chart, chart2)
+                                })
+                        }else
+                            $scope.chartToPlot = plot;
                     },
                     function(result){
                         console.log("Failed to create DC chart",result);
                     }
                 );
 
+
+
             }],
             template:
-            '<div style="outline: none;">'+
-                '<div>'+
-                    '<div class="pull-left chart-title">'+
+
+            '<div class="obs-chart">'+
+                    '<div class="chart-title">'+
                         '<h5>{{obs.qO2_label}}</h5>'+
-
                     '</div>'+
-                    /*'<div ng-hide="chartingOpts.chartGroup == \'subject\'" class="pull-right chart-options">'+
+                    '<div ng-hide="done" style="margin-top:70px" class="sk-spinner sk-spinner-fading-circle"> ' +
+                        '<div class="sk-circle1 sk-circle"></div> ' +
+                        '<div class="sk-circle2 sk-circle"></div> ' +
+                        '<div class="sk-circle3 sk-circle"></div> ' +
+                        '<div class="sk-circle4 sk-circle"></div> ' +
+                        '<div class="sk-circle5 sk-circle"></div> ' +
+                        '<div class="sk-circle6 sk-circle"></div> ' +
+                        '<div class="sk-circle7 sk-circle"></div> ' +
+                        '<div class="sk-circle8 sk-circle"></div> ' +
+                        '<div class="sk-circle9 sk-circle"></div> ' +
+                        '<div class="sk-circle10 sk-circle"></div> ' +
+                        '<div class="sk-circle11 sk-circle"></div> ' +
+                        '<div class="sk-circle12 sk-circle"></div> ' +
+                    '</div>'+
+                    /*'<div  class="chart-options">'+
                         '<ul>'+
-                            '<li> <a class="count-chart"> <i class="fa fa-bar-chart-o"></i></a></li>'+
-                            '<li> <a class="box-chart"> <i class="flat-icon flaticon-candlestick"></i></a></li>'+
-                            '<li> <a class="zoom"> <i class="fa fa-search-plus"></i></a></li>'+
+                            // '<li> <a class="count-chart"> <i class="fa fa-bar-chart-o"></i></a></li>'+
+                            // '<li> <a class="box-chart"> <i class="flat-icon flaticon-candlestick"></i></a></li>'+
+                            // '<li> <a class="zoom"> <i class="fa fa-search-plus"></i></a></li>'+
+                            // '<li>' +
+                            //      '<div class="form-group" id="data_5"> ' +
+                            //         // '<label>Date Range</label> ' +
+                            //         '<div class="form-group"> ' +
+                            //             '<label class="col-sm-1 control-label">From:</label>'+
+                            //             '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterFrom" auto-close="true" ng-model="from"> </input></div>' +
+                            //             '<label class="col-sm-1 control-label">To:</label>'+
+                            //             '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterTo" auto-close="true" ng-model="to" > </input></div>' +
+                            //             // '<span><i uib-dropdown-toggle class="fa fa-calendar"></i></span>'+
+                            //             // '<div> ' + '<span>Selected date: <br/> {{(a|date)}} - {{(b|date)}} </span> ' + '</div> ' +
+                            //             // '<div uib-dropdown-menu> ' +
+                            //             //     '<div date-range format="D MMM YYYY HH:mm" start="a" end="b" auto-close="false"></div> ' +
+                            //             // '</div> ' +
+                            //         '</div>'+
+                            //         '<a ng-click="filterChart()" class="btn btn-lnk btn-xs"><i class="fa fa-filter"></i></a>'+
+                            //      '</div>'+
+                            //     // '<div class="input-group date">'+
+                            //     //     '<input type="datetime" class="form-control" date-time ng-model="sampleDate" format="yyyy-MM-dd HH:mm" view="month" auto-close="true">'+
+                            //     //     '<span class="input-group-addon"><i class="fa fa-calendar"></i></span>'+
+                            //     // '</div>'+
+                            // '</li>'+
                         '</ul>'+
-                    '</div>'+*/
-                '</div>'+
-                '<div class="obs-chart" style="width:320px"> ' +
-                    '<span class="filter"></span> <a class="reset">reset</a> '+
-                '</div>'+
+                    '</div>'+
+*/
 
-            '</div>'
-            ,
+                    '<div id="mainChart">' +
+                        '<div class="chartControls"> ' +
+                            '<span class="reset" style="visibility: hidden;">' +
+                            ' Filtered by: <span class="filter"></span>' +
+                                '<a> reset </a> ' +
+                            '</span>'+
+                        '</div>'+
+                        '<div class="clearfix"></div>'+
+                    '</div>'+
+
+
+                    '<div id="range-chart"></div>'+
+            '</div>',
             link: function (scope, element, attrs) {
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
                         var groupChart = scope.chartingOpts.chartGroup
                         //var d = angular.element(document.getElementById(sliderElementId))
-                        scope.chartToPlot.anchor(element[0].querySelector('div.obs-chart'), groupChart);
+                        scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), groupChart);
+
+                        if(scope.rangeChart){
+                            console.log('rangeChart is there',scope.rangeChart)
+                            scope.rangeChart.anchor(element[0].querySelector('#range-chart'), groupChart);
+                            scope.chartToPlot.rangeChart(scope.rangeChart);
+
+                            //scope.chartToPlot.rangeChart(scope.rangeChart)
+                        }
 
 
-                        var d = angular.element(element[0].querySelector('div.obs-chart').querySelector('div.chart-options'));
-                        d.css('display', 'inherit');
+
+                        var d = angular.element(element[0].querySelector('div.chart-options'));
+                        d.css('display', 'inline-block');
 
                         //Set reset link
-                        var a = angular.element(element[0].querySelector('div.obs-chart').querySelector('a.reset'));
-                        a.attr('href', 'javascript:;');
-                        a.css('display', 'none');
+                        var a = angular.element(element[0].querySelector('div.chartControls').querySelector('span.reset').querySelector('a'));
                         a.on('click', function () {
+                            console.log('RESETTING FILTER')
+                            //scope.chartToPlot.filterAll(groupChart);
+                            if(scope.chartToPlot.chartType == 'barChart')scope.chartToPlot.focus();
                             scope.chartToPlot.filterAll(groupChart);
+                            scope.chartToPlot.render();
+                            if(scope.rangeChart){
+                                //scope.rangeChart.focus();
+                                scope.rangeChart.filterAll(groupChart);
+                                //scope.rangeChart.render();
+                            }
                             dc.redrawAll(groupChart);
                         });
 
@@ -409,33 +390,220 @@ angular.module('eTRIKSdata.dcPlots')
                         //     //dc.redrawAll(groupChart);
                         // });
 
-                        /*element.on('filtered',function(chart, filter){
-
-                            console.log("===EVENT===CHART===FILTERED",chart.chartID())
-                            scope.chartservice.propagateFilter(scope.chartingOpts.xfilterService);
-
-                            scope.filtersService.updateFilters(scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
-                            //console.log("filters for " + $scope.chartingOpts.chartGroup,chart.dimName,chart.filters())
 
 
-                            //dc.renderAll("Clinical");
-                        })*/
+                        scope.chartToPlot.render();
+                        if(scope.rangeChart)
+                            scope.rangeChart.render();
 
-                        scope.chartToPlot.render()
-
-                        //console.log('chartId',scope.chartToPlot.chartID())
-                        //console.log('chart group inside directive',scope.chartToPlot.chartGroup())
-                        //console.log('subject cf size',scope.chartCFservice.getCountData().size())
-                        //console.log('subject group',scope.chartCFservice.subjDimension().group())
-                        //console.log('subject groupAll',scope.chartCFservice.subjDimension().group().all())
-                        //console.log('subject dimension groupAll value',scope.chartCFservice.subjDimension().groupAll().value())
-                        //console.log('Group chart ', groupChart)
-                        //dc.renderAll(groupChart);
-                        //dc.redrawAll();
                     }
                 })
             }
         };
+    })
+
+    .directive('dcTimeChart', function () {
+        return {
+            restrict: 'EA',
+            replace:true,
+            scope:{
+                obs:'=',
+                chartingOpts:'='
+            },
+            controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
+
+                var chartService = $injector.get($scope.chartingOpts.DCchartService);
+                $scope.chartservice = chartService;
+
+                var xfilterService = $injector.get($scope.chartingOpts.xfilterService);
+                $scope.xfService = xfilterService;
+
+                /*var expService = $injector.get($scope.chartingOpts.exportService);
+                 $scope.expService = expService;*/
+
+                /*var filtersServ = $injector.get($scope.chartingOpts.filtersService);
+                 $scope.filtersService = filtersServ;*/
+
+                var chartDataType = 'Count';//$scope.role;
+
+                var from,to;
+                var plot;
+
+                //console.log('inside dc-chart controller')
+                //console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp)
+
+                //obs.id is a unique id for the requested observation and the qualifier requested to chart
+                //(e.g. HEADACHE [AEOCCUR] , HEADHACHE [AESEV] ... it's a combination of the object of observation and a qualifier
+                // could replace with o3id_qo2id
+                //used for uniquely identifying charts for erquested observations AND also used as xfilter dimension key
+                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,chartDataType,$scope.obs)
+                    .then(
+                        function(chart){
+                            plot = chart
+
+
+
+                                $scope.chartToPlot = plot;
+                        },
+                        function(result){
+                            console.log("Failed to create DC chart",result);
+                        }
+                    );
+
+                $scope.filterFrom = function(fromto,date){
+                    console.log(fromto,date._d);
+                    from = date._d;
+
+                }
+                $scope.filterTo = function(fromto,date){
+                    console.log(fromto,date._d);
+                    to = date._d;
+                }
+                $scope.filterChart = function(){
+                    plot.filter(dc.filters.RangedFilter(from,to));
+                    dc.redrawAll($scope.chartingOpts.chartGroup);
+
+
+                }
+
+            }],
+            template:
+            '<div class="obs-chart">'+
+
+
+            '<div  class="chart-options">'+
+            '<ul>'+
+
+            '<li>' +
+            '<div  id="data_5"> ' +
+            // '<label>Date Range</label> ' +
+            '<div > ' +
+            '<label class="col-sm-1 control-label">From:</label>'+
+            '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterFrom" auto-close="true" ng-model="from"> </input></div>' +
+            '<label class="col-sm-1 control-label">To:</label>'+
+            '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterTo" auto-close="true" ng-model="to" > </input></div>' +
+            // '<span><i uib-dropdown-toggle class="fa fa-calendar"></i></span>'+
+            // '<div> ' + '<span>Selected date: <br/> {{(a|date)}} - {{(b|date)}} </span> ' + '</div> ' +
+            // '<div uib-dropdown-menu> ' +
+            //     '<div date-range format="D MMM YYYY HH:mm" start="a" end="b" auto-close="false"></div> ' +
+            // '</div> ' +
+            '</div>'+
+            '<a ng-click="filterChart()" class="btn btn-lnk btn-xs"><i class="fa fa-filter"></i></a>'+
+            '</div>'+
+            // '<div class="input-group date">'+
+            //     '<input type="datetime" class="form-control" date-time ng-model="sampleDate" format="yyyy-MM-dd HH:mm" view="month" auto-close="true">'+
+            //     '<span class="input-group-addon"><i class="fa fa-calendar"></i></span>'+
+            // '</div>'+
+            '</li>'+
+            '</ul>'+
+            '</div>'+
+
+
+            '<div id="mainChart">' +
+            '<div class="chartControls"> ' +
+            '<span class="reset" style="visibility: hidden;">' +
+            ' Filtered by: <span class="filter"></span>' +
+            '<a> reset </a> ' +
+            '</span>'+
+            '</div>'+
+            '<div class="clearfix"></div>'+
+            '</div>'+
+
+
+
+            '</div>',
+            link: function (scope, element, attrs) {
+                scope.$watch('chartToPlot', function(newVal) {
+                    if (newVal) {
+                        var groupChart = scope.chartingOpts.chartGroup
+                        //var d = angular.element(document.getElementById(sliderElementId))
+                        scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), groupChart);
+
+
+
+
+
+                        var d = angular.element(element[0].querySelector('div.chart-options'));
+                        d.css('display', 'inline-block');
+
+                        //Set reset link
+                        var a = angular.element(element[0].querySelector('div.chartControls').querySelector('span.reset').querySelector('a'));
+                        a.on('click', function () {
+                            console.log('RESETTING FILTER')
+                            //scope.chartToPlot.filterAll(groupChart);
+                            if(scope.chartToPlot.chartType == 'barChart')scope.chartToPlot.focus();
+                            scope.chartToPlot.filterAll(groupChart);
+                            scope.chartToPlot.render();
+                            if(scope.rangeChart){
+                                //scope.rangeChart.focus();
+                                scope.rangeChart.filterAll(groupChart);
+                                //scope.rangeChart.render();
+                            }
+                            dc.redrawAll(groupChart);
+                        });
+
+
+
+                        scope.chartToPlot.render();
+
+                    }
+                })
+            }
+        };
+    })
+
+    .directive('dcChartMenu', function() {
+        return {
+            restrict: 'EA',
+            scope: {
+                obs: '=',
+                chartingOpts: '=',
+                quals:'='
+            },
+            replace:true,
+            controller: function ($scope, $element) {
+                console.log('menu scope',$scope.obs, $scope.quals)
+
+                /*if(!$scope.quals) return
+
+                for(var i=0; i<$scope.quals.length; i++){
+
+                    // ObsGrp.obsRequest.termIds = ObsGrp.obsRequest.termIds.concat(ObsGrp.observations[i].defaultObservation.termIds);
+                    // ObsGrp.obsRequest.o3code = ObsGrp.observations[i].defaultObservation.o3code
+                    // ObsGrp.obsRequest.qO2 = ObsGrp.observations[i].defaultObservation.qO2
+                    // ObsGrp.obsRequest.qO2_label = ObsGrp.observations[i].defaultObservation.qO2_label
+                    // ObsGrp.obsRequest.dataType = ObsGrp.observations[i].defaultObservation.dataType
+                    // ObsGrp.obsRequest.id = ObsGrp.observations[i].defaultObservation.id;
+
+                    $scope.quals[i].termIds = $scope.obs.termIds;
+                    $scope.quals[i].o3code = $scope.obs.o3code;
+                    $scope.quals[i].o3 = $scope.obs.o3;
+                    $scope.quals[i].o3id = $scope.obs.o3id;
+                    $scope.quals[i].id = $scope.obs.o3code + " ["+$scope.quals[i].qO2+"]";
+
+                    console.log($scope.quals[i])
+
+                }*/
+            },
+            template:
+            '<div class="dropdown" uib-dropdown>'+
+                '<a class="dropdown-toggle" href uib-dropdown-toggle>'+
+                    '<i class="fa fa-ellipsis-v"></i>'+
+                '</a>'+
+                '<ul class=" dropdown-menu dropdown-menu-right plotting-options"> ' +
+                    '<li class="dropdown-header">Chart Value for {{obs.o3}}</li>'+
+                    '<li ng-repeat="var in quals">' +
+                        '<div  class="checkbox">'+
+                            '<input id="checkbox_{{var.id}}" type="checkbox" ' +
+                            'charting-button  obs="var"  ' +
+                            'ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive" ' +
+                            'charting-opts="chartingOpts" >' +
+                            '<label uib-tooltip="{{var.qO2_label}}" for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +
+                        '</div>' +
+                    '</li> ' +
+                '</ul>'+
+            '</div>'
+        }
     })
 
     .directive('dcDatatable', function () {
@@ -462,6 +630,7 @@ angular.module('eTRIKSdata.dcPlots')
                     if(newval){
                         //console.log(newval)
                         var chart = scope.chartservice.createDCtable(scope.xfService,scope.module)
+                        console.log('doing it for subject and module is',scope.module)
                         chart.anchor(element[0],scope.grp);
                         //var chart = scope.cf.createDCtable()
                         //console.log(chart.columns());

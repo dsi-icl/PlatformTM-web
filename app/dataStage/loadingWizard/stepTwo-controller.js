@@ -24,7 +24,7 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
     console.log('Controller Two scope',$scope.vm,$stateParams)
     console.log('inside step two controller',$stateParams)
 
-    wizardService.getOriFileInfo(datasetId,fileId)
+    wizardService.checkValidTemplate(datasetId,fileId)
         .then(function(fileInfo){
             $scope.fileInfo = fileInfo
             if($scope.fileInfo.isStandard) 

@@ -15,6 +15,8 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster) 
         project.studies = [];
         vm.project = project;
 
+        toaster.pop('info', "Create a project first by editing Project Name", " ",8000);
+
     }
     else if($stateParams.projectId){
         ProjectService.getProjectResource.getProjectByAccession({ projectId: $stateParams.projectId }, function(response){
@@ -55,16 +57,29 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster) 
 
     vm.saveProject = function(){
         if(vm.project.isNew){
-            vm.project.$save(function(response) {
-                console.log("Project created",response);
-                toaster.pop('success', "SUCCESS", vm.project.name," was successfully CREATED.",8000);
-                $stateParams.projectId = response.accession;
-                $state.transitionTo($state.current, $stateParams, {
-                    reload: true,
-                    inherit: false,
-                    notify: true
+            if(vm.project.name && vm.project.title){
+                vm.project.$save(function(response) {
+                    console.log("Project created",response);
+                    toaster.pop('success', "SUCCESS", vm.project.name," was successfully CREATED.",8000);
+                    $stateParams.projectId = response.id;
+                    $state.transitionTo($state.current, $stateParams, {
+                        reload: true,
+                        inherit: false,
+                        notify: true
+                    });
                 });
-            });
+            }
+            else{
+                //toaster.pop('error',"", "Please enter the project 'Name' and 'Title' before creating the project.",8000);
+                toaster.pop({
+                    type: 'error',
+                    title: '',
+                    body: "Please enter the project 'Name' and 'Title' before creating the project.",
+                    showCloseButton: true
+                });
+            }
+
+
         }
         else{
             console.log("Project Edited");

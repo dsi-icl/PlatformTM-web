@@ -11,7 +11,7 @@
 }
 
 .pace .pace-progress {
-    background: #61b0ba;
+    background: #dd7a2a;
     position: fixed;
     z-index: 2000;
     top: 0;
@@ -44,8 +44,8 @@
     width: 14px;
     height: 14px;
     border: solid 2px transparent;
-    border-top-color: #61b0ba;
-    border-left-color: #61b0ba;
+    border-top-color: #dd7a2a;
+    border-left-color: #dd7a2a;
     border-radius: 10px;
     -webkit-animation: pace-spinner 400ms linear infinite;
     -moz-animation: pace-spinner 400ms linear infinite;

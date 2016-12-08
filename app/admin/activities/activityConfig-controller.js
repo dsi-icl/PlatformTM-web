@@ -79,7 +79,7 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
 
         vm.activity = activity;
         DatasetResource.query(function(response){
-            console.log("querying for datasets", response)
+            //console.log("querying for datasets", response)
             vm.clinicaldomains = response;
         })
     }

@@ -9,7 +9,8 @@ function ClinicalDataService($http,$q,ngAppConfig){
         return {
             getObservations: function(projectId,observations) {
                 return $http({
-                    url:serviceBase+'api/projects/'+projectId+'/data/clinical/observations',
+                    // url:serviceBase+'api/projects/'+projectId+'/data/clinical/observations',
+                    url:serviceBase+'api/apps/explore/projects/'+projectId+'/observations/clinical/search',
                     method:'POST',
                     data: angular.toJson(observations)
                 })
@@ -31,8 +32,9 @@ function ClinicalDataService($http,$q,ngAppConfig){
 
             getClinicalDataTree: function(projectId){
                 return $http({
-                    url: serviceBase+'api/visualise/clinicalTree/'+projectId,
-                    method:'GET'
+                    url: serviceBase+'api/apps/explore/projects/'+projectId+'/observations/clinical/browse',
+                    method:'GET',
+                    cache: true,
                 }).then(
                         function (response){
                             return {
@@ -40,6 +42,19 @@ function ClinicalDataService($http,$q,ngAppConfig){
                             }
                         }
                     )
+            },
+
+            getGroupObsNode: function(projectId,obsRequests){
+                return $http({
+                    url: serviceBase+'api/apps/explore/projects/'+projectId+'/observations/clinical/group',
+                    method:'POST',
+                    data:angular.toJson(obsRequests)
+                }).then(
+                    function (response){
+                        return response.data;
+
+                    }
+                )
             }
         }
     }

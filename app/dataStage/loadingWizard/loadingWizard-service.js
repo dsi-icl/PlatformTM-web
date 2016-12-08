@@ -12,10 +12,10 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var DTdata;
 
 
-    var _getOriFileInfo = function(datasetId,fileId){
+    var _checkValidTemplate = function(datasetId,fileId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'api/datasets/'+datasetId+'/OriFileInfo/'+fileId)
+        $http.get(serviceBase + 'api/datasets/'+datasetId+'/validate/'+fileId)
             .success(function (response) {
                 console.log("Inside http get success",response)
 
@@ -118,7 +118,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _mapFileToTemplate = function(datasetId,fileId,map){
         var deferred = $q.defer();
-        $http.post(serviceBase + 'api/Datasets/'+datasetId+'/mapToTemplate/file/'+fileId,map)
+        $http.post(serviceBase + 'api/datasets/'+datasetId+'/mapToTemplate/file/'+fileId,map)
             //$http.get('../data/dt.json')
             .success(function (response) {
                 //tableHeaders = response.header
@@ -153,7 +153,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _updateDatasetFile = function(dataset){
         var deferred = $q.defer();
-        $http.post(serviceBase + 'api/Datasets/'+dataset.id+'/update/',dataset)
+        $http.post(serviceBase + 'api/datasets/'+dataset.id+'/update/',dataset)
             .success(function (response) {
                 console.log("Inside http get success",response)
                 deferred.resolve(response);
@@ -163,7 +163,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _loadDataset = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/Datasets/'+datasetId+'/saveDataFile/file/'+fileId)
+        $http.get(serviceBase + 'api/datasets/'+datasetId+'/saveDataFile/file/'+fileId)
             .success(function (response) {
                 console.log("LOAD DATASET Inside http get success",response)
                 deferred.resolve(response);
@@ -221,7 +221,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     };*/
 
-    wizardServiceFactory.getOriFileInfo = _getOriFileInfo;
+    wizardServiceFactory.checkValidTemplate = _checkValidTemplate;
     wizardServiceFactory.getActivities = _getActivities;
     //wizardServiceFactory.getFileHeader = _getFileHeader;
     wizardServiceFactory.getTemplateMap = _getTemplateMap;

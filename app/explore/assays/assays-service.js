@@ -30,11 +30,10 @@ function assayDataService($http,$q,ngAppConfig){
 
             },
 
-
             getSampleData: function(projectId,assayId,reqObs) {
                 //console.log(angular.toJson(observations))
                 return $http({
-                    url:serviceBase+'api/projects/'+projectId+'/assays/'+assayId+'/samples',
+                    url:serviceBase+'api/assays/'+assayId+'/samples',
                     method:'GET'//,
                     //data: angular.toJson(observations)
                 }).then(
@@ -56,7 +55,7 @@ function assayDataService($http,$q,ngAppConfig){
 
             getAssays: function(projectId){
                 return $http({
-                    url:serviceBase+'api/projects/'+projectId+'/assays',
+                    url:serviceBase+'api/apps/explore/projects/'+projectId+'/assays/browse',
                     method:'GET'//,
                     //data: angular.toJson(observations)
                 }).then(
