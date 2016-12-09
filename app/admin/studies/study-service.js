@@ -9,7 +9,7 @@ function StudyService($resource, ngAppConfig) {
     console.log(serviceBase);
 
     
-    var _studyResource =  $resource(serviceBase+'api/studies/:studyId',{},{
+    var _studyResource =  $resource(serviceBase+'studies/:studyId',{},{
         update:{
             method: 'PUT',
             params: {studyId: '@id'}

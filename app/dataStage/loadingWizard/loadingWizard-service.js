@@ -15,7 +15,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var _checkValidTemplate = function(datasetId,fileId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'api/datasets/'+datasetId+'/validate/'+fileId)
+        $http.get(serviceBase + 'datasets/'+datasetId+'/validate/'+fileId)
             .success(function (response) {
                 console.log("Inside http get success",response)
 
@@ -33,7 +33,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var _getFile = function(fileId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'api/files/'+fileId)
+        $http.get(serviceBase + 'files/'+fileId)
             .success(function (response) {
                 //console.log("Inside http get success",response)
 
@@ -51,7 +51,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var _getActivities = function(projectId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'api/projects/'+projectId+'/activities/')
+        $http.get(serviceBase + 'projects/'+projectId+'/activities/')
             .success(function (response) {
                 console.log("Inside http get success",response)
 
@@ -85,7 +85,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _getTemplateMap = function(datasetId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/datasets/'+datasetId+'/templateMap/')
+        $http.get(serviceBase + 'datasets/'+datasetId+'/templateMap/')
             .success(function (response) {
                 console.log("Inside http get success",response)
                 deferred.resolve(response);
@@ -102,7 +102,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var _getDataTablePreview = function(datasetId, standardfileId){
         console.log(datasetId,standardfileId);
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/datasets/'+datasetId+'/preview/file/'+standardfileId)
+        $http.get(serviceBase + 'datasets/'+datasetId+'/preview/file/'+standardfileId)
             .success(function (response) {
                 tableHeaders = response.header
                 DTdata = response.data
@@ -118,7 +118,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _mapFileToTemplate = function(datasetId,fileId,map){
         var deferred = $q.defer();
-        $http.post(serviceBase + 'api/datasets/'+datasetId+'/mapToTemplate/file/'+fileId,map)
+        $http.post(serviceBase + 'datasets/'+datasetId+'/mapToTemplate/file/'+fileId,map)
             //$http.get('../data/dt.json')
             .success(function (response) {
                 //tableHeaders = response.header
@@ -153,7 +153,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _updateDatasetFile = function(dataset){
         var deferred = $q.defer();
-        $http.post(serviceBase + 'api/datasets/'+dataset.id+'/update/',dataset)
+        $http.post(serviceBase + 'datasets/'+dataset.id+'/update/',dataset)
             .success(function (response) {
                 console.log("Inside http get success",response)
                 deferred.resolve(response);
@@ -163,7 +163,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _loadDataset = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/datasets/'+datasetId+'/saveDataFile/file/'+fileId)
+        $http.get(serviceBase + 'datasets/'+datasetId+'/saveDataFile/file/'+fileId)
             .success(function (response) {
                 console.log("LOAD DATASET Inside http get success",response)
                 deferred.resolve(response);
@@ -173,7 +173,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _extractObs = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'api/datasets/'+datasetId+'/loadData/file/'+fileId)
+        $http.get(serviceBase + 'datasets/'+datasetId+'/loadData/file/'+fileId)
             .success(function (response) {
                 console.log("EXTRACT OBSERVATIONS Inside http get success",response)
                 deferred.resolve(response);
