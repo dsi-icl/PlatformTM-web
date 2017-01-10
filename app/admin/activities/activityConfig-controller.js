@@ -3,13 +3,10 @@
  */
 
 'use strict';
-function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, DatasetResource,$timeout,SweetAlert,toaster,$q) {
+function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout,SweetAlert,toaster,$q) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
-    //vm.scope = $scope
 
-    //console.log("Activity Controller requested")
-    //console.log($stateParams.activityId);
 
     vm.selectTemplate = false;
     vm.showFieldInfo = false;
@@ -70,7 +67,7 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
     var activity;
     if($stateParams.activityId==0){
         console.log("New Activity");
-        activity = new ActivityResource();
+        activity = new ActivityConfigService.getActivityResource();
         activity.projectId = $stateParams.projectId;//"Study1"
         activity.isNew = true;
         activity.status = "New";
@@ -78,24 +75,24 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
         activity.activityId = 0;
 
         vm.activity = activity;
-        DatasetResource.query(function(response){
+        ActivityConfigService.getDatasetResource.query(function(response){
             //console.log("querying for datasets", response)
             vm.clinicaldomains = response;
         })
     }
     else if($stateParams.activityId){
-        ActivityResource.get({ activityId: $stateParams.activityId }, function(response){
+        ActivityConfigService.getActivityResource.get({ activityId: $stateParams.activityId }, function(response){
             activity = response;
             activity.isNew = false;
 
-            vm.activity = activity
+            vm.activity = activity;
 
             $timeout(function(){
                 //console.log($('#ds_template_tbl'))
                 $('#ds_template_tbl').trigger('footable_redraw');
             }, 1000);
 
-            DatasetResource.query(function(response){
+            ActivityConfigService.getDatasetResource.query(function(response){
                 vm.clinicaldomains = response;
             })
 
@@ -316,11 +313,6 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
         e.name = e.val
     }
 
-
-
-
-
-
     vm.clearExpression = function(){
         vm.expressionList = [];
         vm.cField.expressionList = {};
@@ -332,10 +324,6 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
         vm.showFieldInfo = true;
         vm.selField = field;
     };
-
-
-
-
 
     vm.saveActivity = function() {
         if (vm.activity.name != null && vm.activity.name != ''){
@@ -433,4 +421,4 @@ function ActivityConfigCtrl($scope, $state, $stateParams, ActivityResource, Data
 }
 
 angular.module('bioSpeak.config')
-    .controller('ActivityConfigCtrl',['$scope', '$state','$stateParams','ActivityResource','DatasetResource','$timeout','SweetAlert','toaster','$q',ActivityConfigCtrl]);
+    .controller('ActivityConfigCtrl',['$state','$stateParams','ActivityConfigService','$timeout','SweetAlert','toaster','$q',ActivityConfigCtrl]);

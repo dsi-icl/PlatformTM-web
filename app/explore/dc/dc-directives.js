@@ -4,12 +4,6 @@
 angular.module('eTRIKSdata.dcPlots')
 
 
-    /*.directive('dcChartControl',function($compile){
-        return{
-
-        }
-    })*/
-
 /**
  * groupChartButton
  */
@@ -51,8 +45,8 @@ angular.module('eTRIKSdata.dcPlots')
                     console.log(scope.obs,' CLICKED')
 
                     var isActive = scope.obs.isActive === true;
-                    var chartId = scope.obs.id+"_chart";//scope.obs.o3id+"_"+scope.obs.qO2id+"_chart";
-                    var cardId = scope.obs.o3id+"_card";
+                    var chartId = (scope.obs.name+"_chart").replace(/ /g,'_');
+                    var cardId = (scope.obs.o3code+"_card").replace(/ /g,'_');
 
 
                     if(!document.getElementById(cardId)){
@@ -61,12 +55,10 @@ angular.module('eTRIKSdata.dcPlots')
                                 .prepend(
                                     $compile(
                                         '<div class="cardlock" id="'+ cardId +'">'+
-                                            // '<div class="">'+
                                                 '<div class="card">'+
                                                     '<h1 class="border-bottom">{{obs.o3}}</h1>'+
                                                     '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  class="qualifier-menu"></dc-chart-menu>'+
                                                 '<div>' +
-                                            // '</div>' +
                                         '</div>'
                                     )(scope)
                                 )
@@ -92,12 +84,6 @@ angular.module('eTRIKSdata.dcPlots')
                         if(!isActive){
                             console.log('Removing chart')
                             angular.element(document.getElementById(cardId)).remove();
-
-                            //console.log(angular.element(document.getElementById(cardId).querySelector('div.card')))
-                            //console.log(angular.element(document.getElementById(cardId).querySelector('div.card').querySelector('div.chart')))
-                            /*if(!angular.element(document.getElementById(cardId).querySelector('div.card').querySelector('div.chart')))
-                                angular.element(document.getElementById(cardId)).remove();*/
-                            return;
                         }
                     }
                 });
@@ -122,74 +108,6 @@ angular.module('eTRIKSdata.dcPlots')
     })
 
 
-    /*.directive('dcChartContainer',function($timeout){
-        return {
-            restrict: 'EA',//add a control here and
-            scope:true,
-            template:
-                '<div class="anchor">'+
-                    '<div id="chartslock">'+
-                        '<div class="anchor">'+
-                            '<div id="charts">'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>',
-            controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
-                var charts = [];
-
-                this.addSlide = function(chart){
-
-                }
-                //$scope.chartOptions
-                //$scope.addChart = function(){
-                //    $('.add-remove').slick('slickAdd','<dc-chart></dc-chart>');
-                //}
-                //
-                //$scope.addChart = function(chartRequestParams){
-                //    charts.push(chartRequestParams)
-                //}
-            }],
-            link : function(scope,element,attrs){
-                //console.log('slider scope ',scope);
-
-                $timeout(function() {
-                    $(element).slick(scope.$eval(attrs.dcChartSlider));
-                });
-
-                function addSlide(chart) {
-                    element.slick('slickAdd',chart)
-                }
-
-                function removeSlide(chart){
-
-                }
-
-
-            }
-        }
-    })
-
-    .directive('slickSlider',function($timeout){
-        return {
-            restrict: 'A',
-            scope:true,
-            controller: function($scope){
-                this.test = function(){
-                    console.log('here')
-                    console.log(this)
-                    console.log($scope.obs, $scope.chartingOpts)
-
-                }
-            },
-            controllerAs: 'slickSlider',
-            link: function(scope,element,attrs) {
-                $timeout(function() {
-                    $(element).slick(scope.$eval(attrs.slickSlider));
-                });
-            }
-        }
-    })*/
 
     /**
      *
@@ -234,28 +152,23 @@ angular.module('eTRIKSdata.dcPlots')
                 //used for uniquely identifying charts for erquested observations AND also used as xfilter dimension key
                 chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,chartDataType,$scope.obs)
                     .then(
-                    function(chart){
+                        function(chart){
+                            plot = chart
+                            $scope.done = true;
 
-                        plot = chart
-                        $scope.done = true;
-
-
-                        if(plot.chartType == 'barChart'){
-                            console.log("calling the reangeChart")
-                            chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,"rangeChart",$scope.obs)
-                                .then(function(chart2){
-                                    $scope.rangeChart = chart2
-
-                                    $scope.chartToPlot = plot;
-
-                                    //console.log("back from both charts", chart, chart2)
-                                })
-                        }else
-                            $scope.chartToPlot = plot;
-                    },
-                    function(result){
-                        console.log("Failed to create DC chart",result);
-                    }
+                            if(plot.chartType == 'barChart'){
+                                console.log("calling the reangeChart")
+                                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,"rangeChart",$scope.obs)
+                                    .then(function(chart2){
+                                        $scope.rangeChart = chart2
+                                        $scope.chartToPlot = plot;
+                                    })
+                            }else
+                                $scope.chartToPlot = plot;
+                        },
+                        function(result){
+                            console.log("Failed to create DC chart",result);
+                        }
                 );
 
 
@@ -281,35 +194,6 @@ angular.module('eTRIKSdata.dcPlots')
                         '<div class="sk-circle11 sk-circle"></div> ' +
                         '<div class="sk-circle12 sk-circle"></div> ' +
                     '</div>'+
-                    /*'<div  class="chart-options">'+
-                        '<ul>'+
-                            // '<li> <a class="count-chart"> <i class="fa fa-bar-chart-o"></i></a></li>'+
-                            // '<li> <a class="box-chart"> <i class="flat-icon flaticon-candlestick"></i></a></li>'+
-                            // '<li> <a class="zoom"> <i class="fa fa-search-plus"></i></a></li>'+
-                            // '<li>' +
-                            //      '<div class="form-group" id="data_5"> ' +
-                            //         // '<label>Date Range</label> ' +
-                            //         '<div class="form-group"> ' +
-                            //             '<label class="col-sm-1 control-label">From:</label>'+
-                            //             '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterFrom" auto-close="true" ng-model="from"> </input></div>' +
-                            //             '<label class="col-sm-1 control-label">To:</label>'+
-                            //             '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterTo" auto-close="true" ng-model="to" > </input></div>' +
-                            //             // '<span><i uib-dropdown-toggle class="fa fa-calendar"></i></span>'+
-                            //             // '<div> ' + '<span>Selected date: <br/> {{(a|date)}} - {{(b|date)}} </span> ' + '</div> ' +
-                            //             // '<div uib-dropdown-menu> ' +
-                            //             //     '<div date-range format="D MMM YYYY HH:mm" start="a" end="b" auto-close="false"></div> ' +
-                            //             // '</div> ' +
-                            //         '</div>'+
-                            //         '<a ng-click="filterChart()" class="btn btn-lnk btn-xs"><i class="fa fa-filter"></i></a>'+
-                            //      '</div>'+
-                            //     // '<div class="input-group date">'+
-                            //     //     '<input type="datetime" class="form-control" date-time ng-model="sampleDate" format="yyyy-MM-dd HH:mm" view="month" auto-close="true">'+
-                            //     //     '<span class="input-group-addon"><i class="fa fa-calendar"></i></span>'+
-                            //     // '</div>'+
-                            // '</li>'+
-                        '</ul>'+
-                    '</div>'+
-*/
 
                     '<div id="mainChart">' +
                         '<div class="chartControls"> ' +
@@ -321,22 +205,18 @@ angular.module('eTRIKSdata.dcPlots')
                         '<div class="clearfix"></div>'+
                     '</div>'+
 
-
                     '<div id="range-chart"></div>'+
             '</div>',
             link: function (scope, element, attrs) {
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
                         var groupChart = scope.chartingOpts.chartGroup
-                        //var d = angular.element(document.getElementById(sliderElementId))
                         scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), groupChart);
 
                         if(scope.rangeChart){
                             console.log('rangeChart is there',scope.rangeChart)
                             scope.rangeChart.anchor(element[0].querySelector('#range-chart'), groupChart);
                             scope.chartToPlot.rangeChart(scope.rangeChart);
-
-                            //scope.chartToPlot.rangeChart(scope.rangeChart)
                         }
 
 
@@ -349,7 +229,8 @@ angular.module('eTRIKSdata.dcPlots')
                         a.on('click', function () {
                             console.log('RESETTING FILTER')
                             //scope.chartToPlot.filterAll(groupChart);
-                            if(scope.chartToPlot.chartType == 'barChart')scope.chartToPlot.focus();
+                            if(scope.chartToPlot.chartType == 'barChart')
+                                scope.chartToPlot.focus();
                             scope.chartToPlot.filterAll(groupChart);
                             scope.chartToPlot.render();
                             if(scope.rangeChart){
@@ -630,7 +511,7 @@ angular.module('eTRIKSdata.dcPlots')
                     if(newval){
                         //console.log(newval)
                         var chart = scope.chartservice.createDCtable(scope.xfService,scope.module)
-                        console.log('doing it for subject and module is',scope.module)
+                        // console.log('doing it for subject and module is',scope.module)
                         chart.anchor(element[0],scope.grp);
                         //var chart = scope.cf.createDCtable()
                         //console.log(chart.columns());
