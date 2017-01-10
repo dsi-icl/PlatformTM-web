@@ -1,8 +1,8 @@
 
 angular.module('eTRIKSdata.dcPlots')
 
-    .factory('DCchartingService',['$q','$injector','XFilterLinker',
-        function($q,$injector,XFilterLinker){
+    .factory('DCchartingService',['$q','$injector','XFilterLinker','cartService',
+        function($q,$injector,XFilterLinker,cartService){
 
 
             var DCservice = {}
@@ -41,7 +41,7 @@ angular.module('eTRIKSdata.dcPlots')
                 var chart;
                 var obsId = obsRequest.name
 
-                console.log("=========1- Getting CHART for",obsId," ================== ")
+                //console.log("=========1- Getting CHART for",obsId," ================== ")
                 //console.log(projectId,obsCode, obsId, chartGroup, xfilterService,chartDataType, obsRequest);
 
                 //if chartType is not specified, return the default which is the count chart/histogram/pie/rowChart
@@ -92,8 +92,8 @@ angular.module('eTRIKSdata.dcPlots')
                             DCservice.refreshCharts(chartGroup,xfilterService);
                             chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType,obsRequest.dataType)
                             activeChartsForObs[obsId] = chart.chartID();
-                            console.log("CREATED CHART FOR ",obsId,chartGroup,' chartId', chart.chartID())
-                            console.log('==========DONE=============')
+                            //console.log("CREATED CHART FOR ",obsId,chartGroup,' chartId', chart.chartID())
+                            //console.log('==========DONE=============')
                             deferred.resolve(chart)
                         })
 
@@ -120,7 +120,7 @@ angular.module('eTRIKSdata.dcPlots')
 
 
 
-                console.log("=======3=CREATING ",chartDataType," CHART for ",obsId);
+                //console.log("=======3=CREATING ",chartDataType," CHART for ",obsId);
 
                 var chartData = DCservice.getChartOptions(obsId,cfDimension, cfGroup, chartDataType, dataType);
 
@@ -135,9 +135,17 @@ angular.module('eTRIKSdata.dcPlots')
 
 
                  if(chart.chartType != "rangeChart")
-                    chart.on('filtered',function(chart,filter){
-                        console.log("===EVENT===CHART===FILTERED",chart.chartID(),'FILTER:',filter);
+
+                     chart.on('filtered',function(chart,filter){
+                        console.log("===EVENT===CHART===FILTERED",obsId,'FILTER:',filter);
                         //xfilterService.setLastFilteredObs(chart.dimName);
+
+                         var isRangeFilter = false;
+                        console.log('chart.filters',chart.filters())
+                         if(filter)
+                             isRangeFilter = (filter.filterType == 'RangedFilter');
+
+                        cartService.applyFilter(obsId,chart.filters(),isRangeFilter);
 
                         xfilterService.setActiveFilters(chart.dimName,filter);
                         DCservice.propagateFilter(xfilterService);
@@ -150,7 +158,6 @@ angular.module('eTRIKSdata.dcPlots')
                 //caching
                 obsToChartId[obsId+"_"+chartDataType] = chart.chartID();
                 chartIdToObs[chart.chartID()] = obsId;
-
 
                 return chart
             }
@@ -279,7 +286,7 @@ angular.module('eTRIKSdata.dcPlots')
                 }
                 else if(dataType == 'dateTime'){
                     console.log('making a time chart')
-                    chartType = "lineChart";
+                    chartType = "barChart";
                     chartOptions["width"] = "500";
                     var maxDate = cfDimension.top(1)[0][val]
                     var minDate = DCservice.getMinimumValue(cfDimension,val)
@@ -287,9 +294,10 @@ angular.module('eTRIKSdata.dcPlots')
                     console.log(maxDate,minDate);
                     chartOptions["margins"] = {top: 10, right: 20, bottom: 30, left: 30}
 
-                    chartOptions["x"] = d3.time.scale().domain([minDate, maxDate])
+                    chartOptions["x"] = d3.time.scale().domain([minDate, maxDate]);
+                    //chartOptions["xUnits"] = dc.units.integers(0,3)
                     //chartOptions["round"] = (d3.time.month.round)
-                    chartOptions["xUnits"] = d3.time.days;
+                    //chartOptions["yUnits"] = d3.time.days;
                     chartOptions["renderArea"] = true
 
                 }
@@ -336,12 +344,12 @@ angular.module('eTRIKSdata.dcPlots')
                     console.log("Making a numeric chart")
                     //numeric bar chart
                     //console.log(cfDimension.top(1))
-                    maxValue = parseInt(cfDimension.top(1)[0][val])
-                    minValue = parseInt(DCservice.getMinimumValue(cfDimension,val));
+                    maxValue = parseFloat(cfDimension.top(1)[0][val])
+                    minValue = parseFloat(DCservice.getMinimumValue(cfDimension,val));
 
                     //var minTail = parseInt(minValue/4)
                     //var maxTail = parseInt(maxValue/4)
-                    var offset = (maxValue - Math.abs(minValue) )/10
+                    var offset = (maxValue - minValue )/10.0
 
                     console.log('offset',offset, 'min before',minValue,'max before', maxValue)
                     maxValue = maxValue + offset;
@@ -435,10 +443,15 @@ angular.module('eTRIKSdata.dcPlots')
 
             DCservice.propagateFilter = function(xfilterServiceName){
                 XFilterLinker.propagateFilter(xfilterServiceName);
+
             }
 
             DCservice.filterChart = function(chart,filter,chartGrp){
                 chart.filter(filter);
+
+            }
+
+            DCservice.clearAllCharts = function(){
 
             }
 

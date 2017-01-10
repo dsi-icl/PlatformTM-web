@@ -37,11 +37,11 @@
                             </p>
                         </uib-tab-heading>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="ibox-content">
                                     <h3 class="m-md">Subject Characteristics</h3>
                                     <div class="clinical-tree"style="max-height: 316px; overflow: scroll">
-                                        <ul >
+                                        <ul>
                                             <div class="list-item-text" ng-repeat="sc in subjCharsDB" >
                                                 <div class="plotting-switch">
                                                     <a ng-hide="obs.isSelected" class="switchery"
@@ -51,7 +51,7 @@
                                                        style="color: #222f3f;"
                                                        ng-init="sc.isActive = false"
                                                        ng-class="{on:sc.isActive}"
-                                                        ng-click="sc.isActive = !sc.isActive" >
+                                                       ng-click="sc.isActive = !sc.isActive; updateCurrentCart(sc)" >
                                                         <small></small>
                                                     </a>
                                                 </div>
@@ -63,7 +63,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <div class="ibox-title">
                                     <div class="pull-right">
                                         <div class="btn-group">

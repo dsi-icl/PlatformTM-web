@@ -2,7 +2,7 @@
  * Created by iemam on 06/05/2015.
  */
 'use strict'
-function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService, filtersService){
+function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService, cartService){
 
     $scope.vm = {};
     $scope.vm.show = 'plots';
@@ -24,18 +24,22 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
         clinicalDataService: "clinicalDataService"
     };
 
+    $scope.updateCurrentCart = function(obs) {
 
-    console.log("calling clinical tree")
+        console.log(obs, obs.isActive)
+        if(obs.isActive)
+            cartService.addClinicalObs(obs);
+        else
+            cartService.removeClinicalObs(obs);
+    };
+
+    // console.log("calling clinical tree")
     clinicalDataService.getClinicalDataTree($scope.chartingOpts.projectId)
         .then(function(data){
-            //console.log("back")
             $scope.clinicalObservations = data.treeData;
-            //console.log($scope.clinicalObservations)
-            //$scope.getObsForAll();
-
         })
 
-    $scope.getObsRequest = function(obs){
+    /*$scope.getObsRequest = function(obs){
         var deferred = $q.defer();
 
         clinicalDataService.getObsRequestFor(obs).then(function(obsRequest){
@@ -44,12 +48,12 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
 
             console.log(obs)
         return deferred.promise
-    }
+    }*/
 
 }
 angular.module('biospeak.explorer')
     .controller('ClinicalCtrl', ['$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService',
-        'filtersService',ClinicalController])
+        'cartService',ClinicalController])
 
 
 

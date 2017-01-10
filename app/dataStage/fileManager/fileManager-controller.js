@@ -171,6 +171,13 @@ function fileController($scope, $state, $stateParams, fileService){
         //console.log($scope)
         //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
         $state.go('datastage.wizard.step_one',{projectId:vm.projectId, fileId:vm.fileSelected.dataFileId})
+    };
+    vm.unload = function(){
+        console.log(vm.fileSelected)
+        if(vm.fileSelected)
+        //console.log($scope)
+        //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
+            $state.go('datastage.wizard.step_one',{projectId:vm.projectId, fileId:vm.fileSelected.dataFileId})
     }
 
     vm.computeFields = function(){

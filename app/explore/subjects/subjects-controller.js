@@ -2,7 +2,7 @@
  * Created by iemam on 06/05/2015.
  */
 'use strict'
-function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCchartingService,filtersService, $timeout){
+function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCchartingService,cartService, $timeout){
     var projectId = $stateParams.projectId;
     $scope.title = "Subjects";
     $scope.show='plots';
@@ -21,24 +21,18 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
 
     };
 
-    $scope.addToCart = function(type) {
-
-        /*var count = SubjCf.getCountGroup().value()
-
-         exportService.addToCart(type, count, $scope.projectId, function(){
-         toaster.pop({
-         type: 'success',
-         title: 'Data Saved',
-         body: '',
-         showCloseButton: true,
-         timeout: 1000
-         })
-         })*/
+    SubjCf.resetXF();
 
 
+    $scope.updateCurrentCart = function(sc) {
 
-        //console.log(exportService.getCart());
+        if(sc.isActive)
+            cartService.addSubjChar(sc);
+        else
+            cartService.removeSubjChar(sc)
     };
+
+
 
     //Gets data for StudyId, Arm and Site
     subjectDataService.getSubjCharacteristics(projectId)
@@ -71,4 +65,4 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
 }
 
 angular.module('biospeak.explorer')
-    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','DCchartingService','filtersService','$timeout',SubjectsController])
+    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','DCchartingService','cartService','$timeout',SubjectsController])

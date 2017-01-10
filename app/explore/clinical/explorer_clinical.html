@@ -10,7 +10,9 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-4">
-                        <div clinical-obs-browser></div>
+                        <div class="clinical-tree ">
+                            <cl-tree-class ng-repeat="class in clinicalObservations" class="class" ></cl-tree-class>
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div class="ibox-title">
@@ -26,8 +28,6 @@
                             </div>
                         </div>
                         <div class="ibox-content">
-                            <!--<div class="anchor">-->
-                                <!--<div id="chartslock">-->
                                     <div class="anchor">
                                         <div class="charts-container">
                                             <div id="{{chartingOpts.chartContainerId}}" ng-hide="vm.show =='eventsTable' || vm.show =='findingsTable'">
@@ -46,10 +46,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                <!--</div>-->
-                            <!--</div>-->
-
-
 
                             <div id="findings-datatable" ng-hide="vm.show =='plots' || vm.show=='eventsTable'"
                                  class="table-view  ">

@@ -1241,7 +1241,10 @@ a.editable-click {
     border-bottom: dashed 1px #dd7a2a;
 }
 
-/*Custom css*/
+.form-inline.editable-text
+{
+    color: #254154;
+}/*Custom css*/
 .feed-element div:hover{
     background-color: #f5f5f5;
     cursor: pointer;

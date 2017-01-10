@@ -91,54 +91,54 @@
                     </p>
                 </div>
             </uib-tab-heading>
-            <div class="ibox-content">
 
-                <div>
-                    <div class="btn-group">
-                        <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'plots'">Data Plots</label>
-                        <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'table'">Data Table</label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="ibox-content">
+                            <div class="clinical-tree">
+                                <h3>Samples</h3>
+                                <ul>
+                                    <div class="list-item-text">
+                                        Study Day
+                                    </div>
+                                    <div class="list-item-text">
+                                        Timepoint
+                                    </div>
+                                </ul>
+                                <h3>Features</h3>
+                                <ul>
+                                    <div class="list-item-text">
+                                        Assay Parameters
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="ibox-title">
+                            <div class="btn-group pull-right">
+                                <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'plots'">Data Plots</label>
+                                <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'table'">Data Table</label>
+                                <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'table'"><i class="fa fa-shopping-cart"></i><i class="fa fa-plus"></i></label>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div id="{{chartingOpts.chartContainerId}}_{{assay.id}}" ng-hide="vm.show =='table'" style="display: -webkit-box;"
+                                 class=" plots-view animated fadeIn"></div>
+                            <div id="{{assay.id}}-datatable" ng-hide="vm.show =='plots'" class="table-view animated fadeIn">
+
+                                <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
+                                              chart-service="{{chartingOpts.DCchartService}}"
+                                              xfilter-service="{{chartingOpts.xfilterService}}"
+                                              grp="{{chartingOpts.chartGroup}}"
+                                              module="{{assay.id}}">Choose observations from the tree below
+                                </dc-datatable>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="{{chartingOpts.chartContainerId}}_{{assay.id}}" ng-hide="vm.show =='table'" style="display: -webkit-box;"
-                     class=" plots-view animated fadeIn"></div>
-                <div id="{{assay.id}}-datatable" ng-hide="vm.show =='plots'" class="table-view animated fadeIn">
-
-                    <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
-                                  chart-service="{{chartingOpts.DCchartService}}"
-                                  xfilter-service="{{chartingOpts.xfilterService}}"
-                                  grp="{{chartingOpts.chartGroup}}"
-                                  module="{{assay.id}}">Choose observations from the tree below
-                    </dc-datatable>
-                </div>
-            </div>
-
-            <div class="clearfix"></div>
-            <div class="subject" style="border-top: 1px solid #72879C">
-                <!--<div class="option-list">-->
-                    <!--<ul id="luminex">-->
-                        <!--<li ng-repeat="sc in luminexSampleChars">-->
-                            <!--<label id="luminex_{{sc}}"-->
-                                   <!--charting-button-->
-                                   <!--val="{{sc}}"-->
-                                   <!--active="{{isActive}}"-->
-                                   <!--container="{{sampleChartContainerId}}"-->
-                                   <!--section="{{section}}"-->
-                                   <!--grp="{{section}}"-->
-                                   <!--chart-service="{{chartService}}"-->
-                                   <!--ng-class="{'active': isActive}"-->
-                                   <!--ng-init="isActive = false"-->
-                                   <!--ng-click="isActive = !isActive">-->
-                                <!--{{sc}}-->
-                            <!--</label>-->
-                            <!--&lt;!&ndash; <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"-->
-                                  <!--class="flaticon-download164"></div>&ndash;&gt;-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                    <!--<div class="clearfix"></div>-->
-                <!--</div>-->
-
-            </div>
         </uib-tab>
     </uib-tabset>
 </div>

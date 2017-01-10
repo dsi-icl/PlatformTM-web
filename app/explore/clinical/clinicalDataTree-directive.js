@@ -3,23 +3,6 @@
  */
 angular.module('biospeak.explorer')
 
-    .directive('clinicalObsBrowser',function(){
-        return{
-            restrict:'EA',
-            scope:true,
-            controller: function($scope){
-              //console.log("obs browser",$scope)
-            },
-            template:
-            '<div class="clinical-tree ">'+
-                '<cl-tree-class ng-repeat="class in clinicalObservations" class="class" ></cl-tree-class>'+
-            '</div>',
-            link: function(scope, element, attrs){
-                //console.log(scope)
-            }
-        }
-    })
-
     .directive('clTreeClass', function(){
         return{
             restrict:'EA',
@@ -34,7 +17,7 @@ angular.module('biospeak.explorer')
                         ' </span>' +
                         '</div>'+*/
                         '<ul>'+
-                            '<cl-tree-obs-grp ng-repeat="domain in class.domains " group="domain" charting-opts = "chartingOpts" callbck = "getObsRequest(obs)"></cl-tree-obs-grp>'+
+                            '<cl-tree-obs-grp ng-repeat="domain in class.domains " group="domain" charting-opts = "chartingOpts" callbck = "updateCurrentCart(obs)"></cl-tree-obs-grp>'+
                         '</ul>'+
                     '</div>'
         }
@@ -45,39 +28,26 @@ angular.module('biospeak.explorer')
             restrict:'EA',
             scope:{
                 group:'=',
-                chartingOpts:'='/*,
-                search:'='*/,
+                chartingOpts:'=',
                 sels:'=',
                 callbck: '&'
             },
             controller: function($scope,$injector) {
-                $scope.vm = {}
-                $scope.vm.selObs = []
-
-                //if group.hasTerms and group.terms.length ==0
-                //
 
                 var clinicalDataService = $injector.get($scope.chartingOpts.clinicalDataService);
-
                 var domain;
 
-
-
-                $scope.localcallbck = function(request){
-                    $scope.callbck({request:request})
+                $scope.localcallbck = function(obsRequest){
+                    console.log("ana b2 here",obsRequest)
+                    $scope.callbck({obs:obsRequest})
                 }
 
                 if($scope.group.isDomain){
                     domain = $scope.group;
-                    //$scope.group.selMultiObsGrps = [];
                     domain.selMultiObsGrps = {};
                     domain.selMultiObsGrps.currSelected = [];
                     domain.selMultiObsGrps.tempSelected = [];
-                    domain.selMultiObsGrps.groupedObservations = [];
-
-                    domain = $scope.group;
-                    domain.selectedObservations = [];
-
+                    domain.selMultiObsGrps.grpRequests = [];
 
                 }else {
                     $scope.group.selMultiObsGrps = $scope.sels
@@ -87,8 +57,6 @@ angular.module('biospeak.explorer')
                     var multiObsList = $scope.group.selMultiObsGrps;
                     var currSelected = multiObsList.currSelected;
                     var tempSelected = multiObsList.tempSelected;
-
-
                     var selectedObsRequests = [];
 
                     tempSelected.forEach(function(node){
@@ -97,176 +65,49 @@ angular.module('biospeak.explorer')
                     })
 
                     clinicalDataService.getGroupObsNode($scope.chartingOpts.projectId,selectedObsRequests)
-                        .then(function(obsGrpNode){
-                        var obsGroup = {};
-
-                        obsGroup.observations = angular.copy(tempSelected);
-                        obsGroup.obsRequest =  obsGrpNode.defaultObservation;
-                        obsGroup.quals = obsGrpNode.qualifiers;
-                        obsGroup.name = obsGrpNode.name;
+                        .then(function(obsGrpNode)
+                        {
+                            obsGrpNode.groupedObsNodes = angular.copy(tempSelected);
 
 
-                        for(var i=0; i< obsGroup.observations.length;i++) {
-                            obsGroup.observations[i].isLocked = true;
-                            obsGroup.observations[i].isSelected = false
-                        }
+                            for(var i=0; i< obsGrpNode.groupedObsNodes.length;i++) {
+                                obsGrpNode.groupedObsNodes[i].isLocked = true;
+                                obsGrpNode.groupedObsNodes[i].isSelected = false
+                            }
 
-                        console.log(obsGroup);
-                        $scope.group.selMultiObsGrps.groupedObservations.push(obsGroup);
-
-
-                        for(var i=0; i< currSelected.length;i++) {
-                            currSelected[i].isGrouped = true
-                        }
-                        multiObsList.tempSelected = [];
-                    })
+                            console.log(obsGrpNode);
+                            $scope.group.selMultiObsGrps.grpRequests.push(obsGrpNode);
 
 
-
-
-
-
-                    //$scope.group.selMultiObsGrps.groupedObservations = currSelected;
-
-
-                    //console.log($scope.group.selMultiObsGrps.groupedObservations);
+                            for(var i=0; i< currSelected.length;i++) {
+                                currSelected[i].isGrouped = true
+                            }
+                            multiObsList.tempSelected = [];
+                        })
                 }
 
                 $scope.checkChanged = function(checked){
                     var multiObsList = $scope.group.selMultiObsGrps;
                     var tempSelected = multiObsList.tempSelected;
-                    var selectedObsGrp = $scope.group;
-                    console.log("adding:",selectedObsGrp);
+                    var selectedNode = $scope.group;
+
 
                     if(checked){
-                        tempSelected.push(selectedObsGrp);
+                        console.log("adding node:",selectedNode.code);
+                        tempSelected.push(selectedNode);
                     }
                     else{
                         var pos;
                         for(var i=0; i< tempSelected.length;i++) {
-                            if(selectedObsGrp.code == tempSelected[i].code){
+                            if(selectedNode.code == tempSelected[i].code){
                                 pos = i;
                                 break;
                             }
                         }
+                        console.log('removing node',selectedNode.code, pos )
                         tempSelected.splice(pos,1);
                     }
                 }
-
-                /*$scope.groupClicked = function(checked){
-                    var obsGrp_list = $scope.group.selMultiObsGrps;
-                    var selectedObsGrp = $scope.group;
-
-                    console.log(selectedObsGrp);
-
-                    //find the unlocked group in lockedGroups
-                    var ObsGrp;
-                    for(var k=0; k<obsGrp_list.length; k++){
-                        if(!obsGrp_list[k].isLocked){
-                            ObsGrp = obsGrp_list[k];
-                            break;
-                        }
-                    }
-                    // console.log('obsGroup is ', ObsGrp)
-                    if(!ObsGrp){
-                        // console.log('no unlocked gorups found')
-                        var ObsGrp = {}
-                        ObsGrp.name = selectedObsGrp.name;
-                        ObsGrp.observations=[];
-
-                        ObsGrp.selectedNodes = [];
-
-                        ObsGrp.obsRequest = {};
-                        ObsGrp.obsRequest.termIds = [];
-                        ObsGrp.obsRequest.isMultipleObservations = true;
-                        ObsGrp.obsRequest.isEvent = true;
-                        ObsGrp.obsRequest.o3 = selectedObsGrp.name;
-                        ObsGrp.quals = []
-
-                        ObsGrp.isLocked = false;
-                        obsGrp_list.push(ObsGrp);
-                    }
-
-                    if(checked){
-                        //$scope.group.sels.groups.push($scope.group)
-                        ObsGrp.observations.push(selectedObsGrp);
-
-                        if(ObsGrp.observations.length > 1)
-                            ObsGrp.name = ObsGrp.name.concat(", ",selectedObsGrp.name)
-
-                    }
-                    else{
-                        var pos;
-                        for(var i=0; i< ObsGrp.observations.length;i++) {
-                            if(selectedObsGrp.code == ObsGrp.observations[i].code){
-                                pos = i;
-                                break;
-                            }
-                        }
-                        ObsGrp.observations.splice(pos,1);
-                    }
-
-                    ObsGrp.obsRequest.termIds =[];
-                    ObsGrp.obsRequest.o3id ="";
-
-                        $scope.$apply(function(){
-                        for(var i=0; i< ObsGrp.observations.length;i++) {
-                            //console.log($scope.vm.sels[i].termNames)
-                            for(var j=0; j< ObsGrp.observations[i].termNames.length;j++) {
-                                $scope.vm.selObs.push(ObsGrp.observations[i].termNames[j])
-                                //console.log($scope.vm.sels[i].termNames[j])
-                            }
-
-                            //console.log('obsgrp is',ObsGrp.observations[i].defaultObservation);
-                            ObsGrp.obsRequest.termIds = ObsGrp.obsRequest.termIds.concat(ObsGrp.observations[i].defaultObservation.termIds);
-                            ObsGrp.obsRequest.o3code = ObsGrp.observations[i].defaultObservation.o3code
-                            ObsGrp.obsRequest.qO2 = ObsGrp.observations[i].defaultObservation.qO2
-                            ObsGrp.obsRequest.qO2_label = ObsGrp.observations[i].defaultObservation.qO2_label
-                            ObsGrp.obsRequest.dataType = ObsGrp.observations[i].defaultObservation.dataType
-                            ObsGrp.obsRequest.id = ObsGrp.observations[i].defaultObservation.id;
-                            ObsGrp.quals = ObsGrp.observations[i].qualifiers;
-                            ObsGrp.obsRequest.o3id = ObsGrp.obsRequest.o3id.concat(ObsGrp.obsRequest.id)
-                            //console.log('termIds are',ObsGrp.obsRequest);
-                            /!*for(var j=0; j< ObsGrp.observations[i].termIds.length;j++) {
-                                ObsGrp.obsRequest.termIds.push()
-                                //console.log($scope.vm.sels[i].termNames[j])
-                            }*!/
-
-                        }
-                        //console.log($scope.vm.selObs.length)
-                    })
-
-                    //$scope.group.selMultiObsGrps.count = $scope.vm.selObs.length
-                    ObsGrp.count = $scope.vm.selObs.length;
-
-                    console.log('obsGrp request is',ObsGrp.obsRequest, 'quals are', ObsGrp.quals);
-
-                }*/
-
-                /*$scope.lock = function(obsGrp){
-
-
-                    // $scope.$apply(function() {
-                        obsGrp.observations.forEach(function (group) {
-                            group.isGrouped = true;
-                            /!*if(group.defaultObservation){
-                             group.defaultObservation.isSelected = false
-                             group.defaultObservation.isActive = false
-                             }*!/
-                        })
-                    // })
-
-
-                    //console.log('LOCKING',obsGrp)
-                    //var lockedGrp = {}
-                    //lockedGrp.name="group 1";
-                    //lockedGrp.observations=$scope.vm.sels.groups;
-                    //obsGrp.isLocked = true;
-                    //console.log('LOCKING',obsGrp)
-                   // angular.forEach(obsGrp.observations,function(obs){
-//
-  //                  })
-                }*/
             },
             replace:true,
             template:
@@ -291,7 +132,6 @@ angular.module('biospeak.explorer')
                     /* checkbox */
                     '<div class="node-select" ng-if="group.isSelectable && !group.isLocked">'+
                         '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" >' +
-                        // '<a ng-if="group.isLocked" class="btn btn-xs btn-white" ><i class="fa fa-link"></i></a>'+
                     '</div>'+
 
                     /*Group control*/
@@ -301,37 +141,34 @@ angular.module('biospeak.explorer')
 
 
                     '<ul uib-collapse="group.isCollapsed" id="{{group.code}}"  class="list-group">'+
-                        '<li ng-if="group.isDomain" ng-show="group.selMultiObsGrps.groupedObservations.length > 0" class="animated fadeIn">' +
+
+                        '<li ng-if="group.isDomain" ng-show="group.selMultiObsGrps.grpRequests.length > 0" class="animated fadeIn">' +
                             '<div class="selectDiv">' +
                                 '<h4>Grouped Events</h4>'+
                                 '<ul>'+
-                                    '<li style="margin-bottom: 15px;" ng-repeat="obsGrp in group.selMultiObsGrps.groupedObservations">' +
+                                    '<li style="margin-bottom: 15px;" ng-repeat="grpNode in group.selMultiObsGrps.grpRequests">' +
                                         '<div class="grp-name">' +
-                                            '<span>{{obsGrp.name}}</span>' +
-                                            /*'<a class="btn btn-xs btn-white"><i class="fa fa-link"></i></a>'+
-                                            '<a class="btn btn-xs btn-white"><i class="fa fa-unlink"></i></a>'+*/
+                                            '<span>{{grpNode.defaultObservation.o3}}</span>' +
+
                                         '</div>'+
                                         '<div style="position:absolute; right:5px;top:0px;">' +
-                                             '<a class="switchery" charting-button id="obsgrp_{{obsGrp.id}}" ' +
-                                                 'obs="obsGrp.obsRequest"  charting-opts="chartingOpts" quals="obsGrp.quals" style="color:#222f3f;" ' +
-                                                 'ng-init="obsGrp.isActive = false" ' +
-                                                 'ng-class="{on:obsGrp.isActive}" '+
-                                                 'ng-click="obsGrp.isActive = !obsGrp.isActive; obsGrp.isLocked=true">' +
+                                             '<a class="switchery" charting-button ' +
+                                                 'obs="grpNode.defaultObservation"  charting-opts="chartingOpts" quals="grpNode.qualifiers"' +
+                                                 'ng-init="grpNode.defaultObservation.isActive = false" ' +
+                                                 'ng-class="{on:grpNode.defaultObservation.isActive}" '+
+                                                 'ng-click="grpNode.defaultObservation.isActive = !grpNode.defaultObservation.isActive; grpNode.isLocked=true; localcallbck(grpNode.defaultObservation)">' +
                                                  '<small></small>'+
                                              '</a>'+
                                         '</div>' +
                                         '<ul>' +
-                                            '<li cl-tree-obs class="list-item-text" ng-repeat="obs in obsGrp.observations " ' +
-                                            'obs="obs" ' +
-                                            'charting-opts="chartingOpts">' +
-                                            '</li>'+
+                                            '<li cl-tree-obs class="list-item-text" ng-repeat="obsNode in grpNode.groupedObsNodes" node="obsNode" charting-opts="chartingOpts" ></li>'+
                                         '</ul>'+
                                     '</li>'+
                                 '</ul>'+
                             '</div>' +
                         '</li>'+
 
-                        '<li cl-tree-obs class="list-item-text" ng-repeat="obs in group.terms " sels="group.selMultiObsGrps"  obs="obs" charting-opts="chartingOpts" callbck="localcallbck(request)"></li>'+
+                        '<li cl-tree-obs class="list-item-text" ng-repeat="node in group.terms " sels="group.selMultiObsGrps"  node="node" charting-opts="chartingOpts" callbck="localcallbck(request)"></li>'+
                     '</ul>'+
                 '</li>',
             link: function (scope, element, attrs) {
@@ -377,65 +214,37 @@ angular.module('biospeak.explorer')
             replace:true,
             scope:{
                 chartingOpts:'=',
-                obs:'='/*,
+                node:'='/*,
                 search:'='*/,
                 sels:'=',
                 callbck:'&'
             },
             controller: function($scope){
-                $scope.getObsRequest = function(obs){
-                    //console.log("In here",obs)
-                    /*$scope.callbck()(obs).then(function(request){
-                        $scope.obsRequest = request;
-
-                        angular.element('#sc_'+sc).trigger('click');
-                    })*/
-
-                    //console.log($scope)
-                    //console.log()
-                    //($scope.callbck())(obs);
-                    $scope.callbck({ request: obs })
-                   // $scope.obsRequest = $scope.callbck()(obs);
-
+                $scope.updateCurrentCart = function(obsRequest){
+                    console.log("In here",obsRequest)
+                    $scope.callbck({ request: obsRequest })
                 }
             },
             template:
 
-           '<div ng-class="{selected: obs.isSelected}">' +
-                   /*/!* checkbox *!/
-                   '<div class="node-select" ng-if="obs.isSelectable && !obs.isLocked">'+
-                   '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" >' +
-                   // '<a ng-if="group.isLocked" class="btn btn-xs btn-white" ><i class="fa fa-link"></i></a>'+
-                   '</div>'+*/
+           '<div ng-class="{selected: node.isSelected}">' +
                 '<div class="plotting-switch">'+
-                    '<a ng-hide="obs.isSelected || obs.isLocked" class=" switchery" charting-button id="obs_{{obs.id}}" ' +
-                        'obs="obs.defaultObservation" quals="obs.qualifiers" charting-opts="chartingOpts" style="color: #222f3f;" ' +
-                        'ng-init="obs.defaultObservation.isActive = false" ' +
-                        'data-ng-disabled="obs.isSelected" '+
-                        'ng-class="{on:obs.defaultObservation.isActive}" '+
-                        'ng-click="obs.defaultObservation.isActive = !obs.defaultObservation.isActive"> ' +
+                    '<a ng-hide="node.isSelected || node.isLocked" class=" switchery" charting-button ' +
+                        'obs="node.defaultObservation" quals="node.qualifiers" charting-opts="chartingOpts" style="color: #222f3f;" ' +
+                        'ng-init="node.defaultObservation.isActive = false" ' +
+                        'data-ng-disabled="node.isSelected" '+
+                        'ng-class="{on:node.defaultObservation.isActive}" '+
+                        'ng-click="node.defaultObservation.isActive = !node.defaultObservation.isActive;  updateCurrentCart(node.defaultObservation)"> ' +
                         '<small></small>'+
                     '</a>'+
-
-           /*'<a  class="switchery"  id="obs_{{obs.id}}" ' +
-            'obs="obs.defaultObservation" quals="obs.qualifiers" charting-opts="chartingOpts" style="color: #222f3f;" ' +
-            'ng-init="obs.defaultObservation.isActive = false" ' +
-            'data-ng-disabled="obs.isSelected" '+
-            'ng-class="{on:obs.defaultObservation.isActive}" '+
-            'ng-click="getObsRequest(obs)"> ' +
-            '<small></small>'+
-            '</a>'+*/
-
-                    '<a ng-show="obs.isLocked" class="btn btn-xs btn-white" disabled="disabled"><i class="fa fa-link"></i></a>'+
+                    '<a ng-show="node.isLocked" class="btn btn-xs btn-white" disabled="disabled"><i class="fa fa-link"></i></a>'+
                 '</div>'+
-                '<span>{{obs.defaultObservation.o3}}</span>'+
-
-                /*'<cl-option-menu obs="obs" charting-opts="chartingOpts"  class="qualifier-menu"></cl-option-menu>'+*/
+                '<span>{{node.defaultObservation.o3}}</span>'+
             '</div>',
 
             link: function (scope, element, attrs) {
-                if (angular.isArray(scope.obs.terms)) {
-                    $compile("<cl-tree-obs-grp group='obs' sels='sels'  charting-opts='chartingOpts'></cl-tree-obs-grp>")
+                if (angular.isArray(scope.node.terms)) {
+                    $compile("<cl-tree-obs-grp group='node' sels='sels'  callbck = 'updateCurrentCart(obs)' charting-opts='chartingOpts'></cl-tree-obs-grp>")
                     (scope, function(cloned){
                         element.replaceWith(cloned);
                     });
@@ -449,12 +258,16 @@ angular.module('biospeak.explorer')
             restrict: 'EA',
             scope: {
                 obs: '=',
-                chartingOpts: '='
+                chartingOpts: '=',
+                callbck:'&'
+            },
+            controller: function($scope){
+                $scope.updateCurrentCart = function(obsRequest){
+                    //console.log("In here",obsRequest)
+                    $scope.callbck({ request: obsRequest })
+                }
             },
             replace:true,
-            controller: function ($scope, $element) {
-                //console.log('menu scope',$scope.obs)
-            },
             template:
             '<div class="dropdown" uib-dropdown>'+
                 '<a class="dropdown-toggle" href uib-dropdown-toggle>'+
@@ -466,13 +279,12 @@ angular.module('biospeak.explorer')
                         '<div ng-repeat="var in obs.qualifiers" class="checkbox">'+
                             '<input id="checkbox_{{var.id}}" type="checkbox" ' +
                                     'charting-button  obs="var"  ' +
-                                    'ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive" ' +
+                                    'ng-init="var.isActive = false" ' +
+                                    'ng-click="var.isActive = !var.isActive; updateCurrentCart(var)" ' +
                                     'charting-opts="chartingOpts" >' +
                             '<label for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +
                         '</div>' +
-                    '</li> ' +
-                    /*'<li role="separator" class="divider"></li>'+
-                    '<li><a href><i class="fa fa-arrow-circle-o-down"></i>&nbsp; Add to cart</a></li>'+*/
+                    '</li>' +
                 '</ul>'+
             '</div>'
         }
