@@ -3,113 +3,47 @@
  */
 
 'use strict'
-function ActivityResource($resource, ngAppConfig) {
-    var fileServiceFactory = {};
+
+function ActivityConfigService($resource, ngAppConfig) {
+    var activityConfigServiceFactory = {};
     var serviceBase = ngAppConfig.apiServiceBaseUri;
-    console.log(serviceBase);
-    return $resource(serviceBase+'activities/:activityId',{},{
+    //console.log(serviceBase);
+
+    var _activityResource = $resource(serviceBase+'activities/:activityId',{},{
         update:{
             method: 'PUT',
             params: {activityId: '@id'}
-        },
-        getActivitiesForProject:{
+        }/*,
+        getProjectActivities:{
             method: 'GET',
             url : serviceBase+'projects/:projectId/activities',
             isArray : true
+        }*/
+    });
+
+    var _datasetResource = $resource(serviceBase+'templates/clinical/:datasetId',{},{
+        update:{
+            method: 'PUT',
+            params: {datasetId: '@id'}
+        },
+        query:{
+            method: 'GET',
+            isArray:true
+        },
+        getDatasetForActivity:{
+            method: 'GET',
+            url : serviceBase+'activities/:activityId/datasets/:datasetId',
+            isArray : false
             /*params:{studyId}*/
         }
     });
 
+    activityConfigServiceFactory.getActivityResource = _activityResource;
+    activityConfigServiceFactory.getDatasetResource = _datasetResource;
+
+    return activityConfigServiceFactory
 }
+
+
 angular.module('bioSpeak.config')
-    .factory('ActivityResource',['$resource','ngAppConfig', ActivityResource])
-
-/*angular.module('bioSpeak.config')
-
-    .factory('ActivityResource',function($resource,ngAppConfig){
-        var serviceBase = ngAppConfig.apiServiceBaseUri;
-
-        return $resource(serviceBase+'activities/:activityId',{},{
-            update:{
-                method: 'PUT',
-                params: {activityId: '@id'}
-            },
-            getActivitiesForStudy:{
-                method: 'GET',
-                url : serviceBase+'studies/:studyId/activities',
-                isArray : true
-                /!*params:{studyId}*!/
-            }/!*,
-            get:{
-                method:'GET',
-                url: 'http://rachmaninoff.local:8080/activities/:activityId'
-            }*!/
-       });
-        /!*return $resource('../data/activities.json',{ }, {
-            getData: {method:'GET', isArray: false}
-        });*!/
-    })*/
-
-
-    .factory('AssayResource',function($resource,ngAppConfig){
-        var serviceBase = ngAppConfig.apiServiceBaseUri;
-
-        return $resource(serviceBase+'assays/:assayId',{},{
-            update:{
-                method: 'PUT',
-                params: {assayId: '@id'}
-            }/*,
-            getActivitiesForStudy:{
-                method: 'GET',
-                url : serviceBase+'studies/:studyId/activities',
-                isArray : true
-                params:{studyId}
-            },
-             get:{
-             method:'GET',
-             url: 'http://rachmaninoff.local:8080/activities/:activityId'
-             }*/
-        });
-        /*return $resource('../data/activities.json',{ }, {
-         getData: {method:'GET', isArray: false}
-         });*/
-    })
-
-/*    .factory('DatasetResource',function($resource){
-        return $resource('/activities/:activityId/datasets',
-            { 'query': { method: 'GET', isArray: false } })
-    })*/
-
-    .factory('DatasetResource',function($resource,ngAppConfig){
-        var serviceBase = ngAppConfig.apiServiceBaseUri;
-        return $resource(serviceBase+'templates/clinical/:datasetId',{},{
-            update:{
-                method: 'PUT',
-                params: {datasetId: '@id'}
-            },
-            query:{
-                method: 'GET',
-                isArray:true
-            },
-            getDatasetForActivity:{
-                method: 'GET',
-                url : serviceBase+'activities/:activityId/datasets/:datasetId',
-                isArray : false
-                /*params:{studyId}*/
-            }
-        });
-    })
-
-    .factory('ISAconfigResource',function($resource){
-        /*return $resource('/datasets/:datasetId')*/
-        return $resource('../data/isaconfigs.json');
-    })
-
-
-    .service('model', function() {
-        this.user = { name: 'bar'};
-
-        this.activity = {};
-        //this.dataset = {};
-        this.isNewActivity = false
-    })
+    .factory('ActivityConfigService',['$resource','ngAppConfig', ActivityConfigService])

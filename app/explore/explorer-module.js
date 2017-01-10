@@ -8,12 +8,12 @@ angular.module('biospeak.explorer',[
     .config(function($stateProvider){
 
         $stateProvider
-            /*.state('explore', {
-                abstract : true,
-                url: "",
-                //templateUrl:"layout/content.html",
-                controller: "logOutController"
-            })*/
+            // .state('explore', {
+            //     abstract : true,
+            //     url: "",
+            //     templateUrl:"layout/content.html",
+            //     controller: "logOutController"
+            // })
             .state('explore', {
                 url: "/{projectId}/explore/",
                 views:{
@@ -110,15 +110,79 @@ angular.module('biospeak.explorer',[
                         templateUrl: 'explore/export/right_sidebar.html',
                         controller: 'DatacartCtrl'
                     },*/
-                    'filters@explore':{
-                        templateUrl: 'explore/filters/filters.html',
-                        controller: 'filtersCtrl as vm'
+                    'datacart@explore':{
+                        templateUrl: 'explore/datacart/cart.html',
+                        controller: 'cartCtrl as vm',
+                        resolve: {
+                            loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load('explore/datacart/cart-service.js');
+                            }],
+                            loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load('explore/datacart/cart-controller.js');
+                            }],
+                            loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
+                                return $ocLazyLoad.load({
+                                    files:['lib/plugins/angular-xeditable/js/xeditable.min.js']
+                                }).then(function () {
+                                    var editableThemes = $injector.get('editableThemes');
+                                    editableThemes.bs3.inputClass = 'input-sm';
+                                    editableThemes.bs3.buttonsClass = 'btn-sm';
+                                    var editableOptions = $injector.get('editableOptions');
+                                    editableOptions.theme = 'bs3';
+                                });
+                            }]
+                        }
                     }/*,
                     'design@explore':{
                         templateUrl: 'explore/partials/study_design.html'
                     }*/
                 }
 
+            })
+            .state('datacart', {
+                abstract : true,
+                url: "",
+                templateUrl:"layout/content.html",
+                controller: "logOutController"
+            })
+            .state('datacart.checkout',{
+                url: "/{projectId}/checkout/{cartId}",
+                templateUrl: 'explore/checkout/checkout.html',
+                controller: 'checkoutCtrl as vm',
+                resolve: {
+                    loadServices: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(['explore/datacart/cart-service.js','explore/checkout/checkout-service.js']);
+                    }],
+                    loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load('explore/checkout/checkout-controller.js');
+                    }],
+                    loadPlugins: ['$ocLazyLoad',function ($ocLazyLoad){
+                        return $ocLazyLoad.load({
+                            serie:true,
+                            files: ['lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js',
+
+                                'lib/plugins/ionRangeSlider/css/ion.rangeSlider.css',
+                                'lib/plugins/ionRangeSlider/css/ion.rangeSlider.skinSimple.css',
+                                'lib/plugins/ionRangeSlider/js/ion.rangeSlider.min.js',
+                                'layout/directives/ionRangeSlider.js',
+                                'lib/plugins/ui-select/js/select.min.js',
+                                'lib/plugins/ui-select/css/select.css',
+                                'lib/plugins/angular-dragdrop/angular-dragdrop.min.js'
+                            ]
+                        })
+                    }],
+                    loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
+                        return $ocLazyLoad.load({
+                            files:['lib/plugins/angular-xeditable/js/xeditable.min.js']
+                        }).then(function () {
+                            var editableThemes = $injector.get('editableThemes');
+                            editableThemes.bs3.inputClass = 'input-sm';
+                            editableThemes.bs3.buttonsClass = 'btn-sm';
+                            var editableOptions = $injector.get('editableOptions');
+                            editableOptions.theme = 'bs3';
+                        });
+                    }]
+                }
             })
 
     })

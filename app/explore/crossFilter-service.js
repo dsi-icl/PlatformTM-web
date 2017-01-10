@@ -36,7 +36,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
 
         cfservice.initializeXf = function(assayId){
-            console.log("initializing xf for ",assayId)
+            //console.log("initializing xf for ",assayId)
             XfilterAssayMap[assayId] = {}
             XfilterAssayMap[assayId].xfReady = false;
         }
@@ -83,13 +83,13 @@ angular.module('eTRIKSdata.dcPlots',[])
                 //dimensions[subjectColumnName] = subjectDim
                 XfilterAssayMap[assayId].subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
 
-                console.log("=============Refreshing ASSAY "+assayId+" XF ============")
+                //console.log("=============Refreshing ASSAY "+assayId+" XF ============")
 
                 /**
                  * Create dimensions for each sample characterisitc
                  */
                 columns.forEach(function(sc){
-                    console.log(sc);
+                    //console.log(sc);
                     /**
                      * Dimension
                      */
@@ -219,7 +219,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
         subjCfService.formatData = function(data, requestedObsvs){
 
-            console.log('data AFTER passing to format data',data)
+            //console.log('data AFTER passing to format data',data)
 
             var dateFormat = d3.time.format('%Y-%m-%dT%H:%M').parse
 
@@ -244,7 +244,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
                 })
             });
-            console.log(data)
+            //console.log(data)
         }
 
         subjCfService.refreshCf = function(projectId,requestedObsvs){
@@ -266,7 +266,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                 //     //d.depth = d3.round(+d.depth,0);
                 // });
 
-                console.log('data before passing to format data',data)
+                //console.log('data before passing to format data',data)
                 //console.log(dataToPlot)
 
                 subjCfService.formatData(data, requestedObsvs);
@@ -355,8 +355,11 @@ angular.module('eTRIKSdata.dcPlots',[])
         }
 
         subjCfService.filterBySubjects = function(filteredSubjectIds){
-            subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-            dc.renderAll("subject");
+            if(subjectDim){
+                subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+                dc.renderAll("subject");
+            }
+
         }
 
         subjCfService.getCurrentSubjectIds = function(){
@@ -376,7 +379,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
         subjCfService.resetSubjectFilter = function(){
             console.log('resetting subject xfilter')
-            subjectDim.filter(null);
+            if(subjectDim) subjectDim.filter(null);
             dc.redrawAll("subject");
         }
 
@@ -386,6 +389,10 @@ angular.module('eTRIKSdata.dcPlots',[])
 
         subjCfService.setActiveFilters = function(obs,filter){
 
+        }
+
+        subjCfService.resetXF = function(){
+            cfReady = false
         }
 
         return subjCfService
@@ -874,7 +881,7 @@ angular.module('eTRIKSdata.dcPlots',[])
             // if(filteredIds.length == 0)return;
 
             if(xfFiltered.getXFname() == 'SubjCf'){
-                console.log("subjects filtered");
+                //console.log("subjects filtered");
                 ClinicalCf.resetSubjectFilter();
                 AssayCf.resetSubjectFilter();
 
@@ -884,7 +891,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                 AssayCf.filterBySubjects(filteredIds);
 
             }else if(xfFiltered.getXFname()  == 'ClinicalCf'){
-                console.log("clinical filtered");
+                //console.log("clinical filtered");
 
                 SubjCf.resetSubjectFilter();
                 AssayCf.resetSubjectFilter();
@@ -898,7 +905,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
                 ClinicalCf.syncfilters();
             }else if(xfFiltered.getXFname() == 'AssayCf'){
-                console.log("assays filtered");
+                //console.log("assays filtered");
 
                 SubjCf.resetSubjectFilter();
                 ClinicalCf.resetSubjectFilter();
@@ -929,6 +936,8 @@ angular.module('eTRIKSdata.dcPlots',[])
                 //ClinicalCf.filterBySubjects(filteredIds);
             }
         }
+
+
 
         return XFilterLinker;
     }])
