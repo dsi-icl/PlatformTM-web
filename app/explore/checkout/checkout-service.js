@@ -3,9 +3,12 @@
  */
 'use strict'
 
-function checkoutService($http,ngAppConfig){
+function checkoutService($http,$q,ngAppConfig){
     var serviceBase = ngAppConfig.apiServiceBaseUri;
     var checkoutServiceFactory = {};
+
+    var DTdata = {}
+
 
 
     var _getSavedCart = function(projectId,cartId){
@@ -47,19 +50,29 @@ function checkoutService($http,ngAppConfig){
             url:serviceBase+'checkout/datasets/'+datasetId+'/preview',
             method:'GET'
         }).then(function(response){
-            console.log(response)
-            var tableHeaders = response.header
-            var DTdata = response.data
-            return DTdata
+            var DT = response.data;
+            DTdata[datasetId] = response.data.rows;
+            console.log(DTdata)
+            return DT;
         })
+    };
+
+    var _getDatasetsContent = function(datasetId){
+        var deferred = $q.defer();
+        console.log(DTdata[datasetId])
+        deferred.resolve(DTdata[datasetId]);
+        return deferred.promise;
     }
+
+
 
 
     checkoutServiceFactory.getSavedCart = _getSavedCart;
     checkoutServiceFactory.createCheckoutDatasets = _createCheckoutDatasets;
     checkoutServiceFactory.getDatasetPreview = _getDatasetPreview;
+    checkoutServiceFactory.getDatasetsContent = _getDatasetsContent;
     return checkoutServiceFactory
 }
 
 angular.module('biospeak.explorer')
-    .factory('checkoutService',['$http','ngAppConfig', checkoutService])
+    .factory('checkoutService',['$http','$q','ngAppConfig', checkoutService])

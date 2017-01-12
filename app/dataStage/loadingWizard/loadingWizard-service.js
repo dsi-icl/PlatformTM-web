@@ -135,6 +135,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _getDataTableData = function(){
         var deferred = $q.defer();
+        //console.log(DTdata)
         deferred.resolve(DTdata);
         return deferred.promise;
     }
