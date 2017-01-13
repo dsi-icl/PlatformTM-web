@@ -444,27 +444,6 @@ angular.module('eTRIKSdata.dcPlots')
             replace:true,
             controller: function ($scope, $element) {
                 console.log('menu scope',$scope.obs, $scope.quals)
-
-                /*if(!$scope.quals) return
-
-                for(var i=0; i<$scope.quals.length; i++){
-
-                    // ObsGrp.obsRequest.termIds = ObsGrp.obsRequest.termIds.concat(ObsGrp.observations[i].defaultObservation.termIds);
-                    // ObsGrp.obsRequest.o3code = ObsGrp.observations[i].defaultObservation.o3code
-                    // ObsGrp.obsRequest.qO2 = ObsGrp.observations[i].defaultObservation.qO2
-                    // ObsGrp.obsRequest.qO2_label = ObsGrp.observations[i].defaultObservation.qO2_label
-                    // ObsGrp.obsRequest.dataType = ObsGrp.observations[i].defaultObservation.dataType
-                    // ObsGrp.obsRequest.id = ObsGrp.observations[i].defaultObservation.id;
-
-                    $scope.quals[i].termIds = $scope.obs.termIds;
-                    $scope.quals[i].o3code = $scope.obs.o3code;
-                    $scope.quals[i].o3 = $scope.obs.o3;
-                    $scope.quals[i].o3id = $scope.obs.o3id;
-                    $scope.quals[i].id = $scope.obs.o3code + " ["+$scope.quals[i].qO2+"]";
-
-                    console.log($scope.quals[i])
-
-                }*/
             },
             template:
             '<div class="dropdown" uib-dropdown>'+

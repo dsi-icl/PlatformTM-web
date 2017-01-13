@@ -221,7 +221,7 @@ angular.module('biospeak.explorer')
             },
             controller: function($scope){
                 $scope.updateCurrentCart = function(obsRequest){
-                    console.log("In here",obsRequest)
+                    //console.log("In here",obsRequest)
                     $scope.callbck({ request: obsRequest })
                 }
             },

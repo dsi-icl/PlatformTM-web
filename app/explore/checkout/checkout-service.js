@@ -52,14 +52,14 @@ function checkoutService($http,$q,ngAppConfig){
         }).then(function(response){
             var DT = response.data;
             DTdata[datasetId] = response.data.rows;
-            console.log(DTdata)
+            //console.log(DTdata)
             return DT;
         })
     };
 
     var _getDatasetsContent = function(datasetId){
         var deferred = $q.defer();
-        console.log(DTdata[datasetId])
+        //console.log(DTdata[datasetId])
         deferred.resolve(DTdata[datasetId]);
         return deferred.promise;
     }
