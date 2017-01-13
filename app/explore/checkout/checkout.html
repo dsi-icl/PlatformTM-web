@@ -143,7 +143,7 @@
                                     <td class="project-actions">
                                         <a class="btn btn-white btn-sm" placeholder="Save to my datasets"><i class="fa fa-save"></i>  </a>
                                         <a ng-click="ds.collapse = !ds.collapse" placeholder="Edit" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i></a>
-                                        <a class="btn btn-white btn-sm" placeholder="Download"><i class="fa fa-download"></i>  </a>
+                                        <a ng-click="vm.downloadDataset(ds.id)"class="btn btn-white btn-sm" placeholder="Download"><i class="fa fa-download"></i>  </a>
                                     </td>
                                 </tr>
                                 <tr ng-repeat-end>

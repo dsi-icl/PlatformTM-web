@@ -34,7 +34,14 @@ function checkoutController($scope,$stateParams,cartService,checkoutService,$tim
 
 
     }
-
+    //added part Start ********************************************************
+    vm.downloadDataset = function(datasetId){
+            checkoutService.downloadDataset(datasetId)
+    //        .then(function(data){
+    //            $state.go('datastage.files',{dir:$scope.vm.dir});
+    //        })
+    }
+    //added part finish ********************************************************
 
     // vm.datasets = [];
     // var dataset = {};
