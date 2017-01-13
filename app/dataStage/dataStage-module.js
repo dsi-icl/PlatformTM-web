@@ -53,20 +53,16 @@ function config($stateProvider, $urlRouterProvider) {
                     return $ocLazyLoad.load([
                         {
                             serie: true,
-                            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
-                                'lib/plugins/dataTables/css/dataTables.bootstrap.css',
-                                'lib/plugins/dataTables/css/dataTables.tableTools.css']
-                        },
-                        {
-                            serie: true,
-                            files: ['lib/plugins/dataTables/js/dataTables.bootstrap.js',
-                                'lib/plugins/dataTables/js/dataTables.tableTools.js']
+                            files: ['lib/plugins/dataTables/js/jquery.dataTables.min.js',
+                                'lib/plugins/dataTables/css/dataTables.bootstrap.css']
                         },
                         {
                             name: 'datatables',
                             serie: true,
                             files: ['lib/plugins/dataTables/js/angular-datatables.min.js',
-                                'lib/plugins/dataTables/js/angular-datatables.tabletools.js']
+                                'lib/plugins/dataTables/js/angular-datatables.bootstrap.min.js',
+                                'lib/plugins/dataTables/js/angular-datatables.buttons.min.js',
+                                'lib/plugins/dataTables/css/angular-datatables.min.css']
                         }
                     ]);
                 }],

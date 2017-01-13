@@ -163,7 +163,7 @@
                                                                     <a ng-click="ds.show = 'filters'" class="btn-default "><span>2</span> Filters</a>
                                                                 </li>-->
                                                                 <li>
-                                                                    <a ng-click="vm.preview(ds)" class="btn-default">Preview Data</a>
+                                                                    <a ng-click="vm.getDatasetPreview(ds)" class="btn-default">Preview Data</a>
                                                                 </li>
                                                                 <li>
                                                                     <a ng-click="ds.show = 'info'" class="btn-default">Information</a>
@@ -216,13 +216,10 @@
                                                                         </tr>-->
                                                                     </table>
                                                                 </div>
-                                                                <!--<div ng-show="ds.show == 'filters'">
-                                                                    FILTERS
-                                                                </div>-->
-                                                                <div class="p-lg" ng-show="ds.show == 'preview'">
-                                                                    <table datatable="" dt-options="vm.dtOptions" dt-columns="vm.dtColumns"
-                                                                           class="table table-striped table-bordered table-hover">
 
+                                                                <div class="p-lg" ng-show="ds.show == 'preview'">
+                                                                    <table ng-if="ds.previewReady" datatable="" dt-options="ds.dtOptions" dt-columns="ds.dtColumns"
+                                                                           class="table table-striped table-bordered table-hover">
                                                                     </table>
                                                                 </div>
                                                                 <div class="p-lg" ng-show="ds.show == 'info'">

@@ -159,15 +159,25 @@ angular.module('biospeak.explorer',[
                     loadPlugins: ['$ocLazyLoad',function ($ocLazyLoad){
                         return $ocLazyLoad.load({
                             serie:true,
-                            files: ['lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js',
+                            files: [
+                                'lib/plugins/steps/jquery.steps.css',
+                                //'lib/plugins/iCheck/custom.css',
+                                //'lib/plugins/iCheck/icheck.min.js',
 
-                                'lib/plugins/ionRangeSlider/css/ion.rangeSlider.css',
-                                'lib/plugins/ionRangeSlider/css/ion.rangeSlider.skinSimple.css',
-                                'lib/plugins/ionRangeSlider/js/ion.rangeSlider.min.js',
-                                'layout/directives/ionRangeSlider.js',
-                                'lib/plugins/ui-select/js/select.min.js',
-                                'lib/plugins/ui-select/css/select.css',
-                                'lib/plugins/angular-dragdrop/angular-dragdrop.min.js'
+                                //'lib/plugins/ionRangeSlider/css/ion.rangeSlider.css',
+                                //'lib/plugins/ionRangeSlider/css/ion.rangeSlider.skinSimple.css',
+                                //'lib/plugins/ionRangeSlider/js/ion.rangeSlider.min.js',
+                                //'layout/directives/ionRangeSlider.js',
+                                //'lib/plugins/ui-select/js/select.min.js',
+                                //'lib/plugins/ui-select/css/select.css',
+                                //'lib/plugins/angular-dragdrop/angular-dragdrop.min.js'
+                                'lib/plugins/dataTables/js/jquery.dataTables.min.js',
+                                'lib/plugins/dataTables/css/dataTables.bootstrap.min.css',
+                                'lib/plugins/dataTables/js/angular-datatables.js',
+                                'lib/plugins/dataTables/js/angular-datatables.bootstrap.min.js',
+                                'lib/plugins/dataTables/js/angular-datatables.buttons.min.js',
+                                'lib/plugins/dataTables/css/angular-datatables.min.css'
+
                             ]
                         })
                     }],
