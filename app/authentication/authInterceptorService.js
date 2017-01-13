@@ -7,11 +7,15 @@
 function authInterceptorService($q, $injector,$location, localStorageService){
     var authInterceptorServiceFactory = {};
 
+    //var redirectUrl;
+
     var _request = function (config) {
 
-        //console.log("HEEEEEEYYYYY",config.headers);
+
+
         config.headers = config.headers || {};
 
+        //redirectUrl = config.url;
         var authData = localStorageService.get('authorizationTFAData');
         if (authData) {
             config.headers.Authorization = 'Bearer ' + authData.token;

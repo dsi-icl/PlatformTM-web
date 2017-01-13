@@ -32,13 +32,6 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
     }
 
 
-
-    //$scope.vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(2);
-    //$scope.vm.dtOptions = DTOptionsBuilder.fromSource(res.data);//res.data//$resource('/angular-datatables/dtOptions.json').get().$promise;
-    //$scope.vm.dtColumns = wizardService.getDTheader();
-
-    //$scope.vm.dtColumns = res.header//wizardService.getDataTablePreview($scope.vm.fileName,$scope.vm.map).$promise
-
     wizardService.getDataTablePreview($scope.vm.datasetId, $scope.vm.fileId)
         .then(function(headers){
             //console.log(headers)
@@ -46,29 +39,28 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
             $scope.vm.showDT = true
         })
 
+    $scope.vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
+        return wizardService.getDataTableData();
+        //return $resource('../data/dt.json').query().$promise;
+    })
+        //.withTableTools('lib/plugins/dataTables/copy_csv_xls_pdf.swf')
+        // .withTableToolsButtons([
+        //     'copy',
+        //     'print', {
+        //         'sExtends': 'collection',
+        //         'sButtonText': 'Save',
+        //         'aButtons': ['csv', 'xls', 'pdf']
+        //     }
+        // ])
+        .withPaginationType('simple')
+        .withOption('scrollX', true);
+
     $scope.goToStep2 = function(){
         $state.go('datastage.wizard.step_two',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, fileId: fileId });
     }
     $scope.goToStep4 = function(){
         $state.go('datastage.wizard.step_four',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, fileId: fileId });
     }
-
-    $scope.vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
-        return wizardService.getDataTableData()
-        //return $resource('../data/dt.json').query().$promise;
-    })
-        .withTableTools('lib/plugins/dataTables/copy_csv_xls_pdf.swf')
-        .withTableToolsButtons([
-            'copy',
-            'print', {
-                'sExtends': 'collection',
-                'sButtonText': 'Save',
-                'aButtons': ['csv', 'xls', 'pdf']
-            }
-        ])
-        .withPaginationType('simple')
-        .withOption('scrollX', true);
-
 }
 
 angular.module('bioSpeak.import')

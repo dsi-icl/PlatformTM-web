@@ -31,7 +31,7 @@ function config($stateProvider){
         })
 
         .state('datastage.wizard.step_one', {
-            url: '/step_one',
+            url: '/chooseActivity',
             templateUrl: 'dataStage/loadingWizard/stepOne.html',
             controller: 'stepOneController',
             resolve:{
@@ -44,7 +44,7 @@ function config($stateProvider){
             }
         })
         .state('datastage.wizard.step_two', {
-            url: '/step_two/:activityId/:datasetId/:fileId',
+            url: '/mapping/:activityId/:datasetId/:fileId',
             controller: 'stepTwoController',
             templateUrl: 'dataStage/loadingWizard/stepTwo.html',
             /*params: {
@@ -60,7 +60,7 @@ function config($stateProvider){
             }
         })
         .state('datastage.wizard.step_three', {
-            url: '/step_three/:activityId/:datasetId/:fileId',
+            url: '/preview/:activityId/:datasetId/:fileId',
             templateUrl: 'dataStage/loadingWizard/stepThree.html',
             /*params: {
                 map: null
@@ -71,20 +71,20 @@ function config($stateProvider){
                     return $ocLazyLoad.load([
                         {
                             serie: true,
-                            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
-                                'lib/plugins/dataTables/css/dataTables.bootstrap.css',
-                                'lib/plugins/dataTables/css/dataTables.tableTools.css']
-                        },
-                        {
-                            serie: true,
-                            files: ['lib/plugins/dataTables/js/dataTables.bootstrap.js',
-                                'lib/plugins/dataTables/js/dataTables.tableTools.js']
-                        },
+                            files: ['lib/plugins/dataTables/js/jquery.dataTables.min.js',
+                                'lib/plugins/dataTables/css/dataTables.bootstrap.min.css']
+                        }/*,
+                         {
+                         serie: true,
+                         files: ['lib/plugins/dataTables/js/dataTables.bootstrap.js']
+                         }*/,
                         {
                             name: 'datatables',
                             serie: true,
                             files: ['lib/plugins/dataTables/js/angular-datatables.min.js',
-                                    'lib/plugins/dataTables/js/angular-datatables.tabletools.js']
+                                'lib/plugins/dataTables/js/angular-datatables.bootstrap.min.js',
+                                'lib/plugins/dataTables/js/angular-datatables.buttons.min.js',
+                                'lib/plugins/dataTables/css/angular-datatables.min.css']
                         }
                     ]);
                 }],
