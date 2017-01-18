@@ -44,14 +44,13 @@ function checkoutController($q,$stateParams,checkoutService,DTColumnBuilder,DTOp
                 ds.show = 'preview'
             })
     }
-    //added part Start ********************************************************
+
     vm.downloadDataset = function(datasetId){
+            console.log("Dataset with the following ID will be downloaded",datasetId);
             checkoutService.downloadDataset(datasetId)
     //        .then(function(data){
-    //            $state.go('datastage.files',{dir:$scope.vm.dir});
-    //        })
     }
-    //added part finish ********************************************************
+
 
     // vm.datasets = [];
     // var dataset = {};

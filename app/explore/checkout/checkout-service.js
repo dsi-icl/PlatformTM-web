@@ -64,27 +64,36 @@ function checkoutService($http,$q,ngAppConfig){
         return deferred.promise;
     }
 
-    //added part start********************************************************
-    // In the following ".then" part works on the response of the c#. it puts the response in the "data"
-    var _downloadDataset = function(datasetId){
-        //console.log("checkout-service part is WORKING- and the file with following ID will be deleted",fileId);
-        return $http({
 
-           // url: 'http://localhost:2483/files/remove/'+fileId,
-            url:serviceBase+'checkout/datasets/'+datasetId+'/download',
+
+    var _downloadDataset = function(datasetId) {
+        console.log("The following dataset will be downloaded:", datasetId);
+        $http({
             method: 'GET',
-            //data: { name: dirname }
-            //Do we actually need "Then" because it's a void type and the back-end doesn't return anything????!!!!!!!!
-            // possible answer is that, in this case since we don not get anything returned from c# the "data" would be an empty object
-        }).then(
-            function (response) {
-                return {
-                    files: (response.data)
-                }
-            }
-        )
+            url: serviceBase + 'checkout/datasets/' + datasetId + '/download',
+            params: {datasetId: datasetId},
+            responseType: ''
+        }).success(function (data, status, headers, config) {
+
+            console.log("CSV FILE IS !!!!!:", data);
+
+           // In the following line the "fileName" should be asigned from header.
+
+            var filenName = 'dataset.csv';
+
+            var file = new Blob([data], {type: 'text/csv'});
+            //trick to download store a file having its URL
+            var fileURL = URL.createObjectURL(file);
+            var a = document.createElement('a');
+            a.href = fileURL;
+            a.target = '_blank';
+            a.download = filenName;
+            document.body.appendChild(a);
+            a.click();
+        }).error(function (data, status, headers, config) {
+        });
     }
-    //added part finish********************************************************
+
 
 
 
@@ -92,6 +101,7 @@ function checkoutService($http,$q,ngAppConfig){
     checkoutServiceFactory.createCheckoutDatasets = _createCheckoutDatasets;
     checkoutServiceFactory.getDatasetPreview = _getDatasetPreview;
     checkoutServiceFactory.getDatasetsContent = _getDatasetsContent;
+    checkoutServiceFactory.downloadDataset = _downloadDataset;
     return checkoutServiceFactory
 }
 
