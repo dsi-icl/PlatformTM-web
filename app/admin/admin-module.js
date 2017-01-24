@@ -1,7 +1,7 @@
 /**
  * Created by iemam on 03/07/2014.
  */
-angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.service'])
+angular.module('bioSpeak.config',["ui.bootstrap","ngResource"])
 
     .config(function($stateProvider){
 

@@ -11,14 +11,21 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
     vm.templates={}
     vm.loaded = false;
 
+    vm.featuresVM = {}
+    vm.samplesVM = {}
+    vm.dataVM = {}
+
 
 
     AssayConfigService.getAssayTerms().then(function(data){
         vm.assayTypes = data.terms;
         //console.log(vm.assayTypes)
         //updateTerms()
-    })
+    });
 
+    vm.genericFields = ['Reporter Database Entry','Reporter Group','Composite Element Database Entry','Composite Element Comment']
+
+    vm.refsources = ['RefSeq','genbank']
     var updateTerms = function(){
         var selAssayType = vm.assay.type;
         //console.log(selAssayType)
@@ -87,7 +94,23 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
 
         console.log('Updating',dsType, 'template');
     }
-    
+
+    AssayConfigService.getAssaySampleTemplates().then(function(data) {
+        if (data != null && !angular.isUndefined(data)) {
+            vm.templates.sample = data.templates;
+        }
+    });
+        AssayConfigService.getAssayFeatureTemplates().then(function(data) {
+            if (data != null && !angular.isUndefined(data)) {
+                vm.templates.feature = data.templates;
+            }
+        });
+
+            AssayConfigService.getAssayDataTemplates().then(function(data) {
+                if (data != null && !angular.isUndefined(data)) {
+                    vm.templates.data = data.templates;
+                }
+            });
     vm.loadAssaySampleTemplates = function(){
         return AssayConfigService.getAssaySampleTemplates().then(function(data) {
             if (data != null && !angular.isUndefined(data)) {
@@ -95,6 +118,7 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
             }
         })
     }
+
     vm.loadAssayFeatureTemplates = function(){
         return AssayConfigService.getAssayFeatureTemplates().then(function(data) {
             if (data != null && !angular.isUndefined(data)) {

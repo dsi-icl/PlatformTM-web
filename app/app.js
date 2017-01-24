@@ -5,7 +5,7 @@
 var eTRIKSdataApp = angular.module('eTRIKSdata', [
     "ui.bootstrap",
     "toaster", "ngAnimate",
-    "ui.router",
+    "ui.router","ngSanitize",
     'oc.lazyLoad',
     'LocalStorageModule',                  // ocLazyLoad
     "bioSpeak.layout",
@@ -58,5 +58,5 @@ eTRIKSdataApp.constant('ngAppConfig', {
     // apiServiceBaseUri: '/api/v1/'
     //apiServiceBaseUri: 'http://ehs.biospeak.solutions/api/v1/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-      apiServiceBaseUri: 'http://155.198.188.216:2483/'
+    apiServiceBaseUri: 'http://155.198.188.216:2483/'
 });

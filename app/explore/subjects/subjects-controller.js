@@ -26,10 +26,10 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
 
     $scope.updateCurrentCart = function(sc) {
 
-        if(sc.isActive)
+        /*if(sc.isActive)
             cartService.addSubjChar(sc);
         else
-            cartService.removeSubjChar(sc)
+            cartService.removeSubjChar(sc)*/
     };
 
 

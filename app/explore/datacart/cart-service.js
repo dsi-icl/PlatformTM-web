@@ -14,7 +14,7 @@ function cartService($http,$rootScope,ngAppConfig) {
 
     var _toggle = true;
 
-    var _addSubjectCharacteristic = function(sc){
+    /*var _addSubjectCharacteristic = function(sc){
         console.log(sc)
         currentCart.scs.push(sc);
 
@@ -42,15 +42,48 @@ function cartService($http,$rootScope,ngAppConfig) {
     var _removeClinicalObservation = function(obs){
         var pos;
         for(var i=0; i< currentCart.observations.length;i++) {
+            console.log(currentCart.observations[i].id, obs.id)
             if(obs.id == currentCart.observations[i].id){
                 pos = i;
                 break;
             }
         }
+        console.log('removing ', obs, 'from data cart')
         currentCart.observations.splice(pos,1);
 
         _toggle = !_toggle;
+    }*/
+
+    var _addToCart = function(item){
+        console.log('Adding ',item)
+        if(item.isSubjectCharacteristics || item.isDesignElement)
+            currentCart.scs.push(item);
+        if(item.isClinicalObservations)
+            currentCart.observations.push(item);
+
+        //_toggle = !_toggle;
     }
+
+    var _removeFromCart = function(item){
+        var items = []
+        if(item.isSubjectCharacteristics)
+            items = currentCart.scs
+
+        if(item.isClinicalObservations)
+            items = currentCart.observations
+
+        var pos;
+        for(var i=0; i< items.length;i++) {
+            //console.log(items.id, obs.id)
+            if(item.id == items[i].id){
+                pos = i;
+                break;
+            }
+        }
+        console.log('removing ', item, 'from data cart')
+        items.splice(pos,1);
+    }
+
 
     var _refreshed = function(){
         return _toggle
@@ -144,6 +177,8 @@ function cartService($http,$rootScope,ngAppConfig) {
         filteredObs.filters = dc.printers.filters(filters)
 
         _toggle = !_toggle
+
+        console.log(filteredObs)
         $rootScope.$apply();
     };
 
@@ -152,10 +187,14 @@ function cartService($http,$rootScope,ngAppConfig) {
     };
 
 
-    cartServiceFactory.addSubjChar = _addSubjectCharacteristic;
+    /*cartServiceFactory.addSubjChar = _addSubjectCharacteristic;
     cartServiceFactory.addClinicalObs = _addClinicalObservation;
     cartServiceFactory.removeSubjChar = _removeSubjectCharacteristic;
-    cartServiceFactory.removeClinicalObs = _removeClinicalObservation;
+    cartServiceFactory.removeClinicalObs = _removeClinicalObservation;*/
+
+    cartServiceFactory.addToCart = _addToCart;
+    cartServiceFactory.removeFromCart = _removeFromCart;
+
     cartServiceFactory.getCurrentSCS = _getCurrentSCS;
     cartServiceFactory.getCurrentObservations = _getCurrentObservations;
     cartServiceFactory.clearCurrentCart = _clearCart;

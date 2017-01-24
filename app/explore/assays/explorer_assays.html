@@ -96,7 +96,7 @@
                     <div class="col-md-4">
                         <div class="ibox-content">
                             <div class="clinical-tree">
-                                <h3>Samples</h3>
+                                <h3>Sample Characteristics</h3>
                                 <ul>
                                     <div class="list-item-text">
                                         Study Day
@@ -105,10 +105,52 @@
                                         Timepoint
                                     </div>
                                 </ul>
-                                <h3>Features</h3>
+                                <h3>Feature Properties</h3>
                                 <ul>
                                     <div class="list-item-text">
-                                        Assay Parameters
+                                        Name
+                                    </div>
+                                    <div class="list-item-text">
+                                        GENE SYMBOL
+                                    </div>
+                                    <div class="list-item-text">
+                                        ENTREZ GENE ID
+                                    </div>
+                                    <div class="list-item-text">
+                                        GENE NAME
+                                    </div>
+                                    <div class="list-item-text">
+                                        GENE SYMBOL
+                                    </div>
+                                    <div class="list-item-text">
+                                        UNIGENE
+                                    </div>
+                                    <div class="list-item-text">
+                                        ENSEMBL ID
+                                    </div>
+                                    <div class="list-item-text">
+                                        CYTOBAND
+                                    </div>
+                                    <div class="list-item-text">
+                                        CHROMOSOME COORDINATE
+                                    </div>
+                                    <div class="list-item-text">
+                                        REPORTER SEQUENCE
+                                    </div>
+                                    <div class="list-item-text">
+                                        REFSEQ
+                                    </div>
+                                    <div class="list-item-text">
+                                        GENBANK
+                                    </div>
+                                </ul>
+                                <h3>Observed Measures</h3>
+                                <ul>
+                                    <div class="list-item-text">
+                                        Log Fold Ratio
+                                    </div>
+                                    <div class="list-item-text">
+                                        Raw Counts
                                     </div>
                                 </ul>
                             </div>
@@ -117,9 +159,9 @@
                     <div class="col-md-8">
                         <div class="ibox-title">
                             <div class="btn-group pull-right">
-                                <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'plots'">Data Plots</label>
-                                <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'table'">Data Table</label>
-                                <label class="btn btn-xs btn-white" ng-model="vm.show" btn-radio="'table'"><i class="fa fa-shopping-cart"></i><i class="fa fa-plus"></i></label>
+                                <label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'plots'">Data Plots</label>
+                                <label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'table'">Data Table</label>
+                                <!--<label class="btn btn-xs btn-white"><i class="fa fa-shopping-cart"></i><i class="fa fa-plus"></i></label>-->
                             </div>
                         </div>
                         <div class="ibox-content">

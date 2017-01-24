@@ -2,8 +2,7 @@
  * Created by iemam on 08/07/2014.
  */
 angular.module('biospeak.explorer',[
-        'eTRIKSdata.dcPlots',
-        'eTRIKSdata.exporter'])
+        'eTRIKSdata.dcPlots'])
 
     .config(function($stateProvider){
 

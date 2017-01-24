@@ -1470,3 +1470,8 @@ a.editable-click {
     height: 50px;
     position: relative;
 }
+
+
+.ui-select-container > .ui-select-choices{
+    top:36px;
+}
