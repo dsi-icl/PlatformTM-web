@@ -27,10 +27,10 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
     $scope.updateCurrentCart = function(obs) {
 
         console.log(obs, obs.isActive)
-        if(obs.isActive)
+        /*if(obs.isActive)
             cartService.addClinicalObs(obs);
         else
-            cartService.removeClinicalObs(obs);
+            cartService.removeClinicalObs(obs);*/
     };
 
     // console.log("calling clinical tree")

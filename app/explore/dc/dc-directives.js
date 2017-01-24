@@ -7,7 +7,7 @@ angular.module('eTRIKSdata.dcPlots')
 /**
  * groupChartButton
  */
-    .directive('groupChartButton',function($compile){
+/*    .directive('groupChartButton',function($compile){
         return{
             restrict: 'A',
             scope:{
@@ -23,77 +23,10 @@ angular.module('eTRIKSdata.dcPlots')
                 })
             }
         }
-    })
-/**
- * chartingButton requires obs.o3id, obs.isActive, obs.id
- * cardId , chartId
- * chartContainerId
- * chartingOptions (chartService, xfService, chartGroup ...etc) only to pass to dc-chart directive
- *
- * o3 (Text to display as name for the observation
- */
-    .directive('chartingButton', function($compile){
-        return {
-            restrict: 'EA',
-            scope:{
-                obs:'=',
-                chartingOpts:'=',
-                quals: '='
-            },
-            link: function(scope, element){
-                element.bind("click", function(){
-                    console.log(scope.obs,' CLICKED')
-
-                    var isActive = scope.obs.isActive === true;
-                    var chartId = (scope.obs.name+"_chart").replace(/ /g,'_');
-                    var cardId = (scope.obs.o3code+"_card").replace(/ /g,'_');
+    })*/
 
 
-                    if(!document.getElementById(cardId)){
-                        scope.$apply(function(){
-                            angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
-                                .prepend(
-                                    $compile(
-                                        '<div class="cardlock" id="'+ cardId +'">'+
-                                                '<div class="card">'+
-                                                    '<h1 class="border-bottom">{{obs.o3}}</h1>'+
-                                                    '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  class="qualifier-menu"></dc-chart-menu>'+
-                                                '<div>' +
-                                        '</div>'
-                                    )(scope)
-                                )
-                        })
-                    }
-
-
-                    if(!document.getElementById(chartId)){
-                            scope.$apply(function(){
-                                angular.element(document.getElementById(cardId).querySelector('div.card'))
-                                    .append(
-                                    $compile(
-                                        '<div id="'+ chartId +'"class="chart" ng-switch="obs.dataType">' +
-                                            '<dc-time-chart ng-switch-when="dateTime" charting-opts="chartingOpts" obs="obs"></dc-time-chart>'+
-                                            '<dc-chart ng-switch-default charting-opts="chartingOpts" obs="obs"></dc-chart>'+
-                                        '</div>'
-                                    )(scope)
-                                )
-                            });
-                    }
-                    else{
-                        console.log("chart exists already")
-                        if(!isActive){
-                            console.log('Removing chart')
-                            angular.element(document.getElementById(cardId)).remove();
-                        }
-                    }
-                });
-
-
-            }
-        }
-    })
-
-    .directive('groupControl',function($compile){
+/*    .directive('groupControl',function($compile){
         return{
             restrict:'EA',
             scope:{
@@ -105,7 +38,7 @@ angular.module('eTRIKSdata.dcPlots')
                 })
             }
         }
-    })
+    })*/
 
 
 
@@ -433,38 +366,7 @@ angular.module('eTRIKSdata.dcPlots')
         };
     })
 
-    .directive('dcChartMenu', function() {
-        return {
-            restrict: 'EA',
-            scope: {
-                obs: '=',
-                chartingOpts: '=',
-                quals:'='
-            },
-            replace:true,
-            controller: function ($scope, $element) {
-                console.log('menu scope',$scope.obs, $scope.quals)
-            },
-            template:
-            '<div class="dropdown" uib-dropdown>'+
-                '<a class="dropdown-toggle" href uib-dropdown-toggle>'+
-                    '<i class="fa fa-ellipsis-v"></i>'+
-                '</a>'+
-                '<ul class=" dropdown-menu dropdown-menu-right plotting-options"> ' +
-                    '<li class="dropdown-header">Chart Value for {{obs.o3}}</li>'+
-                    '<li ng-repeat="var in quals">' +
-                        '<div  class="checkbox">'+
-                            '<input id="checkbox_{{var.id}}" type="checkbox" ' +
-                            'charting-button  obs="var"  ' +
-                            'ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive" ' +
-                            'charting-opts="chartingOpts" >' +
-                            '<label uib-tooltip="{{var.qO2_label}}" for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +
-                        '</div>' +
-                    '</li> ' +
-                '</ul>'+
-            '</div>'
-        }
-    })
+
 
     .directive('dcDatatable', function () {
     return {
