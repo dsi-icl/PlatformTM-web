@@ -38,6 +38,7 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
     subjectDataService.getSubjCharacteristics(projectId)
         .then(function(data){
             $scope.subjCharsDB = data.SCs;
+            SubjCf.refreshCf(projectId);
             //console.log('all scs',$scope.subjCharsDB)
 
             /*SubjCf.refreshCf(projectId).then(

@@ -3,7 +3,7 @@
  */
 
 'use strict'
-function fileController($scope, $state, $stateParams, fileService){
+function fileController($scope, $state, $stateParams, SweetAlert, fileService){
 
     //var vm = {}
     //$scope.vm = vm;
@@ -126,19 +126,38 @@ function fileController($scope, $state, $stateParams, fileService){
         var fileId = vm.fileSelected.dataFileId;
         console.log("FileId to be deleted is ", fileId);
 
-        fileService.deleteFile(fileId)
-            .then(function(data){
-                $state.go('datastage.files',{dir:$scope.vm.dir});
-                //in the above code line, we try to direct the page to where it should go after the deleteFile function is exacuted
-                // the first argument 'datastage.files' tells it to be in the datastage/files
-                //the second argument gives the current directory
-                // So, in this case the page will remain the same after the function is finished.
+        SweetAlert.swal({
+                title: "Are you sure you want to delete "+vm.fileSelected.fileName+" ?",
+                text: "All previously loaded content will be unloaded from the database and the file will be permanently deleted! ",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false },
+            function (isConfirm) {
+                if (isConfirm) {
+                    fileService.deleteFile(fileId)
+                        .then(function(data){
+                            SweetAlert.swal("Deleted!", "File "+vm.fileSelected.fileName+" has been unloaded and deleted.", "success");
+                            $state.go('datastage.files',{dir:$scope.vm.dir});
+                            //in the above code line, we try to direct the page to where it should go after the deleteFile function is exacuted
+                            // the first argument 'datastage.files' tells it to be in the datastage/files
+                            //the second argument gives the current directory
+                            // So, in this case the page will remain the same after the function is finished.
 
-                //$scope.vm.fileId = data;
-                //  delete $scope.vm.selectedFiles[fileInfo.fileName]
-                //  $scope.vm.selectedFilesCount--
-                //  $state.go('datastage.files',{dir:$scope.vm.selectedFiles.path});
-            })
+                            //$scope.vm.fileId = data;
+                            //  delete $scope.vm.selectedFiles[fileInfo.fileName]
+                            //  $scope.vm.selectedFilesCount--
+                            //  $state.go('datastage.files',{dir:$scope.vm.selectedFiles.path});
+                        })
+                } else {
+                    SweetAlert.swal("Cancelled", "", "error");
+                }
+            });
+
+
     }
     //added part finish ********************************************************
 
@@ -223,5 +242,5 @@ function fileController($scope, $state, $stateParams, fileService){
 }
 
 angular.module('bioSpeak.DataStager')
-    .controller('fileController',['$scope', '$state','$stateParams','fileService',fileController])
+    .controller('fileController',['$scope', '$state','$stateParams','SweetAlert','fileService',fileController])
 

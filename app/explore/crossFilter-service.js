@@ -197,6 +197,16 @@ angular.module('eTRIKSdata.dcPlots',[])
                 subjectDim.filter(null);
         }
 
+        cfservice.getDimension = function(key){
+
+            return XfilterAssayMap['91'].dimensions[key];
+        }
+
+        cfservice.getGroup = function(key){
+//            console.log(key)
+            return XfilterAssayMap['91'].groups[key];
+        }
+
 
 
         return cfservice
@@ -222,28 +232,28 @@ angular.module('eTRIKSdata.dcPlots',[])
             //console.log('data AFTER passing to format data',data)
 
             var dateFormat = d3.time.format('%Y-%m-%dT%H:%M').parse
+            console.log(requestedObsvs)
+            if(requestedObsvs)
+                data.forEach(function(d) {
+                    //console.log(d)
+                    requestedObsvs.forEach(function(o){
+                         //console.log(o.name); console.log(o.dataType)
+                        if(o.dataType == "dateTime"){
+                            //console.log(d)
+                            d[o.name] = dateFormat(d[o.name]);
+                            //console.log('2',d[o.name])
+                        }else if(o.dataType == "string"){
+                            if(d[o.name] == null) d[o.name] = ""
+                        }else {
+                            //console.log(o.id,' is numeric')
+                            if(d[o.name] != null) d[o.name] = +d[o.name];
+                        }
 
 
-            data.forEach(function(d) {
-                //console.log(d)
-                requestedObsvs.forEach(function(o){
-                     //console.log(o.name); console.log(o.dataType)
-                    if(o.dataType == "dateTime"){
-                        //console.log(d)
-                        d[o.name] = dateFormat(d[o.name]);
-                        //console.log('2',d[o.name])
-                    }else if(o.dataType == "string"){
-                        if(d[o.name] == null) d[o.name] = ""
-                    }else {
-                        //console.log(o.id,' is numeric')
-                        if(d[o.name] != null) d[o.name] = +d[o.name];
-                    }
 
 
-
-
-                })
-            });
+                    })
+                });
             //console.log(data)
         }
 

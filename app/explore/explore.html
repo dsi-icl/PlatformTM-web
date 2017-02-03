@@ -58,17 +58,21 @@
         <!--<div ng-include="'explore/filters/filters.html'"></div>-->
         <div ui-view="datacart" id="filters"></div>
 
+<a class="btn btn-default btn-xs" style="position: fixed; top:20px;right:220px; z-index: 2000"><i class="fa fa-bar"></i> </a>
         <div class="page-wrapper wrapper-content animated fadeInRight" id="page-wrapper" style="margin-top: 143px;">
 
-            <section ui-view="subjects" id="section-1">
-                <i>Subject panel should load here!</i>
-            </section>
-            <section ui-view="assessments" id="section-2">
-                <i>Clinical Assessments panel should load here!</i>
-            </section>
-            <section ui-view="assays" id="section-3">
-                <i>Assays  panel should load here!</i>
-            </section>
+            <div id="explorer-wrapper"  style="margin-left:210px;">
+                <section ui-view="subjects" id="section-1">
+                    <i>Subject panel should load here!</i>
+                </section>
+                <section ui-view="assessments" id="section-2">
+                    <i>Clinical Assessments panel should load here!</i>
+                </section>
+                <section ui-view="assays" id="section-3">
+                    <i>Assays  panel should load here!</i>
+                </section>
+            </div>
+
         </div>
     </div>
 

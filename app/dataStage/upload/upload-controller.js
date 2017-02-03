@@ -12,7 +12,6 @@
         });
         var authData = localStorageService.get('authorizationTFAData');
         if (authData) {
-            //config.headers.Authorization = 'Bearer ' + authData.token;
             uploader.headers["Authorization"] = "Bearer " + authData.token;
         }
 

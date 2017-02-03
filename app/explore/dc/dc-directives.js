@@ -490,7 +490,7 @@ angular.module('eTRIKSdata.dcPlots')
                 $scope.xfService = $injector.get($scope.xfilterService);
             }],
             template:
-                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count model-count number-display"></span>',//+
+                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count number-display"></span>',//+
                 //' from(<span class="total-count"></span>)',
             link: function(scope, element, attrs){
                 scope.$watch(
