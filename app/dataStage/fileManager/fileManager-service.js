@@ -57,7 +57,7 @@
                 // serviceBase = http://ehs.biospeak.solutions/sandbox/
 
                 //the following is added as we use the local host to test
-                url: 'http://localhost:2483/files/remove/'+fileId,
+                url: serviceBase + 'files/'+fileId+'/remove',
                 method: 'GET',
                 //data: { name: dirname }
                 //Do we actually need "Then" because it's a void type and the back-end doesn't return anything????!!!!!!!!

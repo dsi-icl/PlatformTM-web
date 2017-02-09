@@ -313,7 +313,7 @@ angular.module('eTRIKSdata.dcPlots')
                     //console.log('dimensions groupall',cfDimension.groupAll().value())
                     //console.log('dimensions top',cfDimension.top(Infinity))
 
-                    if(noOfGroups > 2){
+                    if(noOfGroups > 1){
                         console.log("making a row chart ")
                         chartType = "rowChart"
                         chartOptions["elasticX"] = "true"

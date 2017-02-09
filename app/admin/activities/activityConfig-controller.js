@@ -80,6 +80,7 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             vm.clinicaldomains = response;
         })
     }
+
     else if($stateParams.activityId){
         ActivityConfigService.getActivityResource.get({ activityId: $stateParams.activityId }, function(response){
             activity = response;
@@ -212,9 +213,6 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             this.updateEEseq()
         }
     };
-
-
-
 
     vm.beforeDropOverExpressionDiv = function(){
         var deferred = $q.defer();
@@ -366,7 +364,10 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             vm.activity.datasets.push(dataset);
 
         $timeout(function(){
+            console.log(vm.activity.datasets.length - 1);
             vm.activeTabIndex = (vm.activity.datasets.length - 1);
+            console.log(vm.activeTabIndex);
+            //$scope.$apply();
         });
             //console.log(vm.activity)
 
@@ -382,7 +383,6 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
     vm.showDSvars = function(domain) {
         vm.showDS = domain;
     }
-
 
     vm.tabSelected = function(ds){
         vm.currDS = ds;
