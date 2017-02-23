@@ -53,10 +53,12 @@ angular.module('eTRIKSdata.dcPlots',[])
             XfilterAssayMap[assayId].dimensions = [];
             XfilterAssayMap[assayId].groups = [];
 
-            this.getData(projectId, assayId,requestedObsvs).then(function(res){
+            this.getData(projectId, assayId,requestedObsvs).then(function(dataTable){
                 //use property dataType to coerce string to numerals
-                var data = res.data;
-                var columns = res.header;
+                var data = dataTable.data;
+                var columns = dataTable.header;
+
+
 
                 data.forEach(function(d) {
                     //d.dtg   = dtgFormat.parse(d.origintime.substr(0,19));
@@ -119,12 +121,12 @@ angular.module('eTRIKSdata.dcPlots',[])
             var deferred = $q.defer();
 
             assayDataService.getSampleData(projectId,assayId,requestedObsvs)
-                .then(function(response){
+                .then(function(dataTable){
                     //console.log('inside getDAta',response)
-                    var dataToPlot = response.data;
-                    var sampleColumns = response.header; //These are the list of HEADERS in the CF data
+                    //var dataToPlot = dataTable.rows;
+                    //var sampleColumns = response.header; //These are the list of HEADERS in the CF data
                     //No need to maintain on the client?!
-                    deferred.resolve(response)
+                    deferred.resolve(dataTable)
                 })
 
             return deferred.promise

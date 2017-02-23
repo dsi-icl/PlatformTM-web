@@ -11,6 +11,7 @@ function cartService($http,$rootScope,ngAppConfig) {
     var currentCart = {}
     currentCart.scs = []
     currentCart.observations = []
+    currentCart.assays=[]
 
     var _toggle = true;
 
@@ -60,6 +61,8 @@ function cartService($http,$rootScope,ngAppConfig) {
             currentCart.scs.push(item);
         if(item.isClinicalObservations)
             currentCart.observations.push(item);
+        if(item.isMolecularObservations)
+            currentCart.assayPanels.push(item);
 
         //_toggle = !_toggle;
     }
@@ -95,6 +98,9 @@ function cartService($http,$rootScope,ngAppConfig) {
     var _getCurrentObservations = function(){
         return currentCart.observations;
     };
+    var _getCurrentAssayPanels = function(){
+        return currentCart.assayPanels;
+    }
 
     var _getUserSavedQueries = function(projectId){
         return null;
@@ -108,7 +114,7 @@ function cartService($http,$rootScope,ngAppConfig) {
         combinedQuery.name = query.name
         combinedQuery.projectId = projectId;
 
-        console.log(angular.toJson(combinedQuery))
+        //console.log(angular.toJson(combinedQuery))
 
         return $http({
             url:serviceBase+'apps/explore/projects/'+projectId+'/saveQuery',
