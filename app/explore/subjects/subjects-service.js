@@ -21,9 +21,13 @@ function subjectDataService($http,ngAppConfig){
                     data: angular.toJson(characs)
                 }).then(
                     function (response) {
+                        var columns = [];
+                        response.data.columns.forEach(function(col){
+                            columns.push(col.columnName);
+                        });
                         return {
-                            header: (response.data.header),
-                            data: (response.data.data)
+                            data: (response.data.rows),
+                            header: columns
                         }
                     },
                     function (httpError) {

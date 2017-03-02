@@ -36,7 +36,7 @@
                                     <div class="clinical-tree">
                                         <h3>Sample Characteristics</h3>
                                         <ul>
-                                            <div class="list-item-text" ng-repeat="sc in sampleCols">
+                                            <div class="list-item-text" ng-repeat="sc in assay.sampleCharacteristics">
                                                 <div class="plotting-switch">
                                                     <a  class="switchery"
                                                        charting-button id="sc_{{sc.id}}"
@@ -45,15 +45,12 @@
                                                        style="color: #222f3f;"
                                                        ng-init="sc.isActive = false"
                                                        ng-class="{on:sc.isActive}"
-                                                       ng-click="sc.isActive = !sc.isActive; updateCurrentCart(sc)" >
-                                                        <small></small>
+                                                       ng-click="sc.isActive = !sc.isActive; updateCurrentCart(sc)" ><small></small>
                                                     </a>
                                                 </div>
-                                                {{sc}}
+                                                {{sc.o3}}
                                             </div>
-                                            <div class="list-item-text">
-                                                Timepoint
-                                            </div>
+
                                         </ul>
                                         <h3>Feature Properties</h3>
                                         <ul>
