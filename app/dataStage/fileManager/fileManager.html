@@ -25,7 +25,7 @@
 
 
         <button ng-show="!vm.fileSelected.isDirectory" ng-click="vm.load()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Load File"><i class="fa fa-arrow-right"></i><i class="fa fa-database"></i> </button>
-        <button ng-show="!vm.fileSelected.isDirectory && vm.fileSelected.state =='LOADED'" ng-click="vm.unload()"class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Unload file from DB"><i class="fa fa-database"></i><i class="fa fa-arrow-right"></i></button>
+        <button ng-show="!vm.fileSelected.isDirectory && vm.fileSelected.isLoaded" ng-click="vm.unload()"class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Unload file from DB"><i class="fa fa-database"></i><i class="fa fa-arrow-right"></i></button>
         <button ng-click="vm.openF()"class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Preview"><i class="fa fa-eye"></i></button>
         <button ng-click="vm.showInfo()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="View Details"><i class="fa fa-info-circle"></i></button>
         <button ng-click="vm.deleteFile()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Delete File"><i class="fa fa-trash"></i></button>
