@@ -38,7 +38,8 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,DCchartin
 
                 angular.forEach(assays, function(assay){
                     promise = promise.then(function(){
-                        return AssayCf.refreshCf(projectId, assay.id).then(function (sampleCols){
+                        return AssayCf.refreshCf(projectId,'', assay.id).then(
+                            function (sampleCols){
                             // console.log('default scs', sampleCols)
                             //$scope.responses.push(sampleCols);
                             //$scope.luminexSampleChars = sampleCols

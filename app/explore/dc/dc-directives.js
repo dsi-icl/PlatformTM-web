@@ -53,7 +53,8 @@ angular.module('eTRIKSdata.dcPlots')
             replace:true,
             scope:{
                 obs:'=',
-                chartingOpts:'='
+                chartingOpts:'=',
+                module:'='
             },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
 
@@ -75,15 +76,14 @@ angular.module('eTRIKSdata.dcPlots')
                 var plot;
 
                 $scope.done = false;
-
-                //console.log('inside dc-chart controller')
-                //console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp)
+                console.log('inside dc-chart controller')
+                //console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp, 'module',$scope.module)
 
                 //obs.id is a unique id for the requested observation and the qualifier requested to chart
                 //(e.g. HEADACHE [AEOCCUR] , HEADHACHE [AESEV] ... it's a combination of the object of observation and a qualifier
                 // could replace with o3id_qo2id
                 //used for uniquely identifying charts for erquested observations AND also used as xfilter dimension key
-                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,chartDataType,$scope.obs)
+                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,chartDataType,$scope.obs,$scope.module)
                     .then(
                         function(chart){
                             plot = chart

@@ -336,6 +336,7 @@ angular.module('biospeak.explorer')
             scope:{
                 obs:'=',
                 chartingOpts:'=',
+                module:'=',
                 quals: '='
             },
             link: function(scope, element){
@@ -345,6 +346,9 @@ angular.module('biospeak.explorer')
                     var isActive = scope.obs.isActive === true;
                     var chartId = (scope.obs.name+"_chart").replace(/ /g,'_');
                     var cardId = (scope.obs.o3code+"_card").replace(/ /g,'_');
+
+                    console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',scope.chartingOpts.chartContainerId, 'for module',scope.module);
+
 
                     if(isActive)
                         cartService.addToCart(scope.obs);
@@ -378,7 +382,7 @@ angular.module('biospeak.explorer')
                                     $compile(
                                         '<div id="'+ chartId +'"class="chart" ng-switch="obs.dataType">' +
                                         '<dc-time-chart ng-switch-when="dateTime" charting-opts="chartingOpts" obs="obs"></dc-time-chart>'+
-                                        '<dc-chart ng-switch-default charting-opts="chartingOpts" obs="obs"></dc-chart>'+
+                                        '<dc-chart ng-switch-default charting-opts="chartingOpts" obs="obs" module="module"></dc-chart>'+
                                         '</div>'
                                     )(scope)
                                 )
