@@ -35,14 +35,14 @@ angular.module('eTRIKSdata.dcPlots')
                 //will need clinicalDataService / assayDataService / SubjectDataService
             }
 
-            DCservice.getDCchart = function(projectId, chartGroup, xfilterService,chartDataType, obsRequest){
+            DCservice.getDCchart = function(projectId, chartGroup, xfilterService,chartDataType, obsRequest, module){
 
                 var deferred = $q.defer();
                 var chart;
                 var obsId = obsRequest.name
 
-                //console.log("=========1- Getting CHART for",obsId," ================== ")
-                //console.log(projectId,obsCode, obsId, chartGroup, xfilterService,chartDataType, obsRequest);
+                console.log("=========1- Getting CHART for",obsId," ================== ")
+                console.log(projectId, obsId, chartGroup, xfilterService,chartDataType, obsRequest, module);
 
                 //if chartType is not specified, return the default which is the count chart/histogram/pie/rowChart
                 //the logic of if chart is not found refreshData, recreate xfilter and recreate dimensions should not apply if an alternative charttye
@@ -74,7 +74,7 @@ angular.module('eTRIKSdata.dcPlots')
                     activeChartsForObs[obsId] = chart.chartID();
                     deferred.resolve(chart)
                 }
-                else if(!angular.isUndefined(xfilterService.getDimension(obsId))){
+                else if(!angular.isUndefined(xfilterService.getDimension(obsId, module))){
                     console.log("Observation ",obsId, " exists. Creating ",chartDataType)
                     chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType, obsRequest.dataType);
                     activeChartsForObs[obsId] = chart.chartID();
@@ -87,10 +87,10 @@ angular.module('eTRIKSdata.dcPlots')
                     //param = requestedObsvs
                     //console.log('requestedObs',requestedObsvs)
 
-                    xfilterService.refreshCf(projectId,requestedObsvs)
+                    xfilterService.refreshCf(projectId,requestedObsvs,module)
                         .then(function () {
-                            DCservice.refreshCharts(chartGroup,xfilterService);
-                            chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType,obsRequest.dataType)
+                            DCservice.refreshCharts(chartGroup,xfilterService,module);
+                            chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType,obsRequest.dataType,module)
                             activeChartsForObs[obsId] = chart.chartID();
                             //console.log("CREATED CHART FOR ",obsId,chartGroup,' chartId', chart.chartID())
                             //console.log('==========DONE=============')
@@ -102,7 +102,7 @@ angular.module('eTRIKSdata.dcPlots')
                 return deferred.promise
             }
 
-            DCservice.createChart = function(obsId,chartGrp,xfilterService,chartDataType, dataType){
+            DCservice.createChart = function(obsId,chartGrp,xfilterService,chartDataType, dataType, module){
 
                 //TODO: add two parameters this method O3 and qO2 or
                 //depending on the role, the right dimension, group is retrieved
@@ -113,8 +113,8 @@ angular.module('eTRIKSdata.dcPlots')
                     cfDimension = xfilterService.getTimeDimension()
                     cfGroup = xfilterService.getGroupByTime(obsId)
                 }else{
-                    cfDimension = xfilterService.getDimension(obsId)
-                    cfGroup = xfilterService.getGroup(obsId)
+                    cfDimension = xfilterService.getDimension(obsId, module)
+                    cfGroup = xfilterService.getGroup(obsId, module)
                 }
 
 
@@ -162,7 +162,7 @@ angular.module('eTRIKSdata.dcPlots')
                 return chart
             }
 
-            DCservice.refreshCharts = function(chartGroup,xfilterService){
+            DCservice.refreshCharts = function(chartGroup, xfilterService, module){
 
                 var allCharts = dc.chartRegistry.list(chartGroup);// change that to activeCharts?
                 console.log('=======2===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
@@ -181,9 +181,9 @@ angular.module('eTRIKSdata.dcPlots')
                         // the new dimensions created for this observation
                         var obs = chartIdToObs[chart.chartID()]
                         if(!angular.isUndefined(obs)){
-                            //console.log('refreshing ',obs)
-                            chart.dimension(xfilterService.getDimension(obs))
-                            chart.group(xfilterService.getGroup(obs));
+                            console.log('refreshing ',obs, ' in module', module)
+                            chart.dimension(xfilterService.getDimension(obs,module))
+                            chart.group(xfilterService.getGroup(obs,module));
 
 
                             //oldFilters.forEach(function(filter){
@@ -195,9 +195,9 @@ angular.module('eTRIKSdata.dcPlots')
                             // if(chart.chartID() == tableWidgetId){
 
                             console.log('refreshing table',chart.obsClass )
-                            chart.dimension(xfilterService.getTableDimension(chart.obsClass ))
+                            chart.dimension(xfilterService.getTableDimension(chart.module ))
                             chart.group(xfilterService.getTableGroup());
-                            chart.columns(xfilterService.getTableHeaders(chart.obsClass ));
+                            chart.columns(xfilterService.getTableHeaders(chart.module ));
 
                             //oldFilters.forEach(function(filter) {
                             //    chart.filter(filter)
@@ -206,8 +206,8 @@ angular.module('eTRIKSdata.dcPlots')
                         }
                         if(chart.chartType == 'dataCount'){
                             console.log('refreshing counter widget')
-                            chart.dimension(xfilterService.getCountData())
-                            chart.group(xfilterService.getCountGroup());
+                            chart.dimension(xfilterService.getCountData(chart.module))
+                            chart.group(xfilterService.getCountGroup(chart.module));
                         }
 
                         chart.render();
@@ -224,7 +224,8 @@ angular.module('eTRIKSdata.dcPlots')
                 chartOptions["group"] =  xfilterService.getCountGroup(module)
                 chart.options(chartOptions);
                 chart.chartType = 'dataCount';
-                chart.dimName = "counter"
+                chart.dimName = "counter";
+                chart.module = module;
                 counterWidgetId = chart.chartID();
 
                 return chart
@@ -250,7 +251,7 @@ angular.module('eTRIKSdata.dcPlots')
                 chart.options(chartOptions);
                 chart.chartType = 'dataTable';
                 chart.dimName = "table"
-                chart.obsClass = module;
+                chart.module = module;
                 chart.on('renderlet', function (table) {
                     // each time table is rendered remove nasty extra row dc.js insists on adding
                     table.select('tr.dc-table-group').remove();

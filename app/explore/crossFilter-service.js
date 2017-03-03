@@ -42,8 +42,15 @@ angular.module('eTRIKSdata.dcPlots',[])
         }
 
 
-        cfservice.refreshCf = function(projectId,assayId,requestedObsvs){
+        cfservice.refreshCf = function(projectId,requestedObsvs,assayId){
             var deferred = $q.defer();
+
+            console.log(assayId)
+
+            if(!assayId && requestedObsvs){
+                assayId = requestedObsvs[0].activityId;
+            }console.log(assayId)
+
             dimensionsPerAssay[assayId] = {}
 
             /**
@@ -53,7 +60,7 @@ angular.module('eTRIKSdata.dcPlots',[])
             XfilterAssayMap[assayId].dimensions = [];
             XfilterAssayMap[assayId].groups = [];
 
-            this.getData(projectId, assayId,requestedObsvs).then(function(dataTable){
+            this.getData(projectId,requestedObsvs,assayId).then(function(dataTable){
                 //use property dataType to coerce string to numerals
                 var data = dataTable.data;
                 var columns = dataTable.header;
@@ -117,7 +124,7 @@ angular.module('eTRIKSdata.dcPlots',[])
             return deferred.promise
         }
 
-        cfservice.getData = function(projectId,assayId,requestedObsvs){
+        cfservice.getData = function(projectId,requestedObsvs,assayId){
             var deferred = $q.defer();
 
             assayDataService.getSampleData(projectId,assayId,requestedObsvs)
@@ -137,6 +144,9 @@ angular.module('eTRIKSdata.dcPlots',[])
          **/
         cfservice.getTableDimension = function(assayId){
             return XfilterAssayMap[assayId].subjectDim
+        }
+        cfservice.getTableGroup = function(){
+            return function(d) {return "booo"}
         }
         cfservice.getTableHeaders = function(assayId){
             var columns = [subjectColumnName];
@@ -199,14 +209,17 @@ angular.module('eTRIKSdata.dcPlots',[])
                 subjectDim.filter(null);
         }
 
-        cfservice.getDimension = function(key){
+        cfservice.getDimension = function(key, assayId){
+            console.log(key)
+            console.log(assayId)
+            console.log(XfilterAssayMap)
 
-            return XfilterAssayMap['91'].dimensions[key];
+            return XfilterAssayMap[assayId].dimensions[key];
         }
 
-        cfservice.getGroup = function(key){
+        cfservice.getGroup = function(key, assayId){
 //            console.log(key)
-            return XfilterAssayMap['91'].groups[key];
+            return XfilterAssayMap[assayId].groups[key];
         }
 
 

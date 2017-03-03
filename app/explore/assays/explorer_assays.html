@@ -39,13 +39,16 @@
                                             <div class="list-item-text" ng-repeat="sc in assay.sampleCharacteristics">
                                                 <div class="plotting-switch">
                                                     <a  class="switchery"
-                                                       charting-button id="sc_{{sc.id}}"
-                                                       obs= "sc"
-                                                       charting-opts="chartingOpts"
-                                                       style="color: #222f3f;"
-                                                       ng-init="sc.isActive = false"
-                                                       ng-class="{on:sc.isActive}"
-                                                       ng-click="sc.isActive = !sc.isActive; updateCurrentCart(sc)" ><small></small>
+                                                        charting-button id="sc_{{sc.id}}"
+                                                        obs= "sc"
+                                                        charting-opts="chartingOpts"
+                                                        module="assay.id"
+                                                        style="color: #222f3f;"
+                                                        ng-init="sc.isActive = false"
+                                                        ng-class="{on:sc.isActive}"
+                                                        ng-click="sc.isActive = !sc.isActive;
+                                                        chartingOpts.chartContainerId =  'assay_plots_'+assay.id;
+                                                        updateCurrentCart(sc)" ><small></small>
                                                     </a>
                                                 </div>
                                                 {{sc.o3}}
@@ -135,7 +138,7 @@
                                 </div>
                                 <div class="ibox-content">
 
-                                    <div id="{{chartingOpts.chartContainerId}}_{{assay.id}}" ng-hide="assay.show =='table'" class=" charts-container  ">
+                                    <div id="assay_plots_{{assay.id}}" ng-hide="assay.show =='table'" class=" charts-container  ">
 
                                         <div class="cardlock placeholder">
                                             <div class="anchor">
