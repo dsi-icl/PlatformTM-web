@@ -34,7 +34,6 @@ function ProjectService($resource, ngAppConfig) {
         }
     });
 
-    console.log(_projectResource)
     ProjectFactory.getProjectResource = _projectResource;
 
 

@@ -42,14 +42,36 @@ angular.module('eTRIKSdata.dcPlots',[])
         }
 
 
+        cfservice.formatData = function(data, requestedObsvs){
+            var dateFormat = d3.time.format('%Y-%m-%dT%H:%M').parse
+            if(requestedObsvs)
+                data.forEach(function(d) {
+                    //console.log(d)
+                    requestedObsvs.forEach(function(o){
+                        //console.log(o.name); console.log(o.dataType)
+                        if(o.dataType == "dateTime"){
+                            //console.log(d)
+                            d[o.name] = dateFormat(d[o.name]);
+                            //console.log('2',d[o.name])
+                        }else if(o.dataType == "string"){
+                            if(d[o.name] == null) d[o.name] = ""
+                        }else {
+                            //console.log(o.id,' is numeric')
+                            if(d[o.name] != null) d[o.name] = +d[o.name];
+                        }
+                    })
+                });
+            //console.log(data)
+        }
+
         cfservice.refreshCf = function(projectId,requestedObsvs,assayId){
             var deferred = $q.defer();
 
-            console.log(assayId)
+            console.log("=============Creating Assay "+assayId+" XF============")
 
             if(!assayId && requestedObsvs){
                 assayId = requestedObsvs[0].activityId;
-            }console.log(assayId)
+            }
 
             dimensionsPerAssay[assayId] = {}
 
@@ -67,13 +89,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
 
 
-                data.forEach(function(d) {
-                    //d.dtg   = dtgFormat.parse(d.origintime.substr(0,19));
-                    //d.lat   = +d.latitude;
-                    //d['Age']  = +d['Age'];
-                    //d.Race   = d.Race;
-                    //d.depth = d3.round(+d.depth,0);
-                });
+                cfservice.formatData(data, requestedObsvs);
 
 
                 //console.log(data,columns)
@@ -92,7 +108,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                 //dimensions[subjectColumnName] = subjectDim
                 XfilterAssayMap[assayId].subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
 
-                //console.log("=============Refreshing ASSAY "+assayId+" XF ============")
+
 
                 /**
                  * Create dimensions for each sample characterisitc
@@ -106,7 +122,6 @@ angular.module('eTRIKSdata.dcPlots',[])
                         return d[sc];
                     });
                     XfilterAssayMap[assayId].dimensions[sc] = dim;
-                    //dimensions[sc] = dim
                     /**
                      * Group
                      */
@@ -210,9 +225,9 @@ angular.module('eTRIKSdata.dcPlots',[])
         }
 
         cfservice.getDimension = function(key, assayId){
-            console.log(key)
-            console.log(assayId)
-            console.log(XfilterAssayMap)
+            // console.log(key)
+            // console.log(assayId)
+            // console.log(XfilterAssayMap)
 
             return XfilterAssayMap[assayId].dimensions[key];
         }
@@ -244,10 +259,8 @@ angular.module('eTRIKSdata.dcPlots',[])
 
         subjCfService.formatData = function(data, requestedObsvs){
 
-            //console.log('data AFTER passing to format data',data)
-
             var dateFormat = d3.time.format('%Y-%m-%dT%H:%M').parse
-            console.log(requestedObsvs)
+
             if(requestedObsvs)
                 data.forEach(function(d) {
                     //console.log(d)
@@ -263,10 +276,6 @@ angular.module('eTRIKSdata.dcPlots',[])
                             //console.log(o.id,' is numeric')
                             if(d[o.name] != null) d[o.name] = +d[o.name];
                         }
-
-
-
-
                     })
                 });
             //console.log(data)
@@ -276,23 +285,11 @@ angular.module('eTRIKSdata.dcPlots',[])
             var deferred = $q.defer();
 
             this.getData(projectId, requestedObsvs).then(function(data){
-                //use property dataType to coerce string to numerals
 
                 //console.log('inside inititialize')
                 //console.log('dataToPlot',dataToPlot)
                 //console.log('data',data)
 
-
-                // data.forEach(function(d) {
-                //     //d.dtg   = dtgFormat.parse(d.origintime.substr(0,19));
-                //     //d.lat   = +d.latitude;
-                //     d['age']  = +d['age'];
-                //     //d.Race   = d.Race;
-                //     //d.depth = d3.round(+d.depth,0);
-                // });
-
-                //console.log('data before passing to format data',data)
-                //console.log(dataToPlot)
 
                 subjCfService.formatData(data, requestedObsvs);
 

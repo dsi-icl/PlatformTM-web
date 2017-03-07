@@ -8,12 +8,10 @@ function subjectDataService($http,ngAppConfig){
 
         return {
             getSubjData: function(projectId,characs) {
-                console.log(characs);
-                console.log(angular.toJson(characs))
+
                 if(!characs)
                     characs='';
-                console.log(characs);
-                console.log(angular.toJson(characs))
+
                 return $http({
                     // url:serviceBase+'api/projects/'+projectId+'/data/subjects/characteristics',
                     url:serviceBase+'apps/explore/projects/'+projectId+'/subjects/search',
