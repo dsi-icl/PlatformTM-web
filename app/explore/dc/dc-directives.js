@@ -91,7 +91,7 @@ angular.module('eTRIKSdata.dcPlots')
 
                             if(plot.chartType == 'barChart'){
                                 console.log("calling the reangeChart")
-                                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,"rangeChart",$scope.obs)
+                                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,"rangeChart",$scope.obs,$scope.module)
                                     .then(function(chart2){
                                         $scope.rangeChart = chart2
                                         $scope.chartToPlot = plot;

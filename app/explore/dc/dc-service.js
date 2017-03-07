@@ -76,7 +76,7 @@ angular.module('eTRIKSdata.dcPlots')
                 }
                 else if(!angular.isUndefined(xfilterService.getDimension(obsId, module))){
                     console.log("Observation ",obsId, " exists. Creating ",chartDataType)
-                    chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType, obsRequest.dataType);
+                    chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType, obsRequest.dataType,module);
                     activeChartsForObs[obsId] = chart.chartID();
                     deferred.resolve(chart)
                 }
