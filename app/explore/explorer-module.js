@@ -64,7 +64,7 @@ angular.module('biospeak.explorer',[
                             ]);
                         }
                         },
-                        controller:'ExplorerCtrl as vm'
+                        controller:'ExplorerCtrl as expVM'
                     },
                     'subjects@explore':{
                         templateUrl: 'explore/subjects/explorer_subjects.html',
@@ -94,8 +94,8 @@ angular.module('biospeak.explorer',[
                         }
                     },
                     'assays@explore':{
-                        templateUrl: 'explore/assays/explorer_assays.html',
-                        controller: 'AssayCtrl',
+                        templateUrl: 'explore/assays/assays.html',
+                        controller: 'AssayCtrl as vm',
                         resolve: {
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/assays/assays-service.js');

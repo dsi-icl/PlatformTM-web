@@ -1,9 +1,8 @@
 /**
- * Created by iemam on 08/12/2016.
+ * Created by iemam on 07/03/2017.
  */
-
 'use strict'
-function cartService($http,$rootScope,ngAppConfig) {
+function explorerService($http,$rootScope,ngAppConfig) {
     var cartServiceFactory = {};
 
     var serviceBase = ngAppConfig.apiServiceBaseUri;
@@ -16,44 +15,44 @@ function cartService($http,$rootScope,ngAppConfig) {
     var _toggle = true;
 
     /*var _addSubjectCharacteristic = function(sc){
-        console.log(sc)
-        currentCart.scs.push(sc);
+     console.log(sc)
+     currentCart.scs.push(sc);
 
-        //_toggle = !_toggle;
-    }
-    var _addClinicalObservation = function(obs){
-        console.log(obs)
-        currentCart.observations.push(obs);
+     //_toggle = !_toggle;
+     }
+     var _addClinicalObservation = function(obs){
+     console.log(obs)
+     currentCart.observations.push(obs);
 
-        _toggle = !_toggle;
-    }
-    var _removeSubjectCharacteristic = function(sc){
-        //console.log(sc)
-        var pos;
-        for(var i=0; i< currentCart.scs.length;i++) {
-            if(sc.id == currentCart.scs[i].id){
-                pos = i;
-                break;
-            }
-        }
-        currentCart.scs.splice(pos,1);
+     _toggle = !_toggle;
+     }
+     var _removeSubjectCharacteristic = function(sc){
+     //console.log(sc)
+     var pos;
+     for(var i=0; i< currentCart.scs.length;i++) {
+     if(sc.id == currentCart.scs[i].id){
+     pos = i;
+     break;
+     }
+     }
+     currentCart.scs.splice(pos,1);
 
-        _toggle = !_toggle;
-    }
-    var _removeClinicalObservation = function(obs){
-        var pos;
-        for(var i=0; i< currentCart.observations.length;i++) {
-            console.log(currentCart.observations[i].id, obs.id)
-            if(obs.id == currentCart.observations[i].id){
-                pos = i;
-                break;
-            }
-        }
-        console.log('removing ', obs, 'from data cart')
-        currentCart.observations.splice(pos,1);
+     _toggle = !_toggle;
+     }
+     var _removeClinicalObservation = function(obs){
+     var pos;
+     for(var i=0; i< currentCart.observations.length;i++) {
+     console.log(currentCart.observations[i].id, obs.id)
+     if(obs.id == currentCart.observations[i].id){
+     pos = i;
+     break;
+     }
+     }
+     console.log('removing ', obs, 'from data cart')
+     currentCart.observations.splice(pos,1);
 
-        _toggle = !_toggle;
-    }*/
+     _toggle = !_toggle;
+     }*/
 
     var _addToCart = function(item){
         console.log('Adding ',item)
@@ -62,7 +61,7 @@ function cartService($http,$rootScope,ngAppConfig) {
         if(item.isClinicalObservations)
             currentCart.observations.push(item);
         if(item.isMolecularObservations)
-            currentCart.assays.push(item);
+            currentCart.assayPanels.push(item);
 
         //_toggle = !_toggle;
     };
@@ -70,7 +69,6 @@ function cartService($http,$rootScope,ngAppConfig) {
     var _addAssayPanel = function(panel){
         console.log('Adding Panel', panel.assayId);
         currentCart.assays.push(panel);
-        _toggle = !_toggle;
     }
 
     var _removeFromCart = function(item){
@@ -105,7 +103,7 @@ function cartService($http,$rootScope,ngAppConfig) {
         return currentCart.observations;
     };
     var _getCurrentAssayPanels = function(){
-        return currentCart.assays;
+        return currentCart.assayPanels;
     }
 
     var _getUserSavedQueries = function(projectId){
@@ -117,10 +115,10 @@ function cartService($http,$rootScope,ngAppConfig) {
         console.log(query)
         var combinedQuery = {}
         combinedQuery.obsRequests = query.cobs.concat(query.scs);
-        combinedQuery.name = query.name;
+        combinedQuery.name = query.name
         combinedQuery.projectId = projectId;
-        combinedQuery.assayPanels = query.assaypanels;
-        console.log(combinedQuery)
+
+        //console.log(angular.toJson(combinedQuery))
 
         return $http({
             url:serviceBase+'apps/explore/projects/'+projectId+'/saveQuery',
@@ -146,7 +144,6 @@ function cartService($http,$rootScope,ngAppConfig) {
     var _clearCart = function () {
         currentCart.scs = []
         currentCart.observations = []
-        currentCart.assays = []
     };
 
     var _applyFilter = function(id,filters,isRange){
@@ -201,9 +198,9 @@ function cartService($http,$rootScope,ngAppConfig) {
 
 
     /*cartServiceFactory.addSubjChar = _addSubjectCharacteristic;
-    cartServiceFactory.addClinicalObs = _addClinicalObservation;
-    cartServiceFactory.removeSubjChar = _removeSubjectCharacteristic;
-    cartServiceFactory.removeClinicalObs = _removeClinicalObservation;*/
+     cartServiceFactory.addClinicalObs = _addClinicalObservation;
+     cartServiceFactory.removeSubjChar = _removeSubjectCharacteristic;
+     cartServiceFactory.removeClinicalObs = _removeClinicalObservation;*/
 
     cartServiceFactory.addToCart = _addToCart;
     cartServiceFactory.removeFromCart = _removeFromCart;
@@ -213,7 +210,6 @@ function cartService($http,$rootScope,ngAppConfig) {
 
     cartServiceFactory.getCurrentSCS = _getCurrentSCS;
     cartServiceFactory.getCurrentObservations = _getCurrentObservations;
-    cartServiceFactory.getCurrentAssayPanels = _getCurrentAssayPanels;
     cartServiceFactory.clearCurrentCart = _clearCart;
     cartServiceFactory.clickclack = _refreshed;
     cartServiceFactory.applyFilter = _applyFilter;
@@ -223,4 +219,4 @@ function cartService($http,$rootScope,ngAppConfig) {
 }
 
 angular.module('biospeak.explorer')
-    .factory('cartService',['$http','$rootScope','ngAppConfig', cartService])
+    .factory('explorerService',['$http','$rootScope','ngAppConfig', explorerService])

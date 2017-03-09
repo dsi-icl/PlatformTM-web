@@ -38,8 +38,8 @@ angular.module('biospeak.explorer')
                 var domain;
 
                 $scope.localcallbck = function(obsRequest){
-                    console.log("ana b2 here",obsRequest)
-                    $scope.callbck({obs:obsRequest})
+                    //console.log("ana b2 here",obsRequest)
+                    //$scope.callbck({obs:obsRequest})
                 }
 
                 if($scope.group.isDomain){
@@ -222,7 +222,7 @@ angular.module('biospeak.explorer')
             controller: function($scope){
                 $scope.updateCurrentCart = function(obsRequest){
                     //console.log("In here",obsRequest)
-                    $scope.callbck({ request: obsRequest })
+                    //$scope.callbck({ request: obsRequest })
                 }
             },
             template:
@@ -264,7 +264,7 @@ angular.module('biospeak.explorer')
             controller: function($scope){
                 $scope.updateCurrentCart = function(obsRequest){
                     //console.log("In here",obsRequest)
-                    $scope.callbck({ request: obsRequest })
+                    //$scope.callbck({ request: obsRequest })
                 }
             },
             replace:true,

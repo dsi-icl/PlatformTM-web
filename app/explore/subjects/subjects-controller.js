@@ -16,7 +16,6 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
         chartGroup : "subject",
         DCchartService : "DCchartingService",
         xfilterService : "SubjCf",
-        //exportService : "exportService",
         filtersService: "filtersService"
 
     };

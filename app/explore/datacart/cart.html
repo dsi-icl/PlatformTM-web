@@ -43,10 +43,11 @@
                 <div>
                     <div style="border-bottom: 1px solid white">
                         <div>MOLECULAR OBSERVATIONS</div>
+
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
-                        <li>
-                            <span>Gene Expression</span> <div class="p-w-xs" style="border-bottom: 1px solid white">Features</div>
+                        <li ng-repeat="panel in vm.query.assaypanels">
+                            <span>{{panel.assayName}} Panel</span> <!--<div class="p-w-xs" style="border-bottom: 1px solid white">Features</div>-->
                             <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                         </li>
                     </ul>

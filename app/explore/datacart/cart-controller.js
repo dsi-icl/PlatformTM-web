@@ -30,10 +30,13 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
 
 
     $scope.$watch('vm.cartservice.clickclack()',function (newval) {
-       //console.log("INSIDE WATCH, ",newval);
+       console.log("INSIDE WATCH, ",newval);
         vm.query.scs = cartService.getCurrentSCS();
         vm.query.cobs = cartService.getCurrentObservations();
+        vm.query.assaypanels = cartService.getCurrentAssayPanels();
+        //$scope.apply()
 
+        console.log(vm.query)
 
     },true)
 
@@ -45,7 +48,7 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
 
     vm.saveToCartAndCheckout = function(){
         cartService.saveQuery(vm.query, vm.projectId).then(function(response){
-            console.log(response.cartId)
+            //console.log(response.cartId)
             $state.go('datacart.checkout',{
                 projectId: vm.projectId,
                 cartId: response.cartId});
