@@ -73,6 +73,7 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,cartServi
         })
 
     vm.addAssayToCart = function(panel){
+        console.log(panel)
         cartService.addAssayPanelToCart(panel)
         //$scope.$apply();
     }

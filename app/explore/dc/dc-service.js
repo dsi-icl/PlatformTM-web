@@ -145,7 +145,7 @@ angular.module('eTRIKSdata.dcPlots')
                          if(filter)
                              isRangeFilter = (filter.filterType == 'RangedFilter');
 
-                        cartService.applyFilter(obsId,chart.filters(),isRangeFilter);
+                        cartService.applyFilter(obsId,chart.filters(),isRangeFilter,module);
 
                         xfilterService.setActiveFilters(chart.dimName,filter);
                         DCservice.propagateFilter(xfilterService);

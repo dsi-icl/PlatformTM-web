@@ -351,9 +351,9 @@ angular.module('biospeak.explorer')
 
 
                     if(isActive)
-                        cartService.addToCart(scope.obs);
+                        cartService.addToCart(scope.obs, scope.module);
                     else
-                        cartService.removeFromCart(scope.obs);
+                        cartService.removeFromCart(scope.obs, scope.module);
 
                     scope.$apply();
 
@@ -374,7 +374,6 @@ angular.module('biospeak.explorer')
                         })
                     }
 
-
                     if(!document.getElementById(chartId)){
                         scope.$apply(function(){
                             angular.element(document.getElementById(cardId).querySelector('div.card'))
@@ -388,6 +387,7 @@ angular.module('biospeak.explorer')
                                 )
                         });
                     }
+
                     else{
                         console.log("chart exists already")
                         if(!isActive){

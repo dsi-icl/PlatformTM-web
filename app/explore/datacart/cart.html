@@ -14,12 +14,14 @@
             <li style="padding: 10px;color: white;">
 
                 <div>
-                    <div style="border-bottom: 1px solid white">
-                        <div>SUBJECTS</div>
+                    <div style="border-bottom: 1px solid #4e7194;
+    /*font-size: 1.2em;*/
+    font-weight: 600;">
+                        <div>SUBJECTS <span> (filtered) </span> </div>
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
                         <li ng-repeat="sc in vm.query.scs">
-                            <span>{{sc.name}}</span> <div class="p-w-xs">{{sc.filters}}</div>
+                            <span>{{sc.name}}</span> <div class="p-w-xs"><span ng-if="sc.filterText"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
                             <!--<a class="pull-right" ng-click="vm.removeFilter('subject',key)"><i class="fa fa-times"></i></a>-->
                         </li>
                     </ul>
@@ -28,12 +30,14 @@
 
             <li style="padding: 10px;color: white;">
                 <div>
-                    <div style="border-bottom: 1px solid white">
+                    <div style="border-bottom: 1px solid #4e7194;
+    /*font-size: 1.2em;*/
+    font-weight: 600;">
                         <div>CLINICAL OBSERVATIONS</div>
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
                         <li ng-repeat="obs in vm.query.cobs">
-                            <span>{{obs.name}}</span> <div class="p-w-xs"><span ng-if="obs.filters"><i class="fa fa-filter"></i></span>{{obs.filters}}</div>
+                            <span>{{obs.name}}</span> <div class="p-w-xs"><span ng-if="obs.filterText"><i class="fa fa-filter"></i></span> {{obs.filterText}}</div>
                             <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                         </li>
                     </ul>
@@ -41,13 +45,34 @@
             </li>
             <li style="padding: 10px;color: white;">
                 <div>
-                    <div style="border-bottom: 1px solid white">
+                    <div style="border-bottom: 1px solid #4e7194;
+    /*font-size: 1.2em;*/
+    font-weight: 600;">
                         <div>MOLECULAR OBSERVATIONS</div>
 
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
-                        <li ng-repeat="panel in vm.query.assaypanels">
-                            <span>{{panel.assayName}} Panel</span> <!--<div class="p-w-xs" style="border-bottom: 1px solid white">Features</div>-->
+                        <li ng-if="panel.isRequested" ng-repeat="panel in vm.query.assaypanels">
+                            <div >
+                                <div style="border-bottom: 1px solid #4e7194">
+                                    <div>{{panel.assayName}} Panel</div>
+                                </div>
+                                <ul style="padding-left: 10px;list-style: none; font-style: italic;">
+                                    <li ng-show="panel.sampleQuery.length > 0">
+                                        <div style="border-bottom: 1px solid #4e7194">
+                                            <div>Sample Characteristics</div>
+                                        </div>
+                                        <ul style="list-style: none;padding-left: 5px;">
+                                            <li ng-repeat="sc in panel.sampleQuery">
+                                                    <span>{{sc.name}}</span><div class="p-w-xs"><span ng-if="sc.filterText"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <!--<div class="p-w-xs" style="border-bottom: 1px solid white">Features</div>-->
                             <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                         </li>
                     </ul>
