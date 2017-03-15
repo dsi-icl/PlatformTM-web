@@ -119,8 +119,6 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
 
     }
 
-
-    //added part Start ********************************************************
     vm.deleteFile = function(){
         console.log("fileManager-controller: information about the relevant selected file ", vm.fileSelected);
         var fileId = vm.fileSelected.dataFileId;
@@ -142,15 +140,6 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
                         .then(function(data){
                             SweetAlert.swal("Deleted!", "File "+vm.fileSelected.fileName+" has been unloaded and deleted.", "success");
                             $state.go('datastage.files',{dir:$scope.vm.dir});
-                            //in the above code line, we try to direct the page to where it should go after the deleteFile function is exacuted
-                            // the first argument 'datastage.files' tells it to be in the datastage/files
-                            //the second argument gives the current directory
-                            // So, in this case the page will remain the same after the function is finished.
-
-                            //$scope.vm.fileId = data;
-                            //  delete $scope.vm.selectedFiles[fileInfo.fileName]
-                            //  $scope.vm.selectedFilesCount--
-                            //  $state.go('datastage.files',{dir:$scope.vm.selectedFiles.path});
                         })
                 } else {
                     SweetAlert.swal("Cancelled", "", "error");
@@ -159,9 +148,6 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
 
 
     }
-    //added part finish ********************************************************
-
-
 
     vm.fileClickFn = function(fileInfo){
         console.log("fileClicked")

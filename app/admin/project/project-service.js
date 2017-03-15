@@ -2,7 +2,7 @@
  * Created by iemam on 15/08/2016.
  */
 'use strict'
-function ProjectService($resource, ngAppConfig) {
+function ProjectService($http,$resource, ngAppConfig) {
     var ProjectFactory = {};
     
     var serviceBase = ngAppConfig.apiServiceBaseUri;
@@ -34,11 +34,25 @@ function ProjectService($resource, ngAppConfig) {
         }
     });
 
-    ProjectFactory.getProjectResource = _projectResource;
+    var _deleteProject = function(projectId){
+        console.log("project-service: the project with following ID will be deleted",projectId);
+        return $http({
+            url: serviceBase + 'projects/' + projectId+'/remove',
+            method: 'GET',
+        }).then(
+            function (response) {
+                return {
+                    projects: (response.data)
+                }
+            }
+        )
+    }
 
+    ProjectFactory.getProjectResource = _projectResource;
+    ProjectFactory.deleteProject = _deleteProject;
 
     return ProjectFactory
 
 }
 angular.module('bioSpeak.config')
-    .factory('ProjectService',['$resource','ngAppConfig', ProjectService])
+    .factory('ProjectService',['$http','$resource','ngAppConfig', ProjectService])

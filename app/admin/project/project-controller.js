@@ -1,5 +1,5 @@
 'use strict'
-function projectController($scope, $state, $stateParams,ProjectService,toaster) {
+function projectController($scope, $state, $stateParams,ProjectService,toaster, SweetAlert) {
     var vm = this;
     
     vm.project = {}
@@ -101,7 +101,35 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster) 
         project = null
         $state.go('admin.projects');
     }
-    
+
+    vm.deleteProject = function(){
+        console.log("project-controller: information about the relevant selected project ", vm.projectId);
+        var projectId = vm.projectId;
+        console.log("Project to be deleted is ", projectId);
+
+        SweetAlert.swal({
+                title: "Are you sure you want to delete "+vm.project.name+" project?",
+                text: "This project including all its content will be permanently deleted! ",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel it!",
+                closeOnConfirm: false,
+                closeOnCancel: false },
+            function (isConfirm) {
+                if (isConfirm) {
+                    ProjectService.deleteProject(projectId)
+                        .then(function(data){
+                            SweetAlert.swal("Deleted!", "Project "+vm.project.name+" has been deleted.", "success");
+                            $state.go('admin.projects');
+                        })
+                } else {
+                    SweetAlert.swal("Cancelled", "", "error");
+                }
+            });
+    }
+
 }
 angular.module('bioSpeak.config')
-    .controller('ProjectCtrl',['$scope', '$state','$stateParams','ProjectService','toaster',projectController])
+    .controller('ProjectCtrl',['$scope', '$state','$stateParams','ProjectService','toaster','SweetAlert', projectController])
