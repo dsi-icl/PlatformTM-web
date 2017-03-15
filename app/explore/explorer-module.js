@@ -14,7 +14,7 @@ angular.module('biospeak.explorer',[
             //     controller: "logOutController"
             // })
             .state('explore', {
-                url: "/{projectId}/explore/",
+                url: "/{projectId}/explore/{queryId}",
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
@@ -64,7 +64,7 @@ angular.module('biospeak.explorer',[
                             ]);
                         }
                         },
-                        controller:'ExplorerCtrl as vm'
+                        controller:'ExplorerCtrl as expVM'
                     },
                     'subjects@explore':{
                         templateUrl: 'explore/subjects/explorer_subjects.html',
@@ -94,8 +94,8 @@ angular.module('biospeak.explorer',[
                         }
                     },
                     'assays@explore':{
-                        templateUrl: 'explore/assays/explorer_assays.html',
-                        controller: 'AssayCtrl',
+                        templateUrl: 'explore/assays/assays.html',
+                        controller: 'AssayCtrl as vm',
                         resolve: {
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/assays/assays-service.js');
@@ -112,7 +112,9 @@ angular.module('biospeak.explorer',[
                     'datacart@explore':{
                         templateUrl: 'explore/datacart/cart.html',
                         controller: 'cartCtrl as vm',
+                        params: { queryId: null, },
                         resolve: {
+
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/datacart/cart-service.js');
                             }],

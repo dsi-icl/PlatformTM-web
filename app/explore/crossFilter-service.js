@@ -239,6 +239,10 @@ angular.module('eTRIKSdata.dcPlots',[])
 
 
 
+        cfservice.setActiveFilters = function(obs,filter){
+
+        }
+
         return cfservice
     }])
 
@@ -897,12 +901,13 @@ angular.module('eTRIKSdata.dcPlots',[])
             //var service = $injector.get(request);
 
 
+            var filteredIds;
 
-            var filteredIds = xfFiltered.getCurrentSubjectIds();
             //console.log(filteredIds)
             // if(filteredIds.length == 0)return;
 
             if(xfFiltered.getXFname() == 'SubjCf'){
+                filteredIds = xfFiltered.getCurrentSubjectIds();
                 //console.log("subjects filtered");
                 ClinicalCf.resetSubjectFilter();
                 AssayCf.resetSubjectFilter();
@@ -913,6 +918,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                 AssayCf.filterBySubjects(filteredIds);
 
             }else if(xfFiltered.getXFname()  == 'ClinicalCf'){
+                filteredIds = xfFiltered.getCurrentSubjectIds();
                 //console.log("clinical filtered");
 
                 SubjCf.resetSubjectFilter();
@@ -926,7 +932,8 @@ angular.module('eTRIKSdata.dcPlots',[])
                 }
 
                 ClinicalCf.syncfilters();
-            }else if(xfFiltered.getXFname() == 'AssayCf'){
+            }
+            /*else if(xfFiltered.getXFname() == 'AssayCf'){
                 //console.log("assays filtered");
 
                 SubjCf.resetSubjectFilter();
@@ -936,7 +943,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
                 SubjCf.filterBySubjects(filteredIds);
                 ClinicalCf.filterBySubjects(filteredIds);
-            }
+            }*/
 
             //SubjCf.filterBySubjects(filteredIds);
             //ClinicalCf.filterBySubjects(filteredIds);

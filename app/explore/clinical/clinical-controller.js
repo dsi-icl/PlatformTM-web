@@ -26,7 +26,7 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
 
     $scope.updateCurrentCart = function(obs) {
 
-        console.log(obs, obs.isActive)
+        //console.log(obs, obs.isActive)
         /*if(obs.isActive)
             cartService.addClinicalObs(obs);
         else

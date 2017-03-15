@@ -9,71 +9,90 @@ function cartService($http,$rootScope,ngAppConfig) {
     var serviceBase = ngAppConfig.apiServiceBaseUri;
 
     var currentCart = {}
-    currentCart.scs = []
-    currentCart.observations = []
-    currentCart.assays=[]
+    //currentCart.scs = [];
+    //currentCart.observations = [];
+    //currentCart.assays=[];
 
     var _toggle = true;
 
-    /*var _addSubjectCharacteristic = function(sc){
-        console.log(sc)
-        currentCart.scs.push(sc);
 
-        //_toggle = !_toggle;
+
+    var _getCartQuery = function(projectId,cartId){
+        return $http({
+            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            method:'GET'
+        })
+            .then(
+                function (response) {
+                    currentCart = response.data;
+                    return {
+                        cart: (response.data),
+
+                    }
+                },
+                function (httpError) {
+                    // translate the error
+                    throw httpError.status + " : " +
+                    httpError.data;
+                });
     }
-    var _addClinicalObservation = function(obs){
-        console.log(obs)
-        currentCart.observations.push(obs);
 
-        _toggle = !_toggle;
+    var _getNewCartQuery = function(projectId){
+        var cartId = "new";
+        return $http({
+            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            method:'GET'
+        })
+            .then(
+                function (response) {
+                    currentCart = response.data;
+                    return {
+                        cart: (response.data),
+
+                    }
+                },
+                function (httpError) {
+                    // translate the error
+                    throw httpError.status + " : " +
+                    httpError.data;
+                });
     }
-    var _removeSubjectCharacteristic = function(sc){
-        //console.log(sc)
-        var pos;
-        for(var i=0; i< currentCart.scs.length;i++) {
-            if(sc.id == currentCart.scs[i].id){
-                pos = i;
-                break;
-            }
-        }
-        currentCart.scs.splice(pos,1);
 
-        _toggle = !_toggle;
-    }
-    var _removeClinicalObservation = function(obs){
-        var pos;
-        for(var i=0; i< currentCart.observations.length;i++) {
-            console.log(currentCart.observations[i].id, obs.id)
-            if(obs.id == currentCart.observations[i].id){
-                pos = i;
-                break;
-            }
-        }
-        console.log('removing ', obs, 'from data cart')
-        currentCart.observations.splice(pos,1);
-
-        _toggle = !_toggle;
-    }*/
-
-    var _addToCart = function(item){
-        console.log('Adding ',item)
+    var _addToCart = function(item, module){
+        console.log('Adding ',item, module)
         if(item.isSubjectCharacteristics || item.isDesignElement)
-            currentCart.scs.push(item);
+            currentCart.subjCharRequests.push(item);
         if(item.isClinicalObservations)
-            currentCart.observations.push(item);
-        if(item.isMolecularObservations)
-            currentCart.assayPanels.push(item);
+            currentCart.obsRequests.push(item);
+        if(item.isSampleCharacteristic){
+            console.log('Adding ',item, currentCart)
+            currentCart.assayPanelRequests[module].isRequested = true;
+            currentCart.assayPanelRequests[module].sampleQuery.push(item);
 
-        //_toggle = !_toggle;
+            console.log('Adding ',item, currentCart.assayPanelRequests[module])
+        }
+
+
+        _toggle = !_toggle;
+    };
+
+    var _addAssayPanel = function(panel){
+        //console.log('Adding Panel', panel.assayId);
+        currentCart.assayPanelRequests[panel.assayId].isRequested = true;
+        //console.log(currentCart);
+
+        _toggle = !_toggle;
     }
 
-    var _removeFromCart = function(item){
+    var _removeFromCart = function(item, module){
         var items = []
         if(item.isSubjectCharacteristics)
-            items = currentCart.scs
+            items = currentCart.subjCharRequests
 
         if(item.isClinicalObservations)
-            items = currentCart.observations
+            items = currentCart.obsRequests;
+        if(item.isSampleCharacteristic)
+            items = currentCart.assayPanelRequests[module];
 
         var pos;
         for(var i=0; i< items.length;i++) {
@@ -93,33 +112,40 @@ function cartService($http,$rootScope,ngAppConfig) {
     }
 
     var _getCurrentSCS = function(){
-        return currentCart.scs;
+        return currentCart.subjCharRequests;
     }
     var _getCurrentObservations = function(){
-        return currentCart.observations;
+        return currentCart.obsRequests;
     };
     var _getCurrentAssayPanels = function(){
-        return currentCart.assayPanels;
+
+        return currentCart.assayPanelRequests;
+    };
+
+
+    var _subjectsAreFiltered = function(){
+
     }
 
     var _getUserSavedQueries = function(projectId){
         return null;
     }
 
+    
     var _saveQuery = function(query,projectId){
 
-        console.log(query)
-        var combinedQuery = {}
-        combinedQuery.obsRequests = query.cobs.concat(query.scs);
-        combinedQuery.name = query.name
-        combinedQuery.projectId = projectId;
-
-        //console.log(angular.toJson(combinedQuery))
+        //console.log(query)
+        // var combinedQuery = {}
+        // combinedQuery.obsRequests = query.cobs.concat(query.scs);
+        // combinedQuery.name = query.name;
+        // combinedQuery.projectId = projectId;
+        // combinedQuery.assayPanelRequests = query.assaypanels;
+        //console.log(combinedQuery)
 
         return $http({
             url:serviceBase+'apps/explore/projects/'+projectId+'/saveQuery',
             method:'POST',
-            data: angular.toJson(combinedQuery)
+            data: angular.toJson(currentCart)
         })
             .then(
                 function (response) {
@@ -135,37 +161,56 @@ function cartService($http,$rootScope,ngAppConfig) {
                 });
     }
 
-
-
     var _clearCart = function () {
         currentCart.scs = []
         currentCart.observations = []
+        currentCart.assays = []
     };
 
-    var _applyFilter = function(id,filters,isRange){
-        console.log(id,filters,isRange);
+    var _applyFilter = function(id,filters,isRange,module){
+        console.log(id,filters,isRange,module);
+        var found = false;
 
         var filteredObs;
+        if(module){
+            for(var i=0; i< currentCart.assayPanelRequests[module].sampleQuery.length;i++) {
+                if (id == currentCart.assayPanelRequests[module].sampleQuery[i].name) {
+                    filteredObs = currentCart.assayPanelRequests[module].sampleQuery[i];
+                    found = true;
+                    break;
+                }
+            }
+        }
 
-        for(var i=0; i< currentCart.observations.length;i++) {
-            if (id == currentCart.observations[i].name) {
-                filteredObs = currentCart.observations[i];
-                break;
+        if(!found){
+            for(var i=0; i< currentCart.obsRequests.length;i++) {
+                if (id == currentCart.obsRequests[i].name) {
+                    filteredObs = currentCart.obsRequests[i];
+                    found = true
+                    break;
+                }
             }
         }
-        for(i=0; i< currentCart.scs.length;i++) {
-            if(id == currentCart.scs[i].name){
-                filteredObs = currentCart.scs[i];
-                break;
+
+
+        if(!found){
+            for(i=0; i< currentCart.subjCharRequests.length;i++) {
+                if(id == currentCart.subjCharRequests[i].name){
+                    filteredObs = currentCart.subjCharRequests[i];
+                    found = true
+                    break;
+                }
             }
         }
+
+        if(!found) return;
 
         //REMOVE FILTER
         if(filters.length == 0){
             filteredObs.filterRangeFrom = 0;
             filteredObs.filterRangeTo = 0;
             filteredObs.filterExactValues = null;
-            filteredObs.filters = dc.printers.filters(filters)
+            filteredObs.filterText = dc.printers.filters(filters)
             filteredObs.isFiltered = false;
             _toggle = !_toggle
             $rootScope.$apply();
@@ -180,7 +225,7 @@ function cartService($http,$rootScope,ngAppConfig) {
             filteredObs.filterExactValues = filters;
 
         filteredObs.isFiltered = true;
-        filteredObs.filters = dc.printers.filters(filters)
+        filteredObs.filterText = dc.printers.filters(filters)
 
         _toggle = !_toggle
 
@@ -193,21 +238,21 @@ function cartService($http,$rootScope,ngAppConfig) {
     };
 
 
-    /*cartServiceFactory.addSubjChar = _addSubjectCharacteristic;
-    cartServiceFactory.addClinicalObs = _addClinicalObservation;
-    cartServiceFactory.removeSubjChar = _removeSubjectCharacteristic;
-    cartServiceFactory.removeClinicalObs = _removeClinicalObservation;*/
+
 
     cartServiceFactory.addToCart = _addToCart;
     cartServiceFactory.removeFromCart = _removeFromCart;
-
+    cartServiceFactory.addAssayPanelToCart = _addAssayPanel;
     cartServiceFactory.getCurrentSCS = _getCurrentSCS;
     cartServiceFactory.getCurrentObservations = _getCurrentObservations;
+    cartServiceFactory.getCurrentAssayPanels = _getCurrentAssayPanels;
     cartServiceFactory.clearCurrentCart = _clearCart;
     cartServiceFactory.clickclack = _refreshed;
     cartServiceFactory.applyFilter = _applyFilter;
     cartServiceFactory.getUserSavedQueries = _getUserSavedQueries;
-    cartServiceFactory.saveQuery = _saveQuery
+    cartServiceFactory.saveQuery = _saveQuery;
+    cartServiceFactory.getCartQuery = _getCartQuery;
+    cartServiceFactory.getNewCartQuery = _getNewCartQuery;
     return cartServiceFactory;
 }
 

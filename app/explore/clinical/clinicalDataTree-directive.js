@@ -38,8 +38,8 @@ angular.module('biospeak.explorer')
                 var domain;
 
                 $scope.localcallbck = function(obsRequest){
-                    console.log("ana b2 here",obsRequest)
-                    $scope.callbck({obs:obsRequest})
+                    //console.log("ana b2 here",obsRequest)
+                    //$scope.callbck({obs:obsRequest})
                 }
 
                 if($scope.group.isDomain){
@@ -222,7 +222,7 @@ angular.module('biospeak.explorer')
             controller: function($scope){
                 $scope.updateCurrentCart = function(obsRequest){
                     //console.log("In here",obsRequest)
-                    $scope.callbck({ request: obsRequest })
+                    //$scope.callbck({ request: obsRequest })
                 }
             },
             template:
@@ -264,7 +264,7 @@ angular.module('biospeak.explorer')
             controller: function($scope){
                 $scope.updateCurrentCart = function(obsRequest){
                     //console.log("In here",obsRequest)
-                    $scope.callbck({ request: obsRequest })
+                    //$scope.callbck({ request: obsRequest })
                 }
             },
             replace:true,
@@ -351,9 +351,9 @@ angular.module('biospeak.explorer')
 
 
                     if(isActive)
-                        cartService.addToCart(scope.obs);
+                        cartService.addToCart(scope.obs, scope.module);
                     else
-                        cartService.removeFromCart(scope.obs);
+                        cartService.removeFromCart(scope.obs, scope.module);
 
                     scope.$apply();
 
@@ -374,7 +374,6 @@ angular.module('biospeak.explorer')
                         })
                     }
 
-
                     if(!document.getElementById(chartId)){
                         scope.$apply(function(){
                             angular.element(document.getElementById(cardId).querySelector('div.card'))
@@ -388,6 +387,7 @@ angular.module('biospeak.explorer')
                                 )
                         });
                     }
+
                     else{
                         console.log("chart exists already")
                         if(!isActive){

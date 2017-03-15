@@ -4,26 +4,28 @@
 
 
 'use strict'
-function AssaysController($scope,$stateParams,AssayCf,assayDataService,DCchartingService,$q,$timeout){
-     
-        $scope.GEXsampleCharacteristics = ['class','sampleType','batch'];
+function AssaysController($scope,$stateParams,AssayCf,assayDataService,cartService,$q){
 
-        $scope.vm = {}
-        $scope.vm.show="table";
+    var vm = this;
 
-        $scope.chartingOpts = {
-            projectId : $stateParams.projectId,
-            chartContainerId : "assay-plots",
-            chartGroup : "assay",
-            DCchartService : "DCchartingService",
-            xfilterService : "AssayCf",
-            exportService : "exportService"
+    vm.GEXsampleCharacteristics = ['class','sampleType','batch'];
 
-        };
+        // $scope.vm = {}
+    vm.show="table";
+
+    vm.chartingOpts = {
+        projectId : $stateParams.projectId,
+        chartContainerId : "assay-plots",
+        chartGroup : "assay",
+        DCchartService : "DCchartingService",
+        xfilterService : "AssayCf",
+        exportService : "exportService"
+
+    };
 
 
-        var projectId = $stateParams.projectId;
-        assayDataService.getAssays(projectId).then(function(data){
+    var projectId = $stateParams.projectId;
+    assayDataService.getAssays(projectId).then(function(data){
             var assays = data.assays
 
             //console.log(assays)
@@ -61,7 +63,7 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,DCchartin
                     //console.log("DONE")
                 })
 
-                $scope.vm.assays = assays;
+                vm.assays = assays;
             }
 
 
@@ -69,8 +71,15 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,DCchartin
 
 
         })
+
+    vm.addAssayToCart = function(panel){
+        console.log(panel)
+        cartService.addAssayPanelToCart(panel)
+        //$scope.$apply();
+    }
+
         
     }
 
 angular.module('biospeak.explorer')
-    .controller('AssayCtrl', ['$scope','$stateParams','AssayCf','assayDataService','DCchartingService','$q','$timeout',AssaysController])
+    .controller('AssayCtrl', ['$scope','$stateParams','AssayCf','assayDataService','cartService','$q',AssaysController])

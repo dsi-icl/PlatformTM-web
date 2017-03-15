@@ -47,7 +47,7 @@ function checkoutService($http,$q,ngAppConfig){
 
     var _getDatasetPreview = function(datasetId){
         return $http({
-            url:serviceBase+'checkout/datasets/'+datasetId+'/preview',
+            url:serviceBase+'apps/export/datasets/'+datasetId+'/preview',
             method:'GET'
         }).then(function(response){
             var DT = response.data;
@@ -70,7 +70,7 @@ function checkoutService($http,$q,ngAppConfig){
         console.log("The following dataset will be downloaded:", datasetId);
         $http({
             method: 'GET',
-            url: serviceBase + 'checkout/datasets/' + datasetId + '/download',
+            url: serviceBase + 'apps/export/datasets/' + datasetId + '/download',
             params: {datasetId: datasetId},
             responseType: ''
         }).success(function (data, status, headers, config) {

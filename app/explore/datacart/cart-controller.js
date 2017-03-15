@@ -5,35 +5,40 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
     //$scope.cart = exportService.getCart();
 
     var vm = this;
-    vm.projectId = $stateParams.projectId
+    vm.projectId = $stateParams.projectId;
+    vm.queryId = $stateParams.queryId;
 
     vm.query = {}
-
+    vm.cartQuery = {};
+    cartService.clearCurrentCart();
 
     vm.cartservice = cartService;
 
-    cartService.clearCurrentCart();
 
-    //vm.cart = {}
-
-    /*cartService.getUserSavedQueries(vm.projectId).then(function(queries){
-        vm.savedQueries = {};
-    })*/
+    if(vm.queryId){
+        cartService.getSavedCart(vm.projectId,vm.cartId).then(function(query){
 
 
-    /*filtersService.getUserSavedFilters($stateParams.projectId)
-     .then(function(data) {
-     vm.savedFilters = data.filters;
-     })*/
+        });
+    }else {
+        cartService.getNewCartQuery(vm.projectId).then(function(query){
+            vm.cartQuery = query;
+        })
+    }
 
-    //vm.subjFilters = filtersService.getFiltersFor('subject')
+
+
+
 
 
     $scope.$watch('vm.cartservice.clickclack()',function (newval) {
-       //console.log("INSIDE WATCH, ",newval);
+       console.log("INSIDE WATCH, ",newval);
         vm.query.scs = cartService.getCurrentSCS();
         vm.query.cobs = cartService.getCurrentObservations();
+        vm.query.assaypanels = cartService.getCurrentAssayPanels();
 
+
+        console.log(vm.query)
 
     },true)
 
@@ -45,7 +50,7 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
 
     vm.saveToCartAndCheckout = function(){
         cartService.saveQuery(vm.query, vm.projectId).then(function(response){
-            console.log(response.cartId)
+            //console.log(response.cartId)
             $state.go('datacart.checkout',{
                 projectId: vm.projectId,
                 cartId: response.cartId});
