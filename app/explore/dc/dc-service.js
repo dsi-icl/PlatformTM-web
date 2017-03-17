@@ -42,7 +42,7 @@ angular.module('eTRIKSdata.dcPlots')
                 var obsId = obsRequest.name
 
                 console.log("=========1- Getting CHART for",obsId," ================== ")
-                console.log(projectId, obsId, chartGroup, xfilterService,chartDataType, obsRequest, module);
+                console.log("===params: ",projectId, obsId, chartGroup, xfilterService,chartDataType, obsRequest, module);
 
                 //if chartType is not specified, return the default which is the count chart/histogram/pie/rowChart
                 //the logic of if chart is not found refreshData, recreate xfilter and recreate dimensions should not apply if an alternative charttye
@@ -75,7 +75,7 @@ angular.module('eTRIKSdata.dcPlots')
                     deferred.resolve(chart)
                 }
                 else if(!angular.isUndefined(xfilterService.getDimension(obsId, module))){
-                    console.log("Observation ",obsId, " exists. Creating ",chartDataType)
+                    console.log("Observation ",obsId, " exists in XF. Creating ",chartDataType)
                     chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType, obsRequest.dataType,module);
                     activeChartsForObs[obsId] = chart.chartID();
                     deferred.resolve(chart)
@@ -266,13 +266,13 @@ angular.module('eTRIKSdata.dcPlots')
                 var chartType,
                     chartOptions = {};
 
-                console.log("Data type is", dataType, val)
+                //console.log("Data type is", dataType, val)
 
 
 
                 //if(val == 'sysbp') requiresBoxplot = true;
                 if(chartDataType == 'GroupedByTime'){
-                    console.log("doing boxplot")
+                  //  console.log("doing boxplot")
                     chartType = "boxPlot"
                     chartOptions["width"] = 384 //768////
                     chartOptions["height"] = 240 //480////
@@ -286,21 +286,40 @@ angular.module('eTRIKSdata.dcPlots')
 
                 }
                 else if(dataType == 'dateTime'){
-                    console.log('making a time chart')
+                    //console.log('making a time chart')
                     chartType = "barChart";
-                    chartOptions["width"] = "500";
+                    chartOptions["width"] = "2000";
                     var maxDate = cfDimension.top(1)[0][val]
                     var minDate = DCservice.getMinimumValue(cfDimension,val)
 
-                    console.log(maxDate,minDate);
-                    chartOptions["margins"] = {top: 10, right: 20, bottom: 30, left: 30}
+                        //console.log(maxDate,minDate);
+                    //chartOptions["margins"] = {top: 10, right: 20, bottom: 30, left: 30}
 
                     chartOptions["x"] = d3.time.scale().domain([minDate, maxDate]);
-                    //chartOptions["xUnits"] = dc.units.integers(0,3)
+
+                    chartOptions["xUnits"] = d3.time.minutes
                     //chartOptions["round"] = (d3.time.month.round)
                     //chartOptions["yUnits"] = d3.time.days;
-                    chartOptions["renderArea"] = true
+                    //chartOptions["renderArea"] = true
+                    chartOptions["barPadding"] = 0.1;
+                    chartOptions["outerPadding"] = 0.05;
+                    chartOptions["brushOn"] =true;
+                    //chartOptions["renderDataPoints"] = true
 
+                }
+                else if(dataType == 'ordinal'){
+                    chartType = "barChart";
+                    chartOptions["x"]  = d3.scale.ordinal();
+                    chartOptions["xUnits"] = dc.units.ordinal;
+                     //   .brushOn(false)
+                     //   .xAxisLabel('Fruit')
+                     //   .yAxisLabel('Quantity Sold')
+                     //   .dimension(fruitDimension)
+                    chartOptions["barPadding"] = 0.1;
+                    chartOptions["outerPadding"] = 0.05;
+                    chartOptions["yAxisLabel"] = "Frequency"
+                    chartOptions["xAxisLabel"] = val
+                     //   .group(sumGroup);
                 }
                 //else if(isNaN(cfGroup.all()[0].key)){
                 else if(dataType == "string"){
@@ -309,13 +328,13 @@ angular.module('eTRIKSdata.dcPlots')
 
                     var noOfGroups = cfGroup.size();
 
-                    console.log('number of groups',noOfGroups)
-                    console.log('groups',cfGroup.all())
+                    //console.log('number of groups',noOfGroups)
+                    //console.log('groups',cfGroup.all())
                     //console.log('dimensions groupall',cfDimension.groupAll().value())
                     //console.log('dimensions top',cfDimension.top(Infinity))
 
                     if(noOfGroups > 1){
-                        console.log("making a row chart ")
+                        console.log("Plotting a DC row chart ")
                         chartType = "rowChart"
                         chartOptions["elasticX"] = "true"
                         chartOptions["xAxis"] = {"ticks":"4"}
@@ -342,7 +361,7 @@ angular.module('eTRIKSdata.dcPlots')
 
 
                 else{
-                    console.log("Making a numeric chart")
+                    console.log("Plotting a DC bar chart")
                     //numeric bar chart
                     //console.log(cfDimension.top(1))
                     maxValue = parseFloat(cfDimension.top(1)[0][val])
@@ -352,13 +371,13 @@ angular.module('eTRIKSdata.dcPlots')
                     //var maxTail = parseInt(maxValue/4)
                     var offset = (maxValue - minValue )/10.0
 
-                    console.log('offset',offset, 'min before',minValue,'max before', maxValue)
+                    //console.log('offset',offset, 'min before',minValue,'max before', maxValue)
                     maxValue = maxValue + offset;
                     minValue = minValue - offset;
 
                     //minValue = cfDimension.bottom(1)[0][val]
-                    console.log('max ',maxValue)
-                    console.log('min ',minValue)
+                    //console.log('max ',maxValue)
+                    //console.log('min ',minValue)
 
                     chartType = "barChart";
                     chartOptions["transitionDuration"] = "500"
@@ -376,7 +395,7 @@ angular.module('eTRIKSdata.dcPlots')
                     chartOptions["renderHorizontalGridLines"] = true;
 
                     if(chartDataType == 'rangeChart'){
-                        console.log('setting range chart to 40')
+                        //console.log('setting range chart to 40')
                         chartOptions["height"] = "60";
 
                         chartOptions["yAxisLabel"] = "";

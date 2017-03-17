@@ -171,53 +171,6 @@
                         </select>
                     </div>
 
-                    <!--<div class="form-group">
-                        <div class="row">
-                            <label class="col-sm-2 control-label">Type</label>
-
-                            <div class="col-sm-10">
-                                <select data-ng-model="vm.project.type" class="form-control" name="type">
-                                    <option value="Single study">Single Study</option>
-                                    <option value="Multiple study">Multiple Study</option>
-                                    <option value="Meta study">Meta study</option>
-                                </select>
-                            </div>
-
-                        </div>
-
-                    </div>-->
-
-                    <!--<form data-editable-form name="uiSelectForm">
-                        <div editable-ui-select="vm.project.ta" data-e-form="uiSelectForm" data-e-name="ta" name="ta"  theme="bs3" data-e-ng-model="vm.project.ta" data-e-style="min-width:150px;">
-                            {{vm.project.ta}}
-                            <editable-ui-select-match placeholder="ta">
-                                {{$select.selected}}
-                            </editable-ui-select-match>
-                            <editable-ui-select-choices repeat="ta in vm.tas | filter: $select.search track by $index">
-                                {{ta}}
-                            </editable-ui-select-choices>
-                        </div>
-                        <div class="buttons">
-                            &lt;!&ndash; button to show form
-                            <button type="button" class="btn btn-default" ng-click="uiSelectForm.$show()" ng-show="!uiSelectForm.$visible">
-                                Edit
-                            </button>
-                             buttons to submit / cancel form
-                              <span ng-show="uiSelectForm.$visible">
-                                <br/>
-                                <button type="submit" class="btn btn-primary" ng-disabled="uiSelectForm.$waiting">
-                                  Save
-                                </button>
-                                <button type="button" class="btn btn-default" ng-disabled="uiSelectForm.$waiting" ng-click="uiSelectForm.$cancel()">
-                                  Cancel
-                                </button>
-                              </span>
-                        </div>
-                    </form>&ndash;&gt;-->
-
-                    <!--<p class="small font-bold">-->
-                    <!--<span><i class="fa fa-circle text-navy"></i> Online status</span>-->
-                    <!--</p>-->
 
                 </div>
             </div>
@@ -231,44 +184,15 @@
                 </div>
             </div>
 
-            <!--<div class="ibox">-->
-            <!--<div class="ibox-content">-->
-            <!--<h3>Personal friends</h3>-->
-            <!--<ul class="list-unstyled file-list">-->
-            <!--<li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>-->
-            <!--<li><a href=""><i class="fa fa-file-picture-o"></i> Logo_zender_company.jpg</a></li>-->
-            <!--<li><a href=""><i class="fa fa-stack-exchange"></i> Email_from_Alex.mln</a></li>-->
-            <!--<li><a href=""><i class="fa fa-file"></i> Contract_20_11_2014.docx</a></li>-->
-            <!--<li><a href=""><i class="fa fa-file-powerpoint-o"></i> Presentation.pptx</a></li>-->
-            <!--<li><a href=""><i class="fa fa-file"></i> 10_08_2015.docx</a></li>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="ibox">-->
-            <!--<div class="ibox-content">-->
-            <!--<h3>Private message</h3>-->
-
-            <!--<p class="small">-->
-            <!--Send private message to Alex Smith-->
-            <!--</p>-->
-
-            <!--<div class="form-group">-->
-            <!--<label>Subject</label>-->
-            <!--<input type="email" class="form-control" placeholder="Message subject">-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-            <!--<label>Message</label>-->
-            <!--<textarea class="form-control" placeholder="Your message" rows="3"></textarea>-->
-            <!--</div>-->
-            <!--<button class="btn btn-primary btn-block">Send</button>-->
-
-            <!--</div>-->
-            <!--</div>-->
-
         </div>
 
         <div class="col-lg-5">
+            <div class="ibox">
+                <div class="ibox-title"><h3>Subjects</h3></div>
+                <div class="ibox-content">
+
+                </div>
+            </div>
             <div class="ibox">
                 <div class="ibox-title">
                     <h3>Activities
@@ -287,15 +211,7 @@
                     </h3>
                 </div>
                 <div class="ibox-content">
-                    <!--<div class="row m-b-sm m-t-sm">
-                        <div class="col-md-1">
-                            <button type="button" id="loading-example-btn" class="btn btn-white btn-sm"><i class="fa fa-refresh"></i> Refresh</button>
-                        </div>
-                        <div class="col-md-11">
-                            <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
-                        </div>
-                    </div>-->
+
                     <div class="activities-list" full-scroll>
                         <div class="full-height-scroll" >
                             <ul class="list-group clear-list">
@@ -309,39 +225,7 @@
                         </div>
 
 
-                        <!--<table class="table table-hover">
-                            <tbody>
-                            <tr ng-repeat="activity in vm.activities">
-                                <td class="project-status">
-                                    <span class="label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
-                                </td>
-                                <td class="project-title">
-                                    <a ui-sref="admin.activity({projectId:vm.projectId,activityId:activity.id})">{{activity.name}}</a>
-                                    <br/>
-                                    <small>Last updated 03.02.2016</small>
-                                </td>
-                                &lt;!&ndash; <td class="project-completion">
-                                     <small>Completion: 100%</small>
-                                     <div class="progress progress-mini">
-                                         <div style="width: 100%;" class="progress-bar"></div>
-                                     </div>
-                                 </td>&ndash;&gt;
-                                &lt;!&ndash;    <td class="project-people">
-                                        <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>
-                                        <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>
-                                        <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>
-                                        <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>
-                                        <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>
-                                    </td>&ndash;&gt;
-                                &lt;!&ndash;<td class="project-actions">&ndash;&gt;
-                                    &lt;!&ndash;<a ng-click="vm.goToActivity(activity,false)" class="btn btn-white btn-sm"><i class="fa fa-eye"></i> View </a>&ndash;&gt;
-                                    &lt;!&ndash;<a ng-click="vm.goToActivity(activity,true)" class="btn btn-white btn-sm"><i class="fa fa-edit"></i> Edit </a>&ndash;&gt;
-                                    &lt;!&ndash;<a ng-click="vm.removeActivity(activity)" class="btn btn-white btn-sm"><i class="fa fa-trash"></i> Delete </a>&ndash;&gt;
-                                &lt;!&ndash;</td>&ndash;&gt;
-                            </tr>
 
-                            </tbody>
-                        </table>-->
                     </div>
                     <div uib-alert class=" alert-info" ng-if="!vm.activities.length>0">
                         <h4>No Activities added

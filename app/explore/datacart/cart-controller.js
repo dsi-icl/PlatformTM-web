@@ -8,16 +8,17 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
     vm.projectId = $stateParams.projectId;
     vm.queryId = $stateParams.queryId;
 
-    vm.query = {}
-    vm.cartQuery = {};
-    cartService.clearCurrentCart();
+    //vm.query = {}
+    //vm.cartQuery = {};
+    //cartService.clearCurrentCart();
 
     vm.cartservice = cartService;
 
 
     if(vm.queryId){
-        cartService.getSavedCart(vm.projectId,vm.cartId).then(function(query){
-
+        cartService.getCartQuery(vm.projectId,vm.queryId).then(function(query){
+            vm.cartQuery = query;
+            console.log(query)
 
         });
     }else {
@@ -27,29 +28,34 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
     }
 
 
+    cartService.getUserQueries(vm.projectId).then(function(response){
+        //console.log(response);
+        vm.savedQueries = response.queries;
+    })
 
 
 
 
     $scope.$watch('vm.cartservice.clickclack()',function (newval) {
-       console.log("INSIDE WATCH, ",newval);
-        vm.query.scs = cartService.getCurrentSCS();
-        vm.query.cobs = cartService.getCurrentObservations();
-        vm.query.assaypanels = cartService.getCurrentAssayPanels();
-
-
-        console.log(vm.query)
-
+        //console.log(newval)
+        vm.cartQuery = cartService.getCurrentCartQuery();
     },true)
 
 
+
     vm.saveQuery = function(){
-        console.log(vm.query)
-        cartService.saveQuery(vm.query)
+        console.log(vm.cartQuery)
+        cartService.saveQuery(vm.cartQuery,vm.projectId).then(function(response){
+            cartService.getUserQueries(vm.projectId).then(function(response){
+                //console.log(response);
+                vm.savedQueries = response.queries;
+            })
+
+        })
     }
 
     vm.saveToCartAndCheckout = function(){
-        cartService.saveQuery(vm.query, vm.projectId).then(function(response){
+        cartService.saveQuery(vm.cartQuery, vm.projectId).then(function(response){
             //console.log(response.cartId)
             $state.go('datacart.checkout',{
                 projectId: vm.projectId,
@@ -57,6 +63,13 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
         })
 
     }
+
+    vm.loadQuery = function(queryId){
+        $state.go('explore',{
+            projectId: vm.projectId,
+            queryId: queryId});
+    }
+
 
     // vm.removeFilter = function(chartGroup,obs){
     //     //if(chartGroup == 'subject')

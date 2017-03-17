@@ -54,7 +54,7 @@
 }
 
 .clininical-tree .plotting-options ul{
-
+    overflow: scroll;
 }
 
 /*.clinical-tree .list-group-node  {
@@ -168,10 +168,11 @@
 }
 
 .plotting-options li{
-    padding: 0px 5px;
+
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
+    padding: 0px 0px 0px 2px;
+    max-width: 195px;
 }
 
 .plotting-switch {

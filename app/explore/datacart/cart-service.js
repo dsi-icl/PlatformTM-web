@@ -14,6 +14,7 @@ function cartService($http,$rootScope,ngAppConfig) {
     //currentCart.assays=[];
 
     var _toggle = true;
+    var ready = false;
 
 
 
@@ -25,8 +26,8 @@ function cartService($http,$rootScope,ngAppConfig) {
             .then(
                 function (response) {
                     currentCart = response.data;
-                    return {
-                        cart: (response.data),
+                    ready = true;
+                    return {cart: (response.data),
 
                     }
                 },
@@ -46,9 +47,8 @@ function cartService($http,$rootScope,ngAppConfig) {
             .then(
                 function (response) {
                     currentCart = response.data;
-                    return {
-                        cart: (response.data),
-
+                    ready = true;
+                    return {cart: (response.data),
                     }
                 },
                 function (httpError) {
@@ -75,6 +75,10 @@ function cartService($http,$rootScope,ngAppConfig) {
 
         _toggle = !_toggle;
     };
+
+    var _cartIsReady = function(){
+        return ready;
+    }
 
     var _addAssayPanel = function(panel){
         //console.log('Adding Panel', panel.assayId);
@@ -111,7 +115,11 @@ function cartService($http,$rootScope,ngAppConfig) {
         return _toggle
     }
 
-    var _getCurrentSCS = function(){
+    var _getCurrentCartQuery = function(){
+        return currentCart;
+    }
+
+    var _getCartSubjObsReq = function(){
         return currentCart.subjCharRequests;
     }
     var _getCurrentObservations = function(){
@@ -127,8 +135,24 @@ function cartService($http,$rootScope,ngAppConfig) {
 
     }
 
-    var _getUserSavedQueries = function(projectId){
-        return null;
+    var _getUserQueries = function(projectId){
+        return $http({
+            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/browse',
+            method:'GET'
+        })
+            .then(
+                function (response) {
+                    //currentCart = response.data;
+                    return {
+                        queries: (response.data),
+
+                    }
+                },
+                function (httpError) {
+                    // translate the error
+                    throw httpError.status + " : " +
+                    httpError.data;
+                });
     }
 
     
@@ -243,16 +267,19 @@ function cartService($http,$rootScope,ngAppConfig) {
     cartServiceFactory.addToCart = _addToCart;
     cartServiceFactory.removeFromCart = _removeFromCart;
     cartServiceFactory.addAssayPanelToCart = _addAssayPanel;
-    cartServiceFactory.getCurrentSCS = _getCurrentSCS;
-    cartServiceFactory.getCurrentObservations = _getCurrentObservations;
+    cartServiceFactory.getCurrentCartQuery = _getCurrentCartQuery;
     cartServiceFactory.getCurrentAssayPanels = _getCurrentAssayPanels;
     cartServiceFactory.clearCurrentCart = _clearCart;
     cartServiceFactory.clickclack = _refreshed;
     cartServiceFactory.applyFilter = _applyFilter;
-    cartServiceFactory.getUserSavedQueries = _getUserSavedQueries;
+    cartServiceFactory.getUserQueries = _getUserQueries;
     cartServiceFactory.saveQuery = _saveQuery;
     cartServiceFactory.getCartQuery = _getCartQuery;
     cartServiceFactory.getNewCartQuery = _getNewCartQuery;
+
+    cartServiceFactory.getCartSubjObsReq = _getCartSubjObsReq;
+
+    cartServiceFactory.cartIsReady = _cartIsReady;
     return cartServiceFactory;
 }
 
