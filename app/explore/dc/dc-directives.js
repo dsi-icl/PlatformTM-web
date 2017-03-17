@@ -76,7 +76,7 @@ angular.module('eTRIKSdata.dcPlots')
                 var plot;
 
                 $scope.done = false;
-                console.log('inside dc-chart controller')
+                //console.log('inside dc-chart controller')
                 //console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp, 'module',$scope.module)
 
                 //obs.id is a unique id for the requested observation and the qualifier requested to chart
@@ -89,8 +89,8 @@ angular.module('eTRIKSdata.dcPlots')
                             plot = chart
                             $scope.done = true;
 
-                            if(plot.chartType == 'barChart'){
-                                console.log("calling the reangeChart")
+                            if(plot.chartType == 'barChart' && $scope.obs.dataType != "ordinal"){
+                                console.log("creating rangeChart")
                                 chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,"rangeChart",$scope.obs,$scope.module)
                                     .then(function(chart2){
                                         $scope.rangeChart = chart2

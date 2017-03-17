@@ -30,7 +30,7 @@ angular.module('biospeak.explorer',[
                                         files: ['lib/plugins/slick/js/angular-slick.min.js']
                                     },
                                     {
-                                        files: ['lib/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
+                                        files: ['lib/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css','explore/clinical/css/clinicalDataTree.css']
                                     },
                                     {
                                         files: ['lib/plugins/moment/js/moment.min.js']
@@ -68,7 +68,7 @@ angular.module('biospeak.explorer',[
                     },
                     'subjects@explore':{
                         templateUrl: 'explore/subjects/explorer_subjects.html',
-                        controller: 'SubjectsCtrl',
+                        controller: 'SubjectsCtrl as vm',
                         resolve: {
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/subjects/subjects-service.js');

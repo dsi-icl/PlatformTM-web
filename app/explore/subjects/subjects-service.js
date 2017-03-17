@@ -42,8 +42,11 @@ function subjectDataService($http,ngAppConfig){
                         method:'GET'
                     }).then(
                         function (response){
+                            console.log(response);
                             return {
-                                SCs: (response.data)
+                                SCs: response.data.characteristics,
+                                TPs: response.data.timings,
+                                DEs: response.data.designElements
                             }
                         }
                     )

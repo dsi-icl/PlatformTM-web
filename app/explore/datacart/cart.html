@@ -17,10 +17,10 @@
                     <div style="border-bottom: 1px solid #4e7194;
     /*font-size: 1.2em;*/
     font-weight: 600;">
-                        <div>SUBJECTS <span> (filtered) </span> </div>
+                        <div>SUBJECTS </div>
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
-                        <li ng-repeat="sc in vm.query.scs">
+                        <li ng-repeat="sc in vm.cartQuery.subjCharRequests">
                             <span>{{sc.name}}</span> <div class="p-w-xs"><span ng-if="sc.filterText"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
                             <!--<a class="pull-right" ng-click="vm.removeFilter('subject',key)"><i class="fa fa-times"></i></a>-->
                         </li>
@@ -83,8 +83,7 @@
 
                 <div class="p-xs" style="background-color: #132634; margin-top:20px">
                     <div>Add To My Queries</div>
-                    <!--<input ng-model="vm.cart.name" style="color:#172334;" placeholder="Give it a name">-->
-                    <a href="#" e-ng-model="vm.query.name" class="bs3" editable-text="vm.query.name" buttons="no" blur="submit">{{vm.query.name || "Give it a name"}}</a>
+                    <a href="#" e-ng-model="vm.cartQuery.name" class="bs3" editable-text="vm.cartQuery.name" >{{vm.cartQuery.name || "Give it a name"}}</a>
                     <a ng-click="vm.saveQuery()" class="pull-right"><i class="fa fa-plus"></i></a>
                 </div>
                 <div style="text-align: right;margin-top: 20px;">
@@ -99,7 +98,7 @@
 
             </li>
 
-            <li style="padding: 10px;">
+            <li style="padding: 10px; color: white; background: #132634">
                 <div>
                     <div style="border-bottom: 1px solid white">
                         <div>MY QUERIES</div>
@@ -107,12 +106,9 @@
                     <ul style="padding: 15px;color: white;list-style: none;">
                         <li ng-repeat="q in vm.savedQueries">
                             {{q.name}}
-                            <a class="pull-right" ng-click="closebox()">LOAD</a>
+                            <!--<a class="pull-right" ui-sref="explore({projectId:vm.projectId, queryId:q.id})">LOAD</a>-->
                         </li>
-                        <li >
-                            TEST
-                            <a class="pull-right" ng-click="closebox()">LOAD</a>
-                        </li>
+
 
                     </ul>
                 </div>
