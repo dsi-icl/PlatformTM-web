@@ -6,6 +6,9 @@
 function assayDataService($http,$q,ngAppConfig){
      var serviceBase = ngAppConfig.apiServiceBaseUri;
 
+     var assays;
+    var ready = false;
+
         return {
             getSubjData: function(projectId,characs) {
                 //var domainCode = "VS"
@@ -28,6 +31,10 @@ function assayDataService($http,$q,ngAppConfig){
 
             getSubjCharacteristics: function(projectId){
 
+            },
+
+            assaysRetrieved: function(){
+                return assays;
             },
 
             getSampleData: function(projectId,assayId,reqChars) {
@@ -63,6 +70,9 @@ function assayDataService($http,$q,ngAppConfig){
                     //data: angular.toJson(observations)
                 }).then(
                     function (response) {
+                        assays = response.data;
+                        ready = true;
+
                         return {
                             assays: (response.data)
                         }

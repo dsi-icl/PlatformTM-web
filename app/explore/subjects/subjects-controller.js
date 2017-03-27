@@ -35,18 +35,19 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
     };
 
     $scope.$watch('cartService.cartIsReady()',function (ready) {
+        //console.log(ready)
         if(ready){
 
             subjectDataService.getSubjCharacteristics(projectId)
                 .then(function(response){
-                    console.log(response);
+                    //console.log(response);
                     vm.SCs = response.SCs;
                     vm.TPs = response.TPs;
                     vm.DEs = response.DEs;
 
                     currentCartSubjObRequests = cartService.getCartSubjObsReq();
 
-                    console.log("SAVED SUBJECT OBSERVATION REQUESTS: ",currentCartSubjObRequests);
+                    //console.log("SAVED SUBJECT OBSERVATION REQUESTS: ",currentCartSubjObRequests);
                     SubjCf.refreshCf(projectId,currentCartSubjObRequests).then(function(res){
                         /*angular.forEach(currentCartSubjObRequests, function(sc) {
                             console.log('#sc_', sc);

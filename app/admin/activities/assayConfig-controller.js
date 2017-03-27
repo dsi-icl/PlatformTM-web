@@ -2,7 +2,7 @@
  * Created by iemam on 17/05/2016.
  */
 'use strict'
-function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
+function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toaster){
     var vm = this;
     vm.projectId = $stateParams.projectId
     vm.assayId = $stateParams.assayId;
@@ -45,16 +45,17 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
     
     vm.selectedDatasets = {};
 
-
+var assay;
     if($stateParams.assayId==0){
         console.log("New Assay")
-        vm.assay = new AssayConfigService.getAssayResource();
-        vm.assay.ProjectId = $stateParams.projectId;//"Study1"
-        vm.assay.isNew = true;
-        vm.assay.status = "New";
-        vm.assay.datasets = {};
-        vm.assay.assayId = 0;
+        assay = new AssayConfigService.getAssayResource();
+        assay.projectId = $stateParams.projectId;//"Study1"
+        assay.isNew = true;
+        assay.status = "New";
+        assay.datasets = [];
+        assay.assayId = 0;
 
+        vm.assay = assay;
     }
 
     else if($stateParams.assayId){
@@ -157,8 +158,9 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
             console.log(vm.assay)
 
             vm.assay.$save(function(response) {
-                console.log("Assay created",response)
-                $state.transitionTo('manager.main', $stateParams, {
+                //console.log("Assay created",response)
+                toaster.pop('success', "SUCCESS", vm.assay.name," was successfully CREATED.",8000);
+                $state.transitionTo('admin.project', $stateParams, {
                     reload: true,
                     inherit: false,
                     notify: true
@@ -180,8 +182,8 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
             //vm.assay.datasets.push(vm.selectedDatasets['data'])
 
             vm.assay.$update(function(response) {
-                console.log("Activity Updated")
-                $state.transitionTo('manager.main', $stateParams, {
+                toaster.pop('success', "SUCCESS", vm.assay.name," was successfully UPDATED.",8000);
+                $state.transitionTo('admin.project', $stateParams, {
                     reload: true,
                     inherit: false,
                     notify: true
@@ -205,4 +207,4 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
 }
 
 angular.module('bioSpeak.config')
-    .controller('AssayConfigCtrl',['$scope', '$state','$stateParams','AssayConfigService','$timeout',AssayConfigCtrl])
+    .controller('AssayConfigCtrl',['$scope', '$state','$stateParams','AssayConfigService','toaster',AssayConfigCtrl])

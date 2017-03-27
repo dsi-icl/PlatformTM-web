@@ -9,6 +9,9 @@
                 <uib-tabset class="models-list">
                     <uib-tab>
                         <uib-tab-heading>
+                            <p class="model-name">
+                                Human subjects
+                            </p>
                             <p class="model-icon">
                                 <span class="flaticon-standing55"></span>
                                 <dc-count-widget
@@ -17,9 +20,7 @@
                                         grp="{{vm.chartingOpts.chartGroup}}">
                                 </dc-count-widget>
                             </p>
-                            <p class="model-name">
-                                Human subjects
-                            </p>
+
                         </uib-tab-heading>
                         <div class="row">
                             <div class="col-md-4">
@@ -33,7 +34,7 @@
                                                        charting-button id="sc_{{de.id}}"
                                                        obs= "de"
                                                        charting-opts="vm.chartingOpts",
-                                                       module="subjects",
+                                                       module="vm.chartingOpts.chartGroup",
                                                        style="color: #222f3f;"
                                                        ng-init="de.isActive = false"
                                                        ng-class="{on:de.isActive}"
@@ -54,7 +55,7 @@
                                                        charting-button id="sc_{{sc.id}}"
                                                        obs= "sc"
                                                        charting-opts="vm.chartingOpts",
-                                                       module="subjects",
+                                                       module="vm.chartingOpts.chartGroup",
                                                        style="color: #222f3f;"
                                                        ng-init="sc.isActive = false"
                                                        ng-class="{on:sc.isActive}"
@@ -76,7 +77,7 @@
                                                        charting-button id="sc_{{tp.id}}"
                                                        obs= "tp"
                                                        charting-opts="vm.chartingOpts",
-                                                       module="subjects",
+                                                       module="vm.chartingOpts.chartGroup",
                                                        style="color: #222f3f;"
                                                        ng-init="tp.isActive = false"
                                                        ng-class="{on:tp.isActive}"
@@ -94,8 +95,8 @@
                                 <div class="ibox-title">
                                     <div class="pull-right">
                                         <div class="btn-group">
-                                            <label class="btn btn-xs btn-primary" ng-model="show" uib-btn-radio="'plots'">Data Plots</label>
-                                            <label class="btn btn-xs btn-primary" ng-model="show" uib-btn-radio="'table'">Data Table</label>
+                                            <label class="btn btn-xs btn-white" ng-model="show" uib-btn-radio="'plots'">Data Plots</label>
+                                            <label class="btn btn-xs btn-white" ng-model="show" uib-btn-radio="'table'">Data Table</label>
                                         </div>
                                     </div>
                                 </div>
@@ -129,90 +130,38 @@
 
                             </div>
                         </div>
-
-
-                        <!--<div class="subject" style="border-top: 1px solid #72879C">-->
-
-                        <!--<div class="row">
-                                <div class="col-md-6">
-
-
-                                    <div class="ibox-content">
-                                        <h3 class="m-md">Subject Characteristics</h3>
-                                        <div style="max-height: 180px; overflow: scroll">
-                                            <ul class="todo-list small-list">
-                                                <li ng-repeat="sc in subjCharsDB" >
-                                                    <label id="sc_{{sc.id}}"
-                                                           charting-button
-                                                           obs = sc
-                                                           charting-opts=chartingOpts
-                                                           ng-class="{'active': sc.isActive}"
-                                                           ng-init="sc.isActive = false"
-                                                           ng-click="sc.isActive = !sc.isActive">
-                                                        {{sc.o3}}
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>-->
-
-
-
-
                     </uib-tab>
+
+
                     <uib-tab>
                         <uib-tab-heading>
+                            <p class="model-name">
+                                Animal subjects
+                            </p>
                             <p class="model-icon">
                                 <span class="flaticon-rat2"></span>
                                 <span class="model-count">0</span>
                             </p>
-                            <p class="model-name">
-                                Animal subjects
-                            </p>
+
                         </uib-tab-heading>
-                        <div id="xenograft-plots" style="margin-bottom: 0px;margin: 40px;border-top: 1px solid #72879C;"
-                             class="plots-view">
+                        <div id="xenograft-plots" class="alert alert-info">
+                            No Animal Subjects
                         </div>
 
                         <div class="clearfix"></div>
-
-                        <div class="subject" style="border-top: 1px solid #72879C">
-                            <!--<div class="option-list">
-                                <ul id="xenoChars" class="pull-left">
-                                    <li ng-repeat="sc in subjChars" >
-                                        <label id="xeno_{{$index}}"
-                                               charting-button val="{{sc}}" active="{{isActive}}"
-                                               container="{{subjChartContainerId}}"
-                                               section="{{section}}"
-                                               grp="{{section}}"
-                                               cf="cf"
-                                               ng-class="{'': !isActive, 'active': isActive}"
-                                               ng-init="isActive = false"
-                                               ng-click="isActive = !isActive">
-                                            {{sc}}
-                                        </label>
-                                        &lt;!&ndash; <div data-toggle="tooltip" data-placement="bottom" title="Add Variable to export" ng-click="addCriterion(sc,'Transcription Profiling')" style="cursor:pointer; margin-left: -10px;"
-                                              class="flaticon-download164"></div>&ndash;&gt;
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>-->
-                        </div>
                     </uib-tab>
                     <uib-tab>
                         <uib-tab-heading>
+                            <p class="model-name">
+                                Cell Line Cultures
+                            </p>
                             <p class="model-icon">
                                 <span class="flaticon-cells"></span>
                                 <span class="model-count">0</span>
                             </p>
-                            <p class="model-name">
-                                Cell Line Cultures
-                            </p>
+
                         </uib-tab-heading>
-                        <div>&nbsp;</div>
+                        <div class="alert alert-info">&nbsp;No Cell lines</div>
                     </uib-tab>
                 </uib-tabset>
             </div>

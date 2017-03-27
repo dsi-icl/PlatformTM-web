@@ -13,7 +13,8 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
     vm.creatingCfield = false;
 
     vm.dataTypes = ['STRING','INTEGER','DOUBLE','DATETIME'];
-    vm.varTypes = ['SUBMITTED','DERIVED']
+    vm.varTypes = ['SUBMITTED','DERIVED'];
+    vm.roleTypes = ['Observation Qualifier','Finding about observation']
 
     vm.dictTerms = ['MILD','SEVERE','MODERATE'];
     vm.expressionList = [];
@@ -130,6 +131,9 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
 
         if(vm.cField.name){
             vm.cField.accession = 'V-COMP-' + vm.activity.datasets[0].code+'-'+vm.cField.name;
+            vm.cField.roleId = 'CL-Role-T-3';
+            vm.cField.projectId = vm.projectId;
+            vm.isCurated = false;
 
             //console.log(vm.activity)
             //if(!vm.cField.usingFunc)

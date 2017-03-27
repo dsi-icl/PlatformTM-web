@@ -169,7 +169,7 @@ angular.module('eTRIKSdata.dcPlots')
                 var oldFilters
 
                 allCharts.forEach(function(chart){
-                    //console.log('got chart ',chart.chartID(),' ',chart.chartGroup())
+                    console.log('got chart ',chart.chartID(),' ',chart.chartGroup())
                     if(chart.chartGroup() == chartGroup){
 
 
@@ -204,13 +204,13 @@ angular.module('eTRIKSdata.dcPlots')
                             //})
 
                         }
-                        if(chart.chartType == 'dataCount'){
+                        if(chart.chartType == 'dataCount' ){
                             console.log('refreshing counter widget')
                             chart.dimension(xfilterService.getCountData(chart.module))
                             chart.group(xfilterService.getCountGroup(chart.module));
                         }
 
-                        chart.render();
+                        chart.redraw();
 
                     }
                 })
@@ -228,6 +228,20 @@ angular.module('eTRIKSdata.dcPlots')
                 chart.module = module;
                 counterWidgetId = chart.chartID();
 
+                return chart
+            }
+
+            DCservice.createDCcounterBar = function(xfilterService, module){
+                var chartFactory = dc['dataCountBar'];
+                var chart = chartFactory();
+                var chartOptions = {};
+                chartOptions["dimension"] = xfilterService.getCountData(module)
+                chartOptions["group"] =  xfilterService.getCountGroup(module)
+                chart.options(chartOptions);
+                chart.chartType = 'dataCount';
+                chart.dimName = "counterBar";
+                chart.module = module;
+                counterWidgetId = chart.chartID();
                 return chart
             }
 
