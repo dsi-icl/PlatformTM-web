@@ -73,21 +73,20 @@ function checkoutService($http,$q,ngAppConfig){
             url: serviceBase + 'apps/export/datasets/' + datasetId + '/download',
             params: {datasetId: datasetId},
             responseType: ''
-        }).success(function (data, status, headers, config) {
+        }).success(function (data, status, headers) {
 
-            console.log("CSV FILE IS !!!!!:", data);
+        headers = headers();
+        console.log("header is",headers)
+           //console.log("content-type is", headers['content-type'])
 
-           // In the following line the "fileName" should be asigned from header.
-
-            var filenName = 'dataset.csv';
-
-            var file = new Blob([data], {type: 'text/csv'});
-            //trick to download store a file having its URL
-            var fileURL = URL.createObjectURL(file);
-            var a = document.createElement('a');
+         //   console.log("The following dataset will be downloaded:", headers);
+         var fileName = headers['x-filename'];
+         var file = new Blob([data], {type: headers['content-type']});
+         var fileURL = URL.createObjectURL(file);
+         var a = document.createElement('a');
             a.href = fileURL;
             a.target = '_blank';
-            a.download = filenName;
+            a.download = fileName;
             document.body.appendChild(a);
             a.click();
         }).error(function (data, status, headers, config) {
