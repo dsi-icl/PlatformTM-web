@@ -38,7 +38,8 @@ angular.module('biospeak.explorer',[
                                     {
                                         name: 'datePicker',
                                         files: ['lib/plugins/angular-datepicker/css/angular-datepicker.css','lib/plugins/angular-datepicker/js/angular-datepicker.js']
-                                    },
+                                    }
+
                                 ]);
                             },
                             loadDependencies: ['$ocLazyLoad',function($ocLazyLoad){

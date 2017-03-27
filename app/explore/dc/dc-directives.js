@@ -475,6 +475,47 @@ angular.module('eTRIKSdata.dcPlots')
         }
     })
 
+    .directive('dcCountBar',function(){
+        return{
+            restrict: 'E',
+            scope:{
+                grp: '@',
+                chartService: '@',
+                xfilterService: '@',
+                projectId:'@',
+                module:'@'
+            },
+            controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
+                $scope.chartservice = $injector.get($scope.chartService);
+                $scope.xfService = $injector.get($scope.xfilterService);
+
+
+            }],
+            template: '<span ng-if="xfService.cfReady(module)" id="{{grp}}_CounterBar" class="filter-count number-display "></span>',
+            //template:'<div ng-if="xfService.cfReady(module)" class="progress progress-mini"> <div style="width: {{val}}%;" class="progress-bar"></div> {{val}}% </div>',
+            link: function(scope, element, attrs){
+                scope.$watch(
+                    function($scope) { return $scope.xfService.cfReady(scope.module);},//$scope.xfService.cfReady(scope.module); },$scope.xfService.getCountValue(scope.module)
+                    function(newval, oldval){
+                        //console.log(newval)
+                        if(newval){
+
+                            var chart = scope.chartservice.createDCcounterBar(scope.xfService,scope.module)
+                            chart.anchor(element[0],scope.grp);
+                            chart.render();
+
+                            /*val = scope.xfService.getCountGroup(scope.module).value();
+                            console.log(val)
+                            tot = scope.xfService.getCountData(scope.module).size();
+                            //console.log(tot);
+                            per = Math.round(val / tot * 100)
+                            console.log(per)
+                            scope.val = per*/
+                        }
+                    })
+            }
+        }
+    })
     .directive('dcCountWidget',function(){
         return{
             restrict:'E',
@@ -490,7 +531,7 @@ angular.module('eTRIKSdata.dcPlots')
                 $scope.xfService = $injector.get($scope.xfilterService);
             }],
             template:
-                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count number-display"></span>',//+
+                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count odometer"></span>',//+
                 //' from(<span class="total-count"></span>)',
             link: function(scope, element, attrs){
                 scope.$watch(

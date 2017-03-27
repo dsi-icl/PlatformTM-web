@@ -564,12 +564,12 @@ nav a {
     font-weight: 400
 }
 .models-list .model-name{
-    font-size: 1.3em;
+    font-size: 1.5em;
     text-transform: uppercase;
     color: #eee;
 }
 .models-list .model-icon{
-    font-size: 3em;
+    font-size: 2em;
     /*color: #eee;*/
     color:#CDFF3B;
 }
@@ -706,9 +706,9 @@ nav a {
 
 .dc-chart .x.axis text {
     text-anchor: end !important;
-    font-size: 0.8em;
+    font-size: 0.7em;
     font-weight: bold;
-    transform: rotate(-20deg);
+    transform: rotate(-45deg);
 }
 
 .dc-chart .x-axis-label{
@@ -744,6 +744,14 @@ nav a {
 
 div .dc-chart{
     float: none;
+}
+
+.progress-bar  {
+
+}
+
+.progress-bar {
+    background-color: #f3b27f;
 }
 .chart-title {
     text-transform: uppercase;

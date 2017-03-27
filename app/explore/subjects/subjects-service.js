@@ -42,7 +42,7 @@ function subjectDataService($http,ngAppConfig){
                         method:'GET'
                     }).then(
                         function (response){
-                            console.log(response);
+                            //console.log(response);
                             return {
                                 SCs: response.data.characteristics,
                                 TPs: response.data.timings,

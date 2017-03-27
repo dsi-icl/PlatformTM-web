@@ -6,6 +6,7 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
 
     $scope.vm = {};
     $scope.vm.show = 'plots';
+    $scope.vm.ready = false;
 
 
     //TEMP
@@ -37,6 +38,7 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
     clinicalDataService.getClinicalDataTree($scope.chartingOpts.projectId)
         .then(function(data){
             $scope.clinicalObservations = data.treeData;
+            $scope.vm.ready = true;
         })
 
     /*$scope.getObsRequest = function(obs){

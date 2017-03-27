@@ -186,6 +186,12 @@ angular.module('eTRIKSdata.dcPlots',[])
         cfservice.getCountGroup = function(assayId){
             return XfilterAssayMap[assayId].all
         }
+        cfservice.getCountValue = function(assayId){
+            console.log("in getcount value in assay,",assayId, XfilterAssayMap[assayId].xfReady, XfilterAssayMap[assayId].all.value())
+            if(XfilterAssayMap[assayId].xfReady)
+                return XfilterAssayMap[assayId].all.value()
+            else return null
+        }
         /********************************************
          **/
 
@@ -201,7 +207,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                     })
                 }
             }
-            dc.renderAll("assay");
+            dc.redrawAll("assay");
         }
 
         cfservice.getCurrentSubjectIds = function(assayId){
@@ -358,6 +364,12 @@ angular.module('eTRIKSdata.dcPlots',[])
 
         subjCfService.getCountGroup = function(){
             return all
+        }
+
+        subjCfService.getCountValue = function(){
+            if(cfReady)
+                return all.value()
+            else return null
         }
 
         subjCfService.getTableDimension = function(){
@@ -759,7 +771,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                 subjectDim['events'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
             }
                 //subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-            dc.renderAll("clinical");
+            dc.redrawAll("clinical");
         }
 
         cfservice.syncfilters = function(){

@@ -229,8 +229,10 @@ angular.module('biospeak.explorer')
 
            '<div ng-class="{selected: node.isSelected}">' +
                 '<div class="plotting-switch">'+
-                    '<a ng-hide="node.isSelected || node.isLocked" class=" switchery" charting-button ' +
-                        'obs="node.defaultObservation" quals="node.qualifiers" charting-opts="chartingOpts" style="color: #222f3f;" ' +
+                    '<a charting-button ng-hide="node.isSelected || node.isLocked" class=" switchery"  ' +
+                        'obs="node.defaultObservation" quals="node.qualifiers" ' +
+                        'module="chartingOpts.chartGroup"'+
+                        'charting-opts="chartingOpts" style="color: #222f3f;" ' +
                         'ng-init="node.defaultObservation.isActive = false" ' +
                         'data-ng-disabled="node.isSelected" '+
                         'ng-class="{on:node.defaultObservation.isActive}" '+

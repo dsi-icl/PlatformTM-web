@@ -65,14 +65,13 @@ function cartService($http,$rootScope,ngAppConfig) {
         if(item.isClinicalObservations)
             currentCart.obsRequests.push(item);
         if(item.isSampleCharacteristic){
-            console.log('Adding ',item, currentCart)
             currentCart.assayPanelRequests[module].isRequested = true;
             currentCart.assayPanelRequests[module].sampleQuery.push(item);
 
             console.log('Adding ',item, currentCart.assayPanelRequests[module])
         }
 
-
+        console.log('current Cart',currentCart)
         _toggle = !_toggle;
     };
 
@@ -192,21 +191,13 @@ function cartService($http,$rootScope,ngAppConfig) {
     };
 
     var _applyFilter = function(id,filters,isRange,module){
-        console.log(id,filters,isRange,module);
+        // console.log(id,filters,isRange,module);
         var found = false;
 
         var filteredObs;
-        if(module){
-            for(var i=0; i< currentCart.assayPanelRequests[module].sampleQuery.length;i++) {
-                if (id == currentCart.assayPanelRequests[module].sampleQuery[i].name) {
-                    filteredObs = currentCart.assayPanelRequests[module].sampleQuery[i];
-                    found = true;
-                    break;
-                }
-            }
-        }
 
-        if(!found){
+
+        if(module == 'clinical'){
             for(var i=0; i< currentCart.obsRequests.length;i++) {
                 if (id == currentCart.obsRequests[i].name) {
                     filteredObs = currentCart.obsRequests[i];
@@ -217,11 +208,21 @@ function cartService($http,$rootScope,ngAppConfig) {
         }
 
 
-        if(!found){
+        if(module == 'subject'){
             for(i=0; i< currentCart.subjCharRequests.length;i++) {
                 if(id == currentCart.subjCharRequests[i].name){
                     filteredObs = currentCart.subjCharRequests[i];
                     found = true
+                    break;
+                }
+            }
+        }
+
+        if(!found){
+            for(var i=0; i< currentCart.assayPanelRequests[module].sampleQuery.length;i++) {
+                if (id == currentCart.assayPanelRequests[module].sampleQuery[i].name) {
+                    filteredObs = currentCart.assayPanelRequests[module].sampleQuery[i];
+                    found = true;
                     break;
                 }
             }
