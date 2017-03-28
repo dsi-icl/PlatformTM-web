@@ -4,44 +4,6 @@
 angular.module('eTRIKSdata.dcPlots')
 
 
-/**
- * groupChartButton
- */
-/*    .directive('groupChartButton',function($compile){
-        return{
-            restrict: 'A',
-            scope:{
-                obsGrps:'=',
-                chartingOpts:'=',
-            },
-            link: function(scope, element){
-                element.bind("click", function() {
-                    console.log(scope.obsGrps, ' CLICKED')
-                    scope.obsGrps.isLocked = true;
-
-
-                })
-            }
-        }
-    })*/
-
-
-/*    .directive('groupControl',function($compile){
-        return{
-            restrict:'EA',
-            scope:{
-                grp:'='
-            },
-            link: function(scope,element){
-                element.bind("ifchanged",function(){
-                    console.log(scope.grp)
-                })
-            }
-        }
-    })*/
-
-
-
     /**
      *
      *  scope params: chartService, xfilterService, exportService,
@@ -366,8 +328,6 @@ angular.module('eTRIKSdata.dcPlots')
         };
     })
 
-
-
     .directive('dcDatatable', function () {
     return {
         restrict: 'E',
@@ -482,7 +442,7 @@ angular.module('eTRIKSdata.dcPlots')
                 grp: '@',
                 chartService: '@',
                 xfilterService: '@',
-                projectId:'@',
+                type:'@',
                 module:'@'
             },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
@@ -496,26 +456,18 @@ angular.module('eTRIKSdata.dcPlots')
             link: function(scope, element, attrs){
                 scope.$watch(
                     function($scope) { return $scope.xfService.cfReady(scope.module);},//$scope.xfService.cfReady(scope.module); },$scope.xfService.getCountValue(scope.module)
-                    function(newval, oldval){
-                        //console.log(newval)
+                    function(newval){
                         if(newval){
 
-                            var chart = scope.chartservice.createDCcounterBar(scope.xfService,scope.module)
+                            var chart = scope.chartservice.createDCcounterBar(scope.xfService,scope.module,scope.type)
                             chart.anchor(element[0],scope.grp);
                             chart.render();
-
-                            /*val = scope.xfService.getCountGroup(scope.module).value();
-                            console.log(val)
-                            tot = scope.xfService.getCountData(scope.module).size();
-                            //console.log(tot);
-                            per = Math.round(val / tot * 100)
-                            console.log(per)
-                            scope.val = per*/
                         }
                     })
             }
         }
     })
+
     .directive('dcCountWidget',function(){
         return{
             restrict:'E',
@@ -523,7 +475,7 @@ angular.module('eTRIKSdata.dcPlots')
                 grp: '@',
                 chartService: '@',
                 xfilterService: '@',
-                projectId:'@',
+                type:'@',
                 module:'@'
             },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
@@ -531,14 +483,14 @@ angular.module('eTRIKSdata.dcPlots')
                 $scope.xfService = $injector.get($scope.xfilterService);
             }],
             template:
-                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count odometer"></span>',//+
+                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count"></span>',//+
                 //' from(<span class="total-count"></span>)',
             link: function(scope, element, attrs){
                 scope.$watch(
                     function($scope) { return $scope.xfService.cfReady(scope.module); },
                     function(newval, oldval){
                         if(newval){
-                            var chart = scope.chartservice.createDCcounter(scope.xfService,scope.module)
+                            var chart = scope.chartservice.createDCcounter(scope.xfService,scope.module,scope.type)
                             chart.anchor(element[0],scope.grp);
                             chart.render();
                         }

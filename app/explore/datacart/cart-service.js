@@ -59,7 +59,7 @@ function cartService($http,$rootScope,ngAppConfig) {
     }
 
     var _addToCart = function(item, module){
-        console.log('Adding ',item, module)
+        //console.log('Adding ',item, module)
         if(item.isSubjectCharacteristics || item.isDesignElement)
             currentCart.subjCharRequests.push(item);
         if(item.isClinicalObservations)
@@ -68,10 +68,10 @@ function cartService($http,$rootScope,ngAppConfig) {
             currentCart.assayPanelRequests[module].isRequested = true;
             currentCart.assayPanelRequests[module].sampleQuery.push(item);
 
-            console.log('Adding ',item, currentCart.assayPanelRequests[module])
+            //console.log('Adding ',item, currentCart.assayPanelRequests[module])
         }
 
-        console.log('current Cart',currentCart)
+        //console.log('current Cart',currentCart)
         _toggle = !_toggle;
     };
 
@@ -254,7 +254,7 @@ function cartService($http,$rootScope,ngAppConfig) {
 
         _toggle = !_toggle
 
-        console.log(filteredObs)
+        // console.log(filteredObs)
         $rootScope.$apply();
     };
 

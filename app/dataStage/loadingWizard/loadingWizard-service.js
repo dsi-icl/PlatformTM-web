@@ -99,14 +99,21 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     }
 
-    var _getDataTablePreview = function(datasetId, standardfileId){
-        console.log(datasetId,standardfileId);
+    var _getDataTablePreview = function(datasetId, fileId){
+        //console.log(datasetId,standardfileId);
         var deferred = $q.defer();
-        $http.get(serviceBase + 'datasets/'+datasetId+'/preview/file/'+standardfileId)
+        $http.get(serviceBase + 'files/'+fileId+'/preview/')
             .success(function (response) {
-                tableHeaders = response.header
-                DTdata = response.data
-                //console.log("Inside http get success",tableHeaders)
+                var dtColumns = [];
+                response.columns.forEach(function(col){
+                    var dtColumn = {}
+                    dtColumn.data = col.columnName.toLowerCase();
+                    dtColumn.title = col.columnName;
+                    dtColumns.push(dtColumn);
+                });
+
+                tableHeaders = dtColumns;
+                DTdata = response.rows
                 deferred.resolve(tableHeaders);
             })
             .error(function (err, code) {

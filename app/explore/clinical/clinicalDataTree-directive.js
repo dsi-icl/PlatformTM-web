@@ -343,7 +343,7 @@ angular.module('biospeak.explorer')
             },
             link: function(scope, element){
                 element.bind("click", function(){
-                    console.log(scope.obs,' CLICKED')
+                    //console.log(scope.obs,' CLICKED')
 
                     var isActive = scope.obs.isActive === true;
                     var chartId = (scope.obs.name+"_chart").replace(/ /g,'_');
@@ -414,7 +414,7 @@ angular.module('biospeak.explorer')
             },
             replace:true,
             controller: function ($scope, $element) {
-                console.log('menu scope',$scope.obs, $scope.quals)
+                //console.log('menu scope',$scope.obs, $scope.quals)
             },
             template:
             '<div class="dropdown" uib-dropdown>'+

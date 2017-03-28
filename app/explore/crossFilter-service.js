@@ -26,13 +26,7 @@ angular.module('eTRIKSdata.dcPlots',[])
         var dimensionsPerAssay = {}
 
         var XfilterAssayMap = {}
-
-        var gexSampleXfilter,
-            luminexSampleXfilter,
-            cytofSampleXfilter,
-            gexSampleColumns,
-            luminexSampleColumns,
-            cytofSampleColumns;
+        var SubjectAssayMap = {}
 
 
         cfservice.initializeXf = function(assayId){
@@ -67,7 +61,7 @@ angular.module('eTRIKSdata.dcPlots',[])
         cfservice.refreshCf = function(projectId,requestedObsvs,assayId){
             var deferred = $q.defer();
 
-            console.log("=============Creating Assay "+assayId+" XF============")
+            //console.log("=============Creating Assay "+assayId+" XF============")
 
             if(!assayId && requestedObsvs){
                 assayId = requestedObsvs[0].activityId;
@@ -81,21 +75,18 @@ angular.module('eTRIKSdata.dcPlots',[])
             XfilterAssayMap[assayId] = {}
             XfilterAssayMap[assayId].dimensions = [];
             XfilterAssayMap[assayId].groups = [];
+            SubjectAssayMap[assayId] = {};
 
             this.getData(projectId,requestedObsvs,assayId).then(function(dataTable){
-                //use property dataType to coerce string to numerals
+
                 var data = dataTable.data;
                 var columns = dataTable.header;
-
-
 
                 cfservice.formatData(data, requestedObsvs);
 
 
                 //console.log(data,columns)
                 var cfdata = crossfilter(data);
-                //allPerAssay[assayId] = cfdata.groupAll();
-                //ndxPerAssay[assayId] = cfdata;
 
                 XfilterAssayMap[assayId].xfdata = cfdata
                 XfilterAssayMap[assayId].all = cfdata.groupAll();
@@ -104,10 +95,15 @@ angular.module('eTRIKSdata.dcPlots',[])
                 /**
                  * Create Subject Dimension
                  */
-                //subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
-                //dimensions[subjectColumnName] = subjectDim
                 XfilterAssayMap[assayId].subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
 
+
+                /**
+                 * Create Unique Subjects Group
+                 */
+                subjIndexDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
+                subjectGroup = subjIndexDim.group();
+                XfilterAssayMap[assayId].subjectGroup = subjectGroup
 
 
                 /**
@@ -186,11 +182,20 @@ angular.module('eTRIKSdata.dcPlots',[])
         cfservice.getCountGroup = function(assayId){
             return XfilterAssayMap[assayId].all
         }
-        cfservice.getCountValue = function(assayId){
-            console.log("in getcount value in assay,",assayId, XfilterAssayMap[assayId].xfReady, XfilterAssayMap[assayId].all.value())
-            if(XfilterAssayMap[assayId].xfReady)
-                return XfilterAssayMap[assayId].all.value()
-            else return null
+
+        cfservice.getSubjectCountData = function(assayId){
+            return XfilterAssayMap[assayId].subjectGroup
+        }
+
+        cfservice.getSubjectCountGroup = function(assayId){
+
+            uniqueSubjGrp = {value: function() {
+                if(XfilterAssayMap[assayId].subjectGroup.size() != 0)
+                    return XfilterAssayMap[assayId].subjectGroup.all().filter(function(kv){return kv.value>0;}).length;
+                return 0;
+            }}
+
+            return uniqueSubjGrp;
         }
         /********************************************
          **/
@@ -201,12 +206,18 @@ angular.module('eTRIKSdata.dcPlots',[])
          */
         cfservice.filterBySubjects = function(filteredSubjectIds){
             for (var assayId in XfilterAssayMap) {
+                // console.log('before',assayId,XfilterAssayMap[assayId].subjectGroup.value().count)
                 if (XfilterAssayMap.hasOwnProperty(assayId)) {
                     XfilterAssayMap[assayId].subjectDim.filterFunction(function (d) {
                         return filteredSubjectIds.indexOf(d) > -1;
                     })
+                    // console.log('after filtering',assayId,XfilterAssayMap[assayId].subjectGroup.value())
+                    //uniqueSubjGrp = XfilterAssayMap[assayId].subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
+                    //XfilterAssayMap[assayId].subjectGroup = uniqueSubjGrp
+                    // console.log('after regrouping',assayId,XfilterAssayMap[assayId].subjectGroup.value().count)
                 }
             }
+            console.log("filtering assays")
             dc.redrawAll("assay");
         }
 
@@ -471,8 +482,6 @@ angular.module('eTRIKSdata.dcPlots',[])
         cfservice.formatData = function(data, requestedObsvs){
             // format our data
             data.forEach(function(d) {
-                //d.bmi   = d3.round(+d.bmi,1);
-                //d.height   = d3.round(+d.height,2);
 
                 requestedObsvs.forEach(function(o){
                    // console.log(o.id); console.log(o.dataType)
@@ -484,12 +493,6 @@ angular.module('eTRIKSdata.dcPlots',[])
                         if(d[o.name] == null) d[o.name] = ""
                     }
                 })
-
-
-
-
-                //d.date_e = dateFormat.parse(d.date_entered);
-                //d.date_i = dateFormat.parse(d.date_issued);
             });
         }
 
@@ -861,6 +864,8 @@ angular.module('eTRIKSdata.dcPlots',[])
         cfservice.setActiveFilters = function(obs,filter){
 
             console.log('set active filter', obs, filter)
+            console.log('filtered findings',filteredFindings)
+            console.log('filtered events',filteredEvents)
 
             var activeFilteredObs;
             if(findingsColumns.indexOf(obs) > -1)
@@ -920,7 +925,7 @@ angular.module('eTRIKSdata.dcPlots',[])
 
             if(xfFiltered.getXFname() == 'SubjCf'){
                 filteredIds = xfFiltered.getCurrentSubjectIds();
-                //console.log("subjects filtered");
+                console.log("subjects filtered");
                 ClinicalCf.resetSubjectFilter();
                 AssayCf.resetSubjectFilter();
 

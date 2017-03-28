@@ -41,8 +41,8 @@ angular.module('eTRIKSdata.dcPlots')
                 var chart;
                 var obsId = obsRequest.name
 
-                console.log("=========1- Getting CHART for",obsId," ================== ")
-                console.log("===params: ",projectId, obsId, chartGroup, xfilterService,chartDataType, obsRequest, module);
+                //console.log("=========1- Getting CHART for",obsId," ================== ")
+                //console.log("===params: ",projectId, obsId, chartGroup, xfilterService,chartDataType, obsRequest, module);
 
                 //if chartType is not specified, return the default which is the count chart/histogram/pie/rowChart
                 //the logic of if chart is not found refreshData, recreate xfilter and recreate dimensions should not apply if an alternative charttye
@@ -61,7 +61,7 @@ angular.module('eTRIKSdata.dcPlots')
                         //console.log('looking for previously plotted chart', c.dimName, c.chartID(), chartId)
                         if(c.chartID() == chartId) {
                             chart = c
-                            console.log("Chart found in DC Registry ")
+                            //console.log("Chart found in DC Registry ")
                         }
                     })
 
@@ -75,13 +75,13 @@ angular.module('eTRIKSdata.dcPlots')
                     deferred.resolve(chart)
                 }
                 else if(!angular.isUndefined(xfilterService.getDimension(obsId, module))){
-                    console.log("Observation ",obsId, " exists in XF. Creating ",chartDataType)
+                    //console.log("Observation ",obsId, " exists in XF. Creating ",chartDataType)
                     chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType, obsRequest.dataType,module);
                     activeChartsForObs[obsId] = chart.chartID();
                     deferred.resolve(chart)
                 }
                 else {
-                    console.log("++Requested observation NOT FOUND IN XF++")
+                    //console.log("++Requested observation NOT FOUND IN XF++")
 
                     requestedObsvs.push(obsRequest);
                     //param = requestedObsvs
@@ -165,11 +165,11 @@ angular.module('eTRIKSdata.dcPlots')
             DCservice.refreshCharts = function(chartGroup, xfilterService, module){
 
                 var allCharts = dc.chartRegistry.list(chartGroup);// change that to activeCharts?
-                console.log('=======2===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
+                //console.log('=======2===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
                 var oldFilters
 
                 allCharts.forEach(function(chart){
-                    console.log('got chart ',chart.chartID(),' ',chart.chartGroup())
+                    //console.log('got chart ',chart.chartID(),' ',chart.chartGroup())
                     if(chart.chartGroup() == chartGroup){
 
 
@@ -181,20 +181,20 @@ angular.module('eTRIKSdata.dcPlots')
                         // the new dimensions created for this observation
                         var obs = chartIdToObs[chart.chartID()]
                         if(!angular.isUndefined(obs)){
-                            console.log('refreshing ',obs, ' in module', module)
+                            //console.log('refreshing ',obs, ' in module', module)
                             chart.dimension(xfilterService.getDimension(obs,module))
                             chart.group(xfilterService.getGroup(obs,module));
 
 
                             //oldFilters.forEach(function(filter){
-                            //    chart.filter(filter)
+                            //   chart.filter(filter)
                             //})
                         }
 
                         if(chart.chartType == 'dataTable'){
                             // if(chart.chartID() == tableWidgetId){
 
-                            console.log('refreshing table',chart.obsClass )
+                            // console.log('refreshing table',chart.obsClass )
                             chart.dimension(xfilterService.getTableDimension(chart.module ))
                             chart.group(xfilterService.getTableGroup());
                             chart.columns(xfilterService.getTableHeaders(chart.module ));
@@ -205,7 +205,7 @@ angular.module('eTRIKSdata.dcPlots')
 
                         }
                         if(chart.chartType == 'dataCount' ){
-                            console.log('refreshing counter widget')
+                            // console.log('refreshing counter widget')
                             chart.dimension(xfilterService.getCountData(chart.module))
                             chart.group(xfilterService.getCountGroup(chart.module));
                         }
@@ -216,12 +216,21 @@ angular.module('eTRIKSdata.dcPlots')
                 })
             }
 
-            DCservice.createDCcounter = function(xfilterService,module){
+            DCservice.createDCcounter = function(xfilterService,module,type){
                 var chartFactory = dc['dataCount'];
                 var chart = chartFactory();
                 var chartOptions = {};
-                chartOptions["dimension"] = xfilterService.getCountData(module)
-                chartOptions["group"] =  xfilterService.getCountGroup(module)
+
+                if(type == 'subject'){
+                    //console.log(xfilterService.getSubjectCountData(module).size())
+                    //console.log(xfilterService.getSubjectCountGroup(module).value())
+                    chartOptions["dimension"] = xfilterService.getSubjectCountData(module)
+                    chartOptions["group"] =  xfilterService.getSubjectCountGroup(module)
+                }else{
+                    chartOptions["dimension"] = xfilterService.getCountData(module)
+                    chartOptions["group"] =  xfilterService.getCountGroup(module)
+                }
+
                 chart.options(chartOptions);
                 chart.chartType = 'dataCount';
                 chart.dimName = "counter";
@@ -231,12 +240,19 @@ angular.module('eTRIKSdata.dcPlots')
                 return chart
             }
 
-            DCservice.createDCcounterBar = function(xfilterService, module){
+            DCservice.createDCcounterBar = function(xfilterService, module, type){
                 var chartFactory = dc['dataCountBar'];
                 var chart = chartFactory();
                 var chartOptions = {};
-                chartOptions["dimension"] = xfilterService.getCountData(module)
-                chartOptions["group"] =  xfilterService.getCountGroup(module)
+
+                if(type == 'subject'){
+                    chartOptions["dimension"] = xfilterService.getSubjectCountData(module)
+                    chartOptions["group"] =  xfilterService.getSubjectCountGroup(module)
+                }else{
+                    chartOptions["dimension"] = xfilterService.getCountData(module)
+                    chartOptions["group"] =  xfilterService.getCountGroup(module)
+                }
+
                 chart.options(chartOptions);
                 chart.chartType = 'dataCount';
                 chart.dimName = "counterBar";
@@ -348,7 +364,7 @@ angular.module('eTRIKSdata.dcPlots')
                     //console.log('dimensions top',cfDimension.top(Infinity))
 
                     if(noOfGroups > 1){
-                        console.log("Plotting a DC row chart ")
+                        //console.log("Plotting a DC row chart ")
                         chartType = "rowChart"
                         chartOptions["elasticX"] = "true"
                         chartOptions["xAxis"] = {"ticks":"4"}
@@ -357,7 +373,7 @@ angular.module('eTRIKSdata.dcPlots')
                         chartOptions["margins"] = {top: 10, right: 10, bottom: 20, left: 10}
                     }
                     else{
-                        console.log("making a pie chart ")
+                        //console.log("making a pie chart ")
                         chartType = "pieChart";
                         chartOptions["radius"] = "100"
                         chartOptions["innerRadius"] = "50"
@@ -375,7 +391,7 @@ angular.module('eTRIKSdata.dcPlots')
 
 
                 else{
-                    console.log("Plotting a DC bar chart")
+                    //console.log("Plotting a DC bar chart")
                     //numeric bar chart
                     //console.log(cfDimension.top(1))
                     maxValue = parseFloat(cfDimension.top(1)[0][val])
