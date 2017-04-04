@@ -2,7 +2,7 @@
  * Created by iemam on 06/05/2015.
  */
 'use strict'
-function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCchartingService,cartService, $timeout){
+function SubjectsController($scope,$stateParams,subjectDataService, SubjectXF,DCchartingService,cartService, $timeout){
     var vm =  this;
 
     var projectId = $stateParams.projectId;
@@ -17,12 +17,12 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
         chartContainerId : "subject-plots",
         chartGroup : "subject",
         DCchartService : "DCchartingService",
-        xfilterService : "SubjCf",
+        xfilterService : "SubjectXF",
         filtersService: "filtersService"
 
     };
 
-    SubjCf.resetXF();
+    SubjectXF.resetXF();
 
     $scope.cartService = cartService
 
@@ -48,7 +48,7 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
                     currentCartSubjObRequests = cartService.getCartSubjObsReq();
 
                     //console.log("SAVED SUBJECT OBSERVATION REQUESTS: ",currentCartSubjObRequests);
-                    SubjCf.refreshCf(projectId,currentCartSubjObRequests).then(function(res){
+                    SubjectXF.refreshCf(projectId,currentCartSubjObRequests).then(function(res){
                         /*angular.forEach(currentCartSubjObRequests, function(sc) {
                             console.log('#sc_', sc);
                             angular.element('#sc_' + sc.id).trigger('click');
@@ -70,4 +70,4 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCcha
 }
 
 angular.module('biospeak.explorer')
-    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','DCchartingService','cartService','$timeout',SubjectsController])
+    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjectXF','DCchartingService','cartService','$timeout',SubjectsController])

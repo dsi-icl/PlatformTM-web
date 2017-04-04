@@ -368,7 +368,7 @@ angular.module('biospeak.explorer')
                                         '<div class="cardlock" id="'+ cardId +'">'+
                                         '<div class="card">'+
                                         '<h1 class="border-bottom">{{obs.o3}}</h1>'+
-                                        '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  class="qualifier-menu"></dc-chart-menu>'+
+                                        '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  module="module" class="qualifier-menu"></dc-chart-menu>'+
                                         '<div>' +
                                         '</div>'
                                     )(scope)
@@ -410,6 +410,7 @@ angular.module('biospeak.explorer')
             scope: {
                 obs: '=',
                 chartingOpts: '=',
+                module:'=',
                 quals:'='
             },
             replace:true,
@@ -426,7 +427,7 @@ angular.module('biospeak.explorer')
             '<li ng-repeat="var in quals">' +
             '<div  class="checkbox">'+
             '<input id="checkbox_{{var.id}}" type="checkbox" ' +
-            'charting-button  obs="var"  ' +
+            'charting-button  obs="var" module="module" ' +
             'ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive" ' +
             'charting-opts="chartingOpts" >' +
             '<label uib-tooltip="{{var.qO2_label}}" for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +

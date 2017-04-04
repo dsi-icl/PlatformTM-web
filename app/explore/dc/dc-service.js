@@ -1,8 +1,8 @@
 
-angular.module('eTRIKSdata.dcPlots')
+angular.module('biospeak.dcPlots')
 
-    .factory('DCchartingService',['$q','$injector','XFilterLinker','cartService',
-        function($q,$injector,XFilterLinker,cartService){
+    .factory('DCchartingService',['$q','$injector','dc','XFilterLinker','cartService',
+        function($q,$injector,dc,XFilterLinker,cartService){
 
 
             var DCservice = {}
@@ -39,7 +39,7 @@ angular.module('eTRIKSdata.dcPlots')
 
                 var deferred = $q.defer();
                 var chart;
-                var obsId = obsRequest.name
+                var obsId = obsRequest.name;
 
                 //console.log("=========1- Getting CHART for",obsId," ================== ")
                 //console.log("===params: ",projectId, obsId, chartGroup, xfilterService,chartDataType, obsRequest, module);
@@ -60,10 +60,10 @@ angular.module('eTRIKSdata.dcPlots')
                     dc.chartRegistry.list(chartGroup).forEach(function(c){
                         //console.log('looking for previously plotted chart', c.dimName, c.chartID(), chartId)
                         if(c.chartID() == chartId) {
-                            chart = c
+                            chart = c;
                             //console.log("Chart found in DC Registry ")
                         }
-                    })
+                    });
 
 
                     if(!chart){
@@ -82,25 +82,24 @@ angular.module('eTRIKSdata.dcPlots')
                 }
                 else {
                     //console.log("++Requested observation NOT FOUND IN XF++")
-
                     requestedObsvs.push(obsRequest);
                     //param = requestedObsvs
                     //console.log('requestedObs',requestedObsvs)
 
                     xfilterService.refreshCf(projectId,requestedObsvs,module)
                         .then(function () {
-                            DCservice.refreshCharts(chartGroup,xfilterService,module);
                             chart = DCservice.createChart(obsId,chartGroup,xfilterService,chartDataType,obsRequest.dataType,module)
-                            activeChartsForObs[obsId] = chart.chartID();
+
+                            DCservice.refreshCharts(chartGroup,xfilterService,module);
+                            DCservice.reApplySubjectFilter(xfilterService);
+                            if(chart != null) activeChartsForObs[obsId] = chart.chartID();
                             //console.log("CREATED CHART FOR ",obsId,chartGroup,' chartId', chart.chartID())
                             //console.log('==========DONE=============')
                             deferred.resolve(chart)
                         })
-
                 }
-
                 return deferred.promise
-            }
+            };
 
             DCservice.createChart = function(obsId,chartGrp,xfilterService,chartDataType, dataType, module){
 
@@ -117,12 +116,15 @@ angular.module('eTRIKSdata.dcPlots')
                     cfGroup = xfilterService.getGroup(obsId, module)
                 }
 
+                // console.log(cfGroup.all())
+                if(cfGroup.all().length == 1 && cfGroup.all()[0].key == "(Blanks)")
+                    return null;
 
 
+                // console.log("=======2=CREATING ",chartDataType," CHART for ",obsId);
 
-                //console.log("=======3=CREATING ",chartDataType," CHART for ",obsId);
+                var chartData = DCservice.getChartOptions(obsId, cfDimension, cfGroup, chartDataType, dataType);
 
-                var chartData = DCservice.getChartOptions(obsId,cfDimension, cfGroup, chartDataType, dataType);
 
                 //CREATE CHART
                 var chartFactory = dc[chartData.chartType];
@@ -131,28 +133,42 @@ angular.module('eTRIKSdata.dcPlots')
                 chart.chartType = chartData.chartType;
                 chart.dimName = obsId;
                 chart.dataType = chartDataType;
-                chart.chartGroup(chartGrp);
+                //chart.chartGroup(chartGrp);
+                //console.log(dc.chartRegistry.list(chartGrp));
 
-
-                 if(chart.chartType != "rangeChart")
-
+                 if(chart.chartDataType != "rangeChart"){
                      chart.on('filtered',function(chart,filter){
-                        console.log("===EVENT===CHART===FILTERED",obsId,'FILTER:',filter);
-                        //xfilterService.setLastFilteredObs(chart.dimName);
 
+                         if(chart.isRefocusing){
+                             console.log('Chart is refocusing');
+                             return;
+                         }
+
+
+                         console.log("/////EVENT CHART",chart.dataType, "FILTERED////",obsId,'FILTER:',filter);
+                         // console.log('chart is refreshing ', chart.IsRefreshing)
+                         // console.log('----PROPAGATING FILTER TO OTHER XFilters')
+                         // xfilterService.setActiveFilters(chart.dimName,filter);
+
+
+                         DCservice.propagateFilter(xfilterService,chart.dimName,filter);
+                         //DCservice.reApplySubjectFilter(xfilterService)
+                         //if(filter != null)
+
+
+                         if(chart.IsRefreshing)
+                             return;
+
+                         // console.log('----APPLYING FILTER TO CART----')
                          var isRangeFilter = false;
-                        console.log('chart.filters',chart.filters())
                          if(filter)
                              isRangeFilter = (filter.filterType == 'RangedFilter');
-
-                        cartService.applyFilter(obsId,chart.filters(),isRangeFilter,module);
-
-                        xfilterService.setActiveFilters(chart.dimName,filter);
-                        DCservice.propagateFilter(xfilterService);
-                    })
+                         cartService.applyFilter(obsId,chart.filters(),isRangeFilter,module);
 
 
-                dc.registerChart(chart,chartGrp)
+                     });
+                 }
+
 
 
                 //caching
@@ -165,55 +181,67 @@ angular.module('eTRIKSdata.dcPlots')
             DCservice.refreshCharts = function(chartGroup, xfilterService, module){
 
                 var allCharts = dc.chartRegistry.list(chartGroup);// change that to activeCharts?
-                //console.log('=======2===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
+                // console.log('=======3===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
                 var oldFilters
-
+                //console.log(allCharts)
                 allCharts.forEach(function(chart){
-                    //console.log('got chart ',chart.chartID(),' ',chart.chartGroup())
+                    //console.log('got chart ',chart.chartID(),' ',chart.chartGroup(), chart)
                     if(chart.chartGroup() == chartGroup){
 
 
-                        //oldFilters = chart.filters(); // Get current filters
+                        oldFilters = chart.filters(); // Get current filters
+                        //console.log('a',oldFilters)
+                        chart.IsRefreshing = true;
+                        // console.log('//////////// CLEARING FILTERS ',chart.dimName,'///////////////')
                         //chart.filter(null); // Reset all filters on current chart
+                        //console.log('b',oldFilters)
                         //chart.expireCache();
+                        // console.log('/////////////FINISHED CLEARING FILTERS ',chart.dimName,'//////////////')
+
 
                         //I need to know which observations this id was associated with so that I can query for
                         // the new dimensions created for this observation
                         var obs = chartIdToObs[chart.chartID()]
                         if(!angular.isUndefined(obs)){
-                            //console.log('refreshing ',obs, ' in module', module)
+                            // console.log('/////REFRESHING CHART FOR ',obs, ' IN  MODULE/////////', module)
                             chart.dimension(xfilterService.getDimension(obs,module))
                             chart.group(xfilterService.getGroup(obs,module));
-
-
-                            //oldFilters.forEach(function(filter){
-                            //   chart.filter(filter)
-                            //})
                         }
 
                         if(chart.chartType == 'dataTable'){
-                            // if(chart.chartID() == tableWidgetId){
-
-                            // console.log('refreshing table',chart.obsClass )
+                            // console.log('/////REFRESHING TABLE FOR ',module,' MODULE/////////')
                             chart.dimension(xfilterService.getTableDimension(chart.module ))
                             chart.group(xfilterService.getTableGroup());
                             chart.columns(xfilterService.getTableHeaders(chart.module ));
 
-                            //oldFilters.forEach(function(filter) {
-                            //    chart.filter(filter)
-                            //})
-
                         }
                         if(chart.chartType == 'dataCount' ){
-                            // console.log('refreshing counter widget')
+                            // console.log('/////REFRESHING COUNTER WIDGET FOR ',module,' MODULE/////////')
                             chart.dimension(xfilterService.getCountData(chart.module))
                             chart.group(xfilterService.getCountGroup(chart.module));
                         }
 
-                        chart.redraw();
+
+                        if(oldFilters.length > 0){
+                            if(oldFilters.length > 1){
+                                oldFilters = new Array(oldFilters)
+                            }
+                            else {
+                                oldFilters = oldFilters[0]
+                            }
+                            //console.log('/////REAPPLYING FILTERS ',oldFilters,' FOR ',obs,'/////////')
+                            chart.replaceFilter(oldFilters)
+                        }
+
+                        ///})
+                        //console.log('redrawing',obs);
+                        chart.IsRefreshing = false;
+                        //chart.redraw();
 
                     }
-                })
+                });
+
+                dc.redrawAll(chartGroup)
             }
 
             DCservice.createDCcounter = function(xfilterService,module,type){
@@ -238,7 +266,7 @@ angular.module('eTRIKSdata.dcPlots')
                 counterWidgetId = chart.chartID();
 
                 return chart
-            }
+            };
 
             DCservice.createDCcounterBar = function(xfilterService, module, type){
                 var chartFactory = dc['dataCountBar'];
@@ -259,7 +287,7 @@ angular.module('eTRIKSdata.dcPlots')
                 chart.module = module;
                 counterWidgetId = chart.chartID();
                 return chart
-            }
+            };
 
             DCservice.createDCtable = function(xfilterService,module){
 
@@ -289,7 +317,7 @@ angular.module('eTRIKSdata.dcPlots')
 
 
                 return chart
-            }
+            };
 
             DCservice.getChartOptions = function(val,cfDimension,cfGroup,chartDataType,dataType){
 
@@ -337,7 +365,8 @@ angular.module('eTRIKSdata.dcPlots')
                     //chartOptions["renderDataPoints"] = true
 
                 }
-                else if(dataType == 'ordinal'){
+                else if(dataType == 'ordinal' || dataType == 'integer'){
+
                     chartType = "barChart";
                     chartOptions["x"]  = d3.scale.ordinal();
                     chartOptions["xUnits"] = dc.units.ordinal;
@@ -354,6 +383,7 @@ angular.module('eTRIKSdata.dcPlots')
                 //else if(isNaN(cfGroup.all()[0].key)){
                 else if(dataType == "string"){
 
+                    //console.log(cfGroup.all())
                     //Ordinal chart (rowChart or PieChart)
 
                     var noOfGroups = cfGroup.size();
@@ -370,6 +400,8 @@ angular.module('eTRIKSdata.dcPlots')
                         chartOptions["xAxis"] = {"ticks":"4"}
                         chartOptions["width"] = "300"
                         chartOptions["height"] = noOfGroups*30+20
+                        //var chartHeight = "180"
+                        //chartOptions["fixedBarHeight"] = chartheight - (noOfGroups + 1) * gap / count
                         chartOptions["margins"] = {top: 10, right: 10, bottom: 20, left: 10}
                     }
                     else{
@@ -393,12 +425,13 @@ angular.module('eTRIKSdata.dcPlots')
                 else{
                     //console.log("Plotting a DC bar chart")
                     //numeric bar chart
-                    //console.log(cfDimension.top(1))
+                    //console.log(cfDimension.top(1)); console.log(cfGroup.all()[0].value)
                     maxValue = parseFloat(cfDimension.top(1)[0][val])
                     minValue = parseFloat(DCservice.getMinimumValue(cfDimension,val));
 
                     //var minTail = parseInt(minValue/4)
                     //var maxTail = parseInt(maxValue/4)
+
                     var offset = (maxValue - minValue )/10.0
 
                     //console.log('offset',offset, 'min before',minValue,'max before', maxValue)
@@ -489,21 +522,23 @@ angular.module('eTRIKSdata.dcPlots')
                 }
                 //console.log(orderedVals[i][val])
                 return orderedVals[i][val]
-            }
+            };
 
-            DCservice.propagateFilter = function(xfilterServiceName){
-                XFilterLinker.propagateFilter(xfilterServiceName);
-
-            }
+            DCservice.propagateFilter = function(xfilterService, chartName, filter){
+                XFilterLinker.propagateFilter(xfilterService, chartName, filter);
+            };
+            DCservice.reApplySubjectFilter = function(xfilterService){
+                XFilterLinker.reApplySubjectFilter(xfilterService)
+            };
 
             DCservice.filterChart = function(chart,filter,chartGrp){
                 chart.filter(filter);
 
-            }
+            };
 
             DCservice.clearAllCharts = function(){
 
-            }
+            };
 
             return DCservice;
         }])

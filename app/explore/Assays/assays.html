@@ -126,16 +126,44 @@
                                 <div class="row ibox-content">
 
                                     <div class="col-md-10" style="font-size: 2em;color: #4cced0;">
-                                        <dc-count-widget
-                                                xfilter-service="{{vm.chartingOpts.xfilterService}}"
-                                                chart-service="{{vm.chartingOpts.DCchartService}}"
-                                                grp="{{vm.chartingOpts.chartGroup}}"
-                                                module="{{assay.id}}"></dc-count-widget> Samples
-                                        <!--<dc-count-widget
-                                            xfilter-service="{{chartingOpts.xfilterService}}"
-                                            chart-service="{{chartingOpts.DCchartService}}"
-                                            grp="{{chartingOpts.chartGroup}}"
-                                            module="{{assay.id}}"></dc-count-widget>--> XXX Features
+                                        <div style="display: inline-block">
+                                            <span style="display: block;font-size: 18px;color: #39c2d7;padding-top: 5px;">
+                                                <i class="flaticon-standing55"></i>&nbsp;
+                                                <dc-count-widget style="font-weight:600;"
+                                                                 xfilter-service="{{vm.chartingOpts.xfilterService}}"
+                                                                 chart-service="{{vm.chartingOpts.DCchartService}}"
+                                                                 grp="{{vm.chartingOpts.chartGroup}}"
+                                                                 type="subject"
+                                                                 module="{{assay.id}}">
+                                                </dc-count-widget>
+                                                <span style="font-size: 12px">Subjects</span>
+                                            </span>
+                                        </div>
+                                        <div style="display: inline-block">
+                                            <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-testtube8"></i>&nbsp;
+                                                <dc-count-widget style="font-weight:600;"
+                                                                 xfilter-service="{{vm.chartingOpts.xfilterService}}"
+                                                                 chart-service="{{vm.chartingOpts.DCchartService}}"
+                                                                 type="vvv"
+                                                                 grp="{{vm.chartingOpts.chartGroup}}"
+                                                                 module="{{assay.id}}">
+                                                </dc-count-widget>
+                                                <span style="font-size: 12px">Samples</span>
+                                            </span>
+                                        </div>
+                                        <div style="display: inline-block">
+                                            <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-testtube8"></i>&nbsp;
+                                                <!--<dc-count-widget style="font-weight:600;"
+                                                                 xfilter-service="{{vm.chartingOpts.xfilterService}}"
+                                                                 chart-service="{{vm.chartingOpts.DCchartService}}"
+                                                                 type="vvv"
+                                                                 grp="{{vm.chartingOpts.chartGroup}}"
+                                                                 module="{{assay.id}}">
+                                                </dc-count-widget>-->
+                                                <span style="font-size: 12px">Features</span>
+                                            </span>
+                                        </div>
+
                                     </div>
                                    <!-- <div class="col-md-3" style="font-size: 2em;color: #4cced0;">
 

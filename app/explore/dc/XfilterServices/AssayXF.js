@@ -5,7 +5,6 @@
 
 function AssayXF(assayDataService,$q){
 
-
     var cfservice = {};
 
     var subjectColumnName = "subjectId";
@@ -24,24 +23,47 @@ function AssayXF(assayDataService,$q){
     var dimensionsPerAssay = {}
 
     var XfilterAssayMap = {}
-
-    var gexSampleXfilter,
-        luminexSampleXfilter,
-        cytofSampleXfilter,
-        gexSampleColumns,
-        luminexSampleColumns,
-        cytofSampleColumns;
+    var SubjectAssayMap = {}
 
 
     cfservice.initializeXf = function(assayId){
-        console.log("initializing xf for ",assayId)
+        //console.log("initializing xf for ",assayId)
         XfilterAssayMap[assayId] = {}
         XfilterAssayMap[assayId].xfReady = false;
     }
 
 
-    cfservice.refreshCf = function(projectId,assayId,requestedObsvs){
+    cfservice.formatData = function(data, requestedObsvs){
+        var dateFormat = d3.time.format('%Y-%m-%dT%H:%M').parse
+        if(requestedObsvs)
+            data.forEach(function(d) {
+                //console.log(d)
+                requestedObsvs.forEach(function(o){
+                    //console.log(o.name); console.log(o.dataType)
+                    if(o.dataType == "dateTime"){
+                        //console.log(d)
+                        d[o.name] = dateFormat(d[o.name]);
+                        //console.log('2',d[o.name])
+                    }else if(o.dataType == "string"){
+                        if(d[o.name] == null) d[o.name] = ""
+                    }else {
+                        //console.log(o.id,' is numeric')
+                        if(d[o.name] != null) d[o.name] = +d[o.name];
+                    }
+                })
+            });
+        //console.log(data)
+    }
+
+    cfservice.refreshCf = function(projectId,requestedObsvs,assayId){
         var deferred = $q.defer();
+
+        //console.log("=============Creating Assay "+assayId+" XF============")
+
+        if(!assayId && requestedObsvs){
+            assayId = requestedObsvs[0].activityId;
+        }
+
         dimensionsPerAssay[assayId] = {}
 
         /**
@@ -50,25 +72,18 @@ function AssayXF(assayDataService,$q){
         XfilterAssayMap[assayId] = {}
         XfilterAssayMap[assayId].dimensions = [];
         XfilterAssayMap[assayId].groups = [];
+        SubjectAssayMap[assayId] = {};
 
-        this.getData(projectId, assayId,requestedObsvs).then(function(res){
-            //use property dataType to coerce string to numerals
-            var data = res.data;
-            var columns = res.header;
+        this.getData(projectId,requestedObsvs,assayId).then(function(dataTable){
 
-            data.forEach(function(d) {
-                //d.dtg   = dtgFormat.parse(d.origintime.substr(0,19));
-                //d.lat   = +d.latitude;
-                //d['Age']  = +d['Age'];
-                //d.Race   = d.Race;
-                //d.depth = d3.round(+d.depth,0);
-            });
+            var data = dataTable.data;
+            var columns = dataTable.header;
+
+            cfservice.formatData(data, requestedObsvs);
 
 
             //console.log(data,columns)
             var cfdata = crossfilter(data);
-            //allPerAssay[assayId] = cfdata.groupAll();
-            //ndxPerAssay[assayId] = cfdata;
 
             XfilterAssayMap[assayId].xfdata = cfdata
             XfilterAssayMap[assayId].all = cfdata.groupAll();
@@ -77,17 +92,22 @@ function AssayXF(assayDataService,$q){
             /**
              * Create Subject Dimension
              */
-            //subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
-            //dimensions[subjectColumnName] = subjectDim
             XfilterAssayMap[assayId].subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
 
-            console.log("=============Refreshing ASSAY "+assayId+" XF ============")
+
+            /**
+             * Create Unique Subjects Group
+             */
+            let subjIndexDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
+            let subjectGroup = subjIndexDim.group();
+            XfilterAssayMap[assayId].subjectGroup = subjectGroup
+
 
             /**
              * Create dimensions for each sample characterisitc
              */
             columns.forEach(function(sc){
-                console.log(sc);
+                //console.log(sc);
                 /**
                  * Dimension
                  */
@@ -95,7 +115,6 @@ function AssayXF(assayDataService,$q){
                     return d[sc];
                 });
                 XfilterAssayMap[assayId].dimensions[sc] = dim;
-                //dimensions[sc] = dim
                 /**
                  * Group
                  */
@@ -113,16 +132,16 @@ function AssayXF(assayDataService,$q){
         return deferred.promise
     }
 
-    cfservice.getData = function(projectId,assayId,requestedObsvs){
+    cfservice.getData = function(projectId,requestedObsvs,assayId){
         var deferred = $q.defer();
 
         assayDataService.getSampleData(projectId,assayId,requestedObsvs)
-            .then(function(response){
+            .then(function(dataTable){
                 //console.log('inside getDAta',response)
-                var dataToPlot = response.data;
-                var sampleColumns = response.header; //These are the list of HEADERS in the CF data
+                //var dataToPlot = dataTable.rows;
+                //var sampleColumns = response.header; //These are the list of HEADERS in the CF data
                 //No need to maintain on the client?!
-                deferred.resolve(response)
+                deferred.resolve(dataTable)
             })
 
         return deferred.promise
@@ -133,6 +152,9 @@ function AssayXF(assayDataService,$q){
      **/
     cfservice.getTableDimension = function(assayId){
         return XfilterAssayMap[assayId].subjectDim
+    }
+    cfservice.getTableGroup = function(){
+        return function(d) {return "booo"}
     }
     cfservice.getTableHeaders = function(assayId){
         var columns = [subjectColumnName];
@@ -157,6 +179,21 @@ function AssayXF(assayDataService,$q){
     cfservice.getCountGroup = function(assayId){
         return XfilterAssayMap[assayId].all
     }
+
+    cfservice.getSubjectCountData = function(assayId){
+        return XfilterAssayMap[assayId].subjectGroup
+    }
+
+    cfservice.getSubjectCountGroup = function(assayId){
+
+        let uniqueSubjGrp = {value: function() {
+            if(XfilterAssayMap[assayId].subjectGroup.size() != 0)
+                return XfilterAssayMap[assayId].subjectGroup.all().filter(function(kv){return kv.value>0;}).length;
+            return 0;
+        }}
+
+        return uniqueSubjGrp;
+    }
     /********************************************
      **/
 
@@ -165,14 +202,21 @@ function AssayXF(assayDataService,$q){
      * XFlinker Methods
      */
     cfservice.filterBySubjects = function(filteredSubjectIds){
+        console.log("filtering assays by subjects")
         for (var assayId in XfilterAssayMap) {
+            //console.log('before',assayId,XfilterAssayMap[assayId].subjectGroup.value().count)
             if (XfilterAssayMap.hasOwnProperty(assayId)) {
                 XfilterAssayMap[assayId].subjectDim.filterFunction(function (d) {
                     return filteredSubjectIds.indexOf(d) > -1;
                 })
+                //console.log('after filtering',assayId,XfilterAssayMap[assayId].subjectGroup.value())
+                //uniqueSubjGrp = XfilterAssayMap[assayId].subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
+                //XfilterAssayMap[assayId].subjectGroup = uniqueSubjGrp
+                // console.log('after regrouping',assayId,XfilterAssayMap[assayId].subjectGroup.value().count)
             }
         }
-        dc.renderAll("assay");
+
+        dc.redrawAll("assay");
     }
 
     cfservice.getCurrentSubjectIds = function(assayId){
@@ -191,13 +235,34 @@ function AssayXF(assayDataService,$q){
     }
 
     cfservice.resetSubjectFilter = function(){
-        if(!angular.isUndefined(subjectDim))
-            subjectDim.filter(null);
+        for (var assayId in XfilterAssayMap) {
+            if (XfilterAssayMap.hasOwnProperty(assayId)) {
+                XfilterAssayMap[assayId].subjectDim.filter(null);
+            }
+        }
+        dc.redrawAll("assay");
+    }
+
+    cfservice.getDimension = function(key, assayId){
+        // console.log(key)
+        // console.log(assayId)
+        // console.log(XfilterAssayMap)
+
+        return XfilterAssayMap[assayId].dimensions[key];
+    }
+
+    cfservice.getGroup = function(key, assayId){
+//            console.log(key)
+        return XfilterAssayMap[assayId].groups[key];
     }
 
 
 
-    return cfservice
+    cfservice.setActiveFilters = function(obs,filter){
+
+    }
+
+    return cfservice;
 }
 
 angular.module('biospeak.dcPlots')

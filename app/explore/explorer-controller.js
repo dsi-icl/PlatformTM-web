@@ -2,7 +2,7 @@
  * Created by iemam on 08/07/2014.
  */
 'use strict';
-function ExplorerCtrl($scope,$state,$stateParams,SubjCf, assayDataService) {
+function ExplorerCtrl($scope,$state,$stateParams,SubjectXF, assayDataService) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
     vm.queryId = $stateParams.queryId;
@@ -12,14 +12,14 @@ function ExplorerCtrl($scope,$state,$stateParams,SubjCf, assayDataService) {
         chartContainerId : "subject-plots",
         subjChartGrp : "subject",
         DCchartService : "DCchartingService",
-        subjectXFservice : "SubjCf",
-        assayXFservice: "AssayCf",
+        subjectXFservice : "SubjectXF",
+        assayXFservice: "AssayXF",
         assayChartGrp: "assay",
         filtersService: "filtersService"
 
     };
 
-    SubjCf.resetXF();
+    SubjectXF.resetXF();
     $scope.assayDataService = assayDataService;
 
 
@@ -36,4 +36,4 @@ function ExplorerCtrl($scope,$state,$stateParams,SubjCf, assayDataService) {
 /* Controllers */
 
 angular.module('biospeak.explorer')
-    .controller('ExplorerCtrl',['$scope','$state','$stateParams','SubjCf','assayDataService',ExplorerCtrl])
+    .controller('ExplorerCtrl',['$scope','$state','$stateParams','SubjectXF','assayDataService',ExplorerCtrl])
