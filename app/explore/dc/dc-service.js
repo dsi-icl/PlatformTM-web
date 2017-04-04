@@ -1,8 +1,8 @@
 
 angular.module('biospeak.dcPlots')
 
-    .factory('DCchartingService',['$q','$injector','dc','XFilterLinker','cartService',
-        function($q,$injector,dc,XFilterLinker,cartService){
+    .factory('DCchartingService',['$q','$injector','XFilterLinker','cartService',
+        function($q,$injector,XFilterLinker,cartService){
 
 
             var DCservice = {}

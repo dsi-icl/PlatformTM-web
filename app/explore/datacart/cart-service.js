@@ -59,7 +59,7 @@ function cartService($http,$rootScope,ngAppConfig) {
     }
 
     var _addToCart = function(item, module){
-        // console.log('Adding ',item, module)
+         //console.log('Adding ',item, module)
         if(item.isSubjectCharacteristics || item.isDesignElement)
             currentCart.subjCharRequests.push(item);
         if(item.isClinicalObservations)
@@ -89,7 +89,7 @@ function cartService($http,$rootScope,ngAppConfig) {
 
     var _removeFromCart = function(item, module){
         var items = []
-        if(item.isSubjectCharacteristics)
+        if(item.isSubjectCharacteristics || item.isDesignElement)
             items = currentCart.subjCharRequests
 
         if(item.isClinicalObservations)
