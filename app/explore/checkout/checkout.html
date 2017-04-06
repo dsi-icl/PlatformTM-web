@@ -52,7 +52,9 @@
                                 </div>
                                 <ul style="padding: 5px;list-style: none;">
                                     <li ng-repeat="sc in vm.cart.subjCharRequests">
-                                        {{sc.name}}</span> <div class="p-w-xs"> <span ng-if="sc.isFiltered"><i class="fa fa-filter"></i><span> {{sc.filterText}}</div>
+                                        {{sc.name}}
+                                        <div class="p-w-xs">
+                                            <span ng-if="sc.isFiltered"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
                                     </li>
                                 </ul>
                             </div>
@@ -118,12 +120,12 @@
         <div class="col-lg-9">
             <div class="ibox">
                 <div class="ibox-title"><h2>Checkout Datasets</h2></div>
-                <div class="ibox-content ibox-heading">
-                    <h5>{{vm.datasets.length}} new datasets were created based on your data cart</h5>
-                </div>
-                <div class="ibox-content">
-                    <div class="project-list">
 
+                <div class="ibox-content">
+                    <div class="alert alert-info">
+                        <h5>{{vm.datasets.length}} new datasets were created based on your data cart</h5>
+                    </div>
+                    <div class="project-list">
                         <table class="table table-hover">
                             <thead>
                                 <th>Type</th>

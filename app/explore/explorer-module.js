@@ -1,8 +1,7 @@
 /**
  * Created by iemam on 08/07/2014.
  */
-angular.module('biospeak.explorer',[
-        'eTRIKSdata.dcPlots'])
+angular.module('biospeak.explorer',[])
 
     .config(function($stateProvider){
 
@@ -20,7 +19,7 @@ angular.module('biospeak.explorer',[
                         templateUrl: 'explore/explore.html',
                         resolve: {
                             
-                            loadPlugin: function ($ocLazyLoad) {
+                            loadPlugins: function ($ocLazyLoad) {
                                 return $ocLazyLoad.load([
                                     {
                                         files: ['lib/plugins/slick/css/slick.css','lib/plugins/slick/css/slick-theme.css','lib/plugins/slick/js/slick.min.js']
@@ -46,8 +45,8 @@ angular.module('biospeak.explorer',[
                                 return $ocLazyLoad.load(
                                     {
                                         serie: true,
-                                        files: ['explore/crossFilter-service.js',
-                                            'explore/dc/dc-service.js','explore/dc/dc-directives.js'
+                                        files: ['explore/dc/dc-module.js','explore/dc/XfilterServices/AssayXF.js','explore/dc/XfilterServices/SubjectXF.js',
+                                            'explore/dc/XfilterServices/ClinicalXF.js', 'explore/dc/XfilterServices/XFlinker.js', 'explore/dc/dc-service.js','explore/dc/dc-directives.js'
                                         ]
                                     }
                                 )
@@ -56,14 +55,14 @@ angular.module('biospeak.explorer',[
                                 return $ocLazyLoad.load('explore/explorer-controller.js');
                             }],
 
-                        loadDependency: function ($ocLazyLoad) {
-                            return $ocLazyLoad.load([
-                                {
-                                    serie:true,
-                                    files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
-                                }
-                            ]);
-                        }
+                            loadDependency: function ($ocLazyLoad) {
+                                return $ocLazyLoad.load([
+                                    {
+                                        serie:true,
+                                        files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
+                                    }
+                                ]);
+                            }
                         },
                         controller:'ExplorerCtrl as expVM'
                     },

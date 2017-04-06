@@ -83,10 +83,17 @@
             var deferred = $q.defer();
             $http.get(serviceBase + 'files/'+fileId+'/preview/')
                 .success(function (response) {
-                    tableHeaders = response.header;
-                    DTdata = response.data;
-                    fileName = response.fileInfo;
-                    //console.log("Inside http get success",tableHeaders)
+                    var dtColumns = [];
+                    response.columns.forEach(function(col){
+                        var dtColumn = {}
+                        dtColumn.data = col.columnName.toLowerCase();
+                        dtColumn.title = col.columnName;
+                        dtColumns.push(dtColumn);
+                    });
+
+                    tableHeaders = dtColumns;
+                    DTdata = response.rows;
+                    fileName = response.tableName;
                     deferred.resolve(tableHeaders);
                 })
                 .error(function (err, code) {

@@ -1,45 +1,7 @@
 /**
  * Created by iemam on 17/10/2014.
  */
-angular.module('eTRIKSdata.dcPlots')
-
-
-/**
- * groupChartButton
- */
-/*    .directive('groupChartButton',function($compile){
-        return{
-            restrict: 'A',
-            scope:{
-                obsGrps:'=',
-                chartingOpts:'=',
-            },
-            link: function(scope, element){
-                element.bind("click", function() {
-                    console.log(scope.obsGrps, ' CLICKED')
-                    scope.obsGrps.isLocked = true;
-
-
-                })
-            }
-        }
-    })*/
-
-
-/*    .directive('groupControl',function($compile){
-        return{
-            restrict:'EA',
-            scope:{
-                grp:'='
-            },
-            link: function(scope,element){
-                element.bind("ifchanged",function(){
-                    console.log(scope.grp)
-                })
-            }
-        }
-    })*/
-
+angular.module('biospeak.dcPlots')
 
 
     /**
@@ -64,12 +26,6 @@ angular.module('eTRIKSdata.dcPlots')
                 var xfilterService = $injector.get($scope.chartingOpts.xfilterService);
                 $scope.xfService = xfilterService;
 
-                /*var expService = $injector.get($scope.chartingOpts.exportService);
-                $scope.expService = expService;*/
-
-                /*var filtersServ = $injector.get($scope.chartingOpts.filtersService);
-                $scope.filtersService = filtersServ;*/
-
                 var chartDataType = 'Count';//$scope.role;
 
                 var from,to;
@@ -88,9 +44,14 @@ angular.module('eTRIKSdata.dcPlots')
                         function(chart){
                             plot = chart
                             $scope.done = true;
+                            if(plot == null)
+                            {
+                                $scope.nochart = true;
+                                return;
+                            }
 
-                            if(plot.chartType == 'barChart' && $scope.obs.dataType != "ordinal"){
-                                console.log("creating rangeChart")
+                            if(plot.chartType == 'barChart' && $scope.obs.dataType != "ordinal" && $scope.obs.dataType != "integer"){
+                                // console.log("creating rangeChart")
                                 chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,"rangeChart",$scope.obs,$scope.module)
                                     .then(function(chart2){
                                         $scope.rangeChart = chart2
@@ -127,6 +88,7 @@ angular.module('eTRIKSdata.dcPlots')
                         '<div class="sk-circle11 sk-circle"></div> ' +
                         '<div class="sk-circle12 sk-circle"></div> ' +
                     '</div>'+
+                    '<div ng-show="nochart">No data found</div>'+
 
                     '<div id="mainChart">' +
                         '<div class="chartControls"> ' +
@@ -144,10 +106,11 @@ angular.module('eTRIKSdata.dcPlots')
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
                         var groupChart = scope.chartingOpts.chartGroup
+                        var xf = scope.xfService
                         scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), groupChart);
 
                         if(scope.rangeChart){
-                            console.log('rangeChart is there',scope.rangeChart)
+                            // console.log('rangeChart is there',scope.rangeChart)
                             scope.rangeChart.anchor(element[0].querySelector('#range-chart'), groupChart);
                             scope.chartToPlot.rangeChart(scope.rangeChart);
                         }
@@ -160,17 +123,27 @@ angular.module('eTRIKSdata.dcPlots')
                         //Set reset link
                         var a = angular.element(element[0].querySelector('div.chartControls').querySelector('span.reset').querySelector('a'));
                         a.on('click', function () {
+
                             console.log('RESETTING FILTER')
                             //scope.chartToPlot.filterAll(groupChart);
-                            if(scope.chartToPlot.chartType == 'barChart')
+                            if(scope.chartToPlot.chartType == 'barChart'){
+                                scope.chartToPlot.isRefocusing = true;
                                 scope.chartToPlot.focus();
-                            scope.chartToPlot.filterAll(groupChart);
-                            scope.chartToPlot.render();
+                                scope.chartToPlot.isRefocusing = false;
+                            }
+
+                            //console.log('calling filterAll from inside a on clcik')
+                            scope.chartToPlot.filterAll();
+
+                            //console.log('calling render from inside a on clcik')
+                            //scope.chartToPlot.render();
                             if(scope.rangeChart){
                                 //scope.rangeChart.focus();
-                                scope.rangeChart.filterAll(groupChart);
+                                //console.log('calling render from inside a on clcik on rangechart')
+                                scope.rangeChart.filterAll();
                                 //scope.rangeChart.render();
                             }
+                            //dc.propagateFilter(xf);
                             dc.redrawAll(groupChart);
                         });
 
@@ -366,8 +339,6 @@ angular.module('eTRIKSdata.dcPlots')
         };
     })
 
-
-
     .directive('dcDatatable', function () {
     return {
         restrict: 'E',
@@ -482,7 +453,7 @@ angular.module('eTRIKSdata.dcPlots')
                 grp: '@',
                 chartService: '@',
                 xfilterService: '@',
-                projectId:'@',
+                type:'@',
                 module:'@'
             },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
@@ -496,26 +467,18 @@ angular.module('eTRIKSdata.dcPlots')
             link: function(scope, element, attrs){
                 scope.$watch(
                     function($scope) { return $scope.xfService.cfReady(scope.module);},//$scope.xfService.cfReady(scope.module); },$scope.xfService.getCountValue(scope.module)
-                    function(newval, oldval){
-                        //console.log(newval)
+                    function(newval){
                         if(newval){
 
-                            var chart = scope.chartservice.createDCcounterBar(scope.xfService,scope.module)
+                            var chart = scope.chartservice.createDCcounterBar(scope.xfService,scope.module,scope.type)
                             chart.anchor(element[0],scope.grp);
                             chart.render();
-
-                            /*val = scope.xfService.getCountGroup(scope.module).value();
-                            console.log(val)
-                            tot = scope.xfService.getCountData(scope.module).size();
-                            //console.log(tot);
-                            per = Math.round(val / tot * 100)
-                            console.log(per)
-                            scope.val = per*/
                         }
                     })
             }
         }
     })
+
     .directive('dcCountWidget',function(){
         return{
             restrict:'E',
@@ -523,7 +486,7 @@ angular.module('eTRIKSdata.dcPlots')
                 grp: '@',
                 chartService: '@',
                 xfilterService: '@',
-                projectId:'@',
+                type:'@',
                 module:'@'
             },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
@@ -531,14 +494,14 @@ angular.module('eTRIKSdata.dcPlots')
                 $scope.xfService = $injector.get($scope.xfilterService);
             }],
             template:
-                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count odometer"></span>',//+
+                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count"></span>',//+
                 //' from(<span class="total-count"></span>)',
             link: function(scope, element, attrs){
                 scope.$watch(
                     function($scope) { return $scope.xfService.cfReady(scope.module); },
                     function(newval, oldval){
                         if(newval){
-                            var chart = scope.chartservice.createDCcounter(scope.xfService,scope.module)
+                            var chart = scope.chartservice.createDCcounter(scope.xfService,scope.module,scope.type)
                             chart.anchor(element[0],scope.grp);
                             chart.render();
                         }

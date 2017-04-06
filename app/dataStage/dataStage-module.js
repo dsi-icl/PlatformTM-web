@@ -55,7 +55,7 @@ function config($stateProvider, $urlRouterProvider) {
                     return $ocLazyLoad.load([
                         {
                             serie: true,
-                            files: ['lib/plugins/dataTables/js/jquery.dataTables.min.js',
+                            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
                                 'lib/plugins/dataTables/css/dataTables.bootstrap.min.css']
                         },
                         {

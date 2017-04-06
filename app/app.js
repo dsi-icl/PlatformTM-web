@@ -13,8 +13,7 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
     "biospeak.explorer",
     "bioSpeak.userAuth",
     "bioSpeak.DataStager",
-    "bioSpeak.import",
-    "bioSpeak.export"
+    "bioSpeak.import"
 ]);
 
 eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){

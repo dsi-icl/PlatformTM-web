@@ -27,18 +27,17 @@
 
             </div>
            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
-               <ul style="list-style: none; display:block; margin: 20px 0 0; padding:0px; font-size: 1.3em">
-                   <li style="display: inline-block;max-height: 70px;overflow: hidden;text-align: left;    padding: 0px 20px">
-                            <h5 style="text-transform: uppercase;">
-                                Human subjects
-                                <span style="display: block;font-size: 24px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-standing55"></i>&nbsp;
-                                <dc-count-widget
+               <ul style="list-style: none; display:block; margin: 10px 0 0; padding:0px; font-size: 1.3em">
+                   <li style="vertical-align:top; display: inline-block;max-height: 100px;overflow: hidden;text-align: left; border-right: 1px dotted #c7c7c7;   padding: 0px 20px">
+                       <h5 style="text-transform: uppercase;margin-bottom: 0px">Human subjects</h5>
+                       <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-standing55"></i>&nbsp;
+                                <dc-count-widget style="font-weight:600;"
                                         xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
                                         chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                        type="sdj"
                                         grp="{{expVM.chartingOpts.subjChartGrp}}">
                                 </dc-count-widget>
-                                </span>
-                            </h5>
+                       </span>
                        <dc-count-bar
                                xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
                                chart-service="{{expVM.chartingOpts.DCchartService}}"
@@ -48,24 +47,54 @@
 
                    </li>
 
-                   <li ng-repeat="assay in expVM.assays" style="display: inline-block;max-height: 70px;overflow: hidden;text-align: left;padding: 0px 20px;border-right: 1px dotted #c7c7c7;">
+                   <li ng-repeat="assay in expVM.assays" style="display: inline-block;max-height: 100px;overflow: hidden;text-align: left; vertical-align: top; text-align:center;padding: 0px 20px;">
+                        <h5 style="text-transform: uppercase; margin-bottom: 0px">
+                            {{assay.name}}
+                        </h5>
+                       <!--<h5 style="text-transform: uppercase;">-->
+                        <div>
+                            <div style="display: inline-block">
+                                <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-testtube8"></i>&nbsp;
+                                   <dc-count-widget style="font-weight:600;"
+                                           xfilter-service="{{expVM.chartingOpts.assayXFservice}}"
+                                           chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                           type="vvv"
+                                           grp="{{expVM.chartingOpts.assayChartGrp}}"
+                                           module="{{assay.id}}">
+                                   </dc-count-widget>
+                                    <!--<span style="font-size: 12px">Samples</span>-->
+                                </span>
+                                <dc-count-bar
+                                        xfilter-service="{{expVM.chartingOpts.assayXFservice}}"
+                                        chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                        grp="{{expVM.chartingOpts.assayChartGrp}}"
+                                        module="{{assay.id}}">
+                                </dc-count-bar>
+                            </div>
+                            <div style="display: inline-block">
+                                <span style="display: block;font-size: 18px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-standing55"></i>&nbsp;
+                                   <dc-count-widget style="font-weight:600;"
+                                           xfilter-service="{{expVM.chartingOpts.assayXFservice}}"
+                                           chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                           grp="{{expVM.chartingOpts.assayChartGrp}}"
+                                           type="subject"
+                                           module="{{assay.id}}">
+                                   </dc-count-widget>
+                                    <!--<span style="font-size: 12px">Subjects</span>-->
+                                </span>
+                                <dc-count-bar
+                                        xfilter-service="{{expVM.chartingOpts.assayXFservice}}"
+                                        chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                        type="subject"
+                                        grp="{{expVM.chartingOpts.assayChartGrp}}"
+                                        module="{{assay.id}}">
+                                </dc-count-bar>
+                            </div>
+                        </div>
 
-                       <h5 style="text-transform: uppercase;">
-                           {{assay.name}}
-                           <span style="display: block;font-size: 24px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-cells"></i>&nbsp;
-                           <dc-count-widget
-                                   xfilter-service="{{expVM.chartingOpts.assayXFservice}}"
-                                   chart-service="{{expVM.chartingOpts.DCchartService}}"
-                                   grp="{{expVM.chartingOpts.assayChartGrp}}"
-                                   module="{{assay.id}}"></dc-count-widget> <span style="font-size: 12px">Samples</span>
-                           </span>
-                       </h5>
-                       <dc-count-bar
-                               xfilter-service="{{expVM.chartingOpts.assayXFservice}}"
-                               chart-service="{{expVM.chartingOpts.DCchartService}}"
-                               grp="{{expVM.chartingOpts.assayChartGrp}}"
-                               module="{{assay.id}}">
-                       </dc-count-bar>
+
+                       <!--</h5>-->
+
                    </li>
                </ul>
 

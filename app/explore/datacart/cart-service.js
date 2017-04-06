@@ -59,7 +59,7 @@ function cartService($http,$rootScope,ngAppConfig) {
     }
 
     var _addToCart = function(item, module){
-        console.log('Adding ',item, module)
+         //console.log('Adding ',item, module)
         if(item.isSubjectCharacteristics || item.isDesignElement)
             currentCart.subjCharRequests.push(item);
         if(item.isClinicalObservations)
@@ -68,10 +68,10 @@ function cartService($http,$rootScope,ngAppConfig) {
             currentCart.assayPanelRequests[module].isRequested = true;
             currentCart.assayPanelRequests[module].sampleQuery.push(item);
 
-            console.log('Adding ',item, currentCart.assayPanelRequests[module])
+            //console.log('Adding ',item, currentCart.assayPanelRequests[module])
         }
 
-        console.log('current Cart',currentCart)
+        //console.log('current Cart',currentCart)
         _toggle = !_toggle;
     };
 
@@ -89,7 +89,7 @@ function cartService($http,$rootScope,ngAppConfig) {
 
     var _removeFromCart = function(item, module){
         var items = []
-        if(item.isSubjectCharacteristics)
+        if(item.isSubjectCharacteristics || item.isDesignElement)
             items = currentCart.subjCharRequests
 
         if(item.isClinicalObservations)
@@ -105,7 +105,7 @@ function cartService($http,$rootScope,ngAppConfig) {
                 break;
             }
         }
-        console.log('removing ', item, 'from data cart')
+        // console.log('removing ', item, 'from data cart')
         items.splice(pos,1);
     }
 
@@ -191,13 +191,14 @@ function cartService($http,$rootScope,ngAppConfig) {
     };
 
     var _applyFilter = function(id,filters,isRange,module){
-        // console.log(id,filters,isRange,module);
+         // console.log("UPDATING CART WITH FILTER ",id,filters,isRange,module);
         var found = false;
 
         var filteredObs;
 
 
         if(module == 'clinical'){
+            // console.log(currentCart.obsRequests)
             for(var i=0; i< currentCart.obsRequests.length;i++) {
                 if (id == currentCart.obsRequests[i].name) {
                     filteredObs = currentCart.obsRequests[i];
@@ -254,7 +255,7 @@ function cartService($http,$rootScope,ngAppConfig) {
 
         _toggle = !_toggle
 
-        console.log(filteredObs)
+        // console.log(filteredObs)
         $rootScope.$apply();
     };
 

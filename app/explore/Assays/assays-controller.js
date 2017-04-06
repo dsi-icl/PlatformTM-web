@@ -4,7 +4,7 @@
 
 
 'use strict'
-function AssaysController($scope,$stateParams,AssayCf,assayDataService,cartService,$q){
+function AssaysController($stateParams,AssayXF,assayDataService,cartService,$q){
 
     var vm = this;
 
@@ -18,7 +18,7 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,cartServi
         chartContainerId : "assay-plots",
         chartGroup : "assay",
         DCchartService : "DCchartingService",
-        xfilterService : "AssayCf",
+        xfilterService : "AssayXF",
         exportService : "exportService"
 
     };
@@ -32,7 +32,7 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,cartServi
 
             if(assays!='null'){
                 angular.forEach(assays, function(assay) {
-                    AssayCf.initializeXf(assay.id);
+                    AssayXF.initializeXf(assay.id);
                 });
 
                 var promise = $q.all(null);
@@ -40,7 +40,7 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,cartServi
 
                 angular.forEach(assays, function(assay){
                     promise = promise.then(function(){
-                        return AssayCf.refreshCf(projectId,'', assay.id).then(
+                        return AssayXF.refreshCf(projectId,'', assay.id).then(
                             function (sampleCols){
                             // console.log('default scs', sampleCols)
                             //$scope.responses.push(sampleCols);
@@ -78,4 +78,4 @@ function AssaysController($scope,$stateParams,AssayCf,assayDataService,cartServi
     }
 
 angular.module('biospeak.explorer')
-    .controller('AssayCtrl', ['$scope','$stateParams','AssayCf','assayDataService','cartService','$q',AssaysController])
+    .controller('AssayCtrl', ['$stateParams','AssayXF','assayDataService','cartService','$q',AssaysController])

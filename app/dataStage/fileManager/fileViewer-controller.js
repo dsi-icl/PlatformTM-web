@@ -20,7 +20,7 @@ function fileViewController($scope, $state, $stateParams, DTOptionsBuilder, file
 
     fileService.getDataTablePreview($scope.vm.fileId)
         .then(function(headers){
-            //console.log(headers)
+            console.log(headers)
             $scope.vm.dtColumns = headers;
             $scope.vm.showDT = true
             $scope.vm.fileName = fileService.getFileInfo();
