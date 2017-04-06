@@ -77,10 +77,7 @@ function checkoutService($http,$q,ngAppConfig){
 
         headers = headers();
         console.log("header is",headers)
-           //console.log("content-type is", headers['content-type'])
-
-         //   console.log("The following dataset will be downloaded:", headers);
-         var fileName = headers['x-filename'];
+        var fileName = headers['x-filename'];
          var file = new Blob([data], {type: headers['content-type']});
          var fileURL = URL.createObjectURL(file);
          var a = document.createElement('a');
@@ -93,14 +90,33 @@ function checkoutService($http,$q,ngAppConfig){
         });
     }
 
+    var _prepareDataset = function(datasetId) {
+    //    console.log("The following dataset will be prepared:", datasetId);
+        return  $http({
+            method: 'GET',
+            url: serviceBase + 'apps/export/datasets/' + datasetId + '/export'
+         }).then(function(response){
+            return{outcome :(response.statusText)}
+                                     });
+    }
 
-
+    var _isFileReady= function(datasetId) {
+    //    console.log("check if following dataset is ready to download:", datasetId);
+        return $http({
+            method: 'GET',
+            url: serviceBase + 'apps/export/datasets/' + datasetId + '/IsFileReady'
+        }).then(function(result){
+           return{ outcome1 :(result.data)}
+                     });
+    }
 
     checkoutServiceFactory.getSavedCart = _getSavedCart;
     checkoutServiceFactory.createCheckoutDatasets = _createCheckoutDatasets;
     checkoutServiceFactory.getDatasetPreview = _getDatasetPreview;
     checkoutServiceFactory.getDatasetsContent = _getDatasetsContent;
     checkoutServiceFactory.downloadDataset = _downloadDataset;
+    checkoutServiceFactory.prepareDataset = _prepareDataset;
+    checkoutServiceFactory.isFileReady = _isFileReady;
     return checkoutServiceFactory
 }
 
