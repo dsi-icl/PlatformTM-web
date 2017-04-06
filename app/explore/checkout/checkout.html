@@ -149,30 +149,34 @@
                                     </td>
 
                                     <td class="project-actions">
-                                        <a class="btn btn-white btn-sm" placeholder="Save to my datasets"><i class="fa fa-save"></i>  </a>
-                                        <a ng-click="ds.collapse = !ds.collapse" placeholder="Edit" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i></a>
-                                        <a ng-click="vm.downloadDataset(ds.id)"class="btn btn-white btn-sm" placeholder="Download"><i class="fa fa-download"></i>  </a>
-                                    </td>
-                                </tr>
-                                <tr ng-repeat-end>
-                                    <td colspan="12" style="padding: 0;">
-                                        <div uib-collapse="ds.collapse">
-                                            <div class="faq-answer" style="margin-top: 0px !important;">
+                                      <a class="btn btn-white btn-sm" placeholder="Save to my datasets"><i class="fa fa-save"></i>  </a>
+                                      <a ng-click="ds.collapse = !ds.collapse" placeholder="Edit" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i></a>
 
-                                                    <div class="ibox-content wizard">
+                                      <a ng-if="ds.fileIsReady == 0"  ng-click= vm.prepareDataset(ds)  class="btn btn-primary" > Prepare File for download
+                                      <a ng-if="ds.fileIsReady == 1"    class="btn btn-primary" > Preparing
+                                      <a ng-if="ds.fileIsReady == 2"  ng-click=  vm.downloadDataset(ds)  class="btn btn-primary" > Download
 
-                                                        <div class="steps clearfix">
-                                                            <ul>
-                                                                <li>
-                                                                    <a ng-click="ds.show = 'info'" class="btn-default">Information</a>
-                                                                </li>
+                                     </td>
+                                 </tr>
+                                 <tr ng-repeat-end>
+                                     <td colspan="12" style="padding: 0;">
+                                         <div uib-collapse="ds.collapse">
+                                             <div class="faq-answer" style="margin-top: 0px !important;">
 
-                                                                <li>
-                                                                    <a ng-click="ds.show = 'fields'" class="btn-default btn btn-xs">Fields</a>
-                                                                </li>
-                                                                <!--<li>
-                                                                    <a ng-click="ds.show = 'filters'" class="btn-default "><span>2</span> Filters</a>
-                                                                </li>-->
+                                                     <div class="ibox-content wizard">
+
+                                                         <div class="steps clearfix">
+                                                             <ul>
+                                                                 <li>
+                                                                     <a ng-click="ds.show = 'info'" class="btn-default">Information</a>
+                                                                 </li>
+
+                                                                 <li>
+                                                                     <a ng-click="ds.show = 'fields'" class="btn-default btn btn-xs">Fields</a>
+                                                                 </li>
+                                                                 <!--<li>
+                                                                     <a ng-click="ds.show = 'filters'" class="btn-default "><span>2</span> Filters</a>
+                                                                 </li>-->
                                                                 <li>
                                                                     <a ng-click="vm.getDatasetPreview(ds)" class="btn-default">Preview Data</a>
                                                                 </li>
