@@ -70,7 +70,7 @@ function checkoutService($http,$q,ngAppConfig){
         console.log("The following dataset will be downloaded:", datasetId);
         $http({
             method: 'GET',
-            url: serviceBase + 'apps/export/datasets/' + datasetId + '/export',
+            url: serviceBase + 'apps/export/datasets/' + datasetId + '/download',
             params: {datasetId: datasetId},
             responseType: ''
         }).success(function (data, status, headers) {
