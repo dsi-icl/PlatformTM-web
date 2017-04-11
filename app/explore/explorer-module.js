@@ -6,14 +6,13 @@ angular.module('biospeak.explorer',[])
     .config(function($stateProvider){
 
         $stateProvider
-            // .state('explore', {
-            //     abstract : true,
-            //     url: "",
-            //     templateUrl:"layout/content.html",
-            //     controller: "logOutController"
-            // })
             .state('explore', {
-                url: "/{projectId}/explore/{queryId}",
+                abstract: true,
+                url: "/{projectId}",
+                templateUrl: "layout/content.html"
+            })
+            .state('explore.main', {
+                url: "/explore/{queryId}",
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
@@ -55,18 +54,18 @@ angular.module('biospeak.explorer',[])
                                 return $ocLazyLoad.load('explore/explorer-controller.js');
                             }],
 
-                            loadDependency: function ($ocLazyLoad) {
+                            loadDependency: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load([
                                     {
                                         serie:true,
                                         files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
                                     }
                                 ]);
-                            }
+                            }]
                         },
                         controller:'ExplorerCtrl as expVM'
                     },
-                    'subjects@explore':{
+                    'subjects@explore.main':{
                         templateUrl: 'explore/subjects/explorer_subjects.html',
                         controller: 'SubjectsCtrl as vm',
                         resolve: {
@@ -78,7 +77,7 @@ angular.module('biospeak.explorer',[])
                             }]
                         }
                     },
-                    'assessments@explore':{
+                    'assessments@explore.main':{
                         templateUrl: 'explore/clinical/explorer_clinical.html',
                         controller: 'ClinicalCtrl',
                         resolve: {
@@ -93,7 +92,7 @@ angular.module('biospeak.explorer',[])
                             }]
                         }
                     },
-                    'assays@explore':{
+                    'assays@explore.main':{
                         templateUrl: 'explore/assays/assays.html',
                         controller: 'AssayCtrl as vm',
                         resolve: {
@@ -105,11 +104,8 @@ angular.module('biospeak.explorer',[])
                             }]
                         }
                     },
-                    /*'datacart@explore':{
-                        templateUrl: 'explore/export/right_sidebar.html',
-                        controller: 'DatacartCtrl'
-                    },*/
-                    'datacart@explore':{
+
+                    'datacart@explore.main':{
                         templateUrl: 'explore/datacart/cart.html',
                         controller: 'cartCtrl as vm',
                         params: { queryId: null, },
@@ -144,7 +140,6 @@ angular.module('biospeak.explorer',[])
                 abstract : true,
                 url: "",
                 templateUrl:"layout/content.html",
-                controller: "logOutController"
             })
             .state('datacart.checkout',{
                 url: "/{projectId}/checkout/{cartId}",
@@ -196,9 +191,4 @@ angular.module('biospeak.explorer',[])
                 }
             })
 
-    })
-
-    /*.constant('ngAuthSettings', {
-        //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-        apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
-    })*/
+    });

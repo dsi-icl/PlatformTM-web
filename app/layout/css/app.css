@@ -7,7 +7,7 @@ body {
     background-color: #f3f3f5;
     width: 100%;
     height: 100%;
-    padding: 10px;
+    /*padding: 10px;*/
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     min-height: 100%;
@@ -44,16 +44,7 @@ a:hover {
     
 }
 
-.login {
-    font-size: .5em;
-    font-weight: bolder;
-    text-transform: uppercase;
-    margin-top: 3.3em;
-}
 
-.login .username {
-    color: #39C2D7;
-}
 
 .top-search-form {
     margin-left: 50px;
@@ -589,7 +580,7 @@ nav a {
     z-index: 2001;
     height: 100%;
     background-color: #2C3E50;
-    margin-left:-10px;
+    margin-left:-15px;
 }
 
 #explorer-wrapper .cart-menu.open{
@@ -614,7 +605,7 @@ nav a {
 
 .option-list ul li label {
     opacity: 1;
-    background: url("../img/icons/unselected_dark.svg") 10px no-repeat;
+    background: url("../../img/icons/unselected_dark.svg") 10px no-repeat;
     padding-left: 38px;
     //margin: 20px;
     background-size: 20px;
@@ -624,7 +615,7 @@ nav a {
 .option-list ul li label.active {
     opacity: 1;
     font-weight: normal;
-    background: url("../img/icons/selected_dark.svg") 10px no-repeat;
+    background: url("../../img/icons/selected_dark.svg") 10px no-repeat;
     padding-left: 38px;
     background-size: 20px;
 }
@@ -633,7 +624,7 @@ nav a {
     display: none;
     opacity: 1;
     font-weight: normal;
-    background: url("../img/icons/selected_dark.svg") 10px no-repeat;
+    background: url("../../img/icons/selected_dark.svg") 10px no-repeat;
     padding-left: 38px;
     background-size: 20px;
 }
@@ -773,8 +764,8 @@ div .dc-chart{
 }
 
 .img-dashboard{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
 }
 
 
@@ -1484,4 +1475,34 @@ a.editable-click {
 
 .ui-select-container > .ui-select-choices{
     top:36px;
+}
+
+.dataset-list tbody {
+    display:block;
+    height:250px;
+    overflow:auto;
+}
+.dataset-list thead {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}
+.dataset-list tbody > tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}
+.dataset-list .project-actions{
+    text-align: inherit;
+}
+
+.login {
+     background: #23C6C8;
+     font-size: .8em;
+     font-weight: bolder;
+     text-transform: uppercase;
+}
+
+.login .username {
+    color: #39C2D7;
 }

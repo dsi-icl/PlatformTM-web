@@ -1,5 +1,5 @@
 'use strict'
-function projectController($scope, $state, $stateParams,ProjectService,toaster, SweetAlert) {
+function projectController($scope, $state, $stateParams,projectService,toaster, SweetAlert) {
     var vm = this;
     
     vm.project = {}
@@ -9,7 +9,7 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster, 
     vm.projectId = $stateParams.projectId
     if($stateParams.projectId=='new'){
         console.log("New Project");
-        project = new ProjectService.getProjectResource();
+        project = new projectService.getProjectResource();
         project.isNew = true;
         project.status = "New";
         project.studies = [];
@@ -19,7 +19,7 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster, 
 
     }
     else if($stateParams.projectId){
-        ProjectService.getProjectResource.getProjectByAccession({ projectId: $stateParams.projectId }, function(response){
+        projectService.getProjectResource.getProjectByAccession({ projectId: $stateParams.projectId }, function(response){
             project = response;
             project.isNew = false;
 
@@ -35,7 +35,7 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster, 
 
 
     //Retrieves list of study activities
-    ProjectService.getProjectResource.getActivitiesForProject({projectId:vm.projectId},function(response){
+    projectService.getProjectResource.getActivitiesForProject({projectId:vm.projectId},function(response){
         vm.activities = response;
     });
 
@@ -132,4 +132,4 @@ function projectController($scope, $state, $stateParams,ProjectService,toaster, 
 
 }
 angular.module('bioSpeak.config')
-    .controller('ProjectCtrl',['$scope', '$state','$stateParams','ProjectService','toaster','SweetAlert', projectController])
+    .controller('ProjectCtrl',['$scope', '$state','$stateParams','projectService','toaster','SweetAlert', projectController])

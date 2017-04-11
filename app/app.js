@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-var eTRIKSdataApp = angular.module('eTRIKSdata', [
+var biospeakApp = angular.module('biospeak.app', [
     "ui.bootstrap",
     "toaster", "ngAnimate",
     "ui.router","ngSanitize",
@@ -16,7 +16,7 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
     "bioSpeak.import"
 ]);
 
-eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
+biospeakApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
 
     $urlRouterProvider.otherwise('/admin/projects');
 
@@ -47,13 +47,13 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
         })
 });
 
-eTRIKSdataApp.run(function($rootScope){
+biospeakApp.run(function($rootScope){
     $rootScope.$on('$stateChangeSuccess', function() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });
 });
 
-eTRIKSdataApp.constant('ngAppConfig', {
+biospeakApp.constant('ngAppConfig', {
      // apiServiceBaseUri: '/api/v1/'
     //apiServiceBaseUri: 'http://ehs.biospeak.solutions/api/v1/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'

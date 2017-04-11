@@ -1,0 +1,237 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+        <h2>{{vm.greet}} {{currentUser.firstName}}!</h2>
+        <!--<ol class="breadcrumb">
+            <li>
+                <a ui-sref="main.home">Home</a>
+            </li>
+            <li class="active">
+                <strong>{{vm.project.isNew ? 'New Project' : vm.project.accession}}</strong>
+            </li>
+        </ol>-->
+    </div>
+    <div class="col-lg-4">
+        <!--<div class="title-action">
+            <a ng-click="vm.saveProject()" class="btn btn-primary">{{vm.project.isNew ? 'Create Project' : 'Save'}}</a>
+            <a ng-click="vm.deleteProject()" class="btn btn-primary">Delete Project</a>
+            <a ng-click="vm.dontSaveProject()" class="btn btn-primary">Go Back</a>
+        </div>-->
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeIn">
+
+
+    <div class="row m-t-sm m-b-md">
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-title panel-header">
+                    <h3>Projects
+                        <span class="pull-right">
+                            <div ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
+                                <a class="dropdown-toggle" href uib-dropdown-toggle>
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </a>
+                                <ul class=" dropdown-menu dropdown-menu-right plotting-options">
+                                    <li> <a ui-sref="admin.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</a></li>
+
+                                    <li><a ui-sref="admin.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</a></li>
+                                </ul>
+                            </div>
+                        </span>
+                    </h3>
+                </div>
+                <div class="ibox-content" style="height: 500px">
+
+                    <div style="background: #f3f3f4; padding: 10px; " full-scroll >
+                            <div ng-repeat="p in vm.projects" style="width: 200px; height: 195px; margin: 5px; display: inline-block" >
+                                <div class="ibox">
+                                    <div class="ibox-title">
+                                        <span ng-if="p.name != 'CDISCTEST'" class="label label-warning pull-right"><i class="fa fa-lock" aria-hidden="true"></i></span>
+
+                                        <h5>{{p.name}}</h5>
+
+                                    </div>
+                                    <div class="ibox-content text-center">
+                                        <a ui-sref="admin.project({projectId: p.id})">
+                                            <img class="img-dashboard" src="img/biospeak7.png"  alt="profile">
+                                        </a>
+                                        <!--<div class="m-t-md">
+                                            <span>Status of current project:</span>
+                                            <div class="stat-percent">48%</div>
+                                            <div class="progress progress-mini">
+                                                <div style="width: 48%;" class="progress-bar"></div>
+                                            </div>
+                                        </div>-->
+                                       <!-- <div class="row  m-t-sm m-b-sm">
+                                            <div class="col-sm-3">
+                                                <div class="font-bold small">STUDIES</div>
+                                                {{p.studyCount || '0'}}
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="font-bold small">SUBJECTS</div>
+                                                {{p.subjectCount || '0'}}
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="font-bold small">COHORTS</div>
+                                                {{p.cohortCount || '0'}}
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="font-bold small">SAMPLES</div>
+                                                {{p.sampleCount || '0'}}
+                                            </div>
+                                        </div>-->
+                                        <div >
+                                            <div class="text-center">
+                                                <div class="btn-group">
+                                                    <a ui-sref="explore.main({projectId:p.id})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> </a>
+                                                    <a ui-sref="admin.project({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> </a>
+                                                    <a ui-sref="datastage.files({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-database"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <ul class="list-group clear-list">
+                                 <li class="list-group-item" ng-repeat="activity in vm.activities" ng-class="{'first-item':$first}">
+                                     <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
+                                     <a ng-click="vm.goToActivity(activity)">{{activity.name}}</a>
+                                     <br/>
+                                     <small>Last updated 03.02.2016</small>
+                                 </li>
+                             </ul>-->
+                        </div>
+
+                    <div uib-alert class=" alert-info" ng-if="!vm.projects.length>0">
+                        <h4>You have not created or been added to any projects yet!
+                            <!--<div class=" btn-group pull-right">
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>
+
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
+                            </div>-->
+                        </h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox">
+                <div class="ibox-title panel-header">
+                    <h3>Saved Datasets</h3>
+                </div>
+
+                <div class="ibox-content" >
+                    <div ng-if="vm.datasets.length>0">
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <input type="text" placeholder="Search" class="input-sm form-control">
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <button type="button" class="btn btn-info btn-sm p-w-sm"><i class="fa fa-refresh"></i> Refresh</button>
+                            </div>
+                        </div>
+
+
+
+                        <div class="project-list dataset-list">
+                            <table class="table table-responsive table-hover" >
+                                <thead>
+                                <th>Type</th>
+                                <th>Project</th>
+                                <th>Name</th>
+                                <th>No. Subjects</th>
+                                <th>No. Samples</th>
+                                <th>Status</th>
+
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="ds in vm.datasets">
+
+                                    <td class="project-status">
+                                        <span class="label label-primary">{{ds.type}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{ds.projectId}}</span>
+                                    </td>
+                                    <td class="project-title">
+                                        {{ds.name}}
+                                    </td>
+                                    <td>
+                                        {{ds.subjectCount}}
+                                    </td>
+                                    <td>
+                                        {{ds.sampleCount?ds.sampleCount : '-'}}
+                                    </td>
+
+
+                                    <td class="project-actions">
+                                        <span ng-if="ds.fileStatus==0"  class="label label-info">preparing...</span>
+                                        <a ng-if="ds.fileStatus==2" ng-click="vm.downloadDataset(ds.id)" class="btn btn-white btn-sm" placeholder="Download"><i  class="fa fa-download"></i>  </a>
+                                        <a ng-if="ds.fileStatus==2" ng-click="vm.deleteDataset(ds.id)" class="btn btn-white btn-sm" placeholder="Delete"><i class="fa fa-trash"></i>  </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div ng-if="vm.datasets.length == 0">
+                        <div uib-alert class=" alert-info">
+                            <h4>You don't have any saved datasets yet.
+                                <!--<div class=" btn-group pull-right">
+                                    <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>
+
+                                    <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
+                                </div>-->
+                            </h4>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="ibox">
+                <div class="ibox-title panel-header">
+                    <h3>Saved Queries</h3>
+                </div>
+
+                <div class="ibox-content" style="height: 215px">
+                    <ul full-scroll class="elements-list list-group clear-list">
+                        <li ng-repeat="query in vm.queries" class="list-group-item" ng-class="{'first-item':$first}">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a ui-sref="admin.study({studyId:study.id, projectId:study.projectId})"><strong>{{query.name}}</strong></a>
+                                </div>
+                                <div class="col-md-6">{{query.title}}</div>
+
+                                <!--<div class="col-md-3"><span uib-tooltip="{{study.armNames}}" tooltip-placement="left" class="badge badge-info">{{study.armCount}} Cohorts</span></div>-->
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+                <div ng-if="vm.queries.length == 0">
+                    <div uib-alert class=" alert-info">
+                        <h4>You don't have any saved queries yet.
+                            <!--<div class=" btn-group pull-right">
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>
+
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
+                            </div>-->
+                        </h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row m-t-sm m-b-md">
+
+    </div>
+
+
+</div>

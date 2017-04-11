@@ -4,7 +4,7 @@
         <h4 class="logo" style="margin-bottom: 0px;
     margin-top: 0px;
     padding-top: 7px;">
-            <a ui-sref="main.home" >
+            <a ui-sref="home.dashboard" >
                 <!--<img src="img/bvs_image.png" width="50px" class="pull-left"/>-->
                 <img src="img/etriks-logo.svg" width="30px" class="pull-left"/>
                 <!--<span> BioVacSafe DB</span>-->
@@ -20,7 +20,7 @@
             </form>-->
         </div>
         <ul class="nav navbar-top-links navbar-right">
-            <!--<li ><a href="#">Logged in as <span class="username"> Ibrahim Emam{{authentication.userName}}</span></a></li>-->
+            <li><a href="#">Logged in as <span class="username"> {{currentUser.username}}</span></a></li>
             <!--<li>
                 <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                     <ul class="nav navbar-nav navbar-right">
