@@ -5,53 +5,71 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
     //$scope.cart = exportService.getCart();
 
     var vm = this;
-    vm.projectId = $stateParams.projectId
+    vm.projectId = $stateParams.projectId;
+    vm.queryId = $stateParams.queryId;
 
-    vm.query = {}
-
+    //vm.query = {}
+    //vm.cartQuery = {};
+    //cartService.clearCurrentCart();
 
     vm.cartservice = cartService;
 
-    cartService.clearCurrentCart();
 
-    //vm.cart = {}
+    if(vm.queryId){
+        cartService.getCartQuery(vm.projectId,vm.queryId).then(function(query){
+            vm.cartQuery = query;
+            console.log(query)
 
-    /*cartService.getUserSavedQueries(vm.projectId).then(function(queries){
-        vm.savedQueries = {};
-    })*/
+        });
+    }else {
+        cartService.getNewCartQuery(vm.projectId).then(function(query){
+            vm.cartQuery = query;
+        })
+    }
 
 
-    /*filtersService.getUserSavedFilters($stateParams.projectId)
-     .then(function(data) {
-     vm.savedFilters = data.filters;
-     })*/
+    cartService.getUserQueries(vm.projectId).then(function(response){
+        //console.log(response);
+        vm.savedQueries = response.queries;
+    })
 
-    //vm.subjFilters = filtersService.getFiltersFor('subject')
+
 
 
     $scope.$watch('vm.cartservice.clickclack()',function (newval) {
-       //console.log("INSIDE WATCH, ",newval);
-        vm.query.scs = cartService.getCurrentSCS();
-        vm.query.cobs = cartService.getCurrentObservations();
-
-
+        //console.log(newval)
+        vm.cartQuery = cartService.getCurrentCartQuery();
     },true)
 
 
+
     vm.saveQuery = function(){
-        console.log(vm.query)
-        cartService.saveQuery(vm.query)
+        console.log(vm.cartQuery)
+        cartService.saveQuery(vm.cartQuery,vm.projectId).then(function(response){
+            cartService.getUserQueries(vm.projectId).then(function(response){
+                //console.log(response);
+                vm.savedQueries = response.queries;
+            })
+
+        })
     }
 
     vm.saveToCartAndCheckout = function(){
-        cartService.saveQuery(vm.query, vm.projectId).then(function(response){
-            console.log(response.cartId)
+        cartService.saveQuery(vm.cartQuery, vm.projectId).then(function(response){
+            //console.log(response.cartId)
             $state.go('datacart.checkout',{
                 projectId: vm.projectId,
                 cartId: response.cartId});
         })
 
     }
+
+    vm.loadQuery = function(queryId){
+        $state.go('explore',{
+            projectId: vm.projectId,
+            queryId: queryId});
+    }
+
 
     // vm.removeFilter = function(chartGroup,obs){
     //     //if(chartGroup == 'subject')

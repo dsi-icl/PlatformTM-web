@@ -8,7 +8,10 @@ function subjectDataService($http,ngAppConfig){
 
         return {
             getSubjData: function(projectId,characs) {
-                //var domainCode = "VS"
+
+                if(!characs)
+                    characs='';
+
                 return $http({
                     // url:serviceBase+'api/projects/'+projectId+'/data/subjects/characteristics',
                     url:serviceBase+'apps/explore/projects/'+projectId+'/subjects/search',
@@ -16,9 +19,13 @@ function subjectDataService($http,ngAppConfig){
                     data: angular.toJson(characs)
                 }).then(
                     function (response) {
+                        var columns = [];
+                        response.data.columns.forEach(function(col){
+                            columns.push(col.columnName);
+                        });
                         return {
-                            header: (response.data.header),
-                            data: (response.data.data)
+                            data: (response.data.rows),
+                            header: columns
                         }
                     },
                     function (httpError) {
@@ -35,8 +42,11 @@ function subjectDataService($http,ngAppConfig){
                         method:'GET'
                     }).then(
                         function (response){
+                            //console.log(response);
                             return {
-                                SCs: (response.data)
+                                SCs: response.data.characteristics,
+                                TPs: response.data.timings,
+                                DEs: response.data.designElements
                             }
                         }
                     )

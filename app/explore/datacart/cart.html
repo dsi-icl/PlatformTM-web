@@ -1,4 +1,7 @@
-<nav class="navbar-default navbar-static-side " style="margin-top: 0; height: 100%;" role="navigation" >
+<!--<div id="right-sidebar" ng-show="rightSidebar" class="sidebar-open">-->
+
+
+<nav class="cart-menu " style="margin-top: 0; height: 100%;" role="navigation" >
     <div class="sidebar-collapse">
         <ul side-navigation class="nav metismenu" id="side-menu">
             <li style="    padding: 10px;color: white;">
@@ -11,12 +14,14 @@
             <li style="padding: 10px;color: white;">
 
                 <div>
-                    <div style="border-bottom: 1px solid white">
-                        <div>SUBJECTS</div>
+                    <div style="border-bottom: 1px solid #4e7194;
+    /*font-size: 1.2em;*/
+    font-weight: 600;">
+                        <div>SUBJECTS </div>
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
-                        <li ng-repeat="sc in vm.query.scs">
-                            <span>{{sc.name}}</span> <div class="p-w-xs">{{sc.filters}}</div>
+                        <li ng-repeat="sc in vm.cartQuery.subjCharRequests">
+                            <span>{{sc.name}}</span> <div class="p-w-xs"><span ng-if="sc.filterText"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
                             <!--<a class="pull-right" ng-click="vm.removeFilter('subject',key)"><i class="fa fa-times"></i></a>-->
                         </li>
                     </ul>
@@ -25,12 +30,14 @@
 
             <li style="padding: 10px;color: white;">
                 <div>
-                    <div style="border-bottom: 1px solid white">
+                    <div style="border-bottom: 1px solid #4e7194;
+    /*font-size: 1.2em;*/
+    font-weight: 600;">
                         <div>CLINICAL OBSERVATIONS</div>
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
-                        <li ng-repeat="obs in vm.query.cobs">
-                            <span>{{obs.name}}</span> <div class="p-w-xs"><span ng-if="obs.filters"><i class="fa fa-filter"></i></span>{{obs.filters}}</div>
+                        <li ng-repeat="obs in vm.cartQuery.obsRequests">
+                            <span>{{obs.name}}</span> <div class="p-w-xs"><span ng-if="obs.filterText"><i class="fa fa-filter"></i></span> {{obs.filterText}}</div>
                             <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                         </li>
                     </ul>
@@ -38,12 +45,34 @@
             </li>
             <li style="padding: 10px;color: white;">
                 <div>
-                    <div style="border-bottom: 1px solid white">
-                        <div>ASSAY DATA</div>
+                    <div style="border-bottom: 1px solid #4e7194;
+    /*font-size: 1.2em;*/
+    font-weight: 600;">
+                        <div>MOLECULAR OBSERVATIONS</div>
+
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
-                        <li ng-repeat="obs in vm.query.aparams">
-                            <span>{{obs.name}}</span> <div class="p-w-xs">{{obs.filters}}</div>
+                        <li ng-if="panel.isRequested" ng-repeat="panel in vm.cartQuery.assayPanelRequests">
+                            <div >
+                                <div style="border-bottom: 1px solid #4e7194">
+                                    <div>{{panel.assayName}} Panel</div>
+                                </div>
+                                <ul style="padding-left: 10px;list-style: none; font-style: italic;">
+                                    <li ng-show="panel.sampleQuery.length > 0">
+                                        <div style="border-bottom: 1px solid #4e7194">
+                                            <div>Sample Characteristics</div>
+                                        </div>
+                                        <ul style="list-style: none;padding-left: 5px;">
+                                            <li ng-repeat="sc in panel.sampleQuery">
+                                                    <span>{{sc.name}}</span><div class="p-w-xs"><span ng-if="sc.filterText"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <!--<div class="p-w-xs" style="border-bottom: 1px solid white">Features</div>-->
                             <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                         </li>
                     </ul>
@@ -54,8 +83,7 @@
 
                 <div class="p-xs" style="background-color: #132634; margin-top:20px">
                     <div>Add To My Queries</div>
-                    <!--<input ng-model="vm.cart.name" style="color:#172334;" placeholder="Give it a name">-->
-                    <a href="#" e-ng-model="vm.query.name" class="bs3" editable-text="vm.query.name" buttons="no" blur="submit">{{vm.query.name || "Give it a name"}}</a>
+                    <a href="#" e-ng-model="vm.cartQuery.name" class="bs3" editable-text="vm.cartQuery.name" >{{vm.cartQuery.name || "Give it a name"}}</a>
                     <a ng-click="vm.saveQuery()" class="pull-right"><i class="fa fa-plus"></i></a>
                 </div>
                 <div style="text-align: right;margin-top: 20px;">
@@ -70,7 +98,7 @@
 
             </li>
 
-            <li style="padding: 10px;">
+            <li style="padding: 10px; color: white; background: #132634">
                 <div>
                     <div style="border-bottom: 1px solid white">
                         <div>MY QUERIES</div>
@@ -78,12 +106,9 @@
                     <ul style="padding: 15px;color: white;list-style: none;">
                         <li ng-repeat="q in vm.savedQueries">
                             {{q.name}}
-                            <a class="pull-right" ng-click="closebox()">LOAD</a>
+                            <!--<a class="pull-right" ui-sref="explore({projectId:vm.projectId, queryId:q.id})">LOAD</a>-->
                         </li>
-                        <li >
-                            TEST
-                            <a class="pull-right" ng-click="closebox()">LOAD</a>
-                        </li>
+
 
                     </ul>
                 </div>
@@ -92,3 +117,4 @@
 
     </div>
 </nav>
+<!--</div>-->

@@ -34,10 +34,12 @@ function config($stateProvider, $urlRouterProvider) {
                     return $ocLazyLoad.load([
                         {
                             serie:true,
-                            files: ['lib/plugins/iCheck/custom.css',
+                            files: ['lib/plugins/iCheck/custom.css','lib/plugins/ngSweetAlert/css/sweetalert.css',
                                 'lib/plugins/iCheck/icheck.min.js',
                                 'lib/plugins/angular-xeditable/js/xeditable.min.js',
-                                'lib/plugins/angular-xeditable/css/xeditable.css']
+                                'lib/plugins/angular-xeditable/css/xeditable.css',
+                                'lib/plugins/ngSweetAlert/js/sweetalert.min.js',
+                                'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js']
                         }
                     ]);
                 }
@@ -53,8 +55,8 @@ function config($stateProvider, $urlRouterProvider) {
                     return $ocLazyLoad.load([
                         {
                             serie: true,
-                            files: ['lib/plugins/dataTables/js/jquery.dataTables.min.js',
-                                'lib/plugins/dataTables/css/dataTables.bootstrap.css']
+                            files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
+                                'lib/plugins/dataTables/css/dataTables.bootstrap.min.css']
                         },
                         {
                             name: 'datatables',
@@ -80,6 +82,14 @@ function config($stateProvider, $urlRouterProvider) {
                 $uibModal.open({
                     templateUrl: "dataStage/upload/upload.html",
                     resolve: {
+                        loadPlugin:['$ocLazyLoad',function($ocLazyLoad){
+                          return $ocLazyLoad.load([
+                              {
+                                  serie:true,
+                                  files:['lib/plugins/angular-file-upload/angular-file-upload.min.js']
+                              }
+                          ])
+                        }],
                         loadController:['$ocLazyLoad',function($ocLazyLoad){
                             return $ocLazyLoad.load([
                                 'dataStage/upload/upload-controller.js'
@@ -90,9 +100,6 @@ function config($stateProvider, $urlRouterProvider) {
                 }).result.finally(function($stateParams) {
                         fileService.getFiles()
                             .then(function(data){
-                                //vm.files = data.files;
-                                //console.log(data)
-                                //$scope.vm = vm;
                             $state.go('datastage.files',{projectId:$stateParams.projectId, dir:$stateParams.dir})
                             })
                     }, function () {
@@ -105,5 +112,5 @@ function config($stateProvider, $urlRouterProvider) {
 }
 
 angular
-    .module('bioSpeak.DataStager', ['ngResource','angularFileUpload'])
+    .module('bioSpeak.DataStager', ['ngResource'])
     .config(config)

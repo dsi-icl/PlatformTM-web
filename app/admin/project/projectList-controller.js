@@ -1,21 +1,13 @@
 'use strict'
-function projectListController($scope, $state, $stateParams,ProjectService,toaster) {
+function projectListController($scope, $state, $stateParams,projectService,toaster) {
     var vm = this;
     
     vm.projects = {}
 
-
-
-
-
-
-
-
     //Retrieves list of study activities
-    ProjectService.getProjectResource.get(function(response){
+    projectService.getProjectResource.get(function(response){
         vm.projects = response;
     });
-
 
 
     vm.goToActivity = function(activity,edit){
@@ -24,11 +16,7 @@ function projectListController($scope, $state, $stateParams,ProjectService,toast
         else
             $state.go('admin.activity',{ projectId:vm.projectId, activityId: activity.id, edit:edit})
     }
-
-
-
-
     
 }
 angular.module('bioSpeak.config')
-    .controller('ProjectsCtrl',['$scope', '$state','$stateParams','ProjectService','toaster',projectListController])
+    .controller('ProjectsCtrl',['$scope', '$state','$stateParams','projectService','toaster',projectListController])

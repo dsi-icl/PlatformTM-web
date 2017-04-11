@@ -11,7 +11,6 @@ function checkoutController($q,$stateParams,checkoutService,DTColumnBuilder,DTOp
     var projectId = $stateParams.projectId;
     var cartId = $stateParams.cartId;
 
-    // console.log(projectId,cartId);
 
     checkoutService.getSavedCart(projectId,cartId)
      .then(function(data){
@@ -45,62 +44,47 @@ function checkoutController($q,$stateParams,checkoutService,DTColumnBuilder,DTOp
             })
     }
 
-    vm.downloadDataset = function(datasetId){
-            console.log("Dataset with the following ID will be downloaded",datasetId);
-            checkoutService.downloadDataset(datasetId)
+
+    var i = 0;
+    vm.fileIsReady=  function(ds){
+        var Sec = 2000;
+      var interval = setInterval(function(){
+          i = i+1;
+   //         console.log("Dataset with the following ID will be prepared",ds.id);
+            checkoutService.isFileReady(ds.id)
+                .then(function(result) {
+                        ds.fileIsReady = result.outcome1;
+                        console.log("File status is", ds.fileIsReady, "for " + ds.type + " dataset")
+                                        })
+          if(ds.fileIsReady == 2)
+          {
+              clearInterval(interval);
+              console.log(ds.type, "dataset took", i*Sec/60000, "minutes to be prepared" );
+              i =0;
+          }
+
+       }, Sec);
+    }
+
+    vm.downloadDataset = function(ds){
+            console.log("Dataset with the following ID will be downloaded",ds.id);
+            ds.isDownloading = true;
+            checkoutService.downloadDataset(ds.id)
     //        .then(function(data){
     }
 
+    vm.prepareDataset =  function(ds){
+        console.log("Dataset with the following ID will be prepared",ds.id);
+        vm.fileIsReady(ds);
+        checkoutService.prepareDataset(ds.id)
+            .then(function(response){
+               vm.outcome =response.outcome;
+                console.log("statusText for file preparation is ", vm.outcome );
 
-    // vm.datasets = [];
-    // var dataset = {};
-    // dataset.type = "PHENO";
-    // dataset.name = "Pheno Data"
-    // dataset.fields = [];
-    // var field = {};
-    // field.name = "Age" ;
-    // field.colHeader = "AGE";
-    // field.isNumeric = true;
-    //
-    // var filter = {}
-    // filter.update = function(slider){
-    //     filter.from = slider.fromNumber;
-    //     filter.to = slider.toNumber;
-    //     //filter.field.isFiltered = true;
-    //     //_updateField(filter.field);
-    //     $scope.$apply();
-    // };
-    // filter.ionSliderOptions = {
-    //     min: 25,
-    //     max: 79,
-    //     //from: 36,
-    //     //to: 50,
-    //     type: 'double',
-    //     postfix: ' '+'years',//filter.unit,
-    //     maxPostfix: "+",
-    //     prettify: true,
-    //     grid: true,
-    //     onChange: filter.update
-    // };
-    //
-    // field.filter = filter
-    // dataset.fields.push(field)
-    //
-    // var field2 = {}
-    // field2.name = "ARM"
-    // field2.colHeader = "ARM"
-    // field2.isNumeric = false;
-    // field2.filter = {}
-    // field2.valueSet = ['FLUAD','PLACEBO','VARILIX','VACCINE']
-    // field2.filter.filterValues=[];
-    //
-    // dataset.fields.push(field2)
-    //
-    // vm.datasets.push(dataset);
-    // var dataset2 = {}
-    // dataset2.type = "OMICS"
-    // dataset2.name = "Transcriptomic Data"
-    // vm.datasets.push(dataset2);
+            })
+
+    }
+
 
 
 }

@@ -1,27 +1,24 @@
 /**
  * Created by iemam on 08/07/2014.
  */
-angular.module('biospeak.explorer',[
-        'eTRIKSdata.dcPlots',
-        'eTRIKSdata.exporter'])
+angular.module('biospeak.explorer',[])
 
     .config(function($stateProvider){
 
         $stateProvider
-            // .state('explore', {
-            //     abstract : true,
-            //     url: "",
-            //     templateUrl:"layout/content.html",
-            //     controller: "logOutController"
-            // })
             .state('explore', {
-                url: "/{projectId}/explore/",
+                abstract: true,
+                url: "/{projectId}",
+                templateUrl: "layout/content.html"
+            })
+            .state('explore.main', {
+                url: "/explore/{queryId}",
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
                         resolve: {
                             
-                            loadPlugin: function ($ocLazyLoad) {
+                            loadPlugins: function ($ocLazyLoad) {
                                 return $ocLazyLoad.load([
                                     {
                                         files: ['lib/plugins/slick/css/slick.css','lib/plugins/slick/css/slick-theme.css','lib/plugins/slick/js/slick.min.js']
@@ -31,7 +28,7 @@ angular.module('biospeak.explorer',[
                                         files: ['lib/plugins/slick/js/angular-slick.min.js']
                                     },
                                     {
-                                        files: ['lib/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css']
+                                        files: ['lib/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css','explore/clinical/css/clinicalDataTree.css']
                                     },
                                     {
                                         files: ['lib/plugins/moment/js/moment.min.js']
@@ -39,15 +36,16 @@ angular.module('biospeak.explorer',[
                                     {
                                         name: 'datePicker',
                                         files: ['lib/plugins/angular-datepicker/css/angular-datepicker.css','lib/plugins/angular-datepicker/js/angular-datepicker.js']
-                                    },
+                                    }
+
                                 ]);
                             },
                             loadDependencies: ['$ocLazyLoad',function($ocLazyLoad){
                                 return $ocLazyLoad.load(
                                     {
                                         serie: true,
-                                        files: ['explore/crossFilter-service.js',
-                                            'explore/dc/dc-service.js','explore/dc/dc-directives.js'
+                                        files: ['explore/dc/dc-module.js','explore/dc/XfilterServices/AssayXF.js','explore/dc/XfilterServices/SubjectXF.js',
+                                            'explore/dc/XfilterServices/ClinicalXF.js', 'explore/dc/XfilterServices/XFlinker.js', 'explore/dc/dc-service.js','explore/dc/dc-directives.js'
                                         ]
                                     }
                                 )
@@ -56,20 +54,20 @@ angular.module('biospeak.explorer',[
                                 return $ocLazyLoad.load('explore/explorer-controller.js');
                             }],
 
-                        loadDependency: function ($ocLazyLoad) {
-                            return $ocLazyLoad.load([
-                                {
-                                    serie:true,
-                                    files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
-                                }
-                            ]);
-                        }
+                            loadDependency: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load([
+                                    {
+                                        serie:true,
+                                        files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
+                                    }
+                                ]);
+                            }]
                         },
-                        controller:'ExplorerCtrl as vm'
+                        controller:'ExplorerCtrl as expVM'
                     },
-                    'subjects@explore':{
+                    'subjects@explore.main':{
                         templateUrl: 'explore/subjects/explorer_subjects.html',
-                        controller: 'SubjectsCtrl',
+                        controller: 'SubjectsCtrl as vm',
                         resolve: {
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/subjects/subjects-service.js');
@@ -79,7 +77,7 @@ angular.module('biospeak.explorer',[
                             }]
                         }
                     },
-                    'assessments@explore':{
+                    'assessments@explore.main':{
                         templateUrl: 'explore/clinical/explorer_clinical.html',
                         controller: 'ClinicalCtrl',
                         resolve: {
@@ -94,9 +92,9 @@ angular.module('biospeak.explorer',[
                             }]
                         }
                     },
-                    'assays@explore':{
-                        templateUrl: 'explore/assays/explorer_assays.html',
-                        controller: 'AssayCtrl',
+                    'assays@explore.main':{
+                        templateUrl: 'explore/assays/assays.html',
+                        controller: 'AssayCtrl as vm',
                         resolve: {
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/assays/assays-service.js');
@@ -106,14 +104,13 @@ angular.module('biospeak.explorer',[
                             }]
                         }
                     },
-                    /*'datacart@explore':{
-                        templateUrl: 'explore/export/right_sidebar.html',
-                        controller: 'DatacartCtrl'
-                    },*/
-                    'datacart@explore':{
+
+                    'datacart@explore.main':{
                         templateUrl: 'explore/datacart/cart.html',
                         controller: 'cartCtrl as vm',
+                        params: { queryId: null, },
                         resolve: {
+
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/datacart/cart-service.js');
                             }],
@@ -143,7 +140,6 @@ angular.module('biospeak.explorer',[
                 abstract : true,
                 url: "",
                 templateUrl:"layout/content.html",
-                controller: "logOutController"
             })
             .state('datacart.checkout',{
                 url: "/{projectId}/checkout/{cartId}",
@@ -195,9 +191,4 @@ angular.module('biospeak.explorer',[
                 }
             })
 
-    })
-
-    /*.constant('ngAuthSettings', {
-        //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-        apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
-    })*/
+    });

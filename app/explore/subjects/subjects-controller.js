@@ -2,67 +2,72 @@
  * Created by iemam on 06/05/2015.
  */
 'use strict'
-function SubjectsController($scope,$stateParams,subjectDataService, SubjCf,DCchartingService,cartService, $timeout){
+function SubjectsController($scope,$stateParams,subjectDataService, SubjectXF,DCchartingService,cartService, $timeout){
+    var vm =  this;
+
     var projectId = $stateParams.projectId;
-    $scope.title = "Subjects";
-    $scope.show='plots';
+    vm.title = "Subjects";
+    vm.show='plots';
 
     //$scope.subjectFilter = exportService.getSubjectFilter();
-    $scope.cart = [];
+    vm.cart = [];
 
-    $scope.chartingOpts = {
+    vm.chartingOpts = {
         projectId : $stateParams.projectId,
         chartContainerId : "subject-plots",
         chartGroup : "subject",
         DCchartService : "DCchartingService",
-        xfilterService : "SubjCf",
-        //exportService : "exportService",
+        xfilterService : "SubjectXF",
         filtersService: "filtersService"
 
     };
 
-    SubjCf.resetXF();
+    SubjectXF.resetXF();
 
+    $scope.cartService = cartService
 
-    $scope.updateCurrentCart = function(sc) {
+    vm.updateCurrentCart = function(sc) {
 
-        if(sc.isActive)
+        /*if(sc.isActive)
             cartService.addSubjChar(sc);
         else
-            cartService.removeSubjChar(sc)
+            cartService.removeSubjChar(sc)*/
     };
 
+    $scope.$watch('cartService.cartIsReady()',function (ready) {
+        //console.log(ready)
+        if(ready){
 
+            subjectDataService.getSubjCharacteristics(projectId)
+                .then(function(response){
+                    //console.log(response);
+                    vm.SCs = response.SCs;
+                    vm.TPs = response.TPs;
+                    vm.DEs = response.DEs;
+
+                    currentCartSubjObRequests = cartService.getCartSubjObsReq();
+
+                    //console.log("SAVED SUBJECT OBSERVATION REQUESTS: ",currentCartSubjObRequests);
+                    SubjectXF.refreshCf(projectId,currentCartSubjObRequests).then(function(res){
+                        /*angular.forEach(currentCartSubjObRequests, function(sc) {
+                            console.log('#sc_', sc);
+                            angular.element('#sc_' + sc.id).trigger('click');
+                        })*/
+                    });
+                })
+
+
+        }
+
+    },true)
+
+    var currentCartSubjObRequests
 
     //Gets data for StudyId, Arm and Site
-    subjectDataService.getSubjCharacteristics(projectId)
-        .then(function(data){
-            $scope.subjCharsDB = data.SCs;
-            //console.log('all scs',$scope.subjCharsDB)
 
-            /*SubjCf.refreshCf(projectId).then(
-                function(subjChars){
-                    //console.log('default scs',subjChars)
-                    DCchartingService
-
-                    $scope.initSCs = subjChars
-                    $timeout(function() {
-                        angular.forEach(subjChars, function(sc) {
-                            console.log('#isc_'+sc)
-
-                            /!**************TEMP HACK******************!/
-                            var dt = 'string'
-                            if(sc == 'age') dt = 'positiveInteger'
-                            DCchartingService.createChart(sc,'subject',SubjCf,'Count',dt)
-                            angular.element('#sc_'+sc).trigger('click');
-                        });
-                    },1000)
-                }
-            )*/
-        })
 
 
 }
 
 angular.module('biospeak.explorer')
-    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjCf','DCchartingService','cartService','$timeout',SubjectsController])
+    .controller('SubjectsCtrl', ['$scope','$stateParams','subjectDataService','SubjectXF','DCchartingService','cartService','$timeout',SubjectsController])

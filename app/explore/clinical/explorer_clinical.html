@@ -1,28 +1,28 @@
-<link type="text/css" rel="stylesheet" href="explore/clinical/css/clinicalDataTree.css"/>
+
 
 
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-title panel-header">
-                <span class="flaticon-man412" style="color: #39b3d7;"></span> Clinical Observations
+                <h3><span class="flaticon-man412" style="color: #39b3d7;"></span> Clinical Observations</h3>
             </div>
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="clinical-tree ">
-                            <cl-tree-class ng-repeat="class in clinicalObservations" class="class" ></cl-tree-class>
+                            <cl-tree-class ng-repeat="class in clinicalObservations.classes" class="class" ></cl-tree-class>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="ibox-title">
                             <div>
                                 <div class="btn-group pull-right">
-                                    <label class="btn btn-xs btn-primary" ng-model="vm.show" uib-btn-radio="'plots'">Data
+                                    <label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'plots'">Data
                                         Plots</label>
-                                    <label class="btn btn-xs btn-primary" ng-model="vm.show"
+                                    <label class="btn btn-xs btn-white" ng-model="vm.show"
                                            uib-btn-radio="'findingsTable'">Findings Table</label>
-                                    <label class="btn btn-xs btn-primary" ng-model="vm.show"
+                                    <label class="btn btn-xs btn-white" ng-model="vm.show"
                                            uib-btn-radio="'eventsTable'">Events Table</label>
                                 </div>
                             </div>
@@ -32,7 +32,7 @@
                                         <div class="charts-container">
                                             <div id="{{chartingOpts.chartContainerId}}" ng-hide="vm.show =='eventsTable' || vm.show =='findingsTable'">
 
-                                               <!-- <div class="cardlock placeholder">
+                                                <div class="cardlock placeholder">
                                                     <div class="anchor">
                                                         <div class="card">
                                                             <div class="cardholder">
@@ -41,7 +41,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>-->
+                                                </div>
 
                                             </div>
                                         </div>

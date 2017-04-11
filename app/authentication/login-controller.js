@@ -5,7 +5,7 @@
 
 
     'use strict'
-    function loginController($scope, $location, authService){
+    function loginController($scope, $rootScope, $state, $location, AUTH_EVENTS, authService){
 
         //var vm = this;
         $scope.loginData = {
@@ -14,7 +14,8 @@
             signIn:false
         };
 
-        $scope.message = "";
+        //console.log($state)
+        $scope.$state = $state;
 
         $scope.login = function () {
             /*console.log($scope.loginData)
@@ -22,22 +23,22 @@
 
             $scope.loginData.signIn = true;
 
-            //$timeout(function(){
-            //    // Simulate some service
-            //    $scope.loadingDemo = false;
-            //},2000)
-            authService.login($scope.loginData).then(function (response) {
-                    console.log(response)
-                    $scope.loginData.signIn = false;
+            authService.login($scope.loginData).then(function (user) {
 
-                    $location.path('/home');
+                    $scope.loginData.signIn = false;
+                    $location.path('/dashboard');
+
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $scope.setCurrentUser(user);
+
                 },
                 function (err) {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                     $scope.message = err.error_description;
                 });
         }
     }
 
     angular.module('bioSpeak.userAuth')
-        .controller('loginController',['$scope', '$location', 'authService',loginController])
+        .controller('loginController',['$scope','$rootScope','$state','$location','AUTH_EVENTS', 'authService',loginController])
 

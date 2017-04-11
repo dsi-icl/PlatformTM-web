@@ -2,9 +2,6 @@
  * Created by iemam on 02/10/2015.
  */
 
-
-
-
 function config($stateProvider){
     $stateProvider
         .state('datastage.wizard',{
@@ -96,7 +93,7 @@ function config($stateProvider){
             }
         })
         .state('datastage.wizard.step_four', {
-            url: '/step_four/:activityId/:datasetId/:fileId',
+            url: '/validate/:activityId/:datasetId/:fileId',
             templateUrl: 'dataStage/loadingWizard/stepFour.html',
             controller: 'stepFourController',
             resolve:{
@@ -108,7 +105,7 @@ function config($stateProvider){
             }
         })
         .state('datastage.wizard.step_five', {
-            url: '/step_five/:activityId/:datasetId/:fileId',
+            url: '/load/:activityId/:datasetId/:fileId',
             templateUrl: 'dataStage/loadingWizard/stepFive.html',
             controller: 'stepFiveController',
             resolve:{
@@ -132,25 +129,9 @@ function config($stateProvider){
             }
         })
 
-
 }
-
-/*function stepTwoController($scope){
-
-    //importService.getSomething
-    $scope.fileMatched = false;
-    console.log($scope);
-}*/
-
-
-
 
 
 angular
     .module('bioSpeak.import', ['bioSpeak.layout','oc.lazyLoad','ngDragDrop'])
-    .config(config)
-    /*.constant('ngAPISettings', {
-        apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-        //apiServiceBaseUri: 'http://ehs.biospeak.solutions/sandbox/'
-    });*/
-    //.controller('stepTwoController',['$scope',stepTwoController]);
+    .config(config);

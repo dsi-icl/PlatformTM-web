@@ -5,7 +5,6 @@
 'use strict'
 function SubjectXF(subjectDataService,$q){
 
-
     var subjChars;
     var dimensions = [], groups = [];
     var cfdata;
@@ -20,31 +19,25 @@ function SubjectXF(subjectDataService,$q){
 
     subjCfService.formatData = function(data, requestedObsvs){
 
-        //console.log('data AFTER passing to format data',data)
-
         var dateFormat = d3.time.format('%Y-%m-%dT%H:%M').parse
 
-
-        data.forEach(function(d) {
-            //console.log(d)
-            requestedObsvs.forEach(function(o){
-                //console.log(o.name); console.log(o.dataType)
-                if(o.dataType == "dateTime"){
-                    //console.log(d)
-                    d[o.name] = dateFormat(d[o.name]);
-                    //console.log('2',d[o.name])
-                }else if(o.dataType == "string"){
-                    if(d[o.name] == null) d[o.name] = ""
-                }else {
-                    //console.log(o.id,' is numeric')
-                    if(d[o.name] != null) d[o.name] = +d[o.name];
-                }
-
-
-
-
-            })
-        });
+        if(requestedObsvs)
+            data.forEach(function(d) {
+                //console.log(d)
+                requestedObsvs.forEach(function(o){
+                    //console.log(o.name); console.log(o.dataType)
+                    if(o.dataType == "dateTime"){
+                        //console.log(d)
+                        d[o.name] = dateFormat(d[o.name]);
+                        //console.log('2',d[o.name])
+                    }else if(o.dataType == "string"){
+                        if(d[o.name] == null) d[o.name] = ""
+                    }else {
+                        //console.log(o.id,' is numeric')
+                        if(d[o.name] != null) d[o.name] = +d[o.name];
+                    }
+                })
+            });
         //console.log(data)
     }
 
@@ -52,23 +45,11 @@ function SubjectXF(subjectDataService,$q){
         var deferred = $q.defer();
 
         this.getData(projectId, requestedObsvs).then(function(data){
-            //use property dataType to coerce string to numerals
 
             //console.log('inside inititialize')
             //console.log('dataToPlot',dataToPlot)
             //console.log('data',data)
 
-
-            // data.forEach(function(d) {
-            //     //d.dtg   = dtgFormat.parse(d.origintime.substr(0,19));
-            //     //d.lat   = +d.latitude;
-            //     d['age']  = +d['age'];
-            //     //d.Race   = d.Race;
-            //     //d.depth = d3.round(+d.depth,0);
-            // });
-
-            //console.log('data before passing to format data',data)
-            //console.log(dataToPlot)
 
             subjCfService.formatData(data, requestedObsvs);
 
@@ -79,10 +60,10 @@ function SubjectXF(subjectDataService,$q){
             subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
             dimensions[subjectColumnName] = subjectDim
 
-            console.log("=============Creating Subject XF============")
+            // console.log("=============Creating Subject XF============")
 
             subjChars.forEach(function(sc){
-                console.log("creating dimension for ",sc);
+                // console.log("creating dimension for ",sc);
                 var dim = cfdata.dimension(function (d) {
                     return d[sc];
                 });
@@ -123,7 +104,7 @@ function SubjectXF(subjectDataService,$q){
     }
 
     subjCfService.getGroup = function(key){
-//            console.log(key)
+        //console.log(key, groups[key].top(3))
         return groups[key];
     }
 
@@ -133,6 +114,12 @@ function SubjectXF(subjectDataService,$q){
 
     subjCfService.getCountGroup = function(){
         return all
+    }
+
+    subjCfService.getCountValue = function(){
+        if(cfReady)
+            return all.value()
+        else return null
     }
 
     subjCfService.getTableDimension = function(){
@@ -156,11 +143,16 @@ function SubjectXF(subjectDataService,$q){
     }
 
     subjCfService.filterBySubjects = function(filteredSubjectIds){
-        subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-        dc.renderAll("subject");
+        console.log("filtering subject module subject dimension")
+        if(subjectDim){
+            subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+            dc.redrawAll("subject");
+        }
+
     }
 
     subjCfService.getCurrentSubjectIds = function(){
+        //TODO: CHECK IF ANY DIMENSIONS ARE FILTERED FIRST
         return ($.map(subjectDim.top(Infinity), function(d) {return d.subjectId }))
     }
 
@@ -176,8 +168,8 @@ function SubjectXF(subjectDataService,$q){
     }
 
     subjCfService.resetSubjectFilter = function(){
-        console.log('resetting subject xfilter')
-        subjectDim.filter(null);
+        //console.log('resetting subject xfilter')
+        if(subjectDim) subjectDim.filter(null);
         dc.redrawAll("subject");
     }
 
@@ -187,6 +179,10 @@ function SubjectXF(subjectDataService,$q){
 
     subjCfService.setActiveFilters = function(obs,filter){
 
+    }
+
+    subjCfService.resetXF = function(){
+        cfReady = false
     }
 
     return subjCfService

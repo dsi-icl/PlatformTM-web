@@ -20,6 +20,13 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
             templateUrl: "authentication/login.html",
             controller: "loginController",
             resolve: {
+                /*loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        'authentication/auth-service.js','authentication/authInterceptor-service.js']);
+                }],
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load('authentication/login-controller.js');
+                }],*/
                 loadPlugin: ['$ocLazyLoad',function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         'lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js'
@@ -41,7 +48,15 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
         .state('signup',{
             url: "/signup",
             templateUrl:"authentication/signup.html",
-            controller : "signupController"
+            controller : "signupController",
+            resolve:{
+                /*loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load('authentication/auth-service.js');
+                }],
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load('authentication/signup-controller.js');
+                }],*/
+            }
         })
 
     $httpProvider.interceptors.push('authInterceptorService');

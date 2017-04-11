@@ -47,21 +47,11 @@
             )
         };
 
-
-        //added part start********************************************************
-        // In the following ".then" part works on the response of the c#. it puts the response in the "data"
         var _deleteFile = function(fileId){
             console.log("fileManager-service part is WORKING- and the file with following ID will be deleted",fileId);
             return $http({
-                // url: serviceBase + 'api/files/remove/'+fileId +'/',
-                // serviceBase = http://ehs.biospeak.solutions/sandbox/
-
-                //the following is added as we use the local host to test
-                url: 'http://localhost:2483/files/remove/'+fileId,
+                url: serviceBase + 'files/'+fileId+'/remove',
                 method: 'GET',
-                //data: { name: dirname }
-                //Do we actually need "Then" because it's a void type and the back-end doesn't return anything????!!!!!!!!
-                // possible answer is that, in this case since we don not get anything returned from c# the "data" would be an empty object
             }).then(
                 function (response) {
                     return {
@@ -70,7 +60,7 @@
                 }
             )
         }
-        //added part finish********************************************************
+
         var _createDirectory= function (projectId,dirname) {
                 console.log('inside service',dirname)
 
@@ -93,10 +83,17 @@
             var deferred = $q.defer();
             $http.get(serviceBase + 'files/'+fileId+'/preview/')
                 .success(function (response) {
-                    tableHeaders = response.header;
-                    DTdata = response.data;
-                    fileName = response.fileInfo;
-                    //console.log("Inside http get success",tableHeaders)
+                    var dtColumns = [];
+                    response.columns.forEach(function(col){
+                        var dtColumn = {}
+                        dtColumn.data = col.columnName.toLowerCase();
+                        dtColumn.title = col.columnName;
+                        dtColumns.push(dtColumn);
+                    });
+
+                    tableHeaders = dtColumns;
+                    DTdata = response.rows;
+                    fileName = response.tableName;
                     deferred.resolve(tableHeaders);
                 })
                 .error(function (err, code) {

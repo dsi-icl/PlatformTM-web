@@ -2,14 +2,20 @@
  * Created by iemam on 17/05/2016.
  */
 'use strict'
-function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
+function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toaster){
     var vm = this;
     vm.projectId = $stateParams.projectId
     vm.assayId = $stateParams.assayId;
     console.log($stateParams.projectId)
 
     vm.templates={}
-    vm.loaded = false;
+    vm.loaded = true;
+
+    vm.featuresVM = {}
+    vm.samplesVM = {}
+    vm.dataVM = {}
+
+    vm.newField= {};
 
 
 
@@ -17,7 +23,11 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
         vm.assayTypes = data.terms;
         //console.log(vm.assayTypes)
         //updateTerms()
-    })
+    });
+
+    vm.genericFields = ['Reporter Database Entry','Reporter Group','Composite Element Database Entry','Composite Element Comment']
+
+    vm.refsources = ['RefSeq','genbank'];
 
     var updateTerms = function(){
         var selAssayType = vm.assay.type;
@@ -29,22 +39,23 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
                 vm.assayPlatTerms = type.assayPlatTerms;
             }
         }
-    }
+    };
     
     vm.updateAssayTerms = updateTerms;
     
     vm.selectedDatasets = {};
 
-
+var assay;
     if($stateParams.assayId==0){
         console.log("New Assay")
-        vm.assay = new AssayConfigService.getAssayResource();
-        vm.assay.ProjectId = $stateParams.projectId;//"Study1"
-        vm.assay.isNew = true;
-        vm.assay.status = "New";
-        vm.assay.datasets = {};
-        vm.assay.assayId = 0;
+        assay = new AssayConfigService.getAssayResource();
+        assay.projectId = $stateParams.projectId;//"Study1"
+        assay.isNew = true;
+        assay.status = "New";
+        assay.datasets = [];
+        assay.assayId = 0;
 
+        vm.assay = assay;
     }
 
     else if($stateParams.assayId){
@@ -60,64 +71,96 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
             vm.selectedDatasets['data'] = vm.assay.observationsDataset;
 
             updateTerms();
-
         })
     }
     
-    vm.showTemplate = function(domainId,dsType){
+/*    vm.showTemplate = function(domainId,dsType){
         AssayConfigService.getDatasetResource.get({datasetId:domainId}, function(response) {
             vm.selectedDatasets[dsType] = response;
             vm.selectedDatasets[dsType].isNew = true;
             vm.selectedDatasets[dsType].activityId = $stateParams.assayId;
             vm.selectedDatasets[dsType].projectStrAcc = vm.projectId;
 
+            console.log(vm.selectedDatasets[dsType])
         })
+    };*/
+
+    vm.setSamplesDS = function(dataset){
+        dataset.isNew = true;
+        dataset.activityId = $stateParams.activityId;
+        dataset.projectStrAcc = vm.projectId;
+        vm.assay.samplesDataset = dataset
     }
-    
-    vm.saveTemplateToAssay = function(dsType){
-        vm.assay.datasets[dsType] = vm.selectedDatasets[dsType];
+    vm.setFeaturesDS = function(dataset){
+        AssayConfigService.getDatasetResource.get({datasetId:dataset.domainId}, function(dataset) {
+            dataset.isNew = true;
+            dataset.activityId = $stateParams.activityId;
+            dataset.projectStrAcc = vm.projectId;
+            dataset.projectId = vm.projectId;
+            vm.assay.featuresDataset = dataset;
+        })
 
-        if(dsType == "sample")
-            vm.assay.samplesDataset = vm.selectedDatasets[dsType];
-        if(dsType == "feature")
-            vm.assay.featuresDataset = vm.selectedDatasets[dsType];
-        if(dsType == "data")
-            vm.assay.observationsDataset = vm.selectedDatasets[dsType];
-
-
-        console.log('Updating',dsType, 'template');
     }
-    
+    vm.setDataDS = function(dataset){
+        dataset.isNew = true;
+        dataset.activityId = $stateParams.activityId;
+        dataset.projectStrAcc = vm.projectId;
+        vm.assay.observationsDataset = dataset
+    }
+
+
+    vm.addField = function(dataset){
+        //var newField = dataset.newField;
+        var newField = angular.copy(dataset.newField)
+
+        //console.log('before',dataset.genericFields)
+        if(newField.isGeneric && dataset.newFieldQualifier != null)
+            newField.name = newField.name + '['+dataset.newFieldQualifier[0]+']';
+        newField.label = newField.name;
+
+        dataset.variables.push(newField);
+        dataset.newField = null;
+        dataset.newFieldQualifier = null;
+
+    }
+
+
     vm.loadAssaySampleTemplates = function(){
-        return AssayConfigService.getAssaySampleTemplates().then(function(data) {
-            if (data != null && !angular.isUndefined(data)) {
-                vm.templates.sample = data.templates;
-            }
-        })
+        if(!vm.templates.sample)
+            return AssayConfigService.getAssaySampleTemplates().then(function(data) {
+                if (data != null && !angular.isUndefined(data)) {
+                    vm.templates.sample = data.templates;
+                }
+            })
     }
+
     vm.loadAssayFeatureTemplates = function(){
-        return AssayConfigService.getAssayFeatureTemplates().then(function(data) {
-            if (data != null && !angular.isUndefined(data)) {
-                vm.templates.feature = data.templates;
-            }
-        })
+        if(!vm.templates.feature)
+            return AssayConfigService.getAssayFeatureTemplates().then(function(data) {
+                if (data != null && !angular.isUndefined(data)) {
+                    vm.templates.feature = data.templates;
+                }
+            })
     }
+
     vm.loadAssayDataTemplates = function(){
-        return AssayConfigService.getAssayDataTemplates().then(function(data) {
-            if (data != null && !angular.isUndefined(data)) {
-                vm.templates.data = data.templates;
-            }
-        })
+        if(!vm.templates.data)
+            return AssayConfigService.getAssayDataTemplates().then(function(data) {
+                if (data != null && !angular.isUndefined(data)) {
+                    vm.templates.data = data.templates;
+                }
+            })
     }
+
 
     vm.saveAssay = function(){
         if(vm.assay.isNew){
             console.log(vm.assay)
 
-
             vm.assay.$save(function(response) {
-                console.log("Assay created",response)
-                $state.transitionTo('manager.main', $stateParams, {
+                //console.log("Assay created",response)
+                toaster.pop('success', "SUCCESS", vm.assay.name," was successfully CREATED.",8000);
+                $state.transitionTo('admin.project', $stateParams, {
                     reload: true,
                     inherit: false,
                     notify: true
@@ -125,22 +168,22 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
             });
         }
         else{
-            console.log("Activity Edited")
+            console.log("Assay Edited")
              console.log(vm.selectedDatasets)
-            vm.assay.samplesDataset = vm.selectedDatasets['sample'];
-            vm.assay.featuresDataset = vm.selectedDatasets['feature'];
-            vm.assay.observationsDataset = vm.selectedDatasets['data'];
+            //vm.assay.samplesDataset = vm.selectedDatasets['sample'];
+            //vm.assay.featuresDataset = vm.selectedDatasets['feature'];
+            //vm.assay.observationsDataset = vm.selectedDatasets['data'];
 
             //TODO: REPEATED SAVE AFTER FAILING FIRST tIME WILL KEEP PUSHING TO DAtASETS
             //NEED TO REMOVE BEFORE PUSH
             
-            vm.assay.datasets.push(vm.selectedDatasets['sample'])
-            vm.assay.datasets.push(vm.selectedDatasets['feature'])
-            vm.assay.datasets.push(vm.selectedDatasets['data'])
+            //vm.assay.datasets.push(vm.selectedDatasets['sample'])
+            //vm.assay.datasets.push(vm.selectedDatasets['feature'])
+            //vm.assay.datasets.push(vm.selectedDatasets['data'])
 
             vm.assay.$update(function(response) {
-                console.log("Activity Updated")
-                $state.transitionTo('manager.main', $stateParams, {
+                toaster.pop('success', "SUCCESS", vm.assay.name," was successfully UPDATED.",8000);
+                $state.transitionTo('admin.project', $stateParams, {
                     reload: true,
                     inherit: false,
                     notify: true
@@ -159,9 +202,9 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService){
         vm.assay = {}
         $state.go('admin.project',{
             projectId: vm.projectId}
-            );
+        );
     }
 }
 
 angular.module('bioSpeak.config')
-    .controller('AssayConfigCtrl',['$scope', '$state','$stateParams','AssayConfigService','$timeout',AssayConfigCtrl])
+    .controller('AssayConfigCtrl',['$scope', '$state','$stateParams','AssayConfigService','toaster',AssayConfigCtrl])

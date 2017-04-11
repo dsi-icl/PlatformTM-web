@@ -2,15 +2,16 @@
  * Created by iemam on 06/05/2015.
  */
 'use strict'
-function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,DCchartingService, cartService){
+function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalXF,DCchartingService, cartService){
 
     $scope.vm = {};
     $scope.vm.show = 'plots';
+    $scope.vm.ready = false;
 
 
     //TEMP
-    $scope.cf = ClinicalCf;
-    $scope.chartservice = DCchartingService;
+    //$scope.cf = ClinicalXF;
+    //$scope.chartservice = DCchartingService;
     //////////////////////
     
 
@@ -19,24 +20,25 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
         chartContainerId : "clinical-plots",
         chartGroup : "clinical",
         DCchartService : "DCchartingService",
-        xfilterService : "ClinicalCf",
+        xfilterService : "ClinicalXF",
         filtersService: "filtersService",
         clinicalDataService: "clinicalDataService"
     };
 
     $scope.updateCurrentCart = function(obs) {
 
-        console.log(obs, obs.isActive)
-        if(obs.isActive)
+        //console.log(obs, obs.isActive)
+        /*if(obs.isActive)
             cartService.addClinicalObs(obs);
         else
-            cartService.removeClinicalObs(obs);
+            cartService.removeClinicalObs(obs);*/
     };
 
     // console.log("calling clinical tree")
     clinicalDataService.getClinicalDataTree($scope.chartingOpts.projectId)
         .then(function(data){
             $scope.clinicalObservations = data.treeData;
+            $scope.vm.ready = true;
         })
 
     /*$scope.getObsRequest = function(obs){
@@ -52,7 +54,7 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalCf,D
 
 }
 angular.module('biospeak.explorer')
-    .controller('ClinicalCtrl', ['$scope','$stateParams','clinicalDataService','ClinicalCf','DCchartingService',
+    .controller('ClinicalCtrl', ['$scope','$stateParams','clinicalDataService','ClinicalXF','DCchartingService',
         'cartService',ClinicalController])
 
 

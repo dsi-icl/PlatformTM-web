@@ -47,9 +47,10 @@
                      <span style="font-size:16px;margin-top:-5px;" class="pull-right">
                          <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
                          <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
-                            | <a ng-init="vm.creatingNewDS = false" ng-click="vm.creatingNewDS = !vm.creatingNewDS"><i uib-tooltip="Add Dataset" class="p-xs fa fa-plus"></i></a>
+                            | <a ng-init="vm.creatingNewDS = false" ng-click="vm.creatingNewDS = !vm.creatingNewDS"><i uib-tooltip="Add Dataset Template" class="p-xs fa fa-plus"></i></a>
                         </span>
                 </div>
+
                 <div uib-collapse="!vm.creatingNewDS" class="ibox-content" style="min-height: 50px;margin: 0px;border: 10px solid white;background-color: rgb(243, 243, 244);">
                     <form role="form">
                         <div class="row">
@@ -153,7 +154,19 @@
 
                     </form>
                 </div>
+
                 <uib-tabset class="tab-panel" active="vm.activeTabIndex" >
+                    <uib-tab  ng-hide="vm.activity.datasets.length > 0" >
+                        <uib-tab-heading class="assay-info" align="center">
+                            <p class="assay-count">
+                                No Template Selected
+                            </p>
+                        </uib-tab-heading>
+                    <!--No Template Info-->
+                    <div ng-hide="vm.activity.datasets.length > 0" class="ibox-content ibox-heading">
+                        <h3>No Template Selected</h3>
+                    </div>
+                    </uib-tab>
                     <uib-tab  ng-repeat="ds in vm.activity.datasets" select="vm.tabSelected(ds)">
                         <uib-tab-heading>
                             <p class="tab-info">{{ds.domainId}} : {{ds.name}}</p>
@@ -164,8 +177,8 @@
                             <!--<small>{{ds.description}}</small>-->
                             <!--</p>-->
                         </uib-tab-heading>
-                        <div class="tab-content">
-                            <div id="{{ds.id}}" class="ibox animated fadeIn" ng-show="ds">
+
+                        <div id="{{ds.id}}" class=" animated fadeIn" ng-show="ds">
 
                                 <div class="ibox-title">
                                     <div class="ibox-tools">
@@ -186,7 +199,7 @@
 
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-7">
+                                            <div class="col-md-8">
                                                 <div class="row">
                                                     <div class="col-md-6">
 
@@ -211,16 +224,22 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-4">
                                                                     <label>Type</label>
                                                                     <select class="form-control" ng-model="vm.cField.varType">
                                                                         <option ng-repeat="t in vm.varTypes">{{t}}</option>
                                                                     </select>
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-md-4">
                                                                     <label>Data Type</label>
                                                                     <select class="form-control" ng-model="vm.cField.dataType">
                                                                         <option ng-repeat="t in vm.dataTypes">{{t}}</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label>Role</label>
+                                                                    <select class="form-control" ng-model="vm.cField.roleId">
+                                                                        <option ng-repeat="t in vm.roleTypes">{{t}}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -622,89 +641,13 @@
 
                             </div>
 
-                        </div>
                     </uib-tab>
 
-                    <!--<uib-tab class="odd">
-                        <uib-tab-heading>
-                            <p class="tab-info">Add New Dataset</p>
-                            <p class="tab-info">
-                                <i class="fa fa-plus-circle"></i>
-                            </p>
-                            &lt;!&ndash;<p class="tab-info text-left" >
-                                <small>{{ds.description}}</small>
-                            </p>&ndash;&gt;
-                        </uib-tab-heading>
-                        <div class="tab-content">
-                            <div>
-                                <h5>Select dataset template</h5>
-                            </div>
-                            <div style="border: 1px solid white; padding: 10px; margin-left: 1%" >
-                                <span>Class:</span><span>{{vm.clinicaldomains.preview.class}}</span>
-                                <p>{{vm.clinicaldomains.preview.description}}</p>
-                            </div>
 
-                            <div id="data-accordion" style="margin: 1.5%">
-                                &lt;!&ndash;<div class="panel" style="border: 0; width:100%">&ndash;&gt;
-
-                                <div class="section-block-header" style="cursor: pointer" id="clinicaldata" data-toggle="collapse" data-parent="#data-accordion" data-target="#clinicadata-content">
-                                    Data Templates
-                                </div>
-                                <div id="clinicadata-content" class="assessment-list collapse in" >
-
-                                    <div style="padding: 5px;font-size: 0.7em;font-weight: bolder;">
-                                        Search: <input ng-model="searchText">
-                                    </div>
-                                    <div style="height: 200px; overflow-y: scroll;">
-                                        <ul>
-                                            <li ng-click="vm.selectTemplate(domain.domainId)"
-                                                ng-repeat="domain in vm.clinicaldomains | filter:{name: searchText}"
-                                                ng-mouseover="vm.mouseOverDataset(domain)">
-                                                {{domain.name}} - ({{domain.code}})
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </uib-tab>-->
 
                 </uib-tabset>
             </div>
         </div>
     </div>
-    <!--<div class="col-lg-3">
-        <div class="wrapper wrapper-content project-manager">
-&lt;!&ndash;            <h4>Project description</h4>
-            <img src="img/zender_logo.png" class="img-responsive">
 
-            <p class="small">
-                There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look
-                even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing
-            </p>
-
-            <p class="small font-bold">
-                <span><i class="fa fa-circle text-warning"></i> High priority</span>
-            </p>
-            <h5>Project tag</h5>
-            <ul class="tag-list" style="padding: 0">
-                <li><a href=""><i class="fa fa-tag"></i> Zender</a></li>
-                <li><a href=""><i class="fa fa-tag"></i> Lorem ipsum</a></li>
-                <li><a href=""><i class="fa fa-tag"></i> Passages</a></li>
-                <li><a href=""><i class="fa fa-tag"></i> Variations</a></li>
-            </ul>&ndash;&gt;
-            <h5>Associated Data files</h5>
-            <ul class="list-unstyled project-files">
-                <li><a href=""><i class="fa fa-file"></i> P-BVS_1.csv</a></li>
-                <li><a href=""><i class="fa fa-file"></i> P-BVS_2.csv</a></li>
-                <li><a href=""><i class="fa fa-file"></i> Sample_protocol.doc</a></li>
-                <li><a href=""><i class="fa fa-file"></i> Contact_20_11_2014.docx</a></li>
-            </ul>
-&lt;!&ndash;            <div class="text-center m-t-md">
-                <a href="" class="btn btn-xs btn-primary">Add files</a>
-                <a href="" class="btn btn-xs btn-primary">Report contact</a>
-
-            </div>&ndash;&gt;
-        </div>
-    </div>-->
 </div>

@@ -1,7 +1,7 @@
 /**
  * Created by iemam on 03/07/2014.
  */
-angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.service'])
+angular.module('bioSpeak.config',["ui.bootstrap","ngResource"])
 
     .config(function($stateProvider){
 
@@ -10,7 +10,6 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.
                 abstract : true,
                 url: "/admin",
                 templateUrl:"layout/content.html",
-                controller: "logOutController",
                 resolve: {
                     loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
                         return $ocLazyLoad.load({
@@ -63,7 +62,6 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource",'eTRIKSdata.utils.
                 templateUrl:"admin/project/project-list.html",
                 controller: "ProjectsCtrl as vm",
                 resolve: {
-
 
                     loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                         console.log("loading project service");

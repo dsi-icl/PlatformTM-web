@@ -2,10 +2,10 @@
 
 
 // Declare app level module which depends on filters, and services
-var eTRIKSdataApp = angular.module('eTRIKSdata', [
+var biospeakApp = angular.module('biospeak.app', [
     "ui.bootstrap",
     "toaster", "ngAnimate",
-    "ui.router",
+    "ui.router","ngSanitize",
     'oc.lazyLoad',
     'LocalStorageModule',                  // ocLazyLoad
     "bioSpeak.layout",
@@ -13,11 +13,10 @@ var eTRIKSdataApp = angular.module('eTRIKSdata', [
     "biospeak.explorer",
     "bioSpeak.userAuth",
     "bioSpeak.DataStager",
-    "bioSpeak.import",
-    "bioSpeak.export"
+    "bioSpeak.import"
 ]);
 
-eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
+biospeakApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
 
     $urlRouterProvider.otherwise('/admin/projects');
 
@@ -48,7 +47,7 @@ eTRIKSdataApp.config(function($stateProvider, $urlRouterProvider, $ocLazyLoadPro
         })
 });
 
-eTRIKSdataApp.run(function($rootScope){
+biospeakApp.run(function($rootScope){
     $rootScope.$on('$stateChangeSuccess', function() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     });

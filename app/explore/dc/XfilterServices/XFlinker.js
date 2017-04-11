@@ -3,61 +3,196 @@
  */
 
 'use strict'
-function XFlinker(ClinicalCf,SubjCf,AssayCf,$injector){
+function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
 
     var XFilterLinker = {}
 
-    XFilterLinker.propagateFilter = function(xfFiltered){
+    var subjectSubjectIds, subjectXFisFiltered;
+    var clinicalSubjectIds, clinicalXFsubjIsFiltered;
 
-        //var xfFiltered = $injector.get(xfilterServiceName);
-        //console.log('filtered in ',xfFiltered);
-        //var service = $injector.get(request);
+    var _subjectFilters = {}
 
+    _subjectFilters['subjectXF'] = []
+    _subjectFilters['clinicalXF'] = []
+    _subjectFilters['assayXF'] = []
 
-
-        var filteredIds = xfFiltered.getCurrentSubjectIds();
-        //console.log(filteredIds)
-        // if(filteredIds.length == 0)return;
-
-        if(xfFiltered.getXFname() == 'SubjCf'){
-            console.log("subjects filtered");
-            ClinicalCf.resetSubjectFilter();
-            AssayCf.resetSubjectFilter();
-
-            if(filteredIds.length == 0)return;
-
-            ClinicalCf.filterBySubjects(filteredIds);
-            AssayCf.filterBySubjects(filteredIds);
-
-        }else if(xfFiltered.getXFname()  == 'ClinicalCf'){
-            console.log("clinical filtered");
-
-            SubjCf.resetSubjectFilter();
-            AssayCf.resetSubjectFilter();
-
-            if(filteredIds.length == 0)return;
-
-            if(xfFiltered.isFiltered()){
-                SubjCf.filterBySubjects(filteredIds);
-                AssayCf.filterBySubjects(filteredIds);
+    var _removeFilterHandler = function (filters, chartName) {
+        console.log('removing filter by chart',chartName)
+        for (var i = 0; i < filters.length; i++) {
+            if (filters[i].chart <= chartName && filters[i].chart >= chartName) {
+                filters.splice(i, 1);
+                break;
             }
+        }
+        return filters;
+    };
 
-            ClinicalCf.syncfilters();
-        }else if(xfFiltered.getXFname() == 'AssayCf'){
-            console.log("assays filtered");
+    var _hasFilterHandler = function (filters, chartName, filter) {
+        //if (filter === null || typeof(filter) === 'undefined') {
+        //    return filters.length > 0;
+        //}
+        return filters.some(function (f) {
+            /* console.log(f.filter, filter)
+             console.log(f.filter.some(function(i){return filter.indexOf(i) == -1}));*/
 
-            SubjCf.resetSubjectFilter();
-            ClinicalCf.resetSubjectFilter();
+            return chartName <= f.chart && chartName >= f.chart  //TODO: add check on filteredIds
+        });
+    };
 
-            if(filteredIds.length == 0)return;
+    var _addFilterHandler = function (filters, chartName, filter) {
+        if(_hasFilterHandler(filters,chartName, filter))
+            _removeFilterHandler(filters,chartName)
 
-            SubjCf.filterBySubjects(filteredIds);
-            ClinicalCf.filterBySubjects(filteredIds);
+
+        console.log('ADDING FILTER BY CHART', chartName)
+        filters.push({chart:chartName,filter:filter});
+        //else console.log('FILTER BY CHART ALREADY ADDED')
+        return filters;
+    };
+
+    var _retainAll = function(filters){
+
+        var intersect = filters[0].filter;
+
+        for(var i=1; i<filters.length; i++){
+            intersect = intersect.filter(function(n){
+                return filters[i].filter.indexOf(n) !== -1
+            })
         }
 
-        //SubjCf.filterBySubjects(filteredIds);
-        //ClinicalCf.filterBySubjects(filteredIds);
-        //AssayCf.filterBySubjects(filteredIds);
+        return intersect;
+    }
+
+    XFilterLinker.reApplySubjectFilter = function(xfFiltered){
+
+        console.log("===REAPPLYING PREVIOUS SUBJECT FILTERS===")
+
+        //ADDING A CHART TO CLINICAL, APPLY IDS FROM SUBJECT AND ASSAY
+        if(xfFiltered.getXFname()  === 'ClinicalCf' && _subjectFilters['clinicalXF'].length > 0){
+            console.log('SUBJECT AND ASSAY TO CLINICAL')
+            //REAPPLY subjectFilteredIds and AssaySubjectFiltered Ids
+
+            let filteredIds = _retainAll(_subjectFilters['clinicalXF']);
+            ClinicalXF.resetSubjectFilter();
+            ClinicalXF.filterBySubjects(filteredIds);
+
+            //TODO: AssayCF.getCurrentSubjectIds and APPLY to ClinicalCf.filterBySubjects
+
+        }
+
+        //ADDING A CHART TO SUBJECT, APPLY IDS FROM CLINICAL AND ASSAY
+        if(xfFiltered.getXFname()  === 'SubjCf' && _subjectFilters['subjectXF'].length > 0){
+            console.log('CLINICAL AND ASSAY TO SUBJECT')
+
+            let filteredIds = _retainAll(_subjectFilters['subjectXF']);
+            SubjectXF.resetSubjectFilter();
+            SubjectXF.filterBySubjects(filteredIds);
+
+            //TODO: AssayCF.getCurrentSubjectIds and APPLY to SubjCf.filterBySubjects
+
+        }
+
+        //ADDING A CHART TO ASSAY, APPLY IDS FROM SUBJECT AND CLINICAL
+        if(xfFiltered.getXFname()  === 'AssayCf' && _subjectFilters['assayXF'].length > 0){
+            console.log('CLINICAL AND SUBJECT TO ASSAY')
+            let filteredIds = _retainAll(_subjectFilters['assayXF']);
+            AssayXF.resetSubjectFilter();
+            AssayXF.filterBySubjects(filteredIds);
+        }
+
+        console.log("===END OF REAPPLYING PREVIOUS SUBJECT FILTERS===")
+    }
+
+    XFilterLinker.propagateFilter = function(xfFiltered, chartName, filter){
+
+        console.log("====PROPAGATING FILTER====")
+
+        var subjectIds;
+
+        if(xfFiltered.getXFname() === 'SubjCf'){
+
+            subjectIds = xfFiltered.getCurrentSubjectIds();
+            if(subjectIds.length == 0)return;
+
+            console.log("SUBJECT TO CLINICAL AND ASSAY");
+            ClinicalXF.resetSubjectFilter();
+            AssayXF.resetSubjectFilter();
+
+            if(filter === null){
+                _subjectFilters['clinicalXF'] = _removeFilterHandler(_subjectFilters['clinicalXF'],chartName)
+                _subjectFilters['assayXF'] = _removeFilterHandler(_subjectFilters['assayXF'],chartName)
+            }
+
+            else{
+                _addFilterHandler(_subjectFilters['clinicalXF'],chartName,subjectIds);
+                _addFilterHandler(_subjectFilters['assayXF'],chartName,subjectIds);
+            }
+
+            if(_subjectFilters['clinicalXF'].length > 0){
+                subjectIds  = _retainAll(_subjectFilters['clinicalXF']);
+                //console.log('Filters to propagate to subjects', subjectIds.length);
+                ClinicalXF.filterBySubjects(subjectIds);
+            }
+
+            if(_subjectFilters['assayXF'].length > 0){
+                subjectIds = _retainAll(_subjectFilters['assayXF'])
+                // console.log('Filters to propagate to assays', subjectIds.length)
+                AssayXF.filterBySubjects(subjectIds);
+            }
+
+        }
+
+        else if(xfFiltered.getXFname()  === 'ClinicalCf'){
+
+            subjectIds = xfFiltered.getCurrentSubjectIds();
+            if(subjectIds.length == 0)return;
+
+            console.log("CLINICAL TO SUBJECT AND ASSAY");
+            SubjectXF.resetSubjectFilter();
+            AssayXF.resetSubjectFilter();
+
+            if(filter === null){
+                _subjectFilters['subjectXF'] = _removeFilterHandler(_subjectFilters['subjectXF'],chartName)
+                _subjectFilters['assayXF'] = _removeFilterHandler(_subjectFilters['assayXF'],chartName)
+            }
+
+            else{
+                _addFilterHandler(_subjectFilters['subjectXF'],chartName,subjectIds);
+                _addFilterHandler(_subjectFilters['assayXF'],chartName,subjectIds);
+            }
+
+            //console.log('_filters[subjectXF]:',_filters['subjectXF'])
+            //console.log('_filters[assayXF]:',_filters['assayXF'])
+            //var filterIds = _intersectIds(_filters['clinicalXF']);
+
+            if(_subjectFilters['subjectXF'].length > 0){
+                subjectIds  = _retainAll(_subjectFilters['subjectXF']);
+                //console.log('Filters to propagate to subjects', subjectIds.length);
+                SubjectXF.filterBySubjects(subjectIds);
+            }
+
+            if(_subjectFilters['assayXF'].length > 0){
+                subjectIds = _retainAll(_subjectFilters['assayXF'])
+                //console.log('Filters to propagate to assays', subjectIds.length)
+                AssayXF.filterBySubjects(subjectIds);
+            }
+
+            // ClinicalCf.syncfilters();
+        }
+
+        /*else if(xfFiltered.getXFname() == 'AssayCf'){
+         //console.log("assays filtered");
+
+         SubjCf.resetSubjectFilter();
+         ClinicalCf.resetSubjectFilter();
+
+         if(filteredIds.length == 0)return;
+
+         SubjCf.filterBySubjects(filteredIds);
+         ClinicalCf.filterBySubjects(filteredIds);
+         }*/
+
+        console.log("====END OF PROPAGATING FILTER====")
     }
 
     XFilterLinker.removeFilter = function(chartGroup,obs){
@@ -80,4 +215,4 @@ function XFlinker(ClinicalCf,SubjCf,AssayCf,$injector){
 }
 
 angular.module('biospeak.dcPlots')
-    .factory('XFilterLinker',['ClinicalCf','SubjCf','AssayCf','$injector',XFlinker])
+    .factory('XFilterLinker',['ClinicalXF','SubjectXF','AssayXF','$injector',XFlinker])

@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/html">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>BioVacSafe</title>
+    <title>eHS</title>
 
 
-    <link type='text/css' rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans'>
+    <link type='text/css' rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
     <link href='https://fonts.googleapis.com/css?family=Ruda:400,700,900' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|PT+Sans|Questrial" rel="stylesheet">
 
@@ -28,11 +28,12 @@
     <link type="text/css" rel="stylesheet" href="lib/dc/dc.css">
 
     <!-- Custom App css -->
+    <link id="load_css_before" type="text/css" rel="stylesheet" href="layout/css/app.css"/>
     <link rel="stylesheet" href="layout/css/bs-md-skin.css">
-    <link id="load_css_before" type="text/css" rel="stylesheet" href="css/app.css"/>
 
-    <link rel="stylesheet" type="text/css" href="css/flaticon/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="layout/css/flaticon/flaticon.css">
     <link rel="stylesheet" type="text/css" href="lib/plugins/pace/pace-flash.css"/>
+
 
     <!--<link rel="stylesheet" type="text/css" href="lib/angular-xeditable/xeditable.css">-->
     <!--<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
@@ -40,8 +41,8 @@
 
 </head>
 
-<body ng-app="eTRIKSdata" class="fixed-nav fixed-sidebar mini-navbar md-skin">
-<div ui-view>Loading App...</div>
+<body ng-app="biospeak.app" ng-controller="appController" class="fixed-nav fixed-sidebar mini-navbar md-skin">
+<div style="height: 100%" ui-view>Loading App...</div>
 </body>
 
 
@@ -51,7 +52,7 @@
 
 
 <!-- jQuery and Bootstrap -->
-<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/jquery/v1.11.3/jquery.min.js"></script>
 <script src="lib/plugins/jquery-ui/jquery-ui.js"></script>
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 
@@ -74,21 +75,10 @@
 <script src="lib/angular-animate/angular-animate.min.js"></script>
 <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="lib/plugins/angularJS-Toaster/toaster.min.js"></script>
-
-<!--<script src="lib/angular-material/angular-aria.min.js"></script>-->
-<!--<script src="lib/angular-material/angular-material.min.js"></script>-->
-
-
+<script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="lib/angular-resource/angular-resource.min.js"></script>
-
 <script src="lib/plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
-
-
-<!--<script src="lib/bootstrap/js/ui-bootstrap-tpls-0.12.0.min.js"></script>-->
-<!--<script src="lib/plugins/angular-xeditable/js/xeditable.min.js"></script>-->
-
 <script src="lib/plugins/angular-dragdrop/angular-dragdrop.js"></script>
-<script src="lib/angular-file-upload/angular-file-upload.min.js"></script>
 <script src="lib/plugins/angular-local-storage/angular-local-storage.min.js"></script>
 
 
@@ -96,55 +86,40 @@
 <script src='lib/crossfilter/crossfilter.min.js' type='text/javascript'></script>
 <script src="lib/d3/d3.min.js"></script>
 <script src='lib/dc/dc.js' type='text/javascript'></script>
+<script src="lib/dc/dc-count-bar.js" type="text/javascript"></script>
 <script src="lib/plugins/reductio/reductio.min.js"></script>
 
 <!--Application Modules-->
-
 <script src="layout/layout-module.js"></script>
 <script src="layout/directives/minimalizeSideBar.js"></script>
 <script src="layout/directives/sideNavigation.js"></script>
-<script src="layout/directives/iboxTools.js"></script>
+<!--<script src="layout/directives/iboxTools.js"></script>-->
 <script src="layout/directives/icheck.js"></script>
 <script src="layout/directives/fullScroll.js"></script>
 
 <script src="authentication/authentication-module.js"></script>
-<script src="authentication/loginController.js"></script>
-<script src="authentication/signupController.js"></script>
-<script src="authentication/authService.js"></script>
-<script src="authentication/authInterceptorService.js"></script>
+<script src="authentication/login-controller.js"></script>
+<script src="authentication/signup-controller.js"></script>
+<script src="authentication/auth-service.js"></script>
+<script src="authentication/userSession-service.js"></script>
+
+<script src="authentication/authInterceptor-service.js"></script>
 
 <script src="dataStage/dataStage-module.js"></script>
-<script src="dataStage/fileManager/fileManager-service.js"></script>
-<script src="dataStage/fileManager/file-directive.js"></script>
 <script src="dataStage/loadingWizard/wizard-module.js"></script>
-
-
-<script src="explore/crossFilter-service.js"></script>
 <script src="explore/explorer-module.js"></script>
-
-
-<script src="explore/filters/exportCriteria-service.js"></script>
-<script src="explore/filters/filters-service.js"></script>
-<script src="explore/filters/filters-controller.js"></script>
-
-
-<script src="common/utils-service.js"></script>
-
+<script src="export/export-module.js"></script>
 <script src="admin/admin-module.js"></script>
 
 
-<script src="export/dataTreeDraggable.js"></script>
-<script src="export/export-module.js"></script>
-
-
-<!--TEMP-->
-
-<script src="lib/plugins/jstree/js/jstree.min.js"></script>
-<script src="lib/plugins/ngJsTree/js/ngJsTree.js"></script>
 
 
 
-<script src="app.js"></script>
+<!--<script src="app.js"></script>-->
+<script src="app.module.js"></script>
+<script src="app.config.js"></script>
+<script src="app.controller.js"></script>
+<script src="app.routes.js"></script>
 <script src="scripts/functions.js"></script>
 
 

@@ -6,6 +6,9 @@
 function assayDataService($http,$q,ngAppConfig){
      var serviceBase = ngAppConfig.apiServiceBaseUri;
 
+     var assays;
+    var ready = false;
+
         return {
             getSubjData: function(projectId,characs) {
                 //var domainCode = "VS"
@@ -30,19 +33,26 @@ function assayDataService($http,$q,ngAppConfig){
 
             },
 
-            getSampleData: function(projectId,assayId,reqObs) {
-                //console.log(angular.toJson(observations))
+            assaysRetrieved: function(){
+                return assays;
+            },
+
+            getSampleData: function(projectId,assayId,reqChars) {
+                if(!reqChars)
+                    reqChars='';
                 return $http({
-                    url:serviceBase+'assays/'+assayId+'/samples',
-                    method:'GET'//,
-                    //data: angular.toJson(observations)
+                    url:serviceBase+'apps/explore/projects/'+projectId+'/assays/'+assayId+'/samples/search',
+                    method:'POST',
+                    data: angular.toJson(reqChars)
                 }).then(
                     function (response) {
+                        var columns = [];
+                        response.data.columns.forEach(function(col){
+                            columns.push(col.columnName);
+                        });
                         return {
-                            data: (response.data.data),
-                            //eventsTbl: (response.data.eventsTbl),
-                            header: (response.data.header)
-                            //eventsTblHeader: (response.data.eventsTblHeader)
+                            data: (response.data.rows),
+                            header: columns
                         }
                     },
                     function (httpError) {
@@ -60,6 +70,9 @@ function assayDataService($http,$q,ngAppConfig){
                     //data: angular.toJson(observations)
                 }).then(
                     function (response) {
+                        assays = response.data;
+                        ready = true;
+
                         return {
                             assays: (response.data)
                         }

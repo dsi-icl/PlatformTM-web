@@ -10,9 +10,6 @@ function authInterceptorService($q, $injector,$location, localStorageService){
     //var redirectUrl;
 
     var _request = function (config) {
-
-
-
         config.headers = config.headers || {};
 
         //redirectUrl = config.url;

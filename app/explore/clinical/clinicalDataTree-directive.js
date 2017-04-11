@@ -38,8 +38,8 @@ angular.module('biospeak.explorer')
                 var domain;
 
                 $scope.localcallbck = function(obsRequest){
-                    console.log("ana b2 here",obsRequest)
-                    $scope.callbck({obs:obsRequest})
+                    //console.log("ana b2 here",obsRequest)
+                    //$scope.callbck({obs:obsRequest})
                 }
 
                 if($scope.group.isDomain){
@@ -222,15 +222,17 @@ angular.module('biospeak.explorer')
             controller: function($scope){
                 $scope.updateCurrentCart = function(obsRequest){
                     //console.log("In here",obsRequest)
-                    $scope.callbck({ request: obsRequest })
+                    //$scope.callbck({ request: obsRequest })
                 }
             },
             template:
 
            '<div ng-class="{selected: node.isSelected}">' +
                 '<div class="plotting-switch">'+
-                    '<a ng-hide="node.isSelected || node.isLocked" class=" switchery" charting-button ' +
-                        'obs="node.defaultObservation" quals="node.qualifiers" charting-opts="chartingOpts" style="color: #222f3f;" ' +
+                    '<a charting-button ng-hide="node.isSelected || node.isLocked" class=" switchery"  ' +
+                        'obs="node.defaultObservation" quals="node.qualifiers" ' +
+                        'module="chartingOpts.chartGroup"'+
+                        'charting-opts="chartingOpts" style="color: #222f3f;" ' +
                         'ng-init="node.defaultObservation.isActive = false" ' +
                         'data-ng-disabled="node.isSelected" '+
                         'ng-class="{on:node.defaultObservation.isActive}" '+
@@ -264,7 +266,7 @@ angular.module('biospeak.explorer')
             controller: function($scope){
                 $scope.updateCurrentCart = function(obsRequest){
                     //console.log("In here",obsRequest)
-                    $scope.callbck({ request: obsRequest })
+                    //$scope.callbck({ request: obsRequest })
                 }
             },
             replace:true,
@@ -320,6 +322,120 @@ angular.module('biospeak.explorer')
                 });
             }
         };
+    })
+
+    /**
+     * chartingButton requires obs.o3id, obs.isActive, obs.id
+     * cardId , chartId
+     * chartContainerId
+     * chartingOptions (chartService, xfService, chartGroup ...etc) only to pass to dc-chart directive
+     *
+     * o3 (Text to display as name for the observation
+     */
+    .directive('chartingButton', function($compile,cartService){
+        return {
+            restrict: 'EA',
+            scope:{
+                obs:'=',
+                chartingOpts:'=',
+                module:'=',
+                quals: '='
+            },
+            link: function(scope, element){
+                element.bind("click", function(){
+                    //console.log(scope.obs,' CLICKED')
+
+                    var isActive = scope.obs.isActive === true;
+                    var chartId = (scope.obs.name+"_chart").replace(/ /g,'_');
+                    var cardId = (scope.obs.o3code+"_card").replace(/ /g,'_');
+
+                    console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',scope.chartingOpts.chartContainerId, 'for module',scope.module);
+
+
+                    if(isActive)
+                        cartService.addToCart(scope.obs, scope.module);
+                    else
+                        cartService.removeFromCart(scope.obs, scope.module);
+
+                    scope.$apply();
+
+
+                    if(!document.getElementById(cardId)){
+                        scope.$apply(function(){
+                            angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
+                                .prepend(
+                                    $compile(
+                                        '<div class="cardlock" id="'+ cardId +'">'+
+                                        '<div class="card">'+
+                                        '<h1 class="border-bottom">{{obs.o3}}</h1>'+
+                                        '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  module="module" class="qualifier-menu"></dc-chart-menu>'+
+                                        '<div>' +
+                                        '</div>'
+                                    )(scope)
+                                )
+                        })
+                    }
+
+                    if(!document.getElementById(chartId)){
+                        scope.$apply(function(){
+                            angular.element(document.getElementById(cardId).querySelector('div.card'))
+                                .append(
+                                    $compile(
+                                        '<div id="'+ chartId +'"class="chart" ng-switch="obs.dataType">' +
+                                        '<dc-time-chart ng-switch-when="dateTime" charting-opts="chartingOpts" obs="obs"></dc-time-chart>'+
+                                        '<dc-chart ng-switch-default charting-opts="chartingOpts" obs="obs" module="module"></dc-chart>'+
+                                        '</div>'
+                                    )(scope)
+                                )
+                        });
+                    }
+
+                    else{
+                        console.log("chart exists already")
+                        if(!isActive){
+                            console.log('Removing chart')
+                            angular.element(document.getElementById(cardId)).remove();
+                        }
+                    }
+                });
+
+
+            }
+        }
+    })
+
+    .directive('dcChartMenu', function() {
+        return {
+            restrict: 'EA',
+            scope: {
+                obs: '=',
+                chartingOpts: '=',
+                module:'=',
+                quals:'='
+            },
+            replace:true,
+            controller: function ($scope, $element) {
+                //console.log('menu scope',$scope.obs, $scope.quals)
+            },
+            template:
+            '<div class="dropdown" uib-dropdown>'+
+            '<a class="dropdown-toggle" href uib-dropdown-toggle>'+
+            '<i class="fa fa-ellipsis-v"></i>'+
+            '</a>'+
+            '<ul class=" dropdown-menu dropdown-menu-right plotting-options"> ' +
+            '<li class="dropdown-header">Chart Value for {{obs.o3}}</li>'+
+            '<li ng-repeat="var in quals">' +
+            '<div  class="checkbox">'+
+            '<input id="checkbox_{{var.id}}" type="checkbox" ' +
+            'charting-button  obs="var" module="module" ' +
+            'ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive" ' +
+            'charting-opts="chartingOpts" >' +
+            '<label uib-tooltip="{{var.qO2_label}}" for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +
+            '</div>' +
+            '</li> ' +
+            '</ul>'+
+            '</div>'
+        }
     })
 
 

@@ -4,15 +4,15 @@
         <h4 class="logo" style="margin-bottom: 0px;
     margin-top: 0px;
     padding-top: 7px;">
-            <a ui-sref="main.home" >
+            <a ui-sref="home.dashboard" >
                 <!--<img src="img/bvs_image.png" width="50px" class="pull-left"/>-->
                 <img src="img/etriks-logo.svg" width="30px" class="pull-left"/>
-                <!--<span>BioVacSafe DB</span>-->
+                <!--<span> BioVacSafe DB</span>-->
                 <span>eTRIKS Data Harmonization Service</span>
             </a>
         </h4>
         <div class="navbar-header">
-            <span minimaliza-sidebar></span>
+            <!--<span minimaliza-sidebar></span>-->
             <!--<form role="search" class="navbar-form-custom" method="post" action="views/search_results.html">
                 <div class="form-group">
                     <input type="text" placeholder="{{ 'SEARCH' }}" class="form-control" name="top-search" id="top-search">
@@ -20,7 +20,7 @@
             </form>-->
         </div>
         <ul class="nav navbar-top-links navbar-right">
-            <!--<li ><a href="#">Logged in as <span class="username"> Ibrahim Emam{{authentication.userName}}</span></a></li>-->
+            <li><a href="#">Logged in as <span class="username"> {{currentUser.username}}</span></a></li>
             <!--<li>
                 <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                     <ul class="nav navbar-nav navbar-right">
@@ -148,7 +148,7 @@
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>
-            <li><a href="blog">Blog</a> </li>
+            <!--<li><a href="blog">Blog</a> </li>-->
             <!--<li>
                 <a ng-click="$root.rightSidebar = !$root.rightSidebar">
                     <i class="fa fa-shopping-cart"></i> Data cart

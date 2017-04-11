@@ -13,7 +13,8 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
     vm.creatingCfield = false;
 
     vm.dataTypes = ['STRING','INTEGER','DOUBLE','DATETIME'];
-    vm.varTypes = ['SUBMITTED','DERIVED']
+    vm.varTypes = ['SUBMITTED','DERIVED'];
+    vm.roleTypes = ['Observation Qualifier','Finding about observation']
 
     vm.dictTerms = ['MILD','SEVERE','MODERATE'];
     vm.expressionList = [];
@@ -80,6 +81,7 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             vm.clinicaldomains = response;
         })
     }
+
     else if($stateParams.activityId){
         ActivityConfigService.getActivityResource.get({ activityId: $stateParams.activityId }, function(response){
             activity = response;
@@ -129,6 +131,9 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
 
         if(vm.cField.name){
             vm.cField.accession = 'V-COMP-' + vm.activity.datasets[0].code+'-'+vm.cField.name;
+            vm.cField.roleId = 'CL-Role-T-3';
+            vm.cField.projectId = vm.projectId;
+            vm.isCurated = false;
 
             //console.log(vm.activity)
             //if(!vm.cField.usingFunc)
@@ -212,9 +217,6 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             this.updateEEseq()
         }
     };
-
-
-
 
     vm.beforeDropOverExpressionDiv = function(){
         var deferred = $q.defer();
@@ -366,7 +368,10 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             vm.activity.datasets.push(dataset);
 
         $timeout(function(){
+            console.log(vm.activity.datasets.length - 1);
             vm.activeTabIndex = (vm.activity.datasets.length - 1);
+            console.log(vm.activeTabIndex);
+            //$scope.$apply();
         });
             //console.log(vm.activity)
 
@@ -382,7 +387,6 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
     vm.showDSvars = function(domain) {
         vm.showDS = domain;
     }
-
 
     vm.tabSelected = function(ds){
         vm.currDS = ds;
