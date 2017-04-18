@@ -26,7 +26,32 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
          }*/
     });
 
-    var _getUserDatasets = function(projectId){
+    var _saveDataset = function(dataset){
+        return $http({
+            url: serviceBase + 'datasets/'+dataset.id,
+            method: 'PUT',
+            data: angular.toJson(dataset)
+        }).then(
+            function (response) {
+                return response.status === 202;
+            }
+        );
+    };
+
+    var _getUserDatasets = function(){
+        return $http({
+            url: serviceBase + 'datasets/user/',
+            method: 'GET'
+        }).then(
+            function(response){
+                return{
+                    datasets:(response.data)
+                }
+            }
+        )
+    };
+
+    var _getProjectUserDatasets = function(projectId){
         return $http({
             url: serviceBase + 'mydatasets/projects/'+projectId+'/',
             method: 'GET'
@@ -38,7 +63,6 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
             }
         )
     }
-
 
     var _fetchDataset = function(datasetId,projectId){
         var deferred = $q.defer();
@@ -262,7 +286,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
      }*/
 
 
-    exportFactory.getUserDatasetsForProject = _getUserDatasets;
+    exportFactory.getProjectUserDatasets = _getProjectUserDatasets;
     exportFactory.getDataFields = _getDataFields;
 
     exportFactory.getFieldFilter = _getFieldFilter;
@@ -277,6 +301,9 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     exportFactory.getMyDatasetResource = _myDatasetResource;
     exportFactory.removeLocalDS = _removeLocalDS;
+
+    exportFactory.saveDataset = _saveDataset;
+    exportFactory.getUserDatasets = _getUserDatasets;
 
     //exportFactory.saveFields = _saveFields;
     //exportFactory.getUserDataset = _getUserDataset;

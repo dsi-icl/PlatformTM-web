@@ -198,12 +198,12 @@ nav a {
     /*padding: 15px;*/
 }
 
-.panel-header h3 {
+.panel-header span {
     margin: 0;
-    /*font-size: .6em;*/
     text-transform: uppercase;
     color: white;
-    /*padding: 15px;*/
+    font-size: 1.2em;
+    font-weight: 500;
 }
 
 .panel-header a{
@@ -1496,7 +1496,7 @@ a.editable-click {
     text-align: inherit;
 }
 
-.login {
+div.login, div.signup {
      background: #23C6C8;
      font-size: .8em;
      font-weight: bolder;
@@ -1505,4 +1505,19 @@ a.editable-click {
 
 .login .username {
     color: #39C2D7;
+}
+
+.signupContainer{
+    background: #fff;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    margin: 0 auto;
+    border-radius: 3px;
+}
+
+h1.logo-name{
+    text-align: center;
+}
+.loginscreen{
+    padding:20px;
 }
