@@ -1521,3 +1521,9 @@ h1.logo-name{
 .loginscreen{
     padding:20px;
 }
+
+.alert-info{
+    background-color: rgba(35, 200, 192, 0.22);
+    color: #31708f;
+    border-color: #bce8f1;
+}
