@@ -17,24 +17,28 @@ function dashboardController($scope, $state, $stateParams,projectService, export
 
     vm.projects = {}
 
-    //Retrieves list of study activities
     projectService.getProjectResource.get(function(response){
         vm.projects = response;
     });
 
-    vm.projectId = 95
-
-    exportService.getUserDatasetsForProject(vm.projectId).then(function(response){
+    exportService.getUserDatasets().then(function(response){
         vm.datasets = response.datasets;
         console.log(vm.datasets.length)
         vm.loaded = true;
     });
 
-
     cartService.getUserQueries(vm.projectId).then(function(response){
         //console.log(response);
         vm.queries = response.queries;
-    })
+    });
+
+    vm.refreshDatasets = function(){
+        exportService.getUserDatasets().then(function(response){
+            vm.datasets = response.datasets;
+            //console.log(vm.datasets.length)
+            vm.loaded = true;
+        });
+    };
 
     vm.goToActivity = function(activity,edit){
         if(activity.isAssay)
@@ -43,8 +47,14 @@ function dashboardController($scope, $state, $stateParams,projectService, export
             $state.go('admin.activity',{ projectId:vm.projectId, activityId: activity.id, edit:edit})
     }
 
-    vm.downloadDataset = function(datasetId){
-        checkoutService.downloadDataset(datasetId)
+    vm.downloadDataset = function(ds){
+        if(ds.fileStatus === 0){
+            ds.fileStatus = 1;
+            checkoutService.prepareDataset(ds.id);
+            vm.refreshDatasets();
+        }else if(ds.fileStatus === 2)
+            checkoutService.downloadDataset(ds.id);
+
     }
 
 }

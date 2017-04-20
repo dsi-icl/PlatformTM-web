@@ -1,168 +1,110 @@
-<div class="row border-bottom">
+<div style="height: inherit" class="gray-bg {{$state.current.name}}">
 
-    <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-        <div class="logo">
-            <a href="index.html">
-                <img src="img/etriks-logo.svg" width="30px" class="pull-left"/>
-                <span>eHS</span>
-            </a>
-        </div>
-        <ul class="nav navbar-top-links navbar-right">
-            <li > <a href="#/login">Login</a></li>
-            <li > <a href="#/signup">Sign Up</a></li>
-        </ul>
-    </nav>
-</div>
+    <div class="row border-bottom">
 
-<div id="wrapper">
-<div class="loginColumns animated fadeInDown loginscreen" style="margin-top: 80px">
-    <div>
-        <!--<div>
-
-            <h1 class="logo-name">IN+</h1>
-
-        </div>-->
-
-        <form class="m-t" role="form" ng-submit="signUp()">
-            <div class="row">
-                <div class="col-md-1">
-                    &nbsp;
-                </div>
-                <div class="col-md-5">
-                    <h3>eHS Signup</h3>
-                    <p>Create account to see it in action.</p>
-                    <div class="form-group">
-                        <input type="text" placeholder="First Name" class="form-control" data-ng-model="registration.firstName" required autofocus>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="Last Name" class="form-control" data-ng-model="registration.lastName" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" placeholder="Organization" class="form-control" data-ng-model="registration.organization" required>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="email" placeholder="Email" class="form-control" data-ng-model="registration.email" required>
-                        <!--<span class="help-block m-b-none">Example block-level help text here.</span>-->
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password" class="form-control" data-ng-model="registration.password" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Confirm Password" class="form-control" data-ng-model="registration.confirmPassword" required>
-                    </div>
-                    <!--<div class="form-group">
-                        <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
-                    </div>-->
-                    <button type="submit" class="btn btn-primary block full-width m-b" data-ng-disabled="savedSuccessfully">Register</button>
-
-                    <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
-                        {{message}}
-                    </div>
-
-
-
-
-                </div>
-                <div class="col-md-5">
-                    <h3>Authenticator Code</h3>
-                    <div class="text-info" ng-show="qrCode==''">Your Google Authenticator QR code will be displayed here after successful Signup!</div>
-                    <div ng-show="qrCode!=''">
-                        <p class="text-success">Authenticator Code: <strong>{{qrCode}}</strong></p>
-                        <div class="form-group">
-                            <img ng-src="{{qrCodeSrc}}" />
-                        </div>
-                        <a ui-sref="login" class="btn btn-primary btn-md btn-block">Continue to login</a>
-                    </div>
-                    <br>
-                    <br>
-                    <p class="text-muted text-center"><small>Already have an account?</small></p>
-                    <a class="btn btn-sm btn-white btn-block" ui-sref="login">Login</a>
-
-                </div>
-                <div class="col-md-1">
-                    &nbsp;
-                </div>
+        <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+            <!--<div class="logo">
+                <a href="index.html">
+                    <img src="img/etriks-logo.svg" width="30px" class="pull-left"/>
+                    <span>eHS</span>
+                </a>
             </div>
-        </form>
-        <p class="m-t"> <small>Data Science Institute, Imperial College &copy; 2015</small> </p>
+            <ul class="nav navbar-top-links navbar-right">
+                <li> <a ui-sref="login">Login</a></li>
+                <li> <a ui-sref="signup">Sign Up</a></li>
+            </ul>-->
+        </nav>
     </div>
-</div>
-</div>
-<!--<div id="wrapper">
 
-    &lt;!&ndash; Page wraper &ndash;&gt;
-    &lt;!&ndash; ng-class with current state name give you the ability to extended customization your view &ndash;&gt;
-    <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
+    <!-- Main view  -->
 
-        &lt;!&ndash; Page wrapper &ndash;&gt;
-        &lt;!&ndash;<div ng-include="'layout/topnavbar.html'"></div>&ndash;&gt;
-        <div class="row border-bottom">
+    <div style="height: 100%">
+        <table style="height: 100%; width: 100%;">
+            <tbody><tr>
+                <td style="vertical-align: middle">
+                    <div class="signupContainer">
+                        <div class=" animated fadeIn">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class=" float-e-margins">
 
-            <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-                <div class="logo">
-                    <a href="index.html">
-                        <img src="img/etriks-logo.svg" width="30px" class="pull-left"/>
-                        <span>eHS</span>
-                    </a>
-                </div>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li > <a href="#/login">Login</a></li>
-                    <li > <a href="#/signup">Sign Up</a></li>
-                </ul>
-            </nav>
-        </div>
+                                        <div class="ibox-content">
+                                            <div class="animated fadeIn loginscreen">
+                                                <div>
+                                                    <form class="m-t" role="form" ng-submit="signUp()">
+                                                        <div class="row">
 
-        &lt;!&ndash; Main view  &ndash;&gt;
+                                                            <div class="col-md-6">
+                                                                <h3>Signup</h3>
+                                                                <p>Create account to see it in action.</p>
+                                                                <div class="form-group">
+                                                                    <input type="text" placeholder="First Name" class="form-control" data-ng-model="registration.firstName" required autofocus>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="text" placeholder="Last Name" class="form-control" data-ng-model="registration.lastName" required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="text" placeholder="Organization" class="form-control" data-ng-model="registration.organization" required>
+                                                                </div>
 
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
+                                                                <div class="form-group">
+                                                                    <input type="email" placeholder="Email" class="form-control" data-ng-model="registration.email" required>
+                                                                    <!--<span class="help-block m-b-none">Example block-level help text here.</span>-->
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" placeholder="Password" class="form-control" data-ng-model="registration.password" required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" placeholder="Confirm Password" class="form-control" data-ng-model="registration.confirmPassword" required>
+                                                                </div>
+                                                                <!--<div class="form-group">
+                                                                    <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
+                                                                </div>-->
+                                                                <button type="submit" class="btn btn-primary block full-width m-b" data-ng-disabled="savedSuccessfully">Register</button>
 
-                    <div class="class="middle-box text-center loginscreen   animated fadeInDown">
-                        <div class="ibox-title">
-                            <h5>REGISTER NEW ACCOUNT
-                            </h5>
+                                                                <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                                                                    {{message}}
+                                                                </div>
 
-                        </div>
-                        <div class="ibox-content">
-                                <form role="form">
 
-                                </form>
 
-                                &lt;!&ndash;<form role="form" class="mb-lg">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group has-feedback">
-                            <input id="signupInputEmail1" type="email" placeholder="Your email" autocomplete="off" class="form-control"><span class="fa fa-envelope form-control-feedback text-muted"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input id="signupInputPassword1" type="password" placeholder="Your password" autocomplete="off" class="form-control"><span class="fa fa-lock form-control-feedback text-muted"></span>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <input id="signupInputRePassword1" type="password" placeholder="Type again your password" autocomplete="off" class="form-control"><span class="fa fa-lock form-control-feedback text-muted"></span>
-                        </div>
-                        <div class="clearfix">
-                            <div class="checkbox c-checkbox pull-left mt0">
-                                <label>
-                                    <input type="checkbox" value=""><span class="fa fa-check"></span> I agree with the <a href="">terms</a>
-                                </label>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <h3>Authenticator Code</h3>
+                                                                <div class="text-info" ng-show="qrCode==''">Your Google Authenticator QR code will be displayed here after successful Signup!</div>
+                                                                <div ng-show="qrCode!=''">
+                                                                    <p class="text-success">Authenticator Code: <strong>{{qrCode}}</strong></p>
+                                                                    <div class="form-group">
+                                                                        <img ng-src="{{qrCodeSrc}}" />
+                                                                    </div>
+                                                                    <a ui-sref="login" class="btn btn-primary btn-md btn-block">Continue to login</a>
+                                                                </div>
+                                                                <br>
+                                                                <br>
+                                                                <p class="text-muted text-center"><small>Already have an account?</small></p>
+                                                                <a class="btn btn-sm btn-white btn-block" ui-sref="login">Login</a>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
+                                                    <p class="m-t"> <small>Data Science Institute, Imperial College &copy; 2015</small> </p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-block btn-primary">Create account</button><br>
-                        <p class="pt-lg text-center mt-sm">Already registerd?</p><a ui-sref="login" class="btn btn-block btn-default"><strong>Login</strong></a>
-                    </div>
-                </div>
-            </form>&ndash;&gt;
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 
-                        </div>
-                    </div>
-
-            </div>
-        </div>
-        &lt;!&ndash; Footer &ndash;&gt;
-        <div ng-include="'layout/footer.html'"></div>
-    </div>-->
-        <!-- END panel-->
+</div>

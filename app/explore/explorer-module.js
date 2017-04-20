@@ -147,7 +147,7 @@ angular.module('biospeak.explorer',[])
                 controller: 'checkoutCtrl as vm',
                 resolve: {
                     loadServices: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['explore/datacart/cart-service.js','explore/checkout/checkout-service.js']);
+                        return $ocLazyLoad.load(['explore/datacart/cart-service.js','explore/checkout/checkout-service.js','export/export-service.js']);
                     }],
                     loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load('explore/checkout/checkout-controller.js');
@@ -172,7 +172,8 @@ angular.module('biospeak.explorer',[])
                                 'lib/plugins/dataTables/js/angular-datatables.js',
                                 'lib/plugins/dataTables/js/angular-datatables.bootstrap.min.js',
                                 'lib/plugins/dataTables/js/angular-datatables.buttons.min.js',
-                                'lib/plugins/dataTables/css/angular-datatables.min.css'
+                                'lib/plugins/dataTables/css/angular-datatables.min.css',
+
 
                             ]
                         })

@@ -9,57 +9,13 @@ function cartService($http,$rootScope,ngAppConfig) {
     var serviceBase = ngAppConfig.apiServiceBaseUri;
 
     var currentCart = {}
-    //currentCart.scs = [];
-    //currentCart.observations = [];
-    //currentCart.assays=[];
 
     var _toggle = true;
     var ready = false;
 
 
-
-    var _getCartQuery = function(projectId,cartId){
-        return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
-            method:'GET'
-        })
-            .then(
-                function (response) {
-                    currentCart = response.data;
-                    ready = true;
-                    return {cart: (response.data),
-
-                    }
-                },
-                function (httpError) {
-                    // translate the error
-                    throw httpError.status + " : " +
-                    httpError.data;
-                });
-    }
-
-    var _getNewCartQuery = function(projectId){
-        var cartId = "new";
-        return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
-            method:'GET'
-        })
-            .then(
-                function (response) {
-                    currentCart = response.data;
-                    ready = true;
-                    return {cart: (response.data),
-                    }
-                },
-                function (httpError) {
-                    // translate the error
-                    throw httpError.status + " : " +
-                    httpError.data;
-                });
-    }
-
     var _addToCart = function(item, module){
-         //console.log('Adding ',item, module)
+        //console.log('Adding ',item, module)
         if(item.isSubjectCharacteristics || item.isDesignElement)
             currentCart.subjCharRequests.push(item);
         if(item.isClinicalObservations)
@@ -74,19 +30,6 @@ function cartService($http,$rootScope,ngAppConfig) {
         //console.log('current Cart',currentCart)
         _toggle = !_toggle;
     };
-
-    var _cartIsReady = function(){
-        return ready;
-    }
-
-    var _addAssayPanel = function(panel){
-        //console.log('Adding Panel', panel.assayId);
-        currentCart.assayPanelRequests[panel.assayId].isRequested = true;
-        //console.log(currentCart);
-
-        _toggle = !_toggle;
-    }
-
     var _removeFromCart = function(item, module){
         var items = []
         if(item.isSubjectCharacteristics || item.isDesignElement)
@@ -107,95 +50,18 @@ function cartService($http,$rootScope,ngAppConfig) {
         }
         // console.log('removing ', item, 'from data cart')
         items.splice(pos,1);
-    }
-
-
-    var _refreshed = function(){
-        return _toggle
-    }
-
-    var _getCurrentCartQuery = function(){
-        return currentCart;
-    }
-
-    var _getCartSubjObsReq = function(){
-        return currentCart.subjCharRequests;
-    }
-    var _getCurrentObservations = function(){
-        return currentCart.obsRequests;
     };
-    var _getCurrentAssayPanels = function(){
+    var _addAssayPanel = function(panel){
+        //console.log('Adding Panel', panel.assayId);
+        currentCart.assayPanelRequests[panel.assayId].isRequested = true;
+        //console.log(currentCart);
 
-        return currentCart.assayPanelRequests;
+        _toggle = !_toggle;
     };
-
-
-    var _subjectsAreFiltered = function(){
-
-    }
-
-    var _getUserQueries = function(projectId){
-        return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/browse',
-            method:'GET'
-        })
-            .then(
-                function (response) {
-                    //currentCart = response.data;
-                    return {
-                        queries: (response.data),
-
-                    }
-                },
-                function (httpError) {
-                    // translate the error
-                    throw httpError.status + " : " +
-                    httpError.data;
-                });
-    }
-
-    
-    var _saveQuery = function(query,projectId){
-
-        //console.log(query)
-        // var combinedQuery = {}
-        // combinedQuery.obsRequests = query.cobs.concat(query.scs);
-        // combinedQuery.name = query.name;
-        // combinedQuery.projectId = projectId;
-        // combinedQuery.assayPanelRequests = query.assaypanels;
-        //console.log(combinedQuery)
-
-        return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/saveQuery',
-            method:'POST',
-            data: angular.toJson(currentCart)
-        })
-            .then(
-                function (response) {
-                    return {
-                        cartId: (response.data.id),
-
-                    }
-                },
-                function (httpError) {
-                    // translate the error
-                    throw httpError.status + " : " +
-                    httpError.data;
-                });
-    }
-
-    var _clearCart = function () {
-        currentCart.scs = []
-        currentCart.observations = []
-        currentCart.assays = []
-    };
-
     var _applyFilter = function(id,filters,isRange,module){
-         // console.log("UPDATING CART WITH FILTER ",id,filters,isRange,module);
+        // console.log("UPDATING CART WITH FILTER ",id,filters,isRange,module);
         var found = false;
-
         var filteredObs;
-
 
         if(module == 'clinical'){
             // console.log(currentCart.obsRequests)
@@ -258,6 +124,115 @@ function cartService($http,$rootScope,ngAppConfig) {
         // console.log(filteredObs)
         $rootScope.$apply();
     };
+    var _clearCart = function () {
+        currentCart.scs = []
+        currentCart.observations = []
+        currentCart.assays = []
+    };
+
+
+    var _getCartQuery = function(projectId,cartId){
+        return $http({
+            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            method:'GET'
+        })
+            .then(
+                function (response) {
+                    currentCart = response.data;
+                    ready = true;
+                    return {cart: (response.data),
+
+                    }
+                },
+                function (httpError) {
+                    // translate the error
+                    throw httpError.status + " : " +
+                    httpError.data;
+                });
+    };
+    var _getNewCartQuery = function(projectId){
+        var cartId = "new";
+        return $http({
+            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            method:'GET'
+        })
+            .then(
+                function (response) {
+                    currentCart = response.data;
+                    ready = true;
+                    return {cart: (response.data),
+                    }
+                },
+                function (httpError) {
+                    // translate the error
+                    throw httpError.status + " : " +
+                    httpError.data;
+                });
+    };
+
+
+
+    var _cartIsReady = function(){
+        return ready;
+    };
+    var _refreshed = function(){
+        return _toggle
+    };
+
+    var _getCurrentCartQuery = function(){
+        return currentCart;
+    };
+    var _getCartSubjObsReq = function(){
+        return currentCart.subjCharRequests;
+    };
+    var _getCurrentObservations = function(){
+        return currentCart.obsRequests;
+    };
+    var _getCurrentAssayPanels = function(){
+
+        return currentCart.assayPanelRequests;
+    };
+
+
+    var _getUserQueries = function(projectId){
+        return $http({
+            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/browse',
+            method:'GET'
+        })
+            .then(
+                function (response) {
+                    //currentCart = response.data;
+                    return {
+                        queries: (response.data),
+                    }
+                },
+                function (httpError) {
+                    // translate the error
+                    throw httpError.status + " : " +
+                    httpError.data;
+                });
+    };
+
+    var _saveQuery = function(query,projectId){
+
+        return $http({
+            url:serviceBase+'apps/explore/projects/'+projectId+'/saveQuery',
+            method:'POST',
+            data: angular.toJson(currentCart)
+        })
+            .then(
+                function (response) {
+                    return {
+                        cartId: (response.data.id),
+                    }
+                },
+                function (httpError) {
+                    // translate the error
+                    throw httpError.status + " : " +
+                    httpError.data;
+                });
+    };
+
 
     var isFloat = function (n) {
         return n === +n && n !== (n | 0);

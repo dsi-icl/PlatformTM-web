@@ -3,7 +3,7 @@
         <h2>Checkout</h2>
         <ol class="breadcrumb">
             <li>
-                <a ui-sref="main.home">Home</a>
+                <a ui-sref="home.dashboard">Home</a>
             </li>
             <li class="active">
                 {{vm.project.accession}}
@@ -16,7 +16,8 @@
     <div class="col-lg-4">
         <div class="title-action">
             <!--<a ng-click="vm.saveProject()" class="btn btn-primary">{{vm.project.isNew ? 'Create Project' : 'Save'}}</a>-->
-            <a ng-click="vm.dontSaveProject()" class="btn btn-primary">Go Back</a>
+            <a class="btn btn-sm btn-default" style="background-color: #23c6c8; color:white;border-color: #2C3E50;" href=""
+               ui-sref="explore.main({projectId:vm.projectId})"> Go Back</a>
         </div>
     </div>
 </div>
@@ -74,6 +75,9 @@
                                         <span>{{grpobs.name}}</span> <div class="p-w-xs"><span ng-if="grpobs.isFiltered"><i class="fa fa-filter"></i></span> {{grpobs.filterText}}</div>
                                         <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                                     </li>
+                                    <li ng-if="vm.cart.obsRequests.length == 0">
+                                        <span style="font-style: italic">None selected</span>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -94,25 +98,14 @@
                                                 </li>
                                             </ul>
                                     </li>
+                                    <!--<li>
+                                        <span style="font-style: italic">None selected</span>
+                                    </li>-->
 
 
                                 </ul>
                             </div>
                         </li>
-
-
-                        <li style="padding: 5px;color: white;list-style: none;">
-                            <div style="    text-align: center;margin-top: 20px;">
-                                <a class="btn btn-sm btn-default" style="background-color: #23c6c8; color:white;border-color: #2C3E50;" href=""
-                                   ui-sref="explore({projectId:vm.projectId})" style=""> CONTINUE EXPLORING</a>
-                            </div>
-
-                        </li>
-
-
-
-
-
                     </ul>
                 </div>
             </div>
@@ -135,7 +128,7 @@
                                 <th></th>
                             </thead>
                             <tbody>
-                                <tr ng-repeat-start="ds in vm.datasets" ng-init="ds.collapse=true; ds.show='info'">
+                                <tr ng-repeat-start="ds in vm.datasets" ng-init="ds.collapse=false; ds.show='info'">
 
                                     <td class="project-status">
                                         <span class="label label-primary">{{ds.type}}</span>
@@ -151,12 +144,11 @@
                                     </td>
 
                                     <td class="project-actions">
-                                      <a class="btn btn-white btn-sm" placeholder="Save to my datasets"><i class="fa fa-save"></i>  </a>
-                                      <a ng-click="ds.collapse = !ds.collapse" placeholder="Edit" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i></a>
-
-                                      <a ng-if="ds.fileIsReady == 0"  ng-click= vm.prepareDataset(ds)  class="btn btn-primary" > Prepare File for download
-                                      <a ng-if="ds.fileIsReady == 1"    class="btn btn-primary" > Preparing
-                                      <a ng-if="ds.fileIsReady == 2"  ng-click=  vm.downloadDataset(ds)  class="btn btn-primary" > Download
+                                        <a ng-click="vm.submitForm(ds)" class="btn btn-white btn-sm" placeholder="Save to my datasets"><i class="fa fa-save"></i> Save</a>
+                                        <a ng-click="ds.collapse = !ds.collapse" placeholder="Edit" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit</a>
+                                        <a ng-if="ds.fileStatus == 0"  ng-click= vm.prepareDataset(ds)  class="btn btn-white btn-sm"> <i class="fa fa-cloud-download"></i> Download</a>
+                                        <a ng-if="ds.fileStatus == 1" class="btn btn-white btn-sm"> <i class="fa fa-circle-o-notch fa-spin  fa-fw"></i> Preparing</a>
+                                        <a ng-if="ds.fileStatus == 2"  ng-click=  vm.downloadDataset(ds)  class="btn btn-white btn-sm" ><i class="fa fa-download"></i> Download</a>
 
                                      </td>
                                  </tr>
@@ -245,28 +237,30 @@
 
                                                                             <!--<p>Sign in today for more expirience.</p>-->
 
-                                                                            <form role="form">
+                                                                            <form id="form_{{ds.id}}" role="form" ng-submit="vm.saveDataset(ds)">
                                                                                 <div class="form-group"><label>Dataset Name </label>
-                                                                                    <input ng-model="ds.name" type="text" placeholder="Enter name" class="form-control">
+                                                                                    <input ng-model="ds.name" type="text" placeholder="Enter name" class="form-control" required>
                                                                                 </div>
                                                                                 <div class="form-group"><label>Dataset Description</label>
-                                                                                    <textarea ng-model="ds.description" class="form-control"></textarea></div>
-                                                                                 <div class="form-group">
+                                                                                    <textarea ng-model="ds.description" class="form-control" placeholder="Enter Dataset Description"  required></textarea></div>
+                                                                                 <!--<div class="form-group">
                                                                                      <label>Tags</label>
-                                                                                     <!--<ui-select multiple tagging tagging-label="(custom 'new' label)" ng-model="step4vm.selectedTags"  sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a tag">
+                                                                                     &lt;!&ndash;<ui-select multiple tagging tagging-label="(custom 'new' label)" ng-model="step4vm.selectedTags"  sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a tag">
                                                                                          <ui-select-match placeholder="Select tags...">{{$item}}</ui-select-match>
                                                                                          <ui-select-choices repeat="tag in step4vm.availableTags | filter:$select.search">
                                                                                              {{tag}}
                                                                                          </ui-select-choices>
-                                                                                     </ui-select>-->
+                                                                                     </ui-select>&ndash;&gt;
                                                                                      <hr>
-                                                                                 </div>
-                                                                                 <div class="form-group">
+                                                                                 </div>-->
+                                                                                 <!--<div class="form-group">
                                                                                      <label>Permissions</label>
                                                                                      <a class="btn btn-white btn-bitbucket btn-xs">
                                                                                          <i class="fa fa-group"></i>
                                                                                      </a>
-                                                                                 </div>
+                                                                                 </div>-->
+                                                                                <input id="but_{{ds.id}}" type="submit" value="submit" hidden >
+
                                                                             </form>
                                                                         <!--</div>-->
                                                                     <!--</div>-->
