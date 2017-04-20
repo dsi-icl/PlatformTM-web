@@ -35,17 +35,27 @@ function ClinicalXF(clinicalDataService,$q){
 
     cfservice.formatData = function(data, requestedObsvs){
         // format our data
+        var dateTimeFormat = d3.time.format('%Y-%m-%dT%H:%M').parse;
+        var dateFormat = d3.time.format('%Y-%m-%d').parse;
+
         data.forEach(function(d) {
 
             requestedObsvs.forEach(function(o){
                 // console.log(o.id); console.log(o.dataType)
-                if(o.dataType != 'string'){
+                if(o.dataType === "dateTime"){
+                    let date = dateTimeFormat(d[o.name]);
+                    if(date === null){
+                        date = dateFormat(d[o.name]);
+                    }
+                    d[o.name] = date;
+                }
+                else if(o.dataType === "string"){
+                    if(d[o.name] === null) d[o.name] = ""
+                }else {
                     //console.log(o.id,' is numeric')
-                    if(d[o.name] != null) d[o.name] = +d[o.name];
+                    if(d[o.name] !== null) d[o.name] = +d[o.name];
                 }
-                if(o.dataType == "string"){
-                    if(d[o.name] == null) d[o.name] = ""
-                }
+
             })
         });
     }

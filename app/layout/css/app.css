@@ -741,7 +741,7 @@ div .dc-chart{
 
 }
 
-.progress-bar {
+.dc-chart .progress-bar{
     background-color: #f3b27f;
 }
 .chart-title {

@@ -121,7 +121,7 @@ angular.module('biospeak.dcPlots')
                     return null;
 
 
-                // console.log("=======2=CREATING ",chartDataType," CHART for ",obsId);
+                //console.log("=======2=CREATING ",chartDataType," CHART for ",obsId, " dataype:",dataType);
 
                 var chartData = DCservice.getChartOptions(obsId, cfDimension, cfGroup, chartDataType, dataType);
 
@@ -343,7 +343,8 @@ angular.module('biospeak.dcPlots')
                     //.group(cfGroup)
 
                 }
-                else if(dataType == 'dateTime'){
+
+                else if(dataType === 'dateTime'){
                     //console.log('making a time chart')
                     chartType = "barChart";
                     chartOptions["width"] = "2000";
@@ -365,7 +366,8 @@ angular.module('biospeak.dcPlots')
                     //chartOptions["renderDataPoints"] = true
 
                 }
-                else if(dataType == 'ordinal' || dataType == 'integer'){
+
+                else if(dataType === 'ordinal' || dataType == 'integer'){
 
                     chartType = "barChart";
                     chartOptions["x"]  = d3.scale.ordinal();
