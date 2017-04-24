@@ -203,7 +203,31 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
     };
     vm.unload = function(){
         console.log(vm.fileSelected)
-        if(vm.fileSelected)
+        if(vm.fileSelected){
+            SweetAlert.swal({
+                    title: "Are you sure you want to unload "+vm.fileSelected.fileName+" ?",
+                    text: "All previously loaded content will be unloaded from the database! ",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, unload it!",
+                    cancelButtonText: "No, cancel plz!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        fileService.unloadFile(fileId)
+                            .then(function (data) {
+                                SweetAlert.swal("Unloaded!", "File " + vm.fileSelected.fileName + " has been unloaded from the database.", "success");
+                                $state.go('datastage.files', {dir: $scope.vm.dir});
+                            })
+                    } else {
+                        SweetAlert.swal("Cancelled", "", "error");
+                    }
+                }
+            )
+        }
+
         //console.log($scope)
         //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
             $state.go('datastage.wizard.step_one',{projectId:vm.projectId, fileId:vm.fileSelected.dataFileId})
