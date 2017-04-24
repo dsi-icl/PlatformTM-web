@@ -48,9 +48,21 @@
         };
 
         var _deleteFile = function(fileId){
-            console.log("fileManager-service part is WORKING- and the file with following ID will be deleted",fileId);
             return $http({
                 url: serviceBase + 'files/'+fileId+'/remove',
+                method: 'GET',
+            }).then(
+                function (response) {
+                    return {
+                        files: (response.data)
+                    }
+                }
+            )
+        };
+
+        var _unloadFile = function(fileId){
+            return $http({
+                url: serviceBase + 'files/'+fileId+'/unload',
                 method: 'GET',
             }).then(
                 function (response) {
@@ -120,6 +132,7 @@
         fileServiceFactory.getDataTableData = _getDataTableData;
         fileServiceFactory.getFileInfo = _getFileInfo;
         fileServiceFactory.deleteFile = _deleteFile;
+        fileServiceFactory.unloadFile = _unloadFile;
 
 
         return fileServiceFactory

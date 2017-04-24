@@ -99,7 +99,7 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
     vm.dontSaveProject = function(){
         vm.project = {}
         project = null
-        $state.go('admin.projects');
+        $state.go('home.dashboard');
     }
 
     vm.deleteProject = function(){
