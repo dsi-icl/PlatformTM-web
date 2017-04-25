@@ -3,7 +3,7 @@
         <h2>{{vm.activity.isNew ? 'New Activity' :'Activity detail'}}</h2>
         <ol class="breadcrumb">
             <li>
-                <a ui-sref="main.home">Home</a>
+                <a ui-sref="home.dashboard">Home</a>
             </li>
             <li>
                <a ui-sref="admin.project({projectId:vm.projectId})">{{vm.projectId}}</a>
@@ -32,7 +32,7 @@
                                 <dt>Activity Title</dt>
                                 <dd>
                                     <div class="col-md-6">
-                                        <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'empty'}}</a>
+                                        <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'Enter Activity Name'}}</a>
                                     </div>
                                 </dd>
                             </dl>
@@ -155,18 +155,14 @@
                     </form>
                 </div>
 
-                <uib-tabset class="tab-panel" active="vm.activeTabIndex" >
-                    <uib-tab  ng-hide="vm.activity.datasets.length > 0" >
-                        <uib-tab-heading class="assay-info" align="center">
-                            <p class="assay-count">
-                                No Template Selected
-                            </p>
-                        </uib-tab-heading>
-                    <!--No Template Info-->
-                    <div ng-hide="vm.activity.datasets.length > 0" class="ibox-content ibox-heading">
-                        <h3>No Template Selected</h3>
+                <div class="ibox-content" ng-if="vm.activity.datasets.length === 0">
+                    <div uib-alert class="alert-info">
+                        <h4>No associated templates set for this activity. Pleae click on the '+' icon above to add a dataset template to this activity.</h4>
                     </div>
-                    </uib-tab>
+                </div>
+
+                <uib-tabset  ng-if="vm.activity.datasets.length > 0" class="tab-panel" active="vm.activeTabIndex" >
+
                     <uib-tab  ng-repeat="ds in vm.activity.datasets" select="vm.tabSelected(ds)">
                         <uib-tab-heading>
                             <p class="tab-info">{{ds.domainId}} : {{ds.name}}</p>
@@ -642,6 +638,17 @@
                             </div>
 
                     </uib-tab>
+                    <!--<uib-tab>
+                        <uib-tab-heading class="assay-info" align="center">
+                            <p class="assay-count">
+                                No Template Selected
+                            </p>
+                        </uib-tab-heading>
+                        &lt;!&ndash;No Template Info&ndash;&gt;
+                        <div ng-hide="vm.activity.datasets.length > 0" class="ibox-content ibox-heading">
+                            <h3>No Template Selected</h3>
+                        </div>
+                    </uib-tab>-->
 
 
 

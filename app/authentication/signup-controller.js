@@ -6,7 +6,7 @@
 
     'use strict';
 
-    function signupController($scope, $location, $timeout, authService){
+    function signupController($scope, $location, $state, authService){
 
         $scope.savedSuccessfully = false;
         $scope.message = "";
@@ -21,6 +21,8 @@
             password: "",
             confirmPassword: ""
         };
+
+        $scope.$state = $state;
 
         $scope.signUp = function () {
 
@@ -50,16 +52,9 @@
                 });
         };
 
-        //Will replace with ngIdle
-        var startTimer = function () {
-            var timer = $timeout(function () {
-                $timeout.cancel(timer);
-                $location.path('/login');
-            }, 2000);
-        }
     }
 
     angular.module('bioSpeak.userAuth')
-        .controller('signupController', ['$scope', '$location', '$timeout', 'authService',signupController])
+        .controller('signupController', ['$scope', '$location', '$state', 'authService',signupController])
 
 })();

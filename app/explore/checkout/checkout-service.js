@@ -28,7 +28,7 @@ function checkoutService($http,$q,ngAppConfig){
                     throw httpError.status + " : " +
                     httpError.data;
                 });
-    }
+    };
 
     var _createCheckoutDatasets = function(cartId){
         return $http({
@@ -43,7 +43,7 @@ function checkoutService($http,$q,ngAppConfig){
             throw httpError.status + " : " +
             httpError.data;
         })
-    }
+    };
 
     var _getDatasetPreview = function(datasetId){
         return $http({
@@ -62,9 +62,7 @@ function checkoutService($http,$q,ngAppConfig){
         //console.log(DTdata[datasetId])
         deferred.resolve(DTdata[datasetId]);
         return deferred.promise;
-    }
-
-
+    };
 
     var _downloadDataset = function(datasetId) {
         console.log("The following dataset will be downloaded:", datasetId);
@@ -88,7 +86,7 @@ function checkoutService($http,$q,ngAppConfig){
             a.click();
         }).error(function (data, status, headers, config) {
         });
-    }
+    };
 
     var _prepareDataset = function(datasetId) {
     //    console.log("The following dataset will be prepared:", datasetId);
@@ -98,7 +96,7 @@ function checkoutService($http,$q,ngAppConfig){
          }).then(function(response){
             return{outcome :(response.statusText)}
                                      });
-    }
+    };
 
     var _isFileReady= function(datasetId) {
     //    console.log("check if following dataset is ready to download:", datasetId);
@@ -108,7 +106,9 @@ function checkoutService($http,$q,ngAppConfig){
         }).then(function(result){
            return{ outcome1 :(result.data)}
                      });
-    }
+    };
+
+
 
     checkoutServiceFactory.getSavedCart = _getSavedCart;
     checkoutServiceFactory.createCheckoutDatasets = _createCheckoutDatasets;

@@ -88,6 +88,7 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             activity.isNew = false;
 
             vm.activity = activity;
+            console.log(vm.activity.datasets.length)
 
             $timeout(function(){
                 //console.log($('#ds_template_tbl'))

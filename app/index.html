@@ -28,10 +28,10 @@
     <link type="text/css" rel="stylesheet" href="lib/dc/dc.css">
 
     <!-- Custom App css -->
-    <link id="load_css_before" type="text/css" rel="stylesheet" href="css/app.css"/>
+    <link id="load_css_before" type="text/css" rel="stylesheet" href="layout/css/app.css"/>
     <link rel="stylesheet" href="layout/css/bs-md-skin.css">
 
-    <link rel="stylesheet" type="text/css" href="css/flaticon/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="layout/css/flaticon/flaticon.css">
     <link rel="stylesheet" type="text/css" href="lib/plugins/pace/pace-flash.css"/>
 
 
@@ -41,8 +41,8 @@
 
 </head>
 
-<body ng-app="eTRIKSdata" class="fixed-nav fixed-sidebar mini-navbar md-skin">
-<div ui-view>Loading App...</div>
+<body ng-app="biospeak.app" ng-controller="appController" class="fixed-nav fixed-sidebar mini-navbar md-skin">
+<div style="height: 100%" ui-view>Loading App...</div>
 </body>
 
 
@@ -93,25 +93,29 @@
 <script src="layout/layout-module.js"></script>
 <script src="layout/directives/minimalizeSideBar.js"></script>
 <script src="layout/directives/sideNavigation.js"></script>
-<script src="layout/directives/iboxTools.js"></script>
+<!--<script src="layout/directives/iboxTools.js"></script>-->
 <script src="layout/directives/icheck.js"></script>
 <script src="layout/directives/fullScroll.js"></script>
 
 <script src="authentication/authentication-module.js"></script>
 <script src="authentication/login-controller.js"></script>
 <script src="authentication/signup-controller.js"></script>
-<script src="authentication/authService.js"></script>
-<script src="authentication/authInterceptorService.js"></script>
+<script src="authentication/auth-service.js"></script>
+<script src="authentication/userSession-service.js"></script>
+
+<script src="authentication/authInterceptor-service.js"></script>
 
 <script src="dataStage/dataStage-module.js"></script>
 <script src="dataStage/loadingWizard/wizard-module.js"></script>
 <script src="explore/explorer-module.js"></script>
+<script src="export/export-module.js"></script>
 <script src="admin/admin-module.js"></script>
 
 
-
-
-<script src="app.js"></script>
+<script src="app.module.js"></script>
+<script src="app.config.js"></script>
+<script src="app.controller.js"></script>
+<script src="app.routes.js"></script>
 <script src="scripts/functions.js"></script>
 
 

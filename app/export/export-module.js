@@ -220,5 +220,5 @@ function config($stateProvider, $urlRouterProvider) {
 }
 
 angular
-    .module('bioSpeak.export',['draggableFieldTree'])
+    .module('bioSpeak.export',[])
     .config(config)

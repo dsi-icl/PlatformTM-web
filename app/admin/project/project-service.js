@@ -2,7 +2,7 @@
  * Created by iemam on 15/08/2016.
  */
 'use strict'
-function ProjectService($http,$resource, ngAppConfig) {
+function projectService($http,$resource, ngAppConfig) {
     var ProjectFactory = {};
     
     var serviceBase = ngAppConfig.apiServiceBaseUri;
@@ -55,4 +55,4 @@ function ProjectService($http,$resource, ngAppConfig) {
 
 }
 angular.module('bioSpeak.config')
-    .factory('ProjectService',['$http','$resource','ngAppConfig', ProjectService])
+    .factory('projectService',['$http','$resource','ngAppConfig', projectService])

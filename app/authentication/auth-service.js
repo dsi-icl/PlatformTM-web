@@ -3,9 +3,7 @@
  */
 'use strict';
 
-function authService($http, $q, localStorageService, ngAppConfig){
-
-//app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', function ($http, $q, localStorageService, ngAuthSettings) {
+function authService($http, $q, $window, localStorageService, userSession, ngAppConfig){
 
     var serviceBase = ngAppConfig.apiServiceBaseUri;
     var authServiceFactory = {};
@@ -55,12 +53,18 @@ function authService($http, $q, localStorageService, ngAppConfig){
 
                 console.log(response);
 
+                let claims = getTokenCalims(response.access_token);
+                //console.log(claims)
                 localStorageService.set('authorizationTFAData', { token: response.access_token, userName: loginData.userName});
 
                 _authentication.isAuth = true;
                 _authentication.userName = loginData.userName;
 
-                deferred.resolve(response);
+
+                userSession.create(claims);
+                //return res.data.user;
+
+                deferred.resolve(response.user);
 
             }).error(function (err, status) {
                 _logOut();
@@ -82,6 +86,27 @@ function authService($http, $q, localStorageService, ngAppConfig){
         return deferred.promise;
     };
 
+    var getTokenCalims = function(token){
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-','+').replace('_','/');
+        return JSON.parse($window.atob(base64));
+
+    };
+
+    var _getCurrentUser = function(){
+
+        return $http({
+            url: serviceBase + 'accounts/currentuser',
+            method: 'GET'
+        }).then(
+            function (response) {
+                return {
+                    user: (response.data.result)
+                }
+            }
+        );
+    };
+
     var _fillAuthData = function () {
 
         var authData = localStorageService.get('authorizationTFAData');
@@ -96,6 +121,7 @@ function authService($http, $q, localStorageService, ngAppConfig){
     authServiceFactory.login = _login;
     authServiceFactory.logOut = _logOut;
     authServiceFactory.fillAuthData = _fillAuthData;
+    authServiceFactory.getCurrentUser = _getCurrentUser;
     authServiceFactory.authentication = _authentication;
 
 
@@ -104,6 +130,6 @@ function authService($http, $q, localStorageService, ngAppConfig){
 
 angular
     .module('bioSpeak.userAuth')
-    .factory('authService',['$http', '$q', 'localStorageService', 'ngAppConfig', authService])
+    .factory('authService',['$http', '$q', '$window','localStorageService','userSession', 'ngAppConfig', authService])
 //.controller('MainCtrl, ['$scope', 'SomeFactory', MainCtrl]);
 

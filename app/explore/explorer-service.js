@@ -106,7 +106,7 @@ function explorerService($http,$rootScope,ngAppConfig) {
         return currentCart.assayPanels;
     }
 
-    var _getUserSavedQueries = function(projectId){
+    var _getUserSavedQueries = function(){
         return null;
     }
 

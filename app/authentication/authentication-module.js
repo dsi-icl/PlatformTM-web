@@ -22,7 +22,7 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
             resolve: {
                 /*loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
-                        'authentication/authService.js','authentication/authInterceptorService.js']);
+                        'authentication/auth-service.js','authentication/authInterceptor-service.js']);
                 }],
                 loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load('authentication/login-controller.js');
@@ -51,7 +51,7 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
             controller : "signupController",
             resolve:{
                 /*loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load('authentication/authService.js');
+                    return $ocLazyLoad.load('authentication/auth-service.js');
                 }],
                 loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load('authentication/signup-controller.js');

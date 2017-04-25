@@ -265,7 +265,7 @@ ISA-Tab Viewer CSS
 }
 
 .assay-icon-proteomics {
-    background: url("../img/assays/proteomics.svg") no-repeat;
+    background: url("../../img/assays/proteomics.svg") no-repeat;
 }
 
 .assay-icon-metabolomics {
@@ -277,7 +277,7 @@ ISA-Tab Viewer CSS
 }
 
 .assay-icon-transcriptomics {
-    background: url("../img/assays/transcriptomics.svg") no-repeat;
+    background: url("../../img/assays/transcriptomics.svg") no-repeat;
 }
 
 

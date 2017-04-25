@@ -5,7 +5,7 @@
         <h2>Projects</h2>
         <ol class="breadcrumb">
             <li>
-                <a ui-sref="main.home">Home</a>
+                <a ui-sref="home.dashboard">Home</a>
             </li>
             <li class="active">
                 <strong>{{vm.project.isNew ? 'New Project' : vm.project.accession}}</strong>
@@ -63,91 +63,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="col-sm-2">
-            <div class="widget style1 lazur-bg">
-                <div class="row vertical-align">
-                    <div class="col-xs-3">
-                        <i class="fa fa-phone fa-3x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <h2 class="font-bold">120</h2>
-                    </div>
-                </div>
-
-            </div>
-            &lt;!&ndash;<table class="table small m-b-xs">
-                <tbody>
-                <tr>
-                    <td>
-                        <strong>142</strong> Projects
-                    </td>
-                    <td>
-                        <strong>22</strong> Followers
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                        <strong>61</strong> Comments
-                    </td>
-                    <td>
-                        <strong>54</strong> Articles
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>154</strong> Tags
-                    </td>
-                    <td>
-                        <strong>32</strong> Friends
-                    </td>
-                </tr>
-                </tbody>
-            </table>&ndash;&gt;
-        </div>
-        <div class="col-sm-2">
-            <div class="widget style1 lazur-bg">
-                <div class="row vertical-align">
-                    <div class="col-xs-3">
-                        <i class="fa fa-euro fa-3x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <h2 class="font-bold">462</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="widget style1 lazur-bg">
-                <div class="row vertical-align">
-                    <div class="col-xs-3">
-                        <i class="fa fa-euro fa-3x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <h2 class="font-bold">462</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <div class="widget style1 lazur-bg">
-                <div class="row vertical-align">
-                    <div class="col-xs-3">
-                        <i class="fa fa-euro fa-3x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <h2 class="font-bold">462</h2>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!--<div class="col-md-3" ng-controller="dashboardFive as chart">-->
-        <!--<small>Sales in last 24h</small>-->
-        <!--<h2 class="no-margins">206 480</h2>-->
-        <!--<div sparkline spark-data="chart.sparkline1" spark-options="chart.sparkline1Options"></div>-->
-        <!--</div>-->
-
-
     </div>
     <div class="row">
 
@@ -212,7 +127,7 @@
                 </div>
                 <div class="ibox-content">
 
-                    <div class="activities-list" full-scroll>
+                    <div class="activities-list">
                         <div class="full-height-scroll" >
                             <ul class="list-group clear-list">
                                 <li class="list-group-item" ng-repeat="activity in vm.activities" ng-class="{'first-item':$first}">
@@ -245,9 +160,9 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h3>Studies
-                    <span class="pull-right">
+                    <!--<span class="pull-right">
                         <button data-ng-disabled="vm.project.isNew" ui-sref="admin.study({projectId:vm.projectId,studyId:0})" class="btn btn-primary btn-xs"><i class="fa fa-plus"/> New Study</button>
-                        </span>
+                        </span>-->
                     </h3>
 
                 </div>

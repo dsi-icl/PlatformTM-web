@@ -44,10 +44,10 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
 
 
     vm.saveQuery = function(){
-        console.log(vm.cartQuery)
+        // console.log(vm.cartQuery)
+        vm.cartQuery.IsSavedByUser = true;
         cartService.saveQuery(vm.cartQuery,vm.projectId).then(function(response){
             cartService.getUserQueries(vm.projectId).then(function(response){
-                //console.log(response);
                 vm.savedQueries = response.queries;
             })
 
@@ -56,7 +56,6 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
 
     vm.saveToCartAndCheckout = function(){
         cartService.saveQuery(vm.cartQuery, vm.projectId).then(function(response){
-            //console.log(response.cartId)
             $state.go('datacart.checkout',{
                 projectId: vm.projectId,
                 cartId: response.cartId});
@@ -70,22 +69,6 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
             queryId: queryId});
     }
 
-
-    // vm.removeFilter = function(chartGroup,obs){
-    //     //if(chartGroup == 'subject')
-    //     console.log('remove filter ',obs, 'from ', chartGroup)
-    //     XFilterLinker.removeFilter(chartGroup,obs);
-    // }
-    //
-    // vm.resetAllFilters = function(){
-    //     console.log('remove all filters ')
-    // }
-    //
-    // vm.saveFilters = function(){
-    //     vm.query.subjFilters = vm.subjFilters;
-    //     vm.query.clinicalFilters = vm.clinicalFilters;
-    //     console.log(vm.query)
-    // }
 
 }
 

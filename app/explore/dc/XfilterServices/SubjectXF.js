@@ -19,19 +19,25 @@ function SubjectXF(subjectDataService,$q){
 
     subjCfService.formatData = function(data, requestedObsvs){
 
-        var dateFormat = d3.time.format('%Y-%m-%dT%H:%M').parse
+        var dateTimeFormat = d3.time.format('%Y-%m-%dT%H:%M').parse;
+        var dateFormat = d3.time.format('%Y-%m-%d').parse;
 
         if(requestedObsvs)
             data.forEach(function(d) {
                 //console.log(d)
                 requestedObsvs.forEach(function(o){
                     //console.log(o.name); console.log(o.dataType)
-                    if(o.dataType == "dateTime"){
-                        //console.log(d)
-                        d[o.name] = dateFormat(d[o.name]);
-                        //console.log('2',d[o.name])
-                    }else if(o.dataType == "string"){
-                        if(d[o.name] == null) d[o.name] = ""
+                    if(o.dataType === "dateTime"){
+                        // console.log(d[o.name]);
+
+                        let date = dateTimeFormat(d[o.name]);
+                        if(date === null){
+                            date = dateFormat(d[o.name]);
+                        }
+                        d[o.name] = date;
+                        // console.log('2',d[o.name])
+                    }else if(o.dataType === "string"){
+                        if(d[o.name] === null) d[o.name] = ""
                     }else {
                         //console.log(o.id,' is numeric')
                         if(d[o.name] != null) d[o.name] = +d[o.name];

@@ -10,7 +10,6 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource"])
                 abstract : true,
                 url: "/admin",
                 templateUrl:"layout/content.html",
-                controller: "logOutController",
                 resolve: {
                     loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
                         return $ocLazyLoad.load({
@@ -63,7 +62,6 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource"])
                 templateUrl:"admin/project/project-list.html",
                 controller: "ProjectsCtrl as vm",
                 resolve: {
-
 
                     loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                         console.log("loading project service");

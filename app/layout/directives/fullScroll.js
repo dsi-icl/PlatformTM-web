@@ -18,4 +18,4 @@ function fullScroll($timeout){
 
 angular
     .module('bioSpeak.layout')
-    .directive('fullScroll', sideNavigation)
+    .directive('fullScroll', fullScroll)
