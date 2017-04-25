@@ -119,10 +119,10 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
                 closeOnCancel: false },
             function (isConfirm) {
                 if (isConfirm) {
-                    ProjectService.deleteProject(projectId)
+                    projectService.deleteProject(projectId)
                         .then(function(data){
                             SweetAlert.swal("Deleted!", "Project "+vm.project.name+" has been deleted.", "success");
-                            $state.go('admin.projects');
+                            $state.go('home.dashboard');
                         })
                 } else {
                     SweetAlert.swal("Cancelled", "", "error");
