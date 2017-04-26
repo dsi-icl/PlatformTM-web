@@ -57,6 +57,43 @@ function dashboardController($scope, $state, $stateParams,projectService, export
 
     }
 
+     vm.deleteDataset = function(datasetId){
+         exportService.deleteDataset(datasetId)
+         .then(function(data){
+             vm.refreshDatasets();
+         });
+     }
+
+// following is not working as sweetalarm should be declared!!!!!!!
+
+  /* vm.deleteDataset1 = function(datasetId){
+            SweetAlert.swal({
+                title: "Are you sure you want to delete this dataset ?",
+                text: "this dataset will be permanently deleted! ",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false },
+            function (isConfirm) {
+                if (isConfirm) {
+                    exportService.deleteDataset(datasetId)
+                        .then(function(data){
+                            SweetAlert.swal("Deleted!");
+                            vm.refreshDatasets();
+                        })
+                } else {
+                    SweetAlert.swal("Cancelled", "", "error");
+                }
+            });
+
+
+    }*/
+
+
+
 }
 angular.module('biospeak.app')
     .controller('DashboardCtrl',['$scope', '$state','$stateParams','projectService','exportService','cartService','checkoutService',dashboardController])
