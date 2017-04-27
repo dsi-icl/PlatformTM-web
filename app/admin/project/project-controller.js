@@ -1,13 +1,13 @@
 'use strict'
-function projectController($scope, $state, $stateParams,projectService,toaster, SweetAlert) {
+function projectController($scope, $state, $stateParams,projectService,toaster, SweetAlert, FileUploader,$uibModal) {
     var vm = this;
     
     vm.project = {}
 
-
+    vm.ready = false;
     var project;
     vm.projectId = $stateParams.projectId
-    if($stateParams.projectId=='new'){
+    if($stateParams.projectId === 'new'){
         console.log("New Project");
         project = new projectService.getProjectResource();
         project.isNew = true;
@@ -15,17 +15,42 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
         project.studies = [];
         vm.project = project;
 
-        toaster.pop('info', "Create a project first by editing Project Name", " ",8000);
+        // toaster.pop('info', "Create a project first by editing Project Name", " ",8000);
+        var modalInstance = $uibModal.open({
+            templateUrl: 'admin/project/newForm.html',
+            controller: function ($uibModalInstance) {
+                var modalCtrl = this;
+                modalCtrl.ok = function () {
+                    $uibModalInstance.close();
+                    console.log(modalCtrl.project)
+                    vm.project.name = modalCtrl.project.name;
+                    vm.project.title = modalCtrl.project.title;
+                    vm.saveProject();
+
+                };
+
+                modalCtrl.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                    vm.dontSaveProject();
+
+                };
+            },
+            controllerAs: 'modalCtrl'
+        });
+        vm.ready = true
 
     }
+
+
     else if($stateParams.projectId){
-        projectService.getProjectResource.getProjectByAccession({ projectId: $stateParams.projectId }, function(response){
-            project = response;
-            project.isNew = false;
+        projectService.getProjectResource.getProjectByAccession({ projectId: $stateParams.projectId },
+            function(response){
+                project = response;
+                project.isNew = false;
 
-            vm.project = project
+                vm.project = project
 
-            console.log(vm.project);
+                vm.ready = true
 
         });
     }
@@ -130,6 +155,20 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
             });
     }
 
+    var uploader = vm.uploader = new FileUploader({
+        url: ''//'files/projects/'+projectId+'/upload/'+$stateParams.dir
+    });
+
+    uploader.filters.push({
+        name: 'imageFilter',
+        fn: function(item /*{File|FileLikeObject}*/, options) {
+            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+            return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+        }
+    });
+
 }
+
+
 angular.module('bioSpeak.config')
-    .controller('ProjectCtrl',['$scope', '$state','$stateParams','projectService','toaster','SweetAlert', projectController])
+    .controller('ProjectCtrl',['$scope', '$state','$stateParams','projectService','toaster','SweetAlert','FileUploader','$uibModal', projectController])

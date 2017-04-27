@@ -138,8 +138,8 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
                 if (isConfirm) {
                     fileService.deleteFile(fileId)
                         .then(function(data){
-                            SweetAlert.swal("Deleted!", "File "+vm.fileSelected.fileName+" has been unloaded and deleted.", "success");
-                            $state.go('datastage.files',{dir:$scope.vm.dir});
+                            SweetAlert.swal("Deleted!", "File "+vm.fileSelected.fileName+" has been deleted.", "success");
+                            $state.go('datastage.files',{dir:vm.dir});
                         })
                 } else {
                     SweetAlert.swal("Cancelled", "", "error");
@@ -201,8 +201,9 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
         //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
         $state.go('datastage.wizard.step_one',{projectId:vm.projectId, fileId:vm.fileSelected.dataFileId})
     };
+
     vm.unload = function(){
-        console.log(vm.fileSelected)
+        //console.log(vm.fileSelected)
         if(vm.fileSelected){
             SweetAlert.swal({
                     title: "Are you sure you want to unload "+vm.fileSelected.fileName+" ?",
@@ -216,10 +217,10 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
                     closeOnCancel: false },
                 function (isConfirm) {
                     if (isConfirm) {
-                        fileService.unloadFile(fileId)
+                        fileService.unloadFile(vm.fileSelected.dataFileId)
                             .then(function (data) {
                                 SweetAlert.swal("Unloaded!", "File " + vm.fileSelected.fileName + " has been unloaded from the database.", "success");
-                                $state.go('datastage.files', {dir: $scope.vm.dir});
+                                $state.go('datastage.files', {dir: vm.dir});
                             })
                     } else {
                         SweetAlert.swal("Cancelled", "", "error");
@@ -227,10 +228,6 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
                 }
             )
         }
-
-        //console.log($scope)
-        //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
-            $state.go('datastage.wizard.step_one',{projectId:vm.projectId, fileId:vm.fileSelected.dataFileId})
     }
 
     vm.computeFields = function(){
