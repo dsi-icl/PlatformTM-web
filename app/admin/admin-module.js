@@ -44,7 +44,8 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource"])
                                     'lib/plugins/ui-select/js/select.min.js',
                                     'lib/plugins/angular-ui-select/js/select.min.js',
                                     'lib/plugins/ngSweetAlert/js/sweetalert.min.js',
-                                    'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js'
+                                    'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js',
+                                    'lib/plugins/angular-file-upload/angular-file-upload.min.js'
                                     ]
                             },
                             {
