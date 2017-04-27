@@ -2,7 +2,7 @@
  * Created by iemam on 06/04/2017.
  */
 'use strict'
-function dashboardController($scope, $state, $stateParams,projectService, exportService, cartService, checkoutService ) {
+function dashboardController($state,$stateParams,projectService, exportService, cartService, checkoutService, SweetAlert ) {
     var vm = this;
 
     var date = new Date();
@@ -57,24 +57,24 @@ function dashboardController($scope, $state, $stateParams,projectService, export
 
     }
 
-     vm.deleteDataset = function(datasetId){
+     /*vm.deleteDataset = function(datasetId){
          exportService.deleteDataset(datasetId)
          .then(function(data){
              vm.refreshDatasets();
          });
-     }
+     }*/
 
 // following is not working as sweetalarm should be declared!!!!!!!
 
-  /* vm.deleteDataset1 = function(datasetId){
+   vm.deleteDataset = function(datasetId){
             SweetAlert.swal({
                 title: "Are you sure you want to delete this dataset ?",
-                text: "this dataset will be permanently deleted! ",
+                text: "Dataset will be permanently deleted! ",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel plx!",
+                cancelButtonText: "No, cancel plz!",
                 closeOnConfirm: false,
                 closeOnCancel: false },
             function (isConfirm) {
@@ -90,10 +90,10 @@ function dashboardController($scope, $state, $stateParams,projectService, export
             });
 
 
-    }*/
+    }
 
 
 
 }
 angular.module('biospeak.app')
-    .controller('DashboardCtrl',['$scope', '$state','$stateParams','projectService','exportService','cartService','checkoutService',dashboardController])
+    .controller('DashboardCtrl',['$state','$stateParams','projectService','exportService','cartService','checkoutService','SweetAlert',dashboardController])

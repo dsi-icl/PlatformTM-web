@@ -38,6 +38,24 @@ angular.module('biospeak.app').config(function($stateProvider, $urlRouterProvide
                         'admin/project/project-service.js','export/export-service.js',
                         'explore/datacart/cart-service.js','explore/checkout/checkout-service.js']);
                 }],
+                loadPlugins:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load(['lib/plugins/ngSweetAlert/js/sweetalert.min.js',
+                        'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js'
+                    ]);
+                }],
+                loadCSS:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            serie:true,
+                            insertBefore: '#load_css_before',
+                            files:[
+                                'lib/plugins/angular-xeditable/css/xeditable.css',
+                                'lib/plugins/ngSweetAlert/css/sweetalert.css']
+                        }
+
+                    ])
+                }],
+
                 /*loadDirectives:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load(['admin/studies/study-plan-directives.js'
                     ]);
@@ -45,7 +63,7 @@ angular.module('biospeak.app').config(function($stateProvider, $urlRouterProvide
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load(['home/dashboard-controller.js'
                     ]);
-                }],
+                }]
             }
             //templateUrl:"admin/project/project-list.html"
             /*templateUrl:"dashboard/dashboard.html"*/
