@@ -48,8 +48,8 @@
                 <div class="ibox-content" style=" height: 500px">
                     <div ng-if="vm.projects.length > 0">
                         <div style="background: #f3f3f4; padding: 10px; height: 465px" full-scroll >
-                            <div ng-repeat="p in vm.projects" style="width: 200px; height: 195px; margin: 5px; display: inline-block" >
-                                <div class="ibox">
+                            <div ng-repeat="p in vm.projects" style="margin: 5px; display: inline-block" >
+                                <div class="ibox" style="width: 235px; height: 182px;  display: inline-block">
                                     <div class="ibox-title">
                                         <span ng-if="p.name != 'CDISCTEST'" class="label label-warning pull-right"><i class="fa fa-lock" aria-hidden="true"></i></span>
 
@@ -88,9 +88,9 @@
                                         <div >
                                             <div class="text-center">
                                                 <div class="btn-group">
-                                                    <a ui-sref="explore.main({projectId:p.id})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> </a>
-                                                    <a ui-sref="admin.project({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> </a>
-                                                    <a ui-sref="datastage.files({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-database"></i></a>
+                                                    <a ui-sref="explore.main({projectId:p.id})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore</a>
+                                                    <a ui-sref="admin.project({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure</a>
+                                                    <a ui-sref="datastage.files({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage</a>
                                                 </div>
                                             </div>
                                         </div>
