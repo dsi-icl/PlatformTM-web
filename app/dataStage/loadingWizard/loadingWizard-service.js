@@ -162,6 +162,18 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     };
 
+    var _getLoadingProgress = function(fileId){
+        return $http({
+            url: serviceBase + 'files/' + fileId+'/progress',
+            method: 'GET',
+        }).then(
+            function (response) {
+                console.log(response)
+                return response.data
+            }
+        )
+    }
+
     var _extractObs = function(datasetId, fileId){
         var deferred = $q.defer();
         $http.get(serviceBase + 'datasets/'+datasetId+'/load/files/'+fileId)
@@ -184,6 +196,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     wizardServiceFactory.extractObs = _extractObs;
     wizardServiceFactory.updateDatasetFile = _updateDatasetFile;
     wizardServiceFactory.getFile = _getFile;
+    wizardServiceFactory.getLoadingProgress = _getLoadingProgress;
 
 
     return wizardServiceFactory;

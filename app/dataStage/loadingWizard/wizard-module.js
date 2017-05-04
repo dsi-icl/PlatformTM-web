@@ -62,7 +62,7 @@ function config($stateProvider){
             /*params: {
                 map: null
             },*/
-            controller: 'stepThreeController',
+            controller: 'stepThreeController as vm',
             resolve: {
                 loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([
@@ -107,7 +107,7 @@ function config($stateProvider){
         .state('datastage.wizard.step_five', {
             url: '/load/:activityId/:datasetId/:fileId',
             templateUrl: 'dataStage/loadingWizard/stepFive.html',
-            controller: 'stepFiveController',
+            controller: 'stepFiveController as vm',
             resolve:{
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([

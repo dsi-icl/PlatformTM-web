@@ -116,9 +116,11 @@
 
                 <div class="ibox-content">
                     <div class="alert alert-info">
-                        <h5>{{vm.datasets.length}} new datasets were created based on your data cart</h5>
+                        <h3 ng-show="vm.datasets.length > 0">{{vm.datasets.length}} new datasets created based on your data cart</h3>
+                        <h3 ng-show="vm.datasets.length == 0">Preparing check out datasets...</h3>
+
                     </div>
-                    <div class="project-list">
+                    <div ng-if="vm.datasets.length > 0"class="project-list">
                         <table class="table table-hover">
                             <thead>
                                 <th>Type</th>
@@ -128,7 +130,7 @@
                                 <th></th>
                             </thead>
                             <tbody>
-                                <tr ng-repeat-start="ds in vm.datasets" ng-init="ds.collapse=false; ds.show='info'">
+                                <tr ng-repeat-start="ds in vm.datasets" ng-init="ds.collapse=true; ds.show='info'">
 
                                     <td class="project-status">
                                         <span class="label label-primary">{{ds.type}}</span>
@@ -144,7 +146,7 @@
                                     </td>
 
                                     <td class="project-actions">
-                                        <a ng-click="vm.submitForm(ds)" class="btn btn-white btn-sm" placeholder="Save to my datasets"><i class="fa fa-save"></i> Save</a>
+                                        <a ng-click="ds.collapse=false;vm.submitForm(ds)" class="btn btn-white btn-sm" placeholder="Save to my datasets"><i class="fa fa-save"></i> Save</a>
                                         <a ng-click="ds.collapse = !ds.collapse" placeholder="Edit" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit</a>
                                         <a ng-if="ds.fileStatus == 0"  ng-click= vm.prepareDataset(ds)  class="btn btn-white btn-sm"> <i class="fa fa-cloud-download"></i> Download</a>
                                         <a ng-if="ds.fileStatus == 1" class="btn btn-white btn-sm"> <i class="fa fa-circle-o-notch fa-spin  fa-fw"></i> Preparing</a>
