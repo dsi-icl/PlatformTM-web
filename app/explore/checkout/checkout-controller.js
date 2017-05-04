@@ -7,6 +7,7 @@ function checkoutController($timeout,$stateParams,checkoutService,exportService,
     var vm = this;
     vm.projectId = $stateParams.projectId;
     vm.dtColumns=[];
+    vm.datasets = [];
 
     var projectId = $stateParams.projectId;
     var cartId = $stateParams.cartId;
@@ -20,6 +21,7 @@ function checkoutController($timeout,$stateParams,checkoutService,exportService,
      checkoutService.createCheckoutDatasets(cartId)
          .then(function(datasets){
              vm.datasets = datasets;
+             vm.checkout = false
      });
 
 

@@ -12,6 +12,13 @@
 
         $scope.vm.projectId = $stateParams.projectId;
 
+        $scope.vm = {
+            datasetId: $stateParams.datasetId,
+            activityId: $stateParams.activityId,
+            projectId: $stateParams.projectId,
+            fileId: $stateParams.fileId
+        };
+
         //console.log('inside wizard controller',$stateParams.selFiles, 'service')
 
         // $scope.selectFile = function(file){

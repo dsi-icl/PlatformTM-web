@@ -737,8 +737,9 @@ div .dc-chart{
     float: none;
 }
 
-.progress-bar  {
 
+.progress-bar-success {
+    background-color: #23c6c8;
 }
 
 .dc-chart .progress-bar{
@@ -1479,7 +1480,7 @@ a.editable-click {
 
 .dataset-list tbody {
     display:block;
-    height:250px;
+    height:385px;
     overflow:auto;
 }
 .dataset-list thead {

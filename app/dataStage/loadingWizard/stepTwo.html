@@ -17,7 +17,7 @@
             File header did not match associated template. Please provide mappings below.
 
         </div>
-        <div class="alert alert-warning" ng-show="fileInfo.percentMatched > 0 && fileInfo.percentMatched < 100" close="main.closeAlert()">
+        <div class="alert alert-warning m-b-none" ng-show="fileInfo.percentMatched > 0 && fileInfo.percentMatched < 100" close="main.closeAlert()">
             <uib-progressbar type="warning" class="progress-striped" value="fileInfo.percentMatched" >{{fileInfo.percentMatched}}%</uib-progressbar>
             File matched {{fileInfo.percentMatched}}% the associated template.
             The following columns cannot be matched to the template: {{fileInfo.unmappedCols}}
@@ -165,7 +165,7 @@
         </div>
     </div>
 
-    <div class=" pull-right">
+    <div class="btn-group pull-right">
         <a ui-sref="datastage.wizard.step_one" class="btn btn-default">Previous</a>
         <a ng-click="goToStep3()"  data-ng-disabled="!vm.mapSaved && !fileInfo.templateMatched"  class="btn btn-primary">Next</a>
     </div>
