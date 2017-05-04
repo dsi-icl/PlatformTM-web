@@ -153,7 +153,7 @@ angular.module('biospeak.explorer')
                                         '</div>'+
                                         '<div style="position:absolute; right:5px;top:0px;">' +
                                              '<a class="switchery" charting-button ' +
-                                                 'obs="grpNode.defaultObservation"  charting-opts="chartingOpts" quals="grpNode.qualifiers"' +
+                                                 'obs="grpNode.defaultObservation" module="\'clinical\'"  charting-opts="chartingOpts" quals="grpNode.qualifiers"' +
                                                  'ng-init="grpNode.defaultObservation.isActive = false" ' +
                                                  'ng-class="{on:grpNode.defaultObservation.isActive}" '+
                                                  'ng-click="grpNode.defaultObservation.isActive = !grpNode.defaultObservation.isActive; grpNode.isLocked=true; localcallbck(grpNode.defaultObservation)">' +
