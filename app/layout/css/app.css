@@ -737,8 +737,9 @@ div .dc-chart{
     float: none;
 }
 
-.progress-bar  {
 
+.progress-bar-success {
+    background-color: #23c6c8;
 }
 
 .dc-chart .progress-bar{
@@ -764,8 +765,8 @@ div .dc-chart{
 }
 
 .img-dashboard{
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
 }
 
 
@@ -1479,7 +1480,7 @@ a.editable-click {
 
 .dataset-list tbody {
     display:block;
-    height:250px;
+    height:385px;
     overflow:auto;
 }
 .dataset-list thead {
@@ -1526,4 +1527,13 @@ h1.logo-name{
     background-color: rgba(35, 200, 192, 0.22);
     color: #31708f;
     border-color: #bce8f1;
+}
+canvas {
+    background-color: #f3f3f3;
+    -webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
+    -moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
+    box-shadow: 3px 3px 3px 0 #e3e3e3;
+    border: 1px solid #c3c3c3;
+    height: 100px;
+    margin: 6px 0 0 6px;
 }

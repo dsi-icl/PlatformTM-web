@@ -18,7 +18,7 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
         .state('login',{
             url: "/login",
             templateUrl: "authentication/login.html",
-            controller: "loginController",
+            controller: "loginController as vm",
             resolve: {
                 /*loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([

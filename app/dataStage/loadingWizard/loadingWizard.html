@@ -60,19 +60,19 @@
                         <ul>
 
                             <li ui-sref-active="current">
-                                <a ui-sref=".step_one" class="btn-default btn btn-xs"><span>1</span> Select Template</a>
+                                <a ui-sref="datastage.wizard.step_one" class="btn-default btn btn-xs"><span>1</span> Select Template</a>
                             </li>
                             <li ui-sref-active="current">
-                                <a ui-sref=".step_two({datasetId: vm.datasetId, activityId: vm.activityId})" class="btn-default "><span>2</span> Template Mapping</a>
+                                <a ui-sref="datastage.wizard.step_two({datasetId: vm.datasetId, activityId: vm.activityId})" class="btn-default "><span>2</span> Template Mapping</a>
                             </li>
                             <li ui-sref-active="current">
-                                <a ui-sref=".step_three({datasetId: vm.datasetId, activityId: vm.activityId})" class="btn-default"><span>3</span> Preview Data</a>
+                                <a ui-sref="datastage.wizard.step_three({datasetId: vm.datasetId, activityId: vm.activityId, fileId:vm.fileId})" class="btn-default"><span>3</span> Preview Data</a>
                             </li>
                             <li ui-sref-active="current">
-                                <a ui-sref=".step_four({datasetId: vm.datasetId, activityId: vm.activityId})" class="btn-default"><span>4</span> Validation</a>
+                                <a ui-sref="datastage.wizard.step_four({datasetId: vm.datasetId, activityId: vm.activityId, fileId:vm.fileId})" class="btn-default"><span>4</span> Validation</a>
                             </li>
                             <li ui-sref-active="current">
-                                <a ui-sref=".step_five({datasetId: vm.datasetId, activityId: vm.activityId})" class="btn-default"><span>5</span> Load to DB</a>
+                                <a ui-sref="datastage.wizard.step_five({datasetId: vm.datasetId, activityId: vm.activityId, fileId:vm.fileId})" class="btn-default"><span>5</span> Load to DB</a>
                             </li>
                         </ul>
                     </div>

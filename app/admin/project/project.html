@@ -20,17 +20,19 @@
         </div>
     </div>
 </div>
-<div class="wrapper wrapper-content animated fadeIn">
+<div class="wrapper wrapper-content animated fadeIn" ng-show="vm.ready">
 
 
     <div class="row m-t-sm m-b-md">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
 
             <div class="profile-image">
                 <div class="text-center">
-                    <div style="font-size: 5em;"><i class="fa fa-camera"></i></div>
-                    <div><a>Upload project logo</a></div>
+                    <div ng-hide="vm.uploader.queue.length > 0" style="font-size: 5em;"><i class="fa fa-camera"></i> </div>
+                    <!--<div ng-show="vm.uploader.isHTML5" ng-thumb="{ file: vm.uploader.queue[0]._file, height: 100 }"></div>-->
+                    <div><a>Upload project logo</a> <!--<input type="file" nv-file-select="" uploader="vm.uploader" class="btn btn-xs"/>--><br/></div>
                 </div>
+
 
                 <!--<img src="img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">-->
             </div>
@@ -40,7 +42,7 @@
                         <p>
                         <h2 class="no-margins">
                             <!--<span class="title">Project Title: </span>-->
-                            <a tooltip-placement="top" uib-tooltip="On the Top!" required editable-text="vm.project.name" e-placeholder="Enter Project Name">
+                            <a required editable-text="vm.project.name" buttons="no" blur="submit" e-placeholder="Enter Project Name">
                                 {{vm.project.name ||'Project Short Name / Acronym'}}
                             </a>
                         </h2>
@@ -48,7 +50,7 @@
                         <p>
                         <h3>
                             <!--<span class="title">Project Name: </span>-->
-                            <a required editable-text="vm.project.title" e-style="color: green" e-required e-placeholder="Enter Project Title" e-formclass="class1 class2">
+                            <a required editable-text="vm.project.title"buttons="no" blur="submit"  e-style="color: green" e-required e-placeholder="Enter Project Title" e-formclass="class1 class2">
                                 {{vm.project.title || 'Project Title'}}
                             </a>
                         </h3>
@@ -73,7 +75,7 @@
                     <h3>About {{vm.project.isNew ? ' the project': vm.project.name}}</h3>
 
                     <p class="small">
-                        <a href="#" editable-textarea="vm.project.desc" e-rows="7" e-cols="20">
+                        <a href="#" editable-textarea="vm.project.desc" buttons="no" blur="submit" e-rows="7" e-cols="20">
                             <pre>{{ vm.project.desc || 'No description' }}</pre>
                         </a>
                     </p>
@@ -150,7 +152,6 @@
                                 <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="admin.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
                             </div>
                         </h4>
-
                     </div>
                 </div>
             </div>

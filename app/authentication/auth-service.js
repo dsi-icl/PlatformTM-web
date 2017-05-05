@@ -53,7 +53,7 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
 
                 console.log(response);
 
-                let claims = getTokenCalims(response.access_token);
+                var claims = getTokenCalims(response.access_token);
                 //console.log(claims)
                 localStorageService.set('authorizationTFAData', { token: response.access_token, userName: loginData.userName});
 

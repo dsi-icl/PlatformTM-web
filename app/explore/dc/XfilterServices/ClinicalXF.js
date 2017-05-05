@@ -421,25 +421,25 @@ function ClinicalXF(clinicalDataService,$q){
 
         var filteredSubjectIds = [];
 
-        filteredSubjectIds = findingsSubjIds
+        //filteredSubjectIds = findingsSubjIds
 
         //This was doing the union of
-        /*if(isFindingsXFFiltered()) {
+       // if(isFindingsXFFiltered()) {
          //console.log('findings filtered')
          findingsSubjIds.forEach(function (id) {
-         if (filteredSubjectIds.indexOf(id) == -1)
-         filteredSubjectIds.push(id);
-         })
-         }
-         if(isEventsXFFiltered()) {
+            if (filteredSubjectIds.indexOf(id) == -1)
+                filteredSubjectIds.push(id);
+         });
+         //}
+         //if(isEventsXFFiltered()) {
          //console.log('events filtered')
          eventsSubjIds.forEach(function (id) {
-         if (filteredSubjectIds.indexOf(id) == -1)
-         filteredSubjectIds.push(id);
+            if (filteredSubjectIds.indexOf(id) == -1)
+                filteredSubjectIds.push(id);
          })
-         }*/
+         //}
         console.log(filteredSubjectIds.length);
-        return filteredSubjectIds;//($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }))
+        return filteredSubjectIds;
     }
 
     cfservice.resetSubjectFilter = function(){

@@ -455,6 +455,15 @@ float: left;
     width: 20%;
 }
 
+/*.md-skin .sk-spinner-wave div {
+    background-color: #f8ac59;
+    height: 100%;
+    width: 6px;
+    display: inline-block;
+    -webkit-animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
+    animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
+}*/
+
 /*
 .thumb .table > thead > tr > th,
 .table > tbody > tr > th,

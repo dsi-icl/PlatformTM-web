@@ -47,6 +47,23 @@
             )
         };
 
+        var _createDirectory= function (projectId,dirname) {
+            console.log('inside service',dirname)
+
+            return $http({
+                url: serviceBase + 'files/projects/'+projectId+'/createdir/',
+                method: 'POST',
+                data: { name: dirname }
+
+            }).then(
+                function (response) {
+                    return {
+                        files: (response.data)
+                    }
+                }
+            )
+        };
+
         var _deleteFile = function(fileId){
             return $http({
                 url: serviceBase + 'files/'+fileId+'/remove',
@@ -72,23 +89,6 @@
                 }
             )
         }
-
-        var _createDirectory= function (projectId,dirname) {
-                console.log('inside service',dirname)
-
-            return $http({
-                url: serviceBase + 'files/projects/'+projectId+'/createdir/',
-                method: 'POST',
-                data: { name: dirname }
-
-            }).then(
-                function (response) {
-                    return {
-                        files: (response.data)
-                    }
-                }
-            )
-        };
 
         var _getDataTablePreview = function(fileId){
             console.log(fileId);
