@@ -101,8 +101,8 @@ angular.module('eTRIKSdata.dcPlots',[])
                 /**
                  * Create Unique Subjects Group
                  */
-                let subjIndexDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
-                let subjectGroup = subjIndexDim.group();
+                var subjIndexDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
+                var subjectGroup = subjIndexDim.group();
                 XfilterAssayMap[assayId].subjectGroup = subjectGroup
 
 
@@ -984,7 +984,7 @@ angular.module('eTRIKSdata.dcPlots',[])
                 console.log('SUBJECT AND ASSAY TO CLINICAL')
                 //REAPPLY subjectFilteredIds and AssaySubjectFiltered Ids
 
-                let filteredIds = _retainAll(_subjectFilters['clinicalXF']);
+                var filteredIds = _retainAll(_subjectFilters['clinicalXF']);
                 ClinicalCf.resetSubjectFilter();
                 ClinicalCf.filterBySubjects(filteredIds);
 
@@ -996,7 +996,7 @@ angular.module('eTRIKSdata.dcPlots',[])
             if(xfFiltered.getXFname()  == 'SubjCf' && _subjectFilters['subjectXF'].length > 0){
                 console.log('CLINICAL AND ASSAY TO SUBJECT')
 
-                let filteredIds = _retainAll(_subjectFilters['subjectXF']);
+                var filteredIds = _retainAll(_subjectFilters['subjectXF']);
                 SubjCf.resetSubjectFilter();
                 SubjCf.filterBySubjects(filteredIds);
 
@@ -1007,7 +1007,7 @@ angular.module('eTRIKSdata.dcPlots',[])
             //ADDING A CHART TO ASSAY, APPLY IDS FROM SUBJECT AND CLINICAL
             if(xfFiltered.getXFname()  == 'AssayCf' && _subjectFilters['assayXF'].length > 0){
                 console.log('CLINICAL AND SUBJECT TO ASSAY')
-                let filteredIds = _retainAll(_subjectFilters['assayXF']);
+                var filteredIds = _retainAll(_subjectFilters['assayXF']);
                 AssayCf.resetSubjectFilter();
                 AssayCf.filterBySubjects(filteredIds);
             }

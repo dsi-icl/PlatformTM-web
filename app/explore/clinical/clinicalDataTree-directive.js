@@ -368,9 +368,8 @@ angular.module('biospeak.explorer')
                                         '<div class="cardlock" id="'+ cardId +'">'+
                                         '<div class="card">'+
                                         '<h1 class="border-bottom">{{obs.o3}}</h1>'+
-                                        '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  module="module" class="qualifier-menu"></dc-chart-menu>'+
-                                        '<div>' +
-                                        '</div>'
+                                        '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  module="module" class="qualifier-menu"></dc-chart-menu>'
+
                                     )(scope)
                                 )
                         })

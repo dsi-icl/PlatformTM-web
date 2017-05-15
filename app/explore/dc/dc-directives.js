@@ -16,7 +16,8 @@ angular.module('biospeak.dcPlots')
             scope:{
                 obs:'=',
                 chartingOpts:'=',
-                module:'='
+                module:'=',
+                onFiltered:'&'
             },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
 
@@ -105,9 +106,10 @@ angular.module('biospeak.dcPlots')
             link: function (scope, element, attrs) {
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
-                        var groupChart = scope.chartingOpts.chartGroup
-                        var xf = scope.xfService
+                        var groupChart = scope.chartingOpts.chartGroup;
+                        var xf = scope.xfService;
                         scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), groupChart);
+                        scope.chartToPlot.on()
 
                         if(scope.rangeChart){
                             // console.log('rangeChart is there',scope.rangeChart)
@@ -126,7 +128,7 @@ angular.module('biospeak.dcPlots')
 
                             console.log('RESETTING FILTER')
                             //scope.chartToPlot.filterAll(groupChart);
-                            if(scope.chartToPlot.chartType == 'barChart'){
+                            if(scope.chartToPlot.chartType === 'barChart'){
                                 scope.chartToPlot.isRefocusing = true;
                                 scope.chartToPlot.focus();
                                 scope.chartToPlot.isRefocusing = false;

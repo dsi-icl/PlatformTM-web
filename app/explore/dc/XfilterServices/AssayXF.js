@@ -98,8 +98,8 @@ function AssayXF(assayDataService,$q){
             /**
              * Create Unique Subjects Group
              */
-            let subjIndexDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
-            let subjectGroup = subjIndexDim.group();
+            var subjIndexDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
+            var subjectGroup = subjIndexDim.group();
             XfilterAssayMap[assayId].subjectGroup = subjectGroup
 
 
@@ -186,7 +186,7 @@ function AssayXF(assayDataService,$q){
 
     cfservice.getSubjectCountGroup = function(assayId){
 
-        let uniqueSubjGrp = {value: function() {
+        var uniqueSubjGrp = {value: function() {
             if(XfilterAssayMap[assayId].subjectGroup.size() != 0)
                 return XfilterAssayMap[assayId].subjectGroup.all().filter(function(kv){return kv.value>0;}).length;
             return 0;

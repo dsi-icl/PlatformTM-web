@@ -24,19 +24,15 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjectXF,DC
 
     SubjectXF.resetXF();
 
+
     $scope.cartService = cartService
 
-    vm.updateCurrentCart = function(sc) {
 
-        /*if(sc.isActive)
-            cartService.addSubjChar(sc);
-        else
-            cartService.removeSubjChar(sc)*/
-    };
 
-    $scope.$watch('cartService.cartIsReady()',function (ready) {
+
+   // $scope.$watch('cartService.cartIsReady()',function (ready) {
         //console.log(ready)
-        if(ready){
+      //  if(ready){
 
             subjectDataService.getSubjCharacteristics(projectId)
                 .then(function(response){
@@ -45,7 +41,7 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjectXF,DC
                     vm.TPs = response.TPs;
                     vm.DEs = response.DEs;
 
-                    currentCartSubjObRequests = cartService.getCartSubjObsReq();
+                    //currentCartSubjObRequests = cartService.getCartSubjObsReq();
 
                     //console.log("SAVED SUBJECT OBSERVATION REQUESTS: ",currentCartSubjObRequests);
                     SubjectXF.refreshCf(projectId,currentCartSubjObRequests).then(function(res){
@@ -57,9 +53,9 @@ function SubjectsController($scope,$stateParams,subjectDataService, SubjectXF,DC
                 })
 
 
-        }
+     //   }
 
-    },true)
+  //  },true)
 
     var currentCartSubjObRequests
 

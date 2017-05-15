@@ -31,14 +31,14 @@
                                             <div class="list-item-text" ng-repeat="de in vm.DEs" >
                                                 <div class="plotting-switch">
                                                     <a class="switchery"
-                                                       charting-button id="sc_{{de.id}}"
+                                                        id="sc_{{de.id}}"
                                                        obs= "de"
                                                        charting-opts="vm.chartingOpts",
                                                        module="vm.chartingOpts.chartGroup",
                                                        style="color: #222f3f;"
                                                        ng-init="de.isActive = false"
                                                        ng-class="{on:de.isActive}"
-                                                       ng-click="de.isActive = !de.isActive;" >
+                                                       ng-click="de.isActive = !de.isActive;expVM.plotSwitchClicked(de,vm.chartingOpts)" >
                                                         <small></small>
                                                     </a>
                                                 </div>
@@ -104,6 +104,18 @@
                                 <div class="ibox-content">
                                     <div class="anchor">
                                         <div class="charts-container" id="subject-plots" ng-hide="show =='table'">
+
+                                            <div ng-repeat="req in expVM.cartQuery.subjCharRequests" class="cardlock " id="{{req.cardId}}">
+                                                <div class="card">
+                                                    <h1 class="border-bottom">{{req.o3}}</h1>
+                                                    <dc-chart-menu obs="req" quals="quals" charting-opts="chartingOpts" module="module" class="qualifier-menu"></dc-chart-menu>
+                                                    <div id="{{req.chartId}}" class="chart" ng-switch="req.dataType">
+                                                        <dc-time-chart ng-switch-when="dateTime" charting-opts="vm.chartingOpts" obs="req"></dc-time-chart>
+                                                        <dc-chart ng-switch-default charting-opts="vm.chartingOpts" obs="req" module="vm.chartingOpts.chartGroup"></dc-chart>
+                                                    </div>
+                                                </div>
+                                            </div>
+
 
                                             <div class="cardlock placeholder">
                                                 <div class="anchor">

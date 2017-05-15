@@ -1,8 +1,8 @@
 
 angular.module('biospeak.dcPlots')
 
-    .factory('DCchartingService',['$q','$injector','XFilterLinker','cartService',
-        function($q,$injector,XFilterLinker,cartService){
+    .factory('DCchartingService',['$q','$injector','XFilterLinker','explorerService',
+        function($q,$injector,XFilterLinker,explorerService){
 
 
             var DCservice = {}
@@ -136,16 +136,16 @@ angular.module('biospeak.dcPlots')
                 //chart.chartGroup(chartGrp);
                 //console.log(dc.chartRegistry.list(chartGrp));
 
-                 if(chart.chartDataType != "rangeChart"){
+                 if(chart.chartDataType !== "rangeChart"){
                      chart.on('filtered',function(chart,filter){
 
                          if(chart.isRefocusing){
-                             console.log('Chart is refocusing');
+                             //console.log('Chart is refocusing');
                              return;
                          }
 
 
-                         console.log("/////EVENT CHART",chart.dataType, "FILTERED////",obsId,'FILTER:',filter);
+                         //console.log("/////EVENT CHART",chart.dataType, "FILTERED////",obsId,'FILTER:',filter);
                          // console.log('chart is refreshing ', chart.IsRefreshing)
                          // console.log('----PROPAGATING FILTER TO OTHER XFilters')
                          // xfilterService.setActiveFilters(chart.dimName,filter);
@@ -162,8 +162,8 @@ angular.module('biospeak.dcPlots')
                          // console.log('----APPLYING FILTER TO CART----')
                          var isRangeFilter = false;
                          if(filter)
-                             isRangeFilter = (filter.filterType == 'RangedFilter');
-                         cartService.applyFilter(obsId,chart.filters(),isRangeFilter,module);
+                             isRangeFilter = (filter.filterType === 'RangedFilter');
+                         explorerService.applyFilter(obsId,chart.filters(),isRangeFilter,module);
 
 
                      });
@@ -186,7 +186,7 @@ angular.module('biospeak.dcPlots')
                 //console.log(allCharts)
                 allCharts.forEach(function(chart){
                     //console.log('got chart ',chart.chartID(),' ',chart.chartGroup(), chart)
-                    if(chart.chartGroup() == chartGroup){
+                    if(chart.chartGroup() === chartGroup){
 
 
                         oldFilters = chart.filters(); // Get current filters
@@ -208,14 +208,14 @@ angular.module('biospeak.dcPlots')
                             chart.group(xfilterService.getGroup(obs,module));
                         }
 
-                        if(chart.chartType == 'dataTable'){
+                        if(chart.chartType === 'dataTable'){
                             // console.log('/////REFRESHING TABLE FOR ',module,' MODULE/////////')
                             chart.dimension(xfilterService.getTableDimension(chart.module ))
                             chart.group(xfilterService.getTableGroup());
                             chart.columns(xfilterService.getTableHeaders(chart.module ));
 
                         }
-                        if(chart.chartType == 'dataCount' ){
+                        if(chart.chartType === 'dataCount' ){
                             // console.log('/////REFRESHING COUNTER WIDGET FOR ',module,' MODULE/////////')
                             chart.dimension(xfilterService.getCountData(chart.module))
                             chart.group(xfilterService.getCountGroup(chart.module));
@@ -538,9 +538,38 @@ angular.module('biospeak.dcPlots')
 
             };
 
-            DCservice.clearAllCharts = function(){
+            DCservice.resetAllCharts = function(){
+                var allCharts = dc.chartRegistry.list();
+                allCharts.forEach(function(chart){
+                    chart.filterAll();
+                });
+                dc.redrawAll();
+            };
 
+            DCservice.resetChart = function(obsReq, chartGroup){
+                var deferred = $q.defer();
+                var chart;
+                var obsId = obsReq.name;
+                var chartDataType = "Count";
+
+                if (angular.isDefined(obsToChartId[obsId+'_'+chartDataType])) {
+
+                    var chartId = obsToChartId[obsId + '_' + chartDataType];
+
+                    dc.chartRegistry.list(chartGroup).forEach(function (c) {
+                        if (c.chartID() === chartId) {
+
+                            chart = c;
+                            //chart.IsRefreshing = true;
+                            c.filterAll();
+                            //chart.IsRefreshing = false;
+                            dc.redrawAll(chartGroup)
+                            deferred.resolve(chart)
+                        }
+                    });
+                }
+                return deferred.promise;
             };
 
             return DCservice;
-        }])
+        }]);

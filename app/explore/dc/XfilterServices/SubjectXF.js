@@ -30,7 +30,7 @@ function SubjectXF(subjectDataService,$q){
                     if(o.dataType === "dateTime"){
                         // console.log(d[o.name]);
 
-                        let date = dateTimeFormat(d[o.name]);
+                        var date = dateTimeFormat(d[o.name]);
                         if(date === null){
                             date = dateFormat(d[o.name]);
                         }

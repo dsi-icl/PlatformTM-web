@@ -53,7 +53,9 @@ angular.module('biospeak.explorer',[])
                             loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/explorer-controller.js');
                             }],
-
+                            loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load('explore/explorer-service.js');
+                            }],
                             loadDependency: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load([
                                     {
