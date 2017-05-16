@@ -41,9 +41,39 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
 
         var data = "grant_type=password&username=" + encodeURIComponent(loginData.userName) + "&password=" + encodeURIComponent(loginData.password);
         //console.log(data)
-       // console.log(serviceBase + 'token');
+        console.log(serviceBase + 'token');
 
-        var deferred = $q.defer();
+        return $http({
+            url:serviceBase + 'token',
+            method:'POST',
+            data: data,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(
+            function (response) {
+                var result = response.data;
+                console.log(result);
+                if(result.token_result === "success" ){
+                    var claims = getTokenCalims(result.access_token);
+                    localStorageService.set('authorizationTFAData', { token: result.access_token, userName: loginData.userName});
+
+                    _authentication.isAuth = true;
+                    _authentication.userName = loginData.userName;
+                    userSession.create(claims);
+                    return result.user
+                }
+                else
+                    throw result;
+
+            },
+            function (httpError) {
+                // translate the error
+                throw httpError.status + " : " +
+                httpError.data;
+            });
+
+
+
+        /*var deferred = $q.defer();
 
         $http.post(serviceBase + 'token',
             data,
@@ -67,12 +97,13 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
                 deferred.resolve(response.user);
 
             }).error(function (err, status) {
+                //console.log(err);
                 _logOut();
                 deferred.reject(err);
             });
 
         return deferred.promise;
-
+*/
     };
 
     var _logOut = function () {
