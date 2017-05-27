@@ -12,9 +12,9 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
 
     var _subjectFilters = {}
 
-    _subjectFilters['subjectXF'] = []
-    _subjectFilters['clinicalXF'] = []
-    _subjectFilters['assayXF'] = []
+    _subjectFilters['subjectXF'] = [];
+    _subjectFilters['clinicalXF'] = [];
+    _subjectFilters['assayXF'] = [];
 
     var _removeFilterHandler = function (filters, chartName) {
         console.log('removing filter by chart',chartName)
@@ -72,7 +72,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
             console.log('SUBJECT AND ASSAY TO CLINICAL')
             //REAPPLY subjectFilteredIds and AssaySubjectFiltered Ids
 
-            let filteredIds = _retainAll(_subjectFilters['clinicalXF']);
+            var filteredIds = _retainAll(_subjectFilters['clinicalXF']);
             ClinicalXF.resetSubjectFilter();
             ClinicalXF.filterBySubjects(filteredIds);
 
@@ -84,7 +84,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
         if(xfFiltered.getXFname()  === 'SubjCf' && _subjectFilters['subjectXF'].length > 0){
             console.log('CLINICAL AND ASSAY TO SUBJECT')
 
-            let filteredIds = _retainAll(_subjectFilters['subjectXF']);
+            var filteredIds = _retainAll(_subjectFilters['subjectXF']);
             SubjectXF.resetSubjectFilter();
             SubjectXF.filterBySubjects(filteredIds);
 
@@ -95,7 +95,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
         //ADDING A CHART TO ASSAY, APPLY IDS FROM SUBJECT AND CLINICAL
         if(xfFiltered.getXFname()  === 'AssayCf' && _subjectFilters['assayXF'].length > 0){
             console.log('CLINICAL AND SUBJECT TO ASSAY')
-            let filteredIds = _retainAll(_subjectFilters['assayXF']);
+            var filteredIds = _retainAll(_subjectFilters['assayXF']);
             AssayXF.resetSubjectFilter();
             AssayXF.filterBySubjects(filteredIds);
         }
@@ -145,11 +145,12 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
         else if(xfFiltered.getXFname()  === 'ClinicalCf'){
 
             subjectIds = xfFiltered.getCurrentSubjectIds();
-            if(subjectIds.length == 0)return;
+            if(subjectIds.length === 0)return;
 
             console.log("CLINICAL TO SUBJECT AND ASSAY");
             SubjectXF.resetSubjectFilter();
             AssayXF.resetSubjectFilter();
+            ClinicalXF.resetSubjectFilter();
 
             if(filter === null){
                 _subjectFilters['subjectXF'] = _removeFilterHandler(_subjectFilters['subjectXF'],chartName)
@@ -177,7 +178,10 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
                 AssayXF.filterBySubjects(subjectIds);
             }
 
-            // ClinicalCf.syncfilters();
+            //USED AS A PROXY THAT A CLINICAL FILTER IS STILL ACTIVE
+            if(_subjectFilters['subjectXF'].length > 0) {
+                ClinicalXF.filterBySubjects(subjectIds);
+            }
         }
 
         /*else if(xfFiltered.getXFname() == 'AssayCf'){
@@ -196,19 +200,35 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
     }
 
     XFilterLinker.removeFilter = function(chartGroup,obs){
-        if(chartGroup == 'clinical'){
+        if(chartGroup === 'clinical'){
             //console.log("subjects filtered")
             ClinicalCf.removeFilters(obs);
             //AssayCf.filterBySubjects(filteredIds);
-        }else if(chartGroup == 'subject'){
+        }else if(chartGroup === 'subject'){
             //console.log("clinical filtered")
             SubjCf.removeFilters(obs);
             //AssayCf.filterBySubjects(filteredIds);
-        }else if(chartGroup == 'AssayCf'){
+        }else if(chartGroup === 'AssayCf'){
             //console.log("assays filtered")
             //SubjCf.filterBySubjects(filteredIds);
             //ClinicalCf.filterBySubjects(filteredIds);
         }
+    }
+
+    XFilterLinker.resetAll = function(){
+        _subjectFilters['subjectXF'] = [];
+        _subjectFilters['clinicalXF'] = [];
+        _subjectFilters['assayXF'] = [];
+
+        SubjectXF.resetAll();
+        ClinicalXF.resetAll();
+        AssayXF.resetAll();
+    };
+
+    XFilterLinker.initAll = function(){
+        SubjectXF.init();
+        ClinicalXF.init();
+        //AssayXF.init();
     }
 
     return XFilterLinker;

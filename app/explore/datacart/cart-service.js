@@ -59,7 +59,7 @@ function cartService($http,$rootScope,ngAppConfig) {
         _toggle = !_toggle;
     };
     var _applyFilter = function(id,filters,isRange,module){
-        // console.log("UPDATING CART WITH FILTER ",id,filters,isRange,module);
+         console.log("UPDATING CART WITH FILTER ",id,filters,isRange,module);
         var found = false;
         var filteredObs;
 

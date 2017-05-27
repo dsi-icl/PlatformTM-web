@@ -39,7 +39,7 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
 
     var _login = function (loginData) {
 
-        var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
+        var data = "grant_type=password&username=" + encodeURIComponent(loginData.userName) + "&password=" + encodeURIComponent(loginData.password);
         //console.log(data)
         console.log(serviceBase + 'token');
 
@@ -81,7 +81,7 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
             } })
             .success(function (response) {
 
-                console.log(response);
+                //console.log(response);
 
                 var claims = getTokenCalims(response.access_token);
                 //console.log(claims)

@@ -1375,28 +1375,30 @@ a.editable-click {
 }
 .cardholder {
     width: 100%;
-    color: #e0e0e0;
+    color: #ccc;
     text-transform: uppercase;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 80px;
 }
-.cardholder strong {
-    font-size: 40px;
+.cardholder i {
+    font-size: 150px;
+    color: #eee;
 }
 .card {
     /*position:absolute;*/
     width: auto; white-space: nowrap;
 }
 .card h1 {
-    width: 90%;
+    /*width: 90%;*/
     font-size: 15px;
     padding: 10px;
     text-transform:uppercase;
-    color: #808080;
-    font-weight:100;
+    color: #23c6c8;
+    font-weight:600;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .card .chart {
     padding-left:10px;
@@ -1416,9 +1418,10 @@ a.editable-click {
     top: 7px;
 }
 .switchery {
-    border: 1px solid #808080;
-    background-color: #808080;
-    border-radius: 20px;
+    /*border: 1px solid #808080;*/
+    /*background-color: #808080;*/
+    /*border-radius: 20px;*/
+    color:#ccc;
     cursor: pointer;
     display: inline-block;
     height: 15px;
@@ -1444,9 +1447,10 @@ a.editable-click {
     background-color:#efefef;
 }
 .switchery.on {
-    border: 1px solid #5bb8b7;
-    background-color: #1ececc;
-    right: 0px;
+    /*border: 1px solid #5bb8b7;*/
+    /*background-color: #1ececc;*/
+    /*right: 0px;*/
+    color:#23c6c8;
 }
 .switchery.on > small {
     right: 0px;

@@ -15,7 +15,7 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
     vm.cartservice = cartService;
 
 
-    if(vm.queryId){
+    /*if(vm.queryId){
         cartService.getCartQuery(vm.projectId,vm.queryId).then(function(query){
             vm.cartQuery = query;
             console.log(query)
@@ -31,7 +31,7 @@ function cartController($scope,$state,$stateParams,cartService,XFilterLinker,$ti
     cartService.getUserQueries(vm.projectId).then(function(response){
         //console.log(response);
         vm.savedQueries = response.queries;
-    })
+    })*/
 
 
 
