@@ -27,8 +27,7 @@ function ClinicalXF(clinicalDataService,$q){
 
     var dataToPlot = {};
     var tableDimensions = {}, tableHeaders = {};
-    var lastFilteredObs;
-    var filteredFindings = [], filteredEvents = [];
+
 
     var cfReady=false;
     var cfservice = {};
@@ -43,7 +42,7 @@ function ClinicalXF(clinicalDataService,$q){
             requestedObsvs.forEach(function(o){
                 // console.log(o.id); console.log(o.dataType)
                 if(o.dataType === "dateTime"){
-                    let date = dateTimeFormat(d[o.name]);
+                    var date = dateTimeFormat(d[o.name]);
                     if(date === null){
                         date = dateFormat(d[o.name]);
                     }
@@ -92,7 +91,7 @@ function ClinicalXF(clinicalDataService,$q){
         xfilter = crossfilter(data)
 
         columns.forEach(function(obs){
-            if(obs==visitColumnName)
+            if(obs===visitColumnName)
                 return;
 
             /**
@@ -101,36 +100,17 @@ function ClinicalXF(clinicalDataService,$q){
             var dim = xfilter.dimension(function (d) {return d[obs]});
             dimensions[obs] = dim
             var grp = dim.group();
-            //console.log('creating dimension for',obs,'dimension',dim)
 
-            /*function remove_empty_bins(source_group) {
-             return {
-             all:function () {
-             return source_group.all().filter(function(d) {
-             return d.value.count != 0;
-             });
-             }
-             };
-             }*/
-
-            //console.log(obs,grp.all())
-            if(grp.all()[0] && grp.all()[0].key == "")
-                grp.all()[0].key = "(Blanks)"
+            if(grp.all()[0] && grp.all()[0].key === "")
+                grp.all()[0].key = "(Blanks)";
 
 
-            //var grp1 = dim.group().reduce(reduceAdd(obs),reduceRemove(obs),reduceInit);
             var reducer = reductio()
                 .filter(function(d) { return  d[obs] !=  "x"})
                 .count(true);
             grp = reducer(grp);
-            //grp.top(Infinity).filter(function(d) { return d.value.count > 0; });
-            //var filtered_group = remove_empty_bins(grp);
+            groups[obs] = grp;
 
-            groups[obs] = grp;//filtered_group;
-            //console.log('after reducing',grp.all())
-            //console.log('reductio',obs,grp.all())
-            //console.log('my group',obs, grp1.top(3))
-            //console.log('cf group',obs, dim.group().all())
 
 
             /**
@@ -285,7 +265,7 @@ function ClinicalXF(clinicalDataService,$q){
     }
 
     cfservice.getCountData = function(){
-        return subjectDim.group()//.all();subjectGrp.group()
+        return subjectDim.group()
     }
 
     cfservice.getCountGroup = function() {
@@ -369,49 +349,16 @@ function ClinicalXF(clinicalDataService,$q){
         return XFserviceName;
     }
 
-    cfservice.setLastFilteredObs = function(obs){
-        lastFilteredObs = obs;
-    }
-
-    cfservice.setActiveFilters = function(obs,filter){
-
-        console.log('set active filter', obs, filter)
-        //console.log('filtered findings',filteredFindings)
-        //console.log('filtered events',filteredEvents)
-
-        var activeFilteredObs;
-        if(findingsColumns.indexOf(obs) > -1)
-            activeFilteredObs = filteredFindings;
-        else if(eventsColumns.indexOf(obs) > -1)
-            activeFilteredObs = filteredEvents;
-
-        if(activeFilteredObs.indexOf(obs) != -1 && filter == null)
-            activeFilteredObs.splice(activeFilteredObs.indexOf(obs),1);
-        if(activeFilteredObs.indexOf(obs) == -1 && filter != null)
-            activeFilteredObs.push(obs);
-        console.log('active filters',activeFilteredObs,filteredFindings,filteredEvents)
-
-    }
 
     cfservice.filterBySubjects = function(filteredSubjectIds){
 
         if(!angular.isUndefined(tableDimensions['findings'])){
-            //RESET subjectDimension filters
-            //subjectDim['findings'].filter(null);
-            //subjectDim['events'].filter(null);
-            console.log("filtering clinical on subjects",filteredSubjectIds.length)
-
-
             subjectDim['findings'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
             subjectDim['events'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-
-
-
             IsSubjectFiltered = true;
         }
-        //subjectDim.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
         dc.redrawAll("clinical");
-    }
+    };
 
     cfservice.getCurrentSubjectIds = function(){
         if(!cfReady)
@@ -419,26 +366,40 @@ function ClinicalXF(clinicalDataService,$q){
         var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
         var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
 
+        //console.log(findingsSubjIds,eventsSubjIds);
+
         var filteredSubjectIds = [];
+
+        if(findingsSubjIds.length !== 0 && eventsSubjIds.length !==0){
+            filteredSubjectIds = findingsSubjIds
+            filteredSubjectIds = filteredSubjectIds.filter(function(n){
+                return eventsSubjIds.indexOf(n) !== -1
+            });
+            //console.log(filteredSubjectIds);
+        }else{
+            findingsSubjIds.forEach(function (id) {
+                if (filteredSubjectIds.indexOf(id) === -1)
+                    filteredSubjectIds.push(id);
+            });
+            eventsSubjIds.forEach(function (id) {
+                if (filteredSubjectIds.indexOf(id) === -1)
+                    filteredSubjectIds.push(id);
+            });
+        }
+
 
         //filteredSubjectIds = findingsSubjIds
 
         //This was doing the union of
        // if(isFindingsXFFiltered()) {
          //console.log('findings filtered')
-         findingsSubjIds.forEach(function (id) {
-            if (filteredSubjectIds.indexOf(id) == -1)
-                filteredSubjectIds.push(id);
-         });
+
          //}
          //if(isEventsXFFiltered()) {
          //console.log('events filtered')
-         eventsSubjIds.forEach(function (id) {
-            if (filteredSubjectIds.indexOf(id) == -1)
-                filteredSubjectIds.push(id);
-         })
+
          //}
-        console.log(filteredSubjectIds.length);
+        //console.log(filteredSubjectIds.length);
         return filteredSubjectIds;
     }
 
@@ -449,26 +410,23 @@ function ClinicalXF(clinicalDataService,$q){
         dc.redrawAll("clinical");
     }
 
-    cfservice.isSubjectFiltered = function(){
-        return IsSubjectFiltered;
-    }
+    cfservice.resetAll = function(){
+        for (var key in dimensions){
+            dimensions[key].filter(null);
+        };
 
-    cfservice.isFiltered = function(){
+        if(subjectDim['findings'])subjectDim['findings'].filter(null);
+        if(subjectDim['events'])subjectDim['events'].filter(null);
+        IsSubjectFiltered = false;
 
-        //console.log('inside isFiltered',isEventsXFFiltered(),is)
-        return isEventsXFFiltered() || isFindingsXFFiltered();
-    }
+        dc.redrawAll("clinical");
+    };
 
-    var isEventsXFFiltered = function(){
-        //console.log(filteredEvents.length, 'number of filtered event observations')
-        return filteredEvents.length >0;
-    }
-
-    var isFindingsXFFiltered = function(){
-        //console.log(filteredFindings.length, 'number of filtered findings observations')
-        return filteredFindings.length >0;
-    }
-
+    cfservice.init = function () {
+        dimensions = [];
+        groups = [];
+        cfReady = false;
+    };
 
     return cfservice
 }

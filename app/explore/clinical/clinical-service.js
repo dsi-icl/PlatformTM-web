@@ -52,7 +52,18 @@ function ClinicalDataService($http,$q,ngAppConfig){
                 }).then(
                     function (response){
                         return response.data;
+                    }
+                )
+            },
 
+            getObsQaulifiers: function(projectId,obsId,obsReq){
+                return $http({
+                    url: serviceBase+'apps/explore/projects/'+projectId+'/observations/clinical/'+obsId+'/qualifiers',
+                    method:'POST',
+                    data:angular.toJson(obsReq)
+                }).then(
+                    function (response){
+                        return response.data;
                     }
                 )
             }

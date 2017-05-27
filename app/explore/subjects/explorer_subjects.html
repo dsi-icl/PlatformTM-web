@@ -17,7 +17,7 @@
                                 <dc-count-widget
                                         xfilter-service="{{vm.chartingOpts.xfilterService}}"
                                         chart-service="{{vm.chartingOpts.DCchartService}}"
-                                        grp="{{vm.chartingOpts.chartGroup}}">
+                                        module="{{vm.chartingOpts.chartGroup}}">
                                 </dc-count-widget>
                             </p>
 
@@ -28,64 +28,51 @@
                                     <h3 class="m-md">Design Elements</h3>
                                     <div class="clinical-tree">
                                         <ul>
-                                            <div class="list-item-text" ng-repeat="de in vm.DEs" >
+                                            <div class="list-item" ng-repeat="de in vm.DEs" >
                                                 <div class="plotting-switch">
                                                     <a class="switchery"
-                                                        id="sc_{{de.id}}"
-                                                       obs= "de"
-                                                       charting-opts="vm.chartingOpts",
-                                                       module="vm.chartingOpts.chartGroup",
-                                                       style="color: #222f3f;"
+                                                       id="sc_{{de.id}}"
                                                        ng-init="de.isActive = false"
                                                        ng-class="{on:de.isActive}"
-                                                       ng-click="de.isActive = !de.isActive;expVM.plotSwitchClicked(de,vm.chartingOpts)" >
-                                                        <small></small>
+                                                       ng-click="de.isActive = !de.isActive;expVM.plotSwitchClicked(de)" >
+                                                        <i class="material-icons">insert_chart</i>
                                                     </a>
                                                 </div>
-                                                <span class="">{{de.o3}}</span>
+                                                <span class="list-item-text">{{de.o3}}</span>
                                             </div>
                                         </ul>
                                     </div>
                                     <h3 class="m-md">Subject Characteristics</h3>
                                     <div class="clinical-tree"style="max-height: 316px; margin-bottom: 20px;">
                                         <ul>
-                                            <div class="list-item-text" ng-repeat="sc in vm.SCs" >
+                                            <div class="list-item" ng-repeat="sc in vm.SCs" >
                                                 <div class="plotting-switch">
                                                     <a class="switchery"
-                                                       charting-button id="sc_{{sc.id}}"
-                                                       obs= "sc"
-                                                       charting-opts="vm.chartingOpts",
-                                                       module="vm.chartingOpts.chartGroup",
-                                                       style="color: #222f3f;"
+                                                       id="sc_{{sc.id}}"
                                                        ng-init="sc.isActive = false"
                                                        ng-class="{on:sc.isActive}"
-                                                       ng-click="sc.isActive = !sc.isActive;" >
-                                                        <small></small>
+                                                       ng-click="sc.isActive = !sc.isActive;expVM.plotSwitchClicked(sc)">
+                                                        <i class="material-icons">insert_chart</i>
                                                     </a>
                                                 </div>
-                                                <span class="">{{sc.o3}}</span>
-
+                                                <span class="list-item-text">{{sc.o3}}</span>
                                             </div>
                                         </ul>
                                     </div>
                                     <h3 class="m-md">Subject Date/Time Properties</h3>
                                     <div class="clinical-tree"style="max-height: 316px;">
                                         <ul>
-                                            <div class="list-item-text" ng-repeat="tp in vm.TPs" >
+                                            <div class="list-item" ng-repeat="tp in vm.TPs" >
                                                 <div class="plotting-switch">
                                                     <a class="switchery"
-                                                       charting-button id="sc_{{tp.id}}"
-                                                       obs= "tp"
-                                                       charting-opts="vm.chartingOpts",
-                                                       module="vm.chartingOpts.chartGroup",
-                                                       style="color: #222f3f;"
+                                                       id="sc_{{tp.id}}"
                                                        ng-init="tp.isActive = false"
                                                        ng-class="{on:tp.isActive}"
-                                                       ng-click="tp.isActive = !tp.isActive;" >
-                                                        <small></small>
+                                                       ng-click="tp.isActive = !tp.isActive;expVM.plotSwitchClicked(tp)" >
+                                                        <i class="material-icons">insert_chart</i>
                                                     </a>
                                                 </div>
-                                                <span class="">{{tp.o3}}</span>
+                                                <span class="list-item-text">{{tp.o3}}</span>
                                             </div>
                                         </ul>
                                     </div>
@@ -107,22 +94,30 @@
 
                                             <div ng-repeat="req in expVM.cartQuery.subjCharRequests" class="cardlock " id="{{req.cardId}}">
                                                 <div class="card">
-                                                    <h1 class="border-bottom">{{req.o3}}</h1>
-                                                    <dc-chart-menu obs="req" quals="quals" charting-opts="chartingOpts" module="module" class="qualifier-menu"></dc-chart-menu>
+                                                    <h1 class="border-bottom">{{req.o3}}
+                                                        <span class="pull-right" style="padding-right: 5px">
+                                                            <a ng-click="req.isActive = false;expVM.plotSwitchClicked(req,vm.chartingOpts.chartGroup)">
+                                                                <i class="fa fa-times"></i>
+                                                            </a>
+                                                        </span>
+                                                    </h1>
                                                     <div id="{{req.chartId}}" class="chart" ng-switch="req.dataType">
                                                         <dc-time-chart ng-switch-when="dateTime" charting-opts="vm.chartingOpts" obs="req"></dc-time-chart>
-                                                        <dc-chart ng-switch-default charting-opts="vm.chartingOpts" obs="req" module="vm.chartingOpts.chartGroup"></dc-chart>
+                                                        <dc-chart ng-switch-default charting-opts="vm.chartingOpts"
+                                                                  obs="req"
+                                                                  module="vm.chartingOpts.chartGroup"
+                                                                  on-filtered="expVM.onFiltered(obsId,module,filters,filter)"></dc-chart>
                                                     </div>
                                                 </div>
                                             </div>
 
 
-                                            <div class="cardlock placeholder">
+                                            <div ng-hide="expVM.cartQuery.subjCharRequests.length > 0" class="cardlock placeholder">
                                                 <div class="anchor">
                                                     <div class="card">
                                                         <div class="cardholder">
-                                                            <strong>+</strong><br />
-                                                            Add <br />an observation here
+                                                            <i class="material-icons">insert_chart</i><br/>
+                                                            Click an observation to explore here
                                                         </div>
                                                     </div>
                                                 </div>
@@ -134,7 +129,7 @@
                                                           chart-service="{{vm.chartingOpts.DCchartService}}"
                                                           xfilter-service="{{vm.chartingOpts.xfilterService}}"
                                                           grp="{{vm.chartingOpts.chartGroup}}"
-                                                          module="{{vm.chartingOpts.chartGroup}}">Choose observations from the tree below</dc-datatable>
+                                                          module="{{vm.chartingOpts.chartGroup}}"></dc-datatable>
 
                                         </div>
                                     </div>

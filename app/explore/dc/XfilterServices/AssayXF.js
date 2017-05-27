@@ -8,29 +8,16 @@ function AssayXF(assayDataService,$q){
     var cfservice = {};
 
     var subjectColumnName = "subjectId";
-    var XFserviceName = 'AssayCf'
-
-    var dimensions = [], groups = [];
-    var subjectDim;
-    //var sampleColumns;
-    //var dataToPlot;
-
-
-    var ndxPerAssay = {};
-    var allPerAssay = {};
-    var cfReady=false;
-
-    var dimensionsPerAssay = {}
-
-    var XfilterAssayMap = {}
-    var SubjectAssayMap = {}
+    var XFserviceName = 'AssayCf';
+    var XfilterAssayMap = {};
+    var SubjectAssayMap = {};
 
 
     cfservice.initializeXf = function(assayId){
         //console.log("initializing xf for ",assayId)
-        XfilterAssayMap[assayId] = {}
+        XfilterAssayMap[assayId] = {};
         XfilterAssayMap[assayId].xfReady = false;
-    }
+    };
 
 
     cfservice.formatData = function(data, requestedObsvs){
@@ -63,8 +50,6 @@ function AssayXF(assayDataService,$q){
         if(!assayId && requestedObsvs){
             assayId = requestedObsvs[0].activityId;
         }
-
-        dimensionsPerAssay[assayId] = {}
 
         /**
          * Initialize xfilter data fields for this assayType
@@ -120,17 +105,17 @@ function AssayXF(assayDataService,$q){
                  */
                 var grp = dim.group();
                 var reducer = reductio()
-                    .filter(function(d) { return  d[sc] != "" })
-                    .count(true)
+                    .filter(function(d) { return  d[sc] !== "" })
+                    .count(true);
                 reducer(grp);
                 //groups[sc] = grp;
                 XfilterAssayMap[assayId].groups[sc] = grp;
             })
             XfilterAssayMap[assayId].xfReady = true
             deferred.resolve(columns)
-        })
+        });
         return deferred.promise
-    }
+    };
 
     cfservice.getData = function(projectId,requestedObsvs,assayId){
         var deferred = $q.defer();
@@ -145,7 +130,7 @@ function AssayXF(assayDataService,$q){
             })
 
         return deferred.promise
-    }
+    };
 
     /********************************************
      DC TABLE FUNCTIONS
@@ -171,6 +156,7 @@ function AssayXF(assayDataService,$q){
     /*******************************************
      *
      * Count Widget Methods
+     *
      */
     cfservice.getCountData = function(assayId){
         return XfilterAssayMap[assayId].xfdata
@@ -208,7 +194,8 @@ function AssayXF(assayDataService,$q){
             if (XfilterAssayMap.hasOwnProperty(assayId)) {
                 XfilterAssayMap[assayId].subjectDim.filterFunction(function (d) {
                     return filteredSubjectIds.indexOf(d) > -1;
-                })
+                });
+                dc.redrawAll(assayId);
                 //console.log('after filtering',assayId,XfilterAssayMap[assayId].subjectGroup.value())
                 //uniqueSubjGrp = XfilterAssayMap[assayId].subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
                 //XfilterAssayMap[assayId].subjectGroup = uniqueSubjGrp
@@ -216,7 +203,7 @@ function AssayXF(assayDataService,$q){
             }
         }
 
-        dc.redrawAll("assay");
+       // dc.redrawAll("assay");
     }
 
     cfservice.getCurrentSubjectIds = function(assayId){
@@ -228,40 +215,41 @@ function AssayXF(assayDataService,$q){
 
     cfservice.cfReady = function(assayId){
         return XfilterAssayMap[assayId].xfReady;
-    }
+    };
 
     cfservice.getXFname = function(){
         return XFserviceName;
-    }
+    };
 
     cfservice.resetSubjectFilter = function(){
         for (var assayId in XfilterAssayMap) {
             if (XfilterAssayMap.hasOwnProperty(assayId)) {
                 XfilterAssayMap[assayId].subjectDim.filter(null);
+                dc.redrawAll(assayId);
             }
         }
-        dc.redrawAll("assay");
-    }
+        //dc.redrawAll("assay");
+    };
 
     cfservice.getDimension = function(key, assayId){
-        // console.log(key)
-        // console.log(assayId)
-        // console.log(XfilterAssayMap)
-
         return XfilterAssayMap[assayId].dimensions[key];
-    }
+    };
 
     cfservice.getGroup = function(key, assayId){
-//            console.log(key)
         return XfilterAssayMap[assayId].groups[key];
-    }
+    };
 
+    cfservice.resetAll = function(){
+        for (var assayId in XfilterAssayMap){
+            XfilterAssayMap[assayId].subjectDim.filter(null);
 
-
-    cfservice.setActiveFilters = function(obs,filter){
-
-    }
-
+            for (var dim in XfilterAssayMap[assayId].dimensions){
+                XfilterAssayMap[assayId].dimensions[dim].filter(null);
+            }
+            dc.redrawAll(assayId);
+        }
+        //dc.redrawAll("assay");
+    };
     return cfservice;
 }
 

@@ -9,7 +9,7 @@
             <div>
                 <uib-tabset class="models-list">
 
-                    <uib-tab  ng-repeat="assay in vm.assays" ng-class-odd="'odd'">
+                    <uib-tab ng-repeat="assay in vm.assays" ng-class-odd="'odd'">
                         <uib-tab-heading>
                             <div class="assay-info" align="center">
                                 <img src="img/assays/proteomics.svg">
@@ -36,92 +36,78 @@
                                     <div class="clinical-tree">
                                         <h3>Sample Characteristics</h3>
                                         <ul>
-                                            <div class="list-item-text" ng-repeat="sc in assay.sampleCharacteristics">
+                                            <div class="list-item" ng-repeat="sc in assay.sampleCharacteristics">
                                                 <div class="plotting-switch">
-                                                    <a  class="switchery"
-                                                        charting-button id="sc_{{sc.id}}"
-                                                        obs= "sc"
-                                                        charting-opts="vm.chartingOpts"
-                                                        module="assay.id"
-                                                        style="color: #222f3f;"
-                                                        ng-init="sc.isActive = false"
-                                                        ng-class="{on:sc.isActive}"
-                                                        ng-click="sc.isActive = !sc.isActive;
-                                                        vm.chartingOpts.chartContainerId =  'assay_plots_'+assay.id;" >
-                                                        <small></small>
+                                                    <a class="switchery"
+                                                       id="sc_{{sc.id}}"
+                                                       ng-init="sc.isActive = false"
+                                                       ng-class="{on:sc.isActive}"
+                                                       ng-click="sc.isActive = !sc.isActive;expVM.plotSwitchClicked(sc,assay.id)">
+                                                        <i class="material-icons">insert_chart</i>
                                                     </a>
                                                 </div>
-                                                {{sc.o3}}
+                                                <span class="list-item-text">{{sc.o3}}</span>
                                             </div>
 
                                         </ul>
-                                       <!-- <h3>Feature Properties</h3>
-                                        <ul>
-                                            <div class="list-item-text">
-                                                Name
-                                            </div>
-                                            <div class="list-item-text">
-                                                GENE SYMBOL
-                                            </div>
-                                            <div class="list-item-text">
-                                                ENTREZ GENE ID
-                                            </div>
-                                            <div class="list-item-text">
-                                                GENE NAME
-                                            </div>
-                                            <div class="list-item-text">
-                                                GENE SYMBOL
-                                            </div>
-                                            <div class="list-item-text">
-                                                UNIGENE
-                                            </div>
-                                            <div class="list-item-text">
-                                                ENSEMBL ID
-                                            </div>
-                                            <div class="list-item-text">
-                                                CYTOBAND
-                                            </div>
-                                            <div class="list-item-text">
-                                                CHROMOSOME COORDINATE
-                                            </div>
-                                            <div class="list-item-text">
-                                                REPORTER SEQUENCE
-                                            </div>
-                                            <div class="list-item-text">
-                                                REFSEQ
-                                            </div>
-                                            <div class="list-item-text">
-                                                GENBANK
-                                            </div>
-                                        </ul>
-                                        <h3>Observed Measures</h3>
-                                        <ul>
-                                            <div class="list-item-text">
-                                                Log Fold Ratio
-                                            </div>
-                                            <div class="list-item-text">
-                                                Raw Counts
-                                            </div>
-                                        </ul>-->
+                                        <!-- <h3>Feature Properties</h3>
+                                         <ul>
+                                             <div class="list-item-text">
+                                                 Name
+                                             </div>
+                                             <div class="list-item-text">
+                                                 GENE SYMBOL
+                                             </div>
+                                             <div class="list-item-text">
+                                                 ENTREZ GENE ID
+                                             </div>
+                                             <div class="list-item-text">
+                                                 GENE NAME
+                                             </div>
+                                             <div class="list-item-text">
+                                                 GENE SYMBOL
+                                             </div>
+                                             <div class="list-item-text">
+                                                 UNIGENE
+                                             </div>
+                                             <div class="list-item-text">
+                                                 ENSEMBL ID
+                                             </div>
+                                             <div class="list-item-text">
+                                                 CYTOBAND
+                                             </div>
+                                             <div class="list-item-text">
+                                                 CHROMOSOME COORDINATE
+                                             </div>
+                                             <div class="list-item-text">
+                                                 REPORTER SEQUENCE
+                                             </div>
+                                             <div class="list-item-text">
+                                                 REFSEQ
+                                             </div>
+                                             <div class="list-item-text">
+                                                 GENBANK
+                                             </div>
+                                         </ul>
+                                         <h3>Observed Measures</h3>
+                                         <ul>
+                                             <div class="list-item-text">
+                                                 Log Fold Ratio
+                                             </div>
+                                             <div class="list-item-text">
+                                                 Raw Counts
+                                             </div>
+                                         </ul>-->
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <!--<div class="ibox-title">
-
-                                    <div class="btn-group pull-right">
-                                        <label class="btn btn-xs btn-white" ng-init="assay.show='plots'" ng-model="assay.show" uib-btn-radio="'plots'">Data Plots</label>
-                                        <label class="btn btn-xs btn-white" ng-model="assay.show" uib-btn-radio="'table'">Data Table</label>
-                                        &lt;!&ndash;<label class="btn btn-xs btn-white"><i class="fa fa-shopping-cart"></i><i class="fa fa-plus"></i></label>&ndash;&gt;
-                                    </div>
-                                </div>-->
-                                <div class=" ">
-
-                                    <div class="btn-group pull-right">
-                                        <!--<label class="btn btn-xs btn-white" ng-init="assay.show='plots'" ng-model="assay.show" uib-btn-radio="'plots'">Data Plots</label>-->
-                                        <!--<label class="btn btn-xs btn-white" ng-model="assay.show" uib-btn-radio="'table'">Data Table</label>-->
-                                        <label class="btn btn-xs btn-white"><a ng-click="vm.addAssayToCart(assay.assayPanel)"><i class="fa fa-shopping-cart"></i><i class="fa fa-plus"></i></a></label>
-                                    </div>
+                                <div class="btn-group pull-right">
+                                    <!--<label class="btn btn-xs btn-white" ng-init="assay.show='plots'" ng-model="assay.show" uib-btn-radio="'plots'">Data Plots</label>-->
+                                    <!--<label class="btn btn-xs btn-white" ng-model="assay.show" uib-btn-radio="'table'">Data Table</label>-->
+                                    <label class="btn btn-xs btn-white"><a
+                                            ng-click="vm.addAssayToCart(assay.assayPanel)"><i
+                                            class="fa fa-shopping-cart"></i><i class="fa fa-plus"></i></a></label>
                                 </div>
                                 <div class="row ibox-content">
 
@@ -132,7 +118,6 @@
                                                 <dc-count-widget style="font-weight:600;"
                                                                  xfilter-service="{{vm.chartingOpts.xfilterService}}"
                                                                  chart-service="{{vm.chartingOpts.DCchartService}}"
-                                                                 grp="{{vm.chartingOpts.chartGroup}}"
                                                                  type="subject"
                                                                  module="{{assay.id}}">
                                                 </dc-count-widget>
@@ -140,19 +125,20 @@
                                             </span>
                                         </div>
                                         <div style="display: inline-block">
-                                            <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-testtube8"></i>&nbsp;
+                                            <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i
+                                                    class="flaticon-testtube8"></i>&nbsp;
                                                 <dc-count-widget style="font-weight:600;"
                                                                  xfilter-service="{{vm.chartingOpts.xfilterService}}"
                                                                  chart-service="{{vm.chartingOpts.DCchartService}}"
                                                                  type="vvv"
-                                                                 grp="{{vm.chartingOpts.chartGroup}}"
                                                                  module="{{assay.id}}">
                                                 </dc-count-widget>
                                                 <span style="font-size: 12px">Samples</span>
                                             </span>
                                         </div>
                                         <div style="display: inline-block">
-                                            <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i class="flaticon-testtube8"></i>&nbsp;
+                                            <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i
+                                                    class="flaticon-testtube8"></i>&nbsp;
                                                 <!--<dc-count-widget style="font-weight:600;"
                                                                  xfilter-service="{{vm.chartingOpts.xfilterService}}"
                                                                  chart-service="{{vm.chartingOpts.DCchartService}}"
@@ -165,17 +151,37 @@
                                         </div>
 
                                     </div>
-                                   <!-- <div class="col-md-3" style="font-size: 2em;color: #4cced0;">
 
-                                    </div>-->
-                                    <div id="assay_plots_{{assay.id}}"  class=" charts-container  ">
+                                    <div id="assay_plots_{{assay.id}}" class="charts-container">
 
-                                        <div class="cardlock placeholder">
+                                        <div ng-repeat="req in expVM.cartQuery.assayPanelRequests[assay.id].sampleQuery" class="cardlock " id="{{req.cardId}}">
+                                            <div class="card">
+                                                <h1 class="border-bottom">{{req.o3}}
+                                                    <span class="pull-right" style="padding-right: 5px">
+                                                        <a ng-click="req.isActive = false;expVM.plotSwitchClicked(req,assay.id)">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </span>
+                                                </h1>
+                                                <div id="{{req.chartId}}" class="chart" ng-switch="req.dataType">
+                                                    <dc-time-chart ng-switch-when="dateTime"
+                                                                   charting-opts="vm.chartingOpts"
+                                                                   obs="req"></dc-time-chart>
+                                                    <dc-chart ng-switch-default charting-opts="vm.chartingOpts"
+                                                              obs="req"
+                                                              module="assay.id"
+                                                              on-filtered="expVM.onFiltered(obsId,module,filters,filter)"></dc-chart>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div ng-hide="expVM.cartQuery.assayPanelRequests[assay.id].sampleQuery.length > 0"
+                                             class="cardlock placeholder">
                                             <div class="anchor">
                                                 <div class="card">
                                                     <div class="cardholder">
-                                                        <strong>+</strong><br />
-                                                        Add <br />an observation here
+                                                        <i class="material-icons">insert_chart</i><br/>
+                                                        Click an observation to explore here
                                                     </div>
                                                 </div>
                                             </div>

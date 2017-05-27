@@ -11,7 +11,7 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalXF,D
 
     $scope.chartingOpts = {
         projectId : $stateParams.projectId,
-        chartContainerId : "clinical-plots",
+        //chartContainerId : "clinical-plots",
         chartGroup : "clinical",
         DCchartService : "DCchartingService",
         xfilterService : "ClinicalXF",

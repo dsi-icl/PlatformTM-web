@@ -8,52 +8,31 @@ function AssaysController($stateParams,AssayXF,assayDataService,cartService,$q){
 
     var vm = this;
 
-    vm.GEXsampleCharacteristics = ['class','sampleType','batch'];
-
-        // $scope.vm = {}
-    vm.show="table";
-
     vm.chartingOpts = {
         projectId : $stateParams.projectId,
-        chartContainerId : "assay-plots",
-        chartGroup : "assay",
+       // chartGroup : "assay",
         DCchartService : "DCchartingService",
-        xfilterService : "AssayXF",
-        exportService : "exportService"
-
+        xfilterService : "AssayXF"
     };
 
 
     var projectId = $stateParams.projectId;
     assayDataService.getAssays(projectId).then(function(data){
-            var assays = data.assays
+            var assays = data.assays;
 
-            //console.log(assays)
-
-            if(assays!='null'){
+            if(assays!=='null'){
                 angular.forEach(assays, function(assay) {
                     AssayXF.initializeXf(assay.id);
                 });
 
                 var promise = $q.all(null);
 
-
                 angular.forEach(assays, function(assay){
                     promise = promise.then(function(){
                         return AssayXF.refreshCf(projectId,'', assay.id).then(
                             function (sampleCols){
-                            // console.log('default scs', sampleCols)
-                            //$scope.responses.push(sampleCols);
-                            //$scope.luminexSampleChars = sampleCols
-                            /*$timeout(function() {
-                               angular.forEach(sampleCols, function(sc) {
-                                   //console.log('#isc_'+sc)
-                                   DCchartingService.createChart(sc,'assay',AssayCf,'Count')
-                                   angular.element('#s_'+sc).trigger('click');
-                               });
-                            },8000)*/
 
-                        });
+                            });
                     });
                 });
 
@@ -71,7 +50,6 @@ function AssaysController($stateParams,AssayXF,assayDataService,cartService,$q){
     vm.addAssayToCart = function(panel){
         console.log(panel)
         cartService.addAssayPanelToCart(panel)
-        //$scope.$apply();
     }
 
         

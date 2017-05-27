@@ -27,9 +27,7 @@ angular.module('biospeak.dcPlots')
                 var xfilterService = $injector.get($scope.chartingOpts.xfilterService);
                 $scope.xfService = xfilterService;
 
-                var chartDataType = 'Count';//$scope.role;
-
-                var from,to;
+                var chartDataType = 'Count';
                 var plot;
 
                 $scope.done = false;
@@ -40,22 +38,22 @@ angular.module('biospeak.dcPlots')
                 //(e.g. HEADACHE [AEOCCUR] , HEADHACHE [AESEV] ... it's a combination of the object of observation and a qualifier
                 // could replace with o3id_qo2id
                 //used for uniquely identifying charts for erquested observations AND also used as xfilter dimension key
-                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,chartDataType,$scope.obs,$scope.module)
+                chartService.getDCchart($scope.chartingOpts.projectId,$scope.module,xfilterService,chartDataType,$scope.obs)
                     .then(
                         function(chart){
-                            plot = chart
+                            plot = chart;
                             $scope.done = true;
-                            if(plot == null)
+                            if(plot === null)
                             {
                                 $scope.nochart = true;
                                 return;
                             }
 
-                            if(plot.chartType == 'barChart' && $scope.obs.dataType != "ordinal" && $scope.obs.dataType != "integer"){
+                            if(plot.chartType === 'barChart' && $scope.obs.dataType !== "ordinal" && $scope.obs.dataType !== "integer"){
                                 // console.log("creating rangeChart")
-                                chartService.getDCchart($scope.chartingOpts.projectId,$scope.chartingOpts.chartGroup,xfilterService,"rangeChart",$scope.obs,$scope.module)
+                                chartService.getDCchart($scope.chartingOpts.projectId,$scope.module,xfilterService,"rangeChart",$scope.obs)
                                     .then(function(chart2){
-                                        $scope.rangeChart = chart2
+                                        $scope.rangeChart = chart2;
                                         $scope.chartToPlot = plot;
                                     })
                             }else
@@ -106,47 +104,51 @@ angular.module('biospeak.dcPlots')
             link: function (scope, element, attrs) {
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
-                        var groupChart = scope.chartingOpts.chartGroup;
-                        var xf = scope.xfService;
-                        scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), groupChart);
-                        scope.chartToPlot.on()
+                        //var groupChart = scope.chartingOpts.chartGroup;
+                        var obsId = scope.obs.name;
+                        var chartGroup = scope.module;
 
+                        //ANCHOR THE PLOT
+                        scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), chartGroup);
+
+                        //SET ONFILTERED
+                        scope.chartToPlot.on('filtered',function(chart, filter){
+
+                            if(scope.chartToPlot.isRefocusing){
+                                //console.log('Chart is refocusing');
+                                return;
+                            }
+
+                            scope.chartservice.propagateFilter(scope.xfService,chart.dimName,filter);
+
+
+                            if(scope.chartToPlot.IsRefreshing)
+                                return;
+                            // console.log('----APPLYING FILTER TO CART----')
+                            scope.onFiltered({obsId:obsId,module:chartGroup,filters:chart.filters(),filter:filter});
+                        });
+
+
+                        //ATTACH RANGE CHART IF AVAILABLE
                         if(scope.rangeChart){
-                            // console.log('rangeChart is there',scope.rangeChart)
-                            scope.rangeChart.anchor(element[0].querySelector('#range-chart'), groupChart);
+                            scope.rangeChart.anchor(element[0].querySelector('#range-chart'), chartGroup);
                             scope.chartToPlot.rangeChart(scope.rangeChart);
                         }
 
 
-
-                        var d = angular.element(element[0].querySelector('div.chart-options'));
-                        d.css('display', 'inline-block');
-
-                        //Set reset link
+                        //SET RESET ONCLICK
                         var a = angular.element(element[0].querySelector('div.chartControls').querySelector('span.reset').querySelector('a'));
                         a.on('click', function () {
-
-                            console.log('RESETTING FILTER')
-                            //scope.chartToPlot.filterAll(groupChart);
-                            if(scope.chartToPlot.chartType === 'barChart'){
+                            if(scope.chartToPlot.chartType === 'barChart' && scope.chartToPlot.dataType !== 'ordinal'){
                                 scope.chartToPlot.isRefocusing = true;
                                 scope.chartToPlot.focus();
                                 scope.chartToPlot.isRefocusing = false;
                             }
-
-                            //console.log('calling filterAll from inside a on clcik')
                             scope.chartToPlot.filterAll();
-
-                            //console.log('calling render from inside a on clcik')
-                            //scope.chartToPlot.render();
                             if(scope.rangeChart){
-                                //scope.rangeChart.focus();
-                                //console.log('calling render from inside a on clcik on rangechart')
                                 scope.rangeChart.filterAll();
-                                //scope.rangeChart.render();
                             }
-                            //dc.propagateFilter(xf);
-                            dc.redrawAll(groupChart);
+                            dc.redrawAll(chartGroup);
                         });
 
                         //Set alt link
@@ -452,7 +454,6 @@ angular.module('biospeak.dcPlots')
         return{
             restrict: 'E',
             scope:{
-                grp: '@',
                 chartService: '@',
                 xfilterService: '@',
                 type:'@',
@@ -465,15 +466,13 @@ angular.module('biospeak.dcPlots')
 
             }],
             template: '<span ng-if="xfService.cfReady(module)" id="{{grp}}_CounterBar" class="filter-count number-display "></span>',
-            //template:'<div ng-if="xfService.cfReady(module)" class="progress progress-mini"> <div style="width: {{val}}%;" class="progress-bar"></div> {{val}}% </div>',
             link: function(scope, element, attrs){
                 scope.$watch(
-                    function($scope) { return $scope.xfService.cfReady(scope.module);},//$scope.xfService.cfReady(scope.module); },$scope.xfService.getCountValue(scope.module)
+                    function($scope) { return $scope.xfService.cfReady(scope.module);},
                     function(newval){
                         if(newval){
-
-                            var chart = scope.chartservice.createDCcounterBar(scope.xfService,scope.module,scope.type)
-                            chart.anchor(element[0],scope.grp);
+                            var chart = scope.chartservice.createDCcounterBar(scope.xfService,scope.module,scope.type);
+                            chart.anchor(element[0],scope.module);
                             chart.render();
                         }
                     })
@@ -485,7 +484,6 @@ angular.module('biospeak.dcPlots')
         return{
             restrict:'E',
             scope:{
-                grp: '@',
                 chartService: '@',
                 xfilterService: '@',
                 type:'@',
@@ -496,15 +494,14 @@ angular.module('biospeak.dcPlots')
                 $scope.xfService = $injector.get($scope.xfilterService);
             }],
             template:
-                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count"></span>',//+
-                //' from(<span class="total-count"></span>)',
+                '<span ng-if="xfService.cfReady(module)" id="{{grp}}_Counter" class="filter-count"></span>',
             link: function(scope, element, attrs){
                 scope.$watch(
                     function($scope) { return $scope.xfService.cfReady(scope.module); },
                     function(newval, oldval){
                         if(newval){
                             var chart = scope.chartservice.createDCcounter(scope.xfService,scope.module,scope.type)
-                            chart.anchor(element[0],scope.grp);
+                            chart.anchor(element[0],scope.module);
                             chart.render();
                         }
                     })

@@ -2,12 +2,14 @@
  * Created by iemam on 07/03/2017.
  */
 'use strict'
-function explorerService($http,$rootScope,ngAppConfig) {
+function explorerService($http,ngAppConfig,$q) {
     var explorerServiceFactory = {};
 
     var serviceBase = ngAppConfig.apiServiceBaseUri;
 
-    var currentCart = {}
+    var currentCart = {};
+
+    var oriCurrentCart;
 
     var _toggle = true;
     var ready = false;
@@ -22,7 +24,6 @@ function explorerService($http,$rootScope,ngAppConfig) {
                     currentCart = response.data;
                     ready = true;
                     return {cart: (response.data),
-
                     }
                 },
                 function (httpError) {
@@ -61,23 +62,24 @@ function explorerService($http,$rootScope,ngAppConfig) {
         if(item.isSampleCharacteristic){
             currentCart.assayPanelRequests[module].isRequested = true;
             currentCart.assayPanelRequests[module].sampleQuery.push(item);
+
+            console.log(currentCart.assayPanelRequests[module])
         }
-        //_toggle = !_toggle;
     };
 
     var _removeFromCart = function(item, module){
-        var items = []
+        // console.log(item,module,currentCart.assayPanelRequests[module])
+        var items = [];
         if(item.isSubjectCharacteristics || item.isDesignElement)
-            items = currentCart.subjCharRequests
+            items = currentCart.subjCharRequests;
 
         if(item.isClinicalObservations)
             items = currentCart.obsRequests;
         if(item.isSampleCharacteristic)
-            items = currentCart.assayPanelRequests[module];
+            items = currentCart.assayPanelRequests[module].sampleQuery;
 
         var pos;
         for(var i=0; i< items.length;i++) {
-            //console.log(items.id, obs.id)
             if(item.id == items[i].id){
                 pos = i;
                 break;
@@ -85,14 +87,15 @@ function explorerService($http,$rootScope,ngAppConfig) {
         }
         // console.log('removing ', item, 'from data cart')
         items.splice(pos,1);
+
+        if(items.length ===0 && item.isSampleCharacteristic)
+            currentCart.assayPanelRequests[module].isRequested = false;
+
     };
 
     var _addAssayPanel = function(panel){
         //console.log('Adding Panel', panel.assayId);
         currentCart.assayPanelRequests[panel.assayId].isRequested = true;
-        //console.log(currentCart);
-
-       // _toggle = !_toggle;
     };
 
     var _applyFilter = function(id,filters,isRange,module){
@@ -100,23 +103,25 @@ function explorerService($http,$rootScope,ngAppConfig) {
         var found = false;
         var filteredObs;
 
-        if(module == 'clinical'){
+        var deferred = $q.defer();
+
+        if(module === 'clinical'){
             // console.log(currentCart.obsRequests)
             for(var i=0; i< currentCart.obsRequests.length;i++) {
-                if (id == currentCart.obsRequests[i].name) {
+                if (id === currentCart.obsRequests[i].name) {
                     filteredObs = currentCart.obsRequests[i];
-                    found = true
+                    found = true;
                     break;
                 }
             }
         }
 
 
-        if(module == 'subject'){
+        if(module === 'subject'){
             for(i=0; i< currentCart.subjCharRequests.length;i++) {
-                if(id == currentCart.subjCharRequests[i].name){
+                if(id === currentCart.subjCharRequests[i].name){
                     filteredObs = currentCart.subjCharRequests[i];
-                    found = true
+                    found = true;
                     break;
                 }
             }
@@ -124,7 +129,7 @@ function explorerService($http,$rootScope,ngAppConfig) {
 
         if(!found){
             for(var i=0; i< currentCart.assayPanelRequests[module].sampleQuery.length;i++) {
-                if (id == currentCart.assayPanelRequests[module].sampleQuery[i].name) {
+                if (id === currentCart.assayPanelRequests[module].sampleQuery[i].name) {
                     filteredObs = currentCart.assayPanelRequests[module].sampleQuery[i];
                     found = true;
                     break;
@@ -132,18 +137,17 @@ function explorerService($http,$rootScope,ngAppConfig) {
             }
         }
 
-        if(!found) return;
+        if(!found) deferred.reject();
 
         //REMOVE FILTER
         if(filters.length == 0){
+            console.log("removing filter");
             filteredObs.filterRangeFrom = 0;
             filteredObs.filterRangeTo = 0;
             filteredObs.filterExactValues = null;
             filteredObs.filterText = dc.printers.filters(filters)
             filteredObs.isFiltered = false;
-           // _toggle = !_toggle
-            $rootScope.$apply();
-            return;
+            deferred.resolve(currentCart)
         }
 
         if(isRange){
@@ -154,18 +158,26 @@ function explorerService($http,$rootScope,ngAppConfig) {
             filteredObs.filterExactValues = filters;
 
         filteredObs.isFiltered = true;
-        filteredObs.filterText = dc.printers.filters(filters)
+        filteredObs.filterText = dc.printers.filters(filters);
 
-        //_toggle = !_toggle
+        deferred.resolve(currentCart)
 
-        // console.log(filteredObs)
-        $rootScope.$apply();
+        return deferred.promise;
     };
 
     var _clearCart = function () {
-        currentCart.subjCharRequests = []
-        currentCart.obsRequests = []
-        currentCart.assayPanelRequests = {}
+        currentCart.subjCharRequests.forEach(function (req){
+           req.isActive = false;
+        });
+        currentCart.obsRequests.forEach(function (req){
+            req.isActive = false;
+        });
+        currentCart.subjCharRequests = [];
+        currentCart.obsRequests = [];
+        for (var assayId in currentCart.assayPanelRequests){
+            currentCart.assayPanelRequests[assayId].sampleQuery=[];
+        }
+
     };
 
 
@@ -262,4 +274,4 @@ function explorerService($http,$rootScope,ngAppConfig) {
 }
 
 angular.module('biospeak.explorer')
-    .factory('explorerService',['$http','$rootScope','ngAppConfig', explorerService])
+    .factory('explorerService',['$http','ngAppConfig','$q', explorerService]);

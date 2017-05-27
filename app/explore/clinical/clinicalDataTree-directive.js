@@ -17,7 +17,7 @@ angular.module('biospeak.explorer')
                         ' </span>' +
                         '</div>'+*/
                         '<ul>'+
-                            '<cl-tree-obs-grp ng-repeat="domain in class.domains " group="domain" charting-opts = "chartingOpts" callbck = "updateCurrentCart(obs)"></cl-tree-obs-grp>'+
+                            '<cl-tree-obs-grp ng-repeat="domain in class.domains " group="domain" charting-opts = "chartingOpts" onplot = "expVM.plotSwitchClicked(obsReq,obsModule)"></cl-tree-obs-grp>'+
                         '</ul>'+
                     '</div>'
         }
@@ -30,16 +30,16 @@ angular.module('biospeak.explorer')
                 group:'=',
                 chartingOpts:'=',
                 sels:'=',
-                callbck: '&'
+                onplot: '&'
             },
             controller: function($scope,$injector) {
 
                 var clinicalDataService = $injector.get($scope.chartingOpts.clinicalDataService);
                 var domain;
 
-                $scope.localcallbck = function(obsRequest){
-                    //console.log("ana b2 here",obsRequest)
-                    //$scope.callbck({obs:obsRequest})
+                $scope.localcallbck = function(obsReq,obsModule){
+                    console.log("ana b2 here",obsReq,obsModule);
+                    $scope.onplot({obsReq:obsReq,obsModule:obsModule})
                 }
 
                 if($scope.group.isDomain){
@@ -122,12 +122,12 @@ angular.module('biospeak.explorer')
                     '</div>'+
 
                     /* text */
-                    '<span class="list-item-text"  ' +
+                    '<div class="list-item"  ' +
                            'ng-class="{group: group.isSelectable, selected: group.isSelected, locked:group.isLocked}"' +
                            'ng-class="{selected: group.isSelected}"' +
                            'uib-tooltip="{{group.name}} ({{group.count}})">' +
-                        '{{group.name}} ({{group.count}})' +
-                    '</span>'+
+                        '<span class="list-item-text">{{group.name}} ({{group.count}})</span>' +
+                    '</div>'+
 
                     /* checkbox */
                     '<div class="node-select" ng-if="group.isSelectable && !group.isLocked">'+
@@ -152,23 +152,25 @@ angular.module('biospeak.explorer')
 
                                         '</div>'+
                                         '<div style="position:absolute; right:5px;top:0px;">' +
-                                             '<a class="switchery" charting-button ' +
+                                             '<a class="switchery"' +
                                                  'obs="grpNode.defaultObservation" module="\'clinical\'"  charting-opts="chartingOpts" quals="grpNode.qualifiers"' +
                                                  'ng-init="grpNode.defaultObservation.isActive = false" ' +
                                                  'ng-class="{on:grpNode.defaultObservation.isActive}" '+
-                                                 'ng-click="grpNode.defaultObservation.isActive = !grpNode.defaultObservation.isActive; grpNode.isLocked=true; localcallbck(grpNode.defaultObservation)">' +
-                                                 '<small></small>'+
+                                                 'ng-click="grpNode.defaultObservation.isActive = !grpNode.defaultObservation.isActive; grpNode.isLocked=true; localcallbck(grpNode.defaultObservation,chartingOpts.chartGroup)">' +
+                                                 '<i class="material-icons">insert_chart</i>'+
                                              '</a>'+
                                         '</div>' +
+                                        '<dc-chart-menu obs="grpNode.defaultObservation" quals= "grpNode.qualifiers" module="chartingOpts.chartGroup" on-select="localcallbck(obsReq,obsModule)" class="qualifier-menu">' +
+                                        '</dc-chart-menu>'+
                                         '<ul>' +
-                                            '<li cl-tree-obs class="list-item-text" ng-repeat="obsNode in grpNode.groupedObsNodes" node="obsNode" charting-opts="chartingOpts" ></li>'+
+                                            '<li cl-tree-obs class="list-item" ng-repeat="obsNode in grpNode.groupedObsNodes" node="obsNode" charting-opts="chartingOpts" ></li>'+
                                         '</ul>'+
                                     '</li>'+
                                 '</ul>'+
                             '</div>' +
                         '</li>'+
 
-                        '<li cl-tree-obs class="list-item-text" ng-repeat="node in group.terms " sels="group.selMultiObsGrps"  node="node" charting-opts="chartingOpts" callbck="localcallbck(request)"></li>'+
+                        '<li cl-tree-obs class="list-item" ng-repeat="node in group.terms " sels="group.selMultiObsGrps"  node="node" charting-opts="chartingOpts" callbck="localcallbck(obsReq,obsModule)"></li>'+
                     '</ul>'+
                 '</li>',
             link: function (scope, element, attrs) {
@@ -220,33 +222,31 @@ angular.module('biospeak.explorer')
                 callbck:'&'
             },
             controller: function($scope){
-                $scope.updateCurrentCart = function(obsRequest){
-                    //console.log("In here",obsRequest)
-                    //$scope.callbck({ request: obsRequest })
+                $scope.plotSwitchClicked = function(obsReq, obsModule) {
+                    //console.log(" here",obsReq,plottingOptions)
+                    $scope.callbck({obsReq: obsReq, obsModule: obsModule})
                 }
             },
             template:
 
            '<div ng-class="{selected: node.isSelected}">' +
                 '<div class="plotting-switch">'+
-                    '<a charting-button ng-hide="node.isSelected || node.isLocked" class=" switchery"  ' +
-                        'obs="node.defaultObservation" quals="node.qualifiers" ' +
-                        'module="chartingOpts.chartGroup"'+
-                        'charting-opts="chartingOpts" style="color: #222f3f;" ' +
+                    '<a  ng-hide="node.isSelected || node.isLocked" class="switchery"  ' +
                         'ng-init="node.defaultObservation.isActive = false" ' +
                         'data-ng-disabled="node.isSelected" '+
                         'ng-class="{on:node.defaultObservation.isActive}" '+
-                        'ng-click="node.defaultObservation.isActive = !node.defaultObservation.isActive;  updateCurrentCart(node.defaultObservation)"> ' +
-                        '<small></small>'+
+                        'ng-click="node.defaultObservation.isActive = !node.defaultObservation.isActive;plotSwitchClicked(node.defaultObservation,chartingOpts.chartGroup)"> ' +
+                        '<i class="material-icons">insert_chart</i>'+
                     '</a>'+
-                    '<a ng-show="node.isLocked" class="btn btn-xs btn-white" disabled="disabled"><i class="fa fa-link"></i></a>'+
+                    '<span ng-show="node.isLocked" class="badge"><i class="fa fa-link"></i></span>'+
                 '</div>'+
-                '<span>{{node.defaultObservation.o3}}</span>'+
+                '<dc-chart-menu obs="node.defaultObservation" quals= "node.qualifiers" module="chartingOpts.chartGroup" on-select="plotSwitchClicked(obsReq,obsModule)" class="qualifier-menu"></dc-chart-menu>'+
+                '<span class="list-item-text">{{node.defaultObservation.o3}}</span>'+
             '</div>',
 
             link: function (scope, element, attrs) {
                 if (angular.isArray(scope.node.terms)) {
-                    $compile("<cl-tree-obs-grp group='node' sels='sels'  callbck = 'updateCurrentCart(obs)' charting-opts='chartingOpts'></cl-tree-obs-grp>")
+                    $compile("<cl-tree-obs-grp group='node' sels='sels'  onplot = 'plotSwitchClicked(obsReq,obsModule)' charting-opts='chartingOpts'></cl-tree-obs-grp>")
                     (scope, function(cloned){
                         element.replaceWith(cloned);
                     });
@@ -332,14 +332,15 @@ angular.module('biospeak.explorer')
      *
      * o3 (Text to display as name for the observation
      */
-    .directive('chartingButton', function($compile,cartService){
+    /*.directive('chartingButton', function($compile,cartService){
         return {
             restrict: 'EA',
             scope:{
                 obs:'=',
                 chartingOpts:'=',
                 module:'=',
-                quals: '='
+                quals: '=',
+                onFiltered: '&'
             },
             link: function(scope, element){
                 element.bind("click", function(){
@@ -350,7 +351,7 @@ angular.module('biospeak.explorer')
                     var cardId = (scope.obs.o3code+"_card").replace(/ /g,'_');
 
                     console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',scope.chartingOpts.chartContainerId, 'for module',scope.module);
-
+                    console.log(scope.onFiltered)
 
                     if(isActive)
                         cartService.addToCart(scope.obs, scope.module);
@@ -382,7 +383,7 @@ angular.module('biospeak.explorer')
                                     $compile(
                                         '<div id="'+ chartId +'"class="chart" ng-switch="obs.dataType">' +
                                         '<dc-time-chart ng-switch-when="dateTime" charting-opts="chartingOpts" obs="obs"></dc-time-chart>'+
-                                        '<dc-chart ng-switch-default charting-opts="chartingOpts" obs="obs" module="module"></dc-chart>'+
+                                        '<dc-chart ng-switch-default charting-opts="chartingOpts" obs="obs" module="module" on-filtered="onFiltered"></dc-chart>'+
                                         '</div>'
                                     )(scope)
                                 )
@@ -401,38 +402,50 @@ angular.module('biospeak.explorer')
 
             }
         }
-    })
+    })*/
 
     .directive('dcChartMenu', function() {
         return {
             restrict: 'EA',
             scope: {
                 obs: '=',
-                chartingOpts: '=',
                 module:'=',
-                quals:'='
+                quals:'=',
+                onSelect: '&'
             },
             replace:true,
-            controller: function ($scope, $element) {
-                //console.log('menu scope',$scope.obs, $scope.quals)
-            },
+            controller: ['$scope','$injector',function($scope,$injector) {
+
+                //var clinicalDataService = $injector.get($scope.chartingOpts.clinicalDataService);
+                //var projectId = $scope.chartingOpts.projectId;
+                //var obsId = $scope.obs.id;
+                // clinicalDataService.getObsQaulifiers(projectId,obsId, $scope.obs).then(function(result){
+                //     $scope.quals = result;
+                // })
+
+                // $scope.onChanged = function(obsReq,plottingOptions){
+                //
+                // }
+            }],
             template:
-            '<div class="dropdown" uib-dropdown>'+
-            '<a class="dropdown-toggle" href uib-dropdown-toggle>'+
-            '<i class="fa fa-ellipsis-v"></i>'+
-            '</a>'+
-            '<ul class=" dropdown-menu dropdown-menu-right plotting-options"> ' +
-            '<li class="dropdown-header">Chart Value for {{obs.o3}}</li>'+
-            '<li ng-repeat="var in quals">' +
-            '<div  class="checkbox">'+
-            '<input id="checkbox_{{var.id}}" type="checkbox" ' +
-            'charting-button  obs="var" module="module" ' +
-            'ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive" ' +
-            'charting-opts="chartingOpts" >' +
-            '<label uib-tooltip="{{var.qO2_label}}" for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +
-            '</div>' +
-            '</li> ' +
-            '</ul>'+
+            '<div ng-show="obs.isActive" class="dropdown" uib-dropdown>'+
+                '<a class="dropdown-toggle" href uib-dropdown-toggle>'+
+                    '<i class="fa fa-ellipsis-v"></i>'+
+                '</a>'+
+                '<ul uib-dropdown-menu class=" dropdown-menu dropdown-menu-right plotting-options"> ' +
+                    '<li class="dropdown-header">Observed Measures</li>'+
+                    '<li class="dropdown-item" ng-repeat="var in quals">' +
+                        '<div>'+
+                            '<a ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive;onSelect({obsReq:var,obsModule:module})">' +
+                                '<i class="material-icons" ng-show="!var.isActive">radio_button_unchecked</i>' +
+                                '<i class="material-icons" ng-show="var.isActive">radio_button_checked</i>' +
+                            '</a>'+
+
+                            //'<input id="checkbox_{{var.id}}" type="checkbox" ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive;onSelect({obsReq:var,plottingOptions:chartingOpts})" >' +
+                            '<label uib-tooltip="{{var.qO2_label}}" for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +
+                        '</div>' +
+                    '</li>' +
+                '</ul>'+
             '</div>'
         }
     })
