@@ -4,7 +4,7 @@
 
 
 'use strict'
-function AssaysController($stateParams,AssayXF,assayDataService,cartService,$q){
+function AssaysController($stateParams,AssayXF,assayDataService,$q){
 
     var vm = this;
 
@@ -36,24 +36,14 @@ function AssaysController($stateParams,AssayXF,assayDataService,cartService,$q){
                     });
                 });
 
-
                 promise.then(function(){
                     //This is run after all of your HTTP requests are done
                     //console.log("DONE")
                 })
-
                 vm.assays = assays;
             }
-
         })
-
-    vm.addAssayToCart = function(panel){
-        console.log(panel)
-        cartService.addAssayPanelToCart(panel)
-    }
-
-        
     }
 
 angular.module('biospeak.explorer')
-    .controller('AssayCtrl', ['$stateParams','AssayXF','assayDataService','cartService','$q',AssaysController])
+    .controller('AssayCtrl', ['$stateParams','AssayXF','assayDataService','$q',AssaysController])

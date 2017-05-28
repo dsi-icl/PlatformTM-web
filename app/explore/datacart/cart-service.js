@@ -214,7 +214,7 @@ function cartService($http,$rootScope,ngAppConfig) {
     };
 
     var _saveQuery = function(query,projectId){
-
+        console.log(currentCart)
         return $http({
             url:serviceBase+'apps/explore/projects/'+projectId+'/saveQuery',
             method:'POST',

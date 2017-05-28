@@ -38,7 +38,6 @@ angular.module('biospeak.explorer')
                 var domain;
 
                 $scope.localcallbck = function(obsReq,obsModule){
-                    console.log("ana b2 here",obsReq,obsModule);
                     $scope.onplot({obsReq:obsReq,obsModule:obsModule})
                 }
 

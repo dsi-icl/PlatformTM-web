@@ -188,7 +188,7 @@ function AssayXF(assayDataService,$q){
      * XFlinker Methods
      */
     cfservice.filterBySubjects = function(filteredSubjectIds){
-        console.log("filtering assays by subjects")
+        // console.log("filtering assays by subjects")
         for (var assayId in XfilterAssayMap) {
             //console.log('before',assayId,XfilterAssayMap[assayId].subjectGroup.value().count)
             if (XfilterAssayMap.hasOwnProperty(assayId)) {
