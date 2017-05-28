@@ -7,8 +7,9 @@ function fullScroll($timeout){
         link: function(scope, element) {
             $timeout(function(){
                 element.slimscroll({
-                    height: '100%',
-                    railOpacity: 0.9
+                    height: 'auto',
+                    railOpacity: 0.5,
+                    color: '#0095a2'
                 });
 
             });

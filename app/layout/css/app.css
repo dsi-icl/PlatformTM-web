@@ -737,8 +737,9 @@ div .dc-chart{
     float: none;
 }
 
-.progress-bar  {
 
+.progress-bar-success {
+    background-color: #23c6c8;
 }
 
 .dc-chart .progress-bar{
@@ -764,8 +765,8 @@ div .dc-chart{
 }
 
 .img-dashboard{
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
 }
 
 
@@ -1374,28 +1375,30 @@ a.editable-click {
 }
 .cardholder {
     width: 100%;
-    color: #e0e0e0;
+    color: #ccc;
     text-transform: uppercase;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 80px;
 }
-.cardholder strong {
-    font-size: 40px;
+.cardholder i {
+    font-size: 150px;
+    color: #eee;
 }
 .card {
     /*position:absolute;*/
     width: auto; white-space: nowrap;
 }
 .card h1 {
-    width: 90%;
+    /*width: 90%;*/
     font-size: 15px;
     padding: 10px;
     text-transform:uppercase;
-    color: #808080;
-    font-weight:100;
+    color: #23c6c8;
+    font-weight:600;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .card .chart {
     padding-left:10px;
@@ -1415,9 +1418,10 @@ a.editable-click {
     top: 7px;
 }
 .switchery {
-    border: 1px solid #808080;
-    background-color: #808080;
-    border-radius: 20px;
+    /*border: 1px solid #808080;*/
+    /*background-color: #808080;*/
+    /*border-radius: 20px;*/
+    color:#ccc;
     cursor: pointer;
     display: inline-block;
     height: 15px;
@@ -1443,9 +1447,10 @@ a.editable-click {
     background-color:#efefef;
 }
 .switchery.on {
-    border: 1px solid #5bb8b7;
-    background-color: #1ececc;
-    right: 0px;
+    /*border: 1px solid #5bb8b7;*/
+    /*background-color: #1ececc;*/
+    /*right: 0px;*/
+    color:#23c6c8;
 }
 .switchery.on > small {
     right: 0px;
@@ -1479,7 +1484,7 @@ a.editable-click {
 
 .dataset-list tbody {
     display:block;
-    height:250px;
+    height:385px;
     overflow:auto;
 }
 .dataset-list thead {
@@ -1526,4 +1531,13 @@ h1.logo-name{
     background-color: rgba(35, 200, 192, 0.22);
     color: #31708f;
     border-color: #bce8f1;
+}
+canvas {
+    background-color: #f3f3f3;
+    -webkit-box-shadow: 3px 3px 3px 0 #e3e3e3;
+    -moz-box-shadow: 3px 3px 3px 0 #e3e3e3;
+    box-shadow: 3px 3px 3px 0 #e3e3e3;
+    border: 1px solid #c3c3c3;
+    height: 100px;
+    margin: 6px 0 0 6px;
 }

@@ -44,7 +44,8 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource"])
                                     'lib/plugins/ui-select/js/select.min.js',
                                     'lib/plugins/angular-ui-select/js/select.min.js',
                                     'lib/plugins/ngSweetAlert/js/sweetalert.min.js',
-                                    'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js'
+                                    'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js',
+                                    'lib/plugins/angular-file-upload/angular-file-upload.min.js'
                                     ]
                             },
                             {
@@ -57,22 +58,22 @@ angular.module('bioSpeak.config',["ui.bootstrap","ngResource"])
                 }
                 
             })
-            .state('admin.projects',{
-                url:"/projects",
-                templateUrl:"admin/project/project-list.html",
-                controller: "ProjectsCtrl as vm",
-                resolve: {
-
-                    loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        console.log("loading project service");
-                        return $ocLazyLoad.load('admin/project/project-service.js');
-                    }],
-                    loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        console.log("loading project list controller");
-                        return $ocLazyLoad.load('admin/project/projectList-controller.js');
-                    }]
-                }
-            })
+            // .state('admin.projects',{
+            //     url:"/projects",
+            //     templateUrl:"admin/project/project-list.html",
+            //     controller: "ProjectsCtrl as vm",
+            //     resolve: {
+            //
+            //         loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+            //             console.log("loading project service");
+            //             return $ocLazyLoad.load('admin/project/project-service.js');
+            //         }],
+            //         loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+            //             console.log("loading project list controller");
+            //             return $ocLazyLoad.load('admin/project/projectList-controller.js');
+            //         }]
+            //     }
+            // })
             .state('admin.project', {
                 url: "/projects/{projectId}",
                 views:{

@@ -3,18 +3,6 @@
  */
 'use strict';
 
-/*function WithPromiseCtrl(DTOptionsBuilder, DTColumnBuilder, $resource) {
-    var vm = this;
-    vm.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
-        return $resource('data.json').query().$promise;
-    }).withPaginationType('full_numbers');
-
-    vm.dtColumns = [
-        DTColumnBuilder.newColumn('id').withTitle('ID'),
-        DTColumnBuilder.newColumn('firstName').withTitle('First name'),
-        DTColumnBuilder.newColumn('lastName').withTitle('Last name').notVisible()
-    ];
-}*/
 
 function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $resource,wizardService){
 
@@ -22,26 +10,25 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
     var datasetId = $stateParams.datasetId;
     var fileId = $stateParams.fileId;
 
-    $scope.vm = {
+    var vm = this;
+    vm.params = {
         datasetId: datasetId,
         activityId:activityId,
-        fileId: fileId,
+        fileId: fileId
         //map: $stateParams.map,
-        showDT: false,
-        dtColumns:[]
-    }
+    };
 
+    vm.showDT= false;
+    vm.dtColumns=[];
 
-    wizardService.getDataTablePreview($scope.vm.datasetId, $scope.vm.fileId)
+    wizardService.getDataTablePreview(vm.params.datasetId, vm.params.fileId)
         .then(function(headers){
-            //console.log(headers)
-            $scope.vm.dtColumns = headers;
-            $scope.vm.showDT = true
-        })
+            vm.dtColumns = headers;
+            vm.showDT = true
+        });
 
-    $scope.vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
+    vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
         return wizardService.getDataTableData();
-        //return $resource('../data/dt.json').query().$promise;
     })
         //.withTableTools('lib/plugins/dataTables/copy_csv_xls_pdf.swf')
         // .withTableToolsButtons([
@@ -55,12 +42,12 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
         .withPaginationType('simple')
         .withOption('scrollX', true);
 
-    $scope.goToStep2 = function(){
-        $state.go('datastage.wizard.step_two',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, fileId: fileId });
-    }
-    $scope.goToStep4 = function(){
-        $state.go('datastage.wizard.step_four',{ activityId: $scope.vm.activityId, datasetId: $scope.vm.datasetId, fileId: fileId });
-    }
+    vm.goToStep2 = function(){
+        $state.go('datastage.wizard.step_two',{ activityId: vm.params.activityId, datasetId: vm.params.datasetId, fileId: vm.params.fileId });
+    };
+    vm.goToStep4 = function(){
+        $state.go('datastage.wizard.step_four',{ activityId: vm.params.activityId, datasetId: vm.params.datasetId, fileId: vm.params.fileId });
+    };
 }
 
 angular.module('bioSpeak.import')

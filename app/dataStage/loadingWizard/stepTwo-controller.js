@@ -31,12 +31,12 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
                 standardFileId = fileInfo.dataFileId;
             $scope.vm.dataIsloaded = true
 
-            if(!fileInfo.templateMatched)
-                return wizardService.getTemplateMap(datasetId)
+            // if(!fileInfo.templateMatched)
+            //     return wizardService.getTemplateMap(datasetId)
         })
-        .then(function(template) {
-            $scope.vm.template = template;
-        })
+        // .then(function(template) {
+        //     $scope.vm.template = template;
+        // })
 
     //$scope.fileMatched = false;
     $scope.topicColumnCount=1;

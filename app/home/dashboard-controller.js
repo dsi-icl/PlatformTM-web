@@ -2,7 +2,7 @@
  * Created by iemam on 06/04/2017.
  */
 'use strict'
-function dashboardController($scope, $state, $stateParams,projectService, exportService, cartService, checkoutService ) {
+function dashboardController($state,projectService, exportService, explorerService, checkoutService ) {
     var vm = this;
 
     var date = new Date();
@@ -27,7 +27,7 @@ function dashboardController($scope, $state, $stateParams,projectService, export
         vm.loaded = true;
     });
 
-    cartService.getUserQueries(vm.projectId).then(function(response){
+    explorerService.getUserQueries(vm.projectId).then(function(response){
         //console.log(response);
         vm.queries = response.queries;
     });
@@ -59,4 +59,4 @@ function dashboardController($scope, $state, $stateParams,projectService, export
 
 }
 angular.module('biospeak.app')
-    .controller('DashboardCtrl',['$scope', '$state','$stateParams','projectService','exportService','cartService','checkoutService',dashboardController])
+    .controller('DashboardCtrl',['$state','projectService','exportService','explorerService','checkoutService',dashboardController])

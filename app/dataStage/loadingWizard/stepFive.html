@@ -1,28 +1,40 @@
-<div class="row">
-        <div class="col-lg-12">
-            <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>Loading Progress</h5>
-                </div>
-                <div class="ibox-content">
-                    <h2 ng-if="!loadedDataset && !loadingFailed">Loading Dataset ...</h2>
-                    <h2 ng-if="loadedDataset && !obsExtracted && !loadingFailed">Extracting Observations ...</h2>
-                    <h2 ng-if="loadingFailed">Loading Failed!</h2>
-                    <h2 ng-if="loadedDataset && obsExtracted">Done</h2>
-                    <div ng-hide="(loadedDataset && obsExtracted) || loadingFailed"class="spiner-example">
-                        <div class="sk-spinner sk-spinner-three-bounce">
-                            <div class="sk-bounce1"></div>
-                            <div class="sk-bounce2"></div>
-                            <div class="sk-bounce3"></div>
-                        </div>
-                    </div>
+
+<fieldset>
+    <div ng-hide="vm.isLoading || vm.isFinished" class="m-b-md">
+        <a ng-click="vm.loadFile2()" class="btn btn-outline btn-info btn-md btn-block" data-ng-disabled="vm.isLoading">START LOADING </a>
+    </div>
+
+
+    <!-- <div class="col-lg-12">-->
+    <uib-progressbar ng-if="vm.isLoading || vm.isFinished" type="success" style="margin-bottom: 0px; height:30px" class="progress-striped  progress-bar-info" value="vm.progress"><div style="text-align: center;
+    padding-top: 5px;
+    font-size: x-large;
+    font-weight: 400;
+    color: rgb(194, 248, 89)">{{vm.progress}}%</div></uib-progressbar>
+
+    <div ng-show="vm.isLoading || vm.isFinished" class="animated fadeInDown alert alert-info">
+        <div class="text-center text-primary text-uppercase">
+            <h3 ng-if="!vm.loadedDataset && !vm.loadingFailed">Loading File </h3>
+            <h3 ng-if="vm.loadedDataset && !vm.obsExtracted && !vm.loadingFailed">Extracting Content </h3>
+            <h3 ng-if="vm.loadingFailed">Loading Failed!</h3>
+            <h3 ng-if="vm.loadedDataset && vm.obsExtracted">Done</h3>
+            <div ng-hide="(vm.loadedDataset && vm.obsExtracted) || vm.loadingFailed">
+                <div class="sk-spinner sk-spinner-wave "  >
+                    <div class="sk-rect1"></div>
+                    <div class="sk-rect2"></div>
+                    <div class="sk-rect3"></div>
+                    <div class="sk-rect4"></div>
+                    <div class="sk-rect5"></div>
                 </div>
             </div>
         </div>
     </div>
-<div class="row">
-    <a ng-click="goToStep4()" class="btn btn-default">Previous</a>
-    <a ng-click="finish()" class="btn btn-primary pull-right">Finish</a>
-    <a ui-sref="datastage.files"  class="btn btn-primary pull-right">Cancel</a>
 
-</div>
+    <div class="btn-group pull-right">
+        <a ng-click="vm.goToStep4()" class="btn btn-default">Previous</a>
+        <a ng-click="vm.finish()" class="btn btn-primary pull-right">Finish</a>
+    </div>
+
+    <a ui-sref="datastage.files"  class="btn btn-primary ">Cancel</a>
+</fieldset>
+

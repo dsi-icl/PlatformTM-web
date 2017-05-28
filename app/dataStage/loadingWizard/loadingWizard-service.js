@@ -15,7 +15,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var _checkValidTemplate = function(datasetId,fileId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'datasets/'+datasetId+'/validate/'+fileId)
+        $http.get(serviceBase + 'files/'+fileId+'/match/datasets/'+datasetId)
             .success(function (response) {
                 console.log("Inside http get success",response)
 
@@ -108,7 +108,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _mapFileToTemplate = function(datasetId,fileId,map){
         var deferred = $q.defer();
-        $http.post(serviceBase + 'datasets/'+datasetId+'/mapToTemplate/file/'+fileId,map)
+        $http.post(serviceBase + 'files/'+fileId+'/mapToTemplate/datasets/'+datasetId,map)
             //$http.get('../data/dt.json')
             .success(function (response) {
                 //tableHeaders = response.header
@@ -154,7 +154,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _loadDataset = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'datasets/'+datasetId+'/saveDataFile/file/'+fileId)
+        $http.get(serviceBase + 'files/'+fileId+'/load/datasets/'+datasetId)
             .success(function (response) {
                 console.log("LOAD DATASET Inside http get success",response)
                 deferred.resolve(response);
@@ -162,9 +162,21 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     };
 
+    var _getLoadingProgress = function(fileId){
+        return $http({
+            url: serviceBase + 'files/' + fileId+'/progress',
+            method: 'GET',
+        }).then(
+            function (response) {
+                console.log(response)
+                return response.data
+            }
+        )
+    }
+
     var _extractObs = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'datasets/'+datasetId+'/loadData/file/'+fileId)
+        $http.get(serviceBase + 'datasets/'+datasetId+'/load/files/'+fileId)
             .success(function (response) {
                 console.log("EXTRACT OBSERVATIONS Inside http get success",response)
                 deferred.resolve(response);
@@ -184,6 +196,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     wizardServiceFactory.extractObs = _extractObs;
     wizardServiceFactory.updateDatasetFile = _updateDatasetFile;
     wizardServiceFactory.getFile = _getFile;
+    wizardServiceFactory.getLoadingProgress = _getLoadingProgress;
 
 
     return wizardServiceFactory;
