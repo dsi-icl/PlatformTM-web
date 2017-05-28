@@ -2,7 +2,7 @@
  * Created by iemam on 08/07/2014.
  */
 'use strict';
-function ExplorerCtrl($scope,$stateParams,XFilterLinker, assayDataService, explorerService, DCchartingService) {
+function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService, explorerService, DCchartingService) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
     vm.queryId = $stateParams.queryId;
@@ -43,10 +43,9 @@ function ExplorerCtrl($scope,$stateParams,XFilterLinker, assayDataService, explo
 
     vm.plotSwitchClicked = function(obsReq, obsModule){
         var isActive = obsReq.isActive === true;
-        var chartId = (obsReq.name+"_chart").replace(/ /g,'_');
-        var cardId = (obsReq.o3code+"_card").replace(/ /g,'_');
+        // var chartId = (obsReq.name+"_chart").replace(/ /g,'_');
+        // var cardId = (obsReq.o3code+"_card").replace(/ /g,'_');
 
-        console.log(obsReq,obsModule);
         //console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',plottingOptions.chartContainerId, 'for module',plottingOptions.chartGroup);
         if(isActive){
             explorerService.addToCart(obsReq, obsModule);
@@ -88,9 +87,32 @@ function ExplorerCtrl($scope,$stateParams,XFilterLinker, assayDataService, explo
 
     }
 
+    vm.addAssayToCart = function(panel){
+        console.log(panel)
+        explorerService.addAssayPanelToCart(panel)
+    }
+
+
+    vm.saveQuery = function(){
+        vm.cartQuery.IsSavedByUser = true;
+        explorerService.saveQuery(vm.cartQuery,vm.projectId).then(function(){
+            explorerService.getUserQueries(vm.projectId).then(function(response){
+                vm.savedQueries = response.queries;
+            })
+
+        })
+    }
+
+    vm.saveToCartAndCheckout = function(){
+        explorerService.saveQuery(vm.cartQuery, vm.projectId).then(function(response){
+            $state.go('datacart.checkout',{
+                projectId: vm.projectId,
+                cartId: response.cartId});
+        })
+
+    }
+
 }
 
-/* Controllers */
-
 angular.module('biospeak.explorer')
-    .controller('ExplorerCtrl',['$scope','$stateParams','XFilterLinker','assayDataService','explorerService','DCchartingService',ExplorerCtrl])
+    .controller('ExplorerCtrl',['$scope','$state','$stateParams','XFilterLinker','assayDataService','explorerService','DCchartingService',ExplorerCtrl])

@@ -7,11 +7,9 @@
                     <span><i class="fa fa-shopping-cart"></i> Data Cart</span>
                     <span class="pull-right"><a ng-click="expVM.resetAll()"><i class="fa fa-refresh"></i> Refresh</a></span>
                 </h4>
-
             </li>
 
             <li style="padding: 10px;color: white;">
-
                 <div>
                     <div style="border-bottom: 1px solid #4e7194;
     /*font-size: 1.2em;*/
@@ -49,7 +47,6 @@
     /*font-size: 1.2em;*/
     font-weight: 600;">
                         <div>MOLECULAR OBSERVATIONS</div>
-
                     </div>
                     <ul style="padding: 5px;color: white;list-style: none;">
                         <li ng-if="panel.isRequested" ng-repeat="panel in expVM.cartQuery.assayPanelRequests">
@@ -70,8 +67,6 @@
                                     </li>
                                 </ul>
                             </div>
-
-
                             <!--<div class="p-w-xs" style="border-bottom: 1px solid white">Features</div>-->
                             <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                         </li>
@@ -83,31 +78,31 @@
 
                 <div class="p-xs" style="background-color: #132634; margin-top:20px">
                     <div>Add To My Queries</div>
-                    <a href="#" e-ng-model="vm.cartQuery.name" class="bs3" editable-text="vm.cartQuery.name" >{{vm.cartQuery.name || "Give it a name"}}</a>
-                    <a ng-click="vm.saveQuery()" class="pull-right"><i class="fa fa-plus"></i></a>
+                    <a href="#" e-ng-model="expVM.cartQuery.name" class="bs3" editable-text="expVM.cartQuery.name" >{{expVM.cartQuery.name || "Give it a name"}}</a>
+                    <a ng-click="expVM.saveQuery()" class="pull-right"><i class="fa fa-plus"></i></a>
                 </div>
                 <div style="text-align: right;margin-top: 20px;">
-                    <a ng-click="vm.saveToCartAndCheckout()" class="btn btn-xs btn-default" style="background-color: #23c6c8; color:white;border-color: #2C3E50;" href=""
+                    <a ng-click="expVM.saveToCartAndCheckout()" class="btn btn-xs btn-default" style="background-color: #23c6c8; color:white;border-color: #2C3E50;" href=""
                        style="">CHECKOUT</a>
                 </div>
 
             </li>
 
-            <li style="padding: 10px; color: white; background: #132634">
+            <!--<li style="padding: 10px; color: white; background: #132634">
                 <div>
                     <div style="border-bottom: 1px solid white">
                         <div>MY QUERIES</div>
                     </div>
                     <ul style="padding: 15px;color: white;list-style: none;">
-                        <li ng-repeat="q in vm.savedQueries">
+                        <li ng-repeat="q in expVM.savedQueries">
                             {{q.name}}
-                            <!--<a class="pull-right" ui-sref="explore({projectId:vm.projectId, queryId:q.id})">LOAD</a>-->
+                            <a class="pull-right" ui-sref="explore.main({projectId:vm.projectId, queryId:q.id})">LOAD</a>
                         </li>
 
 
                     </ul>
                 </div>
-            </li>
+            </li>-->
         </ul>
 
     </div>

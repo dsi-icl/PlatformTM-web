@@ -63,7 +63,7 @@ function explorerService($http,ngAppConfig,$q) {
             currentCart.assayPanelRequests[module].isRequested = true;
             currentCart.assayPanelRequests[module].sampleQuery.push(item);
 
-            console.log(currentCart.assayPanelRequests[module])
+            console.debug(currentCart.assayPanelRequests[module])
         }
     };
 
@@ -94,12 +94,11 @@ function explorerService($http,ngAppConfig,$q) {
     };
 
     var _addAssayPanel = function(panel){
-        //console.log('Adding Panel', panel.assayId);
         currentCart.assayPanelRequests[panel.assayId].isRequested = true;
     };
 
     var _applyFilter = function(id,filters,isRange,module){
-         console.log("UPDATING CART WITH FILTER ",id,filters,isRange,module);
+         console.debug("UPDATING CART WITH FILTER ",id,filters,isRange,module);
         var found = false;
         var filteredObs;
 
@@ -195,14 +194,8 @@ function explorerService($http,ngAppConfig,$q) {
     var _getCurrentCartQuery = function(){
         return currentCart;
     };
-    var _getCartSubjObsReq = function(){
-        return currentCart.subjCharRequests;
-    };
-    var _getCurrentObservations = function(){
-        return currentCart.obsRequests;
-    };
-    var _getCurrentAssayPanels = function(){
 
+    var _getCurrentAssayPanels = function(){
         return currentCart.assayPanelRequests;
     };
 
@@ -267,7 +260,6 @@ function explorerService($http,ngAppConfig,$q) {
     explorerServiceFactory.getCartQuery = _getCartQuery;
     explorerServiceFactory.getNewCartQuery = _getNewCartQuery;
 
-    explorerServiceFactory.getCartSubjObsReq = _getCartSubjObsReq;
 
     explorerServiceFactory.cartIsReady = _cartIsReady;
     return explorerServiceFactory;

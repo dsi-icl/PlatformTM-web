@@ -29,8 +29,7 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalXF,D
 
 }
 angular.module('biospeak.explorer')
-    .controller('ClinicalCtrl', ['$scope','$stateParams','clinicalDataService','ClinicalXF','DCchartingService',
-        'cartService',ClinicalController])
+    .controller('ClinicalCtrl', ['$scope','$stateParams','clinicalDataService','ClinicalXF','DCchartingService',ClinicalController])
 
 
 

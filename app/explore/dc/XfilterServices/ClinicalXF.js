@@ -341,7 +341,7 @@ function ClinicalXF(clinicalDataService,$q){
     }
 
     cfservice.removeFilters = function(obs){
-        console.log('inside remove filter ',obs, cfservice.getDimension(obs))
+        // console.log('inside remove filter ',obs, cfservice.getDimension(obs))
         cfservice.getDimension(obs).filterAll();
     }
 
@@ -366,8 +366,6 @@ function ClinicalXF(clinicalDataService,$q){
         var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
         var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
 
-        //console.log(findingsSubjIds,eventsSubjIds);
-
         var filteredSubjectIds = [];
 
         if(findingsSubjIds.length !== 0 && eventsSubjIds.length !==0){
@@ -387,19 +385,6 @@ function ClinicalXF(clinicalDataService,$q){
             });
         }
 
-
-        //filteredSubjectIds = findingsSubjIds
-
-        //This was doing the union of
-       // if(isFindingsXFFiltered()) {
-         //console.log('findings filtered')
-
-         //}
-         //if(isEventsXFFiltered()) {
-         //console.log('events filtered')
-
-         //}
-        //console.log(filteredSubjectIds.length);
         return filteredSubjectIds;
     }
 

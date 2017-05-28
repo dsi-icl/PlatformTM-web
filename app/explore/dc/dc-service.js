@@ -41,7 +41,7 @@ angular.module('biospeak.dcPlots')
                 //if not found in xfilter then refreshxf then getchart
 
                 if (angular.isDefined(obsToChartId[obsId + '_' + chartDataType+"_"+chartGroup])) {
-                    console.log("ERROR: THIS SHOULD NOT BE HAPPENING");
+                    console.error("ERROR: THIS SHOULD NOT BE HAPPENING");
                     deferred.reject();
 
                     //chartId = obsToChartId[obsId + '_' + chartDataType];
@@ -62,14 +62,13 @@ angular.module('biospeak.dcPlots')
                     //deferred.resolve(chart)
                 }
                 else if (!angular.isUndefined(xfilterService.getDimension(obsId, chartGroup))) {
-                    console.log("Observation ", obsId, " exists in XF. Creating ", chartDataType)
+                    console.debug("Observation ", obsId, " exists in XF. Creating ", chartDataType)
                     chart = DCservice.createChart(obsId, xfilterService, chartDataType, obsRequest.dataType, chartGroup);
                     deferred.resolve(chart)
                 }
                 else {
-                    console.log("++Requested observation NOT FOUND IN XF++")
+                    console.debug("++Requested observation NOT FOUND IN XF++")
                     requestedObsvs.push(obsRequest);
-                    console.log("RequestedObservations are,",requestedObsvs);
                     xfilterService.refreshCf(projectId, requestedObsvs, chartGroup)
                         .then(function () {
                             chart = DCservice.createChart(obsId, xfilterService, chartDataType, obsRequest.dataType, chartGroup);
@@ -503,7 +502,7 @@ angular.module('biospeak.dcPlots')
 
                     dc.chartRegistry.list(chartGroup).forEach(function (c) {
                         if (c.chartID() === chartId || c.chartID() === rangechartId) {
-                            console.log('found chart, resetting filter ...')
+                            // console.log('found chart, resetting filter ...')
                             chart = c;
 
                             c.filterAll();
