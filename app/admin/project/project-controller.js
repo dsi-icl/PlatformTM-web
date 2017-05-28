@@ -6,7 +6,8 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
 
     vm.ready = false;
     var project;
-    vm.projectId = $stateParams.projectId
+    vm.projectId = $stateParams.projectId;
+
     if($stateParams.projectId === 'new'){
         console.log("New Project");
         project = new projectService.getProjectResource();
@@ -15,7 +16,6 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
         project.studies = [];
         vm.project = project;
 
-        // toaster.pop('info', "Create a project first by editing Project Name", " ",8000);
         var modalInstance = $uibModal.open({
             templateUrl: 'admin/project/newForm.html',
             controller: function ($uibModalInstance) {
@@ -38,7 +38,6 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
             controllerAs: 'modalCtrl'
         });
         vm.ready = true
-
     }
 
 
@@ -47,11 +46,8 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
             function(response){
                 project = response;
                 project.isNew = false;
-
                 vm.project = project
-
                 vm.ready = true
-
         });
     }
 
@@ -63,6 +59,10 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
     projectService.getProjectResource.getActivitiesForProject({projectId:vm.projectId},function(response){
         vm.activities = response;
     });
+
+    projectService.getProjectUsers(vm.projectId).then(function(users){
+        vm.users = users;
+    })
 
     vm.openUpload = function() {
         console.log($stateParams)

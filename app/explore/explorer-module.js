@@ -53,7 +53,9 @@ angular.module('biospeak.explorer',[])
                             loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/explorer-controller.js');
                             }],
-
+                            loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                return $ocLazyLoad.load('explore/explorer-service.js');
+                            }],
                             loadDependency: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load([
                                     {
@@ -108,12 +110,12 @@ angular.module('biospeak.explorer',[])
                     'datacart@explore.main':{
                         templateUrl: 'explore/datacart/cart.html',
                         controller: 'cartCtrl as vm',
-                        params: { queryId: null, },
+                        params: { queryId: null },
                         resolve: {
-
+                            /*
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/datacart/cart-service.js');
-                            }],
+                            }],*/
                             loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/datacart/cart-controller.js');
                             }],
