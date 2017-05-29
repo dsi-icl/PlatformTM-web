@@ -36,7 +36,7 @@ angular.module('biospeak.app').config(function($stateProvider, $urlRouterProvide
                     console.log("loading service");
                     return $ocLazyLoad.load([
                         'admin/project/project-service.js','export/export-service.js',
-                        'explore/datacart/cart-service.js','explore/checkout/checkout-service.js']);
+                        'explore/explorer-service.js','explore/checkout/checkout-service.js']);
                 }],
                 /*loadDirectives:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load(['admin/studies/study-plan-directives.js'

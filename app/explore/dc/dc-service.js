@@ -486,6 +486,7 @@ angular.module('biospeak.dcPlots')
                 dc.redrawAll(chartGroup);
                 obsToChartId = [];
                 chartIdToObs = [];
+                requestedObsvs = [];
             };
 
             DCservice.resetChart = function (obsReq, chartGroup) {
@@ -520,6 +521,13 @@ angular.module('biospeak.dcPlots')
                 }
                 return deferred.promise;
             };
+            
+            DCservice.init = function () {
+                requestedObsvs = [];
+                obsToChartId = [];
+                chartIdToObs = [];
+                dc.deregisterAllCharts();
+            }
 
             return DCservice;
         }]);

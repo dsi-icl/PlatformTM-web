@@ -63,9 +63,6 @@ angular.module('biospeak.dcPlots')
                             console.log("Failed to create DC chart",result);
                         }
                 );
-
-
-
             }],
             template:
 

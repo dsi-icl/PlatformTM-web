@@ -21,15 +21,17 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         assayChartGrp: "assay",
         filtersService: "filtersService"
     };
+    vm.loaded = false;
 
-    vm.subjCharRequests=[];
 
     XFilterLinker.initAll();
+    DCchartingService.init();
 
     if(vm.queryId){
         explorerService.getCartQuery(vm.projectId,vm.queryId).then(function(query){
             vm.cartQuery = query.cart;
             vm.projectAcc = query.cart.projectAcc;
+            vm.loaded = true;
         });
     }else {
         explorerService.getNewCartQuery(vm.projectId).then(function(query){
@@ -37,9 +39,9 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         })
     }
 
-    explorerService.getUserQueries(vm.projectId).then(function(response){
+    /*explorerService.getUserQueries(vm.projectId).then(function(response){
         vm.savedQueries = response.queries;
-    });
+    });*/
 
     vm.plotSwitchClicked = function(obsReq, obsModule){
         var isActive = obsReq.isActive === true;
@@ -55,6 +57,8 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
             explorerService.removeFromCart(obsReq, obsModule);
         }
     };
+
+
 
     vm.onFiltered = function(obsId,module,filters, filter){
         var isRangeFilter = false;

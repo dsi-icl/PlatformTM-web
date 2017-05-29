@@ -217,6 +217,14 @@ function AssayXF(assayDataService,$q){
         return XfilterAssayMap[assayId].xfReady;
     };
 
+    cfservice.allXFready = function(){
+        var ready = false;
+        for(var key in XfilterAssayMap){
+            ready = XfilterAssayMap[key].xfReady || ready
+        }
+        return ready
+    }
+
     cfservice.getXFname = function(){
         return XFserviceName;
     };
@@ -250,6 +258,11 @@ function AssayXF(assayDataService,$q){
         }
         //dc.redrawAll("assay");
     };
+
+    cfservice.init= function(){
+        XfilterAssayMap = {}
+        SubjectAssayMap = {}
+    }
     return cfservice;
 }
 
