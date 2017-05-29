@@ -410,6 +410,8 @@ function ClinicalXF(clinicalDataService,$q){
     cfservice.init = function () {
         dimensions = [];
         groups = [];
+        subjectDim['findings']=null;
+        subjectDim['events'] = null;
         cfReady = false;
     };
 

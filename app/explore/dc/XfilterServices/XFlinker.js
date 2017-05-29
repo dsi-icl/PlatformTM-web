@@ -227,7 +227,12 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF,$injector){
         SubjectXF.init();
         ClinicalXF.init();
         //AssayXF.init();
+
+        _subjectFilters['subjectXF'] = [];
+        _subjectFilters['clinicalXF'] = [];
+        _subjectFilters['assayXF'] = [];
     }
+
 
     return XFilterLinker;
 }
