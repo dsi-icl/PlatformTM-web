@@ -41,8 +41,8 @@
 
 
 .clinical-tree ul{
-    width: 100%;
-    position: relative;
+    /*width: 100%;*/
+    /*position: relative;*/
     margin-bottom: 10px;
     list-style: none;
     padding:0px;
@@ -77,7 +77,7 @@
     !*font-weight: bold;*!
 }*/
 
-.clinical-tree .list-item-text {
+.clinical-tree .list-item{
     margin: 0px 10px 0px;
     color: inherit;
     font-size: 1.2em;
@@ -90,14 +90,19 @@
     border-bottom: 1px rgba(0, 175, 188, 0.24) solid;
     float: none;
     display: inline-block;
+
+
+    position: relative;
+
+}
+.clinical-tree .list-item-text{
+    padding-left:10px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    position: relative;
+    width:85%;
+    position: absolute;
     text-transform: capitalize;
-}
-.clinical-tree .list-item-text span{
-    padding-left:10px;
 }
 
 .clinical-tree .list-item-text-sel{
@@ -118,17 +123,17 @@
     margin-right: 40px;
 }
 
-.clinical-tree .list-item-text.group{
-    padding-left:30px;
+.clinical-tree .list-item.group{
+    padding-left:25px;
 }
 
-.clinical-tree .list-item-text.group.locked{
+.clinical-tree .list-item.group.locked{
     padding-left:0px;
     border-bottom: 1px #f5f5f5 solid;
 
 }
 
-.clinical-tree .list-item-text.selected{
+.clinical-tree .list-item.selected{
    background-color: rgba(205, 255, 59, 0.28);
 }
 
@@ -143,11 +148,11 @@
     min-height: 100px;
     /* border-bottom: 1px solid #00AFBC; */
     /* padding: 10px; */
-    margin-left: -35px;
+    margin-left: -10px;
     margin-top: -6px;
     margin-right: -13px;
-    background-color: #eee;
-    padding: 25px 15px 25px 16px;
+    background-color: rgba(107, 202, 204, 0.13);
+    padding: 10px 15px 5px 10px;
 
 }
 
@@ -159,20 +164,57 @@
 
 .qualifier-menu{
     position: absolute;
-    right:25px;
-    top:14px;
+    right:0px;
+    top:4px;
 
 }
 .qualifier-menu i{
     font-size:18px;
+    color: #ccc;
+}
+.qualifier-menu  i:hover, i:active {
+    /*border: 1px solid #5bb8b7;*/
+    /*background-color: #1ececc;*/
+    /*right: 0px;*/
+    color:#23c6c8;
 }
 
-.plotting-options li{
+.plotting-options > li{
 
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 0px 0px 0px 2px;
-    max-width: 195px;
+    max-width: 250px;
+    overflow: hidden;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.plotting-options.dropdown-menu label{
+    font-weight: 200;
+    margin-bottom: 0px;
+    padding-left: 10px;
+}
+
+.plotting-options.dropdown-menu {
+    top: 25px;
+    width: 250px;
+
+}
+
+
+
+.plotting-options .dropdown-header{
+    background: #132634;
+    color: #FFFFFF;
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+}
+.plotting-options .dropdown-item{
+
+
+
 }
 
 .plotting-switch {

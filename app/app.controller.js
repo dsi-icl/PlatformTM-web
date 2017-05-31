@@ -3,9 +3,7 @@
  */
 angular.module('biospeak.app')
     .controller('appController', function ($scope, $location, $state, /*USER_ROLES,*/ authService) {
-
-console.log($state.current)
-        if($state.current.name != "login" || $state.current.name != "signup")
+        if($state.current.name !== "login" || $state.current.name !== "signup")
             authService.getCurrentUser().then(function(response){
                 $scope.currentUser = response.user;
             });
@@ -15,7 +13,6 @@ console.log($state.current)
 
     $scope.setCurrentUser = function (user) {
         $scope.currentUser = user
-        console.log($scope.currentUser)
     };
 
     $scope.loginData = {

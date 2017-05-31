@@ -34,6 +34,17 @@ function projectService($http,$resource, ngAppConfig) {
         }
     });
 
+    var _getProjectUsers = function(projectId){
+        return $http({
+            url: serviceBase + 'projects/' + projectId+'/users',
+            method: 'GET'
+        }).then(
+            function(response){
+                return response.data;
+            }
+        )
+    }
+
     var _deleteProject = function(projectId){
         console.log("project-service: the project with following ID will be deleted",projectId);
         return $http({
@@ -50,6 +61,7 @@ function projectService($http,$resource, ngAppConfig) {
 
     ProjectFactory.getProjectResource = _projectResource;
     ProjectFactory.deleteProject = _deleteProject;
+    ProjectFactory.getProjectUsers = _getProjectUsers;
 
     return ProjectFactory
 

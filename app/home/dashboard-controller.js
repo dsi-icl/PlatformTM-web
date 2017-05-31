@@ -2,7 +2,7 @@
  * Created by iemam on 06/04/2017.
  */
 'use strict'
-function dashboardController($state,$stateParams,projectService, exportService, cartService, checkoutService, SweetAlert ) {
+function dashboardController($state,projectService, exportService, explorerService, checkoutService ) {
     var vm = this;
 
     var date = new Date();
@@ -27,7 +27,7 @@ function dashboardController($state,$stateParams,projectService, exportService, 
         vm.loaded = true;
     });
 
-    cartService.getUserQueries(vm.projectId).then(function(response){
+    explorerService.getUserQueries(vm.projectId).then(function(response){
         //console.log(response);
         vm.queries = response.queries;
     });
@@ -57,43 +57,6 @@ function dashboardController($state,$stateParams,projectService, exportService, 
 
     }
 
-     /*vm.deleteDataset = function(datasetId){
-         exportService.deleteDataset(datasetId)
-         .then(function(data){
-             vm.refreshDatasets();
-         });
-     }*/
-
-// following is not working as sweetalarm should be declared!!!!!!!
-
-   vm.deleteDataset = function(datasetId){
-            SweetAlert.swal({
-                title: "Are you sure you want to delete this dataset ?",
-                text: "Dataset will be permanently deleted! ",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel plz!",
-                closeOnConfirm: false,
-                closeOnCancel: false },
-            function (isConfirm) {
-                if (isConfirm) {
-                    exportService.deleteDataset(datasetId)
-                        .then(function(data){
-                            SweetAlert.swal("Deleted!");
-                            vm.refreshDatasets();
-                        })
-                } else {
-                    SweetAlert.swal("Cancelled", "", "error");
-                }
-            });
-
-
-    }
-
-
-
 }
 angular.module('biospeak.app')
-    .controller('DashboardCtrl',['$state','$stateParams','projectService','exportService','cartService','checkoutService','SweetAlert',dashboardController])
+    .controller('DashboardCtrl',['$state','projectService','exportService','explorerService','checkoutService',dashboardController])
