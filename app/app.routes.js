@@ -36,7 +36,7 @@ angular.module('biospeak.app').config(function($stateProvider, $urlRouterProvide
                     console.log("loading service");
                     return $ocLazyLoad.load([
                         'admin/project/project-service.js','export/export-service.js',
-                        'explore/datacart/cart-service.js','explore/checkout/checkout-service.js']);
+                        'explore/explorer-service.js','explore/checkout/checkout-service.js']);
                 }],
                 loadPlugins:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load(['lib/plugins/ngSweetAlert/js/sweetalert.min.js',

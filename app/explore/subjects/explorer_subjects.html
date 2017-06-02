@@ -34,7 +34,7 @@
                                                        id="sc_{{de.id}}"
                                                        ng-init="de.isActive = false"
                                                        ng-class="{on:de.isActive}"
-                                                       ng-click="de.isActive = !de.isActive;expVM.plotSwitchClicked(de)" >
+                                                       ng-click="de.isActive = !de.isActive;expVM.plotSwitchClicked(de,vm.chartingOpts.chartGroup)" >
                                                         <i class="material-icons">insert_chart</i>
                                                     </a>
                                                 </div>
@@ -51,7 +51,7 @@
                                                        id="sc_{{sc.id}}"
                                                        ng-init="sc.isActive = false"
                                                        ng-class="{on:sc.isActive}"
-                                                       ng-click="sc.isActive = !sc.isActive;expVM.plotSwitchClicked(sc)">
+                                                       ng-click="sc.isActive = !sc.isActive;expVM.plotSwitchClicked(sc,vm.chartingOpts.chartGroup)">
                                                         <i class="material-icons">insert_chart</i>
                                                     </a>
                                                 </div>
@@ -68,7 +68,7 @@
                                                        id="sc_{{tp.id}}"
                                                        ng-init="tp.isActive = false"
                                                        ng-class="{on:tp.isActive}"
-                                                       ng-click="tp.isActive = !tp.isActive;expVM.plotSwitchClicked(tp)" >
+                                                       ng-click="tp.isActive = !tp.isActive;expVM.plotSwitchClicked(tp,vm.chartingOpts.chartGroup)" >
                                                         <i class="material-icons">insert_chart</i>
                                                     </a>
                                                 </div>

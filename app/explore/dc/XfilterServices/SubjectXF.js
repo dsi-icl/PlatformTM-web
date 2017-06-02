@@ -90,9 +90,6 @@ function SubjectXF(subjectDataService,$q){
         return cfReady;
     };
 
-
-
-
     subjCfService.getDimension = function(key){
 
         return dimensions[key];
@@ -162,8 +159,6 @@ function SubjectXF(subjectDataService,$q){
         dc.redrawAll("subject");
     };
 
-
-
     subjCfService.removeFilters = function(obs){
         console.log('inside remove filter',obs, dimensions[obs])
         dimensions[obs].filterAll();
@@ -174,8 +169,6 @@ function SubjectXF(subjectDataService,$q){
     subjCfService.getXFname = function(){
         return XFserviceName;
     }
-
-
 
     subjCfService.resetAll = function(){
         subjectDim.filter(null);

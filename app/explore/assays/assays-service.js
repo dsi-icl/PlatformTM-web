@@ -29,6 +29,11 @@ function assayDataService($http, ngAppConfig) {
                 });
         },
 
+        reset: function () {
+          ready = false;
+          assays = null;
+        },
+
         getSubjCharacteristics: function (projectId) {
 
         },

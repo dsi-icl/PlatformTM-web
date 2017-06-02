@@ -21,15 +21,17 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         assayChartGrp: "assay",
         filtersService: "filtersService"
     };
+    vm.loaded = false;
 
-    vm.subjCharRequests=[];
 
     XFilterLinker.initAll();
+    DCchartingService.init();
 
     if(vm.queryId){
         explorerService.getCartQuery(vm.projectId,vm.queryId).then(function(query){
             vm.cartQuery = query.cart;
             vm.projectAcc = query.cart.projectAcc;
+            vm.loaded = true;
         });
     }else {
         explorerService.getNewCartQuery(vm.projectId).then(function(query){
@@ -37,14 +39,16 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         })
     }
 
-    explorerService.getUserQueries(vm.projectId).then(function(response){
+    /*explorerService.getUserQueries(vm.projectId).then(function(response){
         vm.savedQueries = response.queries;
-    });
+    });*/
 
     vm.plotSwitchClicked = function(obsReq, obsModule){
         var isActive = obsReq.isActive === true;
         // var chartId = (obsReq.name+"_chart").replace(/ /g,'_');
         // var cardId = (obsReq.o3code+"_card").replace(/ /g,'_');
+
+        console.log(obsReq,obsModule, ' clicked');
 
         //console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',plottingOptions.chartContainerId, 'for module',plottingOptions.chartGroup);
         if(isActive){
@@ -52,9 +56,17 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         }
         else{
             DCchartingService.resetChart(obsReq, obsModule);
+            DCchartingService.renderGroup(vm.chartingOpts.subjChartGrp);
+            DCchartingService.renderGroup(vm.chartingOpts.clinicalChartGrp);
+            vm.assays.forEach(function(assay){
+                DCchartingService.renderGroup(assay.id);
+            });
+
             explorerService.removeFromCart(obsReq, obsModule);
         }
     };
+
+
 
     vm.onFiltered = function(obsId,module,filters, filter){
         var isRangeFilter = false;

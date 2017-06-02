@@ -88,7 +88,7 @@
 
             </li>
 
-            <!--<li style="padding: 10px; color: white; background: #132634">
+            <li style="padding: 10px; color: white; background: #132634">
                 <div>
                     <div style="border-bottom: 1px solid white">
                         <div>MY QUERIES</div>
@@ -96,13 +96,13 @@
                     <ul style="padding: 15px;color: white;list-style: none;">
                         <li ng-repeat="q in expVM.savedQueries">
                             {{q.name}}
-                            <a class="pull-right" ui-sref="explore.main({projectId:vm.projectId, queryId:q.id})">LOAD</a>
+                            <a class="pull-right" ui-sref="explore.main({projectId:vm.projectId, queryId:q.id})" ui-sref-opts="{reload:true}">LOAD</a>
                         </li>
 
 
                     </ul>
                 </div>
-            </li>-->
+            </li>
         </ul>
 
     </div>
