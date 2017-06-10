@@ -145,7 +145,7 @@ angular.module('biospeak.dcPlots')
                             if(scope.rangeChart){
                                 scope.rangeChart.filterAll();
                             }
-                            dc.redrawAll(chartGroup);
+                            dc.renderAll(chartGroup);
                         });
 
                         //Set alt link

@@ -2,7 +2,7 @@
  * Created by iemam on 09/12/2016.
  */
 'use strict'
-function checkoutController($timeout,$stateParams,checkoutService,exportService,DTColumnBuilder,DTOptionsBuilder, toaster) {
+function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilder,DTOptionsBuilder, toaster) {
 
     var vm = this;
     vm.projectId = $stateParams.projectId;
@@ -91,7 +91,7 @@ vm.submitForm = function(ds){
 
     vm.saveDataset = function(ds){
 
-        exportService.saveDataset(ds).then(function(accepted){
+        checkoutService.saveDataset(ds).then(function(accepted){
             if(accepted)
             toaster.pop({type:'success', body:'dataset successfully UPDATED.', timeout:8000});
         })
@@ -99,4 +99,4 @@ vm.submitForm = function(ds){
 
 }
 angular.module('biospeak.explorer')
-    .controller('checkoutCtrl', ['$timeout','$stateParams','checkoutService','exportService','DTColumnBuilder','DTOptionsBuilder','toaster',checkoutController]);
+    .controller('checkoutCtrl', ['$timeout','$stateParams','checkoutService','DTColumnBuilder','DTOptionsBuilder','toaster',checkoutController]);

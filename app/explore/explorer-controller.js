@@ -48,12 +48,20 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         // var chartId = (obsReq.name+"_chart").replace(/ /g,'_');
         // var cardId = (obsReq.o3code+"_card").replace(/ /g,'_');
 
+        console.log(obsReq,obsModule, ' clicked');
+
         //console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',plottingOptions.chartContainerId, 'for module',plottingOptions.chartGroup);
         if(isActive){
             explorerService.addToCart(obsReq, obsModule);
         }
         else{
             DCchartingService.resetChart(obsReq, obsModule);
+            DCchartingService.renderGroup(vm.chartingOpts.subjChartGrp);
+            DCchartingService.renderGroup(vm.chartingOpts.clinicalChartGrp);
+            vm.assays.forEach(function(assay){
+                DCchartingService.renderGroup(assay.id);
+            });
+
             explorerService.removeFromCart(obsReq, obsModule);
         }
     };
