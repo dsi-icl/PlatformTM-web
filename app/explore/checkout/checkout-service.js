@@ -108,6 +108,18 @@ function checkoutService($http,$q,ngAppConfig){
                      });
     };
 
+    var _saveDataset = function(dataset){
+        return $http({
+            url: serviceBase + 'datasets/'+dataset.id,
+            method: 'PUT',
+            data: angular.toJson(dataset)
+        }).then(
+            function (response) {
+                return response.status === 202;
+            }
+        );
+    };
+
 
 
     checkoutServiceFactory.getSavedCart = _getSavedCart;
@@ -116,6 +128,7 @@ function checkoutService($http,$q,ngAppConfig){
     checkoutServiceFactory.getDatasetsContent = _getDatasetsContent;
     checkoutServiceFactory.downloadDataset = _downloadDataset;
     checkoutServiceFactory.prepareDataset = _prepareDataset;
+    checkoutServiceFactory.saveDataset = _saveDataset;
     checkoutServiceFactory.isFileReady = _isFileReady;
     return checkoutServiceFactory
 }

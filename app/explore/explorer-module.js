@@ -145,7 +145,7 @@ angular.module('biospeak.explorer',[])
                 controller: 'checkoutCtrl as vm',
                 resolve: {
                     loadServices: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['explore/explorer-service.js']);
+                        return $ocLazyLoad.load(['explore/checkout/checkout-service.js']);
                     }],
                     loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load('explore/checkout/checkout-controller.js');
