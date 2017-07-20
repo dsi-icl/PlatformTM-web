@@ -16,6 +16,8 @@ function AssaysController($stateParams,AssayXF,assayDataService,$q){
     };
 
 
+    assayDataService.reset();
+
     var projectId = $stateParams.projectId;
     assayDataService.getAssays(projectId).then(function(data){
             var assays = data.assays;

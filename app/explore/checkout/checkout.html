@@ -17,7 +17,7 @@
         <div class="title-action">
             <!--<a ng-click="vm.saveProject()" class="btn btn-primary">{{vm.project.isNew ? 'Create Project' : 'Save'}}</a>-->
             <a class="btn btn-sm btn-default" style="background-color: #23c6c8; color:white;border-color: #2C3E50;" href=""
-               ui-sref="explore.main({projectId:vm.projectId})"> Go Back</a>
+               ui-sref="explore.main({projectId:vm.projectId})" ui-sref-opts="{reload:true}"> Go Back</a>
         </div>
     </div>
 </div>

@@ -63,9 +63,6 @@ angular.module('biospeak.dcPlots')
                             console.log("Failed to create DC chart",result);
                         }
                 );
-
-
-
             }],
             template:
 
@@ -148,7 +145,7 @@ angular.module('biospeak.dcPlots')
                             if(scope.rangeChart){
                                 scope.rangeChart.filterAll();
                             }
-                            dc.redrawAll(chartGroup);
+                            dc.renderAll(chartGroup);
                         });
 
                         //Set alt link

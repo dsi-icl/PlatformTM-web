@@ -76,11 +76,11 @@
 
             <li style="padding: 10px; color: white">
 
-                <div class="p-xs" style="background-color: #132634; margin-top:20px">
+                <!--<div class="p-xs" style="background-color: #132634; margin-top:20px">
                     <div>Add To My Queries</div>
                     <a href="#" e-ng-model="expVM.cartQuery.name" class="bs3" editable-text="expVM.cartQuery.name" >{{expVM.cartQuery.name || "Give it a name"}}</a>
                     <a ng-click="expVM.saveQuery()" class="pull-right"><i class="fa fa-plus"></i></a>
-                </div>
+                </div>-->
                 <div style="text-align: right;margin-top: 20px;">
                     <a ng-click="expVM.saveToCartAndCheckout()" class="btn btn-xs btn-default" style="background-color: #23c6c8; color:white;border-color: #2C3E50;" href=""
                        style="">CHECKOUT</a>
@@ -96,7 +96,7 @@
                     <ul style="padding: 15px;color: white;list-style: none;">
                         <li ng-repeat="q in expVM.savedQueries">
                             {{q.name}}
-                            <a class="pull-right" ui-sref="explore.main({projectId:vm.projectId, queryId:q.id})">LOAD</a>
+                            <a class="pull-right" ui-sref="explore.main({projectId:vm.projectId, queryId:q.id})" ui-sref-opts="{reload:true}">LOAD</a>
                         </li>
 
 
