@@ -486,6 +486,7 @@ angular.module('biospeak.dcPlots')
                 dc.redrawAll(chartGroup);
                 obsToChartId = [];
                 chartIdToObs = [];
+                requestedObsvs = [];
             };
 
             DCservice.resetChart = function (obsReq, chartGroup) {
@@ -493,6 +494,7 @@ angular.module('biospeak.dcPlots')
                 var chart;
                 var obsId = obsReq.name;
                 var chartDataType = "Count";
+                console.log(obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup],obsToChartId, obsReq,chartGroup)
 
                 if (angular.isDefined(obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup])
                     || angular.isDefined(obsToChartId[obsId + '_' + 'rangeChart'+"_"+chartGroup])) {
@@ -502,24 +504,36 @@ angular.module('biospeak.dcPlots')
 
                     dc.chartRegistry.list(chartGroup).forEach(function (c) {
                         if (c.chartID() === chartId || c.chartID() === rangechartId) {
-                            // console.log('found chart, resetting filter ...')
+                             console.log('found chart, resetting filter ...')
                             chart = c;
 
                             c.filterAll();
-                            c.resetSvg();
+                            //c.resetSvg();
+                            dc.renderAll(chartGroup);
 
                             dc.deregisterChart(chart, chartGroup);
                             delete obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup];
                             delete obsToChartId[obsId + "_rangeChart"+"_"+chartGroup];
                             delete chartIdToObs[chart.chartID()];
 
-                            dc.redrawAll(chartGroup);
+
                             deferred.resolve(chart)
                         }
                     });
                 }
                 return deferred.promise;
             };
+            
+            DCservice.init = function () {
+                requestedObsvs = [];
+                obsToChartId = [];
+                chartIdToObs = [];
+                dc.deregisterAllCharts();
+            };
+
+            DCservice.renderGroup = function(chartGroup){
+                dc.renderAll(chartGroup);
+            }
 
             return DCservice;
         }]);

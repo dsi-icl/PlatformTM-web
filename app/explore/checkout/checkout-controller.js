@@ -2,7 +2,7 @@
  * Created by iemam on 09/12/2016.
  */
 'use strict'
-function checkoutController($timeout,$stateParams,checkoutService,exportService,DTColumnBuilder,DTOptionsBuilder, toaster) {
+function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilder,DTOptionsBuilder, toaster) {
 
     var vm = this;
     vm.projectId = $stateParams.projectId;
@@ -52,12 +52,13 @@ function checkoutController($timeout,$stateParams,checkoutService,exportService,
             checkoutService.isFileReady(ds.id)
                 .then(function(result) {
                         ds.fileStatus = result.outcome1;
-                        console.log("File status is", ds.fileStatus, "for " + ds.type + " dataset")
+                        //console.log("File status is", ds.fileStatus, "for " + ds.type + " dataset")
                 });
-            if(ds.fileStatus == 2)
+            if(ds.fileStatus === 2)
             {
               clearInterval(interval);
-              console.log(ds.type, "dataset took", i*Sec/60000, "minutes to be prepared" );
+                toaster.pop({type:'info', body:'dataset'+ds.name+' is ready for download', timeout:8000});
+              //console.log(ds.type, "dataset took", i*Sec/60000, "minutes to be prepared" );
               i =0;
             }
 
@@ -78,7 +79,6 @@ function checkoutController($timeout,$stateParams,checkoutService,exportService,
         checkoutService.prepareDataset(ds.id)
             .then(function(response){
                vm.outcome =response.outcome;
-                console.log("statusText for file preparation is ", vm.outcome );
             })
 
     }
@@ -91,7 +91,7 @@ vm.submitForm = function(ds){
 
     vm.saveDataset = function(ds){
 
-        exportService.saveDataset(ds).then(function(accepted){
+        checkoutService.saveDataset(ds).then(function(accepted){
             if(accepted)
             toaster.pop({type:'success', body:'dataset successfully UPDATED.', timeout:8000});
         })
@@ -99,4 +99,4 @@ vm.submitForm = function(ds){
 
 }
 angular.module('biospeak.explorer')
-    .controller('checkoutCtrl', ['$timeout','$stateParams','checkoutService','exportService','DTColumnBuilder','DTOptionsBuilder','toaster',checkoutController]);
+    .controller('checkoutCtrl', ['$timeout','$stateParams','checkoutService','DTColumnBuilder','DTOptionsBuilder','toaster',checkoutController]);

@@ -1,6 +1,6 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>{{vm.activity.isNew ? 'New Activity' :'Activity detail'}}</h2>
+        <h2>{{vm.activity.isNew ? 'New Activity' :'Define Activity'}}</h2>
         <ol class="breadcrumb">
             <li>
                 <a ui-sref="home.dashboard">Home</a>
@@ -43,7 +43,7 @@
 
             <div>
                 <div class="ibox-title panel-header">
-                    <span>Associated Templates</span>
+                    <span>Define Templates</span>
                      <span style="font-size:16px;margin-top:-5px;" class="pull-right">
                          <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
                          <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
@@ -55,7 +55,7 @@
                     <form role="form">
                         <div class="row">
                             <div class="col-md-11">
-                                <h3>Add New Dataset Template</h3>
+                                <h3>Define New Template</h3>
                             </div>
                             <div class="col-md-1"> <span class="pull-right"><a ng-click="vm.creatingNewDS=false" class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>
 
@@ -71,10 +71,10 @@
                                     </div>
                                 </div>
 
-                                <div class="ibox-content">
+                                <div class="ibox-content" style="height: 350px">
 
 
-                                    <div class="activities-list" full-scroll style="height: 250px">
+                                    <div class="activities-list" full-scroll>
                                         <div>
                                             <div class="feed-activity-list elements-list">
 
@@ -110,9 +110,9 @@
                             <!--FIELD INFO-->
                             <div ng-show="vm.showDS" style="border-left: white 1px solid;" class=" m-b-sm m-t-sm col-md-5">
                                 <div class="ibox-title"><strong>{{vm.showDS.name}} Template Columns</strong>
-                                <span class="pull-right"><a ng-click="vm.selectTemplate(vm.showDS);vm.creatingNewDS=false" class="btn btn-xs btn-primary">Add Dataset</a></span>
+                                    <span class="pull-right"><a ng-click="vm.selectTemplate(vm.showDS);vm.creatingNewDS=false" class="btn btn-xs btn-primary">Add Dataset</a></span>
                                 </div>
-                                <div class="ibox-content">
+                                <div class="ibox-content" style="height: 350px">
                                     <div class="activities-list" full-scroll>
                                         <div class="full-height-scroll">
                                             <table class="table table-hover no-margins">
@@ -156,7 +156,7 @@
 
                 <div class="ibox-content" ng-if="vm.activity.datasets.length === 0">
                     <div uib-alert class="alert-info">
-                        <h4>No associated templates set for this activity. Pleae click on the '+' icon above to add a dataset template to this activity.</h4>
+                        <h4>No associated templates set for this activity. Pleae click on the '+' icon above to define a dataset template for this activity.</h4>
                     </div>
                 </div>
 

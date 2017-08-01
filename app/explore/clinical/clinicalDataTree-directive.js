@@ -240,7 +240,7 @@ angular.module('biospeak.explorer')
                     '<span ng-show="node.isLocked" class="badge"><i class="fa fa-link"></i></span>'+
                 '</div>'+
                 '<dc-chart-menu obs="node.defaultObservation" quals= "node.qualifiers" module="chartingOpts.chartGroup" on-select="plotSwitchClicked(obsReq,obsModule)" class="qualifier-menu"></dc-chart-menu>'+
-                '<span class="list-item-text">{{node.defaultObservation.o3}}</span>'+
+                '<span uib-tooltip="{{node.defaultObservation.o3}}" class="list-item-text">{{node.defaultObservation.o3}}</span>'+
             '</div>',
 
             link: function (scope, element, attrs) {
