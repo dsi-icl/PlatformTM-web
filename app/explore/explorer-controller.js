@@ -48,7 +48,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         // var chartId = (obsReq.name+"_chart").replace(/ /g,'_');
         // var cardId = (obsReq.o3code+"_card").replace(/ /g,'_');
 
-        console.log(obsReq,obsModule, ' clicked');
+        // console.log(obsReq,obsModule, ' clicked');
 
         //console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',plottingOptions.chartContainerId, 'for module',plottingOptions.chartGroup);
         if(isActive){
@@ -90,9 +90,10 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         DCchartingService.clearAll(vm.chartingOpts.subjChartGrp);
         DCchartingService.clearAll(vm.chartingOpts.clinicalChartGrp);
 
-        vm.assays.forEach(function(assay){
-            DCchartingService.clearAll(assay.id);
-        });
+        if(vm.assays)
+            vm.assays.forEach(function(assay){
+                DCchartingService.clearAll(assay.id);
+            });
 
         XFilterLinker.resetAll();
         explorerService.clearCart();

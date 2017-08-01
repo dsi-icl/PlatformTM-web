@@ -320,7 +320,7 @@ angular.module('biospeak.dcPlots')
                     //console.log('dimensions groupall',cfDimension.groupAll().value())
                     //console.log('dimensions top',cfDimension.top(Infinity))
 
-                    if (noOfGroups > 1) {
+                    if (noOfGroups > 3) {
                         //console.log("Plotting a DC row chart ")
                         chartType = "rowChart"
                         chartOptions["elasticX"] = "true"
@@ -378,6 +378,7 @@ angular.module('biospeak.dcPlots')
                     //chartOptions["elasticX"] = "true"
                     chartOptions["elasticY"] = "true"
                     //chartOptions["elasticX"] = "true"
+                    chartOptions["height"] = "320";
 
                     chartOptions["width"] = "310"
                     chartOptions["renderArea"] = true;
