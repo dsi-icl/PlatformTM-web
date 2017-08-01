@@ -8,8 +8,10 @@ function fullScroll($timeout){
             $timeout(function(){
                 element.slimscroll({
                     height: 'auto',
-                    railOpacity: 0.5,
-                    color: '#0095a2'
+                    railOpacity: 0.9,
+                    color: '#0095a2',
+                    allowPageScroll: true,
+                    alwaysVisible: true
                 });
 
             });
