@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="ibox-content text-center" style="padding-top:0px;">
                                         <a ui-sref="explore.main({projectId:p.id})">
-                                            <img class="img-dashboard" src="img/biospeak7.png"  alt="profile">
+                                            <img class="img-dashboard" src="{{p.id == 95 ? 'img/bvs_image.png':'img/biospeak7.png'}}"  alt="profile">
                                         </a>
                                         <!--<div class="m-t-md">
                                             <span>Status of current project:</span>
@@ -88,9 +88,9 @@
                                         <div >
                                             <div class="text-center">
                                                 <div class="btn-group">
-                                                    <a ui-sref="explore.main({projectId:p.id})" ui-sref-opts="{reload:true, notify:true}" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore</a>
-                                                    <a ui-sref="admin.project({projectId: p.id})" ui-sref-opts="{reload:true}" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure</a>
-                                                    <a ui-sref="datastage.files({projectId: p.id})" ui-sref-opts="{reload:true}" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage</a>
+                                                    <a ui-sref="explore.main({projectId:p.id})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore</a>
+                                                    <a ui-sref="admin.project({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure</a>
+                                                    <a ui-sref="datastage.files({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage</a>
                                                 </div>
                                             </div>
                                         </div>

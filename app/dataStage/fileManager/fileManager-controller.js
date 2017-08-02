@@ -192,6 +192,12 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
             //vm.currentFile = fileInfo
             $state.go('datastage.files.view',{fileId:fileInfo.dataFileId})
         }
+    };
+
+    vm.downloadFile = function(){
+        if(vm.fileSelected){
+            fileService.downloadFile(vm.fileSelected.dataFileId)
+        }
     }
 
     vm.load = function(){

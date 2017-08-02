@@ -47,6 +47,30 @@
             )
         };
 
+        var _downloadFile = function(fileId) {
+
+            $http({
+                method: 'GET',
+                url: serviceBase + 'files/' + fileId+'/download'
+                //params: {fileId: fileId},
+                //responseType: ''
+            }).success(function (data, status, headers) {
+
+                headers = headers();
+                //console.log("header is",headers)
+                var fileName = headers['x-filename'];
+                var file = new Blob([data], {type: headers['content-type']});
+                var fileURL = URL.createObjectURL(file);
+                var a = document.createElement('a');
+                a.href = fileURL;
+                a.target = '_blank';
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+            }).error(function (data, status, headers, config) {
+            });
+        };
+
         var _createDirectory= function (projectId,dirname) {
             console.log('inside service',dirname)
 
@@ -133,6 +157,7 @@
         fileServiceFactory.getFileInfo = _getFileInfo;
         fileServiceFactory.deleteFile = _deleteFile;
         fileServiceFactory.unloadFile = _unloadFile;
+        fileServiceFactory.downloadFile = _downloadFile
 
 
         return fileServiceFactory
