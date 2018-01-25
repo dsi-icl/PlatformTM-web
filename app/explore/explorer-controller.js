@@ -58,7 +58,9 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
             DCchartingService.resetChart(obsReq, obsModule);
             DCchartingService.renderGroup(vm.chartingOpts.subjChartGrp);
             DCchartingService.renderGroup(vm.chartingOpts.clinicalChartGrp);
-            vm.assays.forEach(function(assay){
+
+            if(vm.assays !== null)
+                vm.assays.forEach(function(assay){
                 DCchartingService.renderGroup(assay.id);
             });
 
