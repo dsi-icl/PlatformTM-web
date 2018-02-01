@@ -54,7 +54,7 @@ function explorerService($http,ngAppConfig,$q) {
     };
 
     var _addToCart = function(item, module){
-        //console.log('Adding ',item, module)
+        console.log('Adding ',item, module)
         if(item.isSubjectCharacteristics || item.isDesignElement)
             currentCart.subjCharRequests.push(item);
         if(item.isClinicalObservations)

@@ -40,7 +40,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     var _getUserDatasets = function(){
         return $http({
-            url: serviceBase + 'datasets/user/',
+            url: serviceBase + 'exports/',
             method: 'GET'
         }).then(
             function(response){
