@@ -28,7 +28,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     var _saveDataset = function(dataset){
         return $http({
-            url: serviceBase + 'datasets/'+dataset.id,
+            url: serviceBase + 'exports/'+dataset.id,
             method: 'PUT',
             data: angular.toJson(dataset)
         }).then(
@@ -37,6 +37,20 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
             }
         );
     };
+
+
+    var _deleteDataset = function(datasetId){
+        return $http({
+            url: serviceBase + 'exports/'+datasetId+'/delete',
+            method: 'GET',
+        }).then(
+            function (response) {
+                return {
+                    files: (response.data)
+                }
+            }
+        )
+    }
 
     var _getUserDatasets = function(){
         return $http({
@@ -304,6 +318,7 @@ function exportService($http, $q,ngAppConfig,$resource,localStorageService){
 
     exportFactory.saveDataset = _saveDataset;
     exportFactory.getUserDatasets = _getUserDatasets;
+    exportFactory.deleteDataset = _deleteDataset;
 
     //exportFactory.saveFields = _saveFields;
     //exportFactory.getUserDataset = _getUserDataset;
