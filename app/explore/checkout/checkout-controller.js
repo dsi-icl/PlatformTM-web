@@ -45,7 +45,7 @@ function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilde
 
     var i = 0;
     vm.fileIsReady=  function(ds){
-        var Sec = 2000;
+        var Sec = 8000;
         var interval = setInterval(function(){
             i = i+1;
    //       console.log("Dataset with the following ID will be prepared",ds.id);
@@ -75,7 +75,7 @@ function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilde
     vm.prepareDataset =  function(ds){
         console.log("Dataset with the following ID will be prepared",ds.id);
         ds.fileStatus = 1;
-        vm.fileIsReady(ds);
+        //vm.fileIsReady(ds);
         checkoutService.prepareDataset(ds.id)
             .then(function(response){
                vm.outcome =response.outcome;
