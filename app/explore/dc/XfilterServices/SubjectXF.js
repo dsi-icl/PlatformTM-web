@@ -26,7 +26,7 @@ function SubjectXF(subjectDataService,$q){
             data.forEach(function(d) {
                 requestedObsvs.forEach(function(o){
                     if(o.dataType === "dateTime"){
-                        var date = dateTimeFormat(d[o.name]);
+                        var date = dateFormat(d[o.name]);
                         if(date === null){
                             date = dateFormat(d[o.name]);
                         }

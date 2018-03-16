@@ -162,7 +162,7 @@ console.log(intersect)
 
             //Filters in clinical AND subject panels are propagated to AssayXF
             var combinedIds = _retainAll2(subjectIds,_currSubjectIds['clinical']);
-            console.log('combinedIds',combinedIds);
+            // console.log('combinedIds',combinedIds);
             AssayXF.filterBySubjects(combinedIds);
 
             /*if(filter === null){
