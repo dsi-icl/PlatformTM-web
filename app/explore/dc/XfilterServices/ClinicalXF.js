@@ -24,6 +24,8 @@ function ClinicalXF(clinicalDataService,$q){
         findingsColumns,
         eventsColumns;
 
+    var activeFilters = [];
+
 
     var dataToPlot = {};
     var tableDimensions = {}, tableHeaders = {};
@@ -57,7 +59,7 @@ function ClinicalXF(clinicalDataService,$q){
 
             })
         });
-    }
+    };
 
     cfservice.generateXf = function(data,columns,isFindings){
 
@@ -133,7 +135,7 @@ function ClinicalXF(clinicalDataService,$q){
         })
 
         return xfilter
-    }
+    };
 
     cfservice.getData = function(projectId,requestedObsvs){
         var deferred = $q.defer();
@@ -144,7 +146,7 @@ function ClinicalXF(clinicalDataService,$q){
                 deferred.resolve(dataToPlot)
             })
         return deferred.promise
-    }
+    };
 
     cfservice.refreshCf = function(projectId,requestedObsvs){
         var deferred = $q.defer();
@@ -246,31 +248,35 @@ function ClinicalXF(clinicalDataService,$q){
             });
 
         return deferred.promise
-    }
+    };
 
     cfservice.getDimension = function(key){
         return dimensions[key];
-    }
+    };
 
     cfservice.getGroup = function(key){
         return groups[key];
-    }
+    };
 
     cfservice.getTimeDimension = function(){
         return timeDimension
-    }
+    };
 
     cfservice.getGroupByTime = function(key){
         return timeGroups[key]
-    }
+    };
 
     cfservice.getCountData = function(){
         return subjectDim.group()
-    }
+    };
 
     cfservice.getCountGroup = function() {
         return uniqueSubjGrpM
-    }
+    };
+
+    cfservice.hasDimension = function(dim){
+        return dim in dimensions;
+    };
 
     /*        /!********************************************
      DC TABLE FUNCTIONS
@@ -413,6 +419,16 @@ function ClinicalXF(clinicalDataService,$q){
         subjectDim['findings']=null;
         subjectDim['events'] = null;
         cfReady = false;
+    };
+
+    cfservice.addToActiveFilters = function (filter) {
+        activeFilters.push(filter);
+    };
+    cfservice.XFisFiltered = function () {
+        return activeFilters.length > 0;
+    };
+    cfservice.removeFilter = function (filter) {
+
     };
 
     return cfservice

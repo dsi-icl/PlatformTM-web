@@ -39,23 +39,27 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         })
     }
 
+    $scope.assayDataService = assayDataService;
+    $scope.$watch('assayDataService.assaysRetrieved()',function (assays) {
+        if(assays && !vm.assays) {
+            vm.assays = assays;
+        }
+    },true);
+
     /*explorerService.getUserQueries(vm.projectId).then(function(response){
         vm.savedQueries = response.queries;
     });*/
 
     vm.plotSwitchClicked = function(obsReq, obsModule){
         var isActive = obsReq.isActive === true;
-        // var chartId = (obsReq.name+"_chart").replace(/ /g,'_');
-        // var cardId = (obsReq.o3code+"_card").replace(/ /g,'_');
 
-        // console.log(obsReq,obsModule, ' clicked');
-
-        //console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',plottingOptions.chartContainerId, 'for module',plottingOptions.chartGroup);
+        //console.debug(obsReq,obsModule, ' clicked');
+        //console.debug('plotting chart: ',chartId, ' in card:',cardId,' in container: ',plottingOptions.chartContainerId, 'for module',plottingOptions.chartGroup);
         if(isActive){
             explorerService.addToCart(obsReq, obsModule);
         }
         else{
-            DCchartingService.resetChart(obsReq, obsModule);
+            DCchartingService.removeChart(obsReq, obsModule);
             DCchartingService.renderGroup(vm.chartingOpts.subjChartGrp);
             DCchartingService.renderGroup(vm.chartingOpts.clinicalChartGrp);
 
@@ -68,8 +72,6 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         }
     };
 
-
-
     vm.onFiltered = function(obsId,module,filters, filter){
         var isRangeFilter = false;
         if(filter)
@@ -79,14 +81,6 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
             vm.cartQuery = updatedCart;
         });
     };
-
-
-    $scope.assayDataService = assayDataService;
-    $scope.$watch('assayDataService.assaysRetrieved()',function (assays) {
-        if(assays && !vm.assays) {
-            vm.assays = assays;
-        }
-    },true);
 
     vm.resetAll = function(){
         DCchartingService.clearAll(vm.chartingOpts.subjChartGrp);
@@ -99,14 +93,12 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
 
         XFilterLinker.resetAll();
         explorerService.clearCart();
-
-    }
+    };
 
     vm.addAssayToCart = function(panel){
         console.log(panel)
         explorerService.addAssayPanelToCart(panel)
-    }
-
+    };
 
     vm.saveQuery = function(){
         vm.cartQuery.IsSavedByUser = true;
@@ -116,7 +108,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
             })
 
         })
-    }
+    };
 
     vm.saveToCartAndCheckout = function(){
         explorerService.saveQuery(vm.cartQuery, vm.projectId).then(function(response){
@@ -124,9 +116,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
                 projectId: vm.projectId,
                 cartId: response.cartId});
         })
-
     }
-
 }
 
 angular.module('biospeak.explorer')
