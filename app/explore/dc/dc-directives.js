@@ -30,14 +30,10 @@ angular.module('biospeak.dcPlots')
                 var chartDataType = 'Count';
                 var plot;
 
+                $scope.mainChartId = $scope.obs.name.replace(/[\[\]/\s]/g, '_') + "_" + chartDataType+"_"+$scope.module;
+                $scope.rangeChartId = $scope.obs.name.replace(/[\[\]/\s]/g, '_') + "_rangeChart_"+$scope.module;
                 $scope.done = false;
-                //console.log('inside dc-chart controller')
-                //console.log('projectId ',$scope.projectId,'val ',$scope.val,'obsid ',$scope.obsid,'chart grp',$scope.grp, 'module',$scope.module)
 
-                //obs.id is a unique id for the requested observation and the qualifier requested to chart
-                //(e.g. HEADACHE [AEOCCUR] , HEADHACHE [AESEV] ... it's a combination of the object of observation and a qualifier
-                // could replace with o3id_qo2id
-                //used for uniquely identifying charts for erquested observations AND also used as xfilter dimension key
                 chartService.getDCchart($scope.chartingOpts.projectId,$scope.module,xfilterService,chartDataType,$scope.obs)
                     .then(
                         function(chart){
@@ -50,7 +46,6 @@ angular.module('biospeak.dcPlots')
                             }
 
                             if(plot.chartType === 'barChart' && $scope.obs.dataType !== "ordinal" && $scope.obs.dataType !== "integer"){
-                                // console.log("creating rangeChart")
                                 chartService.getDCchart($scope.chartingOpts.projectId,$scope.module,xfilterService,"rangeChart",$scope.obs)
                                     .then(function(chart2){
                                         $scope.rangeChart = chart2;
@@ -60,7 +55,7 @@ angular.module('biospeak.dcPlots')
                                 $scope.chartToPlot = plot;
                         },
                         function(result){
-                            console.log("Failed to create DC chart",result);
+                            console.error("Failed to create DC chart",result);
                         }
                 );
             }],
@@ -86,7 +81,7 @@ angular.module('biospeak.dcPlots')
                     '</div>'+
                     '<div ng-show="nochart">No data found</div>'+
 
-                    '<div id="mainChart">' +
+                    '<div id="{{mainChartId}}">' +
                         '<div class="chartControls"> ' +
                             '<span class="reset" style="visibility: hidden;">' +
                             ' Filtered by: <span class="filter"></span>' +
@@ -96,7 +91,7 @@ angular.module('biospeak.dcPlots')
                         '<div class="clearfix"></div>'+
                     '</div>'+
 
-                    '<div id="range-chart"></div>'+
+                    '<div id="{{rangeChartId}}"></div>'+
             '</div>',
             link: function (scope, element, attrs) {
                 scope.$watch('chartToPlot', function(newVal) {
@@ -104,20 +99,22 @@ angular.module('biospeak.dcPlots')
                         //var groupChart = scope.chartingOpts.chartGroup;
                         var obsId = scope.obs.name;
                         var chartGroup = scope.module;
+                        var mainChartId = '#'+scope.mainChartId;
+                        var rangeChartId = '#'+scope.rangeChartId;
 
                         //ANCHOR THE PLOT
-                        scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), chartGroup);
+                        scope.chartToPlot.anchor(element[0].querySelector(mainChartId), chartGroup);
 
                         //SET ONFILTERED
                         scope.chartToPlot.on('filtered',function(chart, filter){
+
+
 
                             if(scope.chartToPlot.isRefocusing){
                                 //console.log('Chart is refocusing');
                                 return;
                             }
-
                             scope.chartservice.propagateFilter(scope.xfService,chart.dimName,filter);
-
 
                             if(scope.chartToPlot.IsRefreshing)
                                 return;
@@ -128,7 +125,7 @@ angular.module('biospeak.dcPlots')
 
                         //ATTACH RANGE CHART IF AVAILABLE
                         if(scope.rangeChart){
-                            scope.rangeChart.anchor(element[0].querySelector('#range-chart'), chartGroup);
+                            scope.rangeChart.anchor(element[0].querySelector(rangeChartId), chartGroup);
                             scope.chartToPlot.rangeChart(scope.rangeChart);
                         }
 
@@ -136,7 +133,7 @@ angular.module('biospeak.dcPlots')
                         //SET RESET ONCLICK
                         var a = angular.element(element[0].querySelector('div.chartControls').querySelector('span.reset').querySelector('a'));
                         a.on('click', function () {
-                            if(scope.chartToPlot.chartType === 'barChart' && scope.chartToPlot.dataType !== 'ordinal'){
+                            if(scope.chartToPlot.chartType === 'barChart' && scope.chartToPlot.dataType !== 'ordinal' && scope.chartToPlot.dataType !== "integer"){
                                 scope.chartToPlot.isRefocusing = true;
                                 scope.chartToPlot.focus();
                                 scope.chartToPlot.isRefocusing = false;

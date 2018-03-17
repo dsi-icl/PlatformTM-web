@@ -10,9 +10,9 @@ function SubjectXF(subjectDataService,$q){
     var cfdata;
     var all;
     var dataToPlot;
-    var XFserviceName = 'SubjCf'
+    var XFserviceName = 'SubjCf';
 
-    var subjCfService = {}
+    var subjCfService = {};
     var cfReady;
     var subjectColumnName = "subjectId";
     var subjectDim;
@@ -50,7 +50,7 @@ function SubjectXF(subjectDataService,$q){
             cfdata = crossfilter(data);
             all = cfdata.groupAll();
 
-            subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
+            subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]});
 
             // console.log("=============Creating Subject XF============")
 
@@ -97,6 +97,10 @@ function SubjectXF(subjectDataService,$q){
 
     subjCfService.getGroup = function(key){
         return groups[key];
+    };
+
+    subjCfService.hasDimension = function(dim){
+        return dim in dimensions;
     };
 
     /**

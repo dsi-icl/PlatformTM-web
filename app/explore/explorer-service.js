@@ -54,7 +54,8 @@ function explorerService($http,ngAppConfig,$q) {
     };
 
     var _addToCart = function(item, module){
-        console.log('Adding ',item, module)
+        //console.log('Adding ',item, module)
+
         if(item.isSubjectCharacteristics || item.isDesignElement)
             currentCart.subjCharRequests.push(item);
         if(item.isClinicalObservations)
@@ -62,8 +63,7 @@ function explorerService($http,ngAppConfig,$q) {
         if(item.isSampleCharacteristic){
             currentCart.assayPanelRequests[module].isRequested = true;
             currentCart.assayPanelRequests[module].sampleQuery.push(item);
-
-            console.debug(currentCart.assayPanelRequests[module])
+         console.debug(currentCart.assayPanelRequests[module])
         }
     };
 
@@ -80,7 +80,7 @@ function explorerService($http,ngAppConfig,$q) {
 
         var pos;
         for(var i=0; i< items.length;i++) {
-            if(item.id == items[i].id){
+            if(item.id === items[i].id){
                 pos = i;
                 break;
             }
@@ -139,8 +139,8 @@ function explorerService($http,ngAppConfig,$q) {
         if(!found) deferred.reject();
 
         //REMOVE FILTER
-        if(filters.length == 0){
-            console.log("removing filter");
+        if(filters.length === 0){
+            console.debug("removing filter");
             filteredObs.filterRangeFrom = 0;
             filteredObs.filterRangeTo = 0;
             filteredObs.filterExactValues = null;
@@ -166,17 +166,30 @@ function explorerService($http,ngAppConfig,$q) {
 
     var _clearCart = function () {
         currentCart.subjCharRequests.forEach(function (req){
-           req.isActive = false;
+            _resetObsQuery(req)
         });
         currentCart.obsRequests.forEach(function (req){
-            req.isActive = false;
+            _resetObsQuery(req);
         });
         currentCart.subjCharRequests = [];
         currentCart.obsRequests = [];
         for (var assayId in currentCart.assayPanelRequests){
+            currentCart.assayPanelRequests[assayId].isRequested = false;
+            currentCart.assayPanelRequests[assayId].sampleQuery.forEach(function(req){
+                _resetObsQuery(req)
+            });
             currentCart.assayPanelRequests[assayId].sampleQuery=[];
         }
+    };
 
+    var _resetObsQuery = function(obsQ){
+        obsQ.isActive = false;
+
+        obsQ.filterRangeFrom = 0;
+        obsQ.filterRangeTo = 0;
+        obsQ.filterExactValues = null;
+        obsQ.filterText = dc.printers.filters([]);
+        obsQ.isFiltered = false;
     };
 
 

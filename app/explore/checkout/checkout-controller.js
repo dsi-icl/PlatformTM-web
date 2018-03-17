@@ -73,9 +73,9 @@ function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilde
     };
 
     vm.prepareDataset =  function(ds){
-        console.log("Dataset with the following ID will be prepared",ds.id);
+        //console.log("Dataset with the following ID will be prepared",ds.id);
         ds.fileStatus = 1;
-        //vm.fileIsReady(ds);
+        vm.fileIsReady(ds);
         checkoutService.prepareDataset(ds.id)
             .then(function(response){
                vm.outcome =response.outcome;
