@@ -1,5 +1,0 @@
-[
-    { "subjId": "subj01",  "bmi": 22.5, "height": 1.55, "weight": 70, "diabp": 45, "visit":"screening" },
-    { "subjId": "subj01",  "bmi": 21.5, "height": 1.69, "weight": 50, "diabp": 60, "visit":"VISIT 2" },
-    { "subjId": "subj01",  "bmi": 19.5, "height": 1.24, "weight": 60, "diabp": 50, "visit":"VISIT 3" }
-]

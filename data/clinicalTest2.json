@@ -1,8 +1,0 @@
-[
-    { "subjId": "subj01",  "bmi": 22.5, "height": 1.55, "weight": 70, "diabp": 55, "visit":"screening" },
-    { "subjId": "subj01",  "bmi": null, "height": null, "weight": null, "diabp": 60, "visit":"VISIT 2" },
-    { "subjId": "subj01",  "bmi": null, "height": null, "weight": null, "diabp": 50, "visit":"VISIT 3" },
-    { "subjId": "subj02",  "bmi": 25.5, "height": 1.80, "weight": 78, "diabp": 95, "visit":"screening" },
-    { "subjId": "subj02",  "bmi": null, "height": null, "weight": null, "diabp": 82, "visit":"VISIT 2" },
-    { "subjId": "subj02",  "bmi": null, "height": null, "weight": null, "diabp": 75, "visit":"VISIT 3" }
-]
