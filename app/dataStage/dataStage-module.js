@@ -12,7 +12,7 @@ function config($stateProvider, $urlRouterProvider) {
         })
         .state('datastage.files', {
             url: "/datastage/files/{dir:[a-zA-Z /]*}",
-            templateUrl: "datastage/fileManager/fileManager.html",
+            templateUrl: "dataStage/fileManager/fileManager.html",
             controller: "fileController as vm",
             resolve: {
                 loadDirective: ['$ocLazyLoad', function ($ocLazyLoad) {
