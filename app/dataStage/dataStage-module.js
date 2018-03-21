@@ -56,7 +56,7 @@ function config($stateProvider, $urlRouterProvider) {
                         {
                             serie: true,
                             files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
-                                'lib/plugins/dataTables/css/dataTables.bootstrap.min.css']
+                                'lib/plugins/dataTables/css/datatables.bootstrap.min.css']
                         },
                         {
                             name: 'datatables',
