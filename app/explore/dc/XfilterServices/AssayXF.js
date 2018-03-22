@@ -243,6 +243,10 @@ function AssayXF(assayDataService,$q){
         return XfilterAssayMap[assayId].dimensions[key];
     };
 
+    cfservice.hasDimension = function(dim, assayId){
+        return dim in XfilterAssayMap[assayId].dimensions;
+    };
+
     cfservice.getGroup = function(key, assayId){
         return XfilterAssayMap[assayId].groups[key];
     };
@@ -263,6 +267,7 @@ function AssayXF(assayDataService,$q){
         XfilterAssayMap = {}
         SubjectAssayMap = {}
     }
+
     return cfservice;
 }
 

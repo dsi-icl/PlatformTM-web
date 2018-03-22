@@ -12,8 +12,9 @@ angular.module('biospeak.dcPlots')
                 SERIES: 3
             };
 
-            var obsToChartId = [], //used to retrieving previously created charts
-                chartIdToObs = []; //used when refreshing charts after xfilter data refresh
+            var obsToChartId = {}, //used to retrieving previously created charts
+                _obsToChartIdMap = {},
+                chartIdToObs = {}; //used when refreshing charts after xfilter data refresh
 
 
 
@@ -29,39 +30,14 @@ angular.module('biospeak.dcPlots')
                 var chart;
                 var obsId = obsRequest.name;
 
-                //console.log("=========1- Getting CHART for",obsId," ================== ")
-                //console.log("===params: ",projectId, obsId, chartGroup, xfilterService,chartDataType, obsRequest, module);
+                //console.debug("=========1- Getting CHART for",obsId," ================== ")
+                //console.debug("===params: ",projectId, obsId, chartGroup, xfilterService,chartDataType, obsRequest);
 
-                //if chartType is not specified, return the default which is the count chart/histogram/pie/rowChart
-                //the logic of if chart is not found refreshData, recreate xfilter and recreate dimensions should not apply if an alternative charttye
-                //is requested for an already generated
-
-                //if observation exists as dimension then retrieve it from obsChartId using the aspect
-                //if not found then createChart for requested Aspect
-                //if not found in xfilter then refreshxf then getchart
-
-                if (angular.isDefined(obsToChartId[obsId + '_' + chartDataType+"_"+chartGroup])) {
-                    console.error("ERROR: THIS SHOULD NOT BE HAPPENING");
+                if(_hasChart(obsId + '_' + chartDataType+"_"+chartGroup,chartGroup)){
+                    console.log("ERROR: THIS SHOULD NOT BE HAPPENING");
                     deferred.reject();
-
-                    //chartId = obsToChartId[obsId + '_' + chartDataType];
-                    //console.log('Chart found ', obsId, 'chartId: ', chartId)
-                    //console.log('DC Regsitry ',chartGroup,dc.chartRegistry.list(chartGroup))
-                    // dc.chartRegistry.list(chartGroup).forEach(function (c) {
-                    //     //console.log('looking for previously plotted chart', c.dimName, c.chartID(), chartId)
-                    //     if (c.chartID() === chartId) {
-                    //         chart = c;
-                    //         console.log("Chart found in DC Registry ")
-                    //     }
-                    // });
-                    // if (!chart) {
-                    //     console.log("ERROR: Chart not found in Registry")
-                    //     return
-                    // }
-                    //activeChartsForObs[obsId] = chart.chartID();
-                    //deferred.resolve(chart)
                 }
-                else if (!angular.isUndefined(xfilterService.getDimension(obsId, chartGroup))) {
+                else if (xfilterService.hasDimension(obsId, chartGroup)){
                     console.debug("Observation ", obsId, " exists in XF. Creating ", chartDataType)
                     chart = DCservice.createChart(obsId, xfilterService, chartDataType, obsRequest.dataType, chartGroup);
                     deferred.resolve(chart)
@@ -72,8 +48,8 @@ angular.module('biospeak.dcPlots')
                     xfilterService.refreshCf(projectId, requestedObsvs, chartGroup)
                         .then(function () {
                             chart = DCservice.createChart(obsId, xfilterService, chartDataType, obsRequest.dataType, chartGroup);
-                            DCservice.refreshCharts(chartGroup, xfilterService);
-                            DCservice.reApplySubjectFilter(xfilterService);
+                            _refreshCharts(chartGroup, xfilterService);
+                            _reApplySubjectFilter(xfilterService.getXFname());
                             deferred.resolve(chart)
                         })
                 }
@@ -95,9 +71,9 @@ angular.module('biospeak.dcPlots')
                 if (cfGroup.all().length === 1 && cfGroup.all()[0].key === "(Blanks)")
                     return null;
 
-                //console.log("=======2=CREATING ",chartDataType," CHART for ",obsId, " dataype:",dataType);
+                //console.debug("=======2=CREATING ",chartDataType," CHART for ",obsId, " dataype:",dataType);
 
-                var chartData = DCservice.getChartOptions(obsId, cfDimension, cfGroup, chartDataType, dataType);
+                var chartData = _getChartOptions(obsId, cfDimension, cfGroup, chartDataType, dataType);
 
                 //CREATE CHART
                 var chartFactory = dc[chartData.chartType];
@@ -107,67 +83,20 @@ angular.module('biospeak.dcPlots')
                 chart.dimName = obsId;
                 chart.dataType = dataType;
                 chart.module = chartGroup;
+                chart.chartName = obsId + "_" + chartDataType+"_"+chartGroup;
 
 
                 //CACHING
-                obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup] = chart.chartID();
+                //Initialize Map if isn't
+                //if (!_obsToChartIdMap[chartGroup]) {
+                //    _obsToChartIdMap[chartGroup] = [];
+                //}
+
+                //obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup] = chart.chartID();
+                //_obsToChartIdMap[chartGroup].push(chart.chartID());
                 chartIdToObs[chart.chartID()] = obsId;
 
                 return chart
-            };
-
-            DCservice.refreshCharts = function (chartGroup, xfilterService) {
-
-                var allCharts = dc.chartRegistry.list(chartGroup);// change that to activeCharts?
-                // console.log('=======3===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
-                var oldFilters;
-                //console.log(allCharts)
-                allCharts.forEach(function (chart) {
-                    //console.log('got chart ',chart.chartID(),' ',chart.chartGroup(), chart)
-                    if (chart.chartGroup() === chartGroup) {
-
-
-                        oldFilters = chart.filters(); // Get current filters
-                        //console.log('a',oldFilters)
-                        chart.IsRefreshing = true;
-
-                        //I need to know which observations this id was associated with so that I can query for
-                        // the new dimensions created for this observation
-                        var obs = chartIdToObs[chart.chartID()]
-                        if (!angular.isUndefined(obs)) {
-                            // console.log('/////REFRESHING CHART FOR ',obs, ' IN  MODULE/////////', module)
-                            chart.dimension(xfilterService.getDimension(obs, chart.module))
-                            chart.group(xfilterService.getGroup(obs, chart.module));
-                        }
-
-                        if (chart.chartType === 'dataTable') {
-                            // console.log('/////REFRESHING TABLE FOR ',module,' MODULE/////////')
-                            chart.dimension(xfilterService.getTableDimension(chart.module))
-                            chart.group(xfilterService.getTableGroup());
-                            chart.columns(xfilterService.getTableHeaders(chart.module));
-
-                        }
-                        if (chart.chartType === 'dataCount') {
-                            // console.log('/////REFRESHING COUNTER WIDGET FOR ',module,' MODULE/////////')
-                            chart.dimension(xfilterService.getCountData(chart.module))
-                            chart.group(xfilterService.getCountGroup(chart.module));
-                        }
-
-
-                        if (oldFilters.length > 0) {
-                            if (oldFilters.length > 1) {
-                                oldFilters = new Array(oldFilters)
-                            }
-                            else {
-                                oldFilters = oldFilters[0]
-                            }
-                            //console.log('/////REAPPLYING FILTERS ',oldFilters,' FOR ',obs,'/////////')
-                            chart.replaceFilter(oldFilters)
-                        }
-                        chart.IsRefreshing = false;
-                    }
-                });
-                dc.redrawAll(chartGroup)
             };
 
             DCservice.createDCcounter = function (xfilterService, module, type) {
@@ -245,7 +174,149 @@ angular.module('biospeak.dcPlots')
                 return chart
             };
 
-            DCservice.getChartOptions = function (val, cfDimension, cfGroup, chartDataType, dataType) {
+            DCservice.propagateFilter = function (xfilterService, chartName, filter) {
+                XFilterLinker.propagateFilter(xfilterService, chartName, filter);
+            };
+
+            DCservice.clearAll = function (chartGroup) {
+                var allCharts = dc.chartRegistry.list(chartGroup);
+                var chartsToremove = [];
+                for (var i = 0, len = allCharts.length; i < len; i++) {
+                    var chart = allCharts[i];
+                    if (chart.chartType !== 'dataCount') {
+                        chartsToremove.push(chart);
+                    }
+                };
+
+                chartsToremove.forEach(function (chart) {
+                    dc.deregisterChart(chart, chartGroup);
+                });
+
+                dc.redrawAll(chartGroup);
+                obsToChartId = {};
+                chartIdToObs = {};
+                requestedObsvs = [];
+            };
+
+            DCservice.removeChart = function (obsReq, chartGroup) {
+                var deferred = $q.defer();
+
+                var mainChartName = obsReq.name + "_Count_"+chartGroup;
+                var rangeChartName = obsReq.name + "_rangeChart_"+chartGroup;
+
+                var mainChart =_findChartByName(mainChartName,chartGroup);
+                var rangeChart = _findChartByName(rangeChartName,chartGroup);
+
+                //console.log(mainChart);
+                //console.log(rangeChart);
+                if(mainChart){
+                    console.log('removing',mainChart);
+                    //TODO need testing
+                    if(mainChart.hasFilter()){
+                        console.debug('Removing filter first')
+                        mainChart.filterAll();
+                    }
+                    else
+                        console.debug('No filters applied so no not calling filter all')
+
+                    dc.renderAll(chartGroup);
+                    dc.deregisterChart(mainChart, chartGroup);
+                    delete chartIdToObs[mainChart.chartID()];
+                    if(rangeChart) {
+                        console.debug('removing',rangeChart);
+                        dc.deregisterChart(rangeChart, chartGroup);
+                        delete chartIdToObs[rangeChart.chartID()];
+                    }
+
+                }
+                deferred.resolve();
+                return deferred.promise;
+            };
+            
+            DCservice.init = function () {
+                requestedObsvs = [];
+                obsToChartId = {};
+                chartIdToObs = {};
+                dc.deregisterAllCharts();
+            };
+
+            DCservice.renderGroup = function(chartGroup){
+                dc.renderAll(chartGroup);
+            }
+
+            /**
+             * - Updates charts in the same group to reflect a new crossfilter instance after adding a new dimension
+             * - Reapplies previously applied filters
+             * @param chartGroup
+             * @param xfilterService
+             * @private
+             */
+            var _refreshCharts = function (chartGroup, xfilterService) {
+
+                var allCharts = dc.chartRegistry.list(chartGroup);// change that to activeCharts?
+                // console.log('=======3===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
+                var oldFilters;
+                //console.log(allCharts)
+                allCharts.forEach(function (chart) {
+                    //console.log('got chart ',chart.chartID(),' ',chart.chartGroup(), chart)
+                    if (chart.chartGroup() === chartGroup) {
+
+
+                        oldFilters = chart.filters(); // Get current filters
+                        //console.log('a',oldFilters)
+                        chart.IsRefreshing = true;
+
+                        //I need to know which observations this id was associated with so that I can query for
+                        // the new dimensions created for this observation
+                        var obs = chartIdToObs[chart.chartID()]
+                        if (!angular.isUndefined(obs)) {
+                            // console.log('/////REFRESHING CHART FOR ',obs, ' IN  MODULE/////////', module)
+                            chart.dimension(xfilterService.getDimension(obs, chart.module))
+                            chart.group(xfilterService.getGroup(obs, chart.module));
+                        }
+
+                        if (chart.chartType === 'dataTable') {
+                            // console.log('/////REFRESHING TABLE FOR ',module,' MODULE/////////')
+                            chart.dimension(xfilterService.getTableDimension(chart.module))
+                            chart.group(xfilterService.getTableGroup());
+                            chart.columns(xfilterService.getTableHeaders(chart.module));
+
+                        }
+                        if (chart.chartType === 'dataCount') {
+                            // console.log('/////REFRESHING COUNTER WIDGET FOR ',module,' MODULE/////////')
+                            chart.dimension(xfilterService.getCountData(chart.module))
+                            chart.group(xfilterService.getCountGroup(chart.module));
+                        }
+
+
+                        if (oldFilters.length > 0) {
+                            if (oldFilters.length > 1) {
+                                oldFilters = new Array(oldFilters)
+                            }
+                            else {
+                                oldFilters = oldFilters[0]
+                            }
+                            //console.log('/////REAPPLYING FILTERS ',oldFilters,' FOR ',obs,'/////////')
+                            chart.replaceFilter(oldFilters)
+                        }
+                        chart.IsRefreshing = false;
+                    }
+                });
+                dc.redrawAll(chartGroup)
+            };
+
+            var _getMinimumValue = function (dimension, val) {
+                var orderedVals = dimension.bottom(Infinity)
+                //console.log(orderedVals)
+                var i = 0;
+                while (orderedVals[i][val] == null || orderedVals[i][val] == "") {
+                    i++;
+                }
+                //console.log(orderedVals[i][val])
+                return orderedVals[i][val]
+            };
+
+            var _getChartOptions = function (val, cfDimension, cfGroup, chartDataType, dataType) {
 
                 var chartType,
                     chartOptions = {};
@@ -272,9 +343,9 @@ angular.module('biospeak.dcPlots')
                 else if (dataType === 'dateTime') {
                     //console.log('making a time chart')
                     chartType = "barChart";
-                    chartOptions["width"] = "2000";
+                    //chartOptions["width"] = "2000";
                     var maxDate = cfDimension.top(1)[0][val]
-                    var minDate = DCservice.getMinimumValue(cfDimension, val)
+                    var minDate = _getMinimumValue(cfDimension, val)
 
                     //console.log(maxDate,minDate);
                     //chartOptions["margins"] = {top: 10, right: 20, bottom: 30, left: 30}
@@ -353,7 +424,7 @@ angular.module('biospeak.dcPlots')
                     //numeric bar chart
                     //console.log(cfDimension.top(1)); console.log(cfGroup.all()[0].value)
                     maxValue = parseFloat(cfDimension.top(1)[0][val])
-                    minValue = parseFloat(DCservice.getMinimumValue(cfDimension, val));
+                    minValue = parseFloat(_getMinimumValue(cfDimension, val));
 
                     //var minTail = parseInt(minValue/4)
                     //var maxTail = parseInt(maxValue/4)
@@ -391,14 +462,14 @@ angular.module('biospeak.dcPlots')
                         chartOptions["yAxisLabel"] = "";
                         chartOptions["xAxisLabel"] = "";
                         chartOptions["xAxisLabel"] = "";
-                        chartOptions["margins"] = {top: 0, right: 50, bottom: 30, left: 30};
+                        chartOptions["margins"] = {top: 0, right: 50, bottom: 30, left: 40};
                         chartOptions["mouseZoomable"] = false;
                         chartOptions["brushOn"] = true;
                     } else {
                         chartOptions["height"] = "180"
                         chartOptions["yAxisLabel"] = "Frequency"
                         chartOptions["xAxisLabel"] = val
-                        chartOptions["mouseZoomable"] = "true"
+                        chartOptions["mouseZoomable"] = false;
                         chartOptions["brushOn"] = false;
                     }
 
@@ -446,95 +517,29 @@ angular.module('biospeak.dcPlots')
 
             };
 
-            DCservice.getMinimumValue = function (dimension, val) {
-                var orderedVals = dimension.bottom(Infinity)
-                //console.log(orderedVals)
-                var i = 0;
-                while (orderedVals[i][val] == null || orderedVals[i][val] == "") {
-                    i++;
-                }
-                //console.log(orderedVals[i][val])
-                return orderedVals[i][val]
+            var _reApplySubjectFilter = function (XFname) {
+                XFilterLinker.reApplySubjectFilter(XFname)
             };
 
-            DCservice.propagateFilter = function (xfilterService, chartName, filter) {
-                XFilterLinker.propagateFilter(xfilterService, chartName, filter);
-            };
-
-            DCservice.reApplySubjectFilter = function (xfilterService) {
-                XFilterLinker.reApplySubjectFilter(xfilterService)
-            };
-
-            DCservice.filterChart = function (chart, filter, chartGrp) {
-                chart.filter(filter);
-
-            };
-
-            DCservice.clearAll = function (chartGroup) {
-                var allCharts = dc.chartRegistry.list(chartGroup);
-                var chartsToremove = [];
-                for (var i = 0, len = allCharts.length; i < len; i++) {
-                    var chart = allCharts[i];
-                    if (chart.chartType !== 'dataCount') {
-                        chartsToremove.push(chart);
+            var _hasChart = function (cname,chartGroup) {
+                var _charts = dc.chartRegistry.list(chartGroup);
+                for (var i = 0; i < _charts.length; i++) {
+                    if (_charts[i].chartName === cname) {
+                        return true;
                     }
-                };
-
-                chartsToremove.forEach(function (chart) {
-                    dc.deregisterChart(chart, chartGroup);
-                });
-
-                dc.redrawAll(chartGroup);
-                obsToChartId = [];
-                chartIdToObs = [];
-                requestedObsvs = [];
-            };
-
-            DCservice.resetChart = function (obsReq, chartGroup) {
-                var deferred = $q.defer();
-                var chart;
-                var obsId = obsReq.name;
-                var chartDataType = "Count";
-                console.log(obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup],obsToChartId, obsReq,chartGroup)
-
-                if (angular.isDefined(obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup])
-                    || angular.isDefined(obsToChartId[obsId + '_' + 'rangeChart'+"_"+chartGroup])) {
-
-                    var chartId = obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup];
-                    var rangechartId = obsToChartId[obsId + '_' + 'rangeChart'+"_"+chartGroup];
-
-                    dc.chartRegistry.list(chartGroup).forEach(function (c) {
-                        if (c.chartID() === chartId || c.chartID() === rangechartId) {
-                             console.log('found chart, resetting filter ...')
-                            chart = c;
-
-                            c.filterAll();
-                            //c.resetSvg();
-                            dc.renderAll(chartGroup);
-
-                            dc.deregisterChart(chart, chartGroup);
-                            delete obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup];
-                            delete obsToChartId[obsId + "_rangeChart"+"_"+chartGroup];
-                            delete chartIdToObs[chart.chartID()];
-
-
-                            deferred.resolve(chart)
-                        }
-                    });
                 }
-                return deferred.promise;
-            };
-            
-            DCservice.init = function () {
-                requestedObsvs = [];
-                obsToChartId = [];
-                chartIdToObs = [];
-                dc.deregisterAllCharts();
+                return false;
             };
 
-            DCservice.renderGroup = function(chartGroup){
-                dc.renderAll(chartGroup);
-            }
+            var _findChartByName = function(cname, chartGroup){
+                var _charts = dc.chartRegistry.list(chartGroup);
+                for (var i = 0; i < _charts.length; i++) {
+                    if (_charts[i].chartName === cname) {
+                        return _charts[i];
+                    }
+                }
+                return false;
+            };
 
             return DCservice;
         }]);
