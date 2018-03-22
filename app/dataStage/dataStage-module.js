@@ -12,7 +12,7 @@ function config($stateProvider, $urlRouterProvider) {
         })
         .state('datastage.files', {
             url: "/datastage/files/{dir:[a-zA-Z /]*}",
-            templateUrl: "datastage/fileManager/fileManager.html",
+            templateUrl: "dataStage/fileManager/fileManager.html",
             controller: "fileController as vm",
             resolve: {
                 loadDirective: ['$ocLazyLoad', function ($ocLazyLoad) {
@@ -56,7 +56,7 @@ function config($stateProvider, $urlRouterProvider) {
                         {
                             serie: true,
                             files: ['lib/plugins/dataTables/js/jquery.dataTables.js',
-                                'lib/plugins/dataTables/css/dataTables.bootstrap.min.css']
+                                'lib/plugins/dataTables/css/datatables.bootstrap.min.css']
                         },
                         {
                             name: 'datatables',

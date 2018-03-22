@@ -69,7 +69,7 @@ function config($stateProvider){
                         {
                             serie: true,
                             files: ['lib/plugins/dataTables/js/jquery.dataTables.min.js',
-                                'lib/plugins/dataTables/css/dataTables.bootstrap.min.css']
+                                'lib/plugins/dataTables/css/datatables.bootstrap.min.css']
                         }/*,
                          {
                          serie: true,
