@@ -1,9 +1,0 @@
-[   {"id":"1", "name":"Laboratory Test Results"},
-    {"id":"11", "name":"Medical History"},
-    {"id":"12", "name":"Respiratory History"},
-    {"id":"13", "name":"Pregnancy Test"},
-    {"id":"14", "name":"Demographics"},
-    {"id":"15", "name":"Spirometry"},
-    {"id":"16", "name":"Reversability Test"},
-    {"id":"17", "name":"Haemoatology and biochemistry test"}
-]

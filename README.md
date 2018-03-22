@@ -1,3 +1,3 @@
-# biospeak-web
+# PlatformTM-web
 
-This project is the front-end application for the eHS
+This project is the front-end application for PlatformTM
