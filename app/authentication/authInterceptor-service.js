@@ -23,7 +23,6 @@ function authInterceptorService($q, $injector,$location, localStorageService){
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-
             if ((rejection.data.code) && (rejection.data.code = 100))
             {
                 //Case that OTP is not valid but access token is valid

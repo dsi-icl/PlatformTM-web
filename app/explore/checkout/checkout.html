@@ -151,7 +151,7 @@
                                         <a ng-if="ds.fileStatus == 0"  ng-click= vm.prepareDataset(ds)  class="btn btn-white btn-sm"> <i class="fa fa-cloud-download"></i> Download</a>
                                         <a ng-if="ds.fileStatus == 1" class="btn btn-white btn-sm"> <i class="fa fa-circle-o-notch fa-spin  fa-fw"></i> Preparing</a>
                                         <a ng-if="ds.fileStatus == 2"  ng-click=  vm.downloadDataset(ds)  class="btn btn-white btn-sm" ><i class="fa fa-download"></i> Download</a>
-
+                                        <a ng-if="ds.fileStatus == 3" class="btn btn-white btn-sm">FAILED! </a>
                                      </td>
                                  </tr>
                                  <tr ng-repeat-end>

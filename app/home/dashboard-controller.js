@@ -21,11 +21,10 @@ function dashboardController($state,projectService, exportService, explorerServi
         vm.projects = response;
     });
 
-    // exportService.getUserDatasets().then(function(response){
-    //     vm.datasets = response.datasets;
-    //     console.log(vm.datasets.length)
-    //     vm.loaded = true;
-    // });
+    exportService.getUserDatasets().then(function(response){
+        vm.datasets = response.datasets;
+        vm.loaded = true;
+    });
 
     // explorerService.getUserQueries(vm.projectId).then(function(response){
     //     //console.log(response);

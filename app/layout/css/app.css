@@ -1502,10 +1502,12 @@ a.editable-click {
 }
 
 div.login, div.signup {
-     background: #23C6C8;
-     font-size: .8em;
+     /*background: #23C6C8;*/
+    background:#1c3146;
+    /*background: #254154;*/
+     font-size: 1em;
      font-weight: bolder;
-     text-transform: uppercase;
+
 }
 
 .login .username {
@@ -1514,17 +1516,18 @@ div.login, div.signup {
 
 .signupContainer{
     background: #fff;
-    max-width: 800px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    max-width: 400px;
+    box-shadow: 6px 6px 3px rgb(19, 38, 52);
     margin: 0 auto;
     border-radius: 3px;
+    text-transform: uppercase;
 }
 
 h1.logo-name{
     text-align: center;
 }
 .loginscreen{
-    padding:20px;
+    padding:25px;
 }
 
 .alert-info{

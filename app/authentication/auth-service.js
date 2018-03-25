@@ -17,14 +17,10 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
 
 
     var _saveRegistration = function (registration) {
-
-        //_logOut();
-
         var deferred = $q.defer();
 
         $http.post(serviceBase + 'accounts/register', registration)
             .success(function (response) {
-                console.log("Inside http post success")
                 deferred.resolve(response);
             })
 
@@ -34,14 +30,11 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
             });
 
         return deferred.promise;
-
     };
 
     var _login = function (loginData) {
 
         var data = "grant_type=password&username=" + encodeURIComponent(loginData.userName) + "&password=" + encodeURIComponent(loginData.password);
-        //console.log(data)
-        console.log(serviceBase + 'token');
 
         return $http({
             url:serviceBase + 'token',
@@ -51,11 +44,10 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
         }).then(
             function (response) {
                 var result = response.data;
-                console.log(result);
+                console.log("response",response)
                 if(result.token_result === "success" ){
                     var claims = getTokenCalims(result.access_token);
                     localStorageService.set('authorizationTFAData', { token: result.access_token, userName: loginData.userName});
-
                     _authentication.isAuth = true;
                     _authentication.userName = loginData.userName;
                     userSession.create(claims);
@@ -66,6 +58,7 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
 
             },
             function (httpError) {
+                console.log("error resp",httpError)
                 // translate the error
                 throw httpError.status + " : " +
                 httpError.data;
@@ -162,5 +155,3 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
 angular
     .module('bioSpeak.userAuth')
     .factory('authService',['$http', '$q', '$window','localStorageService','userSession', 'ngAppConfig', authService])
-//.controller('MainCtrl, ['$scope', 'SomeFactory', MainCtrl]);
-
