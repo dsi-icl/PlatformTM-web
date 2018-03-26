@@ -31,16 +31,17 @@
 
                     $scope.savedSuccessfully = true;
                     $scope.message = "User registered successfully, generating QR code...";
-                    $scope.qrCode = response.psk;
-                    $scope.qrCodeSrc = "https://chart.googleapis.com/chart?chs=260x260&chld=M|0&cht=qr&chl=otpauth://totp/" + $scope.registration.userName + "%3Fsecret%3D" + $scope.qrCode;
+                    //$scope.qrCode = response.psk;
+                    //$scope.qrCodeSrc = "https://chart.googleapis.com/chart?chs=260x260&chld=M|0&cht=qr&chl=otpauth://totp/" + $scope.registration.userName + "%3Fsecret%3D" + $scope.qrCode;
 
                     $scope.registration.userName= "";
                     $scope.registration.password = "";
                     $scope.registration.confirmPassword = "";
+                    $location.path('/dashboard');
 
                 },
                 function (response) {
-                    console.log(response)
+                    //console.log(response)
                     var errors = [];
                     for (var key in response) {
                         for (var i = 0; i < response[key].length; i++) {
@@ -48,7 +49,7 @@
                         }
                     }
                     $scope.savedSuccessfully = false;
-                    $scope.message = "Failed to register user due to:" + errors.join(' ');
+                    $scope.message = "Failed to register user:" + errors.join(' ');
                 });
         };
 

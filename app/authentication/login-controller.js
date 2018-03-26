@@ -13,13 +13,9 @@
         };
         vm.loginMessage='';
         vm.isSigningIn = false;
-
-        //console.log($state)
         vm.state = $state;
 
         vm.login = function () {
-            /*console.log($scope.loginData)
-            $location.path('/explore/P-BVS');*/
 
             vm.isSigningIn = true;
 
@@ -34,7 +30,7 @@
                 },
                 function (err) {
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                    console.log(err);
+                    //console.log(err);
                     /*var errors = [];
                     for (var key in err) {
                         for (var i = 0; i < err[key].length; i++) {
@@ -43,7 +39,7 @@
                     }*/
                     vm.isSigningIn = false;
                     vm.loginfailed = true;
-                    vm.loginMessage = "Failed to log in: " + err.msg;
+                    vm.loginMessage = "Failed to log in: Invalid username or password"
                 });
         }
     }

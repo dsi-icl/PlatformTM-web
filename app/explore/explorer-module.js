@@ -166,7 +166,7 @@ angular.module('biospeak.explorer',[])
                                 //'lib/plugins/ui-select/css/select.css',
                                 //'lib/plugins/angular-dragdrop/angular-dragdrop.min.js'
                                 'lib/plugins/dataTables/js/jquery.dataTables.min.js',
-                                'lib/plugins/dataTables/css/dataTables.bootstrap.min.css',
+                                'lib/plugins/dataTables/css/datatables.bootstrap.min.css',
                                 'lib/plugins/dataTables/js/angular-datatables.js',
                                 'lib/plugins/dataTables/js/angular-datatables.bootstrap.min.js',
                                 'lib/plugins/dataTables/js/angular-datatables.buttons.min.js',
