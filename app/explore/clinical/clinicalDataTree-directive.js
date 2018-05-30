@@ -228,6 +228,10 @@ angular.module('biospeak.explorer')
             },
             template:
 
+            // '<div class="node-select" ng-if="group.isSelectable && !group.isLocked">'+
+            // '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" >' +
+            // '</div>'+
+
            '<div ng-class="{selected: node.isSelected}">' +
                 '<div class="plotting-switch">'+
                     '<a  ng-hide="node.isSelected || node.isLocked" class="switchery"  ' +

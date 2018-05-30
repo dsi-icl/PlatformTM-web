@@ -65,7 +65,7 @@ angular.module('biospeak.dcPlots')
                     '<div class="chart-title">'+
                         '<h5>{{obs.qO2_label}}</h5>'+
                     '</div>'+
-                    '<div ng-hide="done" style="margin-top:70px" class="sk-spinner sk-spinner-fading-circle"> ' +
+                    /*'<div ng-if="!done" style="margin-top:70px" class="sk-spinner sk-spinner-fading-circle"> ' +
                         '<div class="sk-circle1 sk-circle"></div> ' +
                         '<div class="sk-circle2 sk-circle"></div> ' +
                         '<div class="sk-circle3 sk-circle"></div> ' +
@@ -78,8 +78,8 @@ angular.module('biospeak.dcPlots')
                         '<div class="sk-circle10 sk-circle"></div> ' +
                         '<div class="sk-circle11 sk-circle"></div> ' +
                         '<div class="sk-circle12 sk-circle"></div> ' +
-                    '</div>'+
-                    '<div ng-show="nochart">No data found</div>'+
+                    '</div>'+*/
+                    '<div ng-show="nochart"><small>No observations recorded</small></div>'+
 
                     '<div id="{{mainChartId}}">' +
                         '<div class="chartControls"> ' +
@@ -193,7 +193,8 @@ angular.module('biospeak.dcPlots')
             replace:true,
             scope:{
                 obs:'=',
-                chartingOpts:'='
+                chartingOpts:'=',
+                onFiltered:'&'
             },
             controller: ['$scope','$attrs','$injector',function($scope,$attrs,$injector) {
 
@@ -225,9 +226,6 @@ angular.module('biospeak.dcPlots')
                     .then(
                         function(chart){
                             plot = chart
-
-
-
                                 $scope.chartToPlot = plot;
                         },
                         function(result){
@@ -247,41 +245,37 @@ angular.module('biospeak.dcPlots')
                 $scope.filterChart = function(){
                     plot.filter(dc.filters.RangedFilter(from,to));
                     dc.redrawAll($scope.chartingOpts.chartGroup);
-
-
                 }
 
             }],
             template:
             '<div class="obs-chart">'+
+            // '<div  class="chart-options">'+
+            // '<ul>'+
 
-
-            '<div  class="chart-options">'+
-            '<ul>'+
-
-            '<li>' +
-            '<div  id="data_5"> ' +
+            // '<li>' +
+            // '<div  id="data_5"> ' +
             // '<label>Date Range</label> ' +
-            '<div > ' +
-            '<label class="col-sm-1 control-label">From:</label>'+
-            '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterFrom" auto-close="true" ng-model="from"> </input></div>' +
-            '<label class="col-sm-1 control-label">To:</label>'+
-            '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterTo" auto-close="true" ng-model="to" > </input></div>' +
+            // '<div > ' +
+            // '<label class="col-sm-1 control-label">From:</label>'+
+            // '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterFrom" auto-close="true" ng-model="from"> </input></div>' +
+            // '<label class="col-sm-1 control-label">To:</label>'+
+            // '<div class="col-sm-4"><input date-time format="D MMM YYYY HH:mm" date-change="filterTo" auto-close="true" ng-model="to" > </input></div>' +
             // '<span><i uib-dropdown-toggle class="fa fa-calendar"></i></span>'+
             // '<div> ' + '<span>Selected date: <br/> {{(a|date)}} - {{(b|date)}} </span> ' + '</div> ' +
             // '<div uib-dropdown-menu> ' +
             //     '<div date-range format="D MMM YYYY HH:mm" start="a" end="b" auto-close="false"></div> ' +
             // '</div> ' +
-            '</div>'+
-            '<a ng-click="filterChart()" class="btn btn-lnk btn-xs"><i class="fa fa-filter"></i></a>'+
-            '</div>'+
+            // '</div>'+
+            // '<a ng-click="filterChart()" class="btn btn-lnk btn-xs"><i class="fa fa-filter"></i></a>'+
+            // '</div>'+
             // '<div class="input-group date">'+
             //     '<input type="datetime" class="form-control" date-time ng-model="sampleDate" format="yyyy-MM-dd HH:mm" view="month" auto-close="true">'+
             //     '<span class="input-group-addon"><i class="fa fa-calendar"></i></span>'+
             // '</div>'+
-            '</li>'+
-            '</ul>'+
-            '</div>'+
+            // '</li>'+
+            // '</ul>'+
+            // '</div>'+
 
 
             '<div id="mainChart">' +
@@ -300,31 +294,65 @@ angular.module('biospeak.dcPlots')
             link: function (scope, element, attrs) {
                 scope.$watch('chartToPlot', function(newVal) {
                     if (newVal) {
-                        var groupChart = scope.chartingOpts.chartGroup
-                        //var d = angular.element(document.getElementById(sliderElementId))
-                        scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), groupChart);
+                        var chartGroup = scope.chartingOpts.chartGroup;
+                        var obsId = scope.obs.name;
+
+                        //ANCHOR THE PLOT
+                        //scope.chartToPlot.anchor(element[0].querySelector(mainChartId), chartGroup);
+                        scope.chartToPlot.anchor(element[0].querySelector('#mainChart'), chartGroup);
+
+
+                        //SET ONFILTERED
+                        scope.chartToPlot.on('filtered',function(chart, filter){
 
 
 
+                            if(scope.chartToPlot.isRefocusing){
+                                //console.log('Chart is refocusing');
+                                return;
+                            }
+                            scope.chartservice.propagateFilter(scope.xfService,chart.dimName,filter);
+
+                            if(scope.chartToPlot.IsRefreshing)
+                                return;
+                            // console.log('----APPLYING FILTER TO CART----')
+                            scope.onFiltered({obsId:obsId,module:chartGroup,filters:chart.filters(),filter:filter});
+                        });
 
 
-                        var d = angular.element(element[0].querySelector('div.chart-options'));
-                        d.css('display', 'inline-block');
 
-                        //Set reset link
+                        // var d = angular.element(element[0].querySelector('div.chart-options'));
+                        // d.css('display', 'inline-block');
+
+                        //SET RESET ONCLICK
+                        //var a = angular.element(element[0].querySelector('div.chartControls').querySelector('span.reset').querySelector('a'));
+                        //a.on('click', function () {
+                        //    if(scope.chartToPlot.chartType === 'barChart' && scope.chartToPlot.dataType !== 'ordinal' && scope.chartToPlot.dataType !== "integer"){
+                        //        scope.chartToPlot.isRefocusing = true;
+                        //        scope.chartToPlot.focus();
+                        //        scope.chartToPlot.isRefocusing = false;
+                        //    }
+                        //    scope.chartToPlot.filterAll();
+                        //    if(scope.rangeChart){
+                        //        scope.rangeChart.filterAll();
+                        //    }
+                        //    dc.renderAll(chartGroup);
+                        //});
+
+                        //SET RESET ONCLICK
                         var a = angular.element(element[0].querySelector('div.chartControls').querySelector('span.reset').querySelector('a'));
                         a.on('click', function () {
-                            console.log('RESETTING FILTER')
+                            console.log('RESETTING FILTER',scope.chartToPlot.chartType)
                             //scope.chartToPlot.filterAll(groupChart);
-                            if(scope.chartToPlot.chartType == 'barChart')scope.chartToPlot.focus();
-                            scope.chartToPlot.filterAll(groupChart);
-                            scope.chartToPlot.render();
-                            if(scope.rangeChart){
-                                //scope.rangeChart.focus();
-                                scope.rangeChart.filterAll(groupChart);
-                                //scope.rangeChart.render();
+                            if(scope.chartToPlot.chartType === 'barChart'){
+                                //scope.chartToPlot.isRefocusing = true;
+                                scope.chartToPlot.focus(null);
+                                //scope.chartToPlot.isRefocusing = false;
                             }
-                            dc.redrawAll(groupChart);
+
+                            //scope.chartToPlot.filter(null);
+                            //dc.renderAll(chartGroup);
+                            scope.chartToPlot.render();
                         });
 
 

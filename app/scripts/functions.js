@@ -45,7 +45,7 @@ etriks.colors2 = ["#23C6C8",/*"#39C2D7",*/ "#2c3e50", "#e57e25", "#d25627","#077
                   "#E2FA00","#AEBC2F","#93A300","#EAFD3F", //yelloegreen
                   "#8805A8","#6C227E","#58026D","#B53AD4"] //purples
 etriks.myColors = function () {
-    return d3.scale.ordinal().range(etriks.colors2);
+    return d3.scaleOrdinal().range(etriks.colors2);
 };
 
 etriks.function = {

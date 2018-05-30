@@ -19,8 +19,8 @@ function SubjectXF(subjectDataService,$q){
 
     subjCfService.formatData = function(data, requestedObsvs){
 
-        var dateTimeFormat = d3.time.format('%Y-%m-%dT%H:%M').parse;
-        var dateFormat = d3.time.format('%Y-%m-%d').parse;
+        var dateTimeFormat = d3.timeFormat('%Y-%m-%dT%H:%M').parse;
+        var dateFormat = d3.timeFormat('%Y-%m-%d').parse;
 
         if(requestedObsvs)
             data.forEach(function(d) {
@@ -119,7 +119,7 @@ function SubjectXF(subjectDataService,$q){
 
     subjCfService.getCountValue = function(){
         if(cfReady)
-            return all.value()
+            return all.value();
         else return null
     };
 

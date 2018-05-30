@@ -2,24 +2,19 @@
  * Created by iemam on 15/09/2015.
  */
 'use strict';
-//app.factory('authInterceptorService', ['$q', '$injector','$location', 'localStorageService', function ($q, $injector,$location, localStorageService) {
-
-function authInterceptorService($q, $injector,$location, localStorageService){
+function authInterceptorService($q,$rootScope,AUTH_EVENTS,userSession){
     var authInterceptorServiceFactory = {};
 
     //var redirectUrl;
 
     var _request = function (config) {
         config.headers = config.headers || {};
-
-        //redirectUrl = config.url;
-        var authData = localStorageService.get('authorizationTFAData');
-        if (authData) {
-            config.headers.Authorization = 'Bearer ' + authData.token;
+        var token = userSession.getAccessToken();
+        if (token) {
+            config.headers.Authorization = 'Bearer ' + token;
         }
-
         return config;
-    }
+    };
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
@@ -28,14 +23,12 @@ function authInterceptorService($q, $injector,$location, localStorageService){
                 //Case that OTP is not valid but access token is valid
                 return $q.reject(rejection);
             }
-
-            var authService = $injector.get('authService');
-
-            authService.logOut();
-            $location.path('/login');
+            console.log("401");
+            userSession.destroy();
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
         }
         return $q.reject(rejection);
-    }
+    };
 
     authInterceptorServiceFactory.request = _request;
     authInterceptorServiceFactory.responseError = _responseError;
@@ -45,7 +38,7 @@ function authInterceptorService($q, $injector,$location, localStorageService){
 
 angular
     .module('bioSpeak.userAuth')
-    .factory('authInterceptorService',['$q', '$injector','$location', 'localStorageService', authInterceptorService])
+    .factory('authInterceptorService',['$q','$rootScope','AUTH_EVENTS','userSession',authInterceptorService])
 
 
 

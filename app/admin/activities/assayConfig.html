@@ -339,7 +339,7 @@
                                         <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
                                         <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
                                         <a ng-init="vm.showFeatureTemplates = false" ng-click="vm.showFeatureTemplates = !vm.showFeatureTemplates;vm.loadAssayFeatureTemplates()">
-                                            <i uib-tooltip="Add Dataset" class="p-xs fa fa-edit"></i>
+                                            <i uib-tooltip="{{vm.assay.featuresDataset ? 'Change Template':'Choose Template'}}" class="p-xs fa fa-edit"></i>
                                         </a>
                                     </span>
                             </div>
@@ -660,7 +660,7 @@
                                         <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
                                         <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
                                         <a ng-init="vm.showDataTemplates = false" ng-click="vm.showDataTemplates = !vm.showDataTemplates; vm.loadAssayDataTemplates() ">
-                                            <i uib-tooltip="Add Dataset" class="p-xs fa fa-edit"></i>
+                                            <i uib-tooltip="{{vm.assay.observationsDataset ? 'Change Template':'Choose Template'}}" class="p-xs fa fa-edit"></i>
                                         </a>
                                     </span>
                             </div>

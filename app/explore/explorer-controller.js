@@ -112,7 +112,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
 
     vm.saveToCartAndCheckout = function(){
         explorerService.saveQuery(vm.cartQuery, vm.projectId).then(function(response){
-            $state.go('datacart.checkout',{
+            $state.go('project.datacart',{
                 projectId: vm.projectId,
                 cartId: response.cartId});
         })

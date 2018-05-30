@@ -5,15 +5,14 @@
 
 function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-        .state('datastage', {
-            abstract: true,
-            url: "/{projectId}",
-            templateUrl: "layout/content.html"
-        })
-        .state('datastage.files', {
-            url: "/datastage/files/{dir:[a-zA-Z /]*}",
+        .state('project.drive', {
+            url: "/datastage/files/{dirId}",
             templateUrl: "dataStage/fileManager/fileManager.html",
             controller: "fileController as vm",
+            data: {
+                requiresAuthentication: true,
+                permissions: ["can-view-drive"]
+            },
             resolve: {
                 loadDirective: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
@@ -46,7 +45,7 @@ function config($stateProvider, $urlRouterProvider) {
             }
         })
 
-        .state('datastage.files.view', {
+        .state('project.drive.view', {
             url: "/view/{fileId}",
             templateUrl: "dataStage/fileManager/fileViewer.html",
             controller : "fileViewController",
@@ -76,8 +75,9 @@ function config($stateProvider, $urlRouterProvider) {
             }
         })
 
-        .state("datastage.upload", {
-            url: "/upload/{dir}",
+        .state("project.drive.upload", {
+            url: "/upload/{dirId}",
+            permissions: ["can-upload"],
             onEnter: ['$stateParams', '$state', '$uibModal', 'fileService',function($stateParams, $state, $uibModal, fileService) {
                 $uibModal.open({
                     templateUrl: "dataStage/upload/upload.html",
@@ -100,7 +100,7 @@ function config($stateProvider, $urlRouterProvider) {
                 }).result.finally(function($stateParams) {
                         fileService.getFiles()
                             .then(function(data){
-                            $state.go('datastage.files',{projectId:$stateParams.projectId, dir:$stateParams.dir})
+                                $state.go('project.drive',{projectId:$stateParams.projectId, dirId:$stateParams.dirId})
                             })
                     }, function () {
                         console.info('Modal dismissed at: ' + new Date());
@@ -110,6 +110,7 @@ function config($stateProvider, $urlRouterProvider) {
             }]
         });
 }
+
 
 angular
     .module('bioSpeak.DataStager', ['ngResource'])

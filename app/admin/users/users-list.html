@@ -1,0 +1,24 @@
+<table class="table table-striped">
+    <tbody>
+        <tr ng-repeat="u in vm.users">
+        <td class="client-avatar"><img alt="image" src="img/icon-user.png"> </td>
+        <td> {{u.firstName}} {{u.lastName}}</a></td>
+        <td> {{u.organization}}</td>
+        <td class="contact-type">
+            <div uib-dropdown>
+                <a class="dropdown-toggle" uib-dropdown-toggle>
+                    <i class="fa fa-ellipsis-v"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu >
+                    <li> <a ui-sref="project.manager.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-edit"></i>&nbsp; Edit</a></li>
+
+                    <li><a ui-sref="project.manager.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-remove"></i>&nbsp; Delete</a></li>
+                </ul>
+            </div>
+
+        </td>
+        <!--<td> {{u.email}}</td>-->
+        <!--<td class="client-status"><span class="label label-primary">Active</span></td>-->
+    </tr>
+    </tbody>
+</table>

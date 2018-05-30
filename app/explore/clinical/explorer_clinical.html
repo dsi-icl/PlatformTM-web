@@ -7,19 +7,26 @@
             <div class="ibox-content">
                 <div class="row">
                     <div class="col-md-4">
+                        <dc-count-widget style="font-weight:600;"
+                                         xfilter-service="{{chartingOpts.xfilterService}}"
+                                         chart-service="{{chartingOpts.DCchartService}}"
+                                         type="sdj"
+                                         module="{{chartingOpts.chartGroup}}">
+                        </dc-count-widget>
+
                         <div class="clinical-tree ">
                             <cl-tree-class ng-repeat="class in clinicalObservations.classes" class="class" onplot="expVM.plotSwitchClicked(obsReq,obsModule)"></cl-tree-class>
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="ibox-title">
-                            <div>
-                                <div class="btn-group pull-right">
-                                    <label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'plots'">Data Plots</label>
-                                    <label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'findingsTable'">Findings Table</label>
-                                    <label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'eventsTable'">Events Table</label>
-                                </div>
-                            </div>
+                            <!--<div>-->
+                                <!--<div class="btn-group pull-right">-->
+                                    <!--<label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'plots'">Data Plots</label>-->
+                                    <!--<label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'findingsTable'">Findings Table</label>-->
+                                    <!--<label class="btn btn-xs btn-white" ng-model="vm.show" uib-btn-radio="'eventsTable'">Events Table</label>-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                         <div class="ibox-content">
                             <div class="anchor">
@@ -55,22 +62,22 @@
                                 </div>
                             </div>
 
-                            <div id="findings-datatable" ng-hide="vm.show =='plots' || vm.show=='eventsTable'" class="table-view  ">
-                                <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
-                                              chart-service="{{chartingOpts.DCchartService}}"
-                                              xfilter-service="{{chartingOpts.xfilterService}}"
-                                              grp="{{chartingOpts.chartGroup}}"
-                                              module="findings">Choose observations from the tree below
-                                </dc-datatable>
-                            </div>
-                            <div id="events-datatable" ng-hide="vm.show =='plots' || vm.show=='findingsTable'" class="table-view  ">
-                                <dc-datatable class="table table-striped table-bordered table-hover dc-data-table"
-                                              chart-service="{{chartingOpts.DCchartService}}"
-                                              xfilter-service="{{chartingOpts.xfilterService}}"
-                                              grp="{{chartingOpts.chartGroup}}"
-                                              module="events">Choose observations from the tree below
-                                </dc-datatable>
-                            </div>
+                            <!--<div id="findings-datatable" ng-hide="vm.show =='plots' || vm.show=='eventsTable'" class="table-view  ">-->
+                                <!--<dc-datatable class="table table-striped table-bordered table-hover dc-data-table"-->
+                                              <!--chart-service="{{chartingOpts.DCchartService}}"-->
+                                              <!--xfilter-service="{{chartingOpts.xfilterService}}"-->
+                                              <!--grp="{{chartingOpts.chartGroup}}"-->
+                                              <!--module="findings">Choose observations from the tree below-->
+                                <!--</dc-datatable>-->
+                            <!--</div>-->
+                            <!--<div id="events-datatable" ng-hide="vm.show =='plots' || vm.show=='findingsTable'" class="table-view  ">-->
+                                <!--<dc-datatable class="table table-striped table-bordered table-hover dc-data-table"-->
+                                              <!--chart-service="{{chartingOpts.DCchartService}}"-->
+                                              <!--xfilter-service="{{chartingOpts.xfilterService}}"-->
+                                              <!--grp="{{chartingOpts.chartGroup}}"-->
+                                              <!--module="events">Choose observations from the tree below-->
+                                <!--</dc-datatable>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>

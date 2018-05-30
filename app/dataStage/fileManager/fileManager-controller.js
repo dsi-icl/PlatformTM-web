@@ -17,6 +17,7 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
 
     vm.projectId = $stateParams.projectId;
     vm.dir = $stateParams.dir;
+    vm.dirId = $stateParams.dirId;
     vm.selectedFiles={};
     vm.selectedFilesCount=0;
     vm.showSideMenu = false;
@@ -28,10 +29,7 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
     fileService.getDirectories(vm.projectId)
         .then(function(data){
             vm.dirs = data.files;
-            //console.log(data.files);
-            //$scope.vm.dirs = data.files;
-
-            fileService.getContent(vm.projectId,$stateParams.dir)
+            fileService.getContent(vm.projectId,vm.dirId)
                 .then(function(data){
                     vm.files = data.files;
                 })
@@ -39,42 +37,24 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
 
 
 
+    //TODO:update it to reflect the new directoryId
     vm.createDirectory = function(){
-        console.log(vm.newdir)
+        //console.log(vm.newdir)
         if(vm.newdir)
             fileService.createDirectory(vm.projectId,$scope.vm.newdir)
                 .then(function(data){
-                    //$scope.vm.dirs = data;
-
                     fileService.getDirectories(vm.projectId)
                         .then(function(data){
-                            vm.dirs = data.files;})
+                            vm.dirs = data.files;});
 
-                    $state.go('datastage.files',{dir:$scope.vm.newdir});
+                    $state.go('project.drive',{dir:$scope.vm.newdir});
                 })
     }
 
     vm.openUpload = function(){
-        console.log($stateParams)
-        $state.go('datastage.upload',{dir:$stateParams.dir})
 
-        /*var modalInstance = $modal.open({
-         templateUrl: 'dataStage/upload/upload.html',
-         controller: 'uploadController'
-         });
-
-         modalInstance.result.then(function () {
-         fileService.getFiles()
-         .then(function(data){
-         vm.files = data.files;
-         console.log(data)
-         $scope.vm = vm;
-
-         })
-         }, function () {
-         console.info('Modal dismissed at: ' + new Date());
-         });*/
-    }
+        $state.go('project.drive.upload',{dirId:vm.dirId})
+    };
 
     vm.updateFn = function(fileInfo){
         if(fileInfo.selected){
@@ -89,41 +69,19 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
             $scope.vm.selectedFilesCount--
         }
 
-        console.log($scope.vm.selectedFilesCount,$scope.vm.selectedFiles)
+        //console.log($scope.vm.selectedFilesCount,$scope.vm.selectedFiles)
     }
 
     vm.clickFn = function(event){
-        console.log("div clicked")
-
-
-        var path;
-
         if(event.target.classList.contains('outer'))
         {
             vm.showControls = false;
             angular.element(document.querySelectorAll('.file > a.active')).removeClass('active')
         }
-        // angular.forEach(vm.files,function(file){
-        //     file.selected=false;
-        // })
-        //vm.fileSelected = null;
-        //angular.forEach(vm.files){
-
-        //}
-        //     vm.fileSelected = fileInfo;
-        //     fileInfo.selected = !fileInfo.selected
-        //     console.log(vm.fileSelected)
-        //}
-        // else
-        //     vm.showControls = false;
-
     }
 
     vm.deleteFile = function(){
-        console.log("fileManager-controller: information about the relevant selected file ", vm.fileSelected);
         var fileId = vm.fileSelected.dataFileId;
-        console.log("FileId to be deleted is ", fileId);
-
         SweetAlert.swal({
                 title: "Are you sure you want to delete "+vm.fileSelected.fileName+" ?",
                 text: "All previously loaded content will be unloaded from the database and the file will be permanently deleted! ",
@@ -139,7 +97,7 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
                     fileService.deleteFile(fileId)
                         .then(function(data){
                             SweetAlert.swal("Deleted!", "File "+vm.fileSelected.fileName+" has been deleted.", "success");
-                            $state.go('datastage.files',{dir:vm.dir});
+                            $state.go('project.drive',{dir:vm.dirId});
                         })
                 } else {
                     SweetAlert.swal("Cancelled", "", "error");
@@ -150,7 +108,6 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
     }
 
     vm.fileClickFn = function(fileInfo){
-        console.log("fileClicked")
         angular.element(document.querySelectorAll('.file > a.active')).removeClass('active')
         angular.forEach(vm.files,function(file){
             file.selected=false;
@@ -159,7 +116,6 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
             vm.showControls = true;
             vm.fileSelected = fileInfo;
             fileInfo.selected = !fileInfo.selected
-            console.log(vm.fileSelected)
         }
     }
 
@@ -167,30 +123,14 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
         if(!fileInfo){
             fileInfo =   vm.fileSelected
         }
-        console.log(fileInfo,"double clicked")
 
-
-
-        var path;
         if(fileInfo.isDirectory){
-
-            if(fileInfo.path.indexOf('\\')!=-1){
-                var pathStart = fileInfo.path.indexOf('\\');
-                //console.log(pathStart)
-                var path2 = fileInfo.path.substring(pathStart+1,fileInfo.path.size)
-
-                path = path2+"/"+fileInfo.fileName;
-            }
-            else
-                path = fileInfo.fileName;
-            //console.log(path);
-
-            $state.go('datastage.files',{dir:path})
+            $state.go('project.drive',{dirId:fileInfo.dataFileId})
 
         }else{
             //console.log(fileInfo)
             //vm.currentFile = fileInfo
-            $state.go('datastage.files.view',{fileId:fileInfo.dataFileId})
+            $state.go('project.drive.view',{fileId:fileInfo.dataFileId})
         }
     };
 

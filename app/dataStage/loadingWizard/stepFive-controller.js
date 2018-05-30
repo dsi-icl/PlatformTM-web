@@ -30,7 +30,7 @@
             $state.go('datastage.wizard.step_four',{ activityId: vm.activityId, datasetId: vm.datasetId, fileId: fileId });
         };
         vm.finish = function(){
-            $state.go('datastage.files',{projectId:$stateParams.projectId, dir:$stateParams.dir})
+            $state.go('project.drive',{projectId:$stateParams.projectId, dir:$stateParams.dir})
         };
 
         var progress;

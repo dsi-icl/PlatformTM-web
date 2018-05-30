@@ -5,25 +5,25 @@
             <div class="ibox-title panel-header">
                 <h3>{{vm.title}}</h3>
             </div>
-            <div>
-                <uib-tabset class="models-list">
-                    <uib-tab>
-                        <uib-tab-heading>
-                            <p class="model-name">
-                                Human subjects
-                            </p>
-                            <p class="model-icon">
-                                <span class="flaticon-standing55"></span>
-                                <dc-count-widget
-                                        xfilter-service="{{vm.chartingOpts.xfilterService}}"
-                                        chart-service="{{vm.chartingOpts.DCchartService}}"
-                                        module="{{vm.chartingOpts.chartGroup}}">
-                                </dc-count-widget>
-                            </p>
-
-                        </uib-tab-heading>
+            <div class="ibox-content">
+                <!--<uib-tabset class="models-list">-->
+                    <!--<uib-tab>-->
+                        <!--<uib-tab-heading>-->
+                            <!--<p class="model-name">-->
+                                <!--Human subjects-->
+                            <!--</p>-->
+                            <!--<p class="model-icon">-->
+                                <!--<span class="flaticon-standing55"></span>-->
+                                <!--<dc-count-widget-->
+                                        <!--xfilter-service="{{vm.chartingOpts.xfilterService}}"-->
+                                        <!--chart-service="{{vm.chartingOpts.DCchartService}}"-->
+                                        <!--module="{{vm.chartingOpts.chartGroup}}">-->
+                                <!--</dc-count-widget>-->
+                            <!--</p>-->
+<!---->
+                        <!--</uib-tab-heading>-->
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 m-t-md m-b-md">
                                 <div style=" max-height: 395px;overflow: scroll;">
                                     <h3 class="m-md">Design Elements</h3>
                                     <div class="clinical-tree">
@@ -79,14 +79,14 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <div class="ibox-title">
-                                    <div class="pull-right">
-                                        <div class="btn-group">
-                                            <label class="btn btn-xs btn-white" ng-model="show" uib-btn-radio="'plots'">Data Plots</label>
-                                            <label class="btn btn-xs btn-white" ng-model="show" uib-btn-radio="'table'">Data Table</label>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!--<div class="ibox-title">-->
+                                    <!--<div class="pull-right">-->
+                                        <!--<div class="btn-group">-->
+                                            <!--<label class="btn btn-xs btn-white" ng-model="show" uib-btn-radio="'plots'">Data Plots</label>-->
+                                            <!--<label class="btn btn-xs btn-white" ng-model="show" uib-btn-radio="'table'">Data Table</label>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
                                 <div class="ibox-content">
                                     <div class="anchor">
@@ -102,7 +102,7 @@
                                                         </span>
                                                     </h1>
                                                     <div id="{{req.chartId}}" class="chart" ng-switch="req.dataType">
-                                                        <dc-time-chart ng-switch-when="dateTime" charting-opts="vm.chartingOpts" obs="req"></dc-time-chart>
+                                                        <dc-time-chart ng-switch-when="dateTime" charting-opts="vm.chartingOpts" obs="req" on-filtered="expVM.onFiltered(obsId,module,filters,filter)"></dc-time-chart>
                                                         <dc-chart ng-switch-default charting-opts="vm.chartingOpts"
                                                                   obs="req"
                                                                   module="vm.chartingOpts.chartGroup"
@@ -137,10 +137,10 @@
 
                             </div>
                         </div>
-                    </uib-tab>
+                    <!--</uib-tab>-->
 
 
-                    <uib-tab>
+                    <!--<uib-tab>
                         <uib-tab-heading>
                             <p class="model-name">
                                 Animal subjects
@@ -156,8 +156,8 @@
                         </div>
 
                         <div class="clearfix"></div>
-                    </uib-tab>
-                    <uib-tab>
+                    </uib-tab>-->
+                    <!--<uib-tab>
                         <uib-tab-heading>
                             <p class="model-name">
                                 Cell Line Cultures
@@ -169,8 +169,8 @@
 
                         </uib-tab-heading>
                         <div class="alert alert-info">&nbsp;No Cell lines</div>
-                    </uib-tab>
-                </uib-tabset>
+                    </uib-tab>-->
+                <!--</uib-tabset>-->
             </div>
         </div>
     </div>

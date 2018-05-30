@@ -9,6 +9,8 @@ function ClinicalXF(clinicalDataService,$q){
         subjectColumnName = "subjectId",
         visitColumnName = "visit";
 
+    var subjectDimension;
+
     var XFserviceName = 'ClinicalCf'
     var IsSubjectFiltered = false;
 
@@ -17,12 +19,13 @@ function ClinicalXF(clinicalDataService,$q){
         timeGroups = [],
         timeDimension;
 
-    var xfilter = {} //"findings":xf, "events":xf
+    var xfilter;// = {} //"findings":xf, "events":xf
 
     var findingsXfilter,
         eventsXfilter,
         findingsColumns,
-        eventsColumns;
+        eventsColumns,
+        keys;
 
     var activeFilters = [];
 
@@ -36,13 +39,12 @@ function ClinicalXF(clinicalDataService,$q){
 
     cfservice.formatData = function(data, requestedObsvs){
         // format our data
-        var dateTimeFormat = d3.time.format('%Y-%m-%dT%H:%M').parse;
-        var dateFormat = d3.time.format('%Y-%m-%d').parse;
+        var dateTimeFormat = d3.timeFormat('%Y-%m-%dT%H:%M').parse;
+        var dateFormat = d3.timeFormat('%Y-%m-%d').parse;
 
         data.forEach(function(d) {
 
             requestedObsvs.forEach(function(o){
-                // console.log(o.id); console.log(o.dataType)
                 if(o.dataType === "dateTime"){
                     var date = dateTimeFormat(d[o.name]);
                     if(date === null){
@@ -53,42 +55,21 @@ function ClinicalXF(clinicalDataService,$q){
                 else if(o.dataType === "string"){
                     if(d[o.name] === null) d[o.name] = ""
                 }else {
-                    //console.log(o.id,' is numeric')
-                    if(d[o.name] !== null) d[o.name] = +d[o.name];
+                    // console.log(d[o.name])
+                    // if()
+                    // if(d[o.name] !== null) d[o.name] = d[o.name].map(function(el){ return +el;});
+                    // if(d[o.name] === "" || d[o.name] === null) d[o.name]=0;
+                    //if(d[o.name] !== null) d[o.name] = +d[o.name]
+                    //.map(function(el){ return +el;});
+                    if(d[o.name]!=null && d[o.name]!=="" && o.isFinding)
+                     d[o.name] = d[o.name].map(function(el){ return +el;});
                 }
-
             })
         });
     };
 
     cfservice.generateXf = function(data,columns,isFindings){
 
-        function reduceAdd(key) {
-            //console.log(key)
-            return function(p, v){
-                //console.log('p is ',p)
-                //console.log('v of ',key,' is', v)
-
-                if(v[key] === null && p === null){
-                    console.log("here")
-                    return null;
-                }
-                //p += v[key];
-                //return p;
-                return p + 1;
-            }
-        }
-        function reduceRemove(key) {
-            return function(p, v){
-                if(v[key] === null && p === null){ return null; }
-                //p -= v[key];
-                //return p;
-                return p - 1;
-            }
-        }
-        function reduceInit(key) {
-            return null;
-        }
         //TODO: return if data is null
         xfilter = crossfilter(data)
 
@@ -99,7 +80,8 @@ function ClinicalXF(clinicalDataService,$q){
             /**
              * Creating histogram count groups
              */
-            var dim = xfilter.dimension(function (d) {return d[obs]});
+            //var dim = xfilter.dimension(function (d) {return d[obs]});
+             var dim = xfilter.dimension(function (d) {return d[obs] ? d[obs] : 0;},true);
             dimensions[obs] = dim
             var grp = dim.group();
 
@@ -108,7 +90,7 @@ function ClinicalXF(clinicalDataService,$q){
 
 
             var reducer = reductio()
-                .filter(function(d) { return  d[obs] !=  "x"})
+                .filter(function(d) { return  d[obs] !==  "x"})
                 .count(true);
             grp = reducer(grp);
             groups[obs] = grp;
@@ -209,34 +191,37 @@ function ClinicalXF(clinicalDataService,$q){
                 /**
                  * Format to data types
                  */
-                cfservice.formatData(data.findingsTbl, requestedObsvs);
-                cfservice.formatData(data.eventsTbl, requestedObsvs);
+                //cfservice.formatData(data.findingsTbl, requestedObsvs);
+                //cfservice.formatData(data.eventsTbl, requestedObsvs);
+                cfservice.formatData(data.data, requestedObsvs);
 
                 /**
                  * Get table headers
                  */
-                findingsColumns = data.findingsTblHeader;
-                eventsColumns = data.eventsTblHeader;
-                tableHeaders['findings'] = findingsColumns;
-                tableHeaders['events'] = eventsColumns;
-
+                // findingsColumns = data.findingsTblHeader;
+                // eventsColumns = data.eventsTblHeader;
+                // tableHeaders['findings'] = findingsColumns;
+                // tableHeaders['events'] = eventsColumns;
+                keys = data.keys
 
                 /**
                  * Generate Xfilter(s)
                  */
-                findingsXfilter = cfservice.generateXf(data.findingsTbl,findingsColumns,true);
-                eventsXfilter = cfservice.generateXf(data.eventsTbl,eventsColumns,false);
+                //findingsXfilter = cfservice.generateXf(data.findingsTbl,findingsColumns,true);
+                //eventsXfilter = cfservice.generateXf(data.eventsTbl,eventsColumns,false);
+                xfilter = cfservice.generateXf(data.data,keys);
 
 
-                tableDimensions['findings'] = findingsXfilter.dimension(function(d) {return d[subjectColumnName]});
-                tableDimensions['events'] = eventsXfilter.dimension(function(d) {return d[subjectColumnName]});
+                //tableDimensions['findings'] = findingsXfilter.dimension(function(d) {return d[subjectColumnName]});
+                //tableDimensions['events'] = eventsXfilter.dimension(function(d) {return d[subjectColumnName]});
 
                 ////number of subject Observations
                 //allSubjObservationsGrp= cfData.groupAll()
 
                 //TODO: merge subject count for both events and findings xfilters
-                subjectDim['findings'] = findingsXfilter.dimension(function(d) {return d[subjectColumnName]});
-                subjectDim['events'] = eventsXfilter.dimension(function(d) {return d[subjectColumnName]});
+                //subjectDim['findings'] = findingsXfilter.dimension(function(d) {return d[subjectColumnName]});
+                //subjectDim['events'] = eventsXfilter.dimension(function(d) {return d[subjectColumnName]});
+                subjectDimension = xfilter.dimension(function(d) {return d[subjectColumnName]});
 
                 /*uniqueSubjGrp = subjectDim.groupAll().reduce(reduceAddSubj, reduceRemoveSubj, initialSubj)
                  uniqueSubjGrpM = {value: function() {
@@ -267,11 +252,13 @@ function ClinicalXF(clinicalDataService,$q){
     };
 
     cfservice.getCountData = function(){
-        return subjectDim.group()
+        return subjectDimension.group()
+        //return subjectDim['findings'].group()
     };
 
     cfservice.getCountGroup = function() {
-        return uniqueSubjGrpM
+        return subjectDimension.groupAll()
+        //return subjectDim['findings'].groupAll()
     };
 
     cfservice.hasDimension = function(dim){
@@ -312,35 +299,34 @@ function ClinicalXF(clinicalDataService,$q){
         return subjectColumnName
     }
 
-    cfservice.syncfilters = function(){
-        /*if (findingsColumns.indexOf(lastFilteredObs) > -1) {
-         var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
-
-         subjectDim['events'].filterFunction(function(d) { return findingsSubjIds.indexOf(d) > -1;})
-         } else if (eventsColumns.indexOf(lastFilteredObs) > -1) {
-         var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
-         subjectDim['findings'].filterFunction(function(d) { return eventsSubjIds.indexOf(d) > -1;})
-         }*/
+    // cfservice.syncFilters = function(filteredSubjectIds,dimName){
+    //     if (findingsColumns.indexOf(dimName) > -1) {
+    //         console.log('cascading to events')
+    //         subjectDim['events'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+    //     } else if (eventsColumns.indexOf(dimName) > -1) {
+    //         console.log('cascading to findings')
+    //         subjectDim['findings'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+    //     }
         //cfservice.resetSubjectFilter();
 
-        if(isEventsXFFiltered()){
-            var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
-            subjectDim['findings'].filterFunction(function(d) { return eventsSubjIds.indexOf(d) > -1;})
-        }
+        // if(isEventsXFFiltered()){
+        //     var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
+        //     subjectDim['findings'].filterFunction(function(d) { return eventsSubjIds.indexOf(d) > -1;})
+        // }
+        //
+        // if(isFindingsXFFiltered()){
+        //     var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
+        //     subjectDim['events'].filterFunction(function(d) { return findingsSubjIds.indexOf(d) > -1;})
+        // }
+    // }
 
-        if(isFindingsXFFiltered()){
-            var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
-            subjectDim['events'].filterFunction(function(d) { return findingsSubjIds.indexOf(d) > -1;})
-        }
-    }
+    // cfservice.getAllSubjFindingsGrp = function(){
+    //     return findingsXfilter.groupAll()
+    // }
 
-    cfservice.getAllSubjFindingsGrp = function(){
-        return findingsXfilter.groupAll()
-    }
-
-    cfservice.getAllSubjEventsGrp = function(){
-        return eventsXfilter.groupAll()
-    }
+    // cfservice.getAllSubjEventsGrp = function(){
+    //     return eventsXfilter.groupAll()
+    // }
 
     cfservice.cfReady = function(){
         return cfReady;
@@ -355,23 +341,26 @@ function ClinicalXF(clinicalDataService,$q){
         return XFserviceName;
     }
 
-
     cfservice.filterBySubjects = function(filteredSubjectIds){
 
-        if(!angular.isUndefined(tableDimensions['findings'])){
-            subjectDim['findings'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-            subjectDim['events'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-            IsSubjectFiltered = true;
+        // if(!angular.isUndefined(tableDimensions['findings'])){
+        //     subjectDim['findings'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+        //     subjectDim['events'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+        //     IsSubjectFiltered = true;
+        // }
+        if(subjectDimension != null){
+            subjectDimension.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
+            dc.redrawAll("clinical");
         }
-        dc.redrawAll("clinical");
+
     };
 
     cfservice.getCurrentSubjectIds = function(){
         if(!cfReady)
             return;
-        var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
+        return ($.map(subjectDimension.top(Infinity), function(d) {return d.subjectId }))
+        /*var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
         var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
-
         var filteredSubjectIds = [];
 
         if(findingsSubjIds.length !== 0 && eventsSubjIds.length !==0){
@@ -379,7 +368,6 @@ function ClinicalXF(clinicalDataService,$q){
             filteredSubjectIds = filteredSubjectIds.filter(function(n){
                 return eventsSubjIds.indexOf(n) !== -1
             });
-            //console.log(filteredSubjectIds);
         }else{
             findingsSubjIds.forEach(function (id) {
                 if (filteredSubjectIds.indexOf(id) === -1)
@@ -389,15 +377,17 @@ function ClinicalXF(clinicalDataService,$q){
                 if (filteredSubjectIds.indexOf(id) === -1)
                     filteredSubjectIds.push(id);
             });
-        }
+        }*/
 
-        return filteredSubjectIds;
+        //console.log(findingsSubjIds.length, filteredSubjectIds.length)
+        //return filteredSubjectIds;
     }
 
     cfservice.resetSubjectFilter = function(){
 
-        if(subjectDim['findings']) subjectDim['findings'].filter(null);
-        if(subjectDim['events']) subjectDim['events'].filter(null);
+        //if(subjectDim['findings']) subjectDim['findings'].filter(null);
+        //if(subjectDim['events']) subjectDim['events'].filter(null);
+        if(subjectDimension) subjectDimension.filter(null);
         dc.redrawAll("clinical");
     }
 
@@ -406,8 +396,9 @@ function ClinicalXF(clinicalDataService,$q){
             dimensions[key].filter(null);
         };
 
-        if(subjectDim['findings'])subjectDim['findings'].filter(null);
-        if(subjectDim['events'])subjectDim['events'].filter(null);
+        //if(subjectDim['findings'])subjectDim['findings'].filter(null);
+        //if(subjectDim['events'])subjectDim['events'].filter(null);
+        if(subjectDimension) subjectDimension.filter(null);
         IsSubjectFiltered = false;
 
         dc.redrawAll("clinical");
@@ -416,20 +407,24 @@ function ClinicalXF(clinicalDataService,$q){
     cfservice.init = function () {
         dimensions = [];
         groups = [];
-        subjectDim['findings']=null;
-        subjectDim['events'] = null;
+        //subjectDim['findings']=null;
+        //subjectDim['events'] = null;
+        subjectDimension = null;
         cfReady = false;
+        keys=null;
+        //findingsColumns = null;
+        //eventsColumns = null;
     };
 
-    cfservice.addToActiveFilters = function (filter) {
-        activeFilters.push(filter);
-    };
-    cfservice.XFisFiltered = function () {
-        return activeFilters.length > 0;
-    };
-    cfservice.removeFilter = function (filter) {
-
-    };
+    // cfservice.addToActiveFilters = function (filter) {
+    //     activeFilters.push(filter);
+    // };
+    // cfservice.XFisFiltered = function () {
+    //     return activeFilters.length > 0;
+    // };
+    // cfservice.removeFilter = function (filter) {
+    //
+    // };
 
     return cfservice
 }

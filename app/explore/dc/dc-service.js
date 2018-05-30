@@ -68,7 +68,7 @@ angular.module('biospeak.dcPlots')
                     cfGroup = xfilterService.getGroup(obsId, chartGroup)
                 }
 
-                if (cfGroup.all().length === 1 && cfGroup.all()[0].key === "(Blanks)")
+                if ((cfGroup.all().length === 1 && cfGroup.all()[0].key === "(Blanks)") || cfGroup.all().length === 0 )
                     return null;
 
                 //console.debug("=======2=CREATING ",chartDataType," CHART for ",obsId, " dataype:",dataType);
@@ -86,6 +86,10 @@ angular.module('biospeak.dcPlots')
                 chart.chartName = obsId + "_" + chartDataType+"_"+chartGroup;
 
 
+                if(dataType === 'ordinal'){
+                    console.log('ordering');
+                    chart.ordering(function(d) { return +d.key; })
+                }
                 //CACHING
                 //Initialize Map if isn't
                 //if (!_obsToChartIdMap[chartGroup]) {
@@ -307,26 +311,27 @@ angular.module('biospeak.dcPlots')
 
             var _getMinimumValue = function (dimension, val) {
                 var orderedVals = dimension.bottom(Infinity)
-                //console.log(orderedVals)
+
                 var i = 0;
-                while (orderedVals[i][val] == null || orderedVals[i][val] == "") {
+                while (orderedVals[i][val] == null || orderedVals[i][val] === "") {
                     i++;
                 }
                 //console.log(orderedVals[i][val])
                 return orderedVals[i][val]
             };
 
+            var _getMaximumValue = function (dimension, val) {
+                var orderedVals = dimension.top(Infinity)
+
+
+            }
+
             var _getChartOptions = function (val, cfDimension, cfGroup, chartDataType, dataType) {
 
                 var chartType,
                     chartOptions = {};
 
-                //console.log("Data type is", dataType, val)
-
-
-                //if(val == 'sysbp') requiresBoxplot = true;
-                if (chartDataType == 'GroupedByTime') {
-                    //  console.log("doing boxplot")
+                if (chartDataType === 'GroupedByTime') {
                     chartType = "boxPlot"
                     chartOptions["width"] = 384 //768////
                     chartOptions["height"] = 240 //480////
@@ -337,22 +342,22 @@ angular.module('biospeak.dcPlots')
                     //chartOptions["boxPadding"] = "0.9"
                     //.dimension(cfDimension)
                     //.group(cfGroup)
-
                 }
 
                 else if (dataType === 'dateTime') {
-                    //console.log('making a time chart')
                     chartType = "barChart";
-                    //chartOptions["width"] = "2000";
                     var maxDate = cfDimension.top(1)[0][val]
                     var minDate = _getMinimumValue(cfDimension, val)
+
+
 
                     //console.log(maxDate,minDate);
                     //chartOptions["margins"] = {top: 10, right: 20, bottom: 30, left: 30}
 
                     chartOptions["x"] = d3.time.scale().domain([minDate, maxDate]);
 
-                    chartOptions["xUnits"] = d3.time.minutes
+                    chartOptions["xUnits"] = d3.time.minutes;
+                    chartOptions["elasticX"] = false;
                     //chartOptions["round"] = (d3.time.month.round)
                     //chartOptions["yUnits"] = d3.time.days;
                     //chartOptions["renderArea"] = true
@@ -366,17 +371,13 @@ angular.module('biospeak.dcPlots')
                 else if (dataType === 'ordinal' || dataType === 'integer') {
 
                     chartType = "barChart";
-                    chartOptions["x"] = d3.scale.ordinal();
+                    chartOptions["x"] = d3.scaleOrdinal();
                     chartOptions["xUnits"] = dc.units.ordinal;
-                    //   .brushOn(false)
-                    //   .xAxisLabel('Fruit')
-                    //   .yAxisLabel('Quantity Sold')
-                    //   .dimension(fruitDimension)
-                    chartOptions["barPadding"] = 0.1;
-                    chartOptions["outerPadding"] = 0.05;
-                    chartOptions["yAxisLabel"] = "Frequency"
+                    //chartOptions["barPadding"] = 0.1;
+                    //chartOptions["outerPadding"] = 0.5;
+                    //chartOptions["centerBar"] = true;
+                    chartOptions["yAxisLabel"] = "Frequency";
                     chartOptions["xAxisLabel"] = val
-                    //   .group(sumGroup);
                 }
                 //else if(isNaN(cfGroup.all()[0].key)){
                 else if (dataType === "string") {
@@ -386,16 +387,11 @@ angular.module('biospeak.dcPlots')
 
                     var noOfGroups = cfGroup.size();
 
-                    //console.log('number of groups',noOfGroups)
-                    //console.log('groups',cfGroup.all())
-                    //console.log('dimensions groupall',cfDimension.groupAll().value())
-                    //console.log('dimensions top',cfDimension.top(Infinity))
-
-                    if (noOfGroups > 3) {
+                    if (noOfGroups > 1) {
                         //console.log("Plotting a DC row chart ")
                         chartType = "rowChart"
                         chartOptions["elasticX"] = "true"
-                        chartOptions["xAxis"] = {"ticks": "4"}
+                        //chartOptions["xAxis"] = {"ticks": "4"}
                         chartOptions["width"] = "300"
                         chartOptions["height"] = noOfGroups * 30 + 20
                         //var chartHeight = "180"
@@ -417,27 +413,40 @@ angular.module('biospeak.dcPlots')
                         //chartOptions["slicesCap"] = "4"
                     }
                 }
-
-
                 else {
                     //console.log("Plotting a DC bar chart")
                     //numeric bar chart
+                    var minValue,maxValue;
                     //console.log(cfDimension.top(1)); console.log(cfGroup.all()[0].value)
-                    maxValue = parseFloat(cfDimension.top(1)[0][val])
-                    minValue = parseFloat(_getMinimumValue(cfDimension, val));
+                    //maxValue = parseFloat(cfDimension.top(1)[0][val])
+                    //minValue = parseFloat(_getMinimumValue(cfDimension, val));
+
+                    //console.log(cfDimension.bottom(Infinity))
+                    //console.log('max ',maxValue)
+                    //console.log('min ',minValue)
+                    //console.log(cfDimension.top(1)[0])
+
+                    if(angular.isArray(cfDimension.top(1)[0][val]))
+                        maxValue = Math.max.apply(null,cfDimension.top(1)[0][val])
+                    else
+                        maxValue = parseFloat(cfDimension.top(1)[0][val])
+
+                    if(angular.isArray(cfDimension.bottom(1)[0][val]))
+                        minValue = Math.min.apply(null,cfDimension.bottom(1)[0][val])
+                    else
+                        minValue = parseFloat(_getMinimumValue(cfDimension, val));
+
+                    //console.log(cfGroup.top(1))
 
                     //var minTail = parseInt(minValue/4)
                     //var maxTail = parseInt(maxValue/4)
 
-                    var offset = (maxValue - minValue ) / 10.0
+                    var offset = (maxValue - minValue ) % 10.0
 
                     //console.log('offset',offset, 'min before',minValue,'max before', maxValue)
                     maxValue = maxValue + offset;
                     minValue = minValue - offset;
 
-                    //minValue = cfDimension.bottom(1)[0][val]
-                    //console.log('max ',maxValue)
-                    //console.log('min ',minValue)
 
                     chartType = "barChart";
                     chartOptions["transitionDuration"] = "500"
@@ -445,11 +454,12 @@ angular.module('biospeak.dcPlots')
                     chartOptions["gap"] = "20"
                     chartOptions["xAxisMin"] = minValue
                     chartOptions["xAxisMax"] = maxValue
-                    chartOptions["x"] = d3.scale.linear().domain([minValue, maxValue])
+                    chartOptions["x"] = d3.scaleLinear().domain([minValue, maxValue])
                     //chartOptions["elasticX"] = "true"
                     chartOptions["elasticY"] = "true"
                     //chartOptions["elasticX"] = "true"
                     chartOptions["height"] = "320";
+                    chartOptions["yAxis","tickFormat"] = d3.format("d");
 
                     chartOptions["width"] = "310"
                     chartOptions["renderArea"] = true;

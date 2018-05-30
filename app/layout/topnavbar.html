@@ -1,13 +1,15 @@
 <div class="row border-bottom">
 
     <nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-        <h4 class="logo" style="margin-bottom: 0px;margin-top: 0px;padding-top: 20px;">
-            <a ui-sref="home.dashboard" >
-                <span style="font-family: Questrial;color: #fcfdff;font-size: 1.7em;border-top-style: solid;border-top-width: 3px;border-top-color: #23c6c8;">Platform<span style="color: #ff9a02;">TM</span></span>
-            </a>
-        </h4>
+
         <div class="navbar-header">
-            <!--<span minimaliza-sidebar></span>-->
+
+            <span minimaliza-sidebar></span>
+            <h4 class="logo" style="margin-bottom: 0px;margin-top: 0px;padding-top: 20px;">
+                <a ui-sref="home.dashboard" >
+                    <span style="font-family: Questrial;color: #fcfdff;font-size: 1.7em;border-top-style: solid;border-top-width: 3px;border-top-color: #23c6c8;">Platform<span style="color: #ff9a02;">TM</span></span>
+                </a>
+            </h4>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li><a href="#">Logged in as <span class="username"> {{currentUser.username.toLowerCase()}}</span></a></li>

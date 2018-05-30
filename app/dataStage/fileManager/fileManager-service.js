@@ -12,17 +12,17 @@
         var DTdata;
         var fileName;
 
-        var _getDirContent = function (projectId,dir) {
-            console.log(!dir)
+        var _getDirContent = function (projectId,dirId) {
+            //console.log(!dir)
             //if(!dir) dir="top"
 
-            dir = dir.replace("/","_")
+            //dir = dir.replace("/","_")
 
 
 
-            console.log(window.encodeURIComponent(serviceBase + 'files/project/'+projectId+'/uploadedFiles/'+dir));
+            //console.log(window.encodeURIComponent(serviceBase + 'files/project/'+projectId+'/uploadedFiles/'+dir));
             return $http({
-                url: serviceBase + 'files/projects/'+projectId+'/uploadedFiles/'+dir,
+                url: serviceBase + 'files/projects/'+projectId+'/uploadedFiles/'+dirId,
                 method: 'GET'
             }).then(
                 function (response) {
@@ -72,8 +72,6 @@
         };
 
         var _createDirectory= function (projectId,dirname) {
-            console.log('inside service',dirname)
-
             return $http({
                 url: serviceBase + 'files/projects/'+projectId+'/createdir/',
                 method: 'POST',

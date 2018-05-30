@@ -555,7 +555,7 @@ nav a {
     font-weight: 400
 }
 .models-list .model-name{
-    font-size: 1.5em;
+    font-size: 1.2em;
     text-transform: uppercase;
     color: #eee;
 }
@@ -700,6 +700,7 @@ nav a {
     font-size: 0.7em;
     font-weight: bold;
     transform: rotate(-45deg);
+    padding-right: 5px;
 }
 
 .dc-chart .x-axis-label{
@@ -713,6 +714,13 @@ nav a {
     /*cursor: pointer;*/
     /*font-size: 0.8em;*/
     /*font-weight: bold;*/
+}
+
+.dc-chart g.row text {
+    fill: #000208;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .fa {
@@ -760,7 +768,8 @@ div .dc-chart{
     /*padding-left: 10px;*/
     /*float: right;*/
     /*display: none;*/
-    color: #d77329;
+    /*color: #d77329;*/
+    color:#ed5565;
     font-weight: 400;
 }
 
@@ -1393,7 +1402,8 @@ a.editable-click {
     font-size: 15px;
     padding: 10px;
     text-transform:uppercase;
-    color: #23c6c8;
+    color: #676a6c;
+    /*color:#23c6c8;*/
     font-weight:600;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1484,7 +1494,7 @@ a.editable-click {
 
 .dataset-list tbody {
     display:block;
-    height:385px;
+    /*height:385px;*/
     overflow:auto;
 }
 .dataset-list thead {
@@ -1501,6 +1511,24 @@ a.editable-click {
     text-align: inherit;
 }
 
+.dataset-list .dataset-preview{
+    padding: 15px 15px 10px 15px;
+    border-style: none;
+    background-color: #ffffff;
+    margin-bottom: 25px;
+}
+.dataset-preview > .pull-left {
+    margin-right: 15px;
+}
+
+.dataset-preview i{
+    color: #132634;
+    /*padding: 5px;*/
+}
+
+.dataset-preview a > i{
+    color: inherit;
+}
 div.login, div.signup {
      /*background: #23C6C8;*/
     background:#1c3146;
@@ -1543,4 +1571,91 @@ canvas {
     border: 1px solid #c3c3c3;
     height: 100px;
     margin: 6px 0 0 6px;
+}
+
+.project-nav{
+    /*border:1px solid #ccc;*/
+    /*border-width:1px 0;*/
+    /*list-style:none;*/
+    /*margin:0;*/
+    /*padding:0;*/
+    width: 100%;
+    text-align: center;
+}
+
+.project-nav li{
+    float: none;
+    display: inline-block;
+
+}
+
+.project-nav li.active{
+    float: none;
+    display: inline-block;
+    border: none;
+    background: none;
+    border-bottom: 4px solid #00bfcd;
+}
+.project-nav li a{
+    /*display:inline-block;*/
+    /*padding:10px;*/
+    color: #8695a5;
+    font-size: 1.5em;
+    text-transform: uppercase;
+}
+
+.md-skin .navbar-top-links li a{
+    color: #8695a5;
+    font-weight: 600;
+    padding-top: 30px;
+    padding-bottom: 0px;
+}
+
+.md-skin .navbar-top-links li a.active{
+    color: #ffffff;
+    font-weight: 600;
+    padding-top: 30px;
+    padding-bottom: 7px;
+    border-bottom: 0.5rem solid #23c6c8;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav {
+        width: 100%;
+        text-align: center;
+    }
+    .navbar-nav > li {
+        float: none;
+        display: inline-block;
+    }
+    .navbar-nav > li.navbar-right {
+        float: right !important;
+    }
+
+    .navbar {
+        min-height: 60px;
+    }
+}
+
+.myform .form-control, .single-line {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: none;
+    border-bottom: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+    font-size: 14px;
+}
+.project-list table tr td {
+    border-bottom: 1px solid #e7eaec;
+    padding: 5px 10px;
+}
+
+label{
+    color: #2e3f50;
+    font-size: 13px;
 }

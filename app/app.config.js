@@ -3,46 +3,38 @@
  */
 var biospeakApp = angular.module('biospeak.app')
 
-    .run(function($rootScope, AUTH_EVENTS, authService){
+    .run(function($rootScope, $location,$state, AUTH_EVENTS, authService){
 
-        $rootScope.$on('$stateChangeStart', function (event, next) {
+        $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
+            $location.path('/login');
+        });
 
-            // var authorizedRoles = next.data.authorizedRoles;
+        $rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
+            $state.go('home.unauthorized');
+        });
 
-            /*if (!authService.isAuthorized(authorizedRoles)) {
+        $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
+
+
+
+            if (!authService.checkPermissionForView(next,toParams)){
                 event.preventDefault();
-                if (authService.isAuthenticated()) {
-                    // user is not allowed
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                } else {
-                    // user is not logged in
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-                }
-            }*/
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+            }//else
+                //console.log('OK to proceed')
         });
 
-        /**
-         * ROUTE CHANGE: START
-         * Triggered when a route change is initiated
-         */
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-
-            // Show curtain loader
-            $rootScope.$broadcast('curtain', true);
-
-
-            /**
-             * CHECK:
-             * Check if user is authenticated
-             */
-
-
-        });
 
         $rootScope.$on('$stateChangeSuccess', function() {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         });
+
     });
+
+biospeakApp.config(function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(blob):/);
+
+})
 
 biospeakApp.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
@@ -60,10 +52,10 @@ biospeakApp.constant('USER_ROLES', {
 })
 
 biospeakApp.constant('ngAppConfig', {
-    apiServiceBaseUri: '/api/v1/'
+    //apiServiceBaseUri: '/api/v1/'
     //apiServiceBaseUri: 'http://146.169.32.103/api/v1/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
     //apiServiceBaseUri: 'http://146.169.15.65:2483/'
     //apiServiceBaseUri: 'http://localhost:2483/'
-    //apiServiceBaseUri: 'http://localhost:5000/'
+    apiServiceBaseUri: 'http://localhost:5000/'
 });

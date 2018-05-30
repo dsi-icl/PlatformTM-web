@@ -1,65 +1,88 @@
 /**
  * Created by iemam on 13/06/2016.
  */
-(function (angular) {
 
-    function sessionService($log){
+'use strict';
+function sessionService(localStorageService) {
 
-        // Instantiate data when service
-        // is loaded
-        //this._user = JSON.parse(localStorage.getItem('session.user'));
-        //this._accessToken = JSON.parse(localStorage.getItem('session.accessToken'));
+    var _userData = null;
+    var _accessToken;
+    // Instantiate data when service is loaded
+    _userData = localStorageService.get('ptmSession.userData');
+    _accessToken = localStorageService.get('ptmSession.accessToken');
+
+    var _roles = [];
+    var _claims = [];
 
 
-        this.create = function (token, userId, userName, userRole) {
+    this.create = function (userData, token, claims) {
+        console.log('Creating new user',userData)
+        this.setAccessToken(token);
+        this.setUser(userData,['can-manage-95','can-view-drive-95', 'can-load-95']);
 
-            this.token = token;
-            this.userId = userId;
-            this.userRole = userRole;
-            this.userName = userName
-        };
-        /*this.destroy = function () {
-            this.id = null;
-            this.userId = null;
-            this.userRole = null;
-        };*/
+        //this.setUserClaims(['admin']);
+    };
 
-        this.getUser = function(){
-            return this._user;
-        };
+    this.getAccessToken = function () {
+        var data = localStorageService.get('ptmSession.accessToken');
+        if (data != null)
+            return data.token;
+    };
 
-        this.setUser = function(user){
-            this._user = user;
-           // localStorage.setItem('session.user', JSON.stringify(user));
-            return this;
-        };
+    this.setAccessToken = function (token) {
+        localStorageService.set('ptmSession.accessToken', {token: token});
+    };
 
-        this.getAccessToken = function(){
-            return this._accessToken;
-        };
+    this.getUser = function () {
+        return _userData;
+    };
 
-        this.setAccessToken = function(token){
-            this._accessToken = token;
-         //   localStorage.setItem('session.accessToken', token);
-            return this;
-        };
+    this.setUser = function (userData,claims) {
+        _userData = {};
+        _userData.username = userData.username;
+        _userData.firstName = userData.firstName;
+        _userData.email = userData.name;
+        _userData.claims = claims;
+        localStorageService.set('ptmSession.userData', {data:_userData});
 
-        /**
-         * Destroy session
-         */
-        this.destroy = function destroy(){
-            this.setUser(null);
-            this.setAccessToken(null);
-        };
+        return _userData;
+    };
 
-    }
+    this.setUserClaims = function (claims) {
+        _userData.claims = claims;
+        localStorageService.set('ptmSession.userClaims', _userData);
+    };
 
-    // Inject dependencies
-    //sessionService.$inject = ['$log', 'localStorage'];
+    this.getUserClaims = function () {
+        _userData = localStorageService.get('ptmSession.userData');
+        if(_userData.data)
+            return _userData.data.claims;
+        return [];
+    };
 
-    // Export
-    angular
-        .module('bioSpeak.userAuth')
-        .service('userSession', sessionService);
+    this.getUsername = function () {
+        return _userData.userName;
+    };
 
-})(angular);
+    this.getUserEmail = function () {
+        return _userData.email
+    };
+
+    this.getFirstName = function () {
+        return _userData.firstName;
+    };
+
+    this.destroy = function destroy() {
+        localStorageService.remove('ptmSession.accessToken');
+        localStorageService.remove('ptmSession.userClaims');
+        localStorageService.remove('ptmSession.userData');
+        _userData = null;
+        _accessToken = null;
+    };
+}
+
+
+
+angular
+    .module('bioSpeak.userAuth')
+    .service('userSession',['localStorageService', sessionService]);

@@ -17,10 +17,12 @@ function ClinicalDataService($http,$q,ngAppConfig){
                     .then(
                     function (response) {
                         return {
-                            findingsTbl: (response.data.findingsTbl),
-                            eventsTbl: (response.data.eventsTbl),
-                            findingsTblHeader: (response.data.findingsTblHeader),
-                            eventsTblHeader: (response.data.eventsTblHeader)
+                            // findingsTbl: (response.data.findingsTbl),
+                            // eventsTbl: (response.data.eventsTbl),
+                            // findingsTblHeader: (response.data.findingsTblHeader),
+                            // eventsTblHeader: (response.data.eventsTblHeader)
+                            data: response.data.data,
+                            keys: response.data.keys
                         }
                     },
                     function (httpError) {

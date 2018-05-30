@@ -2,13 +2,13 @@
     function uploadController($scope,$state, $stateParams, FileUploader, $uibModalInstance, ngAppConfig, localStorageService){
 
         var serviceBase = ngAppConfig.apiServiceBaseUri;
-        var projectId = $stateParams.projectId
+        var projectId = $stateParams.projectId;
+        console.log($stateParams.dirId);
 
-
-        console.log(serviceBase+'files/projects/'+projectId+'/upload/'+$stateParams.dir)
+        //console.log(serviceBase+'files/projects/'+projectId+'/upload/'+$stateParams.dir)
 
         var uploader = $scope.uploader = new FileUploader({
-            url: serviceBase+'files/projects/'+projectId+'/upload/'+$stateParams.dir
+            url: serviceBase+'files/projects/'+projectId+'/upload/'+$stateParams.dirId
         });
         var authData = localStorageService.get('authorizationTFAData');
         if (authData) {
@@ -18,12 +18,12 @@
         $scope.ok = function () {
 
             $uibModalInstance.close();
-            $state.go('datastage.files',{dir:$stateParams.dir});
+            $state.go('project.drive',{dirId:$stateParams.dirId});
         };
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
-            $state.go('datastage.files',{dir:$stateParams.dir});
+            $state.go('project.drive',{dirId:$stateParams.dirId});
         };
 
         // FILTERS
@@ -75,7 +75,7 @@
             console.info('onCompleteAll');
         };
 
-        console.info('uploader', uploader);
+        // console.info('uploader', uploader);
     }
 
     angular.module('bioSpeak.DataStager')

@@ -19,19 +19,18 @@ function AssayXF(assayDataService,$q){
         XfilterAssayMap[assayId].xfReady = false;
     };
 
-
     cfservice.formatData = function(data, requestedObsvs){
-        var dateFormat = d3.time.format('%Y-%m-%dT%H:%M').parse
+        var dateFormat = d3.timeFormat('%Y-%m-%dT%H:%M').parse
         if(requestedObsvs)
             data.forEach(function(d) {
                 //console.log(d)
                 requestedObsvs.forEach(function(o){
                     //console.log(o.name); console.log(o.dataType)
-                    if(o.dataType == "dateTime"){
+                    if(o.dataType === "dateTime"){
                         //console.log(d)
                         d[o.name] = dateFormat(d[o.name]);
                         //console.log('2',d[o.name])
-                    }else if(o.dataType == "string"){
+                    }else if(o.dataType === "string" || o.dataType ==='ordinal'){
                         if(d[o.name] == null) d[o.name] = ""
                     }else {
                         //console.log(o.id,' is numeric')
@@ -92,7 +91,8 @@ function AssayXF(assayDataService,$q){
              * Create dimensions for each sample characterisitc
              */
             columns.forEach(function(sc){
-                //console.log(sc);
+                // console.log(sc);
+
                 /**
                  * Dimension
                  */
@@ -104,10 +104,33 @@ function AssayXF(assayDataService,$q){
                  * Group
                  */
                 var grp = dim.group();
+
+
+
+
+                // if(grp.all()[0].key === ""){
+                //     console.log('filtering blanks');
+                //     // grp.all()[0].key = "(Blanks)";
+                //     grp = remove_empty_bins(grp);
+                //     console.log(grp.all())
+                // }
+
+
+
+
                 var reducer = reductio()
                     .filter(function(d) { return  d[sc] !== "" })
                     .count(true);
-                reducer(grp);
+
+                // if(sc ==='day')
+                //     grp = remove_bins(grp)
+                //
+                // else
+                    reducer(grp);
+
+
+
+                // console.log(dim.groupAll().value());
                 //groups[sc] = grp;
                 XfilterAssayMap[assayId].groups[sc] = grp;
             })
@@ -132,9 +155,47 @@ function AssayXF(assayDataService,$q){
         return deferred.promise
     };
 
+    var remove_empty_bins  = function (source_group) {
+        return {
+            all:function () {
+                return source_group.all().filter(function(d) {
+                    //return Math.abs(d.value) > 0.00001; // if using floating-point numbers
+                    return d.value !== "" ; // if integers only
+                });
+            }
+        };
+    };
+
+    var remove_bins  = function (source_group) { // (source_group, bins...}
+        var bins = Array.prototype.slice.call(arguments, 1);
+        return {
+            all:function () {
+                return source_group.all().filter(function(d) {
+                    return bins.indexOf(d.key) !== "";
+                });
+            }
+        };
+    }
+
+    var sort_group = function (group, order) {
+        return {
+            all: function() {
+                var g = group.all(), map = {};
+
+                g.forEach(function(kv) {
+                    map[kv.key] = kv.value;
+                });
+                return order.map(function(k) {
+                    return {key: k, value: map[k]};
+                });
+            }
+        };
+    };
+
     /********************************************
      DC TABLE FUNCTIONS
      **/
+
     cfservice.getTableDimension = function(assayId){
         return XfilterAssayMap[assayId].subjectDim
     }
@@ -149,6 +210,7 @@ function AssayXF(assayDataService,$q){
     cfservice.getSubjectHeader = function(){
         return subjectColumnName
     }
+
     /*******************************************
      */
 

@@ -144,7 +144,7 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             vm.cField.expressionList = vm.expressionList
             console.log(vm.cField)
 
-            if(vm.cField.varType == 'DERIVED')
+            if(vm.cField.varType === 'DERIVED')
                 vm.cField.isComputed = true;
             vm.activity.datasets[0].variables.push(vm.cField)
             toaster.pop('success', "SUCCESS", vm.cField.name+" has been added to dataset template successfully.",8000);
@@ -329,12 +329,12 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
     };
 
     vm.saveActivity = function() {
-        if (vm.activity.name != null && vm.activity.name != ''){
+        if (vm.activity.name != null && vm.activity.name !== ''){
 
             if (vm.activity.isNew) {
                 vm.activity.$save(function (response) {
                     toaster.pop('success', "SUCCESS", vm.activity.name," was successfully CREATED.",8000);
-                    $state.transitionTo('admin.project', $stateParams, {
+                    $state.transitionTo('project.manager.main', $stateParams, {
                         reload: true,
                         inherit: false,
                         notify: true
@@ -344,7 +344,7 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             else {
                 vm.activity.$update(function (response) {
                     toaster.pop('success', "SUCCESS", vm.activity.name," was successfully UPDATED.",8000);
-                    $state.transitionTo('admin.project', $stateParams, {
+                    $state.transitionTo('project.manager.main', $stateParams, {
                         reload: true,
                         inherit: false,
                         notify: true
@@ -357,7 +357,7 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
 
     vm.dontSaveActivity = function(){
         vm.activity = {}
-        $state.go('admin.project',{
+        $state.go('project.manager.main',{
             projectId: vm.projectId}
         );
     }
@@ -410,7 +410,7 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
                     var pos;
                     for(var i=0; i< vm.activity.datasets.length;i++) {
                         console.log(i)
-                        if(vm.currDS.id == vm.activity.datasets[i].id){
+                        if(vm.currDS.id === vm.activity.datasets[i].id){
                             console.log(i, 'for',vm.currDS.name)
                             pos = i;
                             break;

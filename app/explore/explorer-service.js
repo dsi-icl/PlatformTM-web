@@ -147,20 +147,18 @@ function explorerService($http,ngAppConfig,$q) {
             filteredObs.filterText = dc.printers.filters(filters)
             filteredObs.isFiltered = false;
             deferred.resolve(currentCart)
+        }else{
+            console.debug('adding filter');
+            filteredObs.isFiltered = true;
+            filteredObs.filterText = dc.printers.filters(filters);
+            if(isRange){
+                filteredObs.filterRangeFrom = filters[0][0];
+                filteredObs.filterRangeTo = filters[0][1];
+            }
+            else
+                filteredObs.filterExactValues = filters;
+            deferred.resolve(currentCart)
         }
-
-        if(isRange){
-            filteredObs.filterRangeFrom = filters[0][0];
-            filteredObs.filterRangeTo = filters[0][1];
-        }
-        else
-            filteredObs.filterExactValues = filters;
-
-        filteredObs.isFiltered = true;
-        filteredObs.filterText = dc.printers.filters(filters);
-
-        deferred.resolve(currentCart)
-
         return deferred.promise;
     };
 
