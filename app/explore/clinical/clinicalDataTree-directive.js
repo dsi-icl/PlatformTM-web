@@ -85,28 +85,60 @@ angular.module('biospeak.explorer')
                         })
                 }
 
-                $scope.checkChanged = function(checked){
+                $scope.ungroup = function (grpNode) {
+
                     var multiObsList = $scope.group.selMultiObsGrps;
-                    var tempSelected = multiObsList.tempSelected;
-                    var selectedNode = $scope.group;
+                    var currSelected = multiObsList.currSelected;
+                    var groupedObservations = multiObsList.grpRequests
+                    console.log(grpNode);
 
-
-                    if(checked){
-                        console.log("adding node:",selectedNode.code);
-                        tempSelected.push(selectedNode);
+                    var pos;
+                    for(var i=0; i< groupedObservations.length;i++) {
+                        if(grpNode.defaultObservation.o3code === groupedObservations[i].defaultObservation.o3code){
+                            pos = i;
+                            break;
+                        }
                     }
-                    else{
-                        var pos;
-                        for(var i=0; i< tempSelected.length;i++) {
-                            if(selectedNode.code == tempSelected[i].code){
-                                pos = i;
+                    console.log('removing group',grpNode.defaultObservation.o3code, pos )
+                    groupedObservations.splice(pos,1);
+
+                    for(var i=0; i< grpNode.groupedObsNodes.length;i++) {
+                        for(var j=0; j< currSelected.length;j++) {
+
+                            if(currSelected[j].code === grpNode.groupedObsNodes[i].code){
+                                pos = j;
                                 break;
                             }
                         }
-                        console.log('removing node',selectedNode.code, pos )
-                        tempSelected.splice(pos,1);
+                        currSelected[j].isSelected = false;
+                        currSelected[j].isGrouped = false;
+                        currSelected[j].isLocked = false;
                     }
+
                 }
+
+                // $scope.checkChanged = function(checked){
+                //     var tempSelected = $scope.group.selMultiObsGrps.tempSelected;
+                //
+                //     var selectedNode = $scope.group;
+                //
+                //
+                //     if(checked){
+                //         console.log("adding node:",selectedNode.code);
+                //         tempSelected.push(selectedNode);
+                //     }
+                //     else{
+                //         var pos;
+                //         for(var i=0; i< tempSelected.length;i++) {
+                //             if(selectedNode.code === tempSelected[i].code){
+                //                 pos = i;
+                //                 break;
+                //             }
+                //         }
+                //         console.log('removing node',selectedNode.code, pos )
+                //         tempSelected.splice(pos,1);
+                //     }
+                // }
             },
             replace:true,
             template:
@@ -130,7 +162,7 @@ angular.module('biospeak.explorer')
 
                     /* checkbox */
                     '<div class="node-select" ng-if="group.isSelectable && !group.isLocked">'+
-                        '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" >' +
+                        '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" />' +
                     '</div>'+
 
                     /*Group control*/
@@ -141,7 +173,7 @@ angular.module('biospeak.explorer')
 
                     '<ul uib-collapse="group.isCollapsed" id="{{group.code}}"  class="list-group">'+
 
-                        '<li ng-if="group.isDomain" ng-show="group.selMultiObsGrps.grpRequests.length > 0" class="animated fadeIn">' +
+                        '<li ng-if="group.isDomain" ng-show="group.selMultiObsGrps.grpRequests.length > 0" >' +
                             '<div class="selectDiv">' +
                                 '<h4>Grouped Events</h4>'+
                                 '<ul>'+
@@ -159,6 +191,7 @@ angular.module('biospeak.explorer')
                                                  '<i class="material-icons">insert_chart</i>'+
                                              '</a>'+
                                         '</div>' +
+                                        '<div style="position:absolute; right:10px;top:0px;"><a ng-click="ungroup(grpNode)"><i class="fa fa-unlock-alt"></i></a>' +'</div>'+
                                         '<dc-chart-menu obs="grpNode.defaultObservation" quals= "grpNode.qualifiers" module="chartingOpts.chartGroup" on-select="localcallbck(obsReq,obsModule)" class="qualifier-menu">' +
                                         '</dc-chart-menu>'+
                                         '<ul>' +
@@ -233,6 +266,9 @@ angular.module('biospeak.explorer')
             // '</div>'+
 
            '<div ng-class="{selected: node.isSelected}">' +
+                    '<div class="node-select" ng-if="node.isSelectable && !group.isLocked">'+
+                    '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" />' +
+                        '</div>'+
                 '<div class="plotting-switch">'+
                     '<a  ng-hide="node.isSelected || node.isLocked" class="switchery"  ' +
                         'ng-init="node.defaultObservation.isActive = false" ' +
@@ -299,13 +335,36 @@ angular.module('biospeak.explorer')
         return {
             restrict: 'A',
             require: 'ngModel',
+            controller:function($scope){
+                $scope.checkChanged = function(checked){
+                    var tempSelected = $scope.group.selMultiObsGrps.tempSelected;
 
-            link: function($scope, element, $attrs, ngModel) {
+                    var selectedNode = $scope.group;
+
+
+                    if(checked){
+                        console.log("adding node:",selectedNode.code);
+                        tempSelected.push(selectedNode);
+                    }
+                    else{
+                        var pos;
+                        for(var i=0; i< tempSelected.length;i++) {
+                            if(selectedNode.code === tempSelected[i].code){
+                                pos = i;
+                                break;
+                            }
+                        }
+                        console.log('removing node',selectedNode.code, pos )
+                        tempSelected.splice(pos,1);
+                    }
+                }
+            },
+            link: function(scope, element, $attrs, ngModel) {
                 return $timeout(function() {
                     var value;
                     value = $attrs['value'];
 
-                    $scope.$watch($attrs['ngModel'], function(newValue){
+                    scope.$watch($attrs['ngModel'], function(newValue){
                         $(element).iCheck('update');
                     })
 
@@ -313,11 +372,11 @@ angular.module('biospeak.explorer')
                         checkboxClass: 'icheckbox_square-aero'
 
                     }).on('ifChanged', function(event) {
-                        $scope.$parent.checkChanged(event.target.checked)
+                        scope.checkChanged(event.target.checked)
 
                         //console.log("Im clicked",)
                         if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
-                            $scope.$apply(function() {
+                            scope.$apply(function() {
                                 return ngModel.$setViewValue(event.target.checked);
                             });
                         }
@@ -326,86 +385,6 @@ angular.module('biospeak.explorer')
             }
         };
     })
-
-    /**
-     * chartingButton requires obs.o3id, obs.isActive, obs.id
-     * cardId , chartId
-     * chartContainerId
-     * chartingOptions (chartService, xfService, chartGroup ...etc) only to pass to dc-chart directive
-     *
-     * o3 (Text to display as name for the observation
-     */
-    /*.directive('chartingButton', function($compile,cartService){
-        return {
-            restrict: 'EA',
-            scope:{
-                obs:'=',
-                chartingOpts:'=',
-                module:'=',
-                quals: '=',
-                onFiltered: '&'
-            },
-            link: function(scope, element){
-                element.bind("click", function(){
-                    //console.log(scope.obs,' CLICKED')
-
-                    var isActive = scope.obs.isActive === true;
-                    var chartId = (scope.obs.name+"_chart").replace(/ /g,'_');
-                    var cardId = (scope.obs.o3code+"_card").replace(/ /g,'_');
-
-                    console.log('plotting chart: ',chartId, ' in card:',cardId,' in container: ',scope.chartingOpts.chartContainerId, 'for module',scope.module);
-                    console.log(scope.onFiltered)
-
-                    if(isActive)
-                        cartService.addToCart(scope.obs, scope.module);
-                    else
-                        cartService.removeFromCart(scope.obs, scope.module);
-
-                    scope.$apply();
-
-
-                    if(!document.getElementById(cardId)){
-                        scope.$apply(function(){
-                            angular.element(document.getElementById(scope.chartingOpts.chartContainerId))
-                                .prepend(
-                                    $compile(
-                                        '<div class="cardlock" id="'+ cardId +'">'+
-                                        '<div class="card">'+
-                                        '<h1 class="border-bottom">{{obs.o3}}</h1>'+
-                                        '<dc-chart-menu obs="obs" quals="quals" charting-opts="chartingOpts"  module="module" class="qualifier-menu"></dc-chart-menu>'
-
-                                    )(scope)
-                                )
-                        })
-                    }
-
-                    if(!document.getElementById(chartId)){
-                        scope.$apply(function(){
-                            angular.element(document.getElementById(cardId).querySelector('div.card'))
-                                .append(
-                                    $compile(
-                                        '<div id="'+ chartId +'"class="chart" ng-switch="obs.dataType">' +
-                                        '<dc-time-chart ng-switch-when="dateTime" charting-opts="chartingOpts" obs="obs"></dc-time-chart>'+
-                                        '<dc-chart ng-switch-default charting-opts="chartingOpts" obs="obs" module="module" on-filtered="onFiltered"></dc-chart>'+
-                                        '</div>'
-                                    )(scope)
-                                )
-                        });
-                    }
-
-                    else{
-                        console.log("chart exists already")
-                        if(!isActive){
-                            console.log('Removing chart')
-                            angular.element(document.getElementById(cardId)).remove();
-                        }
-                    }
-                });
-
-
-            }
-        }
-    })*/
 
     .directive('dcChartMenu', function() {
         return {

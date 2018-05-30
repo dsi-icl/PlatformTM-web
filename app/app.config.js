@@ -56,6 +56,6 @@ biospeakApp.constant('ngAppConfig', {
     //apiServiceBaseUri: 'http://146.169.32.103/api/v1/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
     //apiServiceBaseUri: 'http://146.169.15.65:2483/'
-    //apiServiceBaseUri: 'http://localhost:2483/'
-    apiServiceBaseUri: 'http://localhost:5000/'
+    apiServiceBaseUri: 'http://localhost:2483/api/v1/'
+    //apiServiceBaseUri: 'http://localhost:5000/'
 });

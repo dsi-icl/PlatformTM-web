@@ -64,6 +64,9 @@
                                         <div class="p-w-xs">
                                             <span ng-if="sc.isFiltered"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
                                     </li>
+                                    <li ng-if="vm.cart.subjCharRequests.length == 0">
+                                        <span style="font-style: italic">None selected</span>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
@@ -76,11 +79,9 @@
                                 <ul style="padding: 5px;list-style: none;">
                                     <li ng-repeat="obs in vm.cart.obsRequests">
                                         <span>{{obs.name}}</span> <div class="p-w-xs"><span ng-if="obs.isFiltered"><i class="fa fa-filter"></i></span> {{obs.filterText}}</div>
-                                        <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                                     </li>
                                     <li ng-repeat="grpobs in vm.cart.groupedObservations">
                                         <span>{{grpobs.name}}</span> <div class="p-w-xs"><span ng-if="grpobs.isFiltered"><i class="fa fa-filter"></i></span> {{grpobs.filterText}}</div>
-                                        <!--<a class="pull-right" ng-click="vm.removeFilter('clinical',key)"><i class="fa fa-times"></i></a>-->
                                     </li>
                                     <li ng-if="vm.cart.obsRequests.length == 0">
                                         <span style="font-style: italic">None selected</span>
@@ -169,12 +170,11 @@
                                             <a ng-hide="ds.fileStatus != 0" placeholder="Download" ng-click="vm.prepareDataset(ds)">
                                                 <i class="fa fa-download"></i>
                                             </a>
-                                            <span ng-show="ds.fileStatus == 1"><i class="fa fa-circle-o-notch fa-spin "></i></span>
+                                            <span ng-show="ds.fileStatus == 1"><i class="fa fa-circle-o-notch fa-spin "></i><small> Preparing...</small></span>
                                             <a  ng-show="ds.fileStatus == 2" ng-click=  vm.downloadDataset(ds)>
-                                                <i class="fa fa-check"></i><i class="fa fa-download"></i>
+                                                <i class="fa fa-check"></i><i class="fa fa-download"></i><small> File ready </small>
                                             </a>
                                             <span ng-show="ds.fileStatus == 3"><i class="fa fa-times-circle-o "></i>FAILED!</span>
-                                            <!--<a ng-if="ds.fileStatus == 3" class="btn btn-white btn-sm">FAILED! </a>-->
                                         </td>
                                     </tr>
                                     </tbody>
