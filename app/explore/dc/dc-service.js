@@ -397,6 +397,7 @@ angular.module('biospeak.dcPlots')
                         //var chartHeight = "180"
                         //chartOptions["fixedBarHeight"] = chartheight - (noOfGroups + 1) * gap / count
                         chartOptions["margins"] = {top: 10, right: 10, bottom: 20, left: 10}
+                        chartOptions["xAxis","tickFormat"] = d3.format("d");
                     }
                     else {
                         //console.log("making a pie chart ")

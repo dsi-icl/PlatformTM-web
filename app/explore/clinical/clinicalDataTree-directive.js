@@ -58,6 +58,8 @@ angular.module('biospeak.explorer')
                     var tempSelected = multiObsList.tempSelected;
                     var selectedObsRequests = [];
 
+                    console.log($scope.group);
+
                     tempSelected.forEach(function(node){
                         selectedObsRequests.push(node.defaultObservation)
                         currSelected.push(node);
@@ -71,7 +73,7 @@ angular.module('biospeak.explorer')
 
                             for(var i=0; i< obsGrpNode.groupedObsNodes.length;i++) {
                                 obsGrpNode.groupedObsNodes[i].isLocked = true;
-                                obsGrpNode.groupedObsNodes[i].isSelected = false
+                                //obsGrpNode.groupedObsNodes[i].isSelected = false
                             }
 
                             console.log(obsGrpNode);
@@ -79,41 +81,43 @@ angular.module('biospeak.explorer')
 
 
                             for(var i=0; i< currSelected.length;i++) {
-                                currSelected[i].isGrouped = true
+                                //currSelected[i].isGrouped = true
+                                currSelected[i].isSelected = false
+                                currSelected[i].isLocked = false;
                             }
                             multiObsList.tempSelected = [];
                         })
                 }
 
-                $scope.ungroup = function (grpNode) {
+                $scope.ungroup = function (grpObs) {
 
                     var multiObsList = $scope.group.selMultiObsGrps;
                     var currSelected = multiObsList.currSelected;
                     var groupedObservations = multiObsList.grpRequests
-                    console.log(grpNode);
+                    console.log(grpObs);
 
                     var pos;
                     for(var i=0; i< groupedObservations.length;i++) {
-                        if(grpNode.defaultObservation.o3code === groupedObservations[i].defaultObservation.o3code){
+                        if(grpObs.o3code === groupedObservations[i].defaultObservation.o3code){
                             pos = i;
                             break;
                         }
                     }
-                    console.log('removing group',grpNode.defaultObservation.o3code, pos )
+                    console.log('removing group',grpObs.o3code, pos )
                     groupedObservations.splice(pos,1);
 
-                    for(var i=0; i< grpNode.groupedObsNodes.length;i++) {
-                        for(var j=0; j< currSelected.length;j++) {
-
-                            if(currSelected[j].code === grpNode.groupedObsNodes[i].code){
-                                pos = j;
-                                break;
-                            }
-                        }
-                        currSelected[j].isSelected = false;
-                        currSelected[j].isGrouped = false;
-                        currSelected[j].isLocked = false;
-                    }
+                    // for(var i=0; i< grpNode.groupedObsNodes.length;i++) {
+                    //     for(var j=0; j< currSelected.length;j++) {
+                    //
+                    //         if(currSelected[j].code === grpNode.groupedObsNodes[i].code){
+                    //             pos = j;
+                    //             break;
+                    //         }
+                    //     }
+                    //     currSelected[j].isSelected = false;
+                    //     currSelected[j].isGrouped = false;
+                    //     currSelected[j].isLocked = false;
+                    // }
 
                 }
 
@@ -162,12 +166,12 @@ angular.module('biospeak.explorer')
 
                     /* checkbox */
                     '<div class="node-select" ng-if="group.isSelectable && !group.isLocked">'+
-                        '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" />' +
+                        '<input cl-select group="group" type="checkbox"  ng-model="group.isSelected" />' +
                     '</div>'+
 
                     /*Group control*/
                     '<span class="link-btn" ng-if="group.isDomain" ng-show="group.selMultiObsGrps.tempSelected.length>0" class="pull-right">' +
-                        '<a ng-click="groupObservations()" class="btn btn-xs btn-white"><i class="fa fa-link"></i>&nbsp;&nbsp;Group Selected Events</a>'+
+                        '<a ng-click="groupObservations()" class="btn btn-xs btn-info">Group</a>'+
                     '</span>'+
 
 
@@ -178,11 +182,26 @@ angular.module('biospeak.explorer')
                                 '<h4>Grouped Events</h4>'+
                                 '<ul>'+
                                     '<li style="margin-bottom: 15px;" ng-repeat="grpNode in group.selMultiObsGrps.grpRequests">' +
-                                        '<div class="grp-name">' +
-                                            '<span>{{grpNode.defaultObservation.o3}}</span>' +
-
+                                        /* > */
+                                        '<div class="node-toggle">' +
+                                        '<a style="outline:none;" class="btn btn-sm btn-outline btn-link " ' +
+                                        'ng-click="grpNode.isCollapsed = !grpNode.isCollapsed" ng-init="grpNode.isCollapsed = true"'+
+                                        'ng-class="{collapsed: grpNode.isCollapsed}">'+
+                                        '</a>'+
                                         '</div>'+
-                                        '<div style="position:absolute; right:5px;top:0px;">' +
+
+                                        /* text */
+                                        '<div class="list-item"  ' +
+                                        //'ng-class="{group: group.isSelectable, selected: group.isSelected, locked:group.isLocked}"' +
+                                        //'ng-class="{selected: group.isSelected}"' +
+                                        'uib-tooltip="{{grpNode.name}} ({{grpNode.count}})">' +
+                                        '<span class="list-item-text">{{grpNode.defaultObservation.o3}}</span>' +
+                                        '</div>'+
+                                        // '<div class="grp-name">' +
+                                        //     '<span>{{grpNode.defaultObservation.o3}}</span>' +
+                                        //
+                                        // '</div>'+
+                                        '<div style="position:absolute; right:15px;top:-10px;">' +
                                              '<a class="switchery"' +
                                                  'obs="grpNode.defaultObservation" module="\'clinical\'"  charting-opts="chartingOpts" quals="grpNode.qualifiers"' +
                                                  'ng-init="grpNode.defaultObservation.isActive = false" ' +
@@ -191,10 +210,10 @@ angular.module('biospeak.explorer')
                                                  '<i class="material-icons">insert_chart</i>'+
                                              '</a>'+
                                         '</div>' +
-                                        '<div style="position:absolute; right:10px;top:0px;"><a ng-click="ungroup(grpNode)"><i class="fa fa-unlock-alt"></i></a>' +'</div>'+
-                                        '<dc-chart-menu obs="grpNode.defaultObservation" quals= "grpNode.qualifiers" module="chartingOpts.chartGroup" on-select="localcallbck(obsReq,obsModule)" class="qualifier-menu">' +
+                                        // '<div style="position:absolute; right:10px;top:0px;"><a ng-click="ungroup(grpNode)"><i class="fa fa-unlock-alt"></i></a>' +'</div>'+
+                                        '<dc-chart-menu obs="grpNode.defaultObservation" quals= "grpNode.qualifiers" module="chartingOpts.chartGroup" on-select="localcallbck(obsReq,obsModule)" remove-fn="ungroup(grpObs)" class="qualifier-menu">' +
                                         '</dc-chart-menu>'+
-                                        '<ul>' +
+                                        '<ul uib-collapse="grpNode.isCollapsed" id="{{grpNode.code}}"  class="list-group">' +
                                             '<li cl-tree-obs class="list-item" ng-repeat="obsNode in grpNode.groupedObsNodes" node="obsNode" charting-opts="chartingOpts" ></li>'+
                                         '</ul>'+
                                     '</li>'+
@@ -202,7 +221,7 @@ angular.module('biospeak.explorer')
                             '</div>' +
                         '</li>'+
 
-                        '<li cl-tree-obs class="list-item" ng-repeat="node in group.terms " sels="group.selMultiObsGrps"  node="node" charting-opts="chartingOpts" callbck="localcallbck(obsReq,obsModule)"></li>'+
+                        '<li cl-tree-obs class="list-item" ng-class="{selected: node.isSelected}" ng-repeat="node in group.terms " sels="group.selMultiObsGrps"  node="node" charting-opts="chartingOpts" callbck="localcallbck(obsReq,obsModule)"></li>'+
                     '</ul>'+
                 '</li>',
             link: function (scope, element, attrs) {
@@ -213,7 +232,7 @@ angular.module('biospeak.explorer')
                                 group.isSelected = true//scope.group.isSelected;
                                 if(group.defaultObservation){
                                     group.defaultObservation.isSelected = true
-                                    group.defaultObservation.isActive = true
+                                    //group.defaultObservation.isActive = true
                                 }
                             })
                         //}
@@ -224,7 +243,7 @@ angular.module('biospeak.explorer')
                                 group.isSelected = false;
                                 if(group.defaultObservation){
                                     group.defaultObservation.isSelected = false
-                                    group.defaultObservation.isActive = false
+                                    //group.defaultObservation.isActive = false
                                 }
                             })
                         }
@@ -245,11 +264,10 @@ angular.module('biospeak.explorer')
     .directive('clTreeObs',function($compile){
         return{
             restrict:'EA',
-            replace:true,
+           // replace:true,
             scope:{
                 chartingOpts:'=',
-                node:'='/*,
-                search:'='*/,
+                node:'=',
                 sels:'=',
                 callbck:'&'
             },
@@ -258,30 +276,24 @@ angular.module('biospeak.explorer')
                     //console.log(" here",obsReq,plottingOptions)
                     $scope.callbck({obsReq: obsReq, obsModule: obsModule})
                 }
+                $scope.node.selMultiObsGrps = $scope.sels
             },
             template:
 
-            // '<div class="node-select" ng-if="group.isSelectable && !group.isLocked">'+
-            // '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" >' +
-            // '</div>'+
-
-           '<div ng-class="{selected: node.isSelected}">' +
-                    '<div class="node-select" ng-if="node.isSelectable && !group.isLocked">'+
-                    '<input cl-select cb="groupClicked" type="checkbox"  ng-model="group.isSelected" />' +
-                        '</div>'+
-                '<div class="plotting-switch">'+
-                    '<a  ng-hide="node.isSelected || node.isLocked" class="switchery"  ' +
-                        'ng-init="node.defaultObservation.isActive = false" ' +
-                        'data-ng-disabled="node.isSelected" '+
-                        'ng-class="{on:node.defaultObservation.isActive}" '+
-                        'ng-click="node.defaultObservation.isActive = !node.defaultObservation.isActive;plotSwitchClicked(node.defaultObservation,chartingOpts.chartGroup)"> ' +
-                        '<i class="material-icons">insert_chart</i>'+
-                    '</a>'+
-                    '<span ng-show="node.isLocked" class="badge"><i class="fa fa-link"></i></span>'+
-                '</div>'+
-                '<dc-chart-menu obs="node.defaultObservation" quals= "node.qualifiers" module="chartingOpts.chartGroup" on-select="plotSwitchClicked(obsReq,obsModule)" class="qualifier-menu"></dc-chart-menu>'+
-                '<span uib-tooltip="{{node.defaultObservation.o3}}" class="list-item-text">{{node.defaultObservation.o3}}</span>'+
-            '</div>',
+            '<div class="leaf-select " ng-if="node.isSelectable && !group.isLocked">'+
+                '<input cl-select group="node" type="checkbox"  ng-model="group.isSelected" />' +
+            '</div>'+
+            '<span uib-tooltip="{{node.defaultObservation.o3}}" class="list-item-text">{{node.defaultObservation.o3}}</span>'+
+            '<div class="plotting-switch">'+
+                '<a  ng-hide="node.isSelected || node.isLocked" class="switchery"  ' +
+                    'ng-init="node.defaultObservation.isActive = false" ' +
+                    'data-ng-disabled="node.isSelected" '+
+                    'ng-class="{on:node.defaultObservation.isActive}" '+
+                    'ng-click="node.defaultObservation.isActive = !node.defaultObservation.isActive;plotSwitchClicked(node.defaultObservation,chartingOpts.chartGroup)"> ' +
+                    '<i class="material-icons">insert_chart</i>'+
+                '</a>'+
+            '</div>'+
+            '<dc-chart-menu obs="node.defaultObservation" quals= "node.qualifiers" module="chartingOpts.chartGroup" on-select="plotSwitchClicked(obsReq,obsModule)" class="qualifier-menu"></dc-chart-menu>',
 
             link: function (scope, element, attrs) {
                 if (angular.isArray(scope.node.terms)) {
@@ -335,10 +347,14 @@ angular.module('biospeak.explorer')
         return {
             restrict: 'A',
             require: 'ngModel',
+            scope:{
+              group:'='
+            },
             controller:function($scope){
                 $scope.checkChanged = function(checked){
-                    var tempSelected = $scope.group.selMultiObsGrps.tempSelected;
+                    console.log($scope.group)
 
+                    var tempSelected = $scope.group.selMultiObsGrps.tempSelected;
                     var selectedNode = $scope.group;
 
 
@@ -393,7 +409,8 @@ angular.module('biospeak.explorer')
                 obs: '=',
                 module:'=',
                 quals:'=',
-                onSelect: '&'
+                onSelect: '&',
+                removeFn: '&'
             },
             replace:true,
             controller: ['$scope','$injector',function($scope,$injector) {
@@ -410,23 +427,27 @@ angular.module('biospeak.explorer')
                 // }
             }],
             template:
-            '<div ng-show="obs.isActive" class="dropdown" uib-dropdown>'+
+            '<div ng-show="obs.isActive && !obs.isLocked" class="dropdown" uib-dropdown>'+
                 '<a class="dropdown-toggle" href uib-dropdown-toggle>'+
                     '<i class="fa fa-ellipsis-v"></i>'+
                 '</a>'+
                 '<ul uib-dropdown-menu class=" dropdown-menu dropdown-menu-right plotting-options"> ' +
-                    '<li class="dropdown-header">Observed Measures</li>'+
+                    '<li class="dropdown-header"> More observed Measures</li>'+
                     '<li class="dropdown-item" ng-repeat="var in quals">' +
-                        '<div>'+
-                            '<a ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive;onSelect({obsReq:var,obsModule:module})">' +
-                                '<i class="material-icons" ng-show="!var.isActive">radio_button_unchecked</i>' +
-                                '<i class="material-icons" ng-show="var.isActive">radio_button_checked</i>' +
+
+                            '<a ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive;onSelect({obsReq:var,obsModule:module})" class="switchery" ng-class="{on:var.isActive}">' +
+                                /*'<i class="material-icons" ng-show="!var.isActive">radio_button_unchecked</i>' +*/
+                                // '<i class="material-icons" ng-show="var.isActive">radio_button_checked</i>' +
+                                '<i class="material-icons">insert_chart</i>'+
+                                '<label uib-tooltip="{{var.qO2_label}}" for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +
                             '</a>'+
 
                             //'<input id="checkbox_{{var.id}}" type="checkbox" ng-init="var.isActive = false" ng-click="var.isActive = !var.isActive;onSelect({obsReq:var,plottingOptions:chartingOpts})" >' +
-                            '<label uib-tooltip="{{var.qO2_label}}" for="checkbox_{{var.id}}">{{var.qO2_label}}</label>' +
-                        '</div>' +
+
+
                     '</li>' +
+                    '<li ng-if="obs.isMultipleObservations" class="divider"></li>'+
+                    '<li ng-if="obs.isMultipleObservations" class="dropdown-item" ><a ng-click="removeFn({grpObs:obs})"><i class="fa fa-trash"></i><label>Remove group</label></a></li>'+
                 '</ul>'+
             '</div>'
         }
