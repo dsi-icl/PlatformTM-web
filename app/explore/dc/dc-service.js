@@ -393,7 +393,7 @@ angular.module('biospeak.dcPlots')
                         chartOptions["elasticX"] = "true"
                         //chartOptions["xAxis"] = {"ticks": "4"}
                         chartOptions["width"] = "300"
-                        chartOptions["height"] = noOfGroups * 30 + 20
+                        chartOptions["height"] = (noOfGroups * 30) + 20
                         //var chartHeight = "180"
                         //chartOptions["fixedBarHeight"] = chartheight - (noOfGroups + 1) * gap / count
                         chartOptions["margins"] = {top: 10, right: 10, bottom: 20, left: 10}

@@ -4,8 +4,8 @@
 .node-toggle {
     /*padding: 2px 5px;*/
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: -4px;
+    left: -10px;
     display: inline-block;
 }
 
@@ -39,7 +39,9 @@
     content: "\f023";
 }
 
-
+.clinical-tree{
+    margin-bottom: 30px;
+}
 .clinical-tree ul{
     /*width: 100%;*/
     /*position: relative;*/
@@ -78,20 +80,18 @@
 }*/
 
 .clinical-tree .list-item{
-    margin: 0px 10px 0px;
+    /*margin: 0px 10px 0px 0px;*/
     color: inherit;
-    font-size: 0.9em;
+    /*font-size: 0.9em;*/
     width: 100%;
-    height: 25px;
-    max-height: 25px;
-    line-height: 20px;
+    height: 26px;
+    max-height: 26px;
+    line-height: 26px;
     text-align: left;
-    /*text-indent: 2px;*/
+    /*text-indent: -4px;*/
     border-bottom: 1px rgba(0, 175, 188, 0.24) solid;
     float: none;
-    display: inline-block;
-
-
+    /*display: inline-block;*/
     position: relative;
 
 }
@@ -103,6 +103,9 @@
     width:85%;
     position: absolute;
     text-transform: capitalize;
+}
+.clinical-tree .list-item-text.selectable{
+    padding-left:20px;
 }
 
 .clinical-tree .list-item-text-sel{
@@ -139,16 +142,16 @@
 
 .clinical-tree .node-select{
     position: absolute;
-    top: 4px;
-    left: 33px;
+    top: 0px;
+    left: 19px;
     border: 1px solid white;
 }
 
 .clinical-tree .leaf-select{
     position: absolute;
-    top: -3px;
-    left: 3px;
-    border: 1px solid white;
+    top: -2px;
+    left: 10px;
+    /*border: 1px solid white;*/
 }
 
 .clinical-tree .selectDiv{
@@ -171,8 +174,8 @@
 
 .qualifier-menu{
     position: absolute;
-    right:-6px;
-    top:6px;
+    right:-10px;
+    top:3px;
 
 }
 .qualifier-menu i{

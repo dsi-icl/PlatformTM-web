@@ -24,7 +24,7 @@ a {
 }
 
 a:hover {
-    color: #39C2D7;
+    color: #24dddf;
     text-decoration: none;
 }
 
@@ -560,7 +560,7 @@ nav a {
     color: #eee;
 }
 .models-list .model-icon{
-    font-size: 2em;
+    font-size: 1.2em;
     /*color: #eee;*/
     color:#CDFF3B;
 }
@@ -585,6 +585,9 @@ nav a {
 
 #explorer-wrapper .cart-menu.open{
     margin-left:200px;
+}
+#explorer-wrapper {
+    margin-top: 97px;
 }
 
 
@@ -1346,6 +1349,7 @@ a.editable-click {
 
 
 
+
 /*Flo's Css for charts*/
 .anchor {
     width: 100%;
@@ -1421,6 +1425,76 @@ a.editable-click {
 
 
 
+#data-cart.sidebar-open {
+    right: 50px;
+}
+#data-cart {
+    background-color: #ffffff;
+    /*border-left: 1px solid #e7eaec;*/
+    /*border-top: 1px solid #e7eaec;*/
+    overflow: hidden;
+    position: fixed;
+    /*top: 160px;*/
+    /*width: 260px !important;*/
+    top: 140px;
+    width: 400px !important;
+    z-index: 1500;
+    /*bottom: 0;*/
+    /*right: -260px;*/
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border: none;
+}
+
+.data-cart-container{
+    padding: 10px;
+}
+
+.cart-icon{
+    position: fixed;
+    top: 92px;
+    right: 100px;
+    font-size: 1.7em;
+}
+
+
+.page-header-title{
+    float: left;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    width: 180px;
+    padding-top: 16px;
+}
+.page-header-title span{
+    /*font-family: Questrial;*/
+    color: #fcfdff;
+    font-size: 1.7em;"
+}
+
+#data-cart  li{
+    color: #686b6d;
+    padding: 3px;
+}
+
+.count-info .badge{
+    line-height: 12px;
+    /* padding: 2px 5px; */
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    background-color: #f4b27f;
+}
+
+#menu-button{
+    /*padding-left: 20px;*/
+    /*padding-top: 12px;*/
+    /*padding-bottom: 0;*/
+    padding: 12px 0px 0px 20px  ;
+    background-color: #2d3e4f;
+    border: 0;
+    float: left;
+}
+
+
 /*switch*/
 .menu-toggle {
     position:absolute;
@@ -1442,7 +1516,7 @@ a.editable-click {
     -moz-box-sizing: content-box;
     box-sizing: content-box;
     /*padding-top: 2px;*/
-    top:10px;
+    top:5px;
     left: 12px;
 }
 .switchery > small {

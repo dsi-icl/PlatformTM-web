@@ -157,7 +157,7 @@ angular.module('biospeak.explorer')
                     '</div>'+
 
                     /* text */
-                    '<div class="list-item"  ' +
+                    '<div class="list-item "  ' +
                            'ng-class="{group: group.isSelectable, selected: group.isSelected, locked:group.isLocked}"' +
                            'ng-class="{selected: group.isSelected}"' +
                            'uib-tooltip="{{group.name}} ({{group.count}})">' +
@@ -283,7 +283,7 @@ angular.module('biospeak.explorer')
             '<div class="leaf-select " ng-if="node.isSelectable && !group.isLocked">'+
                 '<input cl-select group="node" type="checkbox"  ng-model="group.isSelected" />' +
             '</div>'+
-            '<span uib-tooltip="{{node.defaultObservation.o3}}" class="list-item-text">{{node.defaultObservation.o3}}</span>'+
+            '<span class="list-item-text" ng-class="{selectable:node.isSelectable}" uib-tooltip="{{node.defaultObservation.o3}}" >{{node.defaultObservation.o3}}</span>'+
             '<div class="plotting-switch">'+
                 '<a  ng-hide="node.isSelected || node.isLocked" class="switchery"  ' +
                     'ng-init="node.defaultObservation.isActive = false" ' +

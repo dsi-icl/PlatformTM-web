@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="col-lg-12 m-t-md">
+    <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title panel-header">
                 <h3>{{vm.title}}</h3>
@@ -24,8 +24,8 @@
                         <!--</uib-tab-heading>-->
                         <div class="row">
                             <div class="col-md-4 m-t-md m-b-md">
-                                <div style=" max-height: 395px;overflow: scroll;">
-                                    <h3 class="m-md">Design Elements</h3>
+                                <div style=" max-height: 395px;overflow: scroll;padding: 0px 20px">
+                                    <h3>Design Elements</h3>
                                     <div class="clinical-tree">
                                         <ul>
                                             <div class="list-item" ng-repeat="de in vm.DEs" >
@@ -42,8 +42,8 @@
                                             </div>
                                         </ul>
                                     </div>
-                                    <h3 class="m-md">Subject Characteristics</h3>
-                                    <div class="clinical-tree"style="max-height: 316px; margin-bottom: 20px;">
+                                    <h3>Subject Characteristics</h3>
+                                    <div class="clinical-tree">
                                         <ul>
                                             <div class="list-item" ng-repeat="sc in vm.SCs" >
                                                 <div class="plotting-switch">
@@ -59,8 +59,8 @@
                                             </div>
                                         </ul>
                                     </div>
-                                    <h3 ng-if ="vm.TPs.length > 0" class="m-md">Subject Date/Time Properties</h3>
-                                    <div class="clinical-tree"style="max-height: 316px;">
+                                    <h3 ng-if ="vm.TPs.length > 0">Subject Date/Time Properties</h3>
+                                    <div class="clinical-tree">
                                         <ul>
                                             <div class="list-item" ng-repeat="tp in vm.TPs" >
                                                 <div class="plotting-switch">

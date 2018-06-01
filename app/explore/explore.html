@@ -2,9 +2,9 @@
 
     <!-- Page Header-->
     <div class="row wrapper border-bottom white-bg page-heading"
-         style="top: 60px;padding: 10px 10px;position: fixed;width: 100%;z-index: 1030; text-align: center">
+         style="top: 60px;padding: 10px 10px;position: fixed;width: 100%;z-index: 1030;">
 
-        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-10">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                 <ul style="list-style: none; display:block; margin: 10px 0 0; padding:0px; font-size: 1.3em">
                     <li style="vertical-align:top; display: inline-block;max-height: 100px;overflow: hidden;text-align: left; border-right: 1px dotted #c7c7c7;   padding: 0px 20px">
@@ -66,17 +66,22 @@
                             </div>
                         </div>
                     </li>
+                    <li class="cart-icon" >
+                        <a class="count-info" ng-click="expVM.showCart = !expVM.showCart">
+                            <i class="fa fa-shopping-cart"></i><span class="badge badge-info">{{expVM.cartObsCount}}</span>
+                        </a>
+                    </li>
                 </ul>
         </div>
     </div>
 
     <!-- Cart Menu-->
-    <div ui-view="datacart" id="cart"></div>
+    <!--<div ui-view="datacart" id="cart"></div>-->
 
 
-    <div class="page-wrapper wrapper-content animated fadeInRight" id="page-wrapper" style="margin-top: 84px;">
+    <div class="wrapper-content animated fadeInRight" id="explorer-wrapper">
 
-        <div id="explorer-wrapper" style="margin-left:210px;">
+        <!--<div style="margin-left:210px;">-->
             <section ui-view="subjects" id="section-1">
                 <i>Subject panel should load here!</i>
             </section>
@@ -86,7 +91,10 @@
             <section ui-view="assays" id="section-3">
                 <i>Assays panel should load here!</i>
             </section>
-        </div>
+        <!--</div>-->
 
     </div>
+
+    <!-- Right Sidebar -->
+    <div ng-include="'explore/datacart/cart2.html'"></div>
 </div>
