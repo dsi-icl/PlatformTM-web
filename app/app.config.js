@@ -3,7 +3,7 @@
  */
 var biospeakApp = angular.module('biospeak.app')
 
-    .run(function($rootScope, $location,$state, AUTH_EVENTS, authService){
+    .run(function($rootScope, $location,$state, $uibModalStack,AUTH_EVENTS, authService){
 
         $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
             $location.path('/login');
@@ -13,8 +13,11 @@ var biospeakApp = angular.module('biospeak.app')
             $state.go('home.unauthorized');
         });
 
-        $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
+        $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
+            $state.go('home.dashboard');
+        });
 
+        $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
 
 
             if (!authService.checkPermissionForView(next,toParams)){
@@ -22,6 +25,7 @@ var biospeakApp = angular.module('biospeak.app')
                 $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
             }//else
                 //console.log('OK to proceed')
+            $uibModalStack.dismissAll();
         });
 
 

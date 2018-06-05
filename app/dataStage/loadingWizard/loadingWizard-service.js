@@ -53,13 +53,9 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
         $http.get(serviceBase + 'projects/'+projectId+'/activities/')
             .success(function (response) {
-                console.log("Inside http get success",response)
-
                 deferred.resolve(response);
             })
-
             .error(function (err, status) {
-                /*_logOut();*/
                 deferred.reject(err);
             });
 
@@ -82,7 +78,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     };
 
-    var _getDataTablePreview = function(datasetId, fileId){
+    /*var _getDataTablePreview = function(datasetId, fileId){
         //console.log(datasetId,standardfileId);
         var deferred = $q.defer();
         $http.get(serviceBase + 'files/'+fileId+'/preview/')
@@ -104,7 +100,38 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
                 console.log(err, code);
             });
         return deferred.promise;
-    };
+    };*/
+
+    var _getDataTablePreview = function(fileId){
+        // console.log(fileId);
+        var deferred = $q.defer();
+        $http.get(serviceBase + 'files/'+fileId+'/preview/')
+            .success(function (response) {
+                var dtColumns = [];
+                response.data.columns.forEach(function(col){
+                    var dtColumn = {}
+                    dtColumn.data = col.columnName.toLowerCase();
+                    dtColumn.title = col.columnName;
+                    dtColumns.push(dtColumn);
+                });
+
+                tableHeaders = dtColumns;
+                DTdata = response.data.rows;
+
+
+                var result = {data:response.data,
+                    file: response.file,
+                    folders: response.folders,
+                    tableHeader: dtColumns}
+
+                deferred.resolve(result);
+            })
+            .error(function (err, code) {
+                deferred.reject(err);
+                console.log(err, code);
+            });
+        return deferred.promise;
+    }
 
     var _mapFileToTemplate = function(datasetId,fileId,map){
         var deferred = $q.defer();

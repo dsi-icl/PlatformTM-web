@@ -22,10 +22,10 @@
             authService.login(vm.loginData).then(function (user) {
 
                     vm.isSigningIn = false;
-                    $location.path('/dashboard');
-
-                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    //$location.path('/dashboard');
                     $scope.setCurrentUser(user);
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+
 
                 },
                 function (err) {

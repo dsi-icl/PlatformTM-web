@@ -1,31 +1,34 @@
 <div class="row border-bottom">
-    <nav class="navbar navbar-fixed-top  project-nav" role="navigation">
+    <nav class="navbar navbar-fixed-top project-nav " role="navigation">
 
 
             <div class="navbar-header">
                 <span minimaliza-sidebar></span>
                 <h4 class="page-header-title">
                     <a ui-sref="home.dashboard" >
-                        <span>BioVacSafe</span>
+                        <span>{{projVM.project.name}}</span>
                     </a>
                 </h4>
             </div>
             <ul class="nav navbar-top-links ">
+                <li class="project-nav-item"><a ui-sref-active="active" ui-sref="project.home({projectId:projVM.projectId})">Summary</a></li>
+                <li class="project-nav-item"><a ui-sref-active="active" ui-sref="project.explorer({projectId:projVM.projectId})">Explorer</a></li>
+                <li class="project-nav-item"><a ui-sref-active="active" ui-sref="project.drive.files({projectId:projVM.projectId})">Project Drive</a></li>
+                <li class="project-nav-item"><a ui-sref-active="active" ui-sref="project.manager.main({projectId:projVM.projectId})">Manager</a></li>
 
-                <li><a ui-sref-active="active" ui-sref="project.home({projectId:vm.projectId})">Summary</a></li>
-                <li><a ui-sref-active="active" ui-sref="project.explorer({projectId:vm.projectId})">Explorer</a></li>
-                <li><a ui-sref-active="active" ui-sref="project.drive({projectId:vm.projectId})">Project Drive</a></li>
-                <li><a ui-sref-active="active" ui-sref="project.manager.main({projectId:vm.projectId})">Manager</a></li>
+
                 <li class="navbar-right">
-                    <ul style="padding-top: 20px">
-                        <li>Logged in as <span class="username"> {{currentUser.username.toLowerCase()}}</span></li>
-                        <li>
-                            <a ng-click="logout()">
-                                <i class="fa fa-sign-out"></i> Log out
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <div class="user-nav-control" style="padding: 15px;" uib-dropdown>
+                            <a uib-dropdown-toggle uib-tooltip="Logged in as {{currentUser.username.toLowerCase()}}" tooltip-placement="bottom" ><i class="fa fa-user-circle-o fa-2x"></i></a>
+                            <ul uib-dropdown-menu class="animated fadeInRight m-t-xs">
+                                <!--<li><a ui-sref="app.profile">Profile</a></li>-->
+                                <!--<li class="divider"></li>-->
+                                <li><a ng-click="logout()"><i class="fa fa-sign-out"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+
             </ul>
     </nav>
 </div>

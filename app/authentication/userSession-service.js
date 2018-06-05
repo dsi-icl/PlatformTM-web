@@ -18,7 +18,7 @@ function sessionService(localStorageService) {
     this.create = function (userData, token, claims) {
         console.log('Creating new user',userData)
         this.setAccessToken(token);
-        this.setUser(userData,['can-manage-95','can-view-drive-95', 'can-load-95']);
+        this.setUser(userData,['can-manage-95','can-view-drive-95', 'can-load-95', 'can-upload-95']);
 
         //this.setUserClaims(['admin']);
     };

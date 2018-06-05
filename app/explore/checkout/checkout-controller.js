@@ -2,7 +2,7 @@
  * Created by iemam on 09/12/2016.
  */
 'use strict'
-function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilder,DTOptionsBuilder, toaster, $uibModal) {
+function checkoutController($timeout,$stateParams,checkoutService, toaster, $uibModal) {
 
     var vm = this;
     vm.projectId = $stateParams.projectId;

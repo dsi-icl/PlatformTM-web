@@ -46,6 +46,7 @@ a:hover {
 
 
 
+
 .top-search-form {
     margin-left: 50px;
     margin-top: 1em;
@@ -95,33 +96,24 @@ a:hover {
 
 /*breadcrumbs*/
 
-.breadcrumbs {
-    margin-top: 20px;
-    margin-bottom: 20px;
-
+.breadcrumb {
+    font-size: 1.3em;
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
 }
 
-.breadcrumbs ul {
-
-    font-size: .5em;
-    list-style: none;
-    color: #39C2D7;
+.breadcrumb ul {
     font-weight: bolder;
     -webkit-padding-start: 0px;
 }
 
-.breadcrumbs ul li {
-    float: left;
-    margin-right: 2px;
-}
-
-.breadcrumbs ul li.active a {
-    color: #2C3E50;
-}
-
-.breadcrumbs a {
-    color: #39b3d7;
-    text-decoration: none;
+.breadcrumb>li+li:before {
+    padding: 0 5px;
+    color: #ccc;
+    content: "\f054";
+    font-family: FontAwesome;
 }
 
 /*study details section*/
@@ -198,7 +190,7 @@ nav a {
     /*padding: 15px;*/
 }
 
-.panel-header span {
+.panel-header h3 {
     margin: 0;
     text-transform: uppercase;
     color: white;
@@ -1166,20 +1158,7 @@ a.editable-select {
     list-style: none;
 }
 
-.file-box a:hover > .file-name{
-    background-color: #d1dade;
-    color:#ffffff;
-}
-.file-box a.active > .file-name{
-    background-color: #00bfcd;
-    color:#ffffff;
-}
 
-.file .icon {
-    padding: 15px 10px;
-    text-align: center;
-    display: block;
-}
 
 .dropdown-menu{
     top:21px;
@@ -1461,7 +1440,7 @@ a.editable-click {
     float: left;
     margin-bottom: 0px;
     margin-top: 0px;
-    width: 180px;
+    /*width: 180px;*/
     padding-top: 16px;
 }
 .page-header-title span{
@@ -1656,39 +1635,24 @@ canvas {
     /*list-style:none;*/
     /*margin:0;*/
     /*padding:0;*/
-    width: 100%;
+    /*width: 100%;*/
     text-align: center;
 }
 
-.project-nav li{
-    float: none;
-    display: inline-block;
-
+.md-skin .navbar-top-links .user-nav-control  a{
+    /*padding: 10px;*/
+    color:#FFFFFF;
 }
 
-.project-nav li.active{
-    float: none;
-    display: inline-block;
-    border: none;
-    background: none;
-    border-bottom: 4px solid #00bfcd;
-}
-.project-nav li a{
-    /*display:inline-block;*/
-    /*padding:10px;*/
-    color: #8695a5;
-    font-size: 1.5em;
-    text-transform: uppercase;
-}
-
-.md-skin .navbar-top-links li a{
+.md-skin .navbar-top-links  li.project-nav-item a{
     color: #8695a5;
     font-weight: 600;
     padding-top: 30px;
     padding-bottom: 0px;
+    text-transform: uppercase;
 }
 
-.md-skin .navbar-top-links li a.active{
+.md-skin  .navbar-top-links  li.project-nav-item a.active{
     color: #ffffff;
     font-weight: 600;
     padding-top: 30px;
@@ -1735,4 +1699,75 @@ canvas {
 label{
     color: #2e3f50;
     font-size: 13px;
+}
+
+/*Project-Drive*/
+
+.project-drive{
+
+}
+
+.project-drive .page-header{
+    padding: 30px 30px;
+    position: fixed;
+    margin: 0 0 0 250px;
+    top: 61px;
+    left: 0px;
+    right: 0px;
+    z-index: 1030;
+    background: white;
+}
+
+.project-drive .file-tree{
+    /*top: 60px;*/
+    padding: 10px 10px;
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    z-index: 1030;
+}
+
+.project-drive .content{
+    margin: 100px 0 0 250px;
+    width: 100%;
+    height: 100%;
+}
+.file-box a:hover > .file-name{
+    background-color: #d1dade;
+    color:#ffffff;
+}
+.file-box a.active > .file-name{
+    background-color: #00bfcd;
+    color:#ffffff;
+}
+
+.file .icon {
+    padding: 15px 10px;
+    text-align: center;
+    display: block;
+}
+
+.folder-list {
+    margin-top: 50px;
+}
+
+.project-menu{
+    position: fixed;
+    top: 21px;
+    right: 150px;
+    z-index: 3500;
+}
+.project-menu a{
+    color: #fff;
+    font-size: 1.3em;
+}
+
+.title-action{
+    /* text-align: right; */
+    /* padding-top: 30px; */
+    padding: 0;
+    position: fixed;
+    top: 13px;
+    z-index: 2500;
+    right: 100px;
 }

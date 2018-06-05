@@ -12,8 +12,8 @@ var managerConfig = function($stateProvider){
             url: "/admin",
             templateUrl:"admin/project/adminContent.html",
             data: {
-                requiresAuthentication: true,
-                permissions: ["can-manage"],
+                //requiresAuthentication: true,
+                //permissions: ["can-manage"],
                 // authorizedRoles: [USER_ROLES.admin, USER_ROLES.editor]
             },
             resolve: {
@@ -82,8 +82,20 @@ var managerConfig = function($stateProvider){
                 }
             }
         })
-        .state('project.manager.activity',{
-            url:'/projects/{projectId}/activities/{activityId}',
+
+        .state('define',{
+            abstract:true,
+            url:'/define/{projectId}',
+            templateUrl:'layout/noNavContent.html',
+            controller: "defineController as vm",
+            resolve: {
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load('admin/define-controller.js');
+                }]
+            }
+        })
+        .state('define.activity',{
+            url:'/activities/{activityId}',
             templateUrl: "admin/activities/activityConfig.html",
             controller: "ActivityConfigCtrl as vm",
             resolve: {
@@ -97,8 +109,8 @@ var managerConfig = function($stateProvider){
                 }]
             }
         })
-        .state('project.manager.assay',{
-            url:'/projects/{projectId}/assays/{assayId}',
+        .state('define.assay',{
+            url:'/assays/{assayId}',
             templateUrl: "admin/activities/assayConfig.html",
             controller: "AssayConfigCtrl as vm",
             resolve: {
@@ -112,8 +124,8 @@ var managerConfig = function($stateProvider){
                 }]
             }
         })
-        .state('project.manager.study',{
-            url:'/projects/{projectId}/studies/{studyId}',
+        .state('define.study',{
+            url:'/studies/{studyId}',
             templateUrl: "admin/studies/study.html",
             controller: "StudyCtrl as vm",
             resolve: {

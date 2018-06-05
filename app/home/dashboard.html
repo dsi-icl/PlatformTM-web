@@ -33,15 +33,6 @@
                                 <!--{{p.sampleCount || '0'}}-->
                             <!--</div>-->
                         </div>
-                        <!--<div >
-                            <div class="text-center">
-                                <div class="btn-group">
-                                    <a ui-sref="explore.main({projectId:p.id})" class="btn btn-xs btn-white"><i class="fa fa-search"></i> Explore</a>
-                                    <a ui-sref="admin.project({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-cogs"></i> Configure</a>
-                                    <a ui-sref="datastage.files({projectId: p.id})" class="btn btn-xs btn-white"><i class="fa fa-database"></i> Stage</a>
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -50,4 +41,11 @@
 
 
 
+</div>
+<div class="project-menu" uib-dropdown>
+    <a uib-dropdown-toggle uib-tooltip="Create or join a project" tooltip-placement="bottom"><i class="fa fa-plus"></i></a>
+    <ul uib-dropdown-menu class="animated fadeInRight m-t-xs">
+        <li><a ng-click="vm.createProject()">Create project</a></li>
+        <li><a ng-click="vm.joinProject()">Join project </a></li>
+    </ul>
 </div>

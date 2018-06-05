@@ -1461,7 +1461,7 @@ a.list-group-item.active:focus {
 
 }
 .elements-list .list-group-item {
-    border-left: none;ب
+    border-left: none;
     border-right: none;
     /*border-top: none;*/
     padding: 15px 25px;

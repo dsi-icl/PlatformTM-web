@@ -21,7 +21,7 @@ function projService($http,$resource, ngAppConfig) {
         },
         getProjectById:{
             method: 'GET',
-            url : serviceBase+'projects/id/:projectId/'
+            url : serviceBase+'projects/:projectId/'
         },
         get:{
             method:'GET',
@@ -127,6 +127,17 @@ function projService($http,$resource, ngAppConfig) {
         // }).error(function (data, status, headers, config) {
         // });
     };
+
+    var _requestAccess = function (projectId) {
+        return $http({
+            url: serviceBase + 'projects/' + projectId+'/requestaccess/',
+            method: 'GET'
+        }).then(
+            function(response){
+                return response.data;
+            }
+        )
+    }
 
 
     ProjectFactory.getProjectResource = _projectResource;

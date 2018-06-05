@@ -6,7 +6,6 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toast
     var vm = this;
     vm.projectId = $stateParams.projectId
     vm.assayId = $stateParams.assayId;
-    console.log($stateParams.projectId)
 
     vm.templates={}
     vm.loaded = true;
@@ -17,7 +16,7 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toast
 
     vm.newField= {};
 
-
+    $scope.$parent.vm.stateName = "Define Assay";
 
     AssayConfigService.getAssayTerms().then(function(data){
         vm.assayTypes = data.terms;
