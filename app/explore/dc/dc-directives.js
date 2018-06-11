@@ -65,20 +65,10 @@ angular.module('biospeak.dcPlots')
                     '<div class="chart-title">'+
                         '<h5>{{obs.qO2_label}}</h5>'+
                     '</div>'+
-                    /*'<div ng-if="!done" style="margin-top:70px" class="sk-spinner sk-spinner-fading-circle"> ' +
-                        '<div class="sk-circle1 sk-circle"></div> ' +
-                        '<div class="sk-circle2 sk-circle"></div> ' +
-                        '<div class="sk-circle3 sk-circle"></div> ' +
-                        '<div class="sk-circle4 sk-circle"></div> ' +
-                        '<div class="sk-circle5 sk-circle"></div> ' +
-                        '<div class="sk-circle6 sk-circle"></div> ' +
-                        '<div class="sk-circle7 sk-circle"></div> ' +
-                        '<div class="sk-circle8 sk-circle"></div> ' +
-                        '<div class="sk-circle9 sk-circle"></div> ' +
-                        '<div class="sk-circle10 sk-circle"></div> ' +
-                        '<div class="sk-circle11 sk-circle"></div> ' +
-                        '<div class="sk-circle12 sk-circle"></div> ' +
-                    '</div>'+*/
+            '<div  ng-if="!done" style="margin-top: 100px; color: #23c6c8; text-align: center" >'+
+            '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>'+
+            '<span class="sr-only">Loading...</span>'+
+            '</div>'+
                     '<div ng-show="nochart"><small>No observations recorded</small></div>'+
 
                     '<div id="{{mainChartId}}">' +
@@ -104,6 +94,7 @@ angular.module('biospeak.dcPlots')
 
                         //ANCHOR THE PLOT
                         scope.chartToPlot.anchor(element[0].querySelector(mainChartId), chartGroup);
+                        // console.log('anchroing',element[0].querySelector(mainChartId),chartGroup);
 
                         //SET ONFILTERED
                         scope.chartToPlot.on('filtered',function(chart, filter){
@@ -523,6 +514,7 @@ angular.module('biospeak.dcPlots')
                     function(newval, oldval){
                         if(newval){
                             var chart = scope.chartservice.createDCcounter(scope.xfService,scope.module,scope.type)
+                            // console.log('anchroing',element[0],scope.module);
                             chart.anchor(element[0],scope.module);
                             chart.render();
                         }

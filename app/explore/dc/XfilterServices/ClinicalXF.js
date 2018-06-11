@@ -265,23 +265,6 @@ function ClinicalXF(clinicalDataService,$q){
         return dim in dimensions;
     };
 
-    /*        /!********************************************
-     DC TABLE FUNCTIONS
-     **!/
-     cfservice.getTableDimension = function(obsClass){
-     return XfilterAssayMap[assayId].subjectDim
-     }
-     cfservice.getTableHeaders = function(obsClass){
-     var columns = [subjectColumnName];
-     columns = columns.concat(XfilterAssayMap[assayId].columns)
-     return columns;
-     }
-     cfservice.getSubjectHeader = function(){
-     return subjectColumnName
-     }
-     /!*******************************************
-     *!/*/
-
     cfservice.getTableDimension = function(obsClass){
         return tableDimensions[obsClass]
     }
@@ -299,35 +282,6 @@ function ClinicalXF(clinicalDataService,$q){
         return subjectColumnName
     }
 
-    // cfservice.syncFilters = function(filteredSubjectIds,dimName){
-    //     if (findingsColumns.indexOf(dimName) > -1) {
-    //         console.log('cascading to events')
-    //         subjectDim['events'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-    //     } else if (eventsColumns.indexOf(dimName) > -1) {
-    //         console.log('cascading to findings')
-    //         subjectDim['findings'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-    //     }
-        //cfservice.resetSubjectFilter();
-
-        // if(isEventsXFFiltered()){
-        //     var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
-        //     subjectDim['findings'].filterFunction(function(d) { return eventsSubjIds.indexOf(d) > -1;})
-        // }
-        //
-        // if(isFindingsXFFiltered()){
-        //     var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
-        //     subjectDim['events'].filterFunction(function(d) { return findingsSubjIds.indexOf(d) > -1;})
-        // }
-    // }
-
-    // cfservice.getAllSubjFindingsGrp = function(){
-    //     return findingsXfilter.groupAll()
-    // }
-
-    // cfservice.getAllSubjEventsGrp = function(){
-    //     return eventsXfilter.groupAll()
-    // }
-
     cfservice.cfReady = function(){
         return cfReady;
     }
@@ -342,12 +296,6 @@ function ClinicalXF(clinicalDataService,$q){
     }
 
     cfservice.filterBySubjects = function(filteredSubjectIds){
-
-        // if(!angular.isUndefined(tableDimensions['findings'])){
-        //     subjectDim['findings'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-        //     subjectDim['events'].filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
-        //     IsSubjectFiltered = true;
-        // }
         if(subjectDimension != null){
             subjectDimension.filterFunction(function(d) { return filteredSubjectIds.indexOf(d) > -1;})
             dc.redrawAll("clinical");
@@ -359,34 +307,9 @@ function ClinicalXF(clinicalDataService,$q){
         if(!cfReady)
             return;
         return ($.map(subjectDimension.top(Infinity), function(d) {return d.subjectId }))
-        /*var findingsSubjIds = ($.map(subjectDim['findings'].top(Infinity), function(d) {return d.subjectId }));
-        var eventsSubjIds = ($.map(subjectDim['events'].top(Infinity), function(d) {return d.subjectId }));
-        var filteredSubjectIds = [];
-
-        if(findingsSubjIds.length !== 0 && eventsSubjIds.length !==0){
-            filteredSubjectIds = findingsSubjIds
-            filteredSubjectIds = filteredSubjectIds.filter(function(n){
-                return eventsSubjIds.indexOf(n) !== -1
-            });
-        }else{
-            findingsSubjIds.forEach(function (id) {
-                if (filteredSubjectIds.indexOf(id) === -1)
-                    filteredSubjectIds.push(id);
-            });
-            eventsSubjIds.forEach(function (id) {
-                if (filteredSubjectIds.indexOf(id) === -1)
-                    filteredSubjectIds.push(id);
-            });
-        }*/
-
-        //console.log(findingsSubjIds.length, filteredSubjectIds.length)
-        //return filteredSubjectIds;
     }
 
     cfservice.resetSubjectFilter = function(){
-
-        //if(subjectDim['findings']) subjectDim['findings'].filter(null);
-        //if(subjectDim['events']) subjectDim['events'].filter(null);
         if(subjectDimension) subjectDimension.filter(null);
         dc.redrawAll("clinical");
     }
@@ -396,8 +319,6 @@ function ClinicalXF(clinicalDataService,$q){
             dimensions[key].filter(null);
         };
 
-        //if(subjectDim['findings'])subjectDim['findings'].filter(null);
-        //if(subjectDim['events'])subjectDim['events'].filter(null);
         if(subjectDimension) subjectDimension.filter(null);
         IsSubjectFiltered = false;
 
@@ -416,15 +337,6 @@ function ClinicalXF(clinicalDataService,$q){
         //eventsColumns = null;
     };
 
-    // cfservice.addToActiveFilters = function (filter) {
-    //     activeFilters.push(filter);
-    // };
-    // cfservice.XFisFiltered = function () {
-    //     return activeFilters.length > 0;
-    // };
-    // cfservice.removeFilter = function (filter) {
-    //
-    // };
 
     return cfservice
 }

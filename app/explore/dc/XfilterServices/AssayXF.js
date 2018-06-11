@@ -8,6 +8,7 @@ function AssayXF(assayDataService,$q){
     var cfservice = {};
 
     var subjectColumnName = "subjectId";
+    var sampleColumnName = "sampleId";
     var XFserviceName = 'AssayCf';
     var XfilterAssayMap = {};
     var SubjectAssayMap = {};
@@ -18,6 +19,71 @@ function AssayXF(assayDataService,$q){
         XfilterAssayMap[assayId] = {};
         XfilterAssayMap[assayId].xfReady = false;
     };
+
+
+    cfservice.initXF = function (assayXfObj) {
+
+        var ready = true;
+        return $q.when(ready,function () {
+            for (var assayId in assayXfObj) {
+                XfilterAssayMap[assayId] = {};
+                XfilterAssayMap[assayId].xfReady = false;
+                XfilterAssayMap[assayId].dimensions = [];
+                XfilterAssayMap[assayId].groups = [];
+                SubjectAssayMap[assayId] = {};
+                createXF(assayId,assayXfObj[assayId].data,assayXfObj[assayId].keys);
+            }
+        })
+
+
+    }
+
+    var createXF = function(assayId,data, keys){
+
+        //cfservice.formatData(data, requestedObsvs);
+        //console.log('creating', assayId,data, keys)
+
+        var cfdata = crossfilter(data);
+
+        XfilterAssayMap[assayId].xfdata = cfdata
+        XfilterAssayMap[assayId].all = cfdata.groupAll();
+        XfilterAssayMap[assayId].columns = keys;
+
+        /**
+         * Create Subject Dimension
+         */
+        var subjIndexDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
+        var subjectGroup = subjIndexDim.group();
+        XfilterAssayMap[assayId].subjectDim = subjIndexDim;
+        XfilterAssayMap[assayId].subjectGroup = subjectGroup
+
+        //var sampleIndexDim = cfdata.dimension(function(d) {return d[sampleColumnName]})
+        //var sampleGroup = subjIndexDim.group();
+
+
+        /**
+         * Create dimensions for each sample characterisitc
+         */
+        keys.forEach(function(key){
+            /**
+             * Dimension
+             */
+            var dim = cfdata.dimension(function (d) {return d[key];});
+            //var dim = cfdata.dimension(function (d) {return d[key] ? d[key] : 0;},true)
+            XfilterAssayMap[assayId].dimensions[key] = dim;
+            /**
+             * Group
+             */
+            var grp = dim.group();
+            var reducer = reductio()
+                .filter(function(d) { return  d[key] !== "" })
+                .count(true);
+            reducer(grp);
+
+            XfilterAssayMap[assayId].groups[key] = grp;
+        });
+        XfilterAssayMap[assayId].xfReady = true;
+    }
 
     cfservice.formatData = function(data, requestedObsvs){
         var dateFormat = d3.timeFormat('%Y-%m-%dT%H:%M').parse
@@ -38,13 +104,12 @@ function AssayXF(assayDataService,$q){
                     }
                 })
             });
-        //console.log(data)
     }
 
     cfservice.refreshCf = function(projectId,requestedObsvs,assayId){
         var deferred = $q.defer();
 
-        //console.log("=============Creating Assay "+assayId+" XF============")
+        //console.log("=============Creating Assay "+assayId+" XF============",requestedObsvs)
 
         if(!assayId && requestedObsvs){
             assayId = requestedObsvs[0].activityId;
@@ -53,143 +118,28 @@ function AssayXF(assayDataService,$q){
         /**
          * Initialize xfilter data fields for this assayType
          */
-        XfilterAssayMap[assayId] = {}
-        XfilterAssayMap[assayId].dimensions = [];
-        XfilterAssayMap[assayId].groups = [];
-        SubjectAssayMap[assayId] = {};
+        // XfilterAssayMap[assayId] = {}
+        // XfilterAssayMap[assayId].dimensions = [];
+        // XfilterAssayMap[assayId].groups = [];
+        // SubjectAssayMap[assayId] = {};
 
         this.getData(projectId,requestedObsvs,assayId).then(function(dataTable){
-
             var data = dataTable.data;
-            var columns = dataTable.header;
-
+            var keys = dataTable.keys;
             cfservice.formatData(data, requestedObsvs);
-
-
-            //console.log(data,columns)
-            var cfdata = crossfilter(data);
-
-            XfilterAssayMap[assayId].xfdata = cfdata
-            XfilterAssayMap[assayId].all = cfdata.groupAll();
-            XfilterAssayMap[assayId].columns = columns;
-
-            /**
-             * Create Subject Dimension
-             */
-            XfilterAssayMap[assayId].subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
-
-
-            /**
-             * Create Unique Subjects Group
-             */
-            var subjIndexDim = cfdata.dimension(function(d) {return d[subjectColumnName]})
-            var subjectGroup = subjIndexDim.group();
-            XfilterAssayMap[assayId].subjectGroup = subjectGroup
-
-
-            /**
-             * Create dimensions for each sample characterisitc
-             */
-            columns.forEach(function(sc){
-                // console.log(sc);
-
-                /**
-                 * Dimension
-                 */
-                var dim = cfdata.dimension(function (d) {
-                    return d[sc];
-                });
-                XfilterAssayMap[assayId].dimensions[sc] = dim;
-                /**
-                 * Group
-                 */
-                var grp = dim.group();
-
-
-
-
-                // if(grp.all()[0].key === ""){
-                //     console.log('filtering blanks');
-                //     // grp.all()[0].key = "(Blanks)";
-                //     grp = remove_empty_bins(grp);
-                //     console.log(grp.all())
-                // }
-
-
-
-
-                var reducer = reductio()
-                    .filter(function(d) { return  d[sc] !== "" })
-                    .count(true);
-
-                // if(sc ==='day')
-                //     grp = remove_bins(grp)
-                //
-                // else
-                    reducer(grp);
-
-
-
-                // console.log(dim.groupAll().value());
-                //groups[sc] = grp;
-                XfilterAssayMap[assayId].groups[sc] = grp;
-            })
-            XfilterAssayMap[assayId].xfReady = true
-            deferred.resolve(columns)
+            createXF(assayId,data,keys);
+            deferred.resolve(keys)
         });
         return deferred.promise
     };
 
     cfservice.getData = function(projectId,requestedObsvs,assayId){
         var deferred = $q.defer();
-
         assayDataService.getSampleData(projectId,assayId,requestedObsvs)
-            .then(function(dataTable){
-                //console.log('inside getDAta',response)
-                //var dataToPlot = dataTable.rows;
-                //var sampleColumns = response.header; //These are the list of HEADERS in the CF data
-                //No need to maintain on the client?!
-                deferred.resolve(dataTable)
-            })
-
+            .then(function(data){
+                deferred.resolve(data)
+            });
         return deferred.promise
-    };
-
-    var remove_empty_bins  = function (source_group) {
-        return {
-            all:function () {
-                return source_group.all().filter(function(d) {
-                    //return Math.abs(d.value) > 0.00001; // if using floating-point numbers
-                    return d.value !== "" ; // if integers only
-                });
-            }
-        };
-    };
-
-    var remove_bins  = function (source_group) { // (source_group, bins...}
-        var bins = Array.prototype.slice.call(arguments, 1);
-        return {
-            all:function () {
-                return source_group.all().filter(function(d) {
-                    return bins.indexOf(d.key) !== "";
-                });
-            }
-        };
-    }
-
-    var sort_group = function (group, order) {
-        return {
-            all: function() {
-                var g = group.all(), map = {};
-
-                g.forEach(function(kv) {
-                    map[kv.key] = kv.value;
-                });
-                return order.map(function(k) {
-                    return {key: k, value: map[k]};
-                });
-            }
-        };
     };
 
     /********************************************
@@ -211,8 +161,6 @@ function AssayXF(assayDataService,$q){
         return subjectColumnName
     }
 
-    /*******************************************
-     */
 
 
     /*******************************************
@@ -221,11 +169,11 @@ function AssayXF(assayDataService,$q){
      *
      */
     cfservice.getCountData = function(assayId){
-        return XfilterAssayMap[assayId].xfdata
+        return XfilterAssayMap[assayId].groups[sampleColumnName]
     }
 
     cfservice.getCountGroup = function(assayId){
-        return XfilterAssayMap[assayId].all
+        return XfilterAssayMap[assayId].dimensions[sampleColumnName].groupAll()
     }
 
     cfservice.getSubjectCountData = function(assayId){
@@ -233,14 +181,20 @@ function AssayXF(assayDataService,$q){
     }
 
     cfservice.getSubjectCountGroup = function(assayId){
+        return {value: function() {
+                if(XfilterAssayMap[assayId].subjectGroup.size() !== 0)
+                    return XfilterAssayMap[assayId].subjectGroup.all().filter(function(kv){return kv.value>0;}).length;
+                return 0;
+            }};
+    }
 
-        var uniqueSubjGrp = {value: function() {
-            if(XfilterAssayMap[assayId].subjectGroup.size() != 0)
-                return XfilterAssayMap[assayId].subjectGroup.all().filter(function(kv){return kv.value>0;}).length;
-            return 0;
-        }}
-
-        return uniqueSubjGrp;
+    cfservice.getSampleCountData = function(assayId){
+        //return XfilterAssayMap[assayId].xfdata
+        return XfilterAssayMap[assayId].groups[sampleColumnName]
+    }
+    cfservice.getSampleCountGroup = function(assayId){
+        //return XfilterAssayMap[assayId].all
+        return XfilterAssayMap[assayId].dimensions[sampleColumnName].groupAll()
     }
     /********************************************
      **/
@@ -289,6 +243,12 @@ function AssayXF(assayDataService,$q){
 
     cfservice.getXFname = function(){
         return XFserviceName;
+    };
+    cfservice.getSubjectKey = function () {
+        return subjectColumnName;
+    };
+    cfservice.getSampleKey = function () {
+        return sampleColumnName;
     };
 
     cfservice.resetSubjectFilter = function(){

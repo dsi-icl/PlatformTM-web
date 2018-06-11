@@ -352,14 +352,14 @@ angular.module('biospeak.explorer')
             },
             controller:function($scope){
                 $scope.checkChanged = function(checked){
-                    console.log($scope.group)
+                    // console.log($scope.group)
 
                     var tempSelected = $scope.group.selMultiObsGrps.tempSelected;
                     var selectedNode = $scope.group;
 
 
                     if(checked){
-                        console.log("adding node:",selectedNode.code);
+                        // console.log("adding node:",selectedNode.code);
                         tempSelected.push(selectedNode);
                     }
                     else{
@@ -370,15 +370,13 @@ angular.module('biospeak.explorer')
                                 break;
                             }
                         }
-                        console.log('removing node',selectedNode.code, pos )
+                        // console.log('removing node',selectedNode.code, pos )
                         tempSelected.splice(pos,1);
                     }
                 }
             },
             link: function(scope, element, $attrs, ngModel) {
                 return $timeout(function() {
-                    var value;
-                    value = $attrs['value'];
 
                     scope.$watch($attrs['ngModel'], function(newValue){
                         $(element).iCheck('update');

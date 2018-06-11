@@ -16,7 +16,7 @@ function explorerService($http,ngAppConfig,$q) {
 
     var _getCartQuery = function(projectId,cartId){
         return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            url:serviceBase+'queries/'+cartId,
             method:'GET'
         })
             .then(
@@ -34,9 +34,8 @@ function explorerService($http,ngAppConfig,$q) {
     };
 
     var _getNewCartQuery = function(projectId){
-        var cartId = "new";
         return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            url:serviceBase+'queries/new/'+projectId,
             method:'GET'
         })
             .then(
@@ -243,7 +242,7 @@ function explorerService($http,ngAppConfig,$q) {
     var _saveQuery = function(query,projectId){
 
         return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/saveQuery',
+            url:serviceBase+'queries',
             method:'POST',
             data: angular.toJson(currentCart)
         })

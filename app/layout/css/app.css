@@ -1352,7 +1352,7 @@ a.editable-click {
 }
 .cardlock {
     background-color: #f0f0f0;
-    max-width: 660px;
+    max-width: 340px;
     min-height: 340px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -1382,15 +1382,15 @@ a.editable-click {
 }
 .card h1 {
     /*width: 90%;*/
-    font-size: 15px;
+    font-size: 12px;
     padding: 10px;
     text-transform:uppercase;
     color: #676a6c;
     /*color:#23c6c8;*/
     font-weight:600;
-    text-overflow: ellipsis;
+    /*text-overflow: ellipsis;*/
     overflow: hidden;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
     font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .card .chart {

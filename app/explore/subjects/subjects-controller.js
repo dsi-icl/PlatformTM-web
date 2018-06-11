@@ -16,14 +16,22 @@ function SubjectsController($stateParams, subjectDataService, SubjectXF, DCchart
         xfilterService: "SubjectXF"
     };
 
-    subjectDataService.getSubjCharacteristics(projectId)
-        .then(function (response) {
-            vm.SCs = response.SCs;
-            vm.TPs = response.TPs;
-            vm.DEs = response.DEs;
-        });
+    subjectDataService.initSubjData(projectId).then(function (response) {
+        vm.SCs = response.scs;
+        vm.TPs = response.tps;
+        vm.DEs = response.des;
 
-    SubjectXF.refreshCf(projectId);
+        SubjectXF.initXF(response.xfdata);
+
+    })
+    // subjectDataService.getSubjCharacteristics(projectId)
+    //     .then(function (response) {
+    //         vm.SCs = response.SCs;
+    //         vm.TPs = response.TPs;
+    //         vm.DEs = response.DEs;
+    //     });
+
+    // SubjectXF.refreshCf(projectId);
 }
 
 angular.module('biospeak.explorer')
