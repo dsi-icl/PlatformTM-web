@@ -22,24 +22,24 @@
             authService.login(vm.loginData).then(function (user) {
 
                     vm.isSigningIn = false;
-                    $location.path('/dashboard');
-
-                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    //$location.path('/dashboard');
                     $scope.setCurrentUser(user);
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+
 
                 },
                 function (err) {
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                    //console.log(err);
-                    /*var errors = [];
-                    for (var key in err) {
-                        for (var i = 0; i < err[key].length; i++) {
-                            errors.push(err[key][i]);
-                        }
-                    }*/
+                    console.log(err);
+                    // var errors = [];
+                    // for (var key in err) {
+                    //     for (var i = 0; i < err[key].length; i++) {
+                    //         errors.push(err[key][i]);
+                    //     }
+                    // }
                     vm.isSigningIn = false;
                     vm.loginfailed = true;
-                    vm.loginMessage = "Failed to log in: Invalid username or password"
+                    vm.loginMessage = err//"Failed to log in: Invalid username or password"
                 });
         }
     }

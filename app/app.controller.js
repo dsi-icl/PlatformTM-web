@@ -20,6 +20,7 @@ angular.module('biospeak.app')
         password: ""
     };
 
+
     $scope.message = "";
     $scope.logout = function () {
         authService.logOut().then(function (response) {

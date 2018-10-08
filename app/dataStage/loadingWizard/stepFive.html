@@ -1,24 +1,24 @@
 
 <fieldset>
-    <div ng-hide="vm.isLoading || vm.isFinished" class="m-b-md">
-        <a ng-click="vm.loadFile2()" class="btn btn-outline btn-info btn-md btn-block" data-ng-disabled="vm.isLoading">START LOADING </a>
+    <div ng-hide="step5Ctrl.isLoading || step5Ctrl.isFinished" class="m-b-md">
+        <a ng-click="step5Ctrl.loadFile2()" class="btn btn-outline btn-info btn-md btn-block" data-ng-disabled="step5Ctrl.isLoading">START LOADING </a>
     </div>
 
 
     <!-- <div class="col-lg-12">-->
-    <uib-progressbar ng-if="vm.isLoading || vm.isFinished" type="success" style="margin-bottom: 0px; height:30px" class="progress-striped  progress-bar-info" value="vm.progress"><div style="text-align: center;
+    <uib-progressbar ng-if="step5Ctrl.isLoading || step5Ctrl.isFinished" type="success" style="margin-bottom: 0px; height:30px" class="progress-striped  progress-bar-info" value="step5Ctrl.progress"><div style="text-align: center;
     padding-top: 5px;
     font-size: x-large;
     font-weight: 400;
-    color: rgb(194, 248, 89)">{{vm.progress}}%</div></uib-progressbar>
+    color: rgb(194, 248, 89)">{{step5Ctrl.progress}}%</div></uib-progressbar>
 
-    <div ng-show="vm.isLoading || vm.isFinished" class="animated fadeInDown alert alert-info">
+    <div ng-show="step5Ctrl.isLoading || step5Ctrl.isFinished" class="animated fadeInDown alert alert-info">
         <div class="text-center text-primary text-uppercase">
-            <h3 ng-if="!vm.loadedDataset && !vm.loadingFailed">Loading File </h3>
-            <h3 ng-if="vm.loadedDataset && !vm.obsExtracted && !vm.loadingFailed">Extracting Content </h3>
-            <h3 ng-if="vm.loadingFailed">Loading Failed!</h3>
-            <h3 ng-if="vm.loadedDataset && vm.obsExtracted">Done</h3>
-            <div ng-hide="(vm.loadedDataset && vm.obsExtracted) || vm.loadingFailed">
+            <h3 ng-if="!step5Ctrl.loadedDataset && !step5Ctrl.loadingFailed">Loading File </h3>
+            <h3 ng-if="step5Ctrl.loadedDataset && !step5Ctrl.obsExtracted && !step5Ctrl.loadingFailed">Extracting Content </h3>
+            <h3 ng-if="step5Ctrl.loadingFailed">Loading Failed!</h3>
+            <h3 ng-if="step5Ctrl.loadedDataset && step5Ctrl.obsExtracted">Done</h3>
+            <div ng-hide="(step5Ctrl.loadedDataset && step5Ctrl.obsExtracted) || step5Ctrl.loadingFailed">
                 <div class="sk-spinner sk-spinner-wave "  >
                     <div class="sk-rect1"></div>
                     <div class="sk-rect2"></div>
@@ -31,10 +31,10 @@
     </div>
 
     <div class="btn-group pull-right">
-        <a ng-click="vm.goToStep4()" class="btn btn-default">Previous</a>
-        <a ng-click="vm.finish()" class="btn btn-primary pull-right">Finish</a>
+        <a ng-click="wzCtrl.goToStep4(step5Ctrl.params.activityId,step5Ctrl.params.datasetId)" class="btn btn-default">Previous</a>
+        <a ng-click="wzCtrl.finish()" class="btn btn-primary pull-right">Finish</a>
     </div>
 
-    <a ui-sref="datastage.files"  class="btn btn-primary ">Cancel</a>
+    <a ng-click="wzCtrl.cancel()"  class="btn btn-primary ">Cancel</a>
 </fieldset>
 

@@ -20,11 +20,13 @@
 
                                 <p class="model-icon">
                                    <span>
-                                      <!-- <dc-count-widget
-                                               xfilter-service="{{vm.chartingOpts.xfilterService}}"
-                                               chart-service="{{vm.chartingOpts.DCchartService}}"
-                                               grp="{{vm.chartingOpts.chartGroup}}"
-                                               module="{{assay.id}}"></dc-count-widget> Samples-->
+                                     <dc-count-widget style="font-weight:600;"
+                                                      xfilter-service="{{vm.chartingOpts.xfilterService}}"
+                                                      chart-service="{{vm.chartingOpts.DCchartService}}"
+                                                      type="sample"
+                                                      module="{{assay.id}}">
+                                     </dc-count-widget>
+                                       <span style="font-size: 12px">Samples</span>
                                    </span>
                                 </p>
                             </div>
@@ -63,7 +65,7 @@
                                 </div>
                                 <div class="row ibox-content">
 
-                                    <div class="col-md-12 alert alert-info" style="text-align:center; font-size: 2em;color: #4cced0;">
+                                   <!-- <div class="col-md-12 alert alert-info" style="text-align:center; font-size: 2em;color: #4cced0;">
                                         <div style="display: inline-block">
                                             <span style="display: block;font-size: 18px;color: #39c2d7;padding-top: 5px;">
                                                 <i class="flaticon-standing55"></i>&nbsp;
@@ -91,18 +93,18 @@
                                         <div style="display: inline-block">
                                             <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;"><i
                                                     class="flaticon-testtube8"></i>&nbsp;
-                                                <!--<dc-count-widget style="font-weight:600;"
+                                                &lt;!&ndash;<dc-count-widget style="font-weight:600;"
                                                                  xfilter-service="{{vm.chartingOpts.xfilterService}}"
                                                                  chart-service="{{vm.chartingOpts.DCchartService}}"
                                                                  type="vvv"
                                                                  grp="{{vm.chartingOpts.chartGroup}}"
                                                                  module="{{assay.id}}">
-                                                </dc-count-widget>-->
+                                                </dc-count-widget>&ndash;&gt;
                                                 <span style="font-size: 12px">Features</span>
                                             </span>
                                         </div>
 
-                                    </div>
+                                    </div>-->
 
                                     <div id="assay_plots_{{assay.id}}" class="charts-container">
 

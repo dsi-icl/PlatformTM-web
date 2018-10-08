@@ -1,0 +1,25 @@
+
+<div>
+    <div class="modal-header">
+        <h2 class="modal-title">Join Project</h2>
+        <p>Ask the project data manager for the project code and enter it here </p>
+    </div>
+    <form role="form" name="new" ng-submit="joinCtrl.ok()">
+            <div class="modal-body myform">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Project code</label>
+                            <input type="text" name="code" required ng-model="joinCtrl.projectCode" placeholder="Enter project code" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" ng-click="joinCtrl.cancel()">Cancel</button>
+                <input type="submit" class="btn btn-primary" value="Join"/>
+            </div>
+        </form>
+</div>
+
+

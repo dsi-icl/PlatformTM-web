@@ -1,9 +1,6 @@
 /**
  * Created by iemam on 06/10/2015.
  */
-
-
-
     'use strict';
 
     function stepFiveController($scope,$state,$stateParams,$interval,wizardService){
@@ -26,12 +23,8 @@
         var fileId = $stateParams.fileId;
 
 
-        vm.goToStep4 = function(){
-            $state.go('datastage.wizard.step_four',{ activityId: vm.activityId, datasetId: vm.datasetId, fileId: fileId });
-        };
-        vm.finish = function(){
-            $state.go('project.drive',{projectId:$stateParams.projectId, dir:$stateParams.dir})
-        };
+        $scope.$parent.wzCtrl.activityId = $stateParams.activityId;
+        $scope.$parent.wzCtrl.datasetId = $stateParams.datasetId;
 
         var progress;
         vm.loadFile2 = function(){
@@ -42,9 +35,6 @@
                     //console.log('inside controller ' ,fileInfo)
                     vm.progress = fileInfo.percentLoaded;
                     if(fileInfo.state === 'LOADED' ||  fileInfo.state === 'SAVED'){
-
-                        // vm.loadedDataset = true;
-
                         _fileIsLoaded(fileInfo)
                         //return wizardService.extractObs(datasetId,fileId)
                     }
@@ -84,7 +74,7 @@
             $interval.cancel(progress);
         });
 
-        vm.loadFile = function(){
+        /*vm.loadFile = function(){
             vm.isLoading = true;
             wizardService.loadDataset(datasetId, fileId).then(function(success){
                 if(success){
@@ -105,7 +95,7 @@
                 vm.isLoading = false;
                 vm.isFinished = true;
             });
-        }
+        }*/
 
         vm.getProgress=  function(fileId){
             var Sec = 2000;

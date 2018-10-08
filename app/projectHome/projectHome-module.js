@@ -1,10 +1,15 @@
 function config($stateProvider, $urlRouterProvider) {
     $stateProvider
+        // .state('projects',{
+        //     url: "/projects",
+        //     templateUrl: "home/content.html",
+        //     controller: "ProjectsCtrl as projectsVM",
+        // })
         .state('project', {
             abstract: true,
             url: "/projects/{projectId}",
             templateUrl: "projectHome/projectContent.html",
-            controller: "ProjectHomeCtrl as vm",
+            controller: "ProjectHomeCtrl as projVM",
             resolve: {
                 /*loadDirective: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([

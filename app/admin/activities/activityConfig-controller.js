@@ -3,7 +3,7 @@
  */
 
 'use strict';
-function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout,SweetAlert,toaster,$q) {
+function ActivityConfigCtrl($scope,$state, $stateParams, ActivityConfigService,$timeout,SweetAlert,toaster,$q) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
 
@@ -11,6 +11,8 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
     vm.selectTemplate = false;
     vm.showFieldInfo = false;
     vm.creatingCfield = false;
+
+    $scope.$parent.vm.stateName = "Define Activity";
 
     vm.dataTypes = ['STRING','INTEGER','DOUBLE','DATETIME'];
     vm.varTypes = ['SUBMITTED','DERIVED'];
@@ -66,7 +68,7 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
     ];
 
     var activity;
-    if($stateParams.activityId==0){
+    if($stateParams.activityId===0){
         console.log("New Activity");
         activity = new ActivityConfigService.getActivityResource();
         activity.projectId = $stateParams.projectId;//"Study1"
@@ -88,7 +90,6 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
             activity.isNew = false;
 
             vm.activity = activity;
-            console.log(vm.activity.datasets.length)
 
             $timeout(function(){
                 //console.log($('#ds_template_tbl'))
@@ -157,8 +158,6 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
 
         
     };
-
-
 
 
     /**
@@ -426,4 +425,4 @@ function ActivityConfigCtrl($state, $stateParams, ActivityConfigService,$timeout
 }
 
 angular.module('bioSpeak.config')
-    .controller('ActivityConfigCtrl',['$state','$stateParams','ActivityConfigService','$timeout','SweetAlert','toaster','$q',ActivityConfigCtrl]);
+    .controller('ActivityConfigCtrl',['$scope','$state','$stateParams','ActivityConfigService','$timeout','SweetAlert','toaster','$q',ActivityConfigCtrl]);

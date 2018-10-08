@@ -14,14 +14,13 @@ function checkoutService($http,$q,ngAppConfig, $resource){
 
     var _getSavedCart = function(projectId,cartId){
         return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            url:serviceBase+'queries/'+cartId,
             method:'GET'
         })
             .then(
                 function (response) {
                     return {
                         cart: (response.data),
-
                     }
                 },
                 function (httpError) {

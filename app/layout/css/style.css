@@ -13,7 +13,7 @@ h4,
 h5,
 h6 {
     font-weight: 100;
-    font-family: 'Questrial';
+    /*font-family: 'Questrial';*/
 }
 h1 {
     font-size: 30px;
@@ -1461,7 +1461,7 @@ a.list-group-item.active:focus {
 
 }
 .elements-list .list-group-item {
-    border-left: none;ب
+    border-left: none;
     border-right: none;
     /*border-top: none;*/
     padding: 15px 25px;

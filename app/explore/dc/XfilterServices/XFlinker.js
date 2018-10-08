@@ -65,7 +65,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
     XFilterLinker.propagateFilter = function(xfFiltered, chartName, filter){
 
         console.debug("====PROPAGATING FILTER====")
-        console.debug('FILTER BEFORE:',_subjectFilters)
+        //console.debug('FILTER BEFORE:',_subjectFilters)
 
         var subjectIds;
 
@@ -163,7 +163,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
                 ClinicalCf.filterBySubjects(filteredIds);
                 }*/
 
-        console.debug('FILTER AFTER:',_subjectFilters)
+        //console.debug('FILTER AFTER:',_subjectFilters)
         console.debug("====END OF PROPAGATING FILTER====")
     };
 
@@ -178,8 +178,8 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
     };
 
     XFilterLinker.initAll = function(){
-        SubjectXF.init();
-        ClinicalXF.init();
+        //SubjectXF.init();
+        //ClinicalXF.init();
         //AssayXF.init();
 
         _subjectFilters['subjectXF'] = [];

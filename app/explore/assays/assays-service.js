@@ -3,39 +3,17 @@
  */
 
 'use strict'
-function assayDataService($http, ngAppConfig) {
+function assayDataService($http,$q, localStorageService,ngAppConfig) {
     var serviceBase = ngAppConfig.apiServiceBaseUri;
 
     var assays = null;
     var ready = false;
+    var xfdata = null;
 
     return {
-        getSubjData: function (projectId, characs) {
-            //var domainCode = "VS"
-            return $http({
-                url: serviceBase + 'projects/' + projectId + '/data/assays/characteristics',
-                method: 'POST',
-                data: angular.toJson(characs)
-            }).then(
-                function (response) {
-                    return {
-                        scs: (response.data)
-                    }
-                },
-                function (httpError) {
-                    // translate the error
-                    throw httpError.status + " : " +
-                    httpError.data;
-                });
-        },
-
         reset: function () {
           ready = false;
           assays = null;
-        },
-
-        getSubjCharacteristics: function (projectId) {
-
         },
 
         assaysRetrieved: function () {
@@ -51,13 +29,9 @@ function assayDataService($http, ngAppConfig) {
                 data: angular.toJson(reqChars)
             }).then(
                 function (response) {
-                    var columns = [];
-                    response.data.columns.forEach(function (col) {
-                        columns.push(col.columnName);
-                    });
                     return {
-                        data: (response.data.rows),
-                        header: columns
+                        data: response.data.data,
+                        keys: response.data.keys
                     }
                 },
                 function (httpError) {
@@ -68,18 +42,54 @@ function assayDataService($http, ngAppConfig) {
             );
         },
 
-        getAssays: function (projectId) {
-            return $http({
-                url: serviceBase + 'apps/explore/projects/' + projectId + '/assays/browse',
+        // getAssays: function (projectId) {
+        //     return $http({
+        //         url: serviceBase + 'apps/explore/projects/' + projectId + '/assays/browse',
+        //         method: 'GET'//,
+        //         //data: angular.toJson(observations)
+        //     }).then(
+        //         function (response) {
+        //             assays = response.data;
+        //             ready = true;
+        //
+        //             return {
+        //                 assays: (response.data)
+        //             }
+        //         },
+        //         function (httpError) {
+        //             // translate the error
+        //             throw httpError.status + " : " +
+        //             httpError.data;
+        //         }
+        //     );
+        //
+        // },
+
+        getAssaysInit: function (projectId) {
+            var initData = localStorageService.get('ptm.explorer.'+projectId+'.assays');
+            //if initData.timestamp < $scope.$parent.expVM.project.lastupdated
+            //then refresh from server
+            if(initData){
+                assays = initData.assays;
+                return $q.when(true,function(){
+                    return initData
+                })
+            }
+            else
+                return $http({
+                url: serviceBase + 'apps/explore/projects/' + projectId + '/assaysInit',
                 method: 'GET'//,
-                //data: angular.toJson(observations)
             }).then(
                 function (response) {
-                    assays = response.data;
+                    assays = response.data.assays;
                     ready = true;
-
+                    localStorageService.set('ptm.explorer.'+projectId+'.assays',{
+                        assays: (response.data.assays),
+                        xfdata: response.data.xfdata
+                    });
                     return {
-                        assays: (response.data)
+                        assays: (response.data.assays),
+                        xfdata: response.data.xfdata
                     }
                 },
                 function (httpError) {
@@ -88,13 +98,10 @@ function assayDataService($http, ngAppConfig) {
                     httpError.data;
                 }
             );
-
         }
-
-
     }
 }
 
 angular.module('biospeak.explorer')
-    .factory('assayDataService', ['$http', 'ngAppConfig', assayDataService])
+    .factory('assayDataService', ['$http', '$q','localStorageService','ngAppConfig', assayDataService])
 

@@ -3,82 +3,52 @@
  */
 
 'use strict'
-function fileController($scope, $state, $stateParams, SweetAlert, fileService){
+function driveController($scope, $state, $stateParams, SweetAlert, $uibModal, fileService){
 
-    //var vm = {}
-    //$scope.vm = vm;
-    //$scope.vm.selectedFiles={};
-    //$scope.vm.selectedFilesCount=0;
-    //
-    //$scope.vm.dir = $stateParams.dir
-    //$scope.vm.projectId = $stateParams.studyId
 
     var vm = this;
 
     vm.projectId = $stateParams.projectId;
-    vm.dir = $stateParams.dir;
     vm.dirId = $stateParams.dirId;
-    vm.selectedFiles={};
-    vm.selectedFilesCount=0;
     vm.showSideMenu = false;
     vm.showControls = false;
     vm.fileSelected = {};
-    vm.currentFile = '';
+    vm.currentFolderId = 0;
+    vm.contentLoaded = false;
 
 
     fileService.getDirectories(vm.projectId)
         .then(function(data){
             vm.dirs = data.files;
-            fileService.getContent(vm.projectId,vm.dirId)
-                .then(function(data){
-                    vm.files = data.files;
-                })
-        })
+        });
 
+    vm.createFolder = function(){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'dataStage/fileManager/newFolderForm.html',
+            controller: function ($uibModalInstance) {
+                var folderModalCtrl = this;
+                folderModalCtrl.ok = function () {
+                    var folder = {};
+                    folder.name = folderModalCtrl.name;
+                    folder.parentFolderId = $stateParams.dirId;
+                    console.log(folder)
+                    fileService.createDirectory(vm.projectId,folder).then(function () {
+                        $state.reload("project.drive.files");
+                    })
+                    $uibModalInstance.close();
+                };
 
-
-    //TODO:update it to reflect the new directoryId
-    vm.createDirectory = function(){
-        //console.log(vm.newdir)
-        if(vm.newdir)
-            fileService.createDirectory(vm.projectId,$scope.vm.newdir)
-                .then(function(data){
-                    fileService.getDirectories(vm.projectId)
-                        .then(function(data){
-                            vm.dirs = data.files;});
-
-                    $state.go('project.drive',{dir:$scope.vm.newdir});
-                })
+                folderModalCtrl.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            },
+            controllerAs: 'folderModalCtrl'
+        });
     }
 
     vm.openUpload = function(){
-
         $state.go('project.drive.upload',{dirId:vm.dirId})
     };
-
-    vm.updateFn = function(fileInfo){
-        if(fileInfo.selected){
-            $scope.vm.selectedFiles[fileInfo.fileName] = fileInfo//.dataFileId
-            $scope.vm.selectedFilesCount++
-        }
-        else{
-            /*index = selectedFiles.indexOf(fileInfo.fileName);
-             $scope.bdays.splice(index, 1);
-             */
-            delete $scope.vm.selectedFiles[fileInfo.fileName]
-            $scope.vm.selectedFilesCount--
-        }
-
-        //console.log($scope.vm.selectedFilesCount,$scope.vm.selectedFiles)
-    }
-
-    vm.clickFn = function(event){
-        if(event.target.classList.contains('outer'))
-        {
-            vm.showControls = false;
-            angular.element(document.querySelectorAll('.file > a.active')).removeClass('active')
-        }
-    }
 
     vm.deleteFile = function(){
         var fileId = vm.fileSelected.dataFileId;
@@ -89,7 +59,7 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel plx!",
+                cancelButtonText: "No, cancel plz!",
                 closeOnConfirm: false,
                 closeOnCancel: false },
             function (isConfirm) {
@@ -97,7 +67,11 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
                     fileService.deleteFile(fileId)
                         .then(function(data){
                             SweetAlert.swal("Deleted!", "File "+vm.fileSelected.fileName+" has been deleted.", "success");
-                            $state.go('project.drive',{dir:vm.dirId});
+                            $state.go('project.drive.files',{},{
+                                reload: true,
+                                inherit: true,
+                                notify: true
+                            });
                         })
                 } else {
                     SweetAlert.swal("Cancelled", "", "error");
@@ -108,14 +82,25 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
     }
 
     vm.fileClickFn = function(fileInfo){
-        angular.element(document.querySelectorAll('.file > a.active')).removeClass('active')
+        //console.log(fileInfo)
+        fileInfo.selected = true;
+        angular.element(document.querySelectorAll('.file > a.active')).toggleClass('active')
         angular.forEach(vm.files,function(file){
-            file.selected=false;
+            if(file.dataFileId !== fileInfo.dataFileId)
+                file.selected=false;
         })
-        if(fileInfo && !fileInfo.selected){
+
+        if(fileInfo && fileInfo.selected){
             vm.showControls = true;
             vm.fileSelected = fileInfo;
-            fileInfo.selected = !fileInfo.selected
+        }
+    }
+
+    vm.clickFn = function(event){
+        if(event.target.classList.contains('outer'))
+        {
+            vm.showControls = false;
+            angular.element(document.querySelectorAll('.file > a.active')).toggleClass('active')
         }
     }
 
@@ -123,34 +108,38 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
         if(!fileInfo){
             fileInfo =   vm.fileSelected
         }
-
+        vm.showControls = false;
         if(fileInfo.isDirectory){
-            $state.go('project.drive',{dirId:fileInfo.dataFileId})
+            vm.currentFolderId = fileInfo.dataFileId;
+            $state.go('project.drive.files',{dirId:fileInfo.dataFileId})
 
         }else{
-            //console.log(fileInfo)
-            //vm.currentFile = fileInfo
             $state.go('project.drive.view',{fileId:fileInfo.dataFileId})
         }
     };
 
-    vm.downloadFile = function(){
-        if(vm.fileSelected){
-            fileService.downloadFile(vm.fileSelected.dataFileId)
+    vm.downloadFile = function(file){
+        if(!file){
+            file =   vm.fileSelected
         }
+        if(file)
+            fileService.downloadFile(file.dataFileId)
     }
 
-    vm.load = function(){
-       console.log(vm.fileSelected)
-        if(vm.fileSelected)
-        //console.log($scope)
-        //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
-        $state.go('datastage.wizard.step_one',{projectId:vm.projectId, fileId:vm.fileSelected.dataFileId})
+    vm.load = function(file){
+        if(!file){
+            file =   vm.fileSelected
+        }
+        if(file)
+            $state.go('loader.wizard.step_one',{projectId:vm.projectId, fileId:file.dataFileId})
     };
 
-    vm.unload = function(){
-        //console.log(vm.fileSelected)
-        if(vm.fileSelected){
+    vm.unload = function(file){
+        if(!file){
+            file =   vm.fileSelected
+        }
+
+        if(file){
             SweetAlert.swal({
                     title: "Are you sure you want to unload "+vm.fileSelected.fileName+" ?",
                     text: "All previously loaded content will be unloaded from the database! ",
@@ -176,24 +165,14 @@ function fileController($scope, $state, $stateParams, SweetAlert, fileService){
         }
     }
 
-    vm.computeFields = function(){
-        if(vm.fileSelected)
-            fileService.computeFields(vm.fileSelected.dataFileId).then(function(){
-
-        })
-    }
-
     vm.showInfo = function(){
         console.log('toggling')
-        // $mdSidenav('right').toggle();
         vm.showSideMenu = !vm.showSideMenu;
         console.log(vm.fileSelected)
     }
 
-
-
 }
 
 angular.module('bioSpeak.DataStager')
-    .controller('fileController',['$scope', '$state','$stateParams','SweetAlert','fileService',fileController])
+    .controller('driveController',['$scope', '$state','$stateParams','SweetAlert','$uibModal','fileService',driveController])
 

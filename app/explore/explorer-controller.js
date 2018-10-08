@@ -23,6 +23,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
     };
     vm.loaded = false;
 
+    vm.showCart = false;
 
     XFilterLinker.initAll();
     DCchartingService.init();
@@ -36,6 +37,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
     }else {
         explorerService.getNewCartQuery(vm.projectId).then(function(query){
             vm.cartQuery = query.cart;
+            //console.log(query.cart)
         })
     }
 
@@ -45,6 +47,9 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
             vm.assays = assays;
         }
     },true);
+
+    //vm.cartIsEmpty = vm.cartQuery
+
 
     /*explorerService.getUserQueries(vm.projectId).then(function(response){
         vm.savedQueries = response.queries;
@@ -70,6 +75,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
 
             explorerService.removeFromCart(obsReq, obsModule);
         }
+        vm.cartObsCount = explorerService.getCartSize()
     };
 
     vm.onFiltered = function(obsId,module,filters, filter){

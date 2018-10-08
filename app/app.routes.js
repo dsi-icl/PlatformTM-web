@@ -3,10 +3,9 @@
  */
 angular.module('biospeak.app').config(function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider){
 
-    $urlRouterProvider.otherwise('/dashboard');
-
+    $urlRouterProvider.otherwise('/projects');
     $urlRouterProvider.when('', '/login');
-    $urlRouterProvider.when('/home', '/dashboard');
+    $urlRouterProvider.when('/home', '/projects');
 
 
     $ocLazyLoadProvider.config({
@@ -27,8 +26,7 @@ angular.module('biospeak.app').config(function($stateProvider, $urlRouterProvide
             templateUrl:"layout/content.html"
         })
         .state('home.dashboard',{
-            // url: "/admin/projects",
-            url: "/dashboard",
+            url: "/projects",
             templateUrl:"home/dashboard.html",
             controller:'DashboardCtrl as vm',
             resolve: {
@@ -55,7 +53,6 @@ angular.module('biospeak.app').config(function($stateProvider, $urlRouterProvide
 
                     ])
                 }],
-
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load(['home/dashboard-controller.js'
                     ]);

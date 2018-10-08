@@ -44,9 +44,9 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
 
             },
             function (httpError) {
-                console.log("error resp",httpError)
+                //console.log("error resp",httpError)
                 // translate the error
-                throw httpError.status + " : " +
+                throw '('+httpError.status + " : " + httpError.statusText + ") "+
                 httpError.data;
             });
     };
@@ -142,7 +142,7 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
             }
         }
 
-
+console.log(found)
         return found;
     };
 

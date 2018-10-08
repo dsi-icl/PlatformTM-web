@@ -8,40 +8,40 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
     var project;
     vm.projectId = $stateParams.projectId;
 
-    if($stateParams.projectId === 'new'){
-        console.log("New Project");
-        project = new projectService.getProjectResource();
-        project.isNew = true;
-        project.status = "New";
-        project.studies = [];
-        vm.project = project;
+    // if($stateParams.projectId === 'new'){
+    //     console.log("New Project");
+    //     project = new projectService.getProjectResource();
+    //     project.isNew = true;
+    //     project.status = "New";
+    //     project.studies = [];
+    //     vm.project = project;
+    //
+    //     var modalInstance = $uibModal.open({
+    //         templateUrl: 'admin/project/newForm.html',
+    //         controller: function ($uibModalInstance) {
+    //             var modalCtrl = this;
+    //             modalCtrl.ok = function () {
+    //
+    //                 console.log(modalCtrl.project)
+    //                 vm.project.name = modalCtrl.project.name;
+    //                 vm.project.title = modalCtrl.project.title;
+    //                 vm.saveProject();
+    //                 $uibModalInstance.close();
+    //             };
+    //
+    //             modalCtrl.cancel = function () {
+    //                 $uibModalInstance.dismiss('cancel');
+    //                 vm.dontSaveProject();
+    //
+    //             };
+    //         },
+    //         controllerAs: 'modalCtrl'
+    //     });
+    //     vm.ready = true
+    // }
 
-        var modalInstance = $uibModal.open({
-            templateUrl: 'admin/project/newForm.html',
-            controller: function ($uibModalInstance) {
-                var modalCtrl = this;
-                modalCtrl.ok = function () {
-                    $uibModalInstance.close();
-                    console.log(modalCtrl.project)
-                    vm.project.name = modalCtrl.project.name;
-                    vm.project.title = modalCtrl.project.title;
-                    vm.saveProject();
 
-                };
-
-                modalCtrl.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                    vm.dontSaveProject();
-
-                };
-            },
-            controllerAs: 'modalCtrl'
-        });
-        vm.ready = true
-    }
-
-
-    else if($stateParams.projectId){
+    if($stateParams.projectId){
         projectService.getProjectResource.getProjectByAccession({ projectId: $stateParams.projectId },
             function(response){
                 project = response;
@@ -49,20 +49,22 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
                 vm.project = project
                 vm.ready = true
         });
+
+        //Retrieves list of study activities
+        projectService.getProjectResource.getActivitiesForProject({projectId:vm.projectId},function(response){
+            vm.activities = response;
+        });
+
+        projectService.getProjectUsers(vm.projectId).then(function(users){
+            vm.users = users;
+        })
     }
 
 
 
 
 
-    //Retrieves list of study activities
-    projectService.getProjectResource.getActivitiesForProject({projectId:vm.projectId},function(response){
-        vm.activities = response;
-    });
 
-    projectService.getProjectUsers(vm.projectId).then(function(users){
-        vm.users = users;
-    })
 
     vm.openUpload = function() {
         console.log($stateParams)
@@ -71,9 +73,9 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
 
     vm.goToActivity = function(activity,edit){
         if(activity.isAssay)
-            $state.go('project.manager.assay',{ projectId:vm.projectId, assayId: activity.id, edit:edit})
+            $state.go('define.assay',{ projectId:vm.projectId, assayId: activity.id, edit:edit})
         else
-            $state.go('project.manager.activity',{ projectId:vm.projectId, activityId: activity.id, edit:edit})
+            $state.go('define.activity',{ projectId:vm.projectId, activityId: activity.id, edit:edit})
     }
 
     vm.removeActivity = function(activity){
@@ -155,16 +157,16 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
             });
     }
 
-    vm.editUserPermissions = function(projectId,user){
+    vm.addUser = function(projectId,user){
         var modalInstance = $uibModal.open({
             templateUrl: 'admin/users/user.html',
             controller: function ($uibModalInstance) {
                 var userModalCtrl = this;
 
                 this.user = user;
-                projectService.getUserClaims(userId,projectId).then(function (claims) {
-                   this.userclaims = claims;
-                });
+                // projectService.getUserClaims(userId,projectId).then(function (claims) {
+                //    this.userclaims = claims;
+                // });
                 userModalCtrl.ok = function () {
                     //var ad = new checkoutService.getAnalysisDatasetResource();
 

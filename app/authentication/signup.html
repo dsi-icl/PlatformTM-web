@@ -23,17 +23,21 @@
                                                             <div class="col-md-12">
                                                                 <h3>Create an account</h3>
                                                                 <div class="form-group">
-                                                                    <input type="text" placeholder="First Name" class="form-control" data-ng-model="registration.firstName" required autofocus>
+                                                                    <input type="text" placeholder="Username" autocomplete="user-name" class="form-control" data-ng-model="registration.username" required autofocus>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="text" placeholder="Last Name" class="form-control" data-ng-model="registration.lastName" required>
+                                                                    <input type="email" placeholder="Email" autocomplete="email" class="form-control" data-ng-model="registration.email" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="text" placeholder="Organization" class="form-control" data-ng-model="registration.organization" required>
+                                                                    <input type="text" placeholder="First Name" autocomplete="given-name" class="form-control" data-ng-model="registration.firstName" required autofocus>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="email" placeholder="Email" class="form-control" data-ng-model="registration.email" required>
+                                                                    <input type="text" placeholder="Last Name" autocomplete="family-name" class="form-control" data-ng-model="registration.lastName" required>
                                                                 </div>
+                                                                <div class="form-group">
+                                                                    <input type="text" placeholder="Organization" autocomplete="organization" class="form-control" data-ng-model="registration.organization" required>
+                                                                </div>
+
                                                                 <div class="form-group">
                                                                     <input type="password" placeholder="Password" class="form-control" data-ng-model="registration.password" required>
                                                                 </div>

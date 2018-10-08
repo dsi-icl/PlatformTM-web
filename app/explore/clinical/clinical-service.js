@@ -3,13 +3,12 @@
  */
 
 'use strict'
-function ClinicalDataService($http,$q,ngAppConfig){
+function ClinicalDataService($http,$q,localStorageService,ngAppConfig){
         var serviceBase = ngAppConfig.apiServiceBaseUri;
 
         return {
             getObservations: function(projectId,observations) {
                 return $http({
-                    // url:serviceBase+'api/projects/'+projectId+'/data/clinical/observations',
                     url:serviceBase+'apps/explore/projects/'+projectId+'/observations/clinical/search',
                     method:'POST',
                     data: angular.toJson(observations)
@@ -17,10 +16,6 @@ function ClinicalDataService($http,$q,ngAppConfig){
                     .then(
                     function (response) {
                         return {
-                            // findingsTbl: (response.data.findingsTbl),
-                            // eventsTbl: (response.data.eventsTbl),
-                            // findingsTblHeader: (response.data.findingsTblHeader),
-                            // eventsTblHeader: (response.data.eventsTblHeader)
                             data: response.data.data,
                             keys: response.data.keys
                         }
@@ -33,17 +28,29 @@ function ClinicalDataService($http,$q,ngAppConfig){
             },
 
             getClinicalDataTree: function(projectId){
-                return $http({
-                    url: serviceBase+'apps/explore/projects/'+projectId+'/observations/clinical/browse',
-                    method:'GET',
-                    cache: true,
-                }).then(
-                        function (response){
+                var initData = localStorageService.get('ptm.explorer.'+projectId+'.clinical');
+                //if initData.timestamp < $scope.$parent.expVM.project.lastupdated
+                //then refresh from server
+                if(initData){
+                    return $q.when(true,function(){
+                        return initData
+                    })
+                }
+                else
+                {
+                    return $http({
+                        url: serviceBase+'apps/explore/projects/'+projectId+'/observations/clinical/browse',
+                        method:'GET',
+                        cache: true,
+                    }).then(function (response){
+                        localStorageService.set('ptm.explorer.'+projectId+'.clinical',{treeData: (response.data)});
                             return {
                                 treeData: (response.data)
                             }
-                        }
-                    )
+                        })
+                }
+
+
             },
 
             getGroupObsNode: function(projectId,obsRequests){
@@ -72,5 +79,5 @@ function ClinicalDataService($http,$q,ngAppConfig){
         }
     }
 angular.module('biospeak.explorer')
-    .factory('clinicalDataService',['$http','$q','ngAppConfig', ClinicalDataService]);
+    .factory('clinicalDataService',['$http','$q','localStorageService','ngAppConfig', ClinicalDataService]);
 

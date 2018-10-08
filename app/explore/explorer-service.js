@@ -16,7 +16,7 @@ function explorerService($http,ngAppConfig,$q) {
 
     var _getCartQuery = function(projectId,cartId){
         return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            url:serviceBase+'queries/'+cartId,
             method:'GET'
         })
             .then(
@@ -34,9 +34,8 @@ function explorerService($http,ngAppConfig,$q) {
     };
 
     var _getNewCartQuery = function(projectId){
-        var cartId = "new";
         return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            url:serviceBase+'queries/new/'+projectId,
             method:'GET'
         })
             .then(
@@ -54,7 +53,6 @@ function explorerService($http,ngAppConfig,$q) {
     };
 
     var _addToCart = function(item, module){
-        //console.log('Adding ',item, module)
 
         if(item.isSubjectCharacteristics || item.isDesignElement)
             currentCart.subjCharRequests.push(item);
@@ -63,9 +61,20 @@ function explorerService($http,ngAppConfig,$q) {
         if(item.isSampleCharacteristic){
             currentCart.assayPanelRequests[module].isRequested = true;
             currentCart.assayPanelRequests[module].sampleQuery.push(item);
-         console.debug(currentCart.assayPanelRequests[module])
+         // console.debug(currentCart.assayPanelRequests[module])
         }
     };
+
+    var _getCartSize = function () {
+        var count = 0;
+        count+= currentCart.subjCharRequests.length;
+        count+= currentCart.obsRequests.length;
+        for (var assayId in currentCart.assayPanelRequests){
+            if(currentCart.assayPanelRequests[assayId].isRequested)
+                count++;
+        }
+        return count;
+    }
 
     var _removeFromCart = function(item, module){
         // console.log(item,module,currentCart.assayPanelRequests[module])
@@ -233,7 +242,7 @@ function explorerService($http,ngAppConfig,$q) {
     var _saveQuery = function(query,projectId){
 
         return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/saveQuery',
+            url:serviceBase+'queries',
             method:'POST',
             data: angular.toJson(currentCart)
         })
@@ -270,6 +279,7 @@ function explorerService($http,ngAppConfig,$q) {
     explorerServiceFactory.saveQuery = _saveQuery;
     explorerServiceFactory.getCartQuery = _getCartQuery;
     explorerServiceFactory.getNewCartQuery = _getNewCartQuery;
+    explorerServiceFactory.getCartSize = _getCartSize;
 
 
     explorerServiceFactory.cartIsReady = _cartIsReady;

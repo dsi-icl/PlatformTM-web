@@ -1,0 +1,17 @@
+<div class="modal-body myform">
+    <h2>New folder</h2>
+    <div class="m-t-md">
+        <form  id="form_{{ds.id}}" role="form" >
+
+            <div class="form-group"><label>Folder Name </label>
+                <input ng-model="folderModalCtrl.name" type="text" placeholder="Enter name" class="form-control"
+                       required>
+            </div>
+        </form>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-white" ng-click="folderModalCtrl.cancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" ng-click="folderModalCtrl.ok()">Create</button>
+</div>

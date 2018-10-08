@@ -6,22 +6,20 @@
 
             <div>
                 <select class="form-control m-b" name="activitySelect" id="activitySelect"
-                        data-ng-model="vm.selectedActivity" ng-options="activity.name for activity in activities">
-                <!--<option value="" disabled selected style="display: none;">Select Activity</option>
-                <option ></option>-->
+                        data-ng-model="step1Ctrl.selectedActivity" ng-options="activity.name for activity in step1Ctrl.activities">
                 </select>
             </div>
 
-            <div ng-if="vm.selectedActivity!=null">
+            <div ng-if="step1Ctrl.selectedActivity!=null">
                 <h5>Associated Datasets</h5>
-                <div ng-repeat="ds in vm.selectedActivity.datasets">
-                    <label> <input required icheck type="radio" name="radioDSselect" ng-model="vm.selectedDataset" ng-value="ds"> {{ds.name}}&nbsp;&nbsp;({{ds.domainId}}) </label>
+                <div ng-repeat="ds in step1Ctrl.selectedActivity.datasets">
+                    <label> <input required icheck type="radio" name="radioDSselect" ng-model="step1Ctrl.selectedDataset" ng-value="ds"> {{ds.name}}&nbsp;&nbsp;({{ds.domainId}}) </label>
                 </div>
             </div>
         </div>
     </div>
 
-    <a ng-click="goToStep2()" data-ng-disabled="!vm.selectedDataset || !vm.selectedActivity" class="btn btn-primary pull-right">Next</a>
-    <a ui-sref="datastage.files"  class="btn btn-primary ">Cancel</a>
+    <a ng-click="wzCtrl.goToStep2(step1Ctrl.selectedActivity.id,step1Ctrl.selectedDataset.id)" data-ng-disabled="!step1Ctrl.selectedDataset || !step1Ctrl.selectedActivity" class="btn btn-primary pull-right">Next</a>
+    <a ng-click="wzCtrl.cancel()"  class="btn btn-primary ">Cancel</a>
 
 </fieldset>

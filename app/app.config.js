@@ -3,7 +3,7 @@
  */
 var biospeakApp = angular.module('biospeak.app')
 
-    .run(function($rootScope, $location,$state, AUTH_EVENTS, authService){
+    .run(function($rootScope, $location,$state, $uibModalStack,AUTH_EVENTS, authService){
 
         $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
             $location.path('/login');
@@ -13,8 +13,15 @@ var biospeakApp = angular.module('biospeak.app')
             $state.go('home.unauthorized');
         });
 
-        $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
+        $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
+            $state.go('home.dashboard');
+        });
 
+        $rootScope.$on(AUTH_EVENTS.accountCreated, function() {
+            $state.go('login');
+        });
+
+        $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
 
 
             if (!authService.checkPermissionForView(next,toParams)){
@@ -22,6 +29,7 @@ var biospeakApp = angular.module('biospeak.app')
                 $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
             }//else
                 //console.log('OK to proceed')
+            $uibModalStack.dismissAll();
         });
 
 
@@ -42,7 +50,8 @@ biospeakApp.constant('AUTH_EVENTS', {
     logoutSuccess: 'auth-logout-success',
     sessionTimeout: 'auth-session-timeout',
     notAuthenticated: 'auth-not-authenticated',
-    notAuthorized: 'auth-not-authorized'
+    notAuthorized: 'auth-not-authorized',
+    accountCreated: 'auth-account-created'
 });
 biospeakApp.constant('USER_ROLES', {
     all: '*',
@@ -52,10 +61,10 @@ biospeakApp.constant('USER_ROLES', {
 })
 
 biospeakApp.constant('ngAppConfig', {
-    //apiServiceBaseUri: '/api/v1/'
+    apiServiceBaseUri: '/api/v1/'
     //apiServiceBaseUri: 'http://146.169.32.103/api/v1/'
     //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
     //apiServiceBaseUri: 'http://146.169.15.65:2483/'
-    //apiServiceBaseUri: 'http://localhost:2483/'
-    apiServiceBaseUri: 'http://localhost:5000/'
+    //apiServiceBaseUri: 'http://localhost:2483/api/v1/'
+    //apiServiceBaseUri: 'http://localhost:5000/'
 });
