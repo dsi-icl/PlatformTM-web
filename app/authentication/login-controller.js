@@ -30,16 +30,16 @@
                 },
                 function (err) {
                     $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                    //console.log(err);
-                    /*var errors = [];
-                    for (var key in err) {
-                        for (var i = 0; i < err[key].length; i++) {
-                            errors.push(err[key][i]);
-                        }
-                    }*/
+                    console.log(err);
+                    // var errors = [];
+                    // for (var key in err) {
+                    //     for (var i = 0; i < err[key].length; i++) {
+                    //         errors.push(err[key][i]);
+                    //     }
+                    // }
                     vm.isSigningIn = false;
                     vm.loginfailed = true;
-                    vm.loginMessage = "Failed to log in: Invalid username or password"
+                    vm.loginMessage = err//"Failed to log in: Invalid username or password"
                 });
         }
     }

@@ -17,6 +17,10 @@ var biospeakApp = angular.module('biospeak.app')
             $state.go('home.dashboard');
         });
 
+        $rootScope.$on(AUTH_EVENTS.accountCreated, function() {
+            $state.go('login');
+        });
+
         $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
 
 
@@ -46,7 +50,8 @@ biospeakApp.constant('AUTH_EVENTS', {
     logoutSuccess: 'auth-logout-success',
     sessionTimeout: 'auth-session-timeout',
     notAuthenticated: 'auth-not-authenticated',
-    notAuthorized: 'auth-not-authorized'
+    notAuthorized: 'auth-not-authorized',
+    accountCreated: 'auth-account-created'
 });
 biospeakApp.constant('USER_ROLES', {
     all: '*',

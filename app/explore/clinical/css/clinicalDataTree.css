@@ -208,6 +208,7 @@
 .plotting-options.dropdown-menu {
     top: 25px;
     width: 250px;
+    color: initial;
 
 }
 

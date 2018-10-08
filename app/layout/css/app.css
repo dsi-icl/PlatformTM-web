@@ -767,6 +767,13 @@ div .dc-chart{
     color:#ed5565;
     font-weight: 400;
 }
+.obs-chart .chart-loading{
+    top: 140px;
+    left: 125px;
+    color: #23c6c8;
+    text-align: center;
+    position: absolute;
+}
 
 .img-dashboard{
     width: 100px;

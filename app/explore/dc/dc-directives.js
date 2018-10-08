@@ -65,7 +65,7 @@ angular.module('biospeak.dcPlots')
                     '<div class="chart-title">'+
                         '<h5>{{obs.qO2_label}}</h5>'+
                     '</div>'+
-            '<div  ng-if="!done" style="margin-top: 100px; color: #23c6c8; text-align: center" >'+
+            '<div  ng-if="!done" class="chart-loading" >'+
             '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>'+
             '<span class="sr-only">Loading...</span>'+
             '</div>'+

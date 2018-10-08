@@ -6,7 +6,7 @@
 
     'use strict';
 
-    function signupController($scope, $location, $state, authService){
+    function signupController($rootScope,$scope,$location, $state, AUTH_EVENTS, authService){
 
         $scope.savedSuccessfully = false;
         $scope.message = "";
@@ -19,14 +19,15 @@
             organization: "",
             email: "",
             password: "",
-            confirmPassword: ""
+            confirmPassword: "",
+            username:""
         };
 
         $scope.$state = $state;
 
         $scope.signUp = function () {
 
-            $scope.registration.userName = $scope.registration.email
+            //$scope.registration.userName = $scope.registration.email
             authService.saveRegistration($scope.registration).then(function (response) {
 
                     $scope.savedSuccessfully = true;
@@ -34,10 +35,11 @@
                     //$scope.qrCode = response.psk;
                     //$scope.qrCodeSrc = "https://chart.googleapis.com/chart?chs=260x260&chld=M|0&cht=qr&chl=otpauth://totp/" + $scope.registration.userName + "%3Fsecret%3D" + $scope.qrCode;
 
-                    $scope.registration.userName= "";
+                    $scope.registration.username= "";
                     $scope.registration.password = "";
                     $scope.registration.confirmPassword = "";
-                    $location.path('/dashboard');
+                    $rootScope.$broadcast(AUTH_EVENTS.accountCreated);
+                    //$location.path('/login');
 
                 },
                 function (response) {
@@ -56,6 +58,6 @@
     }
 
     angular.module('bioSpeak.userAuth')
-        .controller('signupController', ['$scope', '$location', '$state', 'authService',signupController])
+        .controller('signupController', ['$rootScope','$scope', '$location', '$state','AUTH_EVENTS','authService',signupController])
 
 })();
