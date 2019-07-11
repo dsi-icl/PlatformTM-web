@@ -68,7 +68,7 @@ function ActivityConfigCtrl($scope,$state, $stateParams, ActivityConfigService,$
     ];
 
     var activity;
-    if($stateParams.activityId===0){
+    if($stateParams.activityId==0){
         console.log("New Activity");
         activity = new ActivityConfigService.getActivityResource();
         activity.projectId = $stateParams.projectId;//"Study1"

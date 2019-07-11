@@ -66,7 +66,7 @@
             <div class="ibox">
                 <div class="ibox-title panel-header ">
                     <span class="pull-right">
-                        <a ng-click ="vm.addUser()"class=" btn-link"><i class="fa fa-plus"></i></a>
+                        <!--<a ng-click ="vm.addUser()"class=" btn-link"><i class="fa fa-plus"></i></a>-->
                     </span>
                     <h3>Users</h3>
 
@@ -84,7 +84,7 @@
                                             <i class="fa fa-ellipsis-v"></i>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu >
-                                            <li> <a ng-click="vm.editUserPermissions(vm.projectId,u)"><i class="fa fa fa-edit"></i>&nbsp; Edit</a></li>
+                                            <li> <a ng-click="vm.editUser(vm.projectId,u)"><i class="fa fa fa-edit"></i>&nbsp; Edit</a></li>
 
                                             <li><a ng-click="vm.removeUser(vm.projectId,u.id)"><i class="fa fa-remove"></i>&nbsp; Remove</a></li>
                                         </ul>
@@ -113,14 +113,14 @@
                 <div class="ibox-title panel-header">
                     <h3>Activities
                         <span class="pull-right">
-                            <div ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
+                            <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
                                 <a class="dropdown-toggle" href uib-dropdown-toggle>
                                     <i class="fa fa-plus"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-right plotting-options" uib-dropdown-menu>
-                                    <li><a ui-sref="manage.activity({projectId:vm.projectId,activityId:0})">&nbsp; New Clinical Activity</a></li>
+                                    <li><a ui-sref="define.activity({projectId:vm.projectId,activityId:0})">&nbsp; New Clinical Activity</a></li>
 
-                                    <li><a ui-sref="manage.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>
+                                    <li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>
                                 </ul>
                             </div>
                         </span>
@@ -142,9 +142,9 @@
                     <div uib-alert class=" alert-info" ng-if="!vm.activities.length>0">
                         <h4>No Activities added
                             <div class=" btn-group pull-right">
-                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="manage.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>
 
-                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="manage.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
                             </div>
                         </h4>
                     </div>

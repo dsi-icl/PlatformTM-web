@@ -155,7 +155,10 @@ function driveController($scope, $state, $stateParams, SweetAlert, $uibModal, fi
                         fileService.unloadFile(vm.fileSelected.dataFileId)
                             .then(function (data) {
                                 SweetAlert.swal("Unloaded!", "File " + vm.fileSelected.fileName + " has been unloaded from the database.", "success");
-                                $state.go('datastage.files', {dir: vm.dir});
+                                //$state.go('project.drive.files',{projectId:vm.projectId,dirId:vm.dirId});
+                                //console.log(vm.dirId)
+                                //$state.go('project.drive.files',{dirId:vm.dirId})
+                                $state.go($state.current, {}, {reload: true});
                             })
                     } else {
                         SweetAlert.swal("Cancelled", "", "error");

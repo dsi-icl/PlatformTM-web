@@ -11,29 +11,26 @@ var hasPermission =  function(authService) {
             //     throw 'hasPermission value must be a string'
             // }
 
-            console.log('here',scope)
+            //console.log('here',scope)
             var value = scope.hasPermission.trim();
 
             var notPermissionFlag = value[0] === '!';
 
-            console.log(value[0],notPermissionFlag)
+            console.log(notPermissionFlag)
             if(notPermissionFlag) {
                 value = value.slice(1).trim();
             }
 
-            function toggleVisibilityBasedOnPermission() {
-                var hasPermission = authService.userHasPermission(value,scope.project);
-                console.log(hasPermission)
-                if(hasPermission && !notPermissionFlag || !hasPermission && notPermissionFlag) {
-                    element[0].style.display = 'block';
-                }
-                else {
+            authService.userHasPermission(value,scope.project).then(function(haspermission){
+                if(haspermission && !notPermissionFlag || !haspermission && notPermissionFlag) {
+                            element[0].style.display = 'block';
+                } else {
                     element[0].style.display = 'none';
+                    element[0].remove();
                 }
-            }
 
-            toggleVisibilityBasedOnPermission();
-            scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
+            })
+            //scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
         }
     };
 }

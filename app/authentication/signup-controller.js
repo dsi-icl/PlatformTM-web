@@ -12,6 +12,7 @@
         $scope.message = "";
         $scope.qrCodeSrc = "";
         $scope.qrCode = "";
+        $scope.accountcreated = false;
 
         $scope.registration = {
             firstName: "",
@@ -38,8 +39,9 @@
                     $scope.registration.username= "";
                     $scope.registration.password = "";
                     $scope.registration.confirmPassword = "";
-                    $rootScope.$broadcast(AUTH_EVENTS.accountCreated);
+                    //$rootScope.$broadcast(AUTH_EVENTS.accountCreated);
                     //$location.path('/login');
+                    $scope.accountcreated = true;
 
                 },
                 function (response) {
@@ -54,6 +56,12 @@
                     $scope.message = "Failed to register user:" + errors.join(' ');
                 });
         };
+
+        $scope.copyEmail = function(){
+            console.log($scope.registration)
+            console.log($scope.registration.username)
+            $scope.registration.username = angular.copy($scope.registration.email);
+        }
 
     }
 

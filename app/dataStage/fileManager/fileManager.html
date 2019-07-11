@@ -5,7 +5,7 @@
 <div class="row project-drive animated fadeIn" ng-show="driveVM.contentLoaded">
 
     <div class="file-tree">
-        <div class="m-t-sm m-b-xs text-center p-w-m" uib-dropdown >
+        <div has-permission="can-manage-drive" project = "driveVM.projectId" class="m-t-sm m-b-xs text-center p-w-m" uib-dropdown >
             <a uib-dropdown-toggle class="btn btn-lg btn-circle btn-info" style="padding: 14px 17px;"><i class="fa fa-plus"></i></a>
             <ul uib-dropdown-menu class="animated fadeInDown m-t-xs" style="margin-top: 30px; margin-right: 15px;">
                 <li><a ng-click="driveVM.createFolder()">

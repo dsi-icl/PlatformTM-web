@@ -11,11 +11,6 @@ function config($stateProvider, $urlRouterProvider) {
             templateUrl: "projectHome/projectContent.html",
             controller: "ProjectHomeCtrl as projVM",
             resolve: {
-                /*loadDirective: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        'dataStage/fileManager/file-directive.js'
-                    ]);
-                }],*/
                 loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load(
                         {
@@ -25,20 +20,7 @@ function config($stateProvider, $urlRouterProvider) {
                             ]
                         }
                     )
-                }]/*,
-                loadPlugin: function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        {
-                            serie:true,
-                            files: ['lib/plugins/iCheck/custom.css','lib/plugins/ngSweetAlert/css/sweetalert.css',
-                                'lib/plugins/iCheck/icheck.min.js',
-                                'lib/plugins/angular-xeditable/js/xeditable.min.js',
-                                'lib/plugins/angular-xeditable/css/xeditable.css',
-                                'lib/plugins/ngSweetAlert/js/sweetalert.min.js',
-                                'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js']
-                        }
-                    ]);
-                }*/
+                }]
             }
         })
         .state('project.home', {
@@ -60,21 +42,25 @@ function config($stateProvider, $urlRouterProvider) {
                             ]
                         }
                     )
-                }]/*,
-                loadPlugin: function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        {
-                            serie:true,
-                            files: ['lib/plugins/iCheck/custom.css','lib/plugins/ngSweetAlert/css/sweetalert.css',
-                                'lib/plugins/iCheck/icheck.min.js',
-                                'lib/plugins/angular-xeditable/js/xeditable.min.js',
-                                'lib/plugins/angular-xeditable/css/xeditable.css',
-                                'lib/plugins/ngSweetAlert/js/sweetalert.min.js',
-                                'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js']
-                        }
-                    ]);
-                }*/
+                }]
             }
+        })
+        .state('project.403', {
+            url: "/restrictedaccess",
+            templateUrl: "projectHome/403.html"//,
+            //controller: "ProjectSummaryCtrl as vm",
+            // resolve: {
+            //     loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
+            //         return $ocLazyLoad.load(
+            //             {
+            //                 serie: true,
+            //                 files: [
+            //                     'projectHome/projectSummary-controller.js'
+            //                 ]
+            //             }
+            //         )
+            //     }]
+            // }
         })
 }
 

@@ -414,7 +414,7 @@ angular.module('biospeak.dcPlots')
 
                     var noOfGroups = cfGroup.size();
 
-                    if (noOfGroups > 1) {
+                    if (noOfGroups > 2) {
                         //console.log("Plotting a DC row chart ")
                         chartType = "rowChart"
                         chartOptions["elasticX"] = "true"

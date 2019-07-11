@@ -59,13 +59,9 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
             }
         })
 
-        .state('validated',{
-            url:"/accountvalidated",
-            templateUrl:"authentication/accountvalidated.html",
-            controller:'accountvalidated',
-            loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load('authentication/accountvalidated-controller.js');
-            }]
+        .state('verified',{
+            url:"/verified",
+            templateUrl:"authentication/accountverified.html"
         })
 
     $httpProvider.interceptors.push('authInterceptorService');

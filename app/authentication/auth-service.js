@@ -86,11 +86,60 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
     };
 
     var _checkPermissionForView = function(view, params) {
-        if (!view.data || !view.data.requiresAuthentication) {
-            return true;
+        var deferred = $q.defer();
+
+        if (!view || !view.data || !view.data.requiresAuthentication || !view.data.permissions.length) {
+            deferred.resolve(true);
         }
 
-        return _userHasPermissionForView(view,params);
+        if(!_isLoggedIn()){
+            deferred.resolve(false);//return false;
+        }
+
+        // if(!view.data || !view.data.permissions.length){
+        //     return true;
+        // }
+
+
+        var projectId;
+        if(params.projectId)
+            projectId = params.projectId;
+
+
+        var found = false;
+
+
+        //console.log('checking permissions for ', permissions);
+        //console.log('user claims are',userSession.getUserClaims() )
+        if(view.data)
+        _getUserClaims().then(function(userpermissions){
+
+            if(angular.isArray(view.data.permissions)){
+                angular.forEach(view.data.permissions, function(permission, index){
+                    if(projectId)
+                        permission = permission+"-"+projectId;
+                     // console.log('looking for ',permission,'in', userpermissions)
+                    if (userpermissions.indexOf(permission) >= 0){
+                        found = true;
+                        return//deferred.resolve(true)
+                    }
+                });
+            }
+            if(angular.isString(view.data.permissions)){
+                if(projectId)
+                    var permission = view.data.permissions+"-"+projectId;
+                 // console.log('looking for ',permission,'in', userpermissions)
+                if (userpermissions.indexOf(permission) >= 0){
+                    found = true;
+                    return//deferred.resolve(true)
+                }
+            }
+            // console.log(found)
+            deferred.resolve(found)//return found;
+
+        });
+
+        return deferred.promise;//_userHasPermissionForView(view,params);
     };
 
     var _userHasPermissionForView = function(view,params){
@@ -102,7 +151,7 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
             return true;
         }
 
-        console.log(view,params);
+        //console.log(view,params);
         var projectId;
         if(params.projectId)
             projectId = params.projectId;
@@ -110,40 +159,54 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
         return _userHasPermission(view.data.permissions,projectId);
     };
 
+    var _getUserClaims = function(){
+        return $http({
+            url: serviceBase + 'accounts/userclaims',
+            method: 'GET'
+        }).then(
+            function (response) {
+                return response.data.result
+
+            }
+        );
+    }
+
     var _userHasPermission = function(permissions,projectId){
+        var deferred = $q.defer();
+
         if(!_isLoggedIn()){
-            return false;
+            deferred.resolve(false);
         }
 
         var found = false;
 
+        _getUserClaims().then(function(userpermissions){
 
-        console.log('checking permissions for ', permissions);
-        console.log('user claims are',userSession.getUserClaims() )
-
-        if(angular.isArray(permissions)){
-            angular.forEach(permissions, function(permission, index){
-                if(projectId)
-                    permission = permission+"-"+projectId;
-                console.log('looking for ',permission,'in', userSession.getUserClaims())
-                if (userSession.getUserClaims().indexOf(permission) >= 0){
-                    found = true;
-                    return;
-                }
-            });
-        }
-        if(angular.isString(permissions)){
-            if(projectId)
-                permissions = permissions+"-"+projectId;
-            console.log('looking for ',permissions,'in', userSession.getUserClaims())
-            if (userSession.getUserClaims().indexOf(permissions) >= 0){
-                found = true;
-                return found;
+            if(angular.isArray(permissions)){
+                angular.forEach(permissions, function(permission, index){
+                    if(projectId)
+                        permission = permission+"-"+projectId;
+                    // console.log('looking for ',permission,'in', userpermissions)
+                    if (userpermissions.indexOf(permission) >= 0){
+                        found = true;
+                        return;
+                    }
+                });
             }
-        }
+            if(angular.isString(permissions)){
+                if(projectId)
+                    permissions = permissions+"-"+projectId;
+                // console.log('looking for ',permissions,'in', userpermissions)
+                if (userpermissions.indexOf(permissions) >= 0){
+                    found = true;
+                    //return;
+                }
+            }
+            //console.log(found)
+            deferred.resolve(found)
 
-console.log(found)
-        return found;
+        });
+        return deferred.promise;
     };
 
     authServiceFactory.saveRegistration = _saveRegistration;

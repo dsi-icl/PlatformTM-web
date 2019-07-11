@@ -8,7 +8,7 @@
             File header matched associated template <a class="alert-link" ng-click="wzCtrl.goToStep3()">Skip to next step</a>.
         </div>
         <div class="alert alert-warning" ng-show="step2Ctrl.file.percentMatched == 0" close="main.closeAlert()">
-            File is not structured according to the defined descriptor. Click <a ui-sref="admin.activity({activityId:vm.activityId, projectId: vm.projectId})">here</a> to review the descriptor.
+            File is not structured according to the defined descriptor. Click <a ui-sref="define.activity({activityId:vm.activityId, projectId: vm.projectId})">here</a> to review the descriptor.
 
         </div>
         <div class="alert alert-warning m-b-none" ng-show="step2Ctrl.file.percentMatched > 0 && step2Ctrl.file.percentMatched < 100" close="main.closeAlert()">

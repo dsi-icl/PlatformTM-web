@@ -12,11 +12,11 @@
 
     <div ng-show="driveVM.showControls" class=" btn-group pull-right" >
         <button ng-click="driveVM.load()" ng-show="!driveVM.fileSelected.isDirectory"  class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Load File"><i class="fa fa-arrow-right"></i><i class="fa fa-database"></i> </button>
-        <button ng-click="driveVM.unload()" ng-show="!driveVM.fileSelected.isDirectory && vm.fileSelected.isLoaded" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Unload file from DB"><i class="fa fa-database"></i><i class="fa fa-arrow-right"></i></button>
+        <button has-permission="can-manage-etl" project = "driveVM.projectId" ng-click="driveVM.unload()" ng-show="!driveVM.fileSelected.isDirectory && driveVM.fileSelected.isLoaded" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Unload file from DB"><i class="fa fa-database"></i><i class="fa fa-arrow-right"></i></button>
         <button ng-click="driveVM.openF()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Preview"><i class="fa fa-eye"></i></button>
         <button ng-click="driveVM.downloadFile()" ng-if="!driveVM.fileSelected.isDirectory" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Download File"><i class="fa fa-download"></i></button>
         <button ng-click="driveVM.showInfo()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="View Details"><i class="fa fa-info-circle"></i></button>
-        <button ng-click="driveVM.deleteFile()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Delete File"><i class="fa fa-trash"></i></button>
+        <button has-permission="can-manage-drive" project = "driveVM.projectId" ng-click="driveVM.deleteFile()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Delete File"><i class="fa fa-trash"></i></button>
 
         <!--<span uib-dropdown on-toggle="toggled(open)">
          <button id="simple-dropdown" class="btn btn-white btn-sm" uib-dropdown-toggle><i class="fa fa-ellipsis-v"></i></button>

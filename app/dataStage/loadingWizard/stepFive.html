@@ -1,7 +1,8 @@
 
 <fieldset>
-    <div ng-hide="step5Ctrl.isLoading || step5Ctrl.isFinished" class="m-b-md">
+    <div has-permission="can-manage-etl" projectId="step5Ctrl.projectId" ng-hide="step5Ctrl.isLoading || step5Ctrl.isFinished" class="m-b-md">
         <a ng-click="step5Ctrl.loadFile2()" class="btn btn-outline btn-info btn-md btn-block" data-ng-disabled="step5Ctrl.isLoading">START LOADING </a>
+        <label style="display: none">YOU HAVE READ ONLY ACCESS</label>
     </div>
 
 

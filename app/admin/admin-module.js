@@ -11,11 +11,11 @@ var managerConfig = function($stateProvider){
             abstract : true,
             url: "/admin",
             templateUrl:"admin/project/adminContent.html",
-            data: {
-                //requiresAuthentication: true,
-                //permissions: ["can-manage"],
-                // authorizedRoles: [USER_ROLES.admin, USER_ROLES.editor]
-            },
+            // data: {
+            //     requiresAuthentication: true,
+            //     permissions: ["can-manage"]
+            //     authorizedRoles: [USER_ROLES.admin, USER_ROLES.editor]
+            // },
             resolve: {
                 loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
                     return $ocLazyLoad.load({

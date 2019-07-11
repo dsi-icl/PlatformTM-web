@@ -1,7 +1,6 @@
 
-        <div class="title-action">
-            <a ng-click="vm.saveActivity()" class="btn btn-primary">Save</a>
-            <!--<a ng-click="vm.dontSaveActivity()" class="btn btn-primary">Go Back</a>-->
+        <div has-permission="can-manage" project="vm.projectId" class="title-action" style="display: none">
+            <a  ng-click="vm.saveActivity()" class="btn btn-primary">Save</a>
         </div>
 
 <div class="row">
@@ -29,7 +28,7 @@
                     <span>Dataset Descriptor</span>
                      <span style="font-size:16px;margin-top:-5px;" class="pull-right">
                          <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
-                         <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
+                         <a has-permission="can-manage" project="vm.projectId"  ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
                             | <a ng-init="vm.creatingNewDS = false" ng-click="vm.creatingNewDS = !vm.creatingNewDS"><i uib-tooltip="Add Dataset Template" class="p-xs fa fa-plus"></i></a>
                         </span>
                 </div>

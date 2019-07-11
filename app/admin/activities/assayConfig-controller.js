@@ -2,7 +2,7 @@
  * Created by iemam on 17/05/2016.
  */
 'use strict'
-function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toaster){
+function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toaster, SweetAlert){
     var vm = this;
     vm.projectId = $stateParams.projectId
     vm.assayId = $stateParams.assayId;
@@ -45,7 +45,7 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toast
     vm.selectedDatasets = {};
 
 var assay;
-    if($stateParams.assayId===0){
+    if($stateParams.assayId==0){
         console.log("New Assay")
         assay = new AssayConfigService.getAssayResource();
         assay.projectId = $stateParams.projectId;//"Study1"
@@ -204,11 +204,11 @@ var assay;
         );
     }
 
-    vm.deleteDS = function(datasetId){
+    vm.deleteDS = function(dataset){
 
         SweetAlert.swal({
-                title: "Are you sure you want to delete "+vm.currDS.name+"?",
-                text: "All associated data files will be deleted and all loaded data attached to this data will be permanently deleted! ",
+                title: "Are you sure you want to delete "+dataset.name+" dataset ?",
+                text: "All associated data files will be deleted and all loaded data attached to this dataset will be permanently deleted! ",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -237,4 +237,4 @@ var assay;
 }
 
 angular.module('bioSpeak.config')
-    .controller('AssayConfigCtrl',['$scope', '$state','$stateParams','AssayConfigService','toaster',AssayConfigCtrl])
+    .controller('AssayConfigCtrl',['$scope', '$state','$stateParams','AssayConfigService','toaster','SweetAlert',AssayConfigCtrl])
