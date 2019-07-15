@@ -1,55 +1,36 @@
 
 
 <fieldset>
+    <div ng-hide="!step2Ctrl.checked">
 
-
-    <div ng-hide="!vm.dataIsloaded">
-        <h4>{{vm.template.domain}}&nbsp;Domain Template &nbsp;
-            <a ui-sref=".help({domainId:vm.template.domain.id})">
-                <i class="fa fa-question-circle"></i>Help</a>
-        </h4>
-        <!-- <div class="col-lg-12">-->
-        <div class="alert alert-success" ng-show="fileInfo.percentMatched == 100">
-            <uib-progressbar type="success" class="progress-striped" value="fileInfo.percentMatched" >{{fileInfo.percentMatched}}%</uib-progressbar>
-            File header matched associated template <a class="alert-link" ng-click="goToStep3()">Skip to next step</a>.
+        <div class="alert alert-success" ng-show="step2Ctrl.file.percentMatched == 100">
+            <uib-progressbar type="success" class="progress-striped" value="step2Ctrl.file.percentMatched" >{{step2Ctrl.file.percentMatched}}%</uib-progressbar>
+            File header matched associated template <a class="alert-link" ng-click="wzCtrl.goToStep3()">Skip to next step</a>.
         </div>
-        <div class="alert alert-warning" ng-show="fileInfo.percentMatched == 0" close="main.closeAlert()">
-            File header did not match associated template. Please provide mappings below.
+        <div class="alert alert-warning" ng-show="step2Ctrl.file.percentMatched == 0" close="main.closeAlert()">
+            File is not structured according to the defined descriptor. Click <a ui-sref="define.activity({activityId:vm.activityId, projectId: vm.projectId})">here</a> to review the descriptor.
 
         </div>
-        <div class="alert alert-warning m-b-none" ng-show="fileInfo.percentMatched > 0 && fileInfo.percentMatched < 100" close="main.closeAlert()">
-            <uib-progressbar type="warning" class="progress-striped" value="fileInfo.percentMatched" >{{fileInfo.percentMatched}}%</uib-progressbar>
-            File matched {{fileInfo.percentMatched}}% the associated template.
-            The following columns cannot be matched to the template: {{fileInfo.unmappedCols}}
+        <div class="alert alert-warning m-b-none" ng-show="step2Ctrl.file.percentMatched > 0 && step2Ctrl.file.percentMatched < 100" close="main.closeAlert()">
+            <uib-progressbar type="warning" class="progress-striped" value="step2Ctrl.file.percentMatched" >{{step2Ctrl.file.percentMatched}}%</uib-progressbar>
+            File structurally matched {{step2Ctrl.file.percentMatched}}% the associated descriptor.
+            The following columns cannot be matched to the descriptor: {{step2Ctrl.file.unmappedCols}}
             Click <a ui-sref="admin.activity({activityId:vm.activityId, projectId: vm.projectId})">here</a> to edit the template.
-
         </div>
 
     </div>
-    <div class="row" ng-hide="vm.dataIsloaded">
-        <div class="">
-            <div class="">
-                <div class="spiner-example">
-                    <p class="text-center">Checking template match</p>
-                    <div class="sk-spinner sk-spinner-wave">
-                        <div class="sk-rect1"></div>
-                        <div class="sk-rect2"></div>
-                        <div class="sk-rect3"></div>
-                        <div class="sk-rect4"></div>
-                        <div class="sk-rect5"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row" style="position: absolute; left: 0; right: 0; text-align: center" ng-hide="step2Ctrl.checked">
+        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
     </div>
 
-    <div class="row" ng-hide="fileInfo.templateMatched || !vm.dataIsloaded || fileInfo.percentMatched > 0">
+    <!--<div class="row" ng-hide="fileInfo.templateMatched || !vm.dataIsloaded || fileInfo.percentMatched > 0">
         <div  class="ibox float-e-margins">
             <div class="ibox-content ">
                 <p class="small text-muted"><i class="fa fa-hand-o-right"></i>&nbsp;Use drag'n drop to map column headers to template variables or enter a value</p>
-                <!--<p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>-->
+                &lt;!&ndash;<p class="small"><i class="fa fa-hand-o-up"></i> Drag task between list</p>&ndash;&gt;
                 <div class="row">
-                    <!-- **************************** User Upload Data Overview *******************************-->
+                    &lt;!&ndash; **************************** User Upload Data Overview *******************************&ndash;&gt;
                     <div class="col-lg-4" style="padding-left: 20px;">
                         <h3 class="domainTitleName">Column Headers</h3>
                         <ul class="tag-list">
@@ -68,19 +49,19 @@
 
                             </li>
                         </ul>
-                        <!--</div>-->
+                        &lt;!&ndash;</div>&ndash;&gt;
                     </div>
 
-                    <!-- **************************** User Upload Form *******************************-->
+                    &lt;!&ndash; **************************** User Upload Form *******************************&ndash;&gt;
 
 
-                    <!-- THIS IS WHERE WILL INJECT A DOMAIN ============================== -->
+                    &lt;!&ndash; THIS IS WHERE WILL INJECT A DOMAIN ============================== &ndash;&gt;
                     <div class="col-lg-8">
                         <div ui-view>
                             <div class="row">
 
 
-                                <!-- REPEAT VARIABLE SECTION FOR EACH VARIABLE TYPE-->
+                                &lt;!&ndash; REPEAT VARIABLE SECTION FOR EACH VARIABLE TYPE&ndash;&gt;
                                 <div class="ibox float-e-margins" ng-repeat="varType in vm.template.varTypes">
                                     <div class="ibox-title" style="
                                                         background-color: #2C3E50;
@@ -93,7 +74,7 @@
                                             <i class="fa fa-hand-o-right"></i>&nbsp;If tests exist in separate columns, add a mapping for each</p>
                                         <div ng-repeat="n in dataFile.topicColumns track by $index"
                                              ng-if="(($index==0) || ($index>=1 && varType.name == 'Observation Descriptors'))">
-                                            <!-- Test title-->
+                                            &lt;!&ndash; Test title&ndash;&gt;
                                             <h4 ng-if="((varType.name == 'Observation Descriptors') && dataFile.topicColumnCount > 1)">{{$parent.$parent.template.observationName}} &nbsp; {{$index+1}}</h4>
 
                                             <fieldset id="fieldset_{{$parent.varType.name}}_{{$index}}"  class="form-horizontal">
@@ -104,18 +85,18 @@
                                                            style="font-size: 12px;
                                                            font-weight: 600;">{{var.label}}:</label>
                                                     <btn class="btn btn-sm btn-white pull-left">
-                                                        <!--ng-click="('MyProperty'+($index+1) = !(idVarCollapse_{{$index}})"
-                                                        ng-init="idVarCollapse_{{$index}} = true">-->
+                                                        &lt;!&ndash;ng-click="('MyProperty'+($index+1) = !(idVarCollapse_{{$index}})"
+                                                        ng-init="idVarCollapse_{{$index}} = true">&ndash;&gt;
                                                         <i class="fa fa-info"></i>
                                                     </btn>
 
-                                                    <!-- Droppable element-->
+                                                    &lt;!&ndash; Droppable element&ndash;&gt;
                                                     <div class="col-sm-8" style="border: 1px solid #e7eaec;border-radius: 2px;margin-left: 5px; height:30px"
                                                          data-drop="true"
                                                          data-ng-model="var.mapToColList[$parent.$index]"
                                                          jqyoui-droppable="{index: {{$parent.$index}},onDrop:'dropCallback(var,$parent.$index)'}">
 
-                                                        <!-- Dropped element-->
+                                                        &lt;!&ndash; Dropped element&ndash;&gt;
                                                         <span class="label label-info"
                                                               style="font-size: 10px;
                                                               font-weight: 300;
@@ -127,9 +108,9 @@
                                                                 <i class="fa fa-times"></i></a>
                                                             <span>{{var.mapToColList[$parent.$index].colName}}</span>
                                                         </span>
-                                                        <!-- end of Dropped element-->
+                                                        &lt;!&ndash; end of Dropped element&ndash;&gt;
 
-                                                        <!-- User input if element not dropped-->
+                                                        &lt;!&ndash; User input if element not dropped&ndash;&gt;
                                                         <input ng-model="var.mapToStringValueList[$parent.$index]"
                                                                ng-disabled="var.mapToColList[$parent.$index]"
                                                                ng-change="inputChanged(this)"
@@ -138,9 +119,9 @@
                                                                outline: 0;
                                                                height: 1.666666em;
                                                                margin: 4px -10px;">
-                                                        <!-- End of User input-->
+                                                        &lt;!&ndash; End of User input&ndash;&gt;
                                                     </div>
-                                                    <!-- End of Droppable Element-->
+                                                    &lt;!&ndash; End of Droppable Element&ndash;&gt;
                                                 </div>
                                             </fieldset>
                                             <div class="hr-line-dashed"></div>
@@ -152,7 +133,7 @@
 
                                     </div>
                                 </div>
-                                <!-- END REPEAT VARIABLE TYPE-->
+                                &lt;!&ndash; END REPEAT VARIABLE TYPE&ndash;&gt;
 
 
                             </div>
@@ -163,12 +144,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div class="btn-group pull-right">
-        <a ui-sref="datastage.wizard.step_one" class="btn btn-default">Previous</a>
-        <a ng-click="goToStep3()"  data-ng-disabled="!vm.mapSaved && !fileInfo.templateMatched"  class="btn btn-primary">Next</a>
+        <a ng-click="wzCtrl.goToStep1()" class="btn btn-default">Previous</a>
+        <a ng-click="wzCtrl.goToStep3(step2Ctrl.activityId,step2Ctrl.datasetId)"  data-ng-disabled="!step2Ctrl.file.templateMatched"  class="btn btn-primary">Next</a>
     </div>
 
-    <a ui-sref="datastage.files"  class="btn btn-primary ">Cancel</a>
+    <a ng-click="wzCtrl.cancel()" class="btn btn-primary ">Cancel</a>
 </fieldset>

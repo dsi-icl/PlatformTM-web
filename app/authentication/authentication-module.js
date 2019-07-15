@@ -59,6 +59,11 @@ function config($stateProvider, $urlRouterProvider, $httpProvider){
             }
         })
 
+        .state('verified',{
+            url:"/verified",
+            templateUrl:"authentication/accountverified.html"
+        })
+
     $httpProvider.interceptors.push('authInterceptorService');
 }
 

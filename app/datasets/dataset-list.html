@@ -1,0 +1,128 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>My Datasets</h2>
+
+    </div>
+</div>
+
+<div class="row m-t-lg">
+    <div class="col-lg-10 col-lg-offset-1">
+
+        <div ng-if="vm.datasets.length>0">
+            <div class="row form-group">
+                <div class="col-md-12">
+                    <input type="text" placeholder="Search" ng-model="vm.searchDS.$" class="input-sm form-control">
+                </div>
+            </div>
+
+
+            <div class="wrapper-content dataset-list">
+                <div class="dataset-preview" ng-repeat="ds in vm.datasets | filter:vm.searchDS">
+                    <div  class="pull-left">
+                        <i class="fa fa-files-o fa-2x"></i>
+                    </div>
+                    <div class="media-body ">
+                        <span class="pull-right"><i class="fa fa-ellipsis-v" style="font-size: 1.5em"></i></span>
+                        <strong>{{ds.name}}</strong> <br>
+                        <p class="text-muted">{{ds.description}}</p>
+                        <strong>Files</strong>
+                        <div>
+                            <table class="table ">
+                                <thead>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>No. Subjects</th>
+                                    <th>No. Samples</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="file in ds.files">
+
+                                        <td class="project-status">
+                                            <span class="label label-primary">{{file.contentType}}</span>
+                                        </td>
+                                        <td class="project-title">
+                                            {{file.name}}
+                                        </td>
+                                        <td>
+                                            {{file.subjectCount}}
+                                        </td>
+                                        <td>
+                                            {{file.sampleCount?file.sampleCount : '-'}}
+                                        </td>
+
+                                        <td class="project-actions">
+                                            <a ng-hide="file.fileStatus != 0" placeholder="Download" ng-click="vm.requestFile(file)">
+                                                <i class="fa fa-download"></i>
+                                            </a>
+                                            <span ng-show="file.fileStatus == 1"><i class="fa fa-circle-o-notch fa-spin "></i></span>
+                                            <!--<a  ng-show="ds.fileStatus == 2" ng-click=  vm.downloadDataset(ds)>-->
+                                                <!--<i class="fa fa-check"></i><i class="fa fa-download"></i>-->
+                                            <!--</a>-->
+                                            <!--<a  ng-if="file.fileStatus == 2" href="{{file.href}}" download="{{file.filename}}">-->
+                                                <!--<i class="fa fa-check"></i><i class="fa fa-download"></i>-->
+                                            <!--</a>-->
+                                            <a  ng-if="file.fileStatus == 2" ng-click="vm.getFile(file)" href="{{file.href}}" download="{{file.filename}}" >
+                                                <i class="fa fa-check"></i><i class="fa fa-download"></i>
+                                            </a>
+                                            <!--<a ng-if="ds.fileStatus == 3" class="btn btn-white btn-sm">FAILED! </a>-->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--<div class="project-list dataset-list">-->
+                <!--<table class="table table-responsive table-hover" >-->
+                    <!--<thead>-->
+                    <!--<th>Type</th>-->
+                    <!--<th>Project</th>-->
+                    <!--<th>Name</th>-->
+                    <!--<th>No. Subjects</th>-->
+                    <!--<th>No. Samples</th>-->
+                    <!--<th>Status</th>-->
+
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr ng-repeat="ds in vm.datasets | filter:vm.searchDS">-->
+
+                        <!--<td class="project-status">-->
+                            <!--<span class="label label-primary">{{ds.type}}</span>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<span>{{ds.projectId}}</span>-->
+                        <!--</td>-->
+                        <!--<td class="project-title">-->
+                            <!--{{ds.name}}-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--{{ds.subjectCount}}-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--{{ds.sampleCount?ds.sampleCount : '-'}}-->
+                        <!--</td>-->
+
+
+                        <!--<td class="project-actions">-->
+                            <!--<a ng-click="vm.downloadDataset(ds)" class="btn btn-white btn-sm" placeholder="Download">-->
+                                <!--<span ng-if="ds.fileStatus==1"><i class="fa fa-circle-o-notch fa-spin  fa-fw"></i> Preparing</span>-->
+                                <!--<span ng-if="ds.fileStatus==2 || ds.fileStatus==0"><i class="fa fa-download  fa-fw"></i></span>-->
+                            <!--</a>-->
+                            <!--<a ng-if="ds.fileStatus==2 || ds.fileStatus==0" ng-click="vm.deleteDataset(ds.id)" class="btn btn-white btn-sm" placeholder="Delete"><i class="fa fa-trash"></i>  </a>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
+
+        </div>
+        <div ng-if="vm.datasets.length == 0">
+            <div uib-alert class="alert-info">
+                <h4>You don't have any saved datasets yet.</h4>
+            </div>
+        </div>
+
+    </div>
+</div>

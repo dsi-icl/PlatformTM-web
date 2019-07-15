@@ -65,7 +65,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
     XFilterLinker.propagateFilter = function(xfFiltered, chartName, filter){
 
         console.debug("====PROPAGATING FILTER====")
-        console.debug('FILTER BEFORE:',_subjectFilters)
+        //console.debug('FILTER BEFORE:',_subjectFilters)
 
         var subjectIds;
 
@@ -114,6 +114,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
 
 
             //UPDATING current list of filters applied to all clinical charts
+            // console.log('filter is', filter)
             if(filter === null)
                 _subjectFilters['clinicalXF'] = _removeFilterHandler(_subjectFilters['clinicalXF'],chartName);
             else
@@ -122,6 +123,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
 
             //GET FILTERED SUBJECTS IDS AS A RESULT OF FILTERS APPLIED TO CLINICAL CHARTS (I.E. CLINICAL XF)
             subjectIds = xfFiltered.getCurrentSubjectIds();
+             console.log('subjectIds after filter',subjectIds.length);
             if(subjectIds.length === 0)return;
 
             SubjectXF.resetSubjectFilter();
@@ -145,11 +147,9 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
             AssayXF.filterBySubjects(combinedIds);
 
             //ClinicalXF.resetSubjectFilter();
-            ClinicalXF.filterBySubjects(combinedIds);
-
+            //ClinicalXF.syncFilters(combinedIds,chartName);
 
             return;
-
         }
 
         /*       else if(xfFiltered.getXFname() == 'AssayCf'){
@@ -163,7 +163,7 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
                 ClinicalCf.filterBySubjects(filteredIds);
                 }*/
 
-        console.debug('FILTER AFTER:',_subjectFilters)
+        //console.debug('FILTER AFTER:',_subjectFilters)
         console.debug("====END OF PROPAGATING FILTER====")
     };
 
@@ -178,8 +178,8 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
     };
 
     XFilterLinker.initAll = function(){
-        SubjectXF.init();
-        ClinicalXF.init();
+        //SubjectXF.init();
+        //ClinicalXF.init();
         //AssayXF.init();
 
         _subjectFilters['subjectXF'] = [];
@@ -222,14 +222,14 @@ function XFlinker(ClinicalXF,SubjectXF,AssayXF){
     var _addFilterHandler = function (filters, chartName, filter) {
         if(_hasFilterHandler(filters,chartName, filter))
             _removeFilterHandler(filters,chartName)
-        console.log('ADDING FILTER BY CHART', chartName)
+        console.log('ADDING FILTER BY CHART', chartName, filter)
         filters.push({chart:chartName,filter:filter});
         //else console.log('FILTER BY CHART ALREADY ADDED')
         return filters;
     };
 
     var _retainAll = function(set1,set2){
-        console.log(set1,set2);
+        //console.log(set1,set2);
 
         if(set1.length ===0 && set2.length ===0)
             return [];

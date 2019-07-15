@@ -1,0 +1,103 @@
+<div class="wrapper wrapper-content">
+
+    <div class="row ">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="widget lazur-bg p-lg">
+                <h1 style="font-size: 40px;font-weight: bold">{{projVM.project.name}}</h1>
+                <h2>{{projVM.project.title}}</h2>
+                <h3 style="font-weight: normal">{{projVM.project.desc}}</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row m-t-lg">
+        <div class="col-md-10 col-md-offset-1">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="ibox float-e-margins" >
+                        <div class="ibox-title panel-header">
+                            <h5>Clinical Datasets</h5>
+                        </div>
+                        <div class="ibox-content animated fadeIn" style="min-height: 245px" ng-class="{'sk-loading': !vm.cdsLoaded}">
+                            <div ng-if="!vm.cdsLoaded" class="sk-spinner sk-spinner-wave"  >
+                                <div class="sk-rect1"></div>
+                                <div class="sk-rect2"></div>
+                                <div class="sk-rect3"></div>
+                                <div class="sk-rect4"></div>
+                                <div class="sk-rect5"></div>
+                            </div>
+                            <div class="clinical-tree ">
+                                <ul>
+                                    <li ng-repeat="cDataset in vm.clinicalDatasets">
+                                        <div class="list-item">
+                                            <i class="fa fa-table"></i> <span class="list-item-text">{{cDataset.name}}</span>
+                                            <span ng-show="cDataset.loading" style="position: absolute; right: 50px;"><i class="fa fa-circle-o-notch fa-spin "></i><small> Preparing...</small></span>
+                                            <a ng-hide="cDataset.ready || cDataset.loading" ng-click="vm.downloadDataset(cDataset)"
+                                               style="position: absolute; right: 50px;">
+                                                <i class="fa fa-download"></i>
+                                            </a>
+                                            <a  ng-show="cDataset.ready" href="{{cDataset.href}}" download="{{cDataset.filename}}"
+                                               style="position: absolute; right: 50px;"><i class="fa fa-check"></i><i class="fa fa-download"></i><small> File ready </small>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ibox">
+                        <div class="ibox-title panel-header">
+                            <h5>Molecular Assays</h5>
+                        </div>
+                        <div class="ibox-content animated fadeIn" style="min-height: 245px"  ng-class="{'sk-loading': !vm.adsLoaded}">
+                            <div ng-if="!vm.adsLoaded" class="sk-spinner sk-spinner-wave"  >
+                                <div class="sk-rect1"></div>
+                                <div class="sk-rect2"></div>
+                                <div class="sk-rect3"></div>
+                                <div class="sk-rect4"></div>
+                                <div class="sk-rect5"></div>
+                            </div>
+                            <div class="clinical-tree ">
+                                <ul>
+                                    <li ng-repeat="assay in vm.assayDatasets">
+                                        <div class="node-toggle">
+                                            <a style="outline:none;" class="btn btn-sm btn-outline btn-link "
+                                               ng-click="assay.isCollapsed = !assay.isCollapsed" ng-init="assay.isCollapsed = true"
+                                               ng-class="{collapsed: assay.isCollapsed}">
+                                            </a>
+                                        </div>
+
+                                        <div class="list-item">
+                                            <span class="list-item-text">{{assay.name}}</span>
+                                        </div>
+                                        <ul uib-collapse="assay.isCollapsed" id="{{assay.id}}"  class="list-group">
+                                            <li ng-repeat="dataset in assay.datasets" class="list-item">
+
+                                                    <i class="fa fa-table"></i> <span class="list-item-text">{{dataset.name}}</span>
+                                                    <span ng-show="dataset.loading" style="position: absolute; right: 50px;"><i class="fa fa-circle-o-notch fa-spin "></i></span>
+                                                    <a ng-hide="dataset.ready || dataset.loading" ng-click="vm.downloadDataset(dataset)"
+                                                       style="position: absolute; right: 50px;">
+                                                        <i class="fa fa-download"></i>
+                                                    </a>
+                                                    <a  ng-show="dataset.ready" href="{{dataset.href}}" download="{{dataset.filename}}"
+                                                        style="position: absolute; right: 50px;"><i class="fa fa-check"></i><i class="fa fa-download"></i>
+                                                    </a>
+
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="modal-body myform">
+    <h2>Edit permissions for {{userModalCtrl.user.firstName}}</h2>
+    <div class="m-t-md">
+        <form  id="form_{{user.id}}" role="form" >
+
+            <div class="form-group"><label>Username </label>
+                <input ng-model="dsModalCtrl.user.name" type="text" placeholder="Enter username" class="form-control" required>
+            </div>
+            <div class="form-group"><label>Role</label>
+                <ui-select ng-model="dsModalCtrl.user.role" class="form-control"></ui-select>
+            </div>
+            <!--<div class="form-group">-->
+            <!--<label>Tags</label>-->
+            <!--<ui-select multiple tagging tagging-label="(custom 'new' label)" ng-model="step4vm.selectedTags"  sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a tag">-->
+            <!--<ui-select-match placeholder="Select tags...">{{$item}}</ui-select-match>-->
+            <!--<ui-select-choices repeat="tag in step4vm.availableTags | filter:$select.search">-->
+            <!--{{tag}}-->
+            <!--</ui-select-choices>-->
+            <!--</ui-select>-->
+            <!--<hr>-->
+            <!--</div>-->
+            <div class="form-group">
+            <label>Capabilities</label>
+                <a class="btn btn-white btn-bitbucket btn-xs"><i class="fa fa-group"></i>
+            </a>
+            </div>
+        </form>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-white" ng-click="userModalCtrl.cancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary" ng-click="userModalCtrl.ok()">Save</button>
+</div>

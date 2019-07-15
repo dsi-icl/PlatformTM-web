@@ -23,6 +23,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
     };
     vm.loaded = false;
 
+    vm.showCart = false;
 
     XFilterLinker.initAll();
     DCchartingService.init();
@@ -46,15 +47,10 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         }
     },true);
 
-    /*explorerService.getUserQueries(vm.projectId).then(function(response){
-        vm.savedQueries = response.queries;
-    });*/
 
     vm.plotSwitchClicked = function(obsReq, obsModule){
         var isActive = obsReq.isActive === true;
 
-        //console.debug(obsReq,obsModule, ' clicked');
-        //console.debug('plotting chart: ',chartId, ' in card:',cardId,' in container: ',plottingOptions.chartContainerId, 'for module',plottingOptions.chartGroup);
         if(isActive){
             explorerService.addToCart(obsReq, obsModule);
         }
@@ -70,6 +66,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
 
             explorerService.removeFromCart(obsReq, obsModule);
         }
+        vm.cartObsCount = explorerService.getCartSize()
     };
 
     vm.onFiltered = function(obsId,module,filters, filter){
@@ -112,7 +109,7 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
 
     vm.saveToCartAndCheckout = function(){
         explorerService.saveQuery(vm.cartQuery, vm.projectId).then(function(response){
-            $state.go('datacart.checkout',{
+            $state.go('project.datacart',{
                 projectId: vm.projectId,
                 cartId: response.cartId});
         })

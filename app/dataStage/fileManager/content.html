@@ -1,0 +1,46 @@
+<div class="page-header">
+    <ol class="breadcrumb">
+
+        <li>
+            <a ui-sref="project.drive.files({dirId:''})">{{projVM.project.name}} Drive </a>
+        </li>
+        <li ng-repeat="dir in contentVM.dirs">
+            <a ui-sref="project.drive.files({dirId:dir.dataFileId})">{{dir.fileName}}</a>
+        </li>
+
+    </ol>
+
+    <div ng-show="driveVM.showControls" class=" btn-group pull-right" >
+        <button ng-click="driveVM.load()" ng-show="!driveVM.fileSelected.isDirectory"  class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Load File"><i class="fa fa-arrow-right"></i><i class="fa fa-database"></i> </button>
+        <button has-permission="can-manage-etl" project = "driveVM.projectId" ng-click="driveVM.unload()" ng-show="!driveVM.fileSelected.isDirectory && driveVM.fileSelected.isLoaded" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Unload file from DB"><i class="fa fa-database"></i><i class="fa fa-arrow-right"></i></button>
+        <button ng-click="driveVM.openF()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Preview"><i class="fa fa-eye"></i></button>
+        <button ng-click="driveVM.downloadFile()" ng-if="!driveVM.fileSelected.isDirectory" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Download File"><i class="fa fa-download"></i></button>
+        <button ng-click="driveVM.showInfo()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="View Details"><i class="fa fa-info-circle"></i></button>
+        <button has-permission="can-manage-drive" project = "driveVM.projectId" ng-click="driveVM.deleteFile()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Delete File"><i class="fa fa-trash"></i></button>
+
+        <!--<span uib-dropdown on-toggle="toggled(open)">
+         <button id="simple-dropdown" class="btn btn-white btn-sm" uib-dropdown-toggle><i class="fa fa-ellipsis-v"></i></button>
+            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                <li role="menuitem"><a ng-click="vm.computeFields()"><i class="fa fa-bolt"></i>  Generate Computed Fields</a></li>
+            </ul>
+        </span>-->
+    </div>
+</div>
+
+<div class="content " ng-class="{ 'toggled': vm.showSideMenu }">
+    <div ng-click="driveVM.clickFn($event)" class="section-content outer  col-lg-10">
+        <div class="row outer">
+            <div class=" col-lg-12 outer" >
+                <file-directive ng-repeat="fileInfo in contentVM.files"
+                                dbl-click-fn="driveVM.openF(fileInfo)"
+                                file-info="fileInfo"
+                                click-fn="driveVM.fileClickFn(fileInfo)"></file-directive>
+                <div ng-show="contentVM.files.length===0"><small>Folder is empty</small></div>
+            </div>
+        </div>
+    </div>
+    <div class="right-sidebar-wrapper">
+        <div class="panel-header"><h3>{{driveVM.fileSelected.fileName}}</h3></div>
+    </div>
+</div>
+

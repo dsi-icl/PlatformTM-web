@@ -3,7 +3,7 @@
  */
 angular.module('biospeak.app')
     .controller('appController', function ($scope, $location, $state, /*USER_ROLES,*/ authService) {
-        if($location.url() !=="/signup" && $location.url() !=="/login")
+        if($location.url() !=="/signup" && $location.url() !=="/login" && $location.url() !=="/verified")
             authService.getCurrentUser().then(function(response){
                 $scope.currentUser = response.user;
             });
@@ -19,6 +19,7 @@ angular.module('biospeak.app')
         userName: "",
         password: ""
     };
+
 
     $scope.message = "";
     $scope.logout = function () {

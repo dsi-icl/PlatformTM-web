@@ -12,23 +12,13 @@
         var DTdata;
         var fileName;
 
-        var _getDirContent = function (projectId,dir) {
-            console.log(!dir)
-            //if(!dir) dir="top"
-
-            dir = dir.replace("/","_")
-
-
-
-            console.log(window.encodeURIComponent(serviceBase + 'files/project/'+projectId+'/uploadedFiles/'+dir));
+        var _getDirContent = function (projectId,dirId) {
             return $http({
-                url: serviceBase + 'files/projects/'+projectId+'/uploadedFiles/'+dir,
+                url: serviceBase + 'files/projects/'+projectId+'/drive/'+dirId,
                 method: 'GET'
             }).then(
                 function (response) {
-                    return {
-                        files: (response.data)
-                    }
+                    return response.data
                 }
             )
         };
@@ -36,7 +26,7 @@
         var _getDirectories= function (projectId) {
 
             return $http({
-                url: serviceBase + 'files/projects/'+projectId+'/directories/',
+                url: serviceBase + 'files/projects/'+projectId+'/drive/directories/',
                 method: 'GET'
             }).then(
                 function (response) {
@@ -71,13 +61,11 @@
             });
         };
 
-        var _createDirectory= function (projectId,dirname) {
-            console.log('inside service',dirname)
-
+        var _createDirectory= function (projectId,folder) {
             return $http({
-                url: serviceBase + 'files/projects/'+projectId+'/createdir/',
+                url: serviceBase + 'files/projects/'+projectId+'/folder/create',
                 method: 'POST',
-                data: { name: dirname }
+                data: angular.toJson(folder)
 
             }).then(
                 function (response) {
@@ -115,12 +103,12 @@
         }
 
         var _getDataTablePreview = function(fileId){
-            console.log(fileId);
+            // console.log(fileId);
             var deferred = $q.defer();
             $http.get(serviceBase + 'files/'+fileId+'/preview/')
                 .success(function (response) {
                     var dtColumns = [];
-                    response.columns.forEach(function(col){
+                    response.data.columns.forEach(function(col){
                         var dtColumn = {}
                         dtColumn.data = col.columnName.toLowerCase();
                         dtColumn.title = col.columnName;
@@ -128,9 +116,15 @@
                     });
 
                     tableHeaders = dtColumns;
-                    DTdata = response.rows;
-                    fileName = response.tableName;
-                    deferred.resolve(tableHeaders);
+                    DTdata = response.data.rows;
+                    fileName = response.data.tableName;
+
+                    var result = {data:response.data,
+                                  file: response.file,
+                                    folders: response.folders,
+                        tableHeader: dtColumns}
+
+                    deferred.resolve(result);
                 })
                 .error(function (err, code) {
                     deferred.reject(err);

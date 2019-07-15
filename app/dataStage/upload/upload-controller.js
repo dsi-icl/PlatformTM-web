@@ -1,29 +1,31 @@
 'use strict'
-    function uploadController($scope,$state, $stateParams, FileUploader, $uibModalInstance, ngAppConfig, localStorageService){
+    function uploadController($scope,$state, $stateParams, FileUploader, $uibModalInstance, ngAppConfig, userSession){
 
         var serviceBase = ngAppConfig.apiServiceBaseUri;
-        var projectId = $stateParams.projectId
+        var projectId = $stateParams.projectId;
 
-
-        console.log(serviceBase+'files/projects/'+projectId+'/upload/'+$stateParams.dir)
 
         var uploader = $scope.uploader = new FileUploader({
-            url: serviceBase+'files/projects/'+projectId+'/upload/'+$stateParams.dir
+            url: serviceBase+'files/projects/'+projectId+'/upload/'+$stateParams.dirId
         });
-        var authData = localStorageService.get('authorizationTFAData');
-        if (authData) {
-            uploader.headers["Authorization"] = "Bearer " + authData.token;
+        // var authData = localStorageService.get('authorizationTFAData');
+        // if (authData) {
+        //     uploader.headers["Authorization"] = "Bearer " + authData.token;
+        // }
+        var token = userSession.getAccessToken();
+        if (token) {
+            uploader.headers.Authorization = 'Bearer ' + token;
         }
 
         $scope.ok = function () {
 
             $uibModalInstance.close();
-            $state.go('datastage.files',{dir:$stateParams.dir});
+            $state.go('project.drive.files',{dirId:$stateParams.dirId});
         };
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
-            $state.go('datastage.files',{dir:$stateParams.dir});
+            $state.go('project.drive.files',{dirId:$stateParams.dirId});
         };
 
         // FILTERS
@@ -75,10 +77,10 @@
             console.info('onCompleteAll');
         };
 
-        console.info('uploader', uploader);
+        // console.info('uploader', uploader);
     }
 
     angular.module('bioSpeak.DataStager')
-        .controller('uploadController',['$scope','$state','$stateParams','FileUploader','$uibModalInstance','ngAppConfig','localStorageService',uploadController])
+        .controller('uploadController',['$scope','$state','$stateParams','FileUploader','$uibModalInstance','ngAppConfig','userSession',uploadController])
 
 

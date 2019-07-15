@@ -6,55 +6,33 @@
 'use strict'
 function fileViewController($scope, $state, $stateParams, DTOptionsBuilder, fileService){
 
+    var vm = this;
+
+    vm.projectId= $stateParams.projectId;
+
+    vm.showDT= false;
+    vm.dtColumns=[];
 
 
-    $scope.vm = {
-        //datasetId: $stateParams.datasetId,
-        //activityId:$stateParams.activityId,
-        fileId: $stateParams.fileId,
-        //map: $stateParams.map,
-        showDT: false,
-        dtColumns:[]
-    }
 
+    fileService.getDataTablePreview($stateParams.fileId)
+        .then(function(result){
+            vm.dtColumns = result.tableHeader;
+            vm.showDT = true;
+            //vm.fileName = result.file.fileName;
+            vm.file = result.file;
+            vm.folders = result.folders;
+            //$scope.$parent.driveVM.fileSelected = fileService.getFileInfo();
+            $scope.$parent.driveVM.contentLoaded = true;
+            $scope.$parent.driveVM.showControls = true;
 
-    fileService.getDataTablePreview($scope.vm.fileId)
-        .then(function(headers){
-            console.log(headers)
-            $scope.vm.dtColumns = headers;
-            $scope.vm.showDT = true
-            $scope.vm.fileName = fileService.getFileInfo();
-
-            $scope.$parent.vm.currentFile = fileService.getFileInfo();
         })
 
-    $scope.vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
+    vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
         return fileService.getDataTableData()
-        //return $resource('../data/dt.json').query().$promise;
     })
-        //.withTableTools('lib/plugins/dataTables/copy_csv_xls_pdf.swf')
-        //.withTableToolsButtons([
-        //    'copy',
-        //    'print', {
-        //        'sExtends': 'collection',
-        //        'sButtonText': 'Save',
-        //        'aButtons': ['csv', 'xls', 'pdf']
-        //    }
-        //])
         .withPaginationType('simple')
         .withOption('scrollX', true)
-
-
-
-
-
-
-    $scope.goToNextStep = function(){
-        //TODO: consider storing these files in localstorage
-        //console.log($scope)
-        //$state.go('datastage.wizard.step_one',{selFiles: $scope.vm.selectedFiles})
-        $state.go('datastage.wizard.step_one',{studyId:$stateParams.projectId, selFiles: $scope.vm.selectedFiles})
-    }
 
 
 }

@@ -3,46 +3,48 @@
  */
 var biospeakApp = angular.module('biospeak.app')
 
-    .run(function($rootScope, AUTH_EVENTS, authService){
+    .run(function($rootScope, $location,$state, $uibModalStack,AUTH_EVENTS, authService){
 
-        $rootScope.$on('$stateChangeStart', function (event, next) {
-
-            // var authorizedRoles = next.data.authorizedRoles;
-
-            /*if (!authService.isAuthorized(authorizedRoles)) {
-                event.preventDefault();
-                if (authService.isAuthenticated()) {
-                    // user is not allowed
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                } else {
-                    // user is not logged in
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-                }
-            }*/
+        $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
+            $location.path('/login');
         });
 
-        /**
-         * ROUTE CHANGE: START
-         * Triggered when a route change is initiated
-         */
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        $rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
+            console.log($state)
+            $state.go('project.403');
+        });
 
-            // Show curtain loader
-            $rootScope.$broadcast('curtain', true);
+        $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
+            $state.go('home.dashboard');
+        });
 
+        $rootScope.$on(AUTH_EVENTS.accountCreated, function() {
+            $state.go('confirm');
+        });
 
-            /**
-             * CHECK:
-             * Check if user is authenticated
-             */
+        $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
 
+            authService.checkPermissionForView(next,toParams).then(function (isAllowed) {
+              if(!isAllowed){
+                  event.preventDefault();
+                  $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+              }
+                $uibModalStack.dismissAll();
+            })
 
         });
+
 
         $rootScope.$on('$stateChangeSuccess', function() {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         });
+
     });
+
+biospeakApp.config(function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(blob):/);
+
+})
 
 biospeakApp.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
@@ -50,7 +52,8 @@ biospeakApp.constant('AUTH_EVENTS', {
     logoutSuccess: 'auth-logout-success',
     sessionTimeout: 'auth-session-timeout',
     notAuthenticated: 'auth-not-authenticated',
-    notAuthorized: 'auth-not-authorized'
+    notAuthorized: 'auth-not-authorized',
+    accountCreated: 'auth-account-created'
 });
 biospeakApp.constant('USER_ROLES', {
     all: '*',
@@ -60,10 +63,6 @@ biospeakApp.constant('USER_ROLES', {
 })
 
 biospeakApp.constant('ngAppConfig', {
-    apiServiceBaseUri: '/api/v1/'
-    //apiServiceBaseUri: 'http://146.169.32.103/api/v1/'
-    //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-    //apiServiceBaseUri: 'http://146.169.15.65:2483/'
-    //apiServiceBaseUri: 'http://localhost:2483/'
-    //apiServiceBaseUri: 'http://localhost:5000/'
+    apiServiceBaseUri: '/api/v2/'
+    // apiServiceBaseUri: 'http://localhost:5000/'
 });

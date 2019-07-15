@@ -4,11 +4,23 @@
 
 function config($stateProvider){
     $stateProvider
-        .state('datastage.wizard',{
+        .state('loader',{
+            abstract:true,
+            url:'/project/{projectId}/load',
+            templateUrl:'layout/noNavContent.html',
+            controller: "loaderController as vm",
+            resolve: {
+                loadController:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        'dataStage/loadingWizard/loader-controller.js'
+                    ]);
+                }]
+            }
+        })
+        .state('loader.wizard',{
             url: "/wizard/:fileId",
             templateUrl: "dataStage/loadingWizard/loadingWizard.html",
-            controller: "wizardController",
-            //params:{selFiles: null},
+            controller: "wizardController as wzCtrl",
             resolve: {
                 loadService:['$ocLazyLoad',function($ocLazyLoad){
                     console.log("parent router...loading service");
@@ -27,10 +39,10 @@ function config($stateProvider){
             }
         })
 
-        .state('datastage.wizard.step_one', {
+        .state('loader.wizard.step_one', {
             url: '/chooseActivity',
             templateUrl: 'dataStage/loadingWizard/stepOne.html',
-            controller: 'stepOneController',
+            controller: 'stepOneController as step1Ctrl',
             resolve:{
                 loadController:['$ocLazyLoad','loadService',function($ocLazyLoad,loadService){
                     console.log("step one router...loading controller, service:",loadService);
@@ -40,29 +52,22 @@ function config($stateProvider){
                 }]
             }
         })
-        .state('datastage.wizard.step_two', {
+        .state('loader.wizard.step_two', {
             url: '/mapping/:activityId/:datasetId/:fileId',
-            controller: 'stepTwoController',
+            controller: 'stepTwoController as step2Ctrl',
             templateUrl: 'dataStage/loadingWizard/stepTwo.html',
-            /*params: {
-                file: null
-            },*/
             resolve:{
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([
-                        /*'lib/plugins/angular-dragdrop/angular-dragdrop.min.js',*/
                         'dataStage/loadingWizard/stepTwo-controller.js'
                     ]);
                 }]
             }
         })
-        .state('datastage.wizard.step_three', {
+        .state('loader.wizard.step_three', {
             url: '/preview/:activityId/:datasetId/:fileId',
             templateUrl: 'dataStage/loadingWizard/stepThree.html',
-            /*params: {
-                map: null
-            },*/
-            controller: 'stepThreeController as vm',
+            controller: 'stepThreeController as step3Ctrl',
             resolve: {
                 loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([
@@ -92,10 +97,10 @@ function config($stateProvider){
                 }]
             }
         })
-        .state('datastage.wizard.step_four', {
+        .state('loader.wizard.step_four', {
             url: '/validate/:activityId/:datasetId/:fileId',
             templateUrl: 'dataStage/loadingWizard/stepFour.html',
-            controller: 'stepFourController',
+            controller: 'stepFourController as step4Ctrl',
             resolve:{
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([
@@ -104,10 +109,10 @@ function config($stateProvider){
                 }]
             }
         })
-        .state('datastage.wizard.step_five', {
+        .state('loader.wizard.step_five', {
             url: '/load/:activityId/:datasetId/:fileId',
             templateUrl: 'dataStage/loadingWizard/stepFive.html',
-            controller: 'stepFiveController as vm',
+            controller: 'stepFiveController as step5Ctrl',
             resolve:{
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load([
@@ -116,7 +121,7 @@ function config($stateProvider){
                 }]
             }
         })
-        .state('datastage.wizard.step_two.help', {
+        .state('loader.wizard.step_two.help', {
             url: 'help/',
             templateUrl: 'dataStage/loadingWizard/help.html',
             controller: 'helpController',

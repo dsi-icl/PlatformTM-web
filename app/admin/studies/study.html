@@ -15,8 +15,7 @@
     </div>
     <div class="col-lg-2">
         <div class="title-action">
-            <a ng-click="vm.saveStudy()" class="btn btn-primary">Save</a>
-            <a ng-click="vm.dontSaveStudy()" class="btn btn-primary">Go Back</a>
+            <a has-permission="can-manage" project="vm.projectId" ng-click="vm.saveStudy()" class="btn btn-primary">Save</a>
         </div>
     </div>
 </div>

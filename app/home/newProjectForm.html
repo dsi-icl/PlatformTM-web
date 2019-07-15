@@ -1,0 +1,28 @@
+
+<div>
+    <div class="modal-header">
+            <h2 class="modal-title">Create New Project</h2>
+        </div>
+    <form role="form" name="new" ng-submit="newCtrl.ok()">
+            <div class="modal-body myform">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" ng-class="{'has-warning':new.acronym.$error.minlength}">
+                            <label>Project Acronym</label>
+                            <input type="text" name="acronym" ng-minlength="5" required ng-model="newCtrl.project.name" placeholder="Enter project short name or acronym" class="form-control">
+                            <div role="alert"><span class="text-warning" ng-show="new.acronym.$error.minlength">Too short!</span>
+                            </div>
+                        </div>
+                        <div class="form-group"><label>Project Title</label> <input type="text" name="title" required ng-model="newCtrl.project.title" placeholder="Enter Project Title" class="form-control"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" ng-click="newCtrl.cancel()">Cancel</button>
+                <input  type="submit" class="btn btn-primary" value="Create Project"/>
+            </div>
+        </form>
+</div>
+
+

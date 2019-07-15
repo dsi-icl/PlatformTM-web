@@ -10,12 +10,11 @@
                     </div>
                     <div class="signupContainer">
                         <div class=" animated fadeIn">
-                            <div class="row">
+                            <div class="row" >
                                 <div class="col-lg-12">
                                     <div class=" float-e-margins">
-                                        <div>
-                                            <div class="animated fadeIn loginscreen">
-                                                <div>
+                                        <div class="animated fadeIn loginscreen">
+                                            <div ng-hide="accountcreated">
                                                     <form class="" role="form" ng-submit="signUp()">
 
                                                         <div class="row">
@@ -23,22 +22,26 @@
                                                             <div class="col-md-12">
                                                                 <h3>Create an account</h3>
                                                                 <div class="form-group">
-                                                                    <input type="text" placeholder="First Name" class="form-control" data-ng-model="registration.firstName" required autofocus>
+                                                                    <input type="text" placeholder="First Name" autocomplete="given-name" class="form-control" data-ng-model="registration.firstName" required autofocus>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="text" placeholder="Last Name" class="form-control" data-ng-model="registration.lastName" required>
+                                                                    <input type="text" placeholder="Last Name" autocomplete="family-name" class="form-control" data-ng-model="registration.lastName" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="text" placeholder="Organization" class="form-control" data-ng-model="registration.organization" required>
+                                                                    <input type="text" placeholder="Organization" autocomplete="organization" class="form-control" data-ng-model="registration.organization" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="email" placeholder="Email" class="form-control" data-ng-model="registration.email" required>
+                                                                    <input type="email" placeholder="Email" autocomplete="email" class="form-control" data-ng-model="registration.email" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="password" placeholder="Password" class="form-control" data-ng-model="registration.password" required>
+                                                                    <input type="text" placeholder="Choose your username"  autocomplete="username" class="form-control" data-ng-model="registration.username" data-ng-disabled="usernameAsEmail" required autofocus>
+                                                                    <input type="checkbox" ng-init="usernameAsEmail=false" ng-model="usernameAsEmail" ng-change="usernameAsEmail && copyEmail()"><small class="text-capitalize text-muted p-w-xs">Use email</small>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="password" placeholder="Confirm Password" class="form-control" data-ng-model="registration.confirmPassword" required>
+                                                                    <input type="password" placeholder="Choose your password" class="form-control" autocomplete="new-password" data-ng-model="registration.password" required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" placeholder="Confirm Password" class="form-control" autocomplete="new-password" data-ng-model="registration.confirmPassword" required>
                                                                 </div>
                                                                 <!--<div class="form-group">
                                                                     <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Agree the terms and policy </label></div>
@@ -70,11 +73,17 @@
                                                         </div>
                                                     </form>
                                                 </div>
+                                            <div ng-show="accountcreated">
+                                                <div class="alert alert-info" style="text-transform: none; margin-bottom: 0;">
+                                                    <p class="text-muted"> A confirmation email has been sent to {{registration.email}}</p>
+                                                    <p class="text-muted"> Click on the confirmation link to activate your account.</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </td>

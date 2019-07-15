@@ -2,40 +2,19 @@
  * Created by iemam on 08/07/2014.
  */
 angular.module('biospeak.explorer',[])
-
     .config(function($stateProvider){
-
         $stateProvider
-            .state('explore', {
-                abstract: true,
-                url: "/{projectId}",
-                templateUrl: "layout/content.html"
-            })
-            .state('explore.main', {
+            .state('project.explorer', {
                 url: "/explore/{queryId}",
                 views:{
                     '':{
                         templateUrl: 'explore/explore.html',
                         resolve: {
-                            
                             loadPlugins: function ($ocLazyLoad) {
                                 return $ocLazyLoad.load([
-                                    {
-                                        files: ['lib/plugins/slick/css/slick.css','lib/plugins/slick/css/slick-theme.css','lib/plugins/slick/js/slick.min.js']
-                                    },
-                                    {
-                                        name: 'slick',
-                                        files: ['lib/plugins/slick/js/angular-slick.min.js']
-                                    },
+
                                     {
                                         files: ['lib/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css','explore/clinical/css/clinicalDataTree.css']
-                                    },
-                                    {
-                                        files: ['lib/plugins/moment/js/moment.min.js']
-                                    },
-                                    {
-                                        name: 'datePicker',
-                                        files: ['lib/plugins/angular-datepicker/css/angular-datepicker.css','lib/plugins/angular-datepicker/js/angular-datepicker.js']
                                     }
 
                                 ]);
@@ -44,7 +23,7 @@ angular.module('biospeak.explorer',[])
                                 return $ocLazyLoad.load(
                                     {
                                         serie: true,
-                                        files: ['explore/dc/dc-module.js','explore/dc/XfilterServices/AssayXF.js','explore/dc/XfilterServices/SubjectXF.js',
+                                        files: ['explore/dc/dc-module.js','explore/dc/XfilterServices/AssayXF.js','explore/dc/XfilterServices/SubjectXF.js','lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js',
                                             'explore/dc/XfilterServices/ClinicalXF.js', 'explore/dc/XfilterServices/XFlinker.js', 'explore/dc/dc-service.js','explore/dc/dc-directives.js'
                                         ]
                                     }
@@ -55,19 +34,11 @@ angular.module('biospeak.explorer',[])
                             }],
                             loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                                 return $ocLazyLoad.load('explore/explorer-service.js');
-                            }],
-                            loadDependency: ['$ocLazyLoad', function ($ocLazyLoad) {
-                                return $ocLazyLoad.load([
-                                    {
-                                        serie:true,
-                                        files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js']
-                                    }
-                                ]);
                             }]
                         },
                         controller:'ExplorerCtrl as expVM'
                     },
-                    'subjects@explore.main':{
+                    'subjects@project.explorer':{
                         templateUrl: 'explore/subjects/explorer_subjects.html',
                         controller: 'SubjectsCtrl as vm',
                         resolve: {
@@ -79,7 +50,7 @@ angular.module('biospeak.explorer',[])
                             }]
                         }
                     },
-                    'assessments@explore.main':{
+                    'assessments@project.explorer':{
                         templateUrl: 'explore/clinical/explorer_clinical.html',
                         controller: 'ClinicalCtrl',
                         resolve: {
@@ -94,7 +65,7 @@ angular.module('biospeak.explorer',[])
                             }]
                         }
                     },
-                    'assays@explore.main':{
+                    'assays@project.explorer':{
                         templateUrl: 'explore/assays/assays.html',
                         controller: 'AssayCtrl as vm',
                         resolve: {
@@ -106,8 +77,7 @@ angular.module('biospeak.explorer',[])
                             }]
                         }
                     },
-
-                    'datacart@explore.main':{
+                    'datacart@project.explorer':{
                         templateUrl: 'explore/datacart/cart.html',
                         controller: 'cartCtrl as vm',
                         params: { queryId: null },
@@ -127,20 +97,11 @@ angular.module('biospeak.explorer',[])
                                 });
                             }]
                         }
-                    }/*,
-                    'design@explore':{
-                        templateUrl: 'explore/partials/study_design.html'
-                    }*/
+                    }
                 }
-
             })
-            .state('datacart', {
-                abstract : true,
-                url: "",
-                templateUrl:"layout/content.html",
-            })
-            .state('datacart.checkout',{
-                url: "/{projectId}/checkout/{cartId}",
+            .state('project.datacart',{
+                url: "/checkout/{cartId}",
                 templateUrl: 'explore/checkout/checkout.html',
                 controller: 'checkoutCtrl as vm',
                 resolve: {
@@ -149,45 +110,7 @@ angular.module('biospeak.explorer',[])
                     }],
                     loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load('explore/checkout/checkout-controller.js');
-                    }],
-                    loadPlugins: ['$ocLazyLoad',function ($ocLazyLoad){
-                        return $ocLazyLoad.load({
-                            serie:true,
-                            files: [
-                                'lib/plugins/steps/jquery.steps.css',
-                                //'lib/plugins/iCheck/custom.css',
-                                //'lib/plugins/iCheck/icheck.min.js',
-
-                                //'lib/plugins/ionRangeSlider/css/ion.rangeSlider.css',
-                                //'lib/plugins/ionRangeSlider/css/ion.rangeSlider.skinSimple.css',
-                                //'lib/plugins/ionRangeSlider/js/ion.rangeSlider.min.js',
-                                //'layout/directives/ionRangeSlider.js',
-                                //'lib/plugins/ui-select/js/select.min.js',
-                                //'lib/plugins/ui-select/css/select.css',
-                                //'lib/plugins/angular-dragdrop/angular-dragdrop.min.js'
-                                'lib/plugins/dataTables/js/jquery.dataTables.min.js',
-                                'lib/plugins/dataTables/css/datatables.bootstrap.min.css',
-                                'lib/plugins/dataTables/js/angular-datatables.js',
-                                'lib/plugins/dataTables/js/angular-datatables.bootstrap.min.js',
-                                'lib/plugins/dataTables/js/angular-datatables.buttons.min.js',
-                                'lib/plugins/dataTables/css/angular-datatables.min.css',
-
-
-                            ]
-                        })
-                    }],
-                    loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
-                        return $ocLazyLoad.load({
-                            files:['lib/plugins/angular-xeditable/js/xeditable.min.js']
-                        }).then(function () {
-                            var editableThemes = $injector.get('editableThemes');
-                            editableThemes.bs3.inputClass = 'input-sm';
-                            editableThemes.bs3.buttonsClass = 'btn-sm';
-                            var editableOptions = $injector.get('editableOptions');
-                            editableOptions.theme = 'bs3';
-                        });
                     }]
                 }
             })
-
     });

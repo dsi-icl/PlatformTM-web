@@ -2,11 +2,10 @@
  * Created by iemam on 17/05/2016.
  */
 'use strict'
-function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toaster){
+function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toaster, SweetAlert){
     var vm = this;
     vm.projectId = $stateParams.projectId
     vm.assayId = $stateParams.assayId;
-    console.log($stateParams.projectId)
 
     vm.templates={}
     vm.loaded = true;
@@ -17,7 +16,7 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toast
 
     vm.newField= {};
 
-
+    $scope.$parent.vm.stateName = "Define Assay";
 
     AssayConfigService.getAssayTerms().then(function(data){
         vm.assayTypes = data.terms;
@@ -34,7 +33,7 @@ function AssayConfigCtrl($scope, $state, $stateParams, AssayConfigService, toast
         //console.log(selAssayType)
         for(var i=0; i<vm.assayTypes.length; i++){
             var type = vm.assayTypes[i]
-            if(type.assayTypeTerm.id == selAssayType){
+            if(type.assayTypeTerm.id === selAssayType){
                 vm.assayTechTerms = type.assayTechTerms;
                 vm.assayPlatTerms = type.assayPlatTerms;
             }
@@ -59,11 +58,11 @@ var assay;
     }
 
     else if($stateParams.assayId){
-        console.log(AssayConfigService.getAssayResource);
+        //console.log(AssayConfigService.getAssayResource);
         AssayConfigService.getAssayResource.get({assayId:$stateParams.assayId},function(response){
             vm.assay = response;
             vm.assay.isNew = false;
-            console.log("Retrieved Assay",vm.assay.id);
+            //console.log("Retrieved Assay",vm.assay.id);
 
 
             vm.selectedDatasets['sample'] = vm.assay.samplesDataset;
@@ -160,7 +159,7 @@ var assay;
             vm.assay.$save(function(response) {
                 //console.log("Assay created",response)
                 toaster.pop('success', "SUCCESS", vm.assay.name," was successfully CREATED.",8000);
-                $state.transitionTo('admin.project', $stateParams, {
+                $state.transitionTo('project.manager.main', $stateParams, {
                     reload: true,
                     inherit: false,
                     notify: true
@@ -168,22 +167,10 @@ var assay;
             });
         }
         else{
-            console.log("Assay Edited")
-             console.log(vm.selectedDatasets)
-            //vm.assay.samplesDataset = vm.selectedDatasets['sample'];
-            //vm.assay.featuresDataset = vm.selectedDatasets['feature'];
-            //vm.assay.observationsDataset = vm.selectedDatasets['data'];
-
-            //TODO: REPEATED SAVE AFTER FAILING FIRST tIME WILL KEEP PUSHING TO DAtASETS
-            //NEED TO REMOVE BEFORE PUSH
-            
-            //vm.assay.datasets.push(vm.selectedDatasets['sample'])
-            //vm.assay.datasets.push(vm.selectedDatasets['feature'])
-            //vm.assay.datasets.push(vm.selectedDatasets['data'])
 
             vm.assay.$update(function(response) {
                 toaster.pop('success', "SUCCESS", vm.assay.name," was successfully UPDATED.",8000);
-                $state.transitionTo('admin.project', $stateParams, {
+                $state.transitionTo('project.manager.main', $stateParams, {
                     reload: true,
                     inherit: false,
                     notify: true
@@ -199,12 +186,43 @@ var assay;
     }
 
     vm.dontSaveAssay = function(){
-        vm.assay = {}
-        $state.go('admin.project',{
+        vm.assay = {};
+        $state.go('project.manager.main',{
             projectId: vm.projectId}
         );
+    }
+
+    vm.deleteDS = function(dataset){
+
+        SweetAlert.swal({
+                title: "Are you sure you want to delete "+dataset.name+" dataset ?",
+                text: "All associated data files will be deleted and all loaded data attached to this dataset will be permanently deleted! ",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false },
+            function (isConfirm) {
+                if (isConfirm) {
+                    var pos;
+                    for(var i=0; i< vm.activity.datasets.length;i++) {
+                        console.log(i)
+                        if(vm.currDS.id === vm.activity.datasets[i].id){
+                            console.log(i, 'for',vm.currDS.name)
+                            pos = i;
+                            break;
+                        }
+                    }
+                    vm.activity.datasets.splice(pos,1)
+                    SweetAlert.swal("Deleted!", "Dataset "+vm.currDS.name+" has been deleted.", "success");
+                } else {
+                    SweetAlert.swal("Cancelled", "", "error");
+                }
+            });
     }
 }
 
 angular.module('bioSpeak.config')
-    .controller('AssayConfigCtrl',['$scope', '$state','$stateParams','AssayConfigService','toaster',AssayConfigCtrl])
+    .controller('AssayConfigCtrl',['$scope', '$state','$stateParams','AssayConfigService','toaster','SweetAlert',AssayConfigCtrl])

@@ -2,12 +2,15 @@
  * Created by iemam on 09/12/2016.
  */
 'use strict'
-function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilder,DTOptionsBuilder, toaster) {
+function checkoutController($timeout,$stateParams,checkoutService, toaster, $uibModal) {
 
     var vm = this;
     vm.projectId = $stateParams.projectId;
     vm.dtColumns=[];
     vm.datasets = [];
+    vm.saving = false;
+    vm.dataset ={};
+    vm.checkoutResults = [];
 
     var projectId = $stateParams.projectId;
     var cartId = $stateParams.cartId;
@@ -19,33 +22,16 @@ function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilde
      });
 
      checkoutService.createCheckoutDatasets(cartId)
-         .then(function(datasets){
-             vm.datasets = datasets;
+         .then(function(result){
+             console.log(result)
+             vm.checkoutResults = result;
              vm.checkout = false
      });
 
 
-    vm.getDatasetPreview = function(ds){
-        ds.show = 'preview'
-        checkoutService.getDatasetPreview(ds.id)
-            .then(function(tabledata){
-                // console.log(tabledata)
-                ds.dtColumns=[]
-                tabledata.columns.forEach(function(col){
-                    ds.dtColumns.push(DTColumnBuilder.newColumn(col.columnName,col.label));
-                });
-                ds.previewReady = true;
-                ds.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
-                    return checkoutService.getDatasetsContent(ds.id)
-                })
-                ds.show = 'preview'
-            })
-    }
-
-
     var i = 0;
     vm.fileIsReady=  function(ds){
-        var Sec = 8000;
+        var Sec = 5000;
         var interval = setInterval(function(){
             i = i+1;
    //       console.log("Dataset with the following ID will be prepared",ds.id);
@@ -81,22 +67,72 @@ function checkoutController($timeout,$stateParams,checkoutService,DTColumnBuilde
                vm.outcome =response.outcome;
             })
 
+    };
+
+    vm.openSaveForm = function(){
+        var modalInstance = $uibModal.open({
+            templateUrl: 'explore/checkout/saveDatasetForm.html',
+            controller: function ($uibModalInstance) {
+                var dsModalCtrl = this;
+                dsModalCtrl.ok = function () {
+                    //var ad = new checkoutService.getAnalysisDatasetResource();
+                    var ad = {};
+                    ad.name = dsModalCtrl.ds.name;
+                    ad.description = dsModalCtrl.ds.description;
+                    ad.queryId = cartId;
+                    ad.files = vm.checkoutResults;
+                    vm.saveDataset(ad);
+                    // ad.$save(function(response) {
+                    //     //console.log("Project created",response);
+                    //     toaster.pop('success', "SUCCESS", ad.name," was successfully CREATED.",8000);
+                    //
+                    // });
+
+                    $uibModalInstance.close();
+
+                };
+
+                dsModalCtrl.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                    //vm.dontSaveProject();
+
+                };
+            },
+            controllerAs: 'dsModalCtrl'
+        });
     }
 
-vm.submitForm = function(ds){
-    $timeout(function() {
-        document.getElementById('but_'+ds.id).click();
-    }, 0);
-}
+    vm.saveDataset = function(ad){
 
-    vm.saveDataset = function(ds){
+        if(ad.name && ad.description){
+            checkoutService.saveDataset(ad).then(function(accepted){
+                if(accepted)
+                toaster.pop({type:'success', body:'dataset successfully UPDATED.', timeout:8000});
+            })
+            // ad.$save(function(response) {
+            //     //console.log("Project created",response);
+            //     toaster.pop('success', "SUCCESS", ad.name," was successfully CREATED.",8000);
+            //     $stateParams.projectId = response.id;
+            //     $state.transitionTo($state.current, $stateParams, {
+            //         reload: true,
+            //         inherit: false,
+            //         notify: true
+            //     });
+            // });
+        }
+        else{
+            //toaster.pop('error',"", "Please enter the project 'Name' and 'Title' before creating the project.",8000);
+            toaster.pop({
+                type: 'error',
+                title: '',
+                body: "Please enter the project 'Name' and 'Title' before creating the project.",
+                showCloseButton: true
+            });
+        }
 
-        checkoutService.saveDataset(ds).then(function(accepted){
-            if(accepted)
-            toaster.pop({type:'success', body:'dataset successfully UPDATED.', timeout:8000});
-        })
+
     }
 
 }
 angular.module('biospeak.explorer')
-    .controller('checkoutCtrl', ['$timeout','$stateParams','checkoutService','DTColumnBuilder','DTOptionsBuilder','toaster',checkoutController]);
+    .controller('checkoutCtrl', ['$timeout','$stateParams','checkoutService','toaster','$uibModal',checkoutController]);

@@ -9,7 +9,7 @@ function SubjectXF(subjectDataService,$q){
     var dimensions = [], groups = [];
     var cfdata;
     var all;
-    var dataToPlot;
+    // var dataToPlot;
     var XFserviceName = 'SubjCf';
 
     var subjCfService = {};
@@ -17,10 +17,31 @@ function SubjectXF(subjectDataService,$q){
     var subjectColumnName = "subjectId";
     var subjectDim;
 
+    // subjCfService.init = function () {
+    //     dimensions = [];
+    //     groups = [];
+    //     cfdata = null;
+    //     all = null;
+    //     cfReady = false;
+    // };
+
+    subjCfService.initXF = function (assayXfObj) {
+
+        var ready = true;
+        return $q.when(ready,function () {
+            dimensions = [];
+            groups = [];
+            cfdata = null;
+            all = null;
+            cfReady = false;
+            createXF(assayXfObj.data,assayXfObj.keys);
+        })
+    }
+
     subjCfService.formatData = function(data, requestedObsvs){
 
-        var dateTimeFormat = d3.time.format('%Y-%m-%dT%H:%M').parse;
-        var dateFormat = d3.time.format('%Y-%m-%d').parse;
+        var dateTimeFormat = d3.timeFormat('%Y-%m-%dT%H:%M');
+        var dateFormat = d3.timeParse('%Y-%m-%d');
 
         if(requestedObsvs)
             data.forEach(function(d) {
@@ -44,43 +65,47 @@ function SubjectXF(subjectDataService,$q){
     subjCfService.refreshCf = function(projectId,requestedObsvs){
         var deferred = $q.defer();
 
-        this.getData(projectId, requestedObsvs).then(function(data){
+        this.getData(projectId, requestedObsvs).then(function(dataObj){
+            var data = dataObj.data;
+            var keys = dataObj.keys;
             subjCfService.formatData(data, requestedObsvs);
+            createXF(data,keys);
+            deferred.resolve(keys)
 
-            cfdata = crossfilter(data);
-            all = cfdata.groupAll();
-
-            subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]});
-
-            // console.log("=============Creating Subject XF============")
-
-            subjChars.forEach(function(sc){
-                var dim = cfdata.dimension(function (d) {
-                    return d[sc];
-                });
-                dimensions[sc] = dim
-                var grp = dim.group();
-                var reducer = reductio()
-                    .filter(function(d) { return  d[sc] !== "" })
-                    .count(true)
-                reducer(grp);
-                groups[sc] = grp;
-            });
-            cfReady = true;
-            deferred.resolve(subjChars)
         });
         return deferred.promise
     };
+
+    var createXF = function (data,keys) {
+        cfdata = crossfilter(data);
+        all = cfdata.groupAll();
+
+        subjectDim = cfdata.dimension(function(d) {return d[subjectColumnName]});
+        // console.log("=============Creating Subject XF============")
+        keys.forEach(function(sc){
+            var dim = cfdata.dimension(function (d) {
+                return d[sc];
+            });
+            dimensions[sc] = dim
+            var grp = dim.group();
+            var reducer = reductio()
+                .filter(function(d) { return  d[sc] !== "" })
+                .count(true)
+            reducer(grp);
+            groups[sc] = grp;
+        });
+        cfReady = true;
+    }
 
     subjCfService.getData = function(projectId,requestedObsvs){
         var deferred = $q.defer();
 
         subjectDataService.getSubjData(projectId,requestedObsvs)
             .then(function(response){
-                //console.log('inside getDAta',response)
-                dataToPlot = response.data;
-                subjChars = response.header; //These are the list of HEADERS in the CF data
-                deferred.resolve(dataToPlot)
+                console.log('inside getDAta',response)
+                // dataToPlot = response.data;
+                subjChars = response.keys; //These are the list of HEADERS in the CF data
+                deferred.resolve(response)
             });
 
         return deferred.promise
@@ -119,7 +144,7 @@ function SubjectXF(subjectDataService,$q){
 
     subjCfService.getCountValue = function(){
         if(cfReady)
-            return all.value()
+            return all.value();
         else return null
     };
 
@@ -141,6 +166,10 @@ function SubjectXF(subjectDataService,$q){
     subjCfService.getSubjectHeader = function(){
         return subjectColumnName
     }
+
+    subjCfService.getSubjectKey = function () {
+        return subjectColumnName;
+    };
 
 
     /**
@@ -182,13 +211,7 @@ function SubjectXF(subjectDataService,$q){
         dc.redrawAll("subject");
     };
 
-    subjCfService.init = function () {
-        dimensions = [];
-        groups = [];
-        cfdata = null;
-        all = null;
-        cfReady = false;
-    };
+
 
     return subjCfService
 }

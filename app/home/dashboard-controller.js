@@ -2,7 +2,7 @@
  * Created by iemam on 06/04/2017.
  */
 'use strict'
-function dashboardController($state,projectService, exportService, explorerService, checkoutService,SweetAlert ) {
+function dashboardController($state,$uibModal,projectService ) {
     var vm = this;
 
     var date = new Date();
@@ -21,71 +21,61 @@ function dashboardController($state,projectService, exportService, explorerServi
         vm.projects = response;
     });
 
-    exportService.getUserDatasets().then(function(response){
-        vm.datasets = response.datasets;
-        vm.loaded = true;
-    });
+    vm.createProject = function () {
 
-    // explorerService.getUserQueries(vm.projectId).then(function(response){
-    //     //console.log(response);
-    //     vm.queries = response.queries;
-    // });
+        var project = new projectService.getProjectResource();
+        project.isNew = true;
+        project.status = "New";
+        project.studies = [];
+        vm.project = project;
 
-    vm.refreshDatasets = function(){
-        exportService.getUserDatasets().then(function(response){
-            vm.datasets = response.datasets;
-            //console.log(vm.datasets.length)
-            vm.loaded = true;
-        });
-    };
+        var modalInstance = $uibModal.open({
+            templateUrl: 'home/newProjectForm.html',
+            controller: function ($uibModalInstance) {
+                var modalCtrl = this;
+                modalCtrl.ok = function () {
+                    vm.project.name = modalCtrl.project.name;
+                    vm.project.title = modalCtrl.project.title;
 
-    vm.goToActivity = function(activity,edit){
-        if(activity.isAssay)
-            $state.go('admin.assay',{ projectId:vm.projectId, assayId: activity.id, edit:edit})
-        else
-            $state.go('admin.activity',{ projectId:vm.projectId, activityId: activity.id, edit:edit})
-    }
+                    if(vm.project.name && vm.project.title){
+                        vm.project.$save(function(response) {
 
-    vm.downloadDataset = function(ds){
-        if(ds.fileStatus === 0){
-            ds.fileStatus = 1;
-            checkoutService.prepareDataset(ds.id);
-            vm.refreshDatasets();
-        }else if(ds.fileStatus === 2)
-            checkoutService.downloadDataset(ds.id);
+                            $state.go('project.manager.main',{projectId:response.id});
+                        });
+                    }
 
-    }
+                    $uibModalInstance.close();
+                };
 
-
-    vm.deleteDataset = function(datasetId) {
-        SweetAlert.swal({
-                title: "Are you sure you want to delete this dataset ?",
-                text: "Dataset will be permanently deleted! ",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel plz!",
-                closeOnConfirm: false,
-                closeOnCancel: false
+                modalCtrl.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
             },
-            function (isConfirm) {
-                if (isConfirm) {
-                    exportService.deleteDataset(datasetId)
-                        .then(function (data) {
-                            SweetAlert.swal("Deleted!");
-                            vm.refreshDatasets();
-                        })
-                } else {
-                    SweetAlert.swal("Cancelled", "", "error");
-                }
-            });
-
-
+            controllerAs: 'newCtrl'
+        });
     }
 
+    vm.joinProject = function () {
+
+
+        var modalInstance = $uibModal.open({
+            templateUrl: 'home/joinProjectForm.html',
+            controller: function ($uibModalInstance) {
+                var modalCtrl = this;
+                modalCtrl.ok = function () {
+                   //TODO:JOIN PROJECT
+                    $uibModalInstance.close();
+                };
+
+                modalCtrl.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            },
+            controllerAs: 'joinCtrl'
+        });
+    }
 
 
 }
 angular.module('biospeak.app')
-    .controller('DashboardCtrl',['$state','projectService','exportService','explorerService','checkoutService', 'SweetAlert',dashboardController])
+    .controller('DashboardCtrl',['$state','$uibModal','projectService',dashboardController])

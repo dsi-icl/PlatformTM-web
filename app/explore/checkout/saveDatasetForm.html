@@ -1,0 +1,42 @@
+
+
+
+    <div class="modal-body myform">
+        <h2>Save dataset</h2>
+        <div class="m-t-md">
+            <form  id="form_{{ds.id}}" role="form" >
+
+                <div class="form-group"><label>Dataset Name </label>
+                    <input ng-model="dsModalCtrl.ds.name" type="text" placeholder="Enter name" class="form-control"
+                           required>
+                </div>
+                <div class="form-group"><label>Dataset Description</label>
+                    <textarea ng-model="dsModalCtrl.ds.description" class="form-control"
+                              placeholder="Enter Dataset Description" required></textarea>
+                </div>
+                <!--<div class="form-group">-->
+                <!--<label>Tags</label>-->
+                <!--<ui-select multiple tagging tagging-label="(custom 'new' label)" ng-model="step4vm.selectedTags"  sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a tag">-->
+                <!--<ui-select-match placeholder="Select tags...">{{$item}}</ui-select-match>-->
+                <!--<ui-select-choices repeat="tag in step4vm.availableTags | filter:$select.search">-->
+                <!--{{tag}}-->
+                <!--</ui-select-choices>-->
+                <!--</ui-select>-->
+                <!--<hr>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                <!--<label>Permissions</label>-->
+                <!--<a class="btn btn-white btn-bitbucket btn-xs">-->
+                <!--<i class="fa fa-group"></i>-->
+                <!--</a>-->
+                <!--</div>-->
+            </form>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" ng-click="dsModalCtrl.cancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary" ng-click="dsModalCtrl.ok()">Save</button>
+    </div>
+
+

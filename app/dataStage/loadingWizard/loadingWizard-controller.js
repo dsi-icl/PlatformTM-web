@@ -2,71 +2,75 @@
  * Created by iemam on 02/10/2015.
  */
 
- 'use strict'
-    function wizardController($scope, $state, $stateParams,wizardService){
+'use strict'
+function wizardController($scope, $state, $stateParams,wizardService){
 
-        var vm = {}
-        $scope.vm = vm;
+    var vm = this;
 
-        //$scope.vm.selectedFiles = $stateParams.selFiles;
-
-        $scope.vm.projectId = $stateParams.projectId;
-
-        $scope.vm = {
-            datasetId: $stateParams.datasetId,
-            activityId: $stateParams.activityId,
-            projectId: $stateParams.projectId,
-            fileId: $stateParams.fileId
-        };
-
-        //console.log('inside wizard controller',$stateParams.selFiles, 'service')
-
-        // $scope.selectFile = function(file){
-        //     $scope.vm.fileSelected = file;
-        // }
-
-        // $scope.getActivities = function(){
-        //
-        // }
-
-        wizardService.getFile($stateParams.fileId).then(function(file){
-            console.log(file)
-            $scope.vm.file = file;
-        })
+    vm.projectId = $stateParams.projectId;
 
 
-        /*fileService.getFiles()
-            .then(function(data){
-                vm.files = data.files;
-                console.log(data)
-                $scope.vm = vm;
 
-            })
-*/
-        /*$scope.openUpload = function(){
+    //vm.datasetId= $stateParams.datasetId;
+    //vm.activityId= $stateParams.activityId;
+    //vm.projectId= $stateParams.projectId;
+    vm.fileId= $stateParams.fileId;
 
-            var modalInstance = $modal.open({
-                templateUrl: 'fileManager/upload.html',
-                controller: 'uploadController'
-            });
+    wizardService.getFile($stateParams.fileId).then(function(file){
+        vm.file = file;
+        $scope.$parent.vm.folderId = file.folderId;
+    });
 
-            modalInstance.result.then(function () {
-                fileService.getFiles()
-                    .then(function(data){
-                        vm.files = data.files;
-                        console.log(data)
-                        $scope.vm = vm;
-
-                    })
-            }, function () {
-                console.info('Modal dismissed at: ' + new Date());
-            });
-        }*/
-
-        $scope.loadToDB = function(){
-
-        }
+    vm.goToStep5 = function(activityId,datasetId){
+        vm.datasetId= datasetId;
+        vm.activityId= activityId;
+        $state.go('loader.wizard.step_five',{
+            activityId: activityId,
+            datasetId: datasetId,
+            fileId: vm.fileId });
     }
 
-    angular.module('bioSpeak.import')
-        .controller('wizardController',['$scope','$state','$stateParams','wizardService',wizardController]);
+    vm.goToStep4 = function(activityId,datasetId){
+        vm.datasetId= datasetId;
+        vm.activityId= activityId;
+        $state.go('loader.wizard.step_four',{
+            activityId: activityId,
+            datasetId: datasetId,
+            fileId: vm.fileId });
+    };
+
+    vm.goToStep3 = function(activityId,datasetId){
+        vm.datasetId= datasetId;
+        vm.activityId= activityId;
+        $state.go('loader.wizard.step_three',{
+            activityId: activityId,
+            datasetId: datasetId,
+            fileId: vm.fileId });
+
+    };
+
+    vm.goToStep2 = function(activityId,datasetId){
+        vm.datasetId= datasetId;
+        vm.activityId= activityId;
+        $state.go('loader.wizard.step_two',{
+            activityId: activityId,
+            datasetId: datasetId ,
+            fileId: vm.fileId});
+
+    };
+
+    vm.goToStep1 = function () {
+        $state.go('loader.wizard.step_one',{
+            fileId: vm.fileId});
+    }
+
+    vm.cancel = vm.finish =  function () {
+        $state.go('project.drive.files',{
+            projectId: vm.projectId, dirId:vm.file.folderId});
+    }
+
+
+}
+
+angular.module('bioSpeak.import')
+    .controller('wizardController',['$scope','$state','$stateParams','wizardService',wizardController]);

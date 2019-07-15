@@ -3,24 +3,24 @@
  */
 'use strict'
 
-function checkoutService($http,$q,ngAppConfig){
+function checkoutService($http,$q,ngAppConfig, $resource){
     var serviceBase = ngAppConfig.apiServiceBaseUri;
     var checkoutServiceFactory = {};
 
     var DTdata = {}
 
 
+    var _analysisDatasetResource =  $resource(serviceBase+'analysisdataset/:adId',{});
 
     var _getSavedCart = function(projectId,cartId){
         return $http({
-            url:serviceBase+'apps/explore/projects/'+projectId+'/queries/'+cartId,
+            url:serviceBase+'queries/'+cartId,
             method:'GET'
         })
             .then(
                 function (response) {
                     return {
                         cart: (response.data),
-
                     }
                 },
                 function (httpError) {
@@ -64,12 +64,10 @@ function checkoutService($http,$q,ngAppConfig){
         return deferred.promise;
     };
 
-    var _downloadDataset = function(datasetId) {
-        console.log("The following dataset will be downloaded:", datasetId);
+    var _downloadDataset = function(fileId) {
         $http({
             method: 'GET',
-            url: serviceBase + 'apps/export/datasets/' + datasetId + '/download',
-            params: {datasetId: datasetId},
+            url: serviceBase + 'apps/export/files/' + fileId + '/download',
             responseType: ''
         }).success(function (data, status, headers) {
 
@@ -88,21 +86,21 @@ function checkoutService($http,$q,ngAppConfig){
         });
     };
 
-    var _prepareDataset = function(datasetId) {
+    var _prepareDataset = function(fileId) {
     //    console.log("The following dataset will be prepared:", datasetId);
         return  $http({
             method: 'GET',
-            url: serviceBase + 'apps/export/datasets/' + datasetId + '/export'
+            url: serviceBase + 'apps/export/files/' + fileId + '/export'
          }).then(function(response){
             return{outcome :(response.statusText)}
                                      });
     };
 
-    var _isFileReady= function(datasetId) {
+    var _isFileReady= function(fileId) {
     //    console.log("check if following dataset is ready to download:", datasetId);
         return $http({
             method: 'GET',
-            url: serviceBase + 'apps/export/datasets/' + datasetId + '/IsFileReady'
+            url: serviceBase + 'apps/export/files/' + fileId + '/checkstatus'
         }).then(function(result){
            return{ outcome1 :(result.data)}
                      });
@@ -110,8 +108,8 @@ function checkoutService($http,$q,ngAppConfig){
 
     var _saveDataset = function(dataset){
         return $http({
-            url: serviceBase + 'datasets/'+dataset.id,
-            method: 'PUT',
+            url: serviceBase + 'checkout',
+            method: 'POST',
             data: angular.toJson(dataset)
         }).then(
             function (response) {
@@ -130,8 +128,9 @@ function checkoutService($http,$q,ngAppConfig){
     checkoutServiceFactory.prepareDataset = _prepareDataset;
     checkoutServiceFactory.saveDataset = _saveDataset;
     checkoutServiceFactory.isFileReady = _isFileReady;
+    //checkoutServiceFactory.getAnalysisDatasetResource = _analysisDatasetResource;
     return checkoutServiceFactory
 }
 
 angular.module('biospeak.explorer')
-    .factory('checkoutService',['$http','$q','ngAppConfig', checkoutService])
+    .factory('checkoutService',['$http','$q','ngAppConfig','$resource', checkoutService])

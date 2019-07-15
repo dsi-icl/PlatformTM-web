@@ -1,0 +1,71 @@
+<div id="data-cart" ng-show="expVM.showCart" class="sidebar-open">
+    <div class="data-cart-container">
+        <ul  class="nav">
+            <li>
+                <h4>
+                    <span class="pull-right"><a ng-click="expVM.resetAll()"><i class="fa fa-refresh"></i> Refresh</a></span>
+                </h4>
+            </li>
+            <li>
+                <div style="border-bottom: 1px solid #4e7194;font-weight: 600;">
+                        <div>SUBJECT CHARACTERISTICS </div>
+                    </div>
+                <ul style="padding: 5px;list-style: none;">
+                        <li ng-repeat="sc in expVM.cartQuery.subjCharRequests">
+                            <span>{{sc.name}}</span> <div class="p-w-xs"><span ng-if="sc.filterText"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
+                        </li>
+                    <li ng-if="expVM.cartQuery.subjCharRequests.length == 0 || !expVM.cartQuery.subjCharRequests">
+                        <span style="font-style: italic">None selected</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <div style="border-bottom: 1px solid #4e7194;font-weight: 600;">
+                        <div>CLINICAL OBSERVATIONS</div>
+                    </div>
+                <ul style="padding: 5px;list-style: none;">
+                        <li ng-repeat="obs in expVM.cartQuery.obsRequests">
+                            <span>{{obs.name}}</span> <div class="p-w-xs"><span ng-if="obs.filterText"><i class="fa fa-filter"></i></span> {{obs.filterText}}</div>
+                        </li>
+                        <li ng-if="expVM.cartQuery.obsRequests.length == 0 || !expVM.cartQuery.obsRequests">
+                        <span style="font-style: italic">None selected</span>
+                        </li>
+                    </ul>
+            </li>
+            <li>
+                <div style="border-bottom: 1px solid #4e7194;font-weight: 600;">
+                        <div>MOLECULAR OBSERVATIONS</div>
+                    </div>
+                <ul style="padding: 5px;list-style: none;">
+                        <li ng-if="panel.isRequested" ng-repeat="panel in expVM.cartQuery.assayPanelRequests">
+                            <div >
+                                <div style="border-bottom: 1px solid #4e7194">
+                                    <div>{{panel.assayName}} Panel</div>
+                                </div>
+                                <ul style="padding-left: 10px;list-style: none; font-style: italic;">
+                                    <li ng-show="panel.sampleQuery.length > 0">
+                                        <div style="border-bottom: 1px solid #4e7194">
+                                            <div>Sample Characteristics</div>
+                                        </div>
+                                        <ul style="list-style: none;padding-left: 5px;">
+                                            <li ng-repeat="sc in panel.sampleQuery">
+                                                    <span>{{sc.name}}</span><div class="p-w-xs"><span ng-if="sc.filterText"><i class="fa fa-filter"></i></span> {{sc.filterText}}</div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    <!--<li ng-if="expVM.cartQuery.assayPanelRequests.length == 0 || !expVM.cartQuery.assayPanelRequests">-->
+                        <!--<span style="font-style: italic">None selected</span>-->
+                    <!--</li>-->
+                    </ul>
+            </li>
+            <li>
+                <div style="text-align: right;margin-top: 20px;">
+                    <a class="btn btn-block btn-info" data-ng-disabled="expVM.cartObsCount==0 || !expVM.cartObsCount" ng-click="expVM.saveToCartAndCheckout()">CHECKOUT</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,32 +1,15 @@
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
-        <h2>{{vm.assay.isNew ? 'New Assay' :'Assay detail'}}</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="home.dashboard">Home</a>
-            </li>
-            <li>
-                <a ui-sref="admin.project({projectId:vm.projectId})">{{vm.projectId}}</a>
-            </li>
-            <li class="active">
-                <a>{{vm.assay.isNew ? 'New Assay' : vm.assay.name}}</a>
-            </li>
-        </ol>
-    </div>
-    <div class="col-sm-8">
-        <div class="title-action">
+
+        <div has-permission="can-manage" project="vm.projectId" class="title-action">
             <a ng-click="vm.saveAssay()" class="btn btn-primary">Save</a>
-            <a ng-click="vm.dontSaveAssay()" class="btn btn-primary">Cancel</a>
         </div>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="ibox">
+            <div class="">
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 m-t-md">
                             <dl class="dl-horizontal">
                                 <dt>Assay Configuration</dt>
                                 <dd>
@@ -156,7 +139,7 @@
                                 <div class="border-bottom p-w-sm text-right" style="margin: 0px -15px;">
                                     <span style="font-size:16px;margin-top:-5px;">
                                         <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
-                                        <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
+                                        <a ng-click="vm.deleteDS(vm.assay.samplesDataset)"><i class="p-xs fa fa-trash"> </i></a>
                                         <a ng-init="vm.showSampleTemplates = false" ng-click="vm.showSampleTemplates = !vm.showSampleTemplates;vm.loadAssaySampleTemplates()">
                                             <i uib-tooltip="Add Dataset" class="p-xs fa fa-edit"></i>
                                         </a>
@@ -339,7 +322,7 @@
                                         <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
                                         <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
                                         <a ng-init="vm.showFeatureTemplates = false" ng-click="vm.showFeatureTemplates = !vm.showFeatureTemplates;vm.loadAssayFeatureTemplates()">
-                                            <i uib-tooltip="Add Dataset" class="p-xs fa fa-edit"></i>
+                                            <i uib-tooltip="{{vm.assay.featuresDataset ? 'Change Template':'Choose Template'}}" class="p-xs fa fa-edit"></i>
                                         </a>
                                     </span>
                             </div>
@@ -660,7 +643,7 @@
                                         <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
                                         <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
                                         <a ng-init="vm.showDataTemplates = false" ng-click="vm.showDataTemplates = !vm.showDataTemplates; vm.loadAssayDataTemplates() ">
-                                            <i uib-tooltip="Add Dataset" class="p-xs fa fa-edit"></i>
+                                            <i uib-tooltip="{{vm.assay.observationsDataset ? 'Change Template':'Choose Template'}}" class="p-xs fa fa-edit"></i>
                                         </a>
                                     </span>
                             </div>

@@ -1,33 +1,15 @@
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-4">
-        <h2>{{vm.activity.isNew ? 'New Activity' :'Define Activity'}}</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a ui-sref="home.dashboard">Home</a>
-            </li>
-            <li>
-               <a ui-sref="admin.project({projectId:vm.projectId})">{{vm.projectId}}</a>
-            </li>
-            <li class="active">
-                <a>{{vm.activity.isNew ? 'New Activity' : vm.activity.name}}</a>
-            </li>
-        </ol>
-    </div>
-    <div class="col-sm-8">
-        <div class="title-action">
-            <a ng-click="vm.saveActivity()" class="btn btn-primary">Save</a>
-            <a ng-click="vm.dontSaveActivity()" class="btn btn-primary">Go Back</a>
+
+        <div has-permission="can-manage" project="vm.projectId" class="title-action" style="display: none">
+            <a  ng-click="vm.saveActivity()" class="btn btn-primary">Save</a>
         </div>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="ibox">
-
+            <div class="">
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 m-t-md">
                             <dl class="dl-horizontal">
                                 <dt>Activity Title</dt>
                                 <dd>
@@ -43,10 +25,10 @@
 
             <div>
                 <div class="ibox-title panel-header">
-                    <span>Define Templates</span>
+                    <span>Dataset Descriptor</span>
                      <span style="font-size:16px;margin-top:-5px;" class="pull-right">
                          <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
-                         <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
+                         <a has-permission="can-manage" project="vm.projectId"  ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
                             | <a ng-init="vm.creatingNewDS = false" ng-click="vm.creatingNewDS = !vm.creatingNewDS"><i uib-tooltip="Add Dataset Template" class="p-xs fa fa-plus"></i></a>
                         </span>
                 </div>
@@ -55,7 +37,7 @@
                     <form role="form">
                         <div class="row">
                             <div class="col-md-11">
-                                <h3>Define New Template</h3>
+                                <h3>Select a dataset descriptor</h3>
                             </div>
                             <div class="col-md-1"> <span class="pull-right"><a ng-click="vm.creatingNewDS=false" class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>
 
@@ -63,8 +45,8 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="row m-b-sm m-t-sm">
-
                                     <div class="col-md-12">
+                                        <div class="h5">Standard Dataset Descriptors</div>
                                         <div class="">
                                             <input ng-model="searchTemplate" type="text" placeholder="Search"
                                                    class="input-sm form-control"></div>
@@ -109,8 +91,8 @@
 
                             <!--FIELD INFO-->
                             <div ng-show="vm.showDS" style="border-left: white 1px solid;" class=" m-b-sm m-t-sm col-md-5">
-                                <div class="ibox-title"><strong>{{vm.showDS.name}} Template Columns</strong>
-                                    <span class="pull-right"><a ng-click="vm.selectTemplate(vm.showDS);vm.creatingNewDS=false" class="btn btn-xs btn-primary">Add Dataset</a></span>
+                                <div class="ibox-title"><strong>{{vm.showDS.name}} descriptor fields</strong>
+                                    <span class="pull-right"><a ng-click="vm.selectTemplate(vm.showDS);vm.creatingNewDS=false" class="btn btn-xs btn-primary">Use this descriptor</a></span>
                                 </div>
                                 <div class="ibox-content" style="height: 350px">
                                     <div class="activities-list" full-scroll>
@@ -177,7 +159,7 @@
 
                                 <div class="ibox-title">
                                     <div class="ibox-tools">
-                                        <a class="btn btn-primary btn-xs" ng-init="vm.creatingCfield = false" ng-click="vm.creatingCfield = !vm.creatingCfield;vm.createNewCfield()">New Template Variable</a>
+                                        <a class="btn btn-primary btn-xs" ng-init="vm.creatingCfield = false" ng-click="vm.creatingCfield = !vm.creatingCfield;vm.createNewCfield()">New Descriptor field</a>
                                         <!--<a href="" class="btn btn-primary btn-xs">Preview Template</a>
                                         <a href="" class="btn btn-primary btn-xs">Download Template</a>-->
                                     </div>
@@ -587,10 +569,10 @@
                                             <th>Variable Name</th>
                                             <th>Include</th>
                                             <th data-hide="phone">Mandatory</th>
-                                            <th data-hide="all">Description</th>
-                                            <th data-hide="all">Controlled Vocabulary</th>
-                                            <th data-hide="all">Order</th>
-                                            <th data-hide="all">Key Sequence</th>
+                                            <th data-hide="phone">Description</th>
+                                            <th data-hide="phone">Controlled Vocabulary</th>
+                                            <!--<th data-hide="all">Order</th>
+                                            <th data-hide="all">Key Sequence</th>-->
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -616,12 +598,12 @@
                                             <td>
                                                 {{var.dictionaryName}}
                                             </td>
-                                            <td>
-                                                <a href="#" e-ng-model="var.order" editable-text="var.order" buttons="no" blur="submit">{{var.order || "Undefined"}}</a>
+                                <!--            <td>
+                                                <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
                                             </td>
                                             <td>
-                                                <a href="#" e-ng-model="var.sequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.sequence || "Undefined"}}</a>
-                                            </td>
+                                                <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                            </td>-->
                                         </tr>
                                         </tbody>
                                         <tfoot>

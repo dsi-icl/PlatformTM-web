@@ -19,7 +19,7 @@ angular.module('biospeak.dcPlots')
 
 
             //TEMP ... should be merged to the same varaible eventually either as a hashtable or list of ids
-            var requestedObsvs = [];
+            var requestedObsvs = {};
             var counterWidgetId;
             ////////////////////////////
 
@@ -44,8 +44,10 @@ angular.module('biospeak.dcPlots')
                 }
                 else {
                     console.debug("++Requested observation NOT FOUND IN XF++")
-                    requestedObsvs.push(obsRequest);
-                    xfilterService.refreshCf(projectId, requestedObsvs, chartGroup)
+                    if(!requestedObsvs.hasOwnProperty(chartGroup))
+                        requestedObsvs[chartGroup] = [];
+                    requestedObsvs[chartGroup].push(obsRequest);
+                    xfilterService.refreshCf(projectId, requestedObsvs[chartGroup], chartGroup)
                         .then(function () {
                             chart = DCservice.createChart(obsId, xfilterService, chartDataType, obsRequest.dataType, chartGroup);
                             _refreshCharts(chartGroup, xfilterService);
@@ -66,12 +68,11 @@ angular.module('biospeak.dcPlots')
                 } else {
                     cfDimension = xfilterService.getDimension(obsId, chartGroup)
                     cfGroup = xfilterService.getGroup(obsId, chartGroup)
+
                 }
 
-                if (cfGroup.all().length === 1 && cfGroup.all()[0].key === "(Blanks)")
+                if ((cfGroup.all().length === 1 && cfGroup.all()[0].key === "(Blanks)") || cfGroup.all().length === 0 )
                     return null;
-
-                //console.debug("=======2=CREATING ",chartDataType," CHART for ",obsId, " dataype:",dataType);
 
                 var chartData = _getChartOptions(obsId, cfDimension, cfGroup, chartDataType, dataType);
 
@@ -86,14 +87,11 @@ angular.module('biospeak.dcPlots')
                 chart.chartName = obsId + "_" + chartDataType+"_"+chartGroup;
 
 
+                if(dataType === 'ordinal'){
+                    console.log('ordering');
+                    chart.ordering(function(d) { return +d.key; })
+                }
                 //CACHING
-                //Initialize Map if isn't
-                //if (!_obsToChartIdMap[chartGroup]) {
-                //    _obsToChartIdMap[chartGroup] = [];
-                //}
-
-                //obsToChartId[obsId + "_" + chartDataType+"_"+chartGroup] = chart.chartID();
-                //_obsToChartIdMap[chartGroup].push(chart.chartID());
                 chartIdToObs[chart.chartID()] = obsId;
 
                 return chart
@@ -106,15 +104,22 @@ angular.module('biospeak.dcPlots')
 
                 if (type === 'subject') {
                     chartOptions["dimension"] = xfilterService.getSubjectCountData(module)
-                    chartOptions["group"] = xfilterService.getSubjectCountGroup(module)
-                } else {
+                    chartOptions["group"] = xfilterService.getSubjectCountGroup(module);
+                    chart.dimName = xfilterService.getSubjectKey();
+                } else if(type === 'sample'){
+                    chartOptions["dimension"] = xfilterService.getSampleCountData(module);
+                    chartOptions["group"] = xfilterService.getSampleCountGroup(module);
+                    chart.dimName = xfilterService.getSampleKey();
+                }
+                else {
                     chartOptions["dimension"] = xfilterService.getCountData(module)
                     chartOptions["group"] = xfilterService.getCountGroup(module)
                 }
 
                 chart.options(chartOptions);
                 chart.chartType = 'dataCount';
-                chart.dimName = "counter";
+                // chart.dimName = type;
+                chart.chartName = type+"_counter";
                 chart.module = module;
                 counterWidgetId = chart.chartID();
 
@@ -126,17 +131,25 @@ angular.module('biospeak.dcPlots')
                 var chart = chartFactory();
                 var chartOptions = {};
 
-                if (type == 'subject') {
+                if (type === 'subject') {
                     chartOptions["dimension"] = xfilterService.getSubjectCountData(module)
-                    chartOptions["group"] = xfilterService.getSubjectCountGroup(module)
-                } else {
+                    chartOptions["group"] = xfilterService.getSubjectCountGroup(module);
+                    chart.dimName = xfilterService.getSubjectKey();
+                } else if(type === 'sample'){
+                    chartOptions["dimension"] = xfilterService.getSampleCountData(module)
+                    chartOptions["group"] = xfilterService.getSampleCountGroup(module)
+                    chart.dimName = xfilterService.getSampleKey();
+                }
+                else {
                     chartOptions["dimension"] = xfilterService.getCountData(module)
                     chartOptions["group"] = xfilterService.getCountGroup(module)
+                    chart.dimName = type;
                 }
 
                 chart.options(chartOptions);
                 chart.chartType = 'dataCount';
-                chart.dimName = "counterBar";
+                //chart.dimName = type;
+                chart.chartName = type+"_counterBar";
                 chart.module = module;
                 counterWidgetId = chart.chartID();
                 return chart
@@ -195,7 +208,7 @@ angular.module('biospeak.dcPlots')
                 dc.redrawAll(chartGroup);
                 obsToChartId = {};
                 chartIdToObs = {};
-                requestedObsvs = [];
+                requestedObsvs = {};
             };
 
             DCservice.removeChart = function (obsReq, chartGroup) {
@@ -207,10 +220,7 @@ angular.module('biospeak.dcPlots')
                 var mainChart =_findChartByName(mainChartName,chartGroup);
                 var rangeChart = _findChartByName(rangeChartName,chartGroup);
 
-                //console.log(mainChart);
-                //console.log(rangeChart);
                 if(mainChart){
-                    console.log('removing',mainChart);
                     //TODO need testing
                     if(mainChart.hasFilter()){
                         console.debug('Removing filter first')
@@ -234,7 +244,7 @@ angular.module('biospeak.dcPlots')
             };
             
             DCservice.init = function () {
-                requestedObsvs = [];
+                requestedObsvs = {};
                 obsToChartId = {};
                 chartIdToObs = {};
                 dc.deregisterAllCharts();
@@ -254,23 +264,23 @@ angular.module('biospeak.dcPlots')
             var _refreshCharts = function (chartGroup, xfilterService) {
 
                 var allCharts = dc.chartRegistry.list(chartGroup);// change that to activeCharts?
-                // console.log('=======3===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
+                 // console.log('=======3===REFRESHING CHARTS====='+chartGroup+'========= '+allCharts.length+' in total')
                 var oldFilters;
                 //console.log(allCharts)
                 allCharts.forEach(function (chart) {
-                    //console.log('got chart ',chart.chartID(),' ',chart.chartGroup(), chart)
-                    if (chart.chartGroup() === chartGroup) {
+                    // console.log('got chart ',chart.chartID(),' ',chart.chartGroup(), chart)
+                    // console.log(chart.chartGroup(),chartGroup,chart.chartGroup() == chartGroup)
+                    if (chart.chartGroup() == chartGroup) {
 
 
                         oldFilters = chart.filters(); // Get current filters
-                        //console.log('a',oldFilters)
                         chart.IsRefreshing = true;
 
                         //I need to know which observations this id was associated with so that I can query for
                         // the new dimensions created for this observation
                         var obs = chartIdToObs[chart.chartID()]
                         if (!angular.isUndefined(obs)) {
-                            // console.log('/////REFRESHING CHART FOR ',obs, ' IN  MODULE/////////', module)
+                             //console.log('/////REFRESHING CHART FOR ',obs, ' IN  MODULE/////////', chart.module)
                             chart.dimension(xfilterService.getDimension(obs, chart.module))
                             chart.group(xfilterService.getGroup(obs, chart.module));
                         }
@@ -280,12 +290,20 @@ angular.module('biospeak.dcPlots')
                             chart.dimension(xfilterService.getTableDimension(chart.module))
                             chart.group(xfilterService.getTableGroup());
                             chart.columns(xfilterService.getTableHeaders(chart.module));
-
                         }
                         if (chart.chartType === 'dataCount') {
-                            // console.log('/////REFRESHING COUNTER WIDGET FOR ',module,' MODULE/////////')
-                            chart.dimension(xfilterService.getCountData(chart.module))
-                            chart.group(xfilterService.getCountGroup(chart.module));
+                             //console.log('/////REFRESHING COUNTER WIDGET FOR ',chart.module,chart.type,' MODULE/////////')
+                            if(chart.dimName == xfilterService.getSubjectKey())
+                            {
+                                //console.log('subject')
+                                chart.dimension(xfilterService.getSubjectCountData(chart.module))
+                                chart.group(xfilterService.getSubjectCountGroup(chart.module));
+                            }
+                            else{
+                                chart.dimension(xfilterService.getCountData(chart.module))
+                                chart.group(xfilterService.getCountGroup(chart.module));
+                            }
+
                         }
 
 
@@ -307,100 +325,83 @@ angular.module('biospeak.dcPlots')
 
             var _getMinimumValue = function (dimension, val) {
                 var orderedVals = dimension.bottom(Infinity)
-                //console.log(orderedVals)
+
                 var i = 0;
-                while (orderedVals[i][val] == null || orderedVals[i][val] == "") {
+                while (orderedVals[i][val] == null || orderedVals[i][val] === "") {
                     i++;
                 }
                 //console.log(orderedVals[i][val])
                 return orderedVals[i][val]
             };
 
+            var _getMaximumValue = function (dimension, val) {
+                var orderedVals = dimension.top(Infinity)
+
+
+            }
+
             var _getChartOptions = function (val, cfDimension, cfGroup, chartDataType, dataType) {
 
                 var chartType,
                     chartOptions = {};
 
-                //console.log("Data type is", dataType, val)
-
-
-                //if(val == 'sysbp') requiresBoxplot = true;
-                if (chartDataType == 'GroupedByTime') {
-                    //  console.log("doing boxplot")
+                if (chartDataType === 'GroupedByTime') {
                     chartType = "boxPlot"
                     chartOptions["width"] = 384 //768////
                     chartOptions["height"] = 240 //480////
                     chartOptions["margins"] = {top: 10, right: 50, bottom: 20, left: 50}
                     chartOptions["elasticX"] = "true"
                     chartOptions["elasticY"] = "true"
-                    //chartOptions["boxWidth"] = "10"
-                    //chartOptions["boxPadding"] = "0.9"
-                    //.dimension(cfDimension)
-                    //.group(cfGroup)
-
                 }
 
                 else if (dataType === 'dateTime') {
-                    //console.log('making a time chart')
-                    chartType = "barChart";
-                    //chartOptions["width"] = "2000";
+                    chartType = "lineChart";
                     var maxDate = cfDimension.top(1)[0][val]
                     var minDate = _getMinimumValue(cfDimension, val)
 
-                    //console.log(maxDate,minDate);
                     //chartOptions["margins"] = {top: 10, right: 20, bottom: 30, left: 30}
 
-                    chartOptions["x"] = d3.time.scale().domain([minDate, maxDate]);
+                    chartOptions["x"] = d3.scaleTime().domain([minDate, maxDate]);
 
-                    chartOptions["xUnits"] = d3.time.minutes
+                    chartOptions["xUnits"] = d3.timeMinute
+                    chartOptions["elasticX"] = false;
                     //chartOptions["round"] = (d3.time.month.round)
                     //chartOptions["yUnits"] = d3.time.days;
                     //chartOptions["renderArea"] = true
                     chartOptions["barPadding"] = 0.1;
                     chartOptions["outerPadding"] = 0.05;
                     chartOptions["brushOn"] = true;
-                    //chartOptions["renderDataPoints"] = true
-
+                    chartOptions["renderDataPoints"] = true
                 }
 
                 else if (dataType === 'ordinal' || dataType === 'integer') {
 
                     chartType = "barChart";
-                    chartOptions["x"] = d3.scale.ordinal();
+                    chartOptions["x"] = d3.scaleOrdinal();
                     chartOptions["xUnits"] = dc.units.ordinal;
-                    //   .brushOn(false)
-                    //   .xAxisLabel('Fruit')
-                    //   .yAxisLabel('Quantity Sold')
-                    //   .dimension(fruitDimension)
-                    chartOptions["barPadding"] = 0.1;
-                    chartOptions["outerPadding"] = 0.05;
-                    chartOptions["yAxisLabel"] = "Frequency"
+                    //chartOptions["barPadding"] = 0.1;
+                    //chartOptions["outerPadding"] = 0.5;
+                    //chartOptions["centerBar"] = true;
+                    chartOptions["yAxisLabel"] = "Frequency";
                     chartOptions["xAxisLabel"] = val
-                    //   .group(sumGroup);
                 }
                 //else if(isNaN(cfGroup.all()[0].key)){
                 else if (dataType === "string") {
 
-                    //console.log(cfGroup.all())
                     //Ordinal chart (rowChart or PieChart)
 
                     var noOfGroups = cfGroup.size();
 
-                    //console.log('number of groups',noOfGroups)
-                    //console.log('groups',cfGroup.all())
-                    //console.log('dimensions groupall',cfDimension.groupAll().value())
-                    //console.log('dimensions top',cfDimension.top(Infinity))
-
-                    if (noOfGroups > 3) {
-                        //console.log("Plotting a DC row chart ")
+                    if (noOfGroups > 2) {
                         chartType = "rowChart"
                         chartOptions["elasticX"] = "true"
-                        chartOptions["xAxis"] = {"ticks": "4"}
+                        //chartOptions["xAxis"] = {"ticks": "4"}
                         chartOptions["width"] = "300"
-                        chartOptions["height"] = noOfGroups * 30 + 20
+                        chartOptions["height"] = (noOfGroups * 30) + 20
                         //var chartHeight = "180"
                         //chartOptions["fixedBarHeight"] = chartheight - (noOfGroups + 1) * gap / count
                         chartOptions["margins"] = {top: 10, right: 10, bottom: 20, left: 10}
+                        chartOptions["xAxis","tickFormat"] = d3.format("d");
                     }
                     else {
                         //console.log("making a pie chart ")
@@ -417,27 +418,24 @@ angular.module('biospeak.dcPlots')
                         //chartOptions["slicesCap"] = "4"
                     }
                 }
-
-
                 else {
-                    //console.log("Plotting a DC bar chart")
                     //numeric bar chart
-                    //console.log(cfDimension.top(1)); console.log(cfGroup.all()[0].value)
-                    maxValue = parseFloat(cfDimension.top(1)[0][val])
-                    minValue = parseFloat(_getMinimumValue(cfDimension, val));
+                    var minValue,maxValue;
 
-                    //var minTail = parseInt(minValue/4)
-                    //var maxTail = parseInt(maxValue/4)
+                    if(angular.isArray(cfDimension.top(1)[0][val]))
+                        maxValue = Math.max.apply(null,cfDimension.top(1)[0][val])
+                    else
+                        maxValue = parseFloat(cfDimension.top(1)[0][val])
 
-                    var offset = (maxValue - minValue ) / 10.0
+                    if(angular.isArray(cfDimension.bottom(1)[0][val]))
+                        minValue = Math.min.apply(null,cfDimension.bottom(1)[0][val])
+                    else
+                        minValue = parseFloat(_getMinimumValue(cfDimension, val));
 
-                    //console.log('offset',offset, 'min before',minValue,'max before', maxValue)
+                    var offset = (maxValue - minValue ) % 10.0
+
                     maxValue = maxValue + offset;
                     minValue = minValue - offset;
-
-                    //minValue = cfDimension.bottom(1)[0][val]
-                    //console.log('max ',maxValue)
-                    //console.log('min ',minValue)
 
                     chartType = "barChart";
                     chartOptions["transitionDuration"] = "500"
@@ -445,18 +443,18 @@ angular.module('biospeak.dcPlots')
                     chartOptions["gap"] = "20"
                     chartOptions["xAxisMin"] = minValue
                     chartOptions["xAxisMax"] = maxValue
-                    chartOptions["x"] = d3.scale.linear().domain([minValue, maxValue])
+                    chartOptions["x"] = d3.scaleLinear().domain([minValue, maxValue])
                     //chartOptions["elasticX"] = "true"
                     chartOptions["elasticY"] = "true"
                     //chartOptions["elasticX"] = "true"
                     chartOptions["height"] = "320";
+                    chartOptions["yAxis","tickFormat"] = d3.format("d");
 
                     chartOptions["width"] = "310"
                     chartOptions["renderArea"] = true;
                     chartOptions["renderHorizontalGridLines"] = true;
 
                     if (chartDataType === 'rangeChart') {
-                        //console.log('setting range chart to 40')
                         chartOptions["height"] = "60";
 
                         chartOptions["yAxisLabel"] = "";
@@ -472,22 +470,7 @@ angular.module('biospeak.dcPlots')
                         chartOptions["mouseZoomable"] = false;
                         chartOptions["brushOn"] = false;
                     }
-
-                    //chartOptions["transitionDuration"] = 1000
-
                     chartOptions["xUnits"] = dc.units.fp.precision(0.01)
-
-                    //+ " values"
-                    //chartOptions["margins"] = "{top: 10, right: 10, bottom: 40, left: 20}"
-                    //chartOptions[".xAxis().tickFormat"] = "2"
-                    //d3.extent(data, function(d) { return d.TC; })
-                    // bar width Keep increasing to get right then back off.
-                    /* .x(d3.scale.linear()
-                     .domain(d3.extent(data, function(d) { return d.TC; }))
-                     )
-                     .y(d3.scale.linear().domain([0, d3.max(data, function(d) { return d.close; })]))
-                     .xAxis().tickFormat(function(v) {return v;});
-                     */
                 }
 
 

@@ -13,12 +13,7 @@ function ActivityConfigService($resource, ngAppConfig) {
         update:{
             method: 'PUT',
             params: {activityId: '@id'}
-        }/*,
-        getProjectActivities:{
-            method: 'GET',
-            url : serviceBase+'projects/:projectId/activities',
-            isArray : true
-        }*/
+        }
     });
 
     var _datasetResource = $resource(serviceBase+'templates/clinical/:datasetId',{},{
