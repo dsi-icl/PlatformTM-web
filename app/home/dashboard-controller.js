@@ -63,17 +63,7 @@ function dashboardController($state,$uibModal,projectService ) {
             controller: function ($uibModalInstance) {
                 var modalCtrl = this;
                 modalCtrl.ok = function () {
-                    //joinCtrl.projectCode;
-
-                    // if(modalCtrl.projectCode!==''){
-                    //     projService.getProjectResource.getProjectByAccession({projectId: modalCtrl.projectCode},
-                    //         function (response) {
-                    //             vm.project = response;
-                    //             if(response)
-                    //                 projService.
-                    //         });
-                    // }
-
+                   //TODO:JOIN PROJECT
                     $uibModalInstance.close();
                 };
 

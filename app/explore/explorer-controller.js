@@ -37,7 +37,6 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
     }else {
         explorerService.getNewCartQuery(vm.projectId).then(function(query){
             vm.cartQuery = query.cart;
-            //console.log(query.cart)
         })
     }
 
@@ -48,18 +47,10 @@ function ExplorerCtrl($scope,$state,$stateParams,XFilterLinker, assayDataService
         }
     },true);
 
-    //vm.cartIsEmpty = vm.cartQuery
-
-
-    /*explorerService.getUserQueries(vm.projectId).then(function(response){
-        vm.savedQueries = response.queries;
-    });*/
 
     vm.plotSwitchClicked = function(obsReq, obsModule){
         var isActive = obsReq.isActive === true;
 
-        //console.debug(obsReq,obsModule, ' clicked');
-        //console.debug('plotting chart: ',chartId, ' in card:',cardId,' in container: ',plottingOptions.chartContainerId, 'for module',plottingOptions.chartGroup);
         if(isActive){
             explorerService.addToCart(obsReq, obsModule);
         }

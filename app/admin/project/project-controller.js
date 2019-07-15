@@ -158,71 +158,71 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
     }
 
     vm.addUser = function(projectId,user){
-        var modalInstance = $uibModal.open({
-            templateUrl: 'admin/users/user.html',
-            controller: function ($uibModalInstance) {
-                var userModalCtrl = this;
-
-                this.user = user;
-                // projectService.getUserClaims(userId,projectId).then(function (claims) {
-                //    this.userclaims = claims;
-                // });
-                userModalCtrl.ok = function () {
-                    //var ad = new checkoutService.getAnalysisDatasetResource();
-
-                    //vm.saveDataset(ad);
-                    // ad.$save(function(response) {
-                    //     //console.log("Project created",response);
-                    //     toaster.pop('success', "SUCCESS", ad.name," was successfully CREATED.",8000);
-                    //
-                    // });
-
-                    $uibModalInstance.close();
-
-                };
-
-                userModalCtrl.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                    //vm.dontSaveProject();
-
-                };
-            },
-            controllerAs: 'userModalCtrl'
-        });
+        // var modalInstance = $uibModal.open({
+        //     templateUrl: 'admin/users/user.html',
+        //     controller: function ($uibModalInstance) {
+        //         var userModalCtrl = this;
+        //
+        //         this.user = user;
+        //         // projectService.getUserClaims(userId,projectId).then(function (claims) {
+        //         //    this.userclaims = claims;
+        //         // });
+        //         userModalCtrl.ok = function () {
+        //             //var ad = new checkoutService.getAnalysisDatasetResource();
+        //
+        //             //vm.saveDataset(ad);
+        //             // ad.$save(function(response) {
+        //             //     //console.log("Project created",response);
+        //             //     toaster.pop('success', "SUCCESS", ad.name," was successfully CREATED.",8000);
+        //             //
+        //             // });
+        //
+        //             $uibModalInstance.close();
+        //
+        //         };
+        //
+        //         userModalCtrl.cancel = function () {
+        //             $uibModalInstance.dismiss('cancel');
+        //             //vm.dontSaveProject();
+        //
+        //         };
+        //     },
+        //     controllerAs: 'userModalCtrl'
+        // });
     };
 
     vm.editUser = function(projectId,user){
-        var modalInstance = $uibModal.open({
-            templateUrl: 'admin/users/user.html',
-            controller: function ($uibModalInstance) {
-                var userModalCtrl = this;
-
-                this.user = user;
-                // projectService.getUserClaims(userId,projectId).then(function (claims) {
-                //    this.userclaims = claims;
-                // });
-                userModalCtrl.ok = function () {
-                    //var ad = new checkoutService.getAnalysisDatasetResource();
-
-                    //vm.saveDataset(ad);
-                    // ad.$save(function(response) {
-                    //     //console.log("Project created",response);
-                    //     toaster.pop('success', "SUCCESS", ad.name," was successfully CREATED.",8000);
-                    //
-                    // });
-
-                    $uibModalInstance.close();
-
-                };
-
-                userModalCtrl.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                    //vm.dontSaveProject();
-
-                };
-            },
-            controllerAs: 'userModalCtrl'
-        });
+        // var modalInstance = $uibModal.open({
+        //     templateUrl: 'admin/users/user.html',
+        //     controller: function ($uibModalInstance) {
+        //         var userModalCtrl = this;
+        //
+        //         this.user = user;
+        //         // projectService.getUserClaims(userId,projectId).then(function (claims) {
+        //         //    this.userclaims = claims;
+        //         // });
+        //         userModalCtrl.ok = function () {
+        //             //var ad = new checkoutService.getAnalysisDatasetResource();
+        //
+        //             //vm.saveDataset(ad);
+        //             // ad.$save(function(response) {
+        //             //     //console.log("Project created",response);
+        //             //     toaster.pop('success', "SUCCESS", ad.name," was successfully CREATED.",8000);
+        //             //
+        //             // });
+        //
+        //             $uibModalInstance.close();
+        //
+        //         };
+        //
+        //         userModalCtrl.cancel = function () {
+        //             $uibModalInstance.dismiss('cancel');
+        //             //vm.dontSaveProject();
+        //
+        //         };
+        //     },
+        //     controllerAs: 'userModalCtrl'
+        // });
     };
 
 

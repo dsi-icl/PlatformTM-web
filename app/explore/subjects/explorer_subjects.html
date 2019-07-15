@@ -6,22 +6,6 @@
                 <h3>{{vm.title}}</h3>
             </div>
             <div class="ibox-content">
-                <!--<uib-tabset class="models-list">-->
-                    <!--<uib-tab>-->
-                        <!--<uib-tab-heading>-->
-                            <!--<p class="model-name">-->
-                                <!--Human subjects-->
-                            <!--</p>-->
-                            <!--<p class="model-icon">-->
-                                <!--<span class="flaticon-standing55"></span>-->
-                                <!--<dc-count-widget-->
-                                        <!--xfilter-service="{{vm.chartingOpts.xfilterService}}"-->
-                                        <!--chart-service="{{vm.chartingOpts.DCchartService}}"-->
-                                        <!--module="{{vm.chartingOpts.chartGroup}}">-->
-                                <!--</dc-count-widget>-->
-                            <!--</p>-->
-<!---->
-                        <!--</uib-tab-heading>-->
                         <div class="row">
                             <div class="col-md-4 m-t-md m-b-md">
                                 <div style=" max-height: 395px;overflow: scroll;padding: 0px 20px">
@@ -79,15 +63,6 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <!--<div class="ibox-title">-->
-                                    <!--<div class="pull-right">-->
-                                        <!--<div class="btn-group">-->
-                                            <!--<label class="btn btn-xs btn-white" ng-model="show" uib-btn-radio="'plots'">Data Plots</label>-->
-                                            <!--<label class="btn btn-xs btn-white" ng-model="show" uib-btn-radio="'table'">Data Table</label>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
                                 <div class="ibox-content">
                                     <div class="anchor">
                                         <div class="charts-container" id="subject-plots" ng-hide="show =='table'">
@@ -130,40 +105,6 @@
 
                             </div>
                         </div>
-                    <!--</uib-tab>-->
-
-
-                    <!--<uib-tab>
-                        <uib-tab-heading>
-                            <p class="model-name">
-                                Animal subjects
-                            </p>
-                            <p class="model-icon">
-                                <span class="flaticon-rat2"></span>
-                                <span class="model-count">0</span>
-                            </p>
-
-                        </uib-tab-heading>
-                        <div id="xenograft-plots" class="alert alert-info">
-                            No Animal Subjects
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </uib-tab>-->
-                    <!--<uib-tab>
-                        <uib-tab-heading>
-                            <p class="model-name">
-                                Cell Line Cultures
-                            </p>
-                            <p class="model-icon">
-                                <span class="flaticon-cells"></span>
-                                <span class="model-count">0</span>
-                            </p>
-
-                        </uib-tab-heading>
-                        <div class="alert alert-info">&nbsp;No Cell lines</div>
-                    </uib-tab>-->
-                <!--</uib-tabset>-->
             </div>
         </div>
     </div>

@@ -24,17 +24,7 @@ var biospeakApp = angular.module('biospeak.app')
 
         $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
 
-
-            // if (!authService.checkPermissionForView(next,toParams)){
-            //     event.preventDefault();
-            //     $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-            // }//else
-            //     //console.log('OK to proceed')
-            // $uibModalStack.dismissAll();
-
-
             authService.checkPermissionForView(next,toParams).then(function (isAllowed) {
-                // console.log(next,toParams)
               if(!isAllowed){
                   event.preventDefault();
                   $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
@@ -73,10 +63,6 @@ biospeakApp.constant('USER_ROLES', {
 })
 
 biospeakApp.constant('ngAppConfig', {
-    //apiServiceBaseUri: '/api/v1/'
-    //apiServiceBaseUri: 'http://146.169.32.103/api/v1/'
-    //apiServiceBaseUri: 'http://rachmaninoff.local:8080/'
-    //apiServiceBaseUri: 'http://146.169.15.65:2483/'
-    //apiServiceBaseUri: 'http://localhost:2483/api/v1/'
-    apiServiceBaseUri: 'http://localhost:5000/'
+    apiServiceBaseUri: '/api/v2/'
+    // apiServiceBaseUri: 'http://localhost:5000/'
 });

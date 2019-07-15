@@ -110,32 +110,7 @@ angular.module('biospeak.explorer',[])
                     }],
                     loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load('explore/checkout/checkout-controller.js');
-                    }]/*,
-                    loadPlugins: ['$ocLazyLoad',function ($ocLazyLoad){
-                        return $ocLazyLoad.load({
-                            serie:true,
-                            files: [
-                                'lib/plugins/steps/jquery.steps.css',
-                                'lib/plugins/dataTables/js/jquery.dataTables.min.js',
-                                'lib/plugins/dataTables/css/datatables.bootstrap.min.css',
-                                'lib/plugins/dataTables/js/angular-datatables.js',
-                                'lib/plugins/dataTables/js/angular-datatables.bootstrap.min.js',
-                                'lib/plugins/dataTables/js/angular-datatables.buttons.min.js',
-                                'lib/plugins/dataTables/css/angular-datatables.min.css'
-                            ]
-                        })
-                    }],
-                    loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
-                        return $ocLazyLoad.load({
-                            files:['lib/plugins/angular-xeditable/js/xeditable.min.js']
-                        }).then(function () {
-                            var editableThemes = $injector.get('editableThemes');
-                            editableThemes.bs3.inputClass = 'input-sm';
-                            editableThemes.bs3.buttonsClass = 'btn-sm';
-                            var editableOptions = $injector.get('editableOptions');
-                            editableOptions.theme = 'bs3';
-                        });
-                    }]*/
+                    }]
                 }
             })
     });

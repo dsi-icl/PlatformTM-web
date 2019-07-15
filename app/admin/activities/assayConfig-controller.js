@@ -167,18 +167,6 @@ var assay;
             });
         }
         else{
-            //console.log("Assay Edited")
-            // console.log(vm.selectedDatasets)
-            //vm.assay.samplesDataset = vm.selectedDatasets['sample'];
-            //vm.assay.featuresDataset = vm.selectedDatasets['feature'];
-            //vm.assay.observationsDataset = vm.selectedDatasets['data'];
-
-            //TODO: REPEATED SAVE AFTER FAILING FIRST tIME WILL KEEP PUSHING TO DAtASETS
-            //NEED TO REMOVE BEFORE PUSH
-            
-            //vm.assay.datasets.push(vm.selectedDatasets['sample'])
-            //vm.assay.datasets.push(vm.selectedDatasets['feature'])
-            //vm.assay.datasets.push(vm.selectedDatasets['data'])
 
             vm.assay.$update(function(response) {
                 toaster.pop('success', "SUCCESS", vm.assay.name," was successfully UPDATED.",8000);

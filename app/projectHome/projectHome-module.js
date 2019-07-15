@@ -1,10 +1,5 @@
 function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-        // .state('projects',{
-        //     url: "/projects",
-        //     templateUrl: "home/content.html",
-        //     controller: "ProjectsCtrl as projectsVM",
-        // })
         .state('project', {
             abstract: true,
             url: "/projects/{projectId}",
@@ -28,11 +23,6 @@ function config($stateProvider, $urlRouterProvider) {
             templateUrl: "projectHome/projectMain.html",
             controller: "ProjectSummaryCtrl as vm",
             resolve: {
-                /*loadDirective: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        'dataStage/fileManager/file-directive.js'
-                    ]);
-                }],*/
                 loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load(
                         {
@@ -47,20 +37,7 @@ function config($stateProvider, $urlRouterProvider) {
         })
         .state('project.403', {
             url: "/restrictedaccess",
-            templateUrl: "projectHome/403.html"//,
-            //controller: "ProjectSummaryCtrl as vm",
-            // resolve: {
-            //     loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
-            //         return $ocLazyLoad.load(
-            //             {
-            //                 serie: true,
-            //                 files: [
-            //                     'projectHome/projectSummary-controller.js'
-            //                 ]
-            //             }
-            //         )
-            //     }]
-            // }
+            templateUrl: "projectHome/403.html"
         })
 }
 

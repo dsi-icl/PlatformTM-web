@@ -73,7 +73,6 @@ function projService($http,$resource, ngAppConfig) {
                 var filename;
                 var contentType = headers['content-type'];
                 var disposition = headers['content-disposition'];
-                //console.log(headers,contentType,disposition)
 
                 var linkElement = document.createElement('a');
                 try {
@@ -101,31 +100,6 @@ function projService($http,$resource, ngAppConfig) {
                 }
             }
         )
-
-        // $http({
-        //     method: 'GET',
-        //     url: serviceBase + 'datasets/' + datasetId+'/download'
-        //     //params: {fileId: fileId},
-        //     //responseType: ''
-        // }).success(function (data, status, headers) {
-        //
-        //     headers = headers();console.log(headers);
-        //
-        //     var filename;
-        //
-        //
-        //     /*headers = headers();
-        //     var fileName = headers['x-filename'];
-        //     var file = new Blob([data], {type: headers['content-type']});
-        //     var fileURL = URL.createObjectURL(file);
-        //     var a = document.createElement('a');
-        //     a.href = fileURL;
-        //     a.target = '_blank';
-        //     a.download = fileName;
-        //     document.body.appendChild(a);
-        //     a.click();*/
-        // }).error(function (data, status, headers, config) {
-        // });
     };
 
     var _requestAccess = function (projectId) {
