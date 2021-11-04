@@ -51,6 +51,17 @@ function projService($http,$resource, ngAppConfig) {
         )
     }
 
+    var _getProjectSubjectDatasets = function(projectId){
+        return $http({
+            url: serviceBase + 'projects/' + projectId+'/datasets/subjDataCollection',
+            method: 'GET'
+        }).then(
+            function(response){
+                return response.data;
+            }
+        )
+    }
+
     var _getProjectAssayDatasets = function(projectId){
         return $http({
             url: serviceBase + 'projects/' + projectId+'/datasets/assays',
@@ -102,6 +113,56 @@ function projService($http,$resource, ngAppConfig) {
         )
     };
 
+    var _downloadDatasetDescriptor = function (datasetId) {
+        return $http({
+            url: serviceBase + 'datasets/' + datasetId+'/descriptor',
+            method: 'GET'
+        }).then(
+            function(response){
+
+                if(typeof response == 'undefined' || response == null || response == "")
+                    return ;
+
+                return response.data;
+                //var link = document.createElement("a");
+                //link.download = "info.txt";
+                //var data = "text/json;charset=utf-8," + encodeURIComponent(response);
+                //return data;
+                //link.href = "data:" + data;
+                //link.click();
+                // var headers = response.headers();
+                // var data = response.data;
+                // var filename;
+                // var contentType = "data:text/json"//headers['content-type'];
+                // var disposition = headers['content-disposition'];
+                //
+                // var linkElement = document.createElement('a');
+                // try {
+                //     //var blob = new Blob([data], { type: contentType });
+                //     //var url = window.URL.createObjectURL(blob);
+                //     var json = encodeURIComponent(JSON.stringify(data));
+                //     linkElement.setAttribute('href', url);
+                //     if (disposition && disposition.indexOf('attachment') !== -1) {
+                //         var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                //         var matches = filenameRegex.exec(disposition);
+                //         if (matches != null && matches[1]) {
+                //             filename = matches[1].replace(/['"]/g, '');
+                //         }
+                //     }
+                //     linkElement.setAttribute("download", filename);
+                //
+                //     var clickEvent = new MouseEvent("click", {
+                //         "view": window,
+                //         "bubbles": true,
+                //         "cancelable": false
+                //     });
+                //     return {'url':url,'filename':filename};.dispatchEvent(clickEvent);
+                //} catch (ex) {
+                //    console.log(ex);
+                //}
+            }
+        )
+    };
     var _requestAccess = function (projectId) {
         return $http({
             url: serviceBase + 'projects/' + projectId+'/requestaccess/',
@@ -119,6 +180,8 @@ function projService($http,$resource, ngAppConfig) {
     ProjectFactory.getProjectAssayDatasets = _getProjectAssayDatasets;
     ProjectFactory.getProjectClinicalDatasets = _getProjectClinicalDatasets;
     ProjectFactory.downloadDataset = _downloadDataset;
+    ProjectFactory.downloadDatasetDescriptor = _downloadDatasetDescriptor;
+    ProjectFactory.getProjectSubjectDatasets = _getProjectSubjectDatasets
 
     return ProjectFactory
 

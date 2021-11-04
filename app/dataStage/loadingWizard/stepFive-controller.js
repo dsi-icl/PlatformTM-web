@@ -33,14 +33,15 @@
             progress = $interval(function() {
                 wizardService.getLoadingProgress(fileId).then(function(fileInfo){
                     //console.log('inside controller ' ,fileInfo)
-                    vm.progress = fileInfo.percentLoaded;
+                  //  vm.progress = fileInfo.percentLoaded;
                     if(fileInfo.state === 'LOADED' ||  fileInfo.state === 'SAVED'){
+                        $interval.cancel(progress);
                         _fileIsLoaded(fileInfo)
                         //return wizardService.extractObs(datasetId,fileId)
                     }
 
                 })
-            }, 500);
+            }, 1000);
 
         };
 
@@ -58,14 +59,15 @@
                 vm.isFinished = true;
             } else if(fileInfo.state === 'SAVED'){
                 vm.loadedDataset = true;
-                wizardService.extractObs(datasetId,fileId).then(function(success){
-                    if(success)
-                        vm.obsExtracted = true;
-                    else
-                        vm.loadingFailed = true;
+                console.log(fileInfo.state);
+                //wizardService.extractObs(datasetId,fileId).then(function(success){
+                  //  if(success)
+                    //    vm.obsExtracted = true;
+                  //  else
+                  //      vm.loadingFailed = true;
                     vm.isLoading = false;
                     vm.isFinished = true;
-                })
+                //})
             }
         };
 
@@ -97,21 +99,21 @@
             });
         }*/
 
-        vm.getProgress=  function(fileId){
-            var Sec = 2000;
-
-            var getProgress = $interval(function() {
-                wizardService.getLoadingProgress(fileId).then(function(progress){
-                    vm.progress = progress;
-                    if(progress === 100){
-                        $interval.cancel(getProgress);
-                        vm.loadedDataset = true;
-                    }
-
-                })
-            }, 2000);
-
-        };
+        // vm.getProgress=  function(fileId){
+        //     var Sec = 2000;
+        //
+        //     var getProgress = $interval(function() {
+        //         wizardService.getLoadingProgress(fileId).then(function(progress){
+        //             vm.progress = progress;
+        //             if(progress === 100){
+        //                 $interval.cancel(getProgress);
+        //                 vm.loadedDataset = true;
+        //             }
+        //
+        //         })
+        //     }, 2000);
+        //
+        // };
 
     }
 

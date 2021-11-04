@@ -33,14 +33,23 @@
                                     <li ng-repeat="cDataset in vm.clinicalDatasets">
                                         <div class="list-item">
                                             <i class="fa fa-table"></i> <span class="list-item-text">{{cDataset.name}}</span>
-                                            <span ng-show="cDataset.loading" style="position: absolute; right: 50px;"><i class="fa fa-circle-o-notch fa-spin "></i><small> Preparing...</small></span>
+                                            <span ng-show="cDataset.loading" style="position: absolute; right: 100px;"><i class="fa fa-circle-o-notch fa-spin "></i><small> Preparing...</small></span>
                                             <a ng-hide="cDataset.ready || cDataset.loading" ng-click="vm.downloadDataset(cDataset)"
-                                               style="position: absolute; right: 50px;">
-                                                <i class="fa fa-download"></i>
+                                               style="position: absolute; right: 100px;">
+                                                <i class="fa fa-download"></i>Data
                                             </a>
                                             <a  ng-show="cDataset.ready" href="{{cDataset.href}}" download="{{cDataset.filename}}"
-                                               style="position: absolute; right: 50px;"><i class="fa fa-check"></i><i class="fa fa-download"></i><small> File ready </small>
+                                               style="position: absolute; right: 100px;"><i class="fa fa-check"></i><i class="fa fa-download"></i><small> Dataset ready </small>
                                             </a>
+
+                                            <a ng-click="vm.downloadDescriptor(cDataset)"
+                                               style="position: absolute; right: 0px;">
+                                                <i class="fa fa-download"></i>Metadata
+                                            </a>
+
+                                            <!--<a  ng-show="cDataset.descriptorready" href="{{cDataset.deschref}}" download="{{cDataset.descfilename}}"-->
+                                                <!--style="position: absolute; right: 25px;"><i class="fa fa-check"></i><i class="fa fa-download"></i><small> File ready </small>-->
+                                            <!--</a>-->
                                         </div>
                                     </li>
                                 </ul>

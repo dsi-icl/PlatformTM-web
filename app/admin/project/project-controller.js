@@ -51,8 +51,16 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
         });
 
         //Retrieves list of study activities
-        projectService.getProjectResource.getActivitiesForProject({projectId:vm.projectId},function(response){
-            vm.activities = response;
+        projectService.getProjectResource.getAssays({projectId:vm.projectId},function(response){
+            vm.assays = response;
+        });
+
+        projectService.getProjectResource.getClinicalAssessments({projectId:vm.projectId},function(response){
+            vm.clinicalAssessments = response;
+        });
+
+        projectService.getProjectResource.getSubjDataCollection({projectId:vm.projectId},function(response){
+            vm.subjDataCollection = response;
         });
 
         projectService.getProjectUsers(vm.projectId).then(function(users){
@@ -76,6 +84,10 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
             $state.go('define.assay',{ projectId:vm.projectId, assayId: activity.id, edit:edit})
         else
             $state.go('define.activity',{ projectId:vm.projectId, activityId: activity.id, edit:edit})
+    }
+    
+    vm.goToSubjectCollection = function (activity,edit) {
+        $state.go('define.subject',{ projectId:vm.projectId, activityId: activity.id, edit:edit})
     }
 
     vm.removeActivity = function(activity){

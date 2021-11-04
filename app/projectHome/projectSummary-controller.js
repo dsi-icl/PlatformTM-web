@@ -28,6 +28,22 @@ function ProjectSummaryCtrl($scope,$state,$stateParams,projService) {
         });
     }
 
+    vm.downloadDescriptor = function(dataset){
+        dataset.descriptorloading=true;
+        projService.downloadDatasetDescriptor(dataset.id).then(function (response) {
+            //dataset.deschref = response.url;
+            //dataset.descfilename = response.filename;//dataset.name+".csv";
+            //dataset.descriptorloading=false;
+            //dataset.descriptorready = true;
+            //console.log(response)
+            var data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(response));
+            var downloader = document.createElement('a');
+
+            downloader.setAttribute('href', data);
+            downloader.setAttribute('download', 'file.json');
+            downloader.click();
+        });
+    }
 }
 
 angular.module('bioSpeak.projectHome')

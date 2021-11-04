@@ -51,7 +51,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var _getActivities = function(projectId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'projects/'+projectId+'/activities/')
+        $http.get(serviceBase + 'projects/'+projectId+'/allactivities/')
             .success(function (response) {
                 deferred.resolve(response);
             })

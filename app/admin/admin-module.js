@@ -124,6 +124,21 @@ var managerConfig = function($stateProvider){
                 }]
             }
         })
+        .state('define.subject',{
+            url:'/subjects/{activityId}',
+            templateUrl: "admin/subjects/subjectConfig.html",
+            controller: "SubjectConfigCtrl as vm",
+            resolve: {
+                loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    console.log("loading service");
+                    return $ocLazyLoad.load('admin/subjects/subjectConfig-service.js');
+                }],
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    console.log("loading controller");
+                    return $ocLazyLoad.load('admin/subjects/subjectConfig-controller.js');
+                }]
+            }
+        })
         .state('define.study',{
             url:'/studies/{studyId}',
             templateUrl: "admin/studies/study.html",

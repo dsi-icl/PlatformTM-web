@@ -10,7 +10,7 @@ function studyController($scope,$state,$stateParams,StudyService,toaster) {
 
     vm.projectId = $stateParams.projectId;
     vm.studyId = $stateParams.studyId;
-
+    $scope.$parent.vm.stateName = "Define Study";
     var study;
     if($stateParams.studyId==0){
         console.log("New Project");

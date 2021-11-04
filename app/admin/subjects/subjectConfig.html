@@ -1,0 +1,250 @@
+
+        <div has-permission="can-manage" project="vm.projectId" class="title-action" style="display: none">
+            <a  ng-click="vm.saveActivity()" class="btn btn-primary">Save</a>
+        </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <!--<div class="">-->
+                <!--<div class="ibox-content">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12 m-t-md">-->
+                            <!--<dl class="dl-horizontal">-->
+                                <!--<dt>Activity Title</dt>-->
+                                <!--<dd>-->
+                                    <!--<div class="col-md-6">-->
+                                        <!--<a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'Enter Activity Name'}}</a>-->
+                                    <!--</div>-->
+                                <!--</dd>-->
+                            <!--</dl>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div>
+                <div class="ibox-title panel-header">
+                    <span>Dataset Descriptor</span>
+                     <span style="font-size:16px;margin-top:-5px;" class="pull-right">
+                         <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
+                         <a has-permission="can-manage" project="vm.projectId"  ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
+                            | <a ng-init="vm.creatingNewDS = false" ng-click="vm.creatingNewDS = !vm.creatingNewDS"><i uib-tooltip="Add Dataset Template" class="p-xs fa fa-plus"></i></a>
+                        </span>
+                </div>
+
+                <div uib-collapse="!vm.creatingNewDS" class="ibox-content" style="min-height: 50px;margin: 0px;border: 10px solid white;background-color: rgb(243, 243, 244);">
+                    <form role="form">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <h3>Select a dataset descriptor</h3>
+                            </div>
+                            <div class="col-md-1"> <span class="pull-right"><a ng-click="vm.creatingNewDS=false" class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="row m-b-sm m-t-sm">
+                                    <div class="col-md-12">
+                                        <div class="h5">Standard Dataset Descriptors</div>
+                                        <div class="">
+                                            <input ng-model="searchTemplate" type="text" placeholder="Search"
+                                                   class="input-sm form-control"></div>
+                                    </div>
+                                </div>
+
+                                <div class="ibox-content" style="height: 350px">
+
+
+                                    <div class="activities-list" full-scroll>
+                                        <div>
+                                            <div class="feed-activity-list elements-list">
+
+                                                <div class="feed-element" ng-repeat="ds in vm.templates | filter:{name: searchTemplate}">
+                                                   <!-- <div class="row">
+
+                                                        <div class="col-md-11">-->
+                                                            <a ng-click="vm.showDSvars(ds)">
+                                                                <div>
+                                                                    <small class="pull-right text-navy">{{ds.class}}</small>
+                                                                    <strong>{{ds.name}} - ({{ds.code}})</strong>
+
+                                                                    <div>{{ds.description}}</div>
+                                                                    <small class="text-muted"><strong>Structure: </strong>{{ds.structure}}</small>
+                                                                </div>
+
+                                                            </a>
+                                                        <!--</div>-->
+                                                        <!--<div class="col-md-1">
+                                                            <a> <i class="fa fa-info"></i></a><a><i class="fa fa-plus-square-o"></i></a>
+                                                        </div>-->
+                                                    <!--</div>-->
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--FIELD INFO-->
+                            <div ng-show="vm.showDS" style="border-left: white 1px solid;" class=" m-b-sm m-t-sm col-md-5">
+                                <div class="ibox-title"><strong>{{vm.showDS.name}} descriptor fields</strong>
+                                    <span class="pull-right"><a ng-click="vm.selectTemplate(vm.showDS);vm.creatingNewDS=false" class="btn btn-xs btn-primary">Use this descriptor</a></span>
+                                </div>
+                                <div class="ibox-content" style="height: 350px">
+                                    <div class="activities-list" full-scroll>
+                                        <div class="full-height-scroll">
+                                            <table class="table table-hover no-margins">
+                                        <thead>
+                                            <tr>
+                                                <th>Column</th>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="var in vm.showDS.variables">
+                                                <td class="text-navy">
+                                                    <small>{{var.name}}</small>
+                                                </td>
+                                                <td>{{var.label}}</td>
+                                                <td >{{var.description}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-sm-4">
+                                <button class="btn btn-white btn-sm" ng-click="vm.cancelAddVariableToDS()"
+                                        type="submit">Cancel
+                                </button>
+                                <button class="btn btn-primary btn-sm" ng-click="vm.addVariableToDS()" type="submit">Add
+                                    Field
+                                </button>
+                            </div>-->
+
+
+                        </div>
+
+
+                    </form>
+                </div>
+
+                <div class="ibox-content" ng-if="vm.activity.datasets.length === 0">
+                    <div uib-alert class="alert-info">
+                        <h4>No associated templates set for this activity. Pleae click on the '+' icon above to define a dataset template for this activity.</h4>
+                    </div>
+                </div>
+
+                <uib-tabset  ng-if="vm.activity.datasets.length > 0" class="tab-panel" active="vm.activeTabIndex" >
+
+                    <uib-tab  ng-repeat="ds in vm.activity.datasets" select="vm.tabSelected(ds)">
+                        <uib-tab-heading>
+                            <p class="tab-info">{{ds.domainId}} : {{ds.name}}</p>
+                            <p class="tab-info">
+                                <i class="fa fa-list-alt"></i>
+                            </p>
+                            <!--<p class="tab-info text-left" >-->
+                            <!--<small>{{ds.description}}</small>-->
+                            <!--</p>-->
+                        </uib-tab-heading>
+
+                        <div id="{{ds.id}}" class=" animated fadeIn" ng-show="ds">
+
+                                <div class="ibox-title">
+                                    <div class="ibox-tools">
+                                        <a class="btn btn-primary btn-xs" ng-init="vm.creatingCfield = false" ng-click="vm.creatingCfield = !vm.creatingCfield;vm.createNewCfield()">New Descriptor field</a>
+                                        <!--<a href="" class="btn btn-primary btn-xs">Preview Template</a>
+                                        <a href="" class="btn btn-primary btn-xs">Download Template</a>-->
+                                    </div>
+                                </div>
+
+
+                                <!--DATASET  VARIABLES-->
+                                <div class="ibox-content">
+                                    <h3>Select columns to include in this template</h3>
+
+                                    <!--FOO TABLE-->
+                                    <table id="bs_template_tbl" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                        <thead>
+                                        <tr>
+                                            <th data-toggle="true">Column</th>
+                                            <th>Variable Name</th>
+                                            <th>Include</th>
+                                            <th data-hide="phone">Mandatory</th>
+                                            <th data-hide="phone">Description</th>
+                                            <th data-hide="phone">Controlled Vocabulary</th>
+                                            <!--<th data-hide="all">Order</th>
+                                            <th data-hide="all">Key Sequence</th>-->
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="var in ds.variables">
+                                            <td>
+                                                {{var.name}}
+                                            </td>
+                                            <td>
+                                                {{var.label}}
+                                            </td>
+                                            <td>
+                                                <!--<button type="button" class="btn btn-xs btn-primary" ng-model="var.isSelected" btn-checkbox>
+                                                    {{var.isSelected ? 'Included' : 'Excluded'}}
+                                                </button>-->
+                                                <input  icheck type="checkbox"  ng-model="var.isSelected" >
+                                            </td>
+                                            <td>
+                                                <input  icheck type="checkbox"  ng-model="var.isRequired" >
+                                            </td>
+                                            <td>
+                                                {{var.description}}
+                                            </td>
+                                            <td>
+                                                {{var.dictionaryName}}
+                                            </td>
+                                <!--            <td>
+                                                <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                            </td>
+                                            <td>
+                                                <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                            </td>-->
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="6">
+                                                <ul class="pagination pull-right"></ul>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                    </uib-tab>
+                    <!--<uib-tab>
+                        <uib-tab-heading class="assay-info" align="center">
+                            <p class="assay-count">
+                                No Template Selected
+                            </p>
+                        </uib-tab-heading>
+                        &lt;!&ndash;No Template Info&ndash;&gt;
+                        <div ng-hide="vm.activity.datasets.length > 0" class="ibox-content ibox-heading">
+                            <h3>No Template Selected</h3>
+                        </div>
+                    </uib-tab>-->
+
+
+
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -14,9 +14,24 @@ function projectService($http,$resource, ngAppConfig) {
             method: 'PUT',
             params: {projectId: '@id'}
         },
-        getActivitiesForProject:{
+        // getActivitiesForProject:{
+        //     method: 'GET',
+        //     url : serviceBase+'projects/:projectId/activities',
+        //     isArray : true
+        // },
+        getSubjDataCollection:{
+        method: 'GET',
+            url : serviceBase+'projects/:projectId/subjDataCollection',
+            isArray : true
+        },
+        getClinicalAssessments:{
             method: 'GET',
-            url : serviceBase+'projects/:projectId/activities',
+            url : serviceBase+'projects/:projectId/clinicalAssessments',
+            isArray : true
+        },
+        getAssays:{
+            method: 'GET',
+            url : serviceBase+'projects/:projectId/assays',
             isArray : true
         },
         getProjectByAccession:{
