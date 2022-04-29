@@ -55,10 +55,10 @@ function ClinicalXF(clinicalDataService,$q){
                 else if(o.dataType === "string"){
                     if(d[o.name] === null) d[o.name] = ""
                 }else {
-                    // console.log(d[o.name])
+                    console.log('here here',d[o.name])
                     // if()
                     // if(d[o.name] !== null) d[o.name] = d[o.name].map(function(el){ return +el;});
-                    // if(d[o.name] === "" || d[o.name] === null) d[o.name]=0;
+                    // if(d[o.name].length === 0) d[o.name]=0;
                     //if(d[o.name] !== null) d[o.name] = +d[o.name]
                     //.map(function(el){ return +el;});
                     if(d[o.name]!=null && d[o.name]!=="" && o.isFinding)

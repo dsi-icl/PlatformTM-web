@@ -21,10 +21,10 @@ function ClinicalController($scope,$stateParams,clinicalDataService,ClinicalXF,D
 
 
     clinicalDataService.getClinicalDataTree($scope.chartingOpts.projectId)
-        .then(function(data){
-            $scope.clinicalObservations = data.treeData;
-            $scope.vm.ready = true;
-        })
+         .then(function(data){
+             $scope.clinicalObservations = data.treeData;
+             $scope.vm.ready = true;
+         })
 
 
 }

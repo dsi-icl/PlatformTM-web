@@ -179,11 +179,21 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     };
 
+    var _initLoading = function(datasetId, fileId){
+        var deferred = $q.defer();
+        $http.get(serviceBase + 'files/'+fileId+'/initload/datasets/'+datasetId)
+            .success(function (response) {
+                console.debug("Loading Initiated",response)
+                deferred.resolve(response);
+            })
+        return deferred.promise;
+    };
+
     var _loadDataset = function(datasetId, fileId){
         var deferred = $q.defer();
         $http.get(serviceBase + 'files/'+fileId+'/load/datasets/'+datasetId)
             .success(function (response) {
-                console.log("LOAD DATASET Inside http get success",response)
+                console.debug("LOAD DATASET Inside http get success",response)
                 deferred.resolve(response);
             })
         return deferred.promise;
@@ -224,6 +234,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     wizardServiceFactory.updateDatasetFile = _updateDatasetFile;
     wizardServiceFactory.getFile = _getFile;
     wizardServiceFactory.getLoadingProgress = _getLoadingProgress;
+    wizardServiceFactory.initLoading = _initLoading;
 
 
     return wizardServiceFactory;

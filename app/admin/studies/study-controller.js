@@ -18,7 +18,7 @@ function studyController($scope,$state,$stateParams,StudyService,toaster) {
         // project.ProjectAcc = $stateParams.studyId;//"Study1"
         study.isNew = true;
         study.status = "New";
-        study.projectAcc = $stateParams.projectId;
+        study.projectId = $stateParams.projectId;
         study.oObjectives=[]
         
         vm.study = study;

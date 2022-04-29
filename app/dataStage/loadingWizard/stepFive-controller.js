@@ -29,19 +29,33 @@
         var progress;
         vm.loadFile2 = function(){
             vm.isLoading = true;
-            wizardService.loadDataset(datasetId, fileId);
-            progress = $interval(function() {
-                wizardService.getLoadingProgress(fileId).then(function(fileInfo){
-                    //console.log('inside controller ' ,fileInfo)
-                  //  vm.progress = fileInfo.percentLoaded;
-                    if(fileInfo.state === 'LOADED' ||  fileInfo.state === 'SAVED'){
-                        $interval.cancel(progress);
-                        _fileIsLoaded(fileInfo)
-                        //return wizardService.extractObs(datasetId,fileId)
-                    }
 
-                })
-            }, 1000);
+            wizardService.initLoading(datasetId, fileId).then(function(success){
+                if(success){
+                    wizardService.loadDataset(datasetId, fileId);
+
+                    progress = $interval(function() {
+                        wizardService.getLoadingProgress(fileId).then(function(fileInfo){
+                            vm.progress = fileInfo.percentLoaded;
+                            if(fileInfo.state === 'SAVED'){
+                                $interval.cancel(progress);
+                                _fileIsLoaded(fileInfo)
+                            }
+                        })
+                    }, 500);
+                }
+            })
+
+
+            // wizardService.loadDataset(datasetId,fileId).then(function(success) {
+            //     if(success)
+            //         vm.obsExtracted = true;
+            //     else
+            //         vm.loadingFailed = true;
+            // })
+
+
+
 
         };
 
@@ -59,15 +73,14 @@
                 vm.isFinished = true;
             } else if(fileInfo.state === 'SAVED'){
                 vm.loadedDataset = true;
-                console.log(fileInfo.state);
-                //wizardService.extractObs(datasetId,fileId).then(function(success){
-                  //  if(success)
-                    //    vm.obsExtracted = true;
-                  //  else
-                  //      vm.loadingFailed = true;
+                wizardService.extractObs(datasetId,fileId).then(function(success){
+                    if(success)
+                        vm.obsExtracted = true;
+                    else
+                        vm.loadingFailed = true;
                     vm.isLoading = false;
                     vm.isFinished = true;
-                //})
+                })
             }
         };
 

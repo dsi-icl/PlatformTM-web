@@ -17,19 +17,20 @@ function SubjectsController($stateParams, subjectDataService, SubjectXF, DCchart
     };
 
     subjectDataService.initSubjData(projectId).then(function (response) {
-        vm.SCs = response.scs;
-        vm.TPs = response.tps;
-        vm.DEs = response.des;
+        //vm.SCs = response.scs;
+        //vm.TPs = response.tps;
+        //vm.DEs = response.des;
 
         SubjectXF.initXF(response.xfdata);
 
     })
-    // subjectDataService.getSubjCharacteristics(projectId)
-    //     .then(function (response) {
-    //         vm.SCs = response.SCs;
-    //         vm.TPs = response.TPs;
-    //         vm.DEs = response.DEs;
-    //     });
+    subjectDataService.getSubjCharacteristics(projectId)
+        .then(function (response) {
+            console.log(response)
+            vm.SCs = response.scs;
+            vm.TPs = response.tps;
+            vm.DEs = response.des;
+        });
 
     // SubjectXF.refreshCf(projectId);
 }

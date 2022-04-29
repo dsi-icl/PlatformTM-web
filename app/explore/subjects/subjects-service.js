@@ -26,16 +26,34 @@ function subjectDataService($http,$q, localStorageService,ngAppConfig){
                     });
             },
 
+            getSubjCharacteristics: function(projectId){
+                return $http({
+                    url: serviceBase + 'apps/explore/projects/' + projectId + '/subjcharacteristics/browse',
+                    method: 'GET'
+                }).then(
+                    function (response) {
+                        localStorageService.set('ptm.explorer.'+projectId+'.subjectChars',(response.data));
+                        return response.data
+                    },
+                    function (httpError) {
+                        // translate the error
+                        throw httpError.status + " : " +
+                        httpError.data;
+                    }
+                );
+            },
+
             initSubjData: function (projectId) {
-                var initData = localStorageService.get('ptm.explorer.'+projectId+'.subjects');
-                //if initData.timestamp < $scope.$parent.expVM.project.lastupdated
-                //then refresh from server
-                if(initData){
-                    return $q.when(true,function(){
-                        return initData
-                    })
-                }
-                else
+                 var initData = localStorageService.get('ptm.explorer.'+projectId+'.subjects');
+                // //if initData.timestamp < $scope.$parent.expVM.project.lastupdated
+                // //then refresh from server
+                // console.log(initData)
+                // if(initData){
+                //     return $q.when(true,function(){
+                //         return initData
+                //     })
+                // }
+                // else
                     return $http({
                         url: serviceBase + 'apps/explore/projects/' + projectId + '/subjectsInit',
                         method: 'GET'

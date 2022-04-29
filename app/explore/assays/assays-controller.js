@@ -20,14 +20,14 @@ function AssaysController($stateParams,AssayXF,assayDataService,$q) {
 
     var projectId = $stateParams.projectId;
 
-    assayDataService.getAssaysInit(projectId).then(function (result) {
-        var assayxfObj =  result.xfdata;
-        if(result.assays!=='null') {
-            AssayXF.initXF(assayxfObj).then(function(){
-                vm.assays = result.assays;
-            })
-        }
-    })
+    // assayDataService.getAssaysInit(projectId).then(function (result) {
+    //     var assayxfObj =  result.xfdata;
+    //     if(result.assays!=='null') {
+    //         AssayXF.initXF(assayxfObj).then(function(){
+    //             vm.assays = result.assays;
+    //         })
+    //     }
+    // })
 }
 
 angular.module('biospeak.explorer')

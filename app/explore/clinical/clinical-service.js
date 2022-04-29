@@ -28,16 +28,16 @@ function ClinicalDataService($http,$q,localStorageService,ngAppConfig){
             },
 
             getClinicalDataTree: function(projectId){
-                var initData = localStorageService.get('ptm.explorer.'+projectId+'.clinical');
-                //if initData.timestamp < $scope.$parent.expVM.project.lastupdated
-                //then refresh from server
-                if(initData){
-                    return $q.when(true,function(){
-                        return initData
-                    })
-                }
-                else
-                {
+                // var initData = localStorageService.get('ptm.explorer.'+projectId+'.clinical');
+                // //if initData.timestamp < $scope.$parent.expVM.project.lastupdated
+                // //then refresh from server
+                // if(initData){
+                //     return $q.when(true,function(){
+                //         return initData
+                //     })
+                // }
+                // else
+                // {
                     return $http({
                         url: serviceBase+'apps/explore/projects/'+projectId+'/observations/clinical/browse',
                         method:'GET',
@@ -48,7 +48,7 @@ function ClinicalDataService($http,$q,localStorageService,ngAppConfig){
                                 treeData: (response.data)
                             }
                         })
-                }
+               // }
 
 
             },
