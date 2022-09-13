@@ -75,87 +75,87 @@
     <div class="row m-b-md m-t-md">
         <div class="col-md-8">
 
-            <div class="ibox">
-                <div class=" panel-header">
-                    <h3><a ng-init="vm.GIisCollapsed=false" ng-click="vm.GIisCollapsed = !vm.GIisCollapsed">
-                        <i ng-if="vm.GIisCollapsed" class="fa fa-plus-square"></i>
-                        <i ng-if="!vm.GIisCollapsed"class="fa fa-minus-square"></i></a>
-                        &nbsp;General Information</h3>
-                </div>
-                <div class="ibox-content" uib-collapse="vm.GIisCollapsed">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Protocol Identification Number</label>
-                            <div class="col-lg-10">
-                                <input class="form-control" id="protocol_sections_general_information_protocol_identification_number" name="protocol[sections][general_information][protocol_identification_number]" size="30" type="text" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Sponsor</label>
-                            <div class="col-lg-10">
-                                <input class="form-control" id="protocol_sections_general_information_sponsor" name="protocol[sections][general_information][sponsor]" size="30" type="text" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Phase</label>
-                            <div class="col-lg-10">
-                                <select class="form-control m-b" id="protocol_sections_general_information_phase" name="protocol[sections][general_information][phase]"><option value="">Choose an Item</option>
-                                    <option value="I">I</option>
-                                    <option value="I/II">I/II</option>
-                                    <option value="II">II</option>
-                                    <option value="II/III">II/III</option>
-                                    <option value="IIa">IIa</option>
-                                    <option value="IIb">IIb</option>
-                                    <option value="III">III</option>
-                                    <option value="IIIa">IIIa</option>
-                                    <option value="IIIb">IIIb</option>
-                                    <option value="IV">IV</option>
-                                    <option value="V">V</option></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Indication</label>
-                            <div class="col-lg-10">
-                                <input class="form-control" id="protocol_sections_general_information_indication" name="protocol[sections][general_information][indication]" size="30" type="text" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Multicenter</label>
-                            <div class="col-lg-10">
-                                <div><label> <input icheck type="radio" name="protocol[sections][general_information][multicenter]"
-                                                    ng-model="vm.study.multicenter"> Yes </label></div>
-                                <div><label> <input icheck type="radio" name="protocol[sections][general_information][multicenter]"
-                                                    ng-model="vm.study.multicenter"> No </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Planned Countries</label>
-                            <div class="col-lg-10">
-                                <ui-select multiple ng-model="vm.study.countries"   style="width: 300px;">
-                                    <ui-select-match placeholder="Select countries...">{{$item}}</ui-select-match>
-                                    <ui-select-choices repeat="country in vm.studyForm.countries | filter:$select.search">
-                                            {{country}}
-                                    </ui-select-choices>
-                                </ui-select>
-                            </div>
-                        </div>
-                    </form>
+<!--            <div class="ibox">-->
+<!--                <div class="ibox-title panel-header">-->
+<!--                    <h3><a ng-init="vm.GIisCollapsed=false" ng-click="vm.GIisCollapsed = !vm.GIisCollapsed">-->
+<!--                        <i ng-if="vm.GIisCollapsed" class="fa fa-plus-square"></i>-->
+<!--                        <i ng-if="!vm.GIisCollapsed"class="fa fa-minus-square"></i></a>-->
+<!--                        &nbsp;General Information</h3>-->
+<!--                </div>-->
+<!--                <div class="ibox-content" uib-collapse="vm.GIisCollapsed">-->
+<!--                    <form class="form-horizontal">-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-lg-2 control-label">Protocol Identification Number</label>-->
+<!--                            <div class="col-lg-10">-->
+<!--                                <input class="form-control" id="protocol_sections_general_information_protocol_identification_number" name="protocol[sections][general_information][protocol_identification_number]" size="30" type="text" />-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-lg-2 control-label">Sponsor</label>-->
+<!--                            <div class="col-lg-10">-->
+<!--                                <input class="form-control" id="protocol_sections_general_information_sponsor" name="protocol[sections][general_information][sponsor]" size="30" type="text" />-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-lg-2 control-label">Phase</label>-->
+<!--                            <div class="col-lg-10">-->
+<!--                                <select class="form-control m-b" id="protocol_sections_general_information_phase" name="protocol[sections][general_information][phase]"><option value="">Choose an Item</option>-->
+<!--                                    <option value="I">I</option>-->
+<!--                                    <option value="I/II">I/II</option>-->
+<!--                                    <option value="II">II</option>-->
+<!--                                    <option value="II/III">II/III</option>-->
+<!--                                    <option value="IIa">IIa</option>-->
+<!--                                    <option value="IIb">IIb</option>-->
+<!--                                    <option value="III">III</option>-->
+<!--                                    <option value="IIIa">IIIa</option>-->
+<!--                                    <option value="IIIb">IIIb</option>-->
+<!--                                    <option value="IV">IV</option>-->
+<!--                                    <option value="V">V</option></select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-lg-2 control-label">Indication</label>-->
+<!--                            <div class="col-lg-10">-->
+<!--                                <input class="form-control" id="protocol_sections_general_information_indication" name="protocol[sections][general_information][indication]" size="30" type="text" />-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-lg-2 control-label">Multicenter</label>-->
+<!--                            <div class="col-lg-10">-->
+<!--                                <div><label> <input icheck type="radio" name="protocol[sections][general_information][multicenter]"-->
+<!--                                                    ng-model="vm.study.multicenter"> Yes </label></div>-->
+<!--                                <div><label> <input icheck type="radio" name="protocol[sections][general_information][multicenter]"-->
+<!--                                                    ng-model="vm.study.multicenter"> No </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label class="col-lg-2 control-label">Planned Countries</label>-->
+<!--                            <div class="col-lg-10">-->
+<!--                                <ui-select multiple ng-model="vm.study.countries"   style="width: 300px;">-->
+<!--                                    <ui-select-match placeholder="Select countries...">{{$item}}</ui-select-match>-->
+<!--                                    <ui-select-choices repeat="country in vm.studyForm.countries | filter:$select.search">-->
+<!--                                            {{country}}-->
+<!--                                    </ui-select-choices>-->
+<!--                                </ui-select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </form>-->
 
-                </div>
-            </div>
+<!--                </div>-->
+<!--            </div>-->
             <div class="ibox">
-                <div class=" panel-header">
+                <div class="ibox-title panel-header">
                     <h3> <a ng-init="vm.TOPisCollapsed=true" ng-click="vm.TOPisCollapsed = !vm.TOPisCollapsed">
                         <i ng-if="vm.TOPisCollapsed" class="fa fa-plus-square"></i>
                         <i ng-if="!vm.TOPisCollapsed"class="fa fa-minus-square"></i></a>
-                        &nbsp;Trial Objective and Purpose</h3>
+                        &nbsp;Study Objective and Purpose</h3>
                 </div>
                 <div class="ibox-content" uib-collapse="vm.TOPisCollapsed">
 
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Trial Purpose Summary</label>
+                            <label class="col-lg-2 control-label">Study Purpose Summary</label>
                             <div class="col-lg-10">
                                 <textarea class="form-control" cols="45" id="protocol_sections_trial_objective_and_purpose_trial_purpose_summary" name="protocol[sections][trial_objective_and_purpose][trial_purpose_summary]" rows="5"></textarea>
                             </div>
@@ -167,7 +167,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Other Objective</label>
+                            <label class="col-lg-2 control-label">Other Objectives</label>
                             <div class="col-lg-10">
                                 <ul class="elements-list list-group clear-list">
                                     <li class="list-group-item" ng-repeat="oo in vm.study.oObjectives">
@@ -191,33 +191,32 @@
                 </div>
             </div>
             <div class="ibox">
-                <div class=" panel-header">
+                <div class="ibox-title panel-header">
                     <h3> <a ng-init="vm.TDisCollapsed=true" ng-click="vm.TDisCollapsed = !vm.TDisCollapsed">
                         <i ng-if="vm.TDisCollapsed" class="fa fa-plus-square"></i>
                         <i ng-if="!vm.TDisCollapsed"class="fa fa-minus-square"></i></a>
-                        &nbsp; Trial Design</h3>
+                        &nbsp; Study Design</h3>
                 </div>
                 <div class="ibox-content" uib-collapse="vm.TDisCollapsed">
+
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Description of Study Design</label>
+                            <div class="col-lg-10">
+                                <textarea cols="45" id="protocol_sections_trial_design_description_of_study_design" name="protocol[sections][trial_design][description_of_study_design]" rows="5">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Description of Interventions</label>
+                            <div class="col-lg-10">
+                                <textarea cols="45" id="protocol_sections_trial_design_description_of_interventions" name="protocol[sections][trial_design][description_of_interventions]" rows="5">
+                                </textarea>
+                            </div>
+                        </div>
+                    </form>
                     <table border='0' cellpadding='2' cellspacing='2' width='100%'>
-                        <tr>
-                            <td class='label'>Description of Study Design</td>
-                        </tr>
-                        <tr>
-                            <td class='field_cell'>
-                                <label for='textarea'></label>
-<textarea cols="45" id="protocol_sections_trial_design_description_of_study_design" name="protocol[sections][trial_design][description_of_study_design]" rows="5">
-</textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class='label'>Description of Interventions</td>
-                        </tr>
-                        <tr>
-                            <td>
-<textarea cols="45" id="protocol_sections_trial_design_description_of_interventions" name="protocol[sections][trial_design][description_of_interventions]" rows="5">
-</textarea>
-                            </td>
-                        </tr>
+
                         <tr>
                             <td class='label'>Randomized Study?</td>
                         </tr>
@@ -333,7 +332,7 @@
                 </div>
             </div>
             <div class="ibox">
-                <div class=" panel-header">
+                <div class="ibox-title panel-header">
                     <h3> <a ng-init="vm.SSisCollapsed=true" ng-click="vm.SSisCollapsed = !vm.SSisCollapsed">
                         <i ng-if="vm.SSisCollapsed" class="fa fa-plus-square"></i>
                         <i ng-if="!vm.SSisCollapsed"class="fa fa-minus-square"></i></a>
@@ -444,7 +443,7 @@
                 </div>
             </div>
             <div class="ibox">
-                <div class=" panel-header">
+                <div class="ibox-title panel-header">
                     <h3><a ng-init="vm.SisCollapsed=true"  ng-click="vm.SisCollapsed = !vm.SisCollapsed">
                         <i ng-if="vm.SisCollapsed" class="fa fa-plus-square"></i>
                         <i ng-if="!vm.SisCollapsed"class="fa fa-minus-square"></i></a>
@@ -492,101 +491,156 @@
             </div>
         </div>
         <div class="col-lg-4 m-b-lg">
-            <div id="vertical-timeline" class="vertical-timeline vertical-container light-timeline no-margins">
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon lazur-bg">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-
-                    <div class="vertical-timeline-content">
-                        <h2>VISIT 1</h2>
-                        <p>Study Day: 1</p>
-
-                                    <span class="vertical-date">
-                                        DateTime <br>
-                                        <small>Dec 24</small>
-                                    </span>
-                    </div>
+            <div class="ibox">
+                <div class="ibox-title panel-header">
+                    <h3>Study Design</h3>
                 </div>
 
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon lazur-bg">
-                        <i class="fa fa-calendar"></i>
-                    </div>
+                <div class="ibox-content">
 
-                    <div class="vertical-timeline-content">
-                        <div id="vertical-timeline2" class="vertical-timeline vertical-container dark-timeline no-margins">
-                            <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon yellow-bg">
-                                    <i class="fa fa-clock-o"></i>
-                                </div>
+                    <div id="vertical-timeline" class="vertical-timeline vertical-container dark-timeline no-margins">
+                        <div class="vertical-timeline-block">
+                            <div class="vertical-timeline-icon lazur-bg">
+                                <i class="fa fa-calendar"></i>
+                            </div>
 
-                                <div class="vertical-timeline-content">
-                                    <h2>Time point 1</h2>
-                                    <p>Study Day: 1</p>
-                                    DateTime:
-                                    <span class="vertical-date">
-                                        Today <br>
-                                        <small>Dec 24</small>
-                                    </span>
+                            <div class="vertical-timeline-content">
+                                <h2>Screening</h2>
+                                <p>Assessments</p>
+
+                                Recruitement Questionnaire
+                                Birth Questionnaire
+<!--                                <span class="vertical-date">-->
+<!--                                        DateTime <br>-->
+<!--                                        <small>Dec 24</small>-->
+<!--                                    </span>-->
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="vertical-timeline-block">
+                            <div class="vertical-timeline-icon lazur-bg">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+
+                            <div class="vertical-timeline-content">
+                                <h2>4 Weeks after birth</h2>
+                                <h3>Assessments:</h3>
+                                <!--                        <span class="vertical-date">DateTime <br><small>Dec 31</small></span>-->
+                            </div>
+                        </div>
+
+                        <div class="vertical-timeline-block">
+                            <div class="vertical-timeline-icon lazur-bg">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+
+                            <div class="vertical-timeline-content">
+                                <h2>Year 3</h2>
+                                <h3>Assessments</h3>
+
+                                <p>Respiratory Questionnaire Year 3</p>
+                                <p>Skin Prick Test Year 3</p>
+                                <p></p>
+
+<!--                                <span class="vertical-date">DateTime <br><small>Jan 01</small></span>-->
+                            </div>
+                        </div>
+
+                        <div class="vertical-timeline-block">
+                            <div class="vertical-timeline-icon lazur-bg">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+
+                            <div class="vertical-timeline-content">
+                                <h2>Year 5</h2>
+                                <h3>Assessments</h3>
+<!--                                <span class="vertical-date">DateTime <br><small>Jan 01</small></span>-->
+                            </div>
+                        </div>
+
+                        <div class="vertical-timeline-block">
+                            <div class="vertical-timeline-icon lazur-bg">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+
+                            <div class="vertical-timeline-content">
+                                <h2>Year 8</h2>
+                                <h3>Assessments</h3>
+<!--                                <span class="vertical-date">DateTime <br><small>Jan 01</small></span>-->
+                            </div>
+                        </div>
+
+                        <div class="vertical-timeline-block">
+                            <div class="vertical-timeline-icon lazur-bg">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+
+                            <div class="vertical-timeline-content">
+                                <h2>Year 11</h2>
+
+                                <!--                        <span class="vertical-date">DateTime <br><small>Jan 01</small></span>-->
+                                <div id="vertical-timeline2" class="vertical-timeline vertical-container dark-timeline no-margins">
+                                    <div class="vertical-timeline-block">
+                                        <div class="vertical-timeline-icon yellow-bg">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+
+                                        <div class="vertical-timeline-content">
+                                            <h2>Visit 1</h2>
+                                            <h3>Assessments</h3>
+                                        </div>
+                                    </div>
+                                    <div class="vertical-timeline-block">
+                                        <div class="vertical-timeline-icon yellow-bg">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+
+                                        <div class="vertical-timeline-content">
+                                            <h2>Visit 2</h2>
+                                            <h3>Assessments</h3>
+                                            <!--                                    <p>Study Day: 1</p>-->
+                                            <!--                                    DateTime:-->
+                                            <!--                                    <span class="vertical-date">-->
+                                            <!--                                        Today <br>-->
+                                            <!--                                        <small>Dec 24</small>-->
+                                            <!--                                    </span>-->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="vertical-timeline-block">
-                                <div class="vertical-timeline-icon yellow-bg">
-                                    <i class="fa fa-clock-o"></i>
-                                </div>
+                        </div>
 
-                                <div class="vertical-timeline-content">
-                                    <h2>Time point 2</h2>
-                                    <p>Study Day: 1</p>
-                                    DateTime:
-                                    <span class="vertical-date">
-                                        Today <br>
-                                        <small>Dec 24</small>
-                                    </span>
-                                </div>
+                        <div class="vertical-timeline-block">
+                            <div class="vertical-timeline-icon lazur-bg">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+
+                            <div class="vertical-timeline-content">
+                                <h2>Years 13-16</h2>
+                                <h3>Assessments</h3>
+<!--                                <span class="vertical-date">DateTime <br><small>Jan 01</small></span>-->
+                            </div>
+                        </div>
+
+                        <div class="vertical-timeline-block">
+                            <div class="vertical-timeline-icon lazur-bg">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+
+                            <div class="vertical-timeline-content">
+                                <h2>Year 18+</h2>
+                                <h3>Assessments</h3>
+<!--                                <span class="vertical-date">DateTime <br><small>Jan 01</small></span>-->
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon lazur-bg">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-
-                    <div class="vertical-timeline-content">
-                        <h2>VISIT 2</h2>
-                        <p>Study day 4</p>
-
-                        <span class="vertical-date"> DateTime <br><small>Dec 27</small></span>
-                    </div>
-                </div>
-
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon lazur-bg">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-
-                    <div class="vertical-timeline-content">
-                        <h2>VISIT 3</h2>
-                        <p>Study day 8</p>
-                        <span class="vertical-date">DateTime <br><small>Dec 31</small></span>
-                    </div>
-                </div>
-
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon lazur-bg">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-
-                    <div class="vertical-timeline-content">
-                        <h2>Visit 4</h2>
-                        <p>Study day 12</p>
-                        <span class="vertical-date">DateTime <br><small>Jan 01</small></span>
-                    </div>
-                </div>
             </div>
+
 
         </div>
     </div>

@@ -12,5 +12,6 @@ var biospeakApp = angular.module('biospeak.app', [
     "bioSpeak.DataStager",
     "bioSpeak.import",
     "bioSpeak.projectHome",
-    "bioSpeak.datasets"
+    "bioSpeak.datasets",
+    "bioSpeak.userspace"
 ]);

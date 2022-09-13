@@ -23,7 +23,7 @@ var hasPermission =  function(authService) {
 
             authService.userHasPermission(value,scope.project).then(function(haspermission){
                 if(haspermission && !notPermissionFlag || !haspermission && notPermissionFlag) {
-                            element[0].style.display = 'block';
+                            element[0].style.display = 'initial';
                 } else {
                     element[0].style.display = 'none';
                     element[0].remove();

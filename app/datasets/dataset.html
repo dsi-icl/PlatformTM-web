@@ -1,0 +1,701 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Dataset View</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li >
+                <strong> <a ui-sref="project.datasets.list"> Datasets </a></strong>
+            </li>
+            <li class="active">
+                <strong>MAAS Medical History</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-9">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="m-b-md">
+<!--                                <a href="" class="btn btn-white btn-xs pull-right">Edit project</a>-->
+
+                                <h2>MAAS Medical History Dataset</h2>
+                            </div>
+<!--                            <dl class="dl-horizontal">-->
+<!--                                <dt>Status:</dt>-->
+<!--                                <dd><span class="label label-primary">Active</span></dd>-->
+<!--                            </dl>-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <dl class="dl-horizontal">
+
+                                <dt>Description:</dt>
+                                <dd>This Dataset contains subject medical history data collected through MAAS respiratory questionnaire data covering Years 1, 3, 5, 8 and 11</dd>
+
+
+<!--                                <dt>Created by:</dt>-->
+<!--                                <dd>Alex Smith</dd>-->
+<!--                                <dt>Messages:</dt>-->
+<!--                                <dd> 162</dd>-->
+<!--                                <dt>Client:</dt>-->
+<!--                                <dd><a href="" class="text-navy"> Zender Company</a></dd>-->
+
+                            </dl>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <dl class="dl-horizontal">
+                            <dt>Observed Features:</dt>
+                            <dd>
+                                <div class="col-md-12">
+                                    <p><span class="badge badge-info">Wheeze</span>
+                                        <span class="badge badge-info">Breathlessness</span>
+                                        <span class="badge badge-info">Recurrent Cough</span>
+                                        <span class="badge badge-info">Asthma</span>
+                                        <span class="badge badge-info">Eczema</span>
+                                        <span class="badge badge-info ">Rhinitis</span>
+                                        <span class="badge badge-info">Itchy Rash</span>
+                                        <span class="badge badge-info">Hay Fever</span>
+
+                                    </p>
+                                </div>
+                            </dd>
+                            </dl>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="col-lg-12" id="cluster_info">
+                                <dl class="dl-horizontal">
+                                    <dt>Version:</dt>
+                                    <dd> v1.2</dd>
+                                    <dt>Last Updated:</dt>
+                                    <dd>03.05.2022</dd>
+                                    <dt>Created:</dt>
+                                    <dd> 10.11.2021</dd>
+                                    <!--                                <dt>Participants:</dt>-->
+                                    <!--                                <dd class="project-people">-->
+                                    <!--                                    <a href=""><img alt="image" class="img-circle" src="img/a3.jpg"></a>-->
+                                    <!--                                    <a href=""><img alt="image" class="img-circle" src="img/a1.jpg"></a>-->
+                                    <!--                                    <a href=""><img alt="image" class="img-circle" src="img/a2.jpg"></a>-->
+                                    <!--                                    <a href=""><img alt="image" class="img-circle" src="img/a4.jpg"></a>-->
+                                    <!--                                    <a href=""><img alt="image" class="img-circle" src="img/a5.jpg"></a>-->
+                                    <!--                                </dd>-->
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="col-lg-12">
+                            <div class="panel blank-panel ui-tab">
+
+                                <uib-tabset>
+
+                                    <uib-tab heading="Files" active="tab.active">
+                                        <div class="ibox-content" style="min-height: 110px">
+                                            <div class="activities-list">
+                                                <div >
+                                                    <ul class="list-group clear-list">
+                                                        <li class="list-group-item"  ng-class="{'first-item':$first}">
+                                                            <div class="icon">
+                                                                <i class="fa fa-file-text-o fa-4x"></i>
+                                                                <span class="pull-right label label-primary">Download</span>
+                                                                <a>MAAS-MH-Y3</a>
+                                                                <br/>
+                                                                <small>Last updated 03.02.2016</small>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item"  ng-class="{'first-item':$first}">
+                                                            <div class="icon">
+                                                                <i class="fa fa-file-text-o fa-4x"></i>
+                                                                <span class="pull-right label label-primary">Download</span>
+                                                                <a>MAAS-MH-Y5</a>
+                                                                <br/>
+                                                                <small>Last updated 03.02.2016</small>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item"  ng-class="{'first-item':$first}">
+                                                            <div class="icon">
+                                                                <i class="fa fa-file-text-o fa-4x"></i>
+                                                                <span class="pull-right label label-primary">Download</span>
+                                                                <a>MAAS-MH-Y8</a>
+                                                                <br/>
+                                                                <small>Last updated 03.02.2016</small>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item"  ng-class="{'first-item':$first}">
+                                                            <div class="icon">
+                                                                <i class="fa fa-file-text-o fa-4x"></i>
+                                                                <span class="pull-right label label-primary">Download</span>
+                                                                <a ui-sref="project.datasets.file">MAAS-MH-Y11</a>
+                                                                <br/>
+                                                                <small>Last updated 03.02.2016</small>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+
+                                    <uib-tab heading="Metadata"  class="dsads">
+                                       <div class="ibox-content">
+                                           <table id="bs_template_tbl" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                               <thead>
+                                               <tr>
+                                                   <th data-toggle="true">Column</th>
+                                                   <th>Field Name</th>
+                                                   <th data-hide="phone">Description</th>
+                                                   <th data-hide="phone">Controlled Vocabulary</th>
+                                                   <!--<th data-hide="all">Order</th>
+                                                   <th data-hide="all">Key Sequence</th>-->
+                                               </tr>
+                                               </thead>
+                                               <tbody>
+                                               <!-- ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       STUDYID
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Study Identifier
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Unique identifier for a study.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables -->
+                                               <tr >
+                                                   <td class="ng-binding">
+                                                       DOMAIN
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Domain Abbreviation
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Two-character abbreviation for the domain.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       USUBJID
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Unique Subject Identifier
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Identifier used to uniquely identify a subject across all studies for all applications or submissions involving the product.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHSEQ
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Sequence Number
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Sequence Number given to ensure uniqueness of subject records within a domain. May be any valid number.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHGRPID
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Group ID
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Used to tie together a block of related records in a single domain for a subject.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHREFID
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Reference ID
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Internal or external medical history identifier.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHSPID
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Sponsor-Defined Identifier
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Sponsor-defined reference number. Perhaps pre-printed on the CRF as an sdtm-1-3:Classifier.ExpecedVariablelicit line identifier or defined in the sponsor's operational database. Example: Line number on a Medical History page.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHTERM
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Reported Term for the Medical History
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Verbatim or preprinted CRF term for the medical condition or event.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHMODIFY
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Modified Reported Term
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       If MHTERM is modified to facilitate coding, then MHMODIFY will contain the modified text.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHDECOD
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Dictionary-Derived Term
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Dictionary-derived text description of MHTERM or MHMODIFY. Equivalent to the Preferred Term (PT in MedDRA). The sponsor is sdtm-1-3:Classifier.ExpecedVariableected to provide the dictionary name and version used to map the terms utilizing the define.xml external codelist attributes.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHCAT
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Category for Medical History
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Used to define a category of related records. Examples: CARDIAC or GENERAL.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHSCAT
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Subcategory for Medical History
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       A further categorization of the condition or event.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHPRESP
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Medical History Event Pre-Specified
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       A value of "Y" indicates that this medical history event was pre-specified on the CRF. Values are null for spontaneously reported events (i.e., those collected as free-text verbatim terms).
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       No Yes Response
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHOCCUR
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Medical History Occurrence
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Used when the occurrence of specific medical history conditions is solicited to indicate whether or not (Y/N) a medical condition (MHTERM) had ever occurred. Values are null for spontaneously reported events.
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       No Yes Response
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHSTAT
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Completion Status
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       The status indicates that the pre-specified question was not answered.
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Not Done
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHREASND
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Reason Medical History Not Collected
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Describes the reason data for a pre-specified condition was not collected. Used in conjunction with MHSTAT when value is NOT DONE.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHBODSYS
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Body System or Organ Class
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Dictionary-derived. Body system or organ class that is involved in an event or measurement from a standard hierarchy (e.g., MedDRA). When using a multi-axial dictionary such as MedDRA, this should contain the SOC used for the sponsor's analyses and summary tables which may not necessarily be the primary SOC.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHDTC
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Date/Time of History Collection
+                                                   </td>
+
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHSTDTC
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Start Date/Time of Medical History Event
+                                                   </td>
+
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHENDTC
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       End Date/Time of Medical History Event
+                                                   </td>
+
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHDY
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Study Day of History Collection
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       1. Study day of medical history collection, measured as integer days.
+                                                       2. Algorithm for calculations must be relative to the sponsor-defined RFSTDTC variable in Demographics. This formula should be consistent across the submission.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHENRF
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       End Relative to Reference Period
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Describes the end of the event relative to the sponsor-defined reference period. The sponsor-defined reference period is a continuous period of time defined by a discrete starting point and a discrete ending point (represented by RFSTDTC and RFENDTC in Demographics).
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       Relation to Reference Period
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHENRTPT
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       End Relative to Reference Time Point
+                                                   </td>
+
+                                                   <td class="ng-binding">
+                                                       Identifies the end of the event as being before or after the reference time point defined by variable MHENTPT.
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables --><tr >
+                                                   <td class="ng-binding">
+                                                       MHENTPT
+                                                   </td>
+                                                   <td class="ng-binding">
+                                                       End Reference Time Point
+                                                   </td>
+                                                   
+                                                   <td class="ng-binding">
+                                                       Description or date/time in ISO 8601 character format of the reference point referred to by MHENRTPT. Examples: "2003-12-25" or "VISIT 2".
+                                                   </td>
+                                                   <td class="ng-binding">
+
+                                                   </td>
+                                                   <!--            <td>
+                                                                   <a href="#" e-ng-model="var.orderNumber" editable-text="var.orderNumber" buttons="no" blur="submit">{{var.orderNumber || "Undefined"}}</a>
+                                                               </td>
+                                                               <td>
+                                                                   <a href="#" e-ng-model="var.keySequence" editable-text="var.sequence" buttons="no" blur="submit">{{var.keySequence || "Undefined"}}</a>
+                                                               </td>-->
+                                               </tr><!-- end ngRepeat: var in ds.variables -->
+                                               </tbody>
+                                               <tfoot>
+                                               <tr>
+                                                   <td colspan="6">
+                                                       <ul class="pagination pull-right"></ul>
+                                                   </td>
+                                               </tr>
+                                               </tfoot>
+                                           </table>
+                                       </div>
+                                    </uib-tab>
+
+
+                                </uib-tabset>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+<!--        <div class="wrapper wrapper-content project-manager">-->
+<!--            <h4>Project description</h4>-->
+<!--            <img src="img/zender_logo.png" class="img-responsive">-->
+
+<!--            <p class="small">-->
+<!--                There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look-->
+<!--                even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing-->
+<!--            </p>-->
+
+<!--            <p class="small font-bold">-->
+<!--                <span><i class="fa fa-circle text-warning"></i> High priority</span>-->
+<!--            </p>-->
+<!--            <h5>Project tag</h5>-->
+<!--            <ul class="tag-list" style="padding: 0">-->
+<!--                <li><a href=""><i class="fa fa-tag"></i> Zender</a></li>-->
+<!--                <li><a href=""><i class="fa fa-tag"></i> Lorem ipsum</a></li>-->
+<!--                <li><a href=""><i class="fa fa-tag"></i> Passages</a></li>-->
+<!--                <li><a href=""><i class="fa fa-tag"></i> Variations</a></li>-->
+<!--            </ul>-->
+<!--            <h5>Project files</h5>-->
+<!--            <ul class="list-unstyled project-files">-->
+<!--                <li><a href=""><i class="fa fa-file"></i> Project_document.docx</a></li>-->
+<!--                <li><a href=""><i class="fa fa-file-picture-o"></i> Logo_zender_company.jpg</a></li>-->
+<!--                <li><a href=""><i class="fa fa-stack-exchange"></i> Email_from_Alex.mln</a></li>-->
+<!--                <li><a href=""><i class="fa fa-file"></i> Contract_20_11_2014.docx</a></li>-->
+<!--            </ul>-->
+<!--            <div class="text-center m-t-md">-->
+<!--                <a href="" class="btn btn-xs btn-primary">Add files</a>-->
+<!--                <a href="" class="btn btn-xs btn-primary">Report contact</a>-->
+
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</div>

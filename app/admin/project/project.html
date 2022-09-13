@@ -62,7 +62,118 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
+
+        <div class="col-lg-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title panel-header">
+                    <h3>Studies
+                        <span class="pull-right">
+                            <button data-ng-disabled="vm.project.isNew" ui-sref="define.study({projectId:vm.projectId,studyId:0})" class="btn btn-primary btn-xs"><i class="fa fa-plus"/> New Study</button>
+                            </span>
+                    </h3>
+
+                </div>
+                <div class="ibox-content " style="min-height: 110px">
+                    <ul class="elements-list list-group clear-list">
+                        <li ng-repeat="study in vm.project.studies" class="list-group-item" ng-class="{'first-item':$first}">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a ui-sref="define.study({studyId:study.id, projectId:study.projectId})"><strong>{{study.name}}</strong></a>
+                                </div>
+                                <div class="col-md-6">{{study.title}}</div>
+                                <div class="col-md-3"><span uib-tooltip="{{study.armNames}}" tooltip-placement="left" class="badge badge-info">{{study.armCount}} Cohorts</span></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+<!--        <div class="col-lg-4">-->
+<!--            <div class="ibox">-->
+<!--                <div class="ibox-title panel-header">-->
+<!--                    <h3>Custom Dataset Descriptors-->
+<!--                        <span class="pull-right">-->
+<!--                            <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>-->
+<!--                                <a class="dropdown-toggle" href uib-dropdown-toggle>-->
+<!--                                    <i class="fa fa-plus"></i>-->
+<!--                                </a>-->
+<!--                                <ul class="dropdown-menu dropdown-menu-right plotting-options" uib-dropdown-menu>-->
+<!--                                    &lt;!&ndash;<li><a ui-sref="define.activity({projectId:vm.projectId,activityId:0})">&nbsp; New Clinical Activity</a></li>&ndash;&gt;-->
+
+<!--                                    <li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Dataset Descriptor</a></li>-->
+<!--                                </ul>-->
+<!--                            </div>-->
+<!--                        </span>-->
+<!--                    </h3>-->
+<!--                </div>-->
+<!--                <div class="ibox-content" style="min-height: 110px">-->
+<!--                    <div class="activities-list">-->
+<!--                        <div full-height-scroll >-->
+<!--                            <ul class="list-group clear-list">-->
+<!--                                <li class="list-group-item" ng-repeat="activity in vm.assays" ng-class="{'first-item':$first}">-->
+<!--                                    <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>-->
+<!--                                    <a ng-click="vm.goToActivity(activity)">{{activity.name}}</a>-->
+<!--                                    <br/>-->
+<!--                                    &lt;!&ndash;<small>Last updated 03.02.2016</small>&ndash;&gt;-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div uib-alert class=" alert-info" ng-if="!vm.assays.length>0">-->
+<!--                        <h4>No Descriptors-->
+<!--                            <div class=" btn-group pull-right">-->
+<!--                                &lt;!&ndash;<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>&ndash;&gt;-->
+
+<!--                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Descriptor</button></li>-->
+<!--                            </div>-->
+<!--                        </h4>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="col-lg-4">
+            <div class="ibox">
+                <div class="ibox-title panel-header ">
+                    <span class="pull-right">
+                        <!--<a ng-click ="vm.addUser()"class=" btn-link"><i class="fa fa-plus"></i></a>-->
+                    </span>
+                    <h3>Users</h3>
+
+                </div>
+                <div class="ibox-content" style="min-height: 110px">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr ng-repeat="u in vm.users">
+                            <td class="client-avatar"><img alt="image" src="img/icon-user.png"> </td>
+                            <td> {{u.firstName}} {{u.lastName}}</a></td>
+                            <td> {{u.organization}}</td>
+                            <td class="contact-type">
+                                <div uib-dropdown>
+                                    <a class="dropdown-toggle" uib-dropdown-toggle>
+                                        <i class="fa fa-ellipsis-v"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu >
+                                        <li> <a ng-click="vm.editUser(vm.projectId,u)"><i class="fa fa fa-edit"></i>&nbsp; Edit</a></li>
+
+                                        <li><a ng-click="vm.removeUser(vm.projectId,u.id)"><i class="fa fa-remove"></i>&nbsp; Remove</a></li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
             <div class="ibox">
                 <div class="ibox-title panel-header ">
                     <span class="pull-right">
@@ -95,71 +206,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title panel-header">
-                    <h3>Studies
-                        <span class="pull-right">
-                            <button data-ng-disabled="vm.project.isNew" ui-sref="define.study({projectId:vm.projectId,studyId:0})" class="btn btn-primary btn-xs"><i class="fa fa-plus"/> New Study</button>
-                            </span>
-                    </h3>
-
-                </div>
-                <div class="ibox-content " style="min-height: 110px">
-                    <ul class="elements-list list-group clear-list">
-                        <li ng-repeat="study in vm.project.studies" class="list-group-item" ng-class="{'first-item':$first}">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <a ui-sref="define.study({studyId:study.id, projectId:study.projectId})"><strong>{{study.name}}</strong></a>
-                                </div>
-                                <div class="col-md-6">{{study.title}}</div>
-                                <div class="col-md-3"><span uib-tooltip="{{study.armNames}}" tooltip-placement="left" class="badge badge-info">{{study.armCount}} Cohorts</span></div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="ibox">
-                <div class="ibox-title panel-header ">
-                    <span class="pull-right">
-                        <!--<a ng-click ="vm.addUser()"class=" btn-link"><i class="fa fa-plus"></i></a>-->
-                    </span>
-                    <h3>Users</h3>
-
-                </div>
-                <div class="ibox-content" style="min-height: 110px">
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr ng-repeat="u in vm.users">
-                                <td class="client-avatar"><img alt="image" src="img/icon-user.png"> </td>
-                                <td> {{u.firstName}} {{u.lastName}}</a></td>
-                                <td> {{u.organization}}</td>
-                                <td class="contact-type">
-                                    <div uib-dropdown>
-                                        <a class="dropdown-toggle" uib-dropdown-toggle>
-                                            <i class="fa fa-ellipsis-v"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-left" uib-dropdown-menu >
-                                            <li> <a ng-click="vm.editUser(vm.projectId,u)"><i class="fa fa fa-edit"></i>&nbsp; Edit</a></li>
-
-                                            <li><a ng-click="vm.removeUser(vm.projectId,u.id)"><i class="fa fa-remove"></i>&nbsp; Remove</a></li>
-                                        </ul>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
         </div>
 
         <div class="col-lg-4">

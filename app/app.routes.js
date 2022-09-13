@@ -5,7 +5,7 @@ angular.module('biospeak.app').config(function($stateProvider, $urlRouterProvide
 
     $urlRouterProvider.otherwise('/projects');
     $urlRouterProvider.when('', '/login');
-    $urlRouterProvider.when('/home', '/projects');
+    $urlRouterProvider.when('/home', '/projects/142/main');
 
 
     $ocLazyLoadProvider.config({

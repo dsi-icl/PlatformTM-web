@@ -15,7 +15,7 @@ var biospeakApp = angular.module('biospeak.app')
         });
 
         $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
-            $state.go('home.dashboard');
+            $state.go('project.home',{projectId:142});
         });
 
         $rootScope.$on(AUTH_EVENTS.accountCreated, function() {

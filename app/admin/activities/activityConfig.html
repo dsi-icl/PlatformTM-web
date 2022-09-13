@@ -28,7 +28,9 @@
                     <span>Dataset Descriptor</span>
                      <span style="font-size:16px;margin-top:-5px;" class="pull-right">
                          <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
-                         <a has-permission="can-manage" project="vm.projectId"  ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>
+                         <a has-permission="can-manage" project="vm.projectId"  ng-click="vm.deleteDS()">
+                             <i class="p-xs fa fa-trash"> </i>
+                         </a>
                             | <a ng-init="vm.creatingNewDS = false" ng-click="vm.creatingNewDS = !vm.creatingNewDS"><i uib-tooltip="Add Dataset Template" class="p-xs fa fa-plus"></i></a>
                         </span>
                 </div>
