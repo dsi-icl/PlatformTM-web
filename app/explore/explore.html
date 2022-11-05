@@ -25,6 +25,43 @@
                         </dc-count-bar>
                     </li>
 
+                    <li style="vertical-align:top; display: inline-block;max-height: 100px;overflow: hidden;text-align: left; border-right: 1px dotted #c7c7c7;   padding: 0px 20px">
+                        <h5 style="text-transform: uppercase;margin-bottom: 0px">ObservedFeatures</h5>
+                        <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;">
+                            <i class="flaticon-standing55"></i>&nbsp;
+                            <dc-count-widget style="font-weight:600;"
+                                             xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                                             chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                             type="sdj"
+                                             module="{{expVM.chartingOpts.subjChartGrp}}">
+                                </dc-count-widget>
+                        </span>
+                        <dc-count-bar
+                                xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                                chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                module="{{expVM.chartingOpts.subjChartGrp}}">
+                        </dc-count-bar>
+                    </li>
+
+                    <li style="vertical-align:top; display: inline-block;max-height: 100px;overflow: hidden;text-align: left; border-right: 1px dotted #c7c7c7;   padding: 0px 20px">
+                        <h5 style="text-transform: uppercase;margin-bottom: 0px">Visits</h5>
+                        <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;">
+                            <i class="flaticon-standing55"></i>&nbsp;
+                            <dc-count-widget style="font-weight:600;"
+                                             xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                                             chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                             type="sdj"
+                                             module="{{expVM.chartingOpts.subjChartGrp}}">
+                                </dc-count-widget>
+                        </span>
+                        <dc-count-bar
+                                xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                                chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                module="{{expVM.chartingOpts.subjChartGrp}}">
+                        </dc-count-bar>
+                    </li>
+
+
                     <li ng-repeat="assay in expVM.assays"
                         style="display: inline-block;max-height: 100px;overflow: hidden;text-align: left; vertical-align: top;padding: 0px 10px;">
                         <h5 style="text-transform: uppercase; margin-bottom: 0px">

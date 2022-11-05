@@ -63,6 +63,6 @@ biospeakApp.constant('USER_ROLES', {
 })
 
 biospeakApp.constant('ngAppConfig', {
-    apiServiceBaseUri: '/api/v1/'
-    //apiServiceBaseUri: 'http://localhost:5000/'
+    //apiServiceBaseUri: '/api/v1/'
+    apiServiceBaseUri: 'http://localhost/api/v1/'
 });
