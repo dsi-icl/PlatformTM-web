@@ -1,0 +1,635 @@
+
+        <div has-permission="can-manage" project="vm.projectId" class="title-action" style="display: none">
+            <a  ng-click="vm.saveActivity()" class="btn btn-primary">Save</a>
+        </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox">
+                <!--                        <div class="ibox-title panel-header ">-->
+                <!--                    -->
+                <!--                            <h3>Users</h3>-->
+
+                <!--                        </div>-->
+                <div class="ibox-content" style="min-height: 110px">
+
+                    <div class=" row" >
+                        <div class="col-md-12">
+                            <dl class="dl-horizontal">
+                                <dt>Descriptor Name</dt>
+                                <dd>
+                                    <div class="col-md-6">
+                                        <a required editable-text="vm.dd.title" buttons="yes" blur="submit" e-placeholder="Enter Descriptor Name">
+                                            {{vm.dd.title || 'Descriptor Name'}}
+                                        </a>
+
+                                    </div>
+                                </dd>
+                                <div class="hr-line-dashed"></div>
+                                <dt>Description: </dt>
+                                <dd>
+                                    <div class="col-md-6">
+                                        <a required editable-text="vm.dd.description" buttons="yes" blur="submit" e-placeholder="Enter Description">
+                                            {{vm.dd.description || 'Descriptor Description'}}
+                                        </a>
+                                    </div>
+                                </dd>
+                                <div class="hr-line-dashed"></div>
+                                <dt>Dataset Descriptor Type:</dt>
+                                <dd>
+                                    <div class="col-md-6">
+                                        <a href="#" editable-select="vm.dd.type" e-ng-options="ddType.value as ddType.text for ddType in vm.ddTypes">
+                                            {{ vm.showDDtype() }}
+                                        </a>
+
+                                    </div>
+                                </dd>
+                                <div class="hr-line-dashed"></div>
+
+                                <!--                                    <div class="hr-line-dashed"></div>-->
+                                <!--                                    <dt>Observed Features:</dt>-->
+                                <!--                                    <dd>-->
+                                <!--                                        <div class="col-md-6">-->
+                                <!--                                            <a  ng-click="vm.downloadDataset(cDataset)">-->
+                                <!--                                                <i class="fa fa-download"></i>Download-->
+                                <!--                                            </a>-->
+                                <!--                                            <a  ng-click="vm.downloadDataset(cDataset)" >-->
+                                <!--                                                <i class="fa fa-download"></i>Metadata-->
+                                <!--                                            </a>-->
+                                <!--                                            <a  ng-click="vm.downloadDataset(cDataset)" >-->
+                                <!--                                                <i class="fa fa-download"></i>Preview-->
+                                <!--                                            </a>-->
+                                <!--                                        </div>-->
+                                <!--                                    </dd>-->
+                            </dl>
+                        </div>
+                    </div>
+                    <!--                        <div class="hr-line-solid"></div>-->
+                </div>
+
+
+            </div>
+
+            <div>
+                <div class="ibox-title panel-header">
+                    <span>Dataset Field Descriptors</span>
+                     <span style="font-size:16px;margin-top:-5px;" class="pull-right">
+
+                         <a ng-show="!tableform.$visible" ng-click="tableform.$show()">
+                             <i class="p-xs fa fa-edit"> </i>
+                         </a>
+
+                         <i class="p-xs fa fa-eye"> </i>
+
+                         <i class="p-xs fa fa-download"> </i>
+
+                         <a has-permission="can-manage" project="vm.projectId"  ng-click="vm.deleteDS()">
+                             <i class="p-xs fa fa-trash"> </i>
+                         </a>
+                            | <a ng-init="vm.creatingNewDS = false" ng-click="vm.openUpload()"><i uib-tooltip="Upload Dataset Descriptor" class="p-xs fa fa-plus"></i></a>
+                        </span>
+                </div>
+<!--                <li><a ng-click="vm.openUpload()"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;File upload</a></li>-->
+<!--                <div uib-collapse="!vm.creatingNewDS" class="ibox-content" style="min-height: 50px;margin: 0px;border: 10px solid white;background-color: rgb(243, 243, 244);">-->
+<!--                    <form role="form">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-11">-->
+<!--                                <h3>Upload a dataset descriptor</h3>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-1"> <span class="pull-right"><a ng-click="vm.creatingNewDS=false" class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>-->
+
+<!--                        </div>-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-7">-->
+<!--                                <div class="ibox-title">-->
+<!--                                    <h5>Input group example</h5>-->
+<!--                                    <div class="ibox-tools">-->
+<!--                                        <a class="collapse-link">-->
+<!--                                            <i class="fa fa-chevron-up"></i>-->
+<!--                                        </a>-->
+<!--                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+<!--                                            <i class="fa fa-wrench"></i>-->
+<!--                                        </a>-->
+<!--                                        <ul class="dropdown-menu dropdown-user">-->
+<!--                                            <li><a href="#">Config option 1</a>-->
+<!--                                            </li>-->
+<!--                                            <li><a href="#">Config option 2</a>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                        <a class="close-link">-->
+<!--                                            <i class="fa fa-times"></i>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="ibox-content">-->
+<!--                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">-->
+<!--                                        <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>-->
+<!--                                        <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>-->
+<!--                                        <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>-->
+<!--                                    </div>-->
+<!--                                    <p>-->
+<!--                                        HTML markup code for abowe example:-->
+<!--                                    </p>-->
+
+
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+
+                <div id="{{ds.id}}" class=" animated fadeIn">
+
+<!--                    <div class="ibox-title">-->
+<!--                        <div class="ibox-tools">-->
+<!--                            <a class="btn btn-primary btn-xs" ng-init="vm.creatingCfield = false" ng-click="vm.creatingCfield = !vm.creatingCfield;vm.createNewCfield()">New Descriptor field</a>-->
+<!--                            &lt;!&ndash;<a href="" class="btn btn-primary btn-xs">Preview Template</a>-->
+<!--                            <a href="" class="btn btn-primary btn-xs">Download Template</a>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash;ADD FIELD DIV&ndash;&gt;-->
+<!--                    <div uib-collapse="!vm.creatingCfield" class="ibox-content" style="min-height: 50px;margin: 0px;border: 10px solid white;background-color: rgb(243, 243, 244);">-->
+<!--                        <form role="form">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-11">-->
+<!--                                    <h3>Add New Field</h3>-->
+<!--                                </div>-->
+<!--                                <div class="col-md-1"> <span class="pull-right"><a ng-click="vm.cancelAddVariableToDS()" class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>-->
+
+<!--                            </div>-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-md-8">-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-md-6">-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <div class="row">-->
+<!--                                                    <div class="col-md-6">-->
+<!--                                                        <label>Name</label>-->
+<!--                                                        <input ng-model="vm.cField.label" type="text" placeholder="E.g. Averse Event Score" class="form-control">-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-md-6">-->
+<!--                                                        <label>Column Header</label>-->
+<!--                                                        <input ng-model="vm.cField.name" type="text" placeholder="E.g. AESEVSCORE" class="form-control">-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <div class="row">-->
+<!--                                                    <div class="col-md-12">-->
+<!--                                                        <label>Description</label>-->
+<!--                                                        <textarea class="form-control" ng-model="vm.cField.description"></textarea>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <div class="row">-->
+<!--                                                    <div class="col-md-4">-->
+<!--                                                        <label>Type</label>-->
+<!--                                                        <select class="form-control" ng-model="vm.cField.varType">-->
+<!--                                                            <option ng-repeat="t in vm.varTypes">{{t}}</option>-->
+<!--                                                        </select>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-md-4">-->
+<!--                                                        <label>Data Type</label>-->
+<!--                                                        <select class="form-control" ng-model="vm.cField.dataType">-->
+<!--                                                            <option ng-repeat="t in vm.dataTypes">{{t}}</option>-->
+<!--                                                        </select>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-md-4">-->
+<!--                                                        <label>Role</label>-->
+<!--                                                        <select class="form-control" ng-model="vm.cField.roleId">-->
+<!--                                                            <option ng-repeat="t in vm.roleTypes">{{t}}</option>-->
+<!--                                                        </select>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+
+
+<!--                                            </div>-->
+
+
+<!--                                        </div>-->
+<!--                                        &lt;!&ndash;VARIABLES&ndash;&gt;-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label>Variables</label>-->
+<!--                                            <div class="search-input">-->
+<!--                                                <input ng-model="searchField" type="text" placeholder="Search fields " class="input input-sm form-control">-->
+<!--                                                <i class="fa fa-search"></i>-->
+<!--                                            </div>-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <div class="field-list">-->
+<!--                                                    <ul>-->
+<!--                                                        <li data-drag="true" data-jqyoui-options="{revert: 'invalid',helper:'clone'}"-->
+<!--                                                            ng-model="var"-->
+<!--                                                            jqyoui-draggable="{animate:true,placeholder:true,placeholder:'keep',onStart:'vm.prepareEE(var)',dropModel:'ee'}"-->
+<!--                                                            ng-repeat="var in ds.variables | filter:searchField"-->
+<!--                                                            ng-click="vm.fieldInfo(var)">-->
+<!--                                                            <a> <i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i> {{var.label}}</a></li>-->
+<!--                                                        &lt;!&ndash;ng-class="{'': !isActive, 'selected': isActive}"&ndash;&gt;-->
+<!--                                                        &lt;!&ndash;ng-init="isActive = false"&ndash;&gt;-->
+<!--                                                        &lt;!&ndash;ng-click="isActive = !isActive"&ndash;&gt;-->
+
+<!--                                                    </ul>-->
+<!--                                                </div>-->
+<!--                                                &lt;!&ndash;<button type="button" class="btn btn-default btn-xs pull-right m-t-xs btn-outline">Insert Function</button>&ndash;&gt;-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row">-->
+<!--                                        &lt;!&ndash;EXPRESSION DIV&ndash;&gt;-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <div>-->
+<!--                                                <label>Expression</label>-->
+<!--                                                <button ng-click="vm.clearExpression()"class="btn btn-default btn-xs pull-right">Clear</button>-->
+<!--                                            </div>-->
+
+
+<!--                                            <div style="background-color: white; border:1px solid lightgrey;  height: 142px;overflow: scroll; margin-top:3px">-->
+
+<!--                                                &lt;!&ndash;DIV FOR SIMPLE EXPRESSIONS&ndash;&gt;-->
+<!--                                                <div class="expression"-->
+
+<!--                                                     data-drop="true"-->
+<!--                                                     ng-model='vm.expressionList'-->
+<!--                                                     jqyoui-droppable="{multiple:true,onDrop:'vm.updateEEseq',beforeDrop: 'vm.beforeDropOverExpressionDiv()'}" style=" height:100%">-->
+<!--                                                    <ul>-->
+<!--                                                        <li ng-repeat="e in vm.expressionList track by $index"-->
+<!--                                                            data-drag="true"-->
+<!--                                                            data-jqyoui-options="{revert: 'invalid', helper: 'clone'}"-->
+<!--                                                            ng-model="vm.expressionList" jqyoui-draggable="{index: {{$index}},animate:true}">-->
+
+<!--                                                            &lt;!&ndash;STRING LITERAL&ndash;&gt;-->
+<!--                                                            <span ng-if="e.type == 'syntax' || e.type == 'op'"style="color: #d77329;">{{e.val}}</span>-->
+
+<!--                                                            &lt;!&ndash; Droppable VARIABLE&ndash;&gt;-->
+<!--                                                            <div ng-if="e.type=='var'"-->
+<!--                                                                 class="droppable"-->
+<!--                                                                 data-drop="true"-->
+<!--                                                                 ondragenter=""-->
+<!--                                                                 jqyoui-droppable="{index: {{e.seq}},beforeDrop: 'vm.beforeDropOverExpressionElement(e)', onDrop:'vm.varDropped(e)'}"-->
+<!--                                                                 data-ng-model="e.temp">-->
+
+<!--                                                                &lt;!&ndash; Dropped element&ndash;&gt;-->
+<!--                                                                <span class="dropped-pill" ng-show="e.temp.val">-->
+<!--                                                                                &lt;!&ndash;<a  ng-click="vm.remFromExpression(e)" style="padding-right: 5px;" >&ndash;&gt;-->
+<!--                                                                    &lt;!&ndash;<i class="fa fa-times"></i></a>&ndash;&gt;-->
+<!--                                                                                <span>{{e.temp.display}}</span>-->
+<!--                                                                            </span>-->
+<!--                                                                &lt;!&ndash; end of Dropped element&ndash;&gt;-->
+
+
+<!--                                                                &lt;!&ndash; User input if element not dropped&ndash;&gt;-->
+<!--                                                                &lt;!&ndash;THIS IS REALLY NEVER USED SHOULD CONSIDER REMOVING IF USER WILL NOT-->
+<!--                                                                BE ALLOWED TO ENTER THE VARIABLE BY HAND&ndash;&gt;-->
+<!--                                                                <input placeholder="Insert field here"-->
+<!--                                                                       ng-model="e.temp.val"-->
+<!--                                                                       ng-hide="e.temp.val"-->
+<!--                                                                       ng-disabled="true"-->
+<!--                                                                       style="background-color:transparent!important; font-size:12px;-->
+<!--                                                                                   border: none;-->
+<!--                                                                                   outline: 0;-->
+<!--                                                                                   height: 1.666666em;-->
+<!--                                                                                   margin: 5px 0px;">-->
+<!--                                                                &lt;!&ndash; End of User input&ndash;&gt;-->
+
+<!--                                                            </div>-->
+
+<!--                                                            &lt;!&ndash; Droppable Multiple VARIABLE&ndash;&gt;-->
+<!--                                                            <div ng-if="e.type=='multivar'"-->
+<!--                                                                 data-drop="true"-->
+<!--                                                                 class="droppable"-->
+<!--                                                                 jqyoui-droppable="{multiple:true, beforeDrop: 'vm.beforeDropOverExpressionElement(e)',onDrop:'vm.varDropped(e)'}"-->
+<!--                                                                 data-ng-model="e.vars">-->
+
+<!--                                                                &lt;!&ndash; Dropped element&ndash;&gt;-->
+<!--                                                                <span ng-repeat="v in e.vars" class="dropped-pill">-->
+<!--                                                                                &lt;!&ndash;<a  ng-click="vm.remFromExpression(e)" style="padding-right: 5px;" >&ndash;&gt;-->
+<!--                                                                    &lt;!&ndash;<i class="fa fa-times"></i></a>&ndash;&gt;-->
+<!--                                                                                <span class="pill">{{v.display}}</span>-->
+<!--                                                                            </span>-->
+<!--                                                                &lt;!&ndash; end of Dropped element&ndash;&gt;-->
+
+<!--                                                                &lt;!&ndash; User input if element not dropped&ndash;&gt;-->
+<!--                                                                &lt;!&ndash;NOT USED&ndash;&gt;-->
+<!--                                                                <input placeholder="Insert field here"-->
+<!--                                                                       ng-model="e.val"-->
+<!--                                                                       ng-hide="e.vars.length > 0"-->
+<!--                                                                       ng-disabled="true"-->
+<!--                                                                       style="background-color:transparent!important; font-size:12px;-->
+<!--                                                                                   border: none;-->
+<!--                                                                                   outline: 0;-->
+<!--                                                                                   height: 1.666666em;-->
+<!--                                                                                   margin: 5px 0px;">-->
+<!--                                                                &lt;!&ndash; End of User input&ndash;&gt;-->
+<!--                                                            </div>-->
+
+<!--                                                            &lt;!&ndash;Droppable VALUE&ndash;&gt;-->
+<!--                                                            <div ng-if="e.type == 'param' "-->
+<!--                                                                 style="padding: 3px;border-radius:5px; border-left: 1px solid #e7eaec;border-right: 1px solid #e7eaec;margin: 3px; display: inline;"-->
+<!--                                                                 data-drop="true"-->
+<!--                                                                 jqyoui-droppable="{index: {{e.seq}},onDrop:'vm.dropTerm(e)',beforeDrop: 'vm.beforeDropOverExpressionElement(e)'}"-->
+<!--                                                                 data-ng-model="e.param">-->
+
+<!--                                                                &lt;!&ndash; Dropped element&ndash;&gt;-->
+<!--                                                                <span class="dropped-pill" ng-show="e.param">-->
+<!--                                                                                &lt;!&ndash;<a  ng-click="vm.remFromExpression(e)" style="padding-right: 5px;" >&ndash;&gt;-->
+<!--                                                                    &lt;!&ndash;<i class="fa fa-times"></i></a>&ndash;&gt;-->
+<!--                                                                                <span>{{e.display}}</span>-->
+<!--                                                                            </span>-->
+<!--                                                                &lt;!&ndash; end of Dropped element&ndash;&gt;-->
+
+<!--                                                                &lt;!&ndash; User input if element not dropped&ndash;&gt;-->
+<!--                                                                <input placeholder="Type or drag term"-->
+<!--                                                                       ng-model="e.val"-->
+<!--                                                                       ng-hide="e.param"-->
+<!--                                                                       ng-change="vm.inputChanged(e)"-->
+<!--                                                                       style="background-color:transparent!important; font-size:10px;-->
+<!--                                                                                   border: none;-->
+<!--                                                                                   outline: 0;-->
+<!--                                                                                   height: 1.666666em;-->
+<!--                                                                                   width:50px;-->
+<!--                                                                                   text-align: center;-->
+<!--                                                                                   margin: 10px 0px;">-->
+<!--                                                                &lt;!&ndash; End of User input&ndash;&gt;-->
+<!--                                                            </div>-->
+
+<!--                                                        </li>-->
+<!--                                                        <li class="placeholder" ng-hide="vm.expressionList.length>0">Drag a function or a field here</li>-->
+
+<!--                                                    </ul>-->
+
+<!--                                                </div>-->
+
+<!--                                                &lt;!&ndash;DIV IF FUNCTION TEMPLATES ARE USED&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<div ng-if="vm.cField.usingFunc" style="display: inline;" ng-repeat="e in vm.cField.expressionList track by e.seq">&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash;STRING LITERAL&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<span ng-if="e.type == 'syntax'" style="color: #d77329;">{{e.val}}</span>&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash; Droppable VARIABLE&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<div ng-if="e.type=='var'"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;style="padding: 3px;border-radius:5px; border-left: 1px solid #e7eaec;border-right: 1px solid #e7eaec;margin: 3px; display: inline;"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;data-drop="true"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;jqyoui-droppable="{index: {{e.seq}},beforeDrop: 'vm.beforeDrop(e)'}"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;data-ng-model="e">&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash; Dropped element&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<span class="dropped-pill" ng-show="e.val">&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash;<a  ng-click="vm.remFromExpression(e)" style="padding-right: 5px;" >&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash;<i class="fa fa-times"></i></a>&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<span>{{e}}</span>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;</span>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash; end of Dropped element&ndash;&gt;&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash; User input if element not dropped&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<input placeholder="Insert field here"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-model="e.val"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-hide="e.val"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-disabled="true"&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;style="background-color:transparent!important; font-size:12px;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;border: none;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;outline: 0;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;height: 1.666666em;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;margin: 5px 0px;">&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash; End of User input&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash; Droppable Multiple VARIABLE&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<div ng-if="e.type=='multivar'"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;style="padding: 3px 9px;border-radius:5px; border-left: 1px solid #e7eaec;border-right: 1px solid #e7eaec;margin: 3px; display: inline;"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;data-drop="true"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;jqyoui-droppable="{multiple:true, beforeDrop: 'vm.beforeDrop(e)'}"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;data-ng-model="e.vars">&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash; Dropped element&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<span ng-repeat="v in e.vars" class="dropped-pill">&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash;<a  ng-click="vm.remFromExpression(e)" style="padding-right: 5px;" >&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash;<i class="fa fa-times"></i></a>&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<span>{{v.display}}</span>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;</span>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash; end of Dropped element&ndash;&gt;&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash; User input if element not dropped&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<input placeholder="Insert field here"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-model="e.val"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-hide="e.vars.length > 0"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-disabled="true"&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;style="background-color:transparent!important; font-size:12px;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;border: none;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;outline: 0;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;height: 1.666666em;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;margin: 5px 0px;">&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash; End of User input&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash;Droppable VALUE&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<div ng-if="e.type == 'param' "&ndash;&gt;-->
+<!--                                                &lt;!&ndash;style="padding: 3px;border-radius:5px; border-left: 1px solid #e7eaec;border-right: 1px solid #e7eaec;margin: 3px; display: inline;"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;data-drop="true"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;jqyoui-droppable="{index: {{e.seq}},onDrop:'vm.dropTerm(e)',beforeDrop: 'vm.beforeDrop(e)'}"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;data-ng-model="e.param">&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash; Dropped element&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<span class="dropped-pill" ng-show="e.param">&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash;<a  ng-click="vm.remFromExpression(e)" style="padding-right: 5px;" >&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash;<i class="fa fa-times"></i></a>&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<span>{{e.display}}</span>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;</span>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash; end of Dropped element&ndash;&gt;&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;&lt;!&ndash; User input if element not dropped&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;<input placeholder="Type or drag term"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-model="e.val"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-hide="e.param"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-change="vm.inputChanged(e)"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;style="background-color:transparent!important; font-size:10px;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;border: none;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;outline: 0;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;height: 1.666666em;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;width:50px;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;margin: 10px 0px;">&ndash;&gt;-->
+<!--                                                &lt;!&ndash;&lt;!&ndash; End of User input&ndash;&gt;&ndash;&gt;-->
+<!--                                                &lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--                                                &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                                                &lt;!&ndash;{{vm.cField.expressionList}}&ndash;&gt;-->
+<!--                                            </div>-->
+<!--                                            <div class="m-b-sm">-->
+<!--                                                <button ng-click="vm.addOperator('+')" class="btn btn-white btn-sm"><i class="fa fa-plus"></i></button>-->
+<!--                                                <button ng-click="vm.addOperator('-')" class="btn btn-white btn-sm"><i class="fa fa-minus"></i></button>-->
+<!--                                                <button ng-click="vm.addOperator('x')" class="btn btn-white btn-sm"><i class="fa fa-times"></i></button>-->
+<!--                                                <button ng-click="vm.addOperator('/')" class="btn btn-white btn-sm"><strong>/</strong></button>-->
+<!--                                                <button ng-click="vm.addOperator('(')" class="btn btn-white btn-sm"><strong>(</strong></button>-->
+<!--                                                <button ng-click="vm.addOperator(')')" class="btn btn-white btn-sm"><strong>)</strong></button>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        &lt;!&ndash;FUNCTIONS&ndash;&gt;-->
+<!--                                        <div class="col-md-6">-->
+<!--                                            <label>Functions</label>-->
+
+<!--                                            <div class="search-input">-->
+<!--                                                <input ng-model="searchFunction" type="text" placeholder="Search functions " class="input input-sm form-control" style="">-->
+<!--                                                <i class="fa fa-search"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="form-group">-->
+<!--                                                <div class="field-list">-->
+<!--                                                    <ul>-->
+<!--                                                        <li ng-repeat="func in vm.computeFunctions | filter:searchFunction"ng-model="vm.func" >-->
+<!--                                                            <a ng-click="vm.addFunc(func)"> <i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i> {{func.name}}</a></li>-->
+<!--                                                        </li>-->
+
+<!--                                                        &lt;!&ndash;ng-class="{'': !isActive, 'selected': isActive}"&ndash;&gt;-->
+<!--                                                        &lt;!&ndash;ng-init="isActive = false"&ndash;&gt;-->
+<!--                                                        &lt;!&ndash;ng-click="isActive = !isActive"&ndash;&gt;-->
+
+<!--                                                    </ul>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                &lt;!&ndash;FIELD INFO&ndash;&gt;-->
+<!--                                <div ng-show="vm.showFieldInfo" style="height: 348px;border-left: white 1px solid;" class="col-md-4">-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Data Type</label>-->
+<!--                                        <div style="text-transform: capitalize">{{vm.selField.dataType}}</div>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Description</label>-->
+<!--                                        <div>{{vm.selField.description}}</div>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Controlled Terms</label>-->
+<!--                                        <div class="search-input">-->
+<!--                                            <input ng-model="searchTerm" type="text" placeholder="Search fields " class="input input-sm form-control">-->
+<!--                                            <i class="fa fa-search"></i>-->
+<!--                                        </div>-->
+<!--                                        <div class="field-list">-->
+<!--                                            <ul>-->
+<!--                                                <li data-drag="true" data-jqyoui-options="{revert: 'invalid',helper:'clone'}"-->
+<!--                                                    ng-model="term" jqyoui-draggable="{animate:true,placeholder:true,placeholder:'keep'}"-->
+<!--                                                    ng-repeat="term in vm.dictTerms | filter:searchTerm">-->
+<!--                                                    <a> <i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i> {{term}}</a></li>-->
+<!--                                                &lt;!&ndash;ng-class="{'': !isActive, 'selected': isActive}"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-init="isActive = false"&ndash;&gt;-->
+<!--                                                &lt;!&ndash;ng-click="isActive = !isActive"&ndash;&gt;-->
+
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+
+
+<!--                            <div class="row">-->
+<!--                                <div class="col-sm-4">-->
+<!--                                    <button class="btn btn-white btn-sm" ng-click="vm.cancelAddVariableToDS()" type="submit">Cancel</button>-->
+<!--                                    <button class="btn btn-primary btn-sm" ng-click="vm.addVariableToDS()" type="submit">Add Field</button>-->
+<!--                                </div>-->
+
+
+<!--                            </div>-->
+
+<!--                        </form>-->
+<!--                    </div>-->
+
+                    <!--DATASET  VARIABLES-->
+                    <div class="ibox-content">
+<!--                        <h3>Select columns to include in this template</h3>-->
+
+                        <form editable-form name="tableform" onaftersave="vm.updateFields()" oncancel="vm.cancel()">
+
+                            <div>
+
+                                <div class="btn-form" ng-show="tableform.$visible">
+                                    <button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add field</button>
+                                    <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">update</button>
+                                    <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel</button>
+                                </div>
+                            </div>
+                        <!--FOO TABLE-->
+                            <table id="bs_template_tbl" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                <thead>
+                            <tr>
+                                <th data-toggle="true">Field </th>
+                                <th>Field Label</th>
+                                <th>Description</th>
+                                <th>Field Type</th>
+                                <th>Name Term ID</th>
+                                <th>Name Term XRef</th>
+                                <!--<th data-hide="all">Order</th>
+                                <th data-hide="all">Key Sequence</th>-->
+                            </tr>
+                            </thead>
+                                <tbody>
+                            <tr ng-repeat="field in vm.dd.fields">
+                                <td>
+                                    <span editable-text="field.name" e-form="tableform">
+                                            {{ field.name || 'empty' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-text="field.label" e-form="tableform">
+                                            {{ field.label || 'empty' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-text="field.description" e-form="tableform">
+                                            {{ field.description || 'empty' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-select="field.fieldType" e-form="tableform" e-ng-options="s.value as s.text for s in vm.fieldTypes">
+                                        {{ vm.showFieldType(field) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6">
+                                            <ul class="pagination pull-right"></ul>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                        </table>
+                        </form>
+
+                        <!-- buttons -->
+
+
+                    </div>
+
+                </div>
+
+                <div class="ibox-content" >
+                    <div uib-alert class="alert-info">
+                        <h4>No associated templates set for this activity. Pleae click on the '+' icon above to define a dataset template for this activity.</h4>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

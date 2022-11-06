@@ -89,6 +89,49 @@ var managerConfig = function($stateProvider){
             templateUrl:'layout/noNavContent.html',
             controller: "defineController as vm",
             resolve: {
+
+                loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
+                    return $ocLazyLoad.load({
+                        files:['lib/plugins/angular-xeditable/js/xeditable.min.js']
+                    }).then(function () {
+                        var editableThemes = $injector.get('editableThemes');
+                        editableThemes.bs3.inputClass = 'input-sm';
+                        editableThemes.bs3.buttonsClass = 'btn-sm';
+                        var editableOptions = $injector.get('editableOptions');
+                        editableOptions.theme = 'bs3';
+                    });
+                }],
+                loadCSS:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load([
+                        {
+                            serie:true,
+                            insertBefore: '#load_css_before',
+                            files:['lib/plugins/ui-select/css/select.css',
+                                'lib/plugins/angular-ui-select/css/select.css',
+                                'lib/plugins/angular-xeditable/css/xeditable.css',
+                                'lib/plugins/ngSweetAlert/css/sweetalert.css']
+                        }
+                    ])
+                }],
+                loadDependency: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            serie:true,
+                            files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js',
+                                'lib/plugins/footable/js/footable.all.min.js', 'lib/plugins/footable/css/footable.core.css',
+                                'lib/plugins/ui-select/js/select.min.js',
+                                'lib/plugins/angular-ui-select/js/select.min.js',
+                                'lib/plugins/ngSweetAlert/js/sweetalert.min.js',
+                                'lib/plugins/ngSweetAlert/js/ngSweetAlert.min.js',
+                                'lib/plugins/angular-file-upload/angular-file-upload.min.js'
+                            ]
+                        },
+                        {
+                            name: 'ui.footable',
+                            files: ['lib/plugins/footable/js/angular-footable.js']
+                        }
+                    ]);
+                },
                 loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load('admin/define-controller.js');
                 }]
@@ -157,6 +200,67 @@ var managerConfig = function($stateProvider){
                     ]);
                 }]
             }
+        })
+        .state('define.descriptor',{
+            url:'/descriptors/{descriptorId}',
+            templateUrl: "admin/descriptors/descriptor.html",
+            controller: "DescriptorCtrl as vm",
+            params: {
+                json: null
+            },
+            resolve: {
+                loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    console.log("loading service");
+                    return $ocLazyLoad.load('admin/descriptors/descriptor-service.js');
+                }],
+                // loadDirectives:['$ocLazyLoad',function($ocLazyLoad){
+                //     return $ocLazyLoad.load(['admin/descriptors/study-plan-directives.js'
+                //     ]);
+                // }],
+                loadController:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load(['admin/descriptors/descriptor-controller.js'
+                    ]);
+                }]
+            }
+        })
+
+        .state("define.descriptor.upload", {
+            url: "/upload/{dirId}",
+            permissions: ["can-upload"],
+            onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: "admin/descriptors/upload/upload.html",
+                    resolve: {
+                        loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                {
+                                    serie: true,
+                                    files: ['lib/plugins/angular-file-upload/angular-file-upload.min.js']
+                                }
+                            ])
+                        }],
+                        loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            console.log("loading service");
+                            return $ocLazyLoad.load('admin/descriptors/descriptor-service.js');
+                        }],
+                        loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'admin/descriptors/upload/upload-controller.js'
+                            ]);
+                        }]
+                    },
+                    controller: 'uploadController'
+                }).result.finally(function ($stateParams) {
+                    //fileService.getFiles()
+
+                            $state.go('define.descriptor', {projectId: $stateParams.projectId, dirId: $stateParams.dirId})
+
+                }, function () {
+                    console.info('Modal dismissed at: ' + new Date());
+                    $state.go('^');
+                });
+
+            }]
         })
 }
 
