@@ -7,7 +7,7 @@
 <div class="row m-t-lg">
     <div class="col-lg-10 col-lg-offset-1">
 
-        <div >
+        <div>
             <div class="row form-group">
                 <div class="col-md-12">
                     <input type="text" placeholder="Search" ng-model="vm.searchDS.$" class="input-sm form-control">
@@ -19,44 +19,44 @@
 
                 <div ng-repeat="ds in vm.clinicalDatasets | filter:vm.searchDS">
                     <div class="ibox">
-<!--                        <div class="ibox-title panel-header ">-->
-<!--                    -->
-<!--                            <h3>Users</h3>-->
+                        <!--                        <div class="ibox-title panel-header ">-->
+                        <!--                    -->
+                        <!--                            <h3>Users</h3>-->
 
-<!--                        </div>-->
+                        <!--                        </div>-->
                         <div class="ibox-content" style="min-height: 110px">
 
-                        <div class=" row" >
-                            <div class="col-md-12">
-                                <dl class="dl-horizontal">
-                                    <dt>Dataset Title</dt>
-                                    <dd>
-                                        <div class="col-md-6">
-                                            <a ui-sref="project.datasets.dataset"  >{{ds.name}}</a>
-                                        </div>
-                                    </dd>
-                                    <div class="hr-line-dashed"></div>
-                                    <dt>Project: </dt>
-                                    <dd>
-                                        <div class="col-md-6">
-                                            <a>UNICORN</a>
-                                        </div>
-                                    </dd>
-                                    <div class="hr-line-dashed"></div>
-                                    <dt>Study:</dt>
-                                    <dd>
-                                        <div class="col-md-6">
-                                            <a >Manchester Asthma and Allergy Study (MAAS)</a>
-                                        </div>
-                                    </dd>
-                                    <div class="hr-line-dashed"></div>
-                                    <dt>Number of Subjects:</dt>
-                                    <dd>
-                                        <div class="col-md-6">
-                                            <span>1184</span>
-                                        </div>
-                                    </dd>
-                                    <div class="hr-line-dashed"></div>
+                            <div class=" row">
+                                <div class="col-md-12">
+                                    <dl class="dl-horizontal">
+                                        <dt>Dataset Title</dt>
+                                        <dd>
+                                            <div class="col-md-6">
+                                                <a ui-sref="project.datasets.dataset({datasetId:ds.id})">{{ds.name}}</a>
+                                            </div>
+                                        </dd>
+                                        <div class="hr-line-dashed"></div>
+                                        <dt>Project: </dt>
+                                        <dd>
+                                            <div class="col-md-6">
+                                                <a>UNICORN</a>
+                                            </div>
+                                        </dd>
+                                        <div class="hr-line-dashed"></div>
+                                        <dt>Study:</dt>
+                                        <dd>
+                                            <div class="col-md-6">
+                                                <a>Manchester Asthma and Allergy Study (MAAS)</a>
+                                            </div>
+                                        </dd>
+                                        <div class="hr-line-dashed"></div>
+                                        <dt>Number of Subjects:</dt>
+                                        <dd>
+                                            <div class="col-md-6">
+                                                <span>1184</span>
+                                            </div>
+                                        </dd>
+                                        <!-- <div class="hr-line-dashed"></div>
                                     <dt>Observed Features:</dt>
                                     <dd>
                                         <div ng-if="ds.name=='Medical History'" class="col-md-6">
@@ -71,75 +71,75 @@
 
                                             </p>
                                         </div>
-                                    </dd>
-                                    <!--                                    <div class="hr-line-dashed"></div>-->
-                                    <!--                                    <dt>Observed Features:</dt>-->
-                                    <!--                                    <dd>-->
-                                    <!--                                        <div class="col-md-6">-->
-                                    <!--                                            <a  ng-click="vm.downloadDataset(cDataset)">-->
-                                    <!--                                                <i class="fa fa-download"></i>Download-->
-                                    <!--                                            </a>-->
-                                    <!--                                            <a  ng-click="vm.downloadDataset(cDataset)" >-->
-                                    <!--                                                <i class="fa fa-download"></i>Metadata-->
-                                    <!--                                            </a>-->
-                                    <!--                                            <a  ng-click="vm.downloadDataset(cDataset)" >-->
-                                    <!--                                                <i class="fa fa-download"></i>Preview-->
-                                    <!--                                            </a>-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </dd>-->
-                                </dl>
+                                    </dd> -->
+                                        <!--                                    <div class="hr-line-dashed"></div>-->
+                                        <!--                                    <dt>Observed Features:</dt>-->
+                                        <!--                                    <dd>-->
+                                        <!--                                        <div class="col-md-6">-->
+                                        <!--                                            <a  ng-click="vm.downloadDataset(cDataset)">-->
+                                        <!--                                                <i class="fa fa-download"></i>Download-->
+                                        <!--                                            </a>-->
+                                        <!--                                            <a  ng-click="vm.downloadDataset(cDataset)" >-->
+                                        <!--                                                <i class="fa fa-download"></i>Metadata-->
+                                        <!--                                            </a>-->
+                                        <!--                                            <a  ng-click="vm.downloadDataset(cDataset)" >-->
+                                        <!--                                                <i class="fa fa-download"></i>Preview-->
+                                        <!--                                            </a>-->
+                                        <!--                                        </div>-->
+                                        <!--                                    </dd>-->
+                                    </dl>
+                                </div>
                             </div>
+                            <!--                        <div class="hr-line-solid"></div>-->
                         </div>
-<!--                        <div class="hr-line-solid"></div>-->
-                    </div>
 
-<!--                        <div class=" row" >-->
-<!--                            <div class="col-md-12">-->
-<!--                                <dl class="dl-horizontal">-->
-<!--                                    <dt>Dataset Title</dt>-->
-<!--                                    <dd>-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'Medical History'}}</a>-->
-<!--                                        </div>-->
-<!--                                    </dd>-->
-<!--                                    <div class="hr-line-dashed"></div>-->
-<!--                                    <dt>Project: </dt>-->
-<!--                                    <dd>-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'UNICORN'}}</a>-->
-<!--                                        </div>-->
-<!--                                    </dd>-->
-<!--                                    <div class="hr-line-dashed"></div>-->
-<!--                                    <dt>Study:</dt>-->
-<!--                                    <dd>-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'MAAS Study'}}</a>-->
-<!--                                        </div>-->
-<!--                                    </dd>-->
-<!--                                    <div class="hr-line-dashed"></div>-->
-<!--                                    <dt>Number of Subjects:</dt>-->
-<!--                                    <dd>-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || '540'}}</a>-->
-<!--                                        </div>-->
-<!--                                    </dd>-->
-<!--                                    <div class="hr-line-dashed"></div>-->
-<!--                                    <dt>Observed Features:</dt>-->
-<!--                                    <dd>-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <p><span class="badge badge-info">Information</span><span class="badge badge-info">Information</span><span class="badge badge-info">Information</span></p>-->
-<!--                                        </div>-->
-<!--                                    </dd>-->
-<!--                                </dl>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <!--                        <div class=" row" >-->
+                        <!--                            <div class="col-md-12">-->
+                        <!--                                <dl class="dl-horizontal">-->
+                        <!--                                    <dt>Dataset Title</dt>-->
+                        <!--                                    <dd>-->
+                        <!--                                        <div class="col-md-6">-->
+                        <!--                                            <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'Medical History'}}</a>-->
+                        <!--                                        </div>-->
+                        <!--                                    </dd>-->
+                        <!--                                    <div class="hr-line-dashed"></div>-->
+                        <!--                                    <dt>Project: </dt>-->
+                        <!--                                    <dd>-->
+                        <!--                                        <div class="col-md-6">-->
+                        <!--                                            <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'UNICORN'}}</a>-->
+                        <!--                                        </div>-->
+                        <!--                                    </dd>-->
+                        <!--                                    <div class="hr-line-dashed"></div>-->
+                        <!--                                    <dt>Study:</dt>-->
+                        <!--                                    <dd>-->
+                        <!--                                        <div class="col-md-6">-->
+                        <!--                                            <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || 'MAAS Study'}}</a>-->
+                        <!--                                        </div>-->
+                        <!--                                    </dd>-->
+                        <!--                                    <div class="hr-line-dashed"></div>-->
+                        <!--                                    <dt>Number of Subjects:</dt>-->
+                        <!--                                    <dd>-->
+                        <!--                                        <div class="col-md-6">-->
+                        <!--                                            <a href="#" e-required e-ng-model="vm.activity.name" e-placeholder="Enter Activity Name" editable-text="vm.activity.name"  blur="submit">{{vm.activity.name || '540'}}</a>-->
+                        <!--                                        </div>-->
+                        <!--                                    </dd>-->
+                        <!--                                    <div class="hr-line-dashed"></div>-->
+                        <!--                                    <dt>Observed Features:</dt>-->
+                        <!--                                    <dd>-->
+                        <!--                                        <div class="col-md-6">-->
+                        <!--                                            <p><span class="badge badge-info">Information</span><span class="badge badge-info">Information</span><span class="badge badge-info">Information</span></p>-->
+                        <!--                                        </div>-->
+                        <!--                                    </dd>-->
+                        <!--                                </dl>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
 
 
 
                     </div>
                 </div>
 
-        </div>
+            </div>
         </div>
 
     </div>

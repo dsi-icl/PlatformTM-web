@@ -1,4 +1,4 @@
-function DatasetListCtrl($scope,$state,$stateParams,projService) {
+function DatasetListCtrl($scope, $state, $stateParams, projService) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
 
@@ -14,4 +14,4 @@ function DatasetListCtrl($scope,$state,$stateParams,projService) {
 }
 
 angular.module('bioSpeak.datasets')
-    .controller('DatasetListCtrl',['$scope','$state','$stateParams','projService',DatasetListCtrl]);
+    .controller('DatasetListCtrl', ['$scope', '$state', '$stateParams', 'projService', DatasetListCtrl]);
