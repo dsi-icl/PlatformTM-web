@@ -70,7 +70,25 @@ function DescriptorCtrl($scope,$state, $stateParams,$filter, DescriptorService,$
         vm.dd = $stateParams.json;
 
         vm.dd.isNew = true;
-        vm.intiDescriptor();
+        vm.dd.hasData = true;
+        vm.dd.idfields = [];
+        vm.dd.roFields = [];
+        vm.dd.featFields = [];
+        vm.dd.idfields.push(vm.dd.studyIdentifierField);
+        vm.dd.idfields.push(vm.dd.subjectIdentifierField);
+
+        for(var f of vm.dd.observedPropertyValueFields)
+            vm.dd.roFields.push(f);
+
+        for(var ff of vm.dd.observationPropertyFields)
+            vm.dd.roFields.push(ff);
+
+        vm.dd.featFields.push(vm.dd.featureNameField);
+        if(vm.dd.featurePropertyNameField != null) vm.dd.featFields.push(vm.dd.featurePropertyNameField);
+        if(vm.dd.featurePropertyValueField != null) vm.dd.featFields.push(vm.dd.featurePropertyValueField);
+
+        vm.complete = true;
+        vm.ready = true;
 
 
     }
@@ -189,7 +207,7 @@ function DescriptorCtrl($scope,$state, $stateParams,$filter, DescriptorService,$
 
                 if (vm.dd.isNew) {
                     DescriptorService.saveDescriptor(vm.dd,vm.projectId).then(function (response) {
-                        console.log(response)
+
                         toaster.pop('success', "SUCCESS", vm.dd.name," was successfully CREATED.",8000);
                         $state.transitionTo('define.descriptor', $stateParams, {
                             reload: true,
@@ -202,11 +220,12 @@ function DescriptorCtrl($scope,$state, $stateParams,$filter, DescriptorService,$
                 else {
                     vm.dd.$update(function (response) {
                         toaster.pop('success', "SUCCESS", vm.dd.name," was successfully UPDATED.",8000);
-                        $state.transitionTo('project.manager.main', $stateParams, {
-                            reload: true,
-                            inherit: false,
-                            notify: true
-                        });
+                        // $state.transitionTo('project.manager.main', $stateParams, {
+                        //     reload: true,
+                        //     inherit: false,
+                        //     notify: true
+                        // });
+                        vm.updateSuccess()
                     });
                 }
             }else
@@ -277,6 +296,30 @@ function DescriptorCtrl($scope,$state, $stateParams,$filter, DescriptorService,$
         );
     }
 
+    vm.updateSuccess = function(){
+        SweetAlert.swal({
+                title: "Success",
+                text: "Dataset Descriptor Updated Successfully",
+                type: "success",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Go back",
+                cancelButtonText: "Remain on this page",
+                closeOnConfirm: true,
+                closeOnCancel: true },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $state.transitionTo('project.manager.main', $stateParams, {
+                        reload: true,
+                        inherit: false,
+                        notify: true
+                    });
+
+                } else {
+
+                }
+            });
+    }
 
 
     vm.deleteDS = function(){
