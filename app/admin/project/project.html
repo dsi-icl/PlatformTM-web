@@ -196,7 +196,7 @@
                             <ul class="list-group clear-list">
                                 <li class="list-group-item" ng-repeat="descriptor in vm.descriptors" ng-class="{'first-item':$first}">
                                     <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
-                                    <a ng-click="vm.goToActivity(descriptor)">{{descriptor.title}}</a>
+                                    <a ui-sref="define.descriptor({projectId:vm.projectId,descriptorId:descriptor.id})">{{descriptor.title}}</a>
                                     <br/>
                                     <!--<small>Last updated 03.02.2016</small>-->
                                 </li>

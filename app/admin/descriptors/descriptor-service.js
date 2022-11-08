@@ -9,14 +9,11 @@ function DescriptorService($resource, $http,ngAppConfig) {
     var serviceBase = ngAppConfig.apiServiceBaseUri;
 
 
-    var _activityResource = $resource(serviceBase+'activities/:activityId',{},{
-        update:{
-            method: 'PUT',
-            params: {activityId: '@id'}
-        }
-    });
-
     var _descriptorResource = $resource(serviceBase+'descriptors/:descriptorId',{},{
+        save: {
+            method: 'POST',
+            params: {projectId: '@id'}
+        },
         update:{
             method: 'PUT',
             params: {descriptorId: '@id'}
@@ -28,12 +25,12 @@ function DescriptorService($resource, $http,ngAppConfig) {
         loadUploadedDescriptor:{
                 method: 'GET',
                 url : serviceBase+'descriptors/:descriptorId'
+        },
+        getDescriptor: {
+            method: 'GET',
+            params: {descriptorId: '@descriptorId'},
+            isArray: false
         }
-        // getDatasetForActivity:{
-        //     method: 'GET',
-        //     url : serviceBase+'activities/:activityId/datasets/:datasetId',
-        //     isArray : false
-        //     /*params:{studyId}*/
 
     });
 
@@ -49,10 +46,23 @@ function DescriptorService($resource, $http,ngAppConfig) {
         )
     }
 
-    //DescriptorServiceFactory.getActivityResource = _activityResource;
-    DescriptorServiceFactory.getDatasetResource = _descriptorResource;
+    var _saveDescriptor = function(dd,projectId){
+        return $http({
+            url: serviceBase + 'descriptors/',
+            method: 'POST',
+            params:{projectId: projectId},
+            data: angular.toJson(dd)
+        }).then(
+            function (response) {
+                return response.status === 202;
+            }
+        );
+    }
+
+    DescriptorServiceFactory.getDDescriptorResource = _descriptorResource;
 
     DescriptorServiceFactory.load = _loadUploadedDescriptor;
+    DescriptorServiceFactory.saveDescriptor = _saveDescriptor;
     return DescriptorServiceFactory
 }
 

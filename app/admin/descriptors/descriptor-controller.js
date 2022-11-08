@@ -3,29 +3,30 @@
  */
 
 'use strict';
-function DescriptorCtrl($scope,$state, $stateParams,$filter, DescriptorCtrlService,$timeout,SweetAlert,toaster,$q) {
+function DescriptorCtrl($scope,$state, $stateParams,$filter, DescriptorService,$timeout,SweetAlert,toaster,$q) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
     vm.descriptorId = $stateParams.descriptorId;
 
     vm.loadedDescriptor = $stateParams.json;
-    console.log(vm.loadedDescriptor);
+    // console.log(vm.loadedDescriptor);
+    vm.ready=false;
 
 
     vm.ddTypes = [
-        {value: 1, text: 'Subject Dataset Type'},
-        {value: 2, text: 'Observation Dataset Type'},
-        {value: 3, text: 'Feature Dataset Type'},
-        {value: 4, text: 'Biosample Dataset Type'}
+        {value: "SubjectDatasetDescriptor", text: 'Subject Dataset Descriptor'},
+        {value: "ObservationDatasetDescriptor", text: 'Observation Dataset Descriptor'},
+        {value: "FeatureDatasetDescriptor", text: 'Feature Dataset Descriptor'},
+        {value: "SampleDatasetDescriptor", text: 'Biosample Dataset Descriptor'}
     ];
 
     vm.fieldTypes = [
-        {value: 1, text: 'Identifier Field'},
-        {value: 2, text: 'Designation Field'},
-        {value: 3, text: 'Classifier Field'},
-        {value: 4, text: 'Property Field'},
-        {value: 4, text: 'Property Value Field'},
-        {value: 4, text: 'Time Series Field'}
+        {value: "0", text: 'Identifier Field'},
+        {value: "1", text: 'Designation Field'},
+        {value: "2", text: 'Classifier Field'},
+        {value: "3", text: 'Property Field'},
+        {value: "4", text: 'Property Value Field'},
+        {value: "5", text: 'Time Series Field'}
     ];
 
 
@@ -36,76 +37,124 @@ function DescriptorCtrl($scope,$state, $stateParams,$filter, DescriptorCtrlServi
 
     $scope.$parent.vm.stateName = "Define Dataset Descriptor";
 
-    vm.dataTypes = ['STRING','INTEGER','DOUBLE','DATETIME'];
-    vm.varTypes = ['SUBMITTED','DERIVED'];
-    vm.roleTypes = ['Observation Qualifier','Finding about observation']
-
-    vm.dictTerms = ['MILD','SEVERE','MODERATE'];
-    vm.expressionList = [];
+    // vm.dictTerms = ['MILD','SEVERE','MODERATE'];
+    // vm.expressionList = [];
 
 
     vm.openUpload = function(){
         $state.go('define.descriptor.upload')
     };
 
-    var activity;
+    var descriptor;
+
+
     if($stateParams.descriptorId==0){
         console.log("New Activity");
-        vm.dd = $stateParams.json;
-        // activity = new ActivityConfigService.getActivityResource();
-        // activity.projectId = $stateParams.projectId;//"Study1"
-        // activity.isNew = true;
-        // activity.status = "New";
-        // activity.datasets = [];
-        // activity.activityId = 0;
+        //vm.dd = $stateParams.json;
+        descriptor = new DescriptorService.getDDescriptorResource();
+        descriptor.projectId = $stateParams.projectId;
+        descriptor.isNew = true;
+        descriptor.hasData = false;
+        descriptor.status = "New";
+        descriptor.fields = [];
+        descriptor.descriptorId = 0;
         //
-        // vm.activity = activity;
+        vm.dd = descriptor;
+        vm.ready= true;
         // ActivityConfigService.getDatasetResource.query(function(response){
         //     //console.log("querying for datasets", response)
         //     vm.clinicaldomains = response;
         // })
+    }else if($stateParams.descriptorId == "upload" && $stateParams.json){
+
+        vm.dd = $stateParams.json;
+
+        vm.dd.isNew = true;
+        vm.intiDescriptor();
+
+
     }
 
     else if($stateParams.descriptorId){
-        // ActivityConfigService.getActivityResource.get({ activityId: $stateParams.activityId }, function(response){
-        //     activity = response;
-        //     activity.isNew = false;
-        //
-        //     vm.dd = activity;
-        //
-        //     $timeout(function(){
-        //         //console.log($('#ds_template_tbl'))
-        //         $('#ds_template_tbl').trigger('footable_redraw');
-        //     }, 1000);
-        //
-        //     ActivityConfigService.getDatasetResource.query(function(response){
-        //         vm.clinicaldomains = response;
-        //     })
-        //
-        // });
-    }
-    vm.showDDtype = function() {
-        if(!vm.dd)
-            return 'Not set'
-        var selected = $filter('filter')(vm.ddTypes, {value: vm.dd.type});
-        return (vm.dd.type && selected.length) ? selected[0].text : 'Not set';
-    };
+        DescriptorService.getDDescriptorResource.getDescriptor({ descriptorId: vm.descriptorId }, function(response){
+            vm.dd = response;
+            vm.dd.isNew = false;
+            vm.intiDescriptor();
 
-    vm.showFieldType = function(field) {
+            $timeout(function(){
+                //console.log($('#ds_template_tbl'))
+                $('#ds_template_tbl').trigger('footable_redraw');
+            }, 1000);
+        });
+    }
+    else{
+        vm.dd = new DescriptorService.getDDescriptorResource();
+        vm.ready = true;
+    }
+
+    vm.intiDescriptor = function(){
+        vm.dd.hasData = true;
+        vm.dd.idfields = [];
+        vm.dd.roFields = [];
+        vm.dd.featFields = [];
+        vm.dd.idfields.push(vm.dd.studyIdentifierField);
+        vm.dd.idfields.push(vm.dd.subjectIdentifierField);
+
+        for(var f of vm.dd.observedPropertyValueFields)
+            vm.dd.roFields.push(f);
+
+        for(var ff of vm.dd.observationPropertyFields)
+            vm.dd.roFields.push(ff);
+
+        vm.dd.featFields.push(vm.dd.featureNameField);
+        if(vm.dd.featurePropertyNameField != null) vm.dd.featFields.push(vm.dd.featurePropertyNameField);
+        if(vm.dd.featurePropertyValueField != null) vm.dd.featFields.push(vm.dd.featurePropertyValueField);
+
+        vm.complete = true;
+        vm.ready = true;
+    }
+
+    vm.showDDtype = function() {
         var selected = [];
-        if(field.fieldType) {
-            selected = $filter('filter')(vm.fieldTypes, {value: field.fieldType});
+        if(vm.dd)
+        if(vm.dd.datasetType){
+            selected = $filter('filter')(vm.ddTypes, {value: vm.dd.datasetType});
         }
         return selected.length ? selected[0].text : 'Not set';
     };
 
+    vm.showFieldType = function(field) {
+        var selected = [];
+
+
+        selected = $filter('filter')(vm.fieldTypes, {value: field.fieldType});
+
+
+        return selected.length ? selected[0].text : 'Not set';
+    };
+
+    //Discard Changes
+    vm.discardChanges = function() {
+        // for (var i = $scope.users.length; i--;) {
+        //     var user = $scope.users[i];
+        //     // undelete
+        //     if (user.isDeleted) {
+        //         delete user.isDeleted;
+        //     }
+        //     // remove new
+        //     if (user.isNew) {
+        //         $scope.users.splice(i, 1);
+        //     }
+        // };
+    };
 
     // save edits
-    vm.updateFields = function() {
+    vm.applyChanges = function() {
+        //console.log(vm.dd);
         var results = [];
-        for (var i = vm.dd.fields.length; i--;) {
-            var field = vm.dd.fields[i];
-           // console.log(field);
+        for (var i = vm.dd.roFields.length; i--;) {
+            var field = vm.dd.roFields[i];
+            // console.log(field);
             // actually delete user
             // if (user.isDeleted) {
             //     $scope.users.splice(i, 1);
@@ -122,88 +171,104 @@ function DescriptorCtrl($scope,$state, $stateParams,$filter, DescriptorCtrlServi
         return $q.all(results);
     };
 
-
-    vm.createNewCfield = function(){
-        if(vm.creatingCfield){
-            //vm.creatingCfield = true;
-            vm.cField = {}
-
-            vm.cField.isSelected = true;
-            vm.cField.isRequired = false;
-            vm.cField.isCurated = false;
-            //vm.cField.dictionaryName = null;
-            //cField.order
-        }
-        //console.log(vm.cField);
-        vm.showFieldInfo = false;
-        vm.selField = {};
-
+    vm.newField = function() {
+        vm.dd.fields.push({
+            id: vm.dd.fields.length+1,
+            name: '',
+            label: '',
+            description: '',
+            fieldType: null
+        });
     };
 
-    vm.cancelAddVariableToDS = function(){
-        vm.creatingCfield = false;
-        vm.clearExpression();
-        console.log('canceling cfield')
+    vm.saveDescriptor = function() {
+        if($scope.tableform.$visible){
+            toaster.warning("Warning","Save or discard changes before saving")
+        }else{
+            if (vm.dd.title != null && vm.dd.title !== '' && vm.dd.hasData){
 
-    };
-
-    vm.addVariableToDS = function(){
-
-        if(vm.cField.name){
-            vm.cField.accession = 'V-COMP-' + vm.activity.datasets[0].code+'-'+vm.cField.name;
-            vm.cField.roleId = 'CL-Role-T-3';
-            vm.cField.projectId = vm.projectId;
-            vm.isCurated = false;
-
-            //console.log(vm.activity)
-            //if(!vm.cField.usingFunc)
-
-            this.finalizeExpression()
-
-            vm.cField.expressionList = vm.expressionList
-            console.log(vm.cField)
-
-            if(vm.cField.varType === 'DERIVED')
-                vm.cField.isComputed = true;
-            vm.activity.datasets[0].variables.push(vm.cField)
-            toaster.pop('success', "SUCCESS", vm.cField.name+" has been added to dataset template successfully.",8000);
-            vm.cField = {};
-            vm.expressionList = [];
-        }
-        else {
-                toaster.warning("Warning","No variable added to dataset template")
-        }
-
-        
-    };
-
-
-    vm.saveActivity = function() {
-        if (vm.activity.name != null && vm.activity.name !== ''){
-
-            if (vm.activity.isNew) {
-                vm.activity.$save(function (response) {
-                    toaster.pop('success', "SUCCESS", vm.activity.name," was successfully CREATED.",8000);
-                    $state.transitionTo('project.manager.main', $stateParams, {
-                        reload: true,
-                        inherit: false,
-                        notify: true
+                if (vm.dd.isNew) {
+                    DescriptorService.saveDescriptor(vm.dd,vm.projectId).then(function (response) {
+                        console.log(response)
+                        toaster.pop('success', "SUCCESS", vm.dd.name," was successfully CREATED.",8000);
+                        $state.transitionTo('define.descriptor', $stateParams, {
+                            reload: true,
+                            inherit: false,
+                            notify: true,
+                            descriptorId: response.id
+                        });
                     });
-                });
-            }
-            else {
-                vm.activity.$update(function (response) {
-                    toaster.pop('success', "SUCCESS", vm.activity.name," was successfully UPDATED.",8000);
-                    $state.transitionTo('project.manager.main', $stateParams, {
-                        reload: true,
-                        inherit: false,
-                        notify: true
+                }
+                else {
+                    vm.dd.$update(function (response) {
+                        toaster.pop('success', "SUCCESS", vm.dd.name," was successfully UPDATED.",8000);
+                        $state.transitionTo('project.manager.main', $stateParams, {
+                            reload: true,
+                            inherit: false,
+                            notify: true
+                        });
                     });
-                });
-            }
-        }else
-            toaster.warning("Warning","Activity has no name!")
+                }
+            }else
+                toaster.warning("Warning","Descriptor has no name and/or fields defined!")
+        }
+
     };
+
+    // vm.createNewCfield = function(){
+    //     if(vm.creatingCfield){
+    //         //vm.creatingCfield = true;
+    //         vm.cField = {}
+    //
+    //         vm.cField.isSelected = true;
+    //         vm.cField.isRequired = false;
+    //         vm.cField.isCurated = false;
+    //         //vm.cField.dictionaryName = null;
+    //         //cField.order
+    //     }
+    //     //console.log(vm.cField);
+    //     vm.showFieldInfo = false;
+    //     vm.selField = {};
+    //
+    // };
+
+    // vm.cancelAddVariableToDS = function(){
+    //     vm.creatingCfield = false;
+    //     vm.clearExpression();
+    //     console.log('canceling cfield')
+    //
+    // };
+
+    // vm.addVariableToDS = function(){
+    //
+    //     if(vm.cField.name){
+    //         vm.cField.accession = 'V-COMP-' + vm.activity.datasets[0].code+'-'+vm.cField.name;
+    //         vm.cField.roleId = 'CL-Role-T-3';
+    //         vm.cField.projectId = vm.projectId;
+    //         vm.isCurated = false;
+    //
+    //         //console.log(vm.activity)
+    //         //if(!vm.cField.usingFunc)
+    //
+    //         this.finalizeExpression()
+    //
+    //         vm.cField.expressionList = vm.expressionList
+    //         console.log(vm.cField)
+    //
+    //         if(vm.cField.varType === 'DERIVED')
+    //             vm.cField.isComputed = true;
+    //         vm.activity.datasets[0].variables.push(vm.cField)
+    //         toaster.pop('success', "SUCCESS", vm.cField.name+" has been added to dataset template successfully.",8000);
+    //         vm.cField = {};
+    //         vm.expressionList = [];
+    //     }
+    //     else {
+    //             toaster.warning("Warning","No variable added to dataset template")
+    //     }
+    // };
+
+
+
 
     vm.dontSaveActivity = function(){
         vm.activity = {}

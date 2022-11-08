@@ -213,10 +213,10 @@ var managerConfig = function($stateProvider){
                     console.log("loading service");
                     return $ocLazyLoad.load('admin/descriptors/descriptor-service.js');
                 }],
-                // loadDirectives:['$ocLazyLoad',function($ocLazyLoad){
-                //     return $ocLazyLoad.load(['admin/descriptors/study-plan-directives.js'
-                //     ]);
-                // }],
+                loadCSS:['$ocLazyLoad',function($ocLazyLoad){
+                    return $ocLazyLoad.load(['explore/clinical/css/clinicalDataTree.css'
+                    ]);
+                }],
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
                     return $ocLazyLoad.load(['admin/descriptors/descriptor-controller.js'
                     ]);

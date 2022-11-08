@@ -20,7 +20,7 @@
         $scope.ok = function () {
 
             $uibModalInstance.close();
-            $state.go('define.descriptor',{descriptorId:0,json:uploadedJSON});
+            $state.go('define.descriptor',{descriptorId:"upload",json:uploadedJSON});
         };
 
         $scope.cancel = function () {
