@@ -66,6 +66,10 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
         projectService.getProjectUsers(vm.projectId).then(function(users){
             vm.users = users;
         })
+
+        projectService.getProjectResource.getDescriptors({projectId:vm.projectId},function(response){
+            vm.descriptors = response;
+        });
     }
 
 

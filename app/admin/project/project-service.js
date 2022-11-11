@@ -24,6 +24,11 @@ function projectService($http,$resource, ngAppConfig) {
             url : serviceBase+'projects/:projectId/subjDataCollection',
             isArray : true
         },
+        getDescriptors:{
+            method: 'GET',
+            url : serviceBase+'projects/:projectId/descriptors',
+            isArray : true
+        },
         getClinicalAssessments:{
             method: 'GET',
             url : serviceBase+'projects/:projectId/clinicalAssessments',

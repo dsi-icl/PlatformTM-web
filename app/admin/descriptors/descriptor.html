@@ -1,0 +1,377 @@
+
+<div  ng-if="!vm.ready" style="margin-top: 150px; position: fixed; left: 0; right: 0; text-align: center" >
+    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+</div>
+
+<div ng-show="vm.ready">
+    <div has-permission="can-manage" project="vm.projectId" class="title-action" style="display: none">
+        <a  ng-click="vm.saveDescriptor()" class="btn btn-primary btn-sm"><i class=" fa fa-save"> </i><span class="p-sm">SAVE</span></a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="ibox">
+                    <div class="ibox-title panel-header ">
+
+                        <h3>Descriptor</h3>
+                        <span style="margin-top:-25px;" class="pull-right">
+                            <a ng-if="vm.dd.isNew" ng-click="vm.openUpload()" class="btn btn-primary btn-sm"><i class=" fa fa-upload"> </i><span class="p-sm">Upload</span></a>
+                        </span>
+                    </div>
+                    <div class="ibox-content" style="min-height: 110px">
+
+                        <div class=" row" >
+                            <div class="col-md-12">
+                                <dl class="dl-horizontal">
+                                    <dt>Descriptor Name</dt>
+                                    <dd>
+                                        <div class="col-md-6">
+                                            <a required editable-text="vm.dd.title" buttons="yes" blur="submit" e-placeholder="Enter Descriptor Name">
+                                                {{vm.dd.title || 'Descriptor Name'}}
+                                            </a>
+
+                                        </div>
+                                    </dd>
+                                    <div class="hr-line-dashed"></div>
+                                    <dt>Description: </dt>
+                                    <dd>
+                                        <div class="col-md-6">
+                                            <a required editable-text="vm.dd.description" buttons="yes" blur="submit" e-placeholder="Enter Description">
+                                                {{vm.dd.description || 'Descriptor Description'}}
+                                            </a>
+                                        </div>
+                                    </dd>
+                                    <div class="hr-line-dashed"></div>
+                                    <dt>Dataset Descriptor Type:</dt>
+                                    <dd>
+                                        <div class="col-md-6">
+                                            <a href="#" editable-select="vm.dd.datasetType" e-ng-options="o.value as o.text for o in vm.ddTypes">
+                                                {{ vm.showDDtype() }}
+                                            </a>
+
+                                        </div>
+                                    </dd>
+                                    <div class="hr-line-dashed"></div>
+
+                                </dl>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div>
+                    <div class="ibox-title panel-header">
+                        <span>Dataset Field Descriptors</span>
+                        <span style="font-size:16px;margin-top:-5px;" class="pull-right">
+
+                         <a uib-tooltip="Upload Dataset Descriptor" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+                             <i class="p-xs fa fa-edit"> </i>
+                         </a>
+
+                         <i class="p-xs fa fa-eye"> </i>
+
+                         <i class="p-xs fa fa-download"> </i>
+
+                         <a has-permission="can-manage" project="vm.projectId"  ng-click="vm.deleteDS()">
+                             <i class="p-xs fa fa-trash"> </i>
+                         </a>
+                            <!--                            | <a ng-init="vm.creatingNewDS = false" ng-click="vm.openUpload()"><i uib-tooltip="Upload Dataset Descriptor" class="p-xs fa fa-plus"></i></a>-->
+                        </span>
+                    </div>
+
+
+                    <div ng-show="vm.dd.hasData" id="{{ds.id}}" class=" animated fadeIn">
+
+
+                        <!--Descriptor  Fields-->
+                        <div class="ibox-content">
+                            <!--                        <h3>Select columns to include in this template</h3>-->
+
+                            <form editable-form name="tableform" onaftersave="vm.applyChanges()" oncancel="vm.cancel()">
+
+                                <div>
+
+                                    <div class="btn-form" ng-show="tableform.$visible">
+                                        <button type="button" ng-disabled="tableform.$waiting" ng-click="vm.newField()" class="btn btn-default pull-right">New Field</button>
+                                        <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">Apply Changes</button>
+                                        <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">Discard Changes</button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div><h3>Identifier Fields</h3></div>
+                                    <div>
+                                        <!--FOO TABLE-->
+                                        <table id="bs_template_tbl1" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                            <thead>
+                                            <tr>
+                                                <th width="10%">Field Name </th>
+                                                <th width="12%">Field Label</th>
+                                                <th>Description</th>
+                                                <th width="10%">Field Type</th>
+                                                <th>Name Term ID</th>
+                                                <th>Name Term XRef</th>
+                                                <th style="width:5%"><span ng-show="tableform.$visible">Action</span></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="field in vm.dd.idfields">
+                                                <td>
+                                    <span editable-text="field.name" e-form="tableform">
+                                            {{ field.name || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.label" e-form="tableform">
+                                            {{ field.label || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.description" e-form="tableform">
+                                            {{ field.description || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-select="field.fieldType" e-form="tableform" e-ng-options="s.value as s.text for s in vm.fieldTypes">
+                                        {{ vm.showFieldType(field) }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>
+
+                                            </tr>
+                                            </tbody>
+                                            <!--                                        <tfoot>-->
+                                            <!--                                        <tr>-->
+                                            <!--                                            <td colspan="6">-->
+                                            <!--                                                <ul class="pagination pull-right"></ul>-->
+                                            <!--                                            </td>-->
+                                            <!--                                        </tr>-->
+                                            <!--                                        </tfoot>-->
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <div><h3>Classifier Fields</h3></div>
+                                    <div>
+                                        <!--FOO TABLE-->
+                                        <table id="bs_template_tbl" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                            <thead>
+                                            <tr>
+                                                <th width="10%">Field Name </th>
+                                                <th width="12%">Field Label</th>
+                                                <th>Description</th>
+                                                <th width="10%">Field Type</th>
+                                                <th>Name Term ID</th>
+                                                <th>Name Term XRef</th>
+                                                <th style="width:5%"><span ng-show="tableform.$visible">Action</span></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="field in vm.dd.classifierFields">
+                                                <td>
+                                    <span editable-text="field.name" e-form="tableform">
+                                            {{ field.name || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.label" e-form="tableform">
+                                            {{ field.label || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.description" e-form="tableform">
+                                            {{ field.description || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-select="field.fieldType" e-form="tableform" e-ng-options="s.value as s.text for s in vm.fieldTypes">
+                                        {{ vm.showFieldType(field) }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>
+
+                                            </tr>
+                                            </tbody>
+                                            <!--                                        <tfoot>-->
+                                            <!--                                        <tr>-->
+                                            <!--                                            <td colspan="6">-->
+                                            <!--                                                <ul class="pagination pull-right"></ul>-->
+                                            <!--                                            </td>-->
+                                            <!--                                        </tr>-->
+                                            <!--                                        </tfoot>-->
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div><h3>Observed Feature Fields</h3></div>
+                                    <div>
+                                        <!--FOO TABLE-->
+                                        <table id="bs_template_tbl4" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                            <thead>
+                                            <tr>
+                                                <th width="10%">Field Name </th>
+                                                <th width="12%">Field Label</th>
+                                                <th>Description</th>
+                                                <th width="10%">Field Type</th>
+                                                <th>Name Term ID</th>
+                                                <th>Name Term XRef</th>
+                                                <th style="width:5%"><span ng-show="tableform.$visible">Action</span></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="field in vm.dd.featFields">
+                                                <td>
+                                    <span editable-text="field.name" e-form="tableform">
+                                            {{ field.name || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.label" e-form="tableform">
+                                            {{ field.label || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.description" e-form="tableform">
+                                            {{ field.description || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-select="field.fieldType" e-form="tableform" e-ng-options="s.value as s.text for s in vm.fieldTypes">
+                                        {{ vm.showFieldType(field) }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>
+
+                                            </tr>
+                                            </tbody>
+                                            <!--                                        <tfoot>-->
+                                            <!--                                        <tr>-->
+                                            <!--                                            <td colspan="6">-->
+                                            <!--                                                <ul class="pagination pull-right"></ul>-->
+                                            <!--                                            </td>-->
+                                            <!--                                        </tr>-->
+                                            <!--                                        </tfoot>-->
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div><h3>Observed Feature Property Fields</h3></div>
+                                    <div>
+                                        <!--FOO TABLE-->
+                                        <table id="bs_template_tbl3" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                            <thead>
+                                            <tr>
+                                                <th width="10%">Field Name </th>
+                                                <th width="12%">Field Label</th>
+                                                <th>Description</th>
+                                                <th width="10%">Field Type</th>
+                                                <th>Name Term ID</th>
+                                                <th>Name Term XRef</th>
+                                                <th style="width:5%"><span ng-show="tableform.$visible">Action</span></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="field in vm.dd.roFields">
+                                                <td>
+                                    <span editable-text="field.name" e-form="tableform">
+                                            {{ field.name || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.label" e-form="tableform">
+                                            {{ field.label || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.description" e-form="tableform">
+                                            {{ field.description || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-select="field.fieldType" e-form="tableform" e-ng-options="s.value as s.text for s in vm.fieldTypes">
+                                        {{ vm.showFieldType(field) }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td>
+                                    <span editable-text="field.term" e-form="tableform">
+                                            {{ field.term || 'empty' }}
+                                    </span>
+                                                </td>
+                                                <td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>
+
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="6">
+                                                    <ul class="pagination pull-right"></ul>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <div ng-hide="vm.dd.hasData" class="ibox-content" >
+                        <div uib-alert class="alert-info">
+                            <h4>No Dataset Fields defined for this Dataset Descriptor.</h4>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
