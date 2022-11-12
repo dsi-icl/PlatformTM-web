@@ -1,14 +1,40 @@
 'use strict';
-function DatasetCtrl($scope, $state, $stateParams, datasetService) {
+function DatasetCtrl($scope, $state, $filter, $stateParams, datasetService) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
     vm.datasetId = $stateParams.datasetId;
 
+    vm.ddTypes = [
+        { value: "SubjectDatasetDescriptor", text: 'Subject Dataset Descriptor' },
+        { value: "ObservationDatasetDescriptor", text: 'Observation Dataset Descriptor' },
+        { value: "FeatureDatasetDescriptor", text: 'Feature Dataset Descriptor' },
+        { value: "SampleDatasetDescriptor", text: 'Biosample Dataset Descriptor' }
+    ];
 
-    // datasetService.getUserDatasets().then(function(datasets){
-    //     vm.datasets = datasets;
-    //     vm.loaded = true;
-    // });
+    vm.fieldTypes = [
+        { value: "0", text: 'Identifier Field' },
+        { value: "1", text: 'Designation Field' },
+        { value: "2", text: 'Classifier Field' },
+        { value: "3", text: 'Property Field' },
+        { value: "4", text: 'Property Value Field' },
+        { value: "5", text: 'Time Series Field' }
+    ];
+
+    vm.showDDtype = function () {
+        var selected = [];
+        if (vm.descriptor)
+            if (vm.descriptor.datasetType) {
+                selected = $filter('filter')(vm.ddTypes, { value: vm.descriptor.datasetType });
+            }
+        return selected.length ? selected[0].text : 'Not set';
+    };
+
+    vm.showFieldType = function (field) {
+
+        let fieldType = field.fieldType;
+        const result = fieldType.replace(/[A-Z]/g, ' $&').trim();
+        return result
+    };
 
 
 
@@ -18,18 +44,20 @@ function DatasetCtrl($scope, $state, $stateParams, datasetService) {
 
     datasetService.getDataSet(vm.datasetId)
         .then(function (data) {
-            console.log("retrieved dataset", data)
+            console.log("clinical dataset", data)
             vm.datasetInfo = data;
         })
 
 
-
-
-
-
+    datasetService.getDescriptorResource.getDescriptorView({
+        descriptorId: "1cbae5d8-64b9-455c-8cbb-9d284164ec7d"
+    }, function (response) {
+        console.log("retrieved new descriptor", response)
+        vm.descriptor = response;
+    })
 
 
 }
 
 angular.module('bioSpeak.datasets')
-    .controller('DatasetCtrl', ['$scope', '$state', '$stateParams', 'datasetService', DatasetCtrl]);
+    .controller('DatasetCtrl', ['$scope', '$state', '$filter', '$stateParams', 'datasetService', DatasetCtrl]);

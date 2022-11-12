@@ -175,7 +175,7 @@
                                                 </div>
                                             </div> -->
 
-                                            <div ng-show="expVM.datasetInfo" style="border-left: white 1px solid;"
+                                            <!-- <div ng-show="expVM.datasetInfo" style="border-left: white 1px solid;"
                                                 class=" m-b-sm m-t-sm col-md-12">
                                                 <div class="ibox-title"><strong>{{expVM.datasetInfo.files.name}}
                                                         descriptor
@@ -208,6 +208,277 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div> -->
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="wrapper wrapper-content">
+                                                        <div class="ibox">
+                                                            <div class="ibox-title panel-header ">
+
+                                                                <h3>Descriptor</h3>
+
+                                                            </div>
+                                                            <div class="ibox-content" style="min-height: 110px">
+
+                                                                <div class=" row">
+                                                                    <div class="col-md-12">
+                                                                        <dl class="dl-horizontal">
+                                                                            <dt>Descriptor Name</dt>
+                                                                            <dd>
+                                                                                <div class="col-md-6">
+
+                                                                                    <a>
+                                                                                        {{expVM.descriptor.title}}
+                                                                                    </a>
+
+                                                                                </div>
+                                                                            </dd>
+                                                                            <div class="hr-line-dashed"></div>
+                                                                            <dt>Description: </dt>
+                                                                            <dd>
+                                                                                <div class="col-md-6">
+                                                                                    <a>
+                                                                                        {{expVM.descriptor.description}}
+                                                                                    </a>
+                                                                                </div>
+                                                                            </dd>
+                                                                            <div class="hr-line-dashed"></div>
+                                                                            <dt>Dataset Descriptor Type:</dt>
+                                                                            <dd>
+                                                                                <div class="col-md-6">
+                                                                                    <a>
+                                                                                        {{expVM.showDDtype()}}
+                                                                                        <!-- {{expVM.descriptor.descriptorFields}}
+                                                                                        {{expVM.descriptor.class}} -->
+                                                                                    </a>
+
+                                                                                </div>
+                                                                            </dd>
+                                                                            <div class="hr-line-dashed"></div>
+
+                                                                        </dl>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <div>
+                                                            <div class="ibox-title panel-header">
+                                                                <span>Dataset Field Descriptors</span>
+                                                                <!-- <span style="font-size:16px;margin-top:-5px;"
+                                                                    class="pull-right">
+
+                                                                    
+                                                                    <i class="p-xs fa fa-eye"> </i>
+
+                                                                    <i class="p-xs fa fa-download"> </i>
+
+                                                                    <a has-permission="can-manage"
+                                                                        project="vm.projectId" ng-click="vm.deleteDS()">
+                                                                        <i class="p-xs fa fa-trash"> </i>
+                                                                    </a>
+                                                                                               | <a ng-init="vm.creatingNewDS = false" ng-click="vm.openUpload()"><i uib-tooltip="Upload Dataset Descriptor" class="p-xs fa fa-plus"></i></a>
+                                                                </span> -->
+                                                            </div>
+
+
+                                                            <div id="{{ds.id}}" class=" animated fadeIn">
+
+
+                                                                <!--Descriptor  Fields-->
+                                                                <div class="ibox-content">
+                                                                    <!--                        <h3>Select columns to include in this template</h3>-->
+
+                                                                    <!-- <form editable-form name="tableform"
+                                                                        onaftersave="vm.applyChanges"
+                                                                        oncancel="vm.cancel()"> -->
+
+                                                                    <!-- <div>
+
+                                                                            <div class="btn-form">
+                                                                                <button type="button"
+                                                                                    ng-disabled="tableform.$waiting"
+                                                                                    ng-click="vm.newField()"
+                                                                                    class="btn btn-default pull-right">New
+                                                                                    Field</button>
+                                                                                <button type="submit"
+                                                                                    ng-disabled="tableform.$waiting"
+                                                                                    class="btn btn-primary">Apply
+                                                                                    Changes</button>
+                                                                                <button type="button"
+                                                                                    ng-disabled="tableform.$waiting"
+                                                                                    ng-click="tableform.$cancel()"
+                                                                                    class="btn btn-default">Discard
+                                                                                    Changes</button>
+                                                                            </div>
+                                                                        </div> -->
+
+                                                                    <div>
+                                                                        <!-- <div>
+                                                                                <h3>Identifier Fields</h3>
+                                                                            </div> -->
+                                                                        <div>
+                                                                            <!--FOO TABLE-->
+                                                                            <table id="bs_template_tbl1"
+                                                                                class="footable table table-stripped toggle-arrow-tiny"
+                                                                                data-page-size="15">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th width="10%">Field Name
+                                                                                        </th>
+                                                                                        <th width="12%">Field Label
+                                                                                        </th>
+                                                                                        <th>Description</th>
+                                                                                        <th width="10%">Field Type
+                                                                                        </th>
+                                                                                        <th>Name Term ID</th>
+                                                                                        <th>Name Term XRef</th>
+                                                                                        <th style="width:5%"><span
+                                                                                                ng-show="tableform.$visible">Action</span>
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr
+                                                                                        ng-repeat="field in expVM.descriptor.fields">
+                                                                                        <td>
+
+                                                                                            <span ng-if="field.name">
+                                                                                                <!-- {{ field.name ||
+                                                                                                    'empty' }} -->
+                                                                                                {{ field.name }}
+                                                                                            </span>
+
+                                                                                            <span ng-if="!field.name">
+                                                                                                <!-- {{ field.name ||
+                                                                                                    'empty' }} -->
+                                                                                                <a>empty</a>
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td>
+
+                                                                                            <span ng-if="field.label">
+                                                                                                <!-- {{ field.label ||
+                                                                                                    'empty' }} -->
+                                                                                                {{ field.label }}
+                                                                                            </span>
+
+                                                                                            <span ng-if="!field.label">
+                                                                                                <!-- {{ field.label ||
+                                                                                                    'empty' }} -->
+                                                                                                <a>empty</a>
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td>
+
+                                                                                            <span
+                                                                                                ng-if="field.description">
+                                                                                                <!-- {{ field.description ||
+                                                                                                    'empty' }} -->
+                                                                                                {{ field.description }}
+                                                                                            </span>
+
+                                                                                            <span
+                                                                                                ng-if="!field.description">
+                                                                                                <!-- {{ field.description ||
+                                                                                                    'empty' }} -->
+                                                                                                <a>empty</a>
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <span
+                                                                                                ng-if='field.fieldType'>
+                                                                                                <!-- {{
+                                                                                                    field.fieldType || 'empty'
+                                                                                                    }} -->
+                                                                                                <!-- {{
+                                                                                                field.varType ||
+                                                                                                'empty'
+                                                                                                }} -->
+                                                                                                {{
+                                                                                                expVM.showFieldType(field)
+
+                                                                                                }}
+                                                                                            </span>
+                                                                                            <span
+                                                                                                ng-if='!field.fieldType'>
+                                                                                                <!-- {{
+                                                                                                    field.fieldType || 'empty'
+                                                                                                    }} -->
+                                                                                                <!-- {{
+                                                                                                field.varType ||
+                                                                                                'empty'
+                                                                                                }} -->
+                                                                                                <a>empty</a>
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <span ng-if="field.term">
+                                                                                                <!-- {{ field.term ||
+                                                                                                    'empty' }} -->
+                                                                                                {{ field.roleId }}
+                                                                                            </span>
+
+                                                                                            <span ng-if="!field.term">
+                                                                                                <!-- {{ field.term ||
+                                                                                                    'empty' }} -->
+                                                                                                <a>empty</a>
+                                                                                            </span>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <span ng-if="field.term">
+                                                                                                <!-- {{ field.term ||
+                                                                                                    'empty' }} -->
+                                                                                                {{ field.roleId }}
+                                                                                            </span>
+
+                                                                                            <span ng-if="!field.term">
+                                                                                                <!-- {{ field.term ||
+                                                                                                    'empty' }} -->
+                                                                                                <a>empty</a>
+                                                                                            </span>
+                                                                                        </td>
+
+
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                                <!--                                        <tfoot>-->
+                                                                                <!--                                        <tr>-->
+                                                                                <!--                                            <td colspan="6">-->
+                                                                                <!--                                                <ul class="pagination pull-right"></ul>-->
+                                                                                <!--                                            </td>-->
+                                                                                <!--                                        </tr>-->
+                                                                                <!--                                        </tfoot>-->
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+
+
+
+
+
+                                                                    <!-- </form> -->
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div ng-hide="expVM.descriptor" class="ibox-content">
+                                                                <div uib-alert class="alert-info">
+                                                                    <h4>No Dataset Fields defined for this Dataset
+                                                                        Descriptor.</h4>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                             <table id="bs_template_tbl"

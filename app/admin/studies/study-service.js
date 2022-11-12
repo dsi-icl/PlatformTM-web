@@ -4,15 +4,23 @@
 'use strict'
 function StudyService($resource, ngAppConfig) {
     var StudyFactory = {};
-    
+
     var serviceBase = ngAppConfig.apiServiceBaseUri;
     console.log(serviceBase);
 
-    
-    var _studyResource =  $resource(serviceBase+'studies/:studyId',{},{
-        update:{
+
+    var _assessmentResource = $resource(serviceBase + 'studies/:studyId/assessments', {}, {
+        getAllAssessments: {
+            method: 'GET',
+            params: { studyId: '@id' },
+            isArray: true
+        }
+    })
+
+    var _studyResource = $resource(serviceBase + 'studies/:studyId', {}, {
+        update: {
             method: 'PUT',
-            params: {studyId: '@id'}
+            params: { studyId: '@id' }
         }/*,
         getActivitiesForProject:{
             method: 'GET',
@@ -35,6 +43,7 @@ function StudyService($resource, ngAppConfig) {
     });
 
     console.log(_studyResource)
+    StudyFactory.getAllAssessments = _assessmentResource;
     StudyFactory.getStudyResource = _studyResource;
 
 
@@ -42,4 +51,4 @@ function StudyService($resource, ngAppConfig) {
 
 }
 angular.module('bioSpeak.config')
-    .factory('StudyService',['$resource','ngAppConfig', StudyService])
+    .factory('StudyService', ['$resource', 'ngAppConfig', StudyService])

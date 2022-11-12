@@ -1,16 +1,16 @@
 /**
  * Created by iemam on 03/07/2014.
  */
-angular.module('bioSpeak.config',['ui.bootstrap','ngResource']);
+angular.module('bioSpeak.config', ['ui.bootstrap', 'ngResource']);
 
 
-var managerConfig = function($stateProvider){
+var managerConfig = function ($stateProvider) {
 
     $stateProvider
         .state('project.manager', {
-            abstract : true,
+            abstract: true,
             url: "/admin",
-            templateUrl:"admin/project/adminContent.html",
+            templateUrl: "admin/project/adminContent.html",
             // data: {
             //     requiresAuthentication: true,
             //     permissions: ["can-manage"]
@@ -19,7 +19,7 @@ var managerConfig = function($stateProvider){
             resolve: {
                 loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
                     return $ocLazyLoad.load({
-                        files:['lib/plugins/angular-xeditable/js/xeditable.min.js']
+                        files: ['lib/plugins/angular-xeditable/js/xeditable.min.js']
                     }).then(function () {
                         var editableThemes = $injector.get('editableThemes');
                         editableThemes.bs3.inputClass = 'input-sm';
@@ -28,12 +28,12 @@ var managerConfig = function($stateProvider){
                         editableOptions.theme = 'bs3';
                     });
                 }],
-                loadCSS:['$ocLazyLoad',function($ocLazyLoad){
+                loadCSS: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            serie:true,
+                            serie: true,
                             insertBefore: '#load_css_before',
-                            files:['lib/plugins/ui-select/css/select.css',
+                            files: ['lib/plugins/ui-select/css/select.css',
                                 'lib/plugins/angular-ui-select/css/select.css',
                                 'lib/plugins/angular-xeditable/css/xeditable.css',
                                 'lib/plugins/ngSweetAlert/css/sweetalert.css']
@@ -43,7 +43,7 @@ var managerConfig = function($stateProvider){
                 loadDependency: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            serie:true,
+                            serie: true,
                             files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js',
                                 'lib/plugins/footable/js/footable.all.min.js', 'lib/plugins/footable/css/footable.core.css',
                                 'lib/plugins/ui-select/js/select.min.js',
@@ -63,10 +63,10 @@ var managerConfig = function($stateProvider){
         })
         .state('project.manager.main', {
             url: "/main",
-            views:{
-                '':{
+            views: {
+                '': {
                     templateUrl: 'admin/project/project.html',
-                    controller:'ProjectCtrl as vm',
+                    controller: 'ProjectCtrl as vm',
                     resolve: {
 
 
@@ -83,16 +83,16 @@ var managerConfig = function($stateProvider){
             }
         })
 
-        .state('define',{
-            abstract:true,
-            url:'/define/{projectId}',
-            templateUrl:'layout/noNavContent.html',
+        .state('define', {
+            abstract: true,
+            url: '/define/{projectId}',
+            templateUrl: 'layout/noNavContent.html',
             controller: "defineController as vm",
             resolve: {
 
                 loadAngularXEditable: ['$ocLazyLoad', '$injector', function ($ocLazyLoad, $injector) {
                     return $ocLazyLoad.load({
-                        files:['lib/plugins/angular-xeditable/js/xeditable.min.js']
+                        files: ['lib/plugins/angular-xeditable/js/xeditable.min.js']
                     }).then(function () {
                         var editableThemes = $injector.get('editableThemes');
                         editableThemes.bs3.inputClass = 'input-sm';
@@ -101,12 +101,12 @@ var managerConfig = function($stateProvider){
                         editableOptions.theme = 'bs3';
                     });
                 }],
-                loadCSS:['$ocLazyLoad',function($ocLazyLoad){
+                loadCSS: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            serie:true,
+                            serie: true,
                             insertBefore: '#load_css_before',
-                            files:['lib/plugins/ui-select/css/select.css',
+                            files: ['lib/plugins/ui-select/css/select.css',
                                 'lib/plugins/angular-ui-select/css/select.css',
                                 'lib/plugins/angular-xeditable/css/xeditable.css',
                                 'lib/plugins/ngSweetAlert/css/sweetalert.css']
@@ -116,7 +116,7 @@ var managerConfig = function($stateProvider){
                 loadDependency: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            serie:true,
+                            serie: true,
                             files: ['lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js',
                                 'lib/plugins/footable/js/footable.all.min.js', 'lib/plugins/footable/css/footable.core.css',
                                 'lib/plugins/ui-select/js/select.min.js',
@@ -137,8 +137,8 @@ var managerConfig = function($stateProvider){
                 }]
             }
         })
-        .state('define.activity',{
-            url:'/activities/{activityId}',
+        .state('define.activity', {
+            url: '/activities/{activityId}',
             templateUrl: "admin/activities/activityConfig.html",
             controller: "ActivityConfigCtrl as vm",
             resolve: {
@@ -152,8 +152,8 @@ var managerConfig = function($stateProvider){
                 }]
             }
         })
-        .state('define.assay',{
-            url:'/assays/{assayId}',
+        .state('define.assay', {
+            url: '/assays/{assayId}',
             templateUrl: "admin/activities/assayConfig.html",
             controller: "AssayConfigCtrl as vm",
             resolve: {
@@ -161,14 +161,14 @@ var managerConfig = function($stateProvider){
                     console.log("loading service");
                     return $ocLazyLoad.load('admin/activities/assayConfig-service.js');
                 }],
-                loadController:['$ocLazyLoad',function($ocLazyLoad){
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load(['admin/activities/assayConfig-controller.js'
                     ]);
                 }]
             }
         })
-        .state('define.subject',{
-            url:'/subjects/{activityId}',
+        .state('define.subject', {
+            url: '/subjects/{activityId}',
             templateUrl: "admin/subjects/subjectConfig.html",
             controller: "SubjectConfigCtrl as vm",
             resolve: {
@@ -182,27 +182,103 @@ var managerConfig = function($stateProvider){
                 }]
             }
         })
-        .state('define.study',{
-            url:'/studies/{studyId}',
-            templateUrl: "admin/studies/study.html",
+        // .state('define.study', {
+        //     url: '/studies/{studyId}',
+        //     templateUrl: "admin/studies/study.html",
+        //     controller: "StudyCtrl as vm",
+        //     resolve: {
+        //         loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //             console.log("loading service");
+        //             return $ocLazyLoad.load('admin/studies/study-service.js');
+        //         }],
+        //         loadDirectives: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //             return $ocLazyLoad.load(['admin/studies/study-plan-directives.js'
+        //             ]);
+        //         }],
+        //         loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //             return $ocLazyLoad.load(['admin/studies/study-controller.js'
+        //             ]);
+        //         }]
+        //     }
+        // })
+        .state('define.study', {
+            url: '/studies/{studyId}',
+            templateUrl: "admin/studies/studyContent.html",
+            //controller: "StudyCtrl as vm",
+            resolve: {
+                loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    console.log("loading service");
+                    return $ocLazyLoad.load('admin/studies/study-service.js');
+                }],
+                loadDirectives: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(['admin/studies/study-plan-directives.js'
+                    ]);
+                }],
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(['admin/studies/study-controller.js'
+                    ]);
+                }]
+            }
+        })
+        .state('define.study.main', {
+            url: '/',
+            templateUrl: "admin/studies/studyMain.html",
             controller: "StudyCtrl as vm",
             resolve: {
                 loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                     console.log("loading service");
                     return $ocLazyLoad.load('admin/studies/study-service.js');
                 }],
-                loadDirectives:['$ocLazyLoad',function($ocLazyLoad){
+                loadDirectives: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load(['admin/studies/study-plan-directives.js'
                     ]);
                 }],
-                loadController:['$ocLazyLoad',function($ocLazyLoad){
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load(['admin/studies/study-controller.js'
                     ]);
                 }]
             }
         })
-        .state('define.descriptor',{
-            url:'/descriptors/{descriptorId}',
+        .state('define.study.assessments', {
+            url: '/assessments/{assessmentId}',
+            templateUrl: "admin/assessments/assessments.html",
+            controller: "AssessmentCtrl as Avm",
+            resolve: {
+                loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    console.log("loading service");
+                    return $ocLazyLoad.load('admin/assessments/assessments-service.js');
+                }],
+                loadDirectives: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(['admin/studies/study-plan-directives.js'
+                    ]);
+                }],
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    return $ocLazyLoad.load(['admin/assessments/assessments-controller.js'
+                    ]);
+                }]
+            }
+        })
+        // .state('define.study.datasets', {
+        //     url: '/datasets/{datasetsId}',
+        //     templateUrl: "admin/datasets/datasets.html",
+        //     controller: "DatasetCtrl as Dvm",
+        //     resolve: {
+        //         loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //             console.log("loading service");
+        //             return $ocLazyLoad.load('admin/studies/study-service.js');
+        //         }],
+        //         loadDirectives: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //             return $ocLazyLoad.load(['admin/studies/study-plan-directives.js'
+        //             ]);
+        //         }],
+        //         loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+        //             return $ocLazyLoad.load(['admin/datasets/datasets-controller.js'
+        //             ]);
+        //         }]
+        //     }
+        // })
+        .state('define.descriptor', {
+            url: '/descriptors/{descriptorId}',
             templateUrl: "admin/descriptors/descriptor.html",
             controller: "DescriptorCtrl as vm",
             params: {
@@ -213,11 +289,11 @@ var managerConfig = function($stateProvider){
                     console.log("loading service");
                     return $ocLazyLoad.load('admin/descriptors/descriptor-service.js');
                 }],
-                loadCSS:['$ocLazyLoad',function($ocLazyLoad){
+                loadCSS: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load(['explore/clinical/css/clinicalDataTree.css'
                     ]);
                 }],
-                loadController:['$ocLazyLoad',function($ocLazyLoad){
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load(['admin/descriptors/descriptor-controller.js'
                     ]);
                 }]
@@ -253,7 +329,7 @@ var managerConfig = function($stateProvider){
                 }).result.finally(function ($stateParams) {
                     //fileService.getFiles()
 
-                            $state.go('define.descriptor', {projectId: $stateParams.projectId, dirId: $stateParams.dirId})
+                    $state.go('define.descriptor', { projectId: $stateParams.projectId, dirId: $stateParams.dirId })
 
                 }, function () {
                     console.info('Modal dismissed at: ' + new Date());

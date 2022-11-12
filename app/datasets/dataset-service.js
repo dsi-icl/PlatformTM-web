@@ -1,6 +1,6 @@
 'use strict';
 
-function datasetService($http, $q, ngAppConfig) {
+function datasetService($http, $q, $resource, ngAppConfig) {
 
     var service = {}
     var serviceBase = ngAppConfig.apiServiceBaseUri;
@@ -9,6 +9,35 @@ function datasetService($http, $q, ngAppConfig) {
     var tableHeaders;
     var DTdata;
 
+    var _projectDescriptors = $resource(serviceBase + 'projects/:projectId/descriptors', {}, {
+        getAllProjectDescriptors: {
+            method: 'GET',
+            params: { projectId: '@id' },
+            isArray: true
+        }
+    })
+
+    var _descriptorViewResource = $resource(serviceBase + 'descriptors/:descriptorId/view', {}, {
+        getDescriptorView: {
+            method: 'GET',
+            params: { descriptorId: '@id' },
+            isArray: false
+        }
+    })
+
+    var _getDescriptor = function (datasetId) {
+        return $http({
+            url: serviceBase + 'descriptors/' + datasetId,
+            method: 'GET',
+        }).then(
+            function (response) {
+                return {
+                    files: (response.data)
+                }
+            }
+        )
+    }
+
     // added function
     var _getDataSet = function (datasetId) {
         return $http({
@@ -16,6 +45,7 @@ function datasetService($http, $q, ngAppConfig) {
             method: 'GET',
         }).then(
             function (response) {
+                console.log(response.data)
                 return {
                     files: (response.data)
                 }
@@ -149,6 +179,9 @@ function datasetService($http, $q, ngAppConfig) {
         )
     };
 
+    service.getProjectDescriptors = _projectDescriptors;
+    service.getDescriptorResource = _descriptorViewResource;
+    service.getDescriptor = _getDescriptor;
     service.getDataSet = _getDataSet;
     service.previewData = _previewData;
     service.getDataTableData = _getDataTableData;
@@ -166,4 +199,4 @@ function datasetService($http, $q, ngAppConfig) {
 
 angular
     .module('bioSpeak.datasets')
-    .factory('datasetService', ['$http', '$q', 'ngAppConfig', datasetService])
+    .factory('datasetService', ['$http', '$q', '$resource', 'ngAppConfig', datasetService])
