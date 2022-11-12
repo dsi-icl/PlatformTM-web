@@ -23,7 +23,7 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
         assessment.status = "";
         assessment.description = null;
         assessment.studyId = $stateParams.studyId;
-        assessment.name - null;
+        assessment.name = null;
         // assessment.associatedDatasets = [
         //     {
         //         "id": 0,

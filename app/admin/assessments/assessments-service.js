@@ -17,14 +17,14 @@ function AssessmentService($resource, ngAppConfig) {
 
     });
 
-    var _assessmentResource = $resource(serviceBase + 'studies/:studyId/', {}, {
-        update: {
-            method: 'PUT',
-            params: { studyId: '@id', }
-        }
-    });
+    // var _assessmentResource = $resource(serviceBase + 'studies/:studyId/', {}, {
+    //     update: {
+    //         method: 'PUT',
+    //         params: { studyId: '@id', }
+    //     }
+    // });
 
-    var _assessmentResource = $resource(serviceBase + 'studies/:studyId/assessments/:assessmentId', {}, {
+    var _assessmentResource = $resource(serviceBase + 'studies/:studyId/assessments/:assessmentId', { studyId: '@studyId', assessmentId: '@assessmentId' }, {
         update: {
             url: serviceBase + 'studies/:studyId/assessments/:assessmentId',
             method: 'PUT',
