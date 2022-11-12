@@ -1,0 +1,218 @@
+<div class="ibox-content" style="min-height: 110px">
+    <div class="row">
+        <div class="col-sm-6">
+            <dl class="dl-horizontal">
+                <ul style="list-style: none; display:block; margin: 10px 0 0; padding:0px; font-size: 1.3em">
+                    <li
+                        style="vertical-align:top; display: inline-block;max-height: 100px;overflow: hidden;text-align: left; border-right: 1px dotted #c7c7c7;   padding: 0px 20px">
+                        <h5 style="text-transform: uppercase;margin-bottom: 0px">
+                            Human
+                            subjects</h5>
+                        <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;">
+                            <i class="flaticon-standing55"></i>&nbsp;
+                            300
+
+                            <!-- count feature to be implemented -->
+
+                            <!-- <dc-count-widget style="font-weight:600;"
+                                         xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                                         chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                         type="sdj"
+                                         module="{{expVM.chartingOpts.subjChartGrp}}">
+                        </dc-count-widget> -->
+                        </span>
+                        <!-- <dc-count-bar
+                        xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                        chart-service="{{expVM.chartingOpts.DCchartService}}"
+                        module="{{expVM.chartingOpts.subjChartGrp}}">
+                </dc-count-bar> -->
+                    </li>
+
+                    <li
+                        style="vertical-align:top; display: inline-block;max-height: 100px;overflow: hidden;text-align: left; border-right: 1px dotted #c7c7c7;   padding: 0px 20px">
+                        <h5 style="text-transform: uppercase;margin-bottom: 0px">
+                            ObservedFeatures</h5>
+                        <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;">
+                            <i class="flaticon-standing55"></i>&nbsp;
+                            200
+                            <!-- <dc-count-widget style="font-weight:600;"
+                                     xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                                     chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                     type="sdj"
+                                     module="{{expVM.chartingOpts.subjChartGrp}}">
+                        </dc-count-widget> -->
+                        </span>
+                        <!-- <dc-count-bar xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                            chart-service="{{expVM.chartingOpts.DCchartService}}"
+                            module="{{expVM.chartingOpts.subjChartGrp}}">
+                        </dc-count-bar> -->
+                    </li>
+
+                    <li
+                        style="vertical-align:top; display: inline-block;max-height: 100px;overflow: hidden;text-align: left; border-right: 1px dotted #c7c7c7;   padding: 0px 20px">
+                        <h5 style="text-transform: uppercase;margin-bottom: 0px">
+                            Visits
+                        </h5>
+                        <span style="display: block;font-size: 20px;color: #39c2d7;padding-top: 5px;">
+                            <i class="flaticon-standing55"></i>&nbsp;
+                            300
+                            <!-- <dc-count-widget style="font-weight:600;"
+                                     xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                                     chart-service="{{expVM.chartingOpts.DCchartService}}"
+                                     type="sdj"
+                                     module="{{expVM.chartingOpts.subjChartGrp}}">
+                        </dc-count-widget> -->
+                        </span>
+                        <!-- <dc-count-bar
+                        xfilter-service="{{expVM.chartingOpts.subjectXFservice}}"
+                        chart-service="{{expVM.chartingOpts.DCchartService}}"
+                        module="{{expVM.chartingOpts.subjChartGrp}}">
+                </dc-count-bar> -->
+                    </li>
+
+
+
+                </ul>
+            </dl>
+
+            <!-- clinical data tree -->
+
+            <div class="clinical-tree ">
+
+                <cl-tree-class ng-repeat="class in clinicalObservations.classes" class="class"
+                    onplot="expVM.plotSwitchClicked(obsReq,obsModule)"></cl-tree-class>
+            </div>
+
+
+        </div>
+        <div class="col-sm-5">
+
+            <div class="ibox-content">
+                <div class="anchor">
+
+
+                    <div class="charts-container">
+                        <div id="clinical_plots" ng-hide="vm.show =='eventsTable' || vm.show =='findingsTable'">
+
+                            <!-- charting requests functionality to be implemented -->
+                            <div ng-repeat="req in expVM.cartQuery.obsRequests" class="cardlock " id="{{req.cardId}}">
+                                <div class="card">
+                                    <h1 class="border-bottom">{{req.o3}}
+                                        <span class="pull-right" style="padding-right: 5px"><a
+                                                ng-click="req.isActive = false;expVM.plotSwitchClicked(req,chartingOpts.chartGroup)"><i
+                                                    class="fa fa-times"></i></a></span>
+                                    </h1>
+                                    <div id="{{req.chartId}}" class="chart" ng-switch="req.dataType">
+                                        <!-- <dc-time-chart ng-switch-when="dateTime" charting-opts="chartingOpts" obs="req">
+                                        </dc-time-chart>
+                                        <dc-chart ng-switch-default charting-opts="chartingOpts" obs="req"
+                                            module="chartingOpts.chartGroup"
+                                            on-filtered="expVM.onFiltered(obsId,module,filters,filter)">
+                                        </dc-chart> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-hide="expVM.cartQuery.obsRequests.length > 0" class="cardlock placeholder">
+                                <div class="anchor">
+                                    <div class="card">
+                                        <div class="cardholder">
+                                            <i class="material-icons">insert_chart</i><br />
+                                            Click on an observation to explore here
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="charts-container" id="subject-plots" ng-hide="show =='table'">
+                        <div ng-repeat="req in expVM.cartQuery.subjCharRequests" class="cardlock " id="{{req.cardId}}">
+                            <div class="card">
+                                <h1 class="border-bottom">{{req.o3}}
+                                    <span class="pull-right" style="padding-right: 5px">
+                                        <a
+                                            ng-click="req.isActive = false;expVM.plotSwitchClicked(req,vm.chartingOpts.chartGroup)">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </span>
+                                </h1>
+                                <div id="{{req.chartId}}" class="chart" ng-switch="req.dataType">
+                                    <dc-time-chart ng-switch-when="dateTime" charting-opts="vm.chartingOpts" obs="req"
+                                        on-filtered="expVM.onFiltered(obsId,module,filters,filter)">
+                                    </dc-time-chart>
+                                    <dc-chart ng-switch-default charting-opts="vm.chartingOpts" obs="req"
+                                        module="vm.chartingOpts.chartGroup"
+                                        on-filtered="expVM.onFiltered(obsId,module,filters,filter)">
+                                    </dc-chart>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-hide="expVM.cartQuery.subjCharRequests.length > 0" class="cardlock placeholder">
+                            <div class="anchor">
+                                <div class="card">
+                                    <div class="cardholder">
+                                        <i class="material-icons">insert_chart</i><br />
+                                        Click an observation to explore here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- <div class="activities-list">
+        <div>
+            <ul class="list-group clear-list">
+                <li class="list-group-item" ng-class="{'first-item':$first}">
+                    <div class="icon">
+                        <i class="fa fa-file-text-o fa-4x"></i>
+                        <span
+                            class="pull-right label label-primary">Download</span>
+                        <a>MAAS-MH-Y3</a>
+                        <br />
+                        <small>Last updated 03.02.2016</small>
+                    </div>
+                </li>
+                <li class="list-group-item" ng-class="{'first-item':$first}">
+                    <div class="icon">
+                        <i class="fa fa-file-text-o fa-4x"></i>
+                        <span
+                            class="pull-right label label-primary">Download</span>
+                        <a>MAAS-MH-Y5</a>
+                        <br />
+                        <small>Last updated 03.02.2016</small>
+                    </div>
+                </li>
+                <li class="list-group-item" ng-class="{'first-item':$first}">
+                    <div class="icon">
+                        <i class="fa fa-file-text-o fa-4x"></i>
+                        <span
+                            class="pull-right label label-primary">Download</span>
+                        <a>MAAS-MH-Y8</a>
+                        <br />
+                        <small>Last updated 03.02.2016</small>
+                    </div>
+                </li>
+                <li class="list-group-item" ng-class="{'first-item':$first}">
+                    <div class="icon">
+                        <i class="fa fa-file-text-o fa-4x"></i>
+                        <span
+                            class="pull-right label label-primary">Download</span>
+                        <a ui-sref="project.datasets.file">MAAS-MH-Y11</a>
+                        <br />
+                        <small>Last updated 03.02.2016</small>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div> -->
+</div>

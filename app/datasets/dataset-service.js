@@ -1,6 +1,6 @@
 'use strict';
 
-function datasetService($http, $q,ngAppConfig){
+function datasetService($http, $q, $resource, ngAppConfig) {
 
     var service = {}
     var serviceBase = ngAppConfig.apiServiceBaseUri;
@@ -9,23 +9,25 @@ function datasetService($http, $q,ngAppConfig){
     var tableHeaders;
     var DTdata;
 
+    var _projectDescriptors = $resource(serviceBase + 'projects/:projectId/descriptors', {}, {
+        getAllProjectDescriptors: {
+            method: 'GET',
+            params: { projectId: '@id' },
+            isArray: true
+        }
+    })
 
+    var _descriptorViewResource = $resource(serviceBase + 'descriptors/:descriptorId/view', {}, {
+        getDescriptorView: {
+            method: 'GET',
+            params: { descriptorId: '@id' },
+            isArray: false
+        }
+    })
 
-    var _saveDataset = function(dataset){
+    var _getDescriptor = function (datasetId) {
         return $http({
-            url: serviceBase + 'analysisdatasets/'+dataset.id,
-            method: 'PUT',
-            data: angular.toJson(dataset)
-        }).then(
-            function (response) {
-                return response.status === 202;
-            }
-        );
-    };
-
-    var _deleteDataset = function(datasetId){
-        return $http({
-            url: serviceBase + 'analysisdatasets/'+datasetId+'/delete',
+            url: serviceBase + 'descriptors/' + datasetId,
             method: 'GET',
         }).then(
             function (response) {
@@ -36,27 +38,68 @@ function datasetService($http, $q,ngAppConfig){
         )
     }
 
-    var _getUserDatasets = function(){
+    // added function
+    var _getDataSet = function (datasetId) {
+        return $http({
+            url: serviceBase + 'datasets/' + datasetId,
+            method: 'GET',
+        }).then(
+            function (response) {
+                console.log(response.data)
+                return {
+                    files: (response.data)
+                }
+            }
+        )
+    }
+
+
+    var _saveDataset = function (dataset) {
+        return $http({
+            url: serviceBase + 'analysisdatasets/' + dataset.id,
+            method: 'PUT',
+            data: angular.toJson(dataset)
+        }).then(
+            function (response) {
+                return response.status === 202;
+            }
+        );
+    };
+
+    var _deleteDataset = function (datasetId) {
+        return $http({
+            url: serviceBase + 'analysisdatasets/' + datasetId + '/delete',
+            method: 'GET',
+        }).then(
+            function (response) {
+                return {
+                    files: (response.data)
+                }
+            }
+        )
+    }
+
+    var _getUserDatasets = function () {
         return $http({
             url: serviceBase + 'analysisdatasets/',
             method: 'GET'
         }).then(
-            function(response){
+            function (response) {
                 return response.data;
             }
         )
     };
 
-    var _previewData = function(projectId, datasetId){
+    var _previewData = function (projectId, datasetId) {
         var deferred = $q.defer();
-        var userDataset = localStorageService.get('Dataset_'+datasetId)
-        console.log('USERDATASET',userDataset);
-        if(!userDataset)
+        var userDataset = localStorageService.get('Dataset_' + datasetId)
+        console.log('USERDATASET', userDataset);
+        if (!userDataset)
             return deferred.promise
         var dataset = userDataset.dataset;
 
 
-        $http.post(serviceBase + 'apps/exportwizard/projects/'+projectId+'/preview/',dataset)
+        $http.post(serviceBase + 'apps/exportwizard/projects/' + projectId + '/preview/', dataset)
             .success(function (response) {
                 tableHeaders = response.header
                 DTdata = response.data
@@ -70,36 +113,36 @@ function datasetService($http, $q,ngAppConfig){
         return deferred.promise;
     }
 
-    var _getDataTableData = function(){
+    var _getDataTableData = function () {
         var deferred = $q.defer();
         deferred.resolve(DTdata);
         return deferred.promise;
     }
 
-    var _requestFile = function(fileId){
-        return  $http({
+    var _requestFile = function (fileId) {
+        return $http({
             method: 'GET',
             url: serviceBase + 'apps/export/files/' + fileId + '/export'
-        }).then(function(response){
-            return{outcome :(response.statusText)}
+        }).then(function (response) {
+            return { outcome: (response.statusText) }
         });
     };
 
-    var _checkFileStatus= function(fileId) {
+    var _checkFileStatus = function (fileId) {
         return $http({
             method: 'GET',
             url: serviceBase + 'apps/export/files/' + fileId + '/checkstatus'
-        }).then(function(result){
+        }).then(function (result) {
             return result.data
         });
     };
 
-    var _getFile = function(fileId) {
+    var _getFile = function (fileId) {
         return $http({
             url: serviceBase + 'apps/export/files/' + fileId + '/download',
             method: 'GET'
         }).then(
-            function(response){
+            function (response) {
                 var headers = response.headers();
                 var data = response.data;
                 //var filename;
@@ -128,7 +171,7 @@ function datasetService($http, $q,ngAppConfig){
                         "cancelable": false
                     });
                     linkElement.dispatchEvent(clickEvent);
-                    return {'url':url,'filename':filename};
+                    return { 'url': url, 'filename': filename };
                 } catch (ex) {
                     console.log(ex);
                 }
@@ -136,6 +179,10 @@ function datasetService($http, $q,ngAppConfig){
         )
     };
 
+    service.getProjectDescriptors = _projectDescriptors;
+    service.getDescriptorResource = _descriptorViewResource;
+    service.getDescriptor = _getDescriptor;
+    service.getDataSet = _getDataSet;
     service.previewData = _previewData;
     service.getDataTableData = _getDataTableData;
     service.saveDataset = _saveDataset;
@@ -152,4 +199,4 @@ function datasetService($http, $q,ngAppConfig){
 
 angular
     .module('bioSpeak.datasets')
-    .factory('datasetService',['$http', '$q','ngAppConfig', datasetService])
+    .factory('datasetService', ['$http', '$q', '$resource', 'ngAppConfig', datasetService])

@@ -5,7 +5,7 @@ function config($stateProvider, $urlRouterProvider) {
             //url: "/{projectId}",
             templateUrl: "admin/project/adminContent.html",
             resolve: {
-                loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
+                loadDependency: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load(
                         {
                             serie: true,
@@ -22,7 +22,7 @@ function config($stateProvider, $urlRouterProvider) {
             templateUrl: "datasets/dataset-list.html",
             controller: "DatasetListCtrl as vm",
             resolve: {
-                loadDependency: ['$ocLazyLoad',function($ocLazyLoad){
+                loadDependency: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load(
                         {
                             serie: true,
@@ -35,37 +35,70 @@ function config($stateProvider, $urlRouterProvider) {
             }
 
         })
-        .state('project.datasets.dataset',{
-            url:"/datasets/{datasetId}",
-            templateUrl: "datasets/dataset.html",
-            controller:"DatasetCtrl as vm2",
-            resolve: {
-                loadController:['$ocLazyLoad',function($ocLazyLoad){
-                    return $ocLazyLoad.load([
-                        'datasets/dataset-controller.js'
-                    ]);
-                }],
-                loadPlugin: ['$ocLazyLoad',function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        'lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js'
-                    ]);
-                }]
+        .state('project.datasets.dataset', {
+            url: "/datasets/{datasetId}",
+            // templateUrl: "datasets/dataset.html",
+            // controller:"DatasetCtrl as vm2",
+            // resolve: {
+            //     loadController:['$ocLazyLoad',function($ocLazyLoad){
+            //         return $ocLazyLoad.load([
+            //             'datasets/dataset-controller.js'
+            //         ]);
+            //     }],
+            //     loadPlugin: ['$ocLazyLoad',function ($ocLazyLoad) {
+            //         return $ocLazyLoad.load([
+            //             'lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js'
+            //         ]);
+            //     }]
+            // },
+            views: {
+                "": {
+                    templateUrl: 'datasets/dataset.html',
+                    resolve: {
+                        loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'datasets/dataset-controller.js'
+                            ]);
+                        }],
+                        loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'lib/plugins/steps/jquery.steps.css', 'lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js'
+                            ]);
+                        }]
+                    },
+                    controller: 'DatasetCtrl as expVM'
+                },
+                'clinical-explorer@project.datasets.dataset': {
+                    templateUrl: 'datasets/clinical-explorer/clinical-explorer.html',
+                    resolve: {
+                        loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            return $ocLazyLoad.load('datasets/clinical-explorer/clinical-service.js');
+                        }],
+                        loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            return $ocLazyLoad.load('datasets/clinical-explorer/clinical-controller.js');
+                        }],
+                        loadDirectives: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            return $ocLazyLoad.load('datasets/clinical-explorer/clinicalDataTree-directive.js');
+                        }]
+                    },
+                    controller: 'ClinicalCtrl',
+                }
             }
         })
-        .state('project.datasets.file',{
-            url:"/datasets/{datasetId}/files/{fileId}",
+        .state('project.datasets.file', {
+            url: "/datasets/{datasetId}/files/{fileId}",
             templateUrl: "datasets/file.html",
-            controller:"datasetFileController as vm",
+            controller: "datasetFileController as vm",
             resolve: {
-                loadController:['$ocLazyLoad',function($ocLazyLoad){
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         'datasets/file-controller.js'
                     ]);
                 }],
-                loadService:['$ocLazyLoad',function($ocLazyLoad){
+                loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load('dataStage/loadingWizard/loadingWizard-service.js');
                 }],
-                loadPlugin: ['$ocLazyLoad',function($ocLazyLoad){
+                loadPlugin: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
                             serie: true,

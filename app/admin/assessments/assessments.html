@@ -1,0 +1,178 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Assessments</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="home.dashboard">Home</a>
+            </li>
+            <li>
+                <a ui-sref="define.project({projectId:Avm.projectId})">{{Avm.projectId}}</a>
+            </li>
+            <li class="active">
+                <strong>
+                    {{Avm.studyId}}
+                </strong>
+            </li>
+            <li class="active">
+                <strong>{{Avm.assessment.isNew ? 'New Assessment' : Avm.assessment.name}}</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+        <div class="title-action">
+            <a has-permission="can-manage" project="Avm.projectId" ng-click="Avm.saveAssessment()"
+                class="btn btn-primary">Save</a>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12 m-t-md">
+                            <dl class="dl-horizontal">
+                                <dt>Assessment Title</dt>
+                                <dd>
+                                    <div class="col-md-6">
+                                        <a href="#" e-required e-ng-model="Avm.assessment.name"
+                                            e-placeholder="Enter Assessment Name" editable-text="Avm.assessment.name"
+                                            blur="submit">
+                                            {{Avm.assessment.name || 'Enter Assessment Name'}}
+                                        </a>
+                                    </div>
+                                </dd>
+
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>Assessment Description</dt>
+                                <dd>
+                                    <div class="col-md-6">
+                                        <a href="#" e-required e-ng-model="Avm.assessment.description"
+                                            e-placeholder="Enter Assessment Description"
+                                            editable-text="Avm.assessment.description" blur="submit">
+                                            {{Avm.assessment.description || 'Enter Assessment Description'}}
+                                        </a>
+                                    </div>
+                                </dd>
+
+                            </dl>
+                            <dl class="dl-horizontal">
+
+
+                                <dt>Status</dt>
+                                <dd>
+                                    <div>
+                                        <select class="form-control m-b" name="assessmentStatusSelect"
+                                            id="assessmentStatus" ng-model="Avm.assessment.status">
+                                            <option ng-repeat="option in Avm.statusOptions" value="{{option}}">
+                                                {{option}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </dd>
+
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox-title panel-header">
+                <span>Associated Datasets</span>
+                <span style="font-size:16px;margin-top:-5px;" class="pull-right">
+                    <i class="p-xs fa fa-eye"> </i><i class="p-xs fa fa-download"> </i>
+                    <a has-permission="can-manage" project="Avm.projectId">
+                        <i class="p-xs fa fa-trash"> </i>
+                    </a>
+                    | <a ng-init="Avm.DScollapsed = false" ng-click="Avm.DScollapsed = !Avm.DScollapsed"><i
+                            uib-tooltip="Expand datasets" class="p-xs fa fa-plus"></i></a>
+                </span>
+            </div>
+
+
+
+            <div uib-collapse="!Avm.DScollapsed" class="ibox-content"
+                style="min-height: 50px;margin: 0px;border: 10px solid white;background-color: rgb(243, 243, 244);">
+                <form role="form">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <h3>Select all datasets associated with this assessment</h3>
+                        </div>
+                        <div class="col-md-1"> <span class="pull-right"><a ng-click="Avm.DScollapsed=false"
+                                    class="btn btn-white btn-lg"><i class="fa fa-times"></i></a> </span></div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+
+                            <div class="row m-b-sm m-t-sm">
+                                <div class="col-md-12">
+                                    <div class="ibox-content">
+
+                                        <!-- TABLE-->
+                                        <table id="bs_template_tbl"
+                                            class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                            <thead>
+                                                <tr>
+                                                    <th data-toggle="true">Select</th>
+                                                    <th>Dataset Name</th>
+                                                    <th>Description</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="var in Avm.assessment.associatedDatasets">
+                                                    <td>
+
+                                                        <input icheck type="checkbox" ng-model="var.isSelected">
+                                                    </td>
+                                                    <td>
+                                                        {{var.title}}
+                                                    </td>
+                                                    <td>
+                                                        {{var.description}}
+                                                    </td>
+
+
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="6">
+                                                        <ul class="pagination pull-right"></ul>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+
+            </div>
+
+
+            </form>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
+
+</div>

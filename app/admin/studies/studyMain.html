@@ -148,10 +148,10 @@
             <!--            </div>-->
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="ibox">
                         <div class="ibox-title panel-header">
-                            <h3>Define Assessment
+                            <h3>Define assessment
                                 <span class="pull-right">
                                     <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew"
                                         class="dropdown slider-control" uib-dropdown>
@@ -160,11 +160,10 @@
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-right plotting-options"
                                             uib-dropdown-menu>
-                                            <li><a
-                                                    ui-sref="define.assessments({projectId:vm.projectId,studyId:vm.studyId,assessmentId:0})">&nbsp;
+                                            <li><a ng-click="vm.checkIfSaved(0)">&nbsp;
                                                     Define new assessment</a></li>
 
-                                            <!--<li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>-->
+                                            <!--<li><a ui-sref="define.study.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>-->
                                         </ul>
                                     </div>
                                 </span>
@@ -174,12 +173,11 @@
                             <div class="activities-list">
                                 <div full-height-scroll>
                                     <ul class="list-group clear-list">
-                                        <li class="list-group-item" ng-repeat="descriptor in vm.descriptors"
+                                        <li class="list-group-item" ng-repeat="assessment in vm.study.assessments"
                                             ng-class="{'first-item':$first}">
-                                            <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' :
-                                                'Clinical'}}</span>
+                                            <span class="pull-right label label-primary">{{assessment.status}}</span>
                                             <a
-                                                ui-sref="define.assessments({projectId:vm.projectId,studyId:vm.studyId,assessmentId:assessment.id})">{{descriptor.title}}</a>
+                                                ui-sref="define.study.assessments({projectId:vm.projectId,studyId:vm.studyId,assessmentId:assessment.id})">{{assessment.name}}</a>
                                             <br />
                                             <!--<small>Last updated 03.02.2016</small>-->
                                         </li>
@@ -190,11 +188,11 @@
                                 <h4>No Assessments defined
                                     <div class=" btn-group pull-right">
                                         <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew"
-                                            ui-sref="define.assessments({projectId:vm.projectId,studyId:vm.studyId,assessmentId:0})"><i
-                                                class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Assessment</button>
+                                            ng-click="vm.checkIfSaved(0)"><i class="fa fa fa-stethoscope"></i>&nbsp; New
+                                            Clinical Assessment</button>
                                         </li>
 
-                                        <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>-->
+                                        <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.study.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>-->
                                     </div>
                                 </h4>
                             </div>
@@ -202,7 +200,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-6">
+                <!-- <div class="col-lg-6">
                     <div class="ibox">
                         <div class="ibox-title panel-header">
                             <h3>Define Datasets
@@ -215,11 +213,10 @@
                                         <ul class="dropdown-menu dropdown-menu-right plotting-options"
                                             uib-dropdown-menu>
                                             <li><a
-                                                    ui-sref="define.datasets({projectId:vm.projectId,studyId:vm.studyId,datasetsId:0})">&nbsp;
+                                                    ui-sref="define.study.datasets({projectId:vm.projectId,studyId:vm.studyId,datasetsId:0})">&nbsp;
                                                     Define new dataset</a></li>
 
-                                            <!--<li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>-->
-                                        </ul>
+                                       </ul>
                                     </div>
                                 </span>
                             </h3>
@@ -233,10 +230,9 @@
                                             <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' :
                                                 'Clinical'}}</span>
                                             <a
-                                                ui-sref="define.datasets({projectId:vm.projectId,studyId:vm.studyId,datasetsId:datasets.id})">{{activity.name}}</a>
+                                                ui-sref="define.study.datasets({projectId:vm.projectId,studyId:vm.studyId,datasetsId:datasets.id})">{{activity.name}}</a>
                                             <br />
-                                            <!--<small>Last updated 03.02.2016</small>-->
-                                        </li>
+                                       </li>
                                     </ul>
                                 </div>
                             </div>
@@ -244,17 +240,16 @@
                                 <h4>No Datasets Defined
                                     <div class=" btn-group pull-right">
                                         <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew"
-                                            ui-sref="define.datasets({projectId:vm.projectId,studyId:vm.studyId,datasetsId:0})"><i
+                                            ui-sref="define.study.datasets({projectId:vm.projectId,studyId:vm.studyId,datasetsId:0})"><i
                                                 class="fa fa fa-stethoscope"></i>&nbsp; New Dataset</button>
                                         </li>
 
-                                        <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>-->
-                                    </div>
+                                   </div>
                                 </h4>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
             </div>
