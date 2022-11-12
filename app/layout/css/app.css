@@ -190,16 +190,28 @@ nav a {
     /*padding: 15px;*/
 }
 
-.panel-header h3 {
+
+.sub-panel-header {
+    /*background-color: #35495E;*/
+    /*background-color: #304A54;*/
+    background-color: #f3f3f4;
+    color: #23c6c8;
+    /*height: 45px;*/
+    text-transform: uppercase;
+    /*color: white;*/
+    /*padding: 15px;*/
+}
+
+.panel-header .sub-panel-header h3 {
     margin: 0;
     text-transform: uppercase;
-    color: white;
+    /*color: white;*/
     font-size: 1.2em;
     font-weight: 500;
 }
 
-.panel-header a{
-    color: inherit;
+.panel-header .sub-panel-header a{
+    color: white;
 }
 
 .panel-content{

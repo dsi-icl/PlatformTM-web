@@ -138,180 +138,6 @@
             <div class="ibox">
                 <div class="ibox-title panel-header ">
                     <span class="pull-right">
-                        <!--<a ng-click ="vm.goToSubjectCollection(vm.projectId,0)"class=" btn-link"><i class="fa fa-plus"></i></a>-->
-                    </span>
-                    <h3>Subjects</h3>
-
-                </div>
-                <div class="ibox-content" style="min-height: 110px">
-                    <div class="activities-list">
-                        <div>
-                            <ul class="list-group clear-list">
-                                <li class="list-group-item" ng-repeat="activity in vm.subjDataCollection" ng-class="{'first-item':$first}">
-                                    <!--<span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>-->
-                                    <a ng-click="vm.goToSubjectCollection(activity)">{{activity.name}}</a>
-                                    <br/>
-                                    <!--<small>Last updated 03.02.2016</small>-->
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div uib-alert class=" alert-info" ng-if="!vm.subjDataCollection.length>0">
-                        <h4>No subject recording dataset defined <br>
-                            <div class=" btn-group pull-right">
-                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.subject({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-user"></i>&nbsp; Define human subjects dataset</button></li>
-
-                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.subject({projectId:vm.projectId,activityId:0})"><i class="fa fa-user-plus"></i>&nbsp; Define animal subjects dataset</button></li>
-                            </div>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="ibox">
-                <div class="ibox-title panel-header">
-                    <h3>Dataset Descriptors
-                        <span class="pull-right">
-                            <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
-                                <a class="dropdown-toggle" href uib-dropdown-toggle>
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-right plotting-options" uib-dropdown-menu>
-                                    <li><a ui-sref="define.descriptor({projectId:vm.projectId,descriptorId:0})">&nbsp; New Descriptor</a></li>
-
-                                    <!--<li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>-->
-                                </ul>
-                            </div>
-                        </span>
-                    </h3>
-                </div>
-                <div class="ibox-content" style="min-height: 110px">
-                    <div class="activities-list">
-                        <div full-height-scroll >
-                            <ul class="list-group clear-list">
-                                <li class="list-group-item" ng-repeat="descriptor in vm.descriptors" ng-class="{'first-item':$first}">
-                                    <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
-                                    <a ui-sref="define.descriptor({projectId:vm.projectId,descriptorId:descriptor.id})">{{descriptor.title}}</a>
-                                    <br/>
-                                    <!--<small>Last updated 03.02.2016</small>-->
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div uib-alert class=" alert-info" ng-if="!vm.clinicalAssessments.length>0">
-                        <h4>No Dataset Descriptors Defined
-                            <div class=" btn-group pull-right">
-                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Assessment</button></li>
-
-                                <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>-->
-                            </div>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="ibox">
-                <div class="ibox-title panel-header">
-                    <h3>Clinical Assessments
-                        <span class="pull-right">
-                            <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
-                                <a class="dropdown-toggle" href uib-dropdown-toggle>
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-right plotting-options" uib-dropdown-menu>
-                                    <li><a ui-sref="define.activity({projectId:vm.projectId,activityId:0})">&nbsp; New Clinical Assessment</a></li>
-
-                                    <!--<li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>-->
-                                </ul>
-                            </div>
-                        </span>
-                    </h3>
-                </div>
-                <div class="ibox-content" style="min-height: 110px">
-                    <div class="activities-list">
-                        <div full-height-scroll >
-                            <ul class="list-group clear-list">
-                                <li class="list-group-item" ng-repeat="activity in vm.clinicalAssessments" ng-class="{'first-item':$first}">
-                                    <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
-                                    <a ng-click="vm.goToActivity(activity)">{{activity.name}}</a>
-                                    <br/>
-                                    <!--<small>Last updated 03.02.2016</small>-->
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div uib-alert class=" alert-info" ng-if="!vm.clinicalAssessments.length>0">
-                        <h4>No clinical assessments defined
-                            <div class=" btn-group pull-right">
-                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Assessment</button></li>
-
-                                <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>-->
-                            </div>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="ibox">
-                <div class="ibox-title panel-header">
-                    <h3>Molecular Assays
-                        <span class="pull-right">
-                            <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
-                                <a class="dropdown-toggle" href uib-dropdown-toggle>
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-right plotting-options" uib-dropdown-menu>
-                                    <!--<li><a ui-sref="define.activity({projectId:vm.projectId,activityId:0})">&nbsp; New Clinical Activity</a></li>-->
-
-                                    <li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>
-                                </ul>
-                            </div>
-                        </span>
-                    </h3>
-                </div>
-                <div class="ibox-content" style="min-height: 110px">
-                    <div class="activities-list">
-                        <div full-height-scroll >
-                            <ul class="list-group clear-list">
-                                <li class="list-group-item" ng-repeat="activity in vm.assays" ng-class="{'first-item':$first}">
-                                    <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
-                                    <a ng-click="vm.goToActivity(activity)">{{activity.name}}</a>
-                                    <br/>
-                                    <!--<small>Last updated 03.02.2016</small>-->
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div uib-alert class=" alert-info" ng-if="!vm.assays.length>0">
-                        <h4>No molecular assays defined
-                            <div class=" btn-group pull-right">
-                                <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>-->
-
-                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
-                            </div>
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="ibox">
-                <div class="ibox-title panel-header ">
-                    <span class="pull-right">
                         <!--<a ng-click ="vm.addUser()"class=" btn-link"><i class="fa fa-plus"></i></a>-->
                     </span>
                     <h3>Users</h3>
@@ -343,6 +169,194 @@
                 </div>
             </div>
 
+
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title panel-header">
+                    <h3>Project Primary Datasets</h3>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="ibox">
+                                <div class="ibox-title sub-panel-header ">
+                    <span class="pull-right">
+                        <!--<a ng-click ="vm.goToSubjectCollection(vm.projectId,0)"class=" btn-link"><i class="fa fa-plus"></i></a>-->
+                    </span>
+                                    <h3>Subject Recording Datasets</h3>
+
+                                </div>
+                                <div class="ibox-content" style="min-height: 110px">
+                                    <div class="activities-list">
+                                        <div>
+                                            <ul class="list-group clear-list">
+                                                <li class="list-group-item" ng-repeat="activity in vm.subjDataCollection" ng-class="{'first-item':$first}">
+                                                    <!--<span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>-->
+                                                    <a ng-click="vm.goToSubjectCollection(activity)">{{activity.name}}</a>
+                                                    <br/>
+                                                    <!--<small>Last updated 03.02.2016</small>-->
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div uib-alert class=" alert-info" ng-if="!vm.subjDataCollection.length>0">
+                                        <h4>No subject recording dataset defined <br>
+                                            <div class=" btn-group pull-right">
+                                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.subject({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-user"></i>&nbsp; Define human subjects dataset</button></li>
+
+                                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.subject({projectId:vm.projectId,activityId:0})"><i class="fa fa-user-plus"></i>&nbsp; Define animal subjects dataset</button></li>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="ibox">
+                                <div class="ibox-title sub-panel-header">
+                                    <h3>Clinical Observation Datasets
+                                        <span class="pull-right">
+                            <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
+                                <a class="dropdown-toggle" href uib-dropdown-toggle>
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right plotting-options" uib-dropdown-menu>
+                                    <li><a ui-sref="define.dataset({projectId:vm.projectId,datasetId:0})">&nbsp; New Clinical Dataset</a></li>
+                                </ul>
+                            </div>
+                        </span>
+                                    </h3>
+                                </div>
+                                <div class="ibox-content" style="min-height: 110px">
+                                    <div class="activities-list">
+                                        <div full-height-scroll >
+                                            <ul class="list-group clear-list">
+                                                <li class="list-group-item" ng-repeat="dataset in vm.clinicalDatasets" ng-class="{'first-item':$first}">
+<!--                                                    <span class="pull-right label label-primary">{{dataset.isAssay ? 'Assay' : 'Clinical'}}</span>-->
+                                                    <a ng-click="vm.goToDataset(dataset)">{{dataset.title}}</a>
+                                                    <br/>
+                                                    <!--<small>Last updated 03.02.2016</small>-->
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div uib-alert class=" alert-info" ng-if="!vm.clinicalDatasets.length>0">
+                                        <h4>No clinical datasets defined
+                                            <div class=" btn-group pull-right">
+                                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Assessment</button></li>
+
+                                                <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>-->
+                                            </div>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="ibox">
+                                <div class="ibox-title sub-panel-header">
+                                    <h3>Molecular Assays Datasets
+                                        <span class="pull-right">
+                            <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
+                                <a class="dropdown-toggle" href uib-dropdown-toggle>
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right plotting-options" uib-dropdown-menu>
+                                    <!--<li><a ui-sref="define.activity({projectId:vm.projectId,activityId:0})">&nbsp; New Clinical Activity</a></li>-->
+
+                                    <li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>
+                                </ul>
+                            </div>
+                        </span>
+                                    </h3>
+                                </div>
+                                <div class="ibox-content" style="min-height: 110px">
+                                    <div class="activities-list">
+                                        <div full-height-scroll >
+                                            <ul class="list-group clear-list">
+                                                <li class="list-group-item" ng-repeat="activity in vm.assays" ng-class="{'first-item':$first}">
+                                                    <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
+                                                    <a ng-click="vm.goToActivity(activity)">{{activity.name}}</a>
+                                                    <br/>
+                                                    <!--<small>Last updated 03.02.2016</small>-->
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div uib-alert class=" alert-info" ng-if="!vm.assays.length>0">
+                                        <h4>No molecular assays defined
+                                            <div class=" btn-group pull-right">
+                                                <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Activity</button></li>-->
+
+                                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="ibox">
+                <div class="ibox-title panel-header">
+                    <h3>Dataset Descriptors
+                        <span class="pull-right">
+                            <div has-permission="can-manage" project="vm.projectId" ng-if="!vm.project.isNew" class="dropdown slider-control" uib-dropdown>
+                                <a class="dropdown-toggle" href uib-dropdown-toggle>
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right plotting-options" uib-dropdown-menu>
+                                    <li><a ui-sref="define.descriptor({projectId:vm.projectId,descriptorId:0})">&nbsp; New Descriptor</a></li>
+
+                                    <!--<li><a ui-sref="define.assay({projectId:vm.projectId,assayId:0})">&nbsp; New Assay</a></li>-->
+                                </ul>
+                            </div>
+                        </span>
+                    </h3>
+                </div>
+                <div class="ibox-content" style="min-height: 110px">
+                    <div class="activities-list">
+                        <div full-height-scroll >
+                            <ul class="list-group clear-list">
+                                <li class="list-group-item" ng-repeat="descriptor in vm.descriptors" ng-class="{'first-item':$first}">
+                                    <span class="pull-right label label-primary">{{activity.isAssay ? 'Assay' : 'Clinical'}}</span>
+                                    <a ui-sref="define.descriptor({projectId:vm.projectId,descriptorId:descriptor.id})">{{descriptor.title}}</a>
+                                    <br/>
+                                    <!--<small>Last updated 03.02.2016</small>-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div uib-alert class=" alert-info" ng-if="!vm.descriptors.length>0">
+                        <h4>No Dataset Descriptors Defined
+                            <div class=" btn-group pull-right">
+                                <button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.activity({projectId:vm.projectId,activityId:0})"><i class="fa fa fa-stethoscope"></i>&nbsp; New Clinical Assessment</button></li>
+
+                                <!--<button class="btn btn-outline btn-sm" data-ng-disabled="vm.project.isNew" ui-sref="define.assay({projectId:vm.projectId,assayId:0})"><i class="fa fa-tint"></i>&nbsp; New Assay</button></li>-->
+                            </div>
+                        </h4>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

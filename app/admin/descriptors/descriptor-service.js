@@ -31,8 +31,16 @@ function DescriptorService($resource, $http,ngAppConfig) {
             params: {descriptorId: '@descriptorId'},
             isArray: false
         }
-
     });
+
+    var _descriptorViewResource = $resource(serviceBase+'descriptors/:descriptorId/view',{}, {
+        getDescriptorView: {
+            method: 'GET',
+            params: {descriptorId: '@id'},
+            isArray: false
+        }
+    })
+
 
 
     var _loadUploadedDescriptor = function(projectId,filename){
@@ -60,9 +68,12 @@ function DescriptorService($resource, $http,ngAppConfig) {
     }
 
     DescriptorServiceFactory.getDDescriptorResource = _descriptorResource;
+    DescriptorServiceFactory.getDescriptorViewResource = _descriptorViewResource;
 
     DescriptorServiceFactory.load = _loadUploadedDescriptor;
     DescriptorServiceFactory.saveDescriptor = _saveDescriptor;
+
+
     return DescriptorServiceFactory
 }
 

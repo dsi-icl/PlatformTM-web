@@ -137,32 +137,32 @@ var managerConfig = function($stateProvider){
                 }]
             }
         })
-        .state('define.activity',{
-            url:'/activities/{activityId}',
-            templateUrl: "admin/activities/activityConfig.html",
+        .state('define.dataset',{
+            url:'/datasets/{datasetId}',
+            templateUrl: "admin/datasets/primaryDatasetConfig.html",
             controller: "ActivityConfigCtrl as vm",
             resolve: {
                 loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                     console.log("loading service");
-                    return $ocLazyLoad.load('admin/activities/activityConfig-service.js');
+                    return $ocLazyLoad.load('admin/datasets/primaryDatasetConfig-service.js');
                 }],
                 loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
                     console.log("loading controller");
-                    return $ocLazyLoad.load('admin/activities/activityConfig-controller.js');
+                    return $ocLazyLoad.load('admin/datasets/primaryDatasetConfig-controller.js');
                 }]
             }
         })
         .state('define.assay',{
             url:'/assays/{assayId}',
-            templateUrl: "admin/activities/assayConfig.html",
+            templateUrl: "admin/datasets/assayConfig.html",
             controller: "AssayConfigCtrl as vm",
             resolve: {
                 loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
                     console.log("loading service");
-                    return $ocLazyLoad.load('admin/activities/assayConfig-service.js');
+                    return $ocLazyLoad.load('admin/datasets/assayConfig-service.js');
                 }],
                 loadController:['$ocLazyLoad',function($ocLazyLoad){
-                    return $ocLazyLoad.load(['admin/activities/assayConfig-controller.js'
+                    return $ocLazyLoad.load(['admin/datasets/assayConfig-controller.js'
                     ]);
                 }]
             }

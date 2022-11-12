@@ -8,39 +8,6 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
     var project;
     vm.projectId = $stateParams.projectId;
 
-    // if($stateParams.projectId === 'new'){
-    //     console.log("New Project");
-    //     project = new projectService.getProjectResource();
-    //     project.isNew = true;
-    //     project.status = "New";
-    //     project.studies = [];
-    //     vm.project = project;
-    //
-    //     var modalInstance = $uibModal.open({
-    //         templateUrl: 'admin/project/newForm.html',
-    //         controller: function ($uibModalInstance) {
-    //             var modalCtrl = this;
-    //             modalCtrl.ok = function () {
-    //
-    //                 console.log(modalCtrl.project)
-    //                 vm.project.name = modalCtrl.project.name;
-    //                 vm.project.title = modalCtrl.project.title;
-    //                 vm.saveProject();
-    //                 $uibModalInstance.close();
-    //             };
-    //
-    //             modalCtrl.cancel = function () {
-    //                 $uibModalInstance.dismiss('cancel');
-    //                 vm.dontSaveProject();
-    //
-    //             };
-    //         },
-    //         controllerAs: 'modalCtrl'
-    //     });
-    //     vm.ready = true
-    // }
-
-
     if($stateParams.projectId){
         projectService.getProjectResource.getProjectByAccession({ projectId: $stateParams.projectId },
             function(response){
@@ -55,13 +22,13 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
             vm.assays = response;
         });
 
-        projectService.getProjectResource.getClinicalAssessments({projectId:vm.projectId},function(response){
-            vm.clinicalAssessments = response;
+        projectService.getProjectResource.getClinicalDatasets({projectId:vm.projectId},function(response){
+            vm.clinicalDatasets = response;
         });
 
-        projectService.getProjectResource.getSubjDataCollection({projectId:vm.projectId},function(response){
-            vm.subjDataCollection = response;
-        });
+        // projectService.getProjectResource.getSubjDataCollection({projectId:vm.projectId},function(response){
+        //     vm.subjDataCollection = response;
+        // });
 
         projectService.getProjectUsers(vm.projectId).then(function(users){
             vm.users = users;
@@ -83,11 +50,11 @@ function projectController($scope, $state, $stateParams,projectService,toaster, 
         $state.go('datastage.upload', {dir: $stateParams.dir})
     }
 
-    vm.goToActivity = function(activity,edit){
-        if(activity.isAssay)
+    vm.goToDataset = function(dataset,edit){
+        if(dataset.isAssay)
             $state.go('define.assay',{ projectId:vm.projectId, assayId: activity.id, edit:edit})
         else
-            $state.go('define.activity',{ projectId:vm.projectId, activityId: activity.id, edit:edit})
+            $state.go('define.dataset',{ projectId:vm.projectId, datasetId: dataset.id, edit:edit})
     }
     
     vm.goToSubjectCollection = function (activity,edit) {
