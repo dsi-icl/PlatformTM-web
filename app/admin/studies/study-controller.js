@@ -83,7 +83,7 @@ function studyController($scope, $state, $stateParams, StudyService, toaster) {
     }
 
     vm.checkIfSaved = function (assessmentId) {
-        if (vm.studyId != 0) {
+        if (vm.studyId == 0) {
             toaster.warning("Warning", "Please save study before adding assessments!")
 
             return
