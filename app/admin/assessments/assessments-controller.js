@@ -46,7 +46,6 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
     else if ($stateParams.assessmentId) {
         AssessmentService.getAssessmentResource.get({ studyId: $stateParams.studyId, assessmentId: $stateParams.assessmentId }, function (response) {
             assessment = response;
-            console.log(response)
             assessment.isNew = false;
             // assessment.studyId = $stateParams.studyId;
             // assessment.status = "Not started";
@@ -66,12 +65,6 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
     }
 
     vm.dontSaveAssessment = function () {
-        if ($stateParams.assessmentId == 0) {
-            vm.assessment.$delete({ studyId: $stateParams.studyId, assessmentId: vm.assessment.id }, function (response) {
-
-            })
-
-        }
         vm.assessment = {}
         $state.go('define.study.main', {
             projectId: vm.projectId,
@@ -104,37 +97,25 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
             //     });
             // }
 
-            console.log("assessment before saving", vm.assessment)
-            vm.assessment.$update({ studyId: $stateParams.studyId, assessmentId: vm.assessment.id }, function (response) {
-                console.log("saved assessment", response)
-                toaster.pop('success', "SUCCESS", vm.assessment.name, " was successfully saved.", 8000);
 
-                $state.go('define.study.assessments', {
-                    projectId: vm.projectId,
-                    studyId: vm.studyId,
-                    assessmentId: response.id
-                }, {
-                    reload: true
+            vm.assessment.$update({ studyId: $stateParams.studyId, assessmentId: vm.assessment.id }, function (response) {
+                toaster.pop('success', "SUCCESS", vm.assessment.name, " was successfully saved.", 8000);
+                $state.transitionTo('define.study.main', $stateParams, {
+                    reload: true,
+                    inherit: false,
+                    notify: true
                 });
+                // $state.go('define.study.assessments', {
+                //     projectId: vm.projectId,
+                //     studyId: vm.studyId,
+                //     assessmentId: response.id
+                // }, {
+                //     reload: true
+                // });
             });
         } else
             toaster.warning("Warning", "Assessment has no name!")
     };
-
-    $scope.$on('$stateChangeStart', function (event) {
-        if ($stateParams.assessmentId == 0) {
-            var answer = confirm("Are you sure you want to leave this page without saving?")
-            if (!answer) {
-                event.preventDefault();
-            }
-            else {
-                vm.assessment.$delete({ studyId: $stateParams.studyId, assessmentId: vm.assessment.id }, function (response) {
-                })
-            }
-        }
-
-
-    });
 
 
 
