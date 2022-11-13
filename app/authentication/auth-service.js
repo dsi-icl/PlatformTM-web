@@ -186,7 +186,7 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
                 angular.forEach(permissions, function(permission, index){
                     if(projectId)
                         permission = permission+"-"+projectId;
-                    // console.log('looking for ',permission,'in', userpermissions)
+                     // console.log('looking for ',permission,'in', userpermissions)
                     if (userpermissions.indexOf(permission) >= 0){
                         found = true;
                         return;
@@ -196,7 +196,7 @@ function authService($http, $q, $window, localStorageService, userSession, ngApp
             if(angular.isString(permissions)){
                 if(projectId)
                     permissions = permissions+"-"+projectId;
-                // console.log('looking for ',permissions,'in', userpermissions)
+                 // console.log('looking for ',permissions,'in', userpermissions)
                 if (userpermissions.indexOf(permissions) >= 0){
                     found = true;
                     //return;

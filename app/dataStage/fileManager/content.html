@@ -11,7 +11,7 @@
     </ol>
 
     <div ng-show="driveVM.showControls" class=" btn-group pull-right" >
-        <button  ng-click="driveVM.load()" ng-show="!driveVM.fileSelected.isDirectory"  class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Load File"><i class="fa fa-arrow-right"></i><i class="fa fa-database"></i> </button>
+        <button ng-click="driveVM.load()" ng-show="!driveVM.fileSelected.isDirectory"  class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Load File"><i class="fa fa-arrow-right"></i><i class="fa fa-database"></i> </button>
         <button  project = "driveVM.projectId" ng-click="driveVM.unload()" ng-show="!driveVM.fileSelected.isDirectory && driveVM.fileSelected.isLoaded" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Unload file from DB"><i class="fa fa-database"></i><i class="fa fa-arrow-right"></i></button>
         <button ng-click="driveVM.openF()" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Preview"><i class="fa fa-eye"></i></button>
         <button ng-click="driveVM.downloadFile()" ng-if="!driveVM.fileSelected.isDirectory" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Download File"><i class="fa fa-download"></i></button>

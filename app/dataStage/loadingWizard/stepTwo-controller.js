@@ -16,11 +16,11 @@ function stepTwoController($scope,$state,$stateParams,wizardService){
     $scope.$parent.wzCtrl.datasetId = $stateParams.datasetId;
 
 
-    wizardService.checkValidTemplate(vm.datasetId,vm.fileId)
-        .then(function(file){
-            vm.file = file;
-            vm.checked = true
-        });
+    // wizardService.checkValidTemplate(vm.datasetId,vm.fileId)
+    //     .then(function(file){
+    //         vm.file = file;
+    //         vm.checked = true
+    //     });
 
 
     $scope.goToActivity = function(){

@@ -13,8 +13,8 @@
 
         var projectId = $stateParams.projectId;
 
-        wizardService.getActivities(projectId).then(function(activities){
-                vm.activities = activities;
+        wizardService.getProjectDatasets(projectId).then(function(studies){
+                vm.studies = studies;
         })
 
 

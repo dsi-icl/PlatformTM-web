@@ -21,6 +21,7 @@ function ActivityConfigCtrl($scope,$state, $stateParams, PrimaryDatasetConfigSer
 
     var dataset;
     if($stateParams.datasetId==0){
+
         console.log("New dataset");
         dataset = new PrimaryDatasetConfigService.getPrimaryDatasetResource();
         dataset.projectId = $stateParams.projectId;//"Study1"

@@ -16,12 +16,14 @@ var hasPermission =  function(authService) {
 
             var notPermissionFlag = value[0] === '!';
 
-            console.log(notPermissionFlag)
+
             if(notPermissionFlag) {
                 value = value.slice(1).trim();
             }
 
+
             authService.userHasPermission(value,scope.project).then(function(haspermission){
+                // console.log(haspermission)
                 if(haspermission && !notPermissionFlag || !haspermission && notPermissionFlag) {
                             element[0].style.display = 'initial';
                 } else {

@@ -1,25 +1,41 @@
 <fieldset>
-    <h5>Select an activity to load data to</h5>
+
+
 
     <div class="row">
         <div class="col-lg-12">
-
-            <div>
-                <select class="form-control m-b" name="activitySelect" id="activitySelect"
-                        data-ng-model="step1Ctrl.selectedActivity" ng-options="activity.name for activity in step1Ctrl.activities">
+            <div class="p-xs">
+                <h3>Which study are you loading data to?</h3>
+                <select class="form-control m-b" name="studySelect" id="studySelect"
+                        data-ng-model="step1Ctrl.selectedStudy" ng-options="study.studyName for study in step1Ctrl.studies">
                 </select>
             </div>
 
-            <div ng-if="step1Ctrl.selectedActivity!=null">
-                <h5>Associated Datasets</h5>
-                <div ng-repeat="ds in step1Ctrl.selectedActivity.datasets">
-                    <label> <input required icheck type="radio" name="radioDSselect" ng-model="step1Ctrl.selectedDataset" ng-value="ds"> {{ds.name}}&nbsp;&nbsp;({{ds.domainId}}) </label>
+            <div class="p-xs">
+                <h3> Which {{step1Ctrl.selectedStudy.studyName}} Assessment ? </h3>
+                <select ng-disabled="!step1Ctrl.selectedStudy" class="form-control m-b" name="assessmentSelect" id="assessmentSelect"
+                        data-ng-model="step1Ctrl.selectedAssessment" ng-options="assessment.name for assessment in step1Ctrl.selectedStudy.studyAssessments">
+                </select>
+            </div>
+            <div class="p-xs" ng-if="step1Ctrl.selectedAssessment!=null">
+                <h3> Which {{step1Ctrl.selectedAssessment.name}} Dataset?</h3>
+                <div ng-repeat="ds in step1Ctrl.selectedAssessment.associatedDatasets">
+                    <label > <input required icheck type="radio" name="radioDSselect" ng-model="step1Ctrl.selectedDataset" ng-value="ds">
+                        <span class="p-sm"> {{ds.title}} ({{ds.acronym}}) </span></label>
+                </div>
+                <div uib-alert class=" alert-info" ng-if="!step1Ctrl.selectedAssessment.associatedDatasets.length>0">
+                    <h4>No Primary Datasets have been associated with {{step1Ctrl.selectedAssessment.name}} assessment</h4>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12 p-md">
+            <a ng-click="wzCtrl.goToStep2(step1Ctrl.selectedAssessment.id,step1Ctrl.selectedDataset.id)" data-ng-disabled="!step1Ctrl.selectedDataset || !step1Ctrl.selectedAssessment" class="btn btn-primary pull-right">Next</a>
+            <a ng-click="wzCtrl.cancel()"  class="btn btn-primary ">Cancel</a>
+        </div>
+    </div>
 
-    <a ng-click="wzCtrl.goToStep2(step1Ctrl.selectedActivity.id,step1Ctrl.selectedDataset.id)" data-ng-disabled="!step1Ctrl.selectedDataset || !step1Ctrl.selectedActivity" class="btn btn-primary pull-right">Next</a>
-    <a ng-click="wzCtrl.cancel()"  class="btn btn-primary ">Cancel</a>
+
 
 </fieldset>

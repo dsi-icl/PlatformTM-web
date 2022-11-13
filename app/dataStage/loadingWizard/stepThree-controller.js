@@ -23,21 +23,21 @@ function stepThreeController($scope, $state, $stateParams, DTOptionsBuilder, $re
     vm.showDT= false;
     vm.dtColumns=[];
 
-    wizardService.getDataTablePreview(fileId)
-        .then(function(result){
-            vm.dtColumns = result.tableHeader;
-            vm.showDT = true;
-            //vm.fileName = result.file.fileName;
-            //vm.file = result.file;
-            //vm.folders = result.folders;
+    // wizardService.getDataTablePreview(fileId)
+    //     .then(function(result){
+    //         vm.dtColumns = result.tableHeader;
+    //         vm.showDT = true;
+    //         //vm.fileName = result.file.fileName;
+    //         //vm.file = result.file;
+    //         //vm.folders = result.folders;
+    //
+    //     });
 
-        });
-
-    vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
-        return wizardService.getDataTableData();
-    })
-        .withPaginationType('simple')
-        .withOption('scrollX', true);
+    // vm.dtOptions = DTOptionsBuilder.fromFnPromise(function(){
+    //     return wizardService.getDataTableData();
+    // })
+    //     .withPaginationType('simple')
+    //     .withOption('scrollX', true);
 }
 
 angular.module('bioSpeak.import')

@@ -14,7 +14,7 @@
 
         var _getDirContent = function (projectId,dirId) {
             return $http({
-                url: serviceBase + 'files/projects/'+projectId+'/drive/'+dirId,
+                url: serviceBase + 'file-management/projects/'+projectId+'/drive/'+dirId,
                 method: 'GET'
             }).then(
                 function (response) {
@@ -26,7 +26,7 @@
         var _getDirectories= function (projectId) {
 
             return $http({
-                url: serviceBase + 'files/projects/'+projectId+'/drive/directories/',
+                url: serviceBase + 'file-management/projects/'+projectId+'/drive/folders/',
                 method: 'GET'
             }).then(
                 function (response) {
@@ -41,7 +41,7 @@
 
             $http({
                 method: 'GET',
-                url: serviceBase + 'files/' + fileId+'/download'
+                url: serviceBase + 'file-management/files/' + fileId+'/download'
                 //params: {fileId: fileId},
                 //responseType: ''
             }).success(function (data, status, headers) {
@@ -63,7 +63,7 @@
 
         var _createDirectory= function (projectId,folder) {
             return $http({
-                url: serviceBase + 'files/projects/'+projectId+'/folder/create',
+                url: serviceBase + 'file-management/projects/'+projectId+'/drive/folders',
                 method: 'POST',
                 data: angular.toJson(folder)
 
@@ -78,7 +78,7 @@
 
         var _deleteFile = function(fileId){
             return $http({
-                url: serviceBase + 'files/'+fileId+'/remove',
+                url: serviceBase + 'file-management/files/'+fileId+'/remove',
                 method: 'GET',
             }).then(
                 function (response) {
@@ -105,7 +105,7 @@
         var _getDataTablePreview = function(fileId){
             // console.log(fileId);
             var deferred = $q.defer();
-            $http.get(serviceBase + 'files/'+fileId+'/preview/')
+            $http.get(serviceBase + 'file-management/files/'+fileId+'/preview/')
                 .success(function (response) {
                     var dtColumns = [];
                     response.data.columns.forEach(function(col){

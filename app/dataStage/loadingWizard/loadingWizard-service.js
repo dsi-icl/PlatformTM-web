@@ -48,10 +48,10 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     }
 
-    var _getActivities = function(projectId){
+    var _getProjectDatasets = function(projectId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'projects/'+projectId+'/allactivities/')
+        $http.get(serviceBase + 'data-loading/projects/'+projectId+'/study-assessments/')
             .success(function (response) {
                 deferred.resolve(response);
             })
@@ -181,7 +181,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _initLoading = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'files/'+fileId+'/initload/datasets/'+datasetId)
+        $http.get(serviceBase + 'data-loading/files/'+fileId+'/initload')
             .success(function (response) {
                 console.debug("Loading Initiated",response)
                 deferred.resolve(response);
@@ -191,7 +191,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _loadDataset = function(datasetId, fileId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'files/'+fileId+'/load/datasets/'+datasetId)
+        $http.get(serviceBase + 'data-loading/files/'+fileId+'/load-to/datasets/'+datasetId)
             .success(function (response) {
                 console.debug("LOAD DATASET Inside http get success",response)
                 deferred.resolve(response);
@@ -201,7 +201,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
 
     var _getLoadingProgress = function(fileId){
         return $http({
-            url: serviceBase + 'files/' + fileId+'/progress',
+            url: serviceBase + 'data-loading/files/' + fileId+'/progress',
             method: 'GET',
         }).then(
             function (response) {
@@ -222,7 +222,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     };
 
     wizardServiceFactory.checkValidTemplate = _checkValidTemplate;
-    wizardServiceFactory.getActivities = _getActivities;
+    wizardServiceFactory.getProjectDatasets = _getProjectDatasets;
     wizardServiceFactory.getTemplateMap = _getTemplateMap;
     wizardServiceFactory.mapFileToTemplate = _mapFileToTemplate;
     wizardServiceFactory.getDataTablePreview = _getDataTablePreview;
