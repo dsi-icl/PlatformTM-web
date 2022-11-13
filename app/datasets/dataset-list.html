@@ -17,7 +17,7 @@
 
             <div class="wrapper-content dataset-list">
 
-                <div ng-repeat="ds in vm.clinicalDatasets | filter:vm.searchDS">
+                <div ng-repeat="ds in vm.datasets | filter:vm.searchDS">
                     <div class="ibox">
                         <!--                        <div class="ibox-title panel-header ">-->
                         <!--                    -->
@@ -29,33 +29,76 @@
                             <div class=" row">
                                 <div class="col-md-12">
                                     <dl class="dl-horizontal">
-                                        <dt>Dataset Title</dt>
-                                        <dd>
-                                            <div class="col-md-6">
-                                                <a ui-sref="project.datasets.dataset({datasetId:ds.id})">{{ds.name}}</a>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <dt>Dataset Name</dt>
+                                                <dd>
+                                                    <a ui-sref="project.datasets.dataset({datasetId:ds.id})">{{ds.acronym}}</a>
+                                                </dd>
                                             </div>
-                                        </dd>
+                                            <div class="col-lg-6">
+                                                <dt>Created</dt>
+                                                <dd>
+                                                    <span>{{ds.dateCreated}}</span>
+                                                </dd>
+                                            </div>
+                                        </div>
+
                                         <div class="hr-line-dashed"></div>
-                                        <dt>Project: </dt>
-                                        <dd>
-                                            <div class="col-md-6">
-                                                <a>UNICORN</a>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <dt>Dataset Title</dt>
+                                                <dd>
+                                                    <span>{{ds.title}}</span>
+                                                </dd>
                                             </div>
-                                        </dd>
+                                            <div class="col-lg-6">
+                                                <dt>Last Modified</dt>
+                                                <dd>
+                                                    <span>{{ds.dateModified}}</span>
+                                                </dd>
+                                            </div>
+                                        </div>
+
                                         <div class="hr-line-dashed"></div>
-                                        <dt>Study:</dt>
-                                        <dd>
-                                            <div class="col-md-6">
-                                                <a>Manchester Asthma and Allergy Study (MAAS)</a>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <dt>Project: </dt>
+                                                <dd>
+                                                    <span>{{ds.projectName}}</span>
+                                                </dd>
                                             </div>
-                                        </dd>
+                                            <div class="col-lg-6">
+                                                <dt>Version: </dt>
+                                                <dd>
+                                                    <span>v1.0</span>
+                                                </dd>
+                                            </div>
+                                        </div>
+
                                         <div class="hr-line-dashed"></div>
-                                        <dt>Number of Subjects:</dt>
-                                        <dd>
-                                            <div class="col-md-6">
-                                                <span>1184</span>
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <dt>Study:</dt>
+                                                <dd>
+                                                    <div>
+                                                        <span>{{ds.studyNames[0]}} ({{ds.studyAccronyms[0]}})</span>
+                                                    </div>
+                                                </dd>
+                                                <div class="hr-line-dashed"></div>
+                                                <dt>Number of Subjects:</dt>
+                                                <dd>
+                                                    <div>
+                                                        <span></span>
+                                                    </div>
+                                                </dd>
                                             </div>
-                                        </dd>
+
+                                        </div>
+
                                         <!-- <div class="hr-line-dashed"></div>
                                     <dt>Observed Features:</dt>
                                     <dd>
@@ -89,6 +132,7 @@
                                         <!--                                    </dd>-->
                                     </dl>
                                 </div>
+
                             </div>
                             <!--                        <div class="hr-line-solid"></div>-->
                         </div>

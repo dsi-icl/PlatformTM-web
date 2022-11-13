@@ -22,15 +22,13 @@ function config($stateProvider, $urlRouterProvider) {
             templateUrl: "datasets/dataset-list.html",
             controller: "DatasetListCtrl as vm",
             resolve: {
-                loadDependency: ['$ocLazyLoad', function ($ocLazyLoad) {
-                    return $ocLazyLoad.load(
-                        {
-                            serie: true,
-                            files: [
-                                'datasets/datasetList-controller.js'
-                            ]
-                        }
-                    )
+                loadService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    console.log("loading service");
+                    return $ocLazyLoad.load('datasets/dataset-service.js');
+                }],
+                loadController: ['$ocLazyLoad', function ($ocLazyLoad) {
+                    console.log("loading controller");
+                    return $ocLazyLoad.load('datasets/datasetList-controller.js');
                 }]
             }
 
@@ -66,7 +64,7 @@ function config($stateProvider, $urlRouterProvider) {
                             ]);
                         }]
                     },
-                    controller: 'DatasetCtrl as expVM'
+                    controller: 'DatasetCtrl as vm'
                 },
                 'clinical-explorer@project.datasets.dataset': {
                     templateUrl: 'datasets/clinical-explorer/clinical-explorer.html',

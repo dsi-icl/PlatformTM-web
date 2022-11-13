@@ -1,4 +1,4 @@
-function DatasetListCtrl($scope, $state, $stateParams, projService) {
+function DatasetListCtrl($scope, $state, $stateParams, datasetService) {
     var vm = this;
     vm.projectId = $stateParams.projectId;
 
@@ -7,11 +7,11 @@ function DatasetListCtrl($scope, $state, $stateParams, projService) {
     //     vm.loaded = true;
     // });
 
-    projService.getProjectClinicalDatasets(vm.projectId).then(function (response) {
-        vm.clinicalDatasets = response;
+    datasetService.getPrimaryDatasetResource.getAllProjectDatasets({projectId:vm.projectId},function (response) {
+        vm.datasets = response;
         vm.cdsLoaded = true;
     });
 }
 
 angular.module('bioSpeak.datasets')
-    .controller('DatasetListCtrl', ['$scope', '$state', '$stateParams', 'projService', DatasetListCtrl]);
+    .controller('DatasetListCtrl', ['$scope', '$state', '$stateParams', 'datasetService', DatasetListCtrl]);

@@ -33,7 +33,7 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
     var _getFile = function(fileId){
         var deferred = $q.defer();
 
-        $http.get(serviceBase + 'files/'+fileId)
+        $http.get(serviceBase + 'file-management/files/'+fileId)
             .success(function (response) {
                 //console.log("Inside http get success",response)
 

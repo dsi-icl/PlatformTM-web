@@ -42,11 +42,11 @@ function DatasetCtrl($scope, $state, $filter, $stateParams, datasetService) {
         //plot functionality....
     }
 
-    datasetService.getDataSet(vm.datasetId)
-        .then(function (data) {
-            console.log("clinical dataset", data)
-            vm.datasetInfo = data;
-        })
+    datasetService.getPrimaryDatasetResource.get({datasetId:vm.datasetId, projectId:vm.projectId},function(data){
+        console.log("clinical dataset", data)
+        vm.dataset = data;
+    })
+
 
 
     datasetService.getDescriptorResource.getDescriptorView({
