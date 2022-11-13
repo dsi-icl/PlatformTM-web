@@ -160,7 +160,7 @@
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-right plotting-options"
                                             uib-dropdown-menu>
-                                            <li><a
+                                            <li><a on-click="vm.checkIfSaved()"
                                                     ui-sref="define.assessments({projectId:vm.projectId,studyId:vm.studyId,assessmentId:0})">&nbsp;
                                                     Define new assessment</a></li>
 

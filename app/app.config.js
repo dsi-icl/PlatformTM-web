@@ -3,39 +3,39 @@
  */
 var biospeakApp = angular.module('biospeak.app')
 
-    .run(function($rootScope, $location,$state, $uibModalStack,AUTH_EVENTS, authService){
+    .run(function ($rootScope, $location, $state, $uibModalStack, AUTH_EVENTS, authService) {
 
-        $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
+        $rootScope.$on(AUTH_EVENTS.notAuthenticated, function () {
             $location.path('/login');
         });
 
-        $rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
+        $rootScope.$on(AUTH_EVENTS.notAuthorized, function () {
             console.log($state)
             $state.go('project.403');
         });
 
-        $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
+        $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
             $state.go('home.dashboard');
         });
 
-        $rootScope.$on(AUTH_EVENTS.accountCreated, function() {
+        $rootScope.$on(AUTH_EVENTS.accountCreated, function () {
             $state.go('confirm');
         });
 
         $rootScope.$on('$stateChangeStart', function (event, next, toParams, fromState, fromParams, options) {
 
-            authService.checkPermissionForView(next,toParams).then(function (isAllowed) {
-              if(!isAllowed){
-                  event.preventDefault();
-                  $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-              }
+            authService.checkPermissionForView(next, toParams).then(function (isAllowed) {
+                if (!isAllowed) {
+                    event.preventDefault();
+                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                }
                 $uibModalStack.dismissAll();
             })
 
         });
 
 
-        $rootScope.$on('$stateChangeSuccess', function() {
+        $rootScope.$on('$stateChangeSuccess', function () {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         });
 

@@ -31,7 +31,7 @@ function studyController($scope, $state, $stateParams, StudyService, toaster) {
             study.isNew = false;
             vm.study = study
 
-            StudyService.getAllAssessments.get({ studyId: $stateParams.studyId }, function (response) {
+            StudyService.getAllAssessments.query({ studyId: $stateParams.studyId }, function (response) {
                 console.log("querying for assessments", response)
                 vm.study.assessments = response;
             })

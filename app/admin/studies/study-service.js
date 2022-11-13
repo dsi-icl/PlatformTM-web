@@ -9,11 +9,17 @@ function StudyService($resource, ngAppConfig) {
     console.log(serviceBase);
 
 
-    var _assessmentResource = $resource(serviceBase + 'studies/:studyId/assessments', {}, {
+    var _assessmentResource = $resource(serviceBase + 'study-management/studies/:studyId/assessments', { studyId: '@studyId', assessmentId: '@assessmentId' }, {
         getAllAssessments: {
             method: 'GET',
-            params: { studyId: '@id' },
-            isArray: true
+            params: { studyId: '@id' }
+        },
+        getAssessment: {
+            url: 'study-management/studies/:studyId/assessments/:assessmentId',
+            method: 'GET',
+            params: { studyId: '@studyId', assessmentId: '@assessmentId' },
+            isArray: false
+
         }
     })
 

@@ -4,6 +4,7 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
 
     vm.projectId = $stateParams.projectId;
     vm.studyId = $stateParams.studyId;
+    vm.assessmentId = $stateParams.assessmentId;
     $scope.$parent.vm.stateName = "Define Assessments";
     $scope.$parent.vm.goBack = function () {
         $state.go('define.study.main', {
@@ -24,15 +25,15 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
         assessment.description = null;
         assessment.studyId = $stateParams.studyId;
         assessment.name = null;
-        // assessment.associatedDatasets = [
-        //     {
-        //         "id": 0,
-        //         "title": "title1",
-        //         "description": "description1",
-        //         "domain": "domain1",
-        //         "isSelected": false
-        //     }
-        // ]
+
+        //New assessment to be retrieved here
+
+        // assessment.$save({ studyId: $stateParams.studyId }, function (response) {
+        //     //toaster.pop('success', "SUCCESS", vm.assessment.name, " was successfully CREATED.", 8000);
+        //     console.log("newly created object", response)
+        //     assessment.associatedDatasets = response.associatedDatasets;
+
+        // });
 
         vm.assessment = assessment;
 
@@ -45,9 +46,13 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
     else if ($stateParams.assessmentId) {
         AssessmentService.getAssessmentResource.get({ studyId: $stateParams.studyId, assessmentId: $stateParams.assessmentId }, function (response) {
             assessment = response;
+            console.log(response)
             assessment.isNew = false;
+            // assessment.studyId = $stateParams.studyId;
+            // assessment.status = "Not started";
+            // assessment.description = "TEST"
             vm.assessment = assessment
-            console.log(vm.assessment);
+
 
             // AssessmentService.getDatasetResource.query(function (response) {
             //     console.log("querying for datasets", response)
@@ -61,6 +66,12 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
     }
 
     vm.dontSaveAssessment = function () {
+        if ($stateParams.assessmentId == 0) {
+            vm.assessment.$delete({ studyId: $stateParams.studyId, assessmentId: vm.assessment.id }, function (response) {
+
+            })
+
+        }
         vm.assessment = {}
         $state.go('define.study.main', {
             projectId: vm.projectId,
@@ -72,30 +83,58 @@ function AssessmentController($scope, $state, $stateParams, $timeout, SweetAlert
     vm.saveAssessment = function () {
         if (vm.assessment.name != null && vm.assessment.name !== '') {
 
-            if (vm.assessment.isNew) {
-                vm.assessment.$save({ studyId: $stateParams.studyId }, function (response) {
-                    toaster.pop('success', "SUCCESS", vm.assessment.name, " was successfully CREATED.", 8000);
-                    $state.transitionTo('define.study.main', $stateParams, {
-                        reload: true,
-                        inherit: false,
-                        notify: true
-                    });
+            // if (vm.assessment.isNew) {
+            //     vm.assessment.$save({ studyId: $stateParams.studyId }, function (response) {
+            //         toaster.pop('success', "SUCCESS", vm.assessment.name, " was successfully CREATED.", 8000);
+            //         $state.transitionTo('define.study.main', $stateParams, {
+            //             reload: true,
+            //             inherit: false,
+            //             notify: true
+            //         });
+            //     });
+            // }
+            // else {
+            //     vm.assessment.$update({ studyId: $stateParams.studyId }, function (response) {
+            //         toaster.pop('success', "SUCCESS", vm.assessment.name, " was successfully UPDATED.", 8000);
+            //         $state.transitionTo('define.study.main', $stateParams, {
+            //             reload: true,
+            //             inherit: false,
+            //             notify: true
+            //         });
+            //     });
+            // }
+
+            console.log("assessment before saving", vm.assessment)
+            vm.assessment.$update({ studyId: $stateParams.studyId, assessmentId: vm.assessment.id }, function (response) {
+                console.log("saved assessment", response)
+                toaster.pop('success', "SUCCESS", vm.assessment.name, " was successfully saved.", 8000);
+
+                $state.go('define.study.assessments', {
+                    projectId: vm.projectId,
+                    studyId: vm.studyId,
+                    assessmentId: response.id
+                }, {
+                    reload: true
                 });
-            }
-            else {
-                vm.assessment.$update({ studyId: $stateParams.studyId }, function (response) {
-                    toaster.pop('success', "SUCCESS", vm.assessment.name, " was successfully UPDATED.", 8000);
-                    $state.transitionTo('define.study.main', $stateParams, {
-                        reload: true,
-                        inherit: false,
-                        notify: true
-                    });
-                });
-            }
+            });
         } else
             toaster.warning("Warning", "Assessment has no name!")
     };
 
+    $scope.$on('$stateChangeStart', function (event) {
+        if ($stateParams.assessmentId == 0) {
+            var answer = confirm("Are you sure you want to leave this page without saving?")
+            if (!answer) {
+                event.preventDefault();
+            }
+            else {
+                vm.assessment.$delete({ studyId: $stateParams.studyId, assessmentId: vm.assessment.id }, function (response) {
+                })
+            }
+        }
+
+
+    });
 
 
 

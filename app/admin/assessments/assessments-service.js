@@ -24,9 +24,9 @@ function AssessmentService($resource, ngAppConfig) {
     //     }
     // });
 
-    var _assessmentResource = $resource(serviceBase + 'studies/:studyId/assessments/:assessmentId', { studyId: '@studyId', assessmentId: '@assessmentId' }, {
+    var _assessmentResource = $resource(serviceBase + 'study-management/studies/:studyId/assessments/:assessmentId',
+        { studyId: '@studyId', assessmentId: '@id' }, {
         update: {
-            url: serviceBase + 'studies/:studyId/assessments/:assessmentId',
             method: 'PUT',
             params: { studyId: '@studyId', assessmentId: '@assessmentId' }
         }
