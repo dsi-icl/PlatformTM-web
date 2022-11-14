@@ -27,7 +27,26 @@ function ClinicalDataService($http, $q, localStorageService, ngAppConfig) {
                     });
         },
 
-        getClinicalDataTree: function (projectId) {
+        getFeatures:function (datasetId) {
+            return $http({
+                url: serviceBase + 'dataset-explorer/datasets/' + datasetId + '/features',
+                method: 'GET',
+                //data: angular.toJson(observations)
+            })
+                .then(
+                    function (response) {
+                        return {
+                            response
+                        }
+                    },
+                    function (httpError) {
+                        // translate the error
+                        throw httpError.status + " : " +
+                        httpError.data;
+                    });
+        },
+
+        getClinicalDataTree: function (datasetId) {
             // var initData = localStorageService.get('ptm.explorer.'+projectId+'.clinical');
             // //if initData.timestamp < $scope.$parent.expVM.project.lastupdated
             // //then refresh from server
@@ -39,11 +58,11 @@ function ClinicalDataService($http, $q, localStorageService, ngAppConfig) {
             // else
             // {
             return $http({
-                url: serviceBase + 'apps/explore/projects/' + projectId + '/observations/clinical/browse',
+                url: serviceBase + 'dataset-explorer/datasets/' + datasetId,
                 method: 'GET',
                 cache: true,
             }).then(function (response) {
-                localStorageService.set('ptm.explorer.' + projectId + '.clinical', { treeData: (response.data) });
+                localStorageService.set('ptm.explorer.' + datasetId + '.clinical', { treeData: (response.data) });
                 return {
                     treeData: (response.data)
                 }

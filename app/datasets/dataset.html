@@ -92,12 +92,26 @@
                     </div> -->
                     <div class="row m-t-sm">
                         <div class="col-lg-12">
-                            <div class="panel blank-panel ui-tab">
+                            <div>
 
-                                <uib-tabset>
+                                <div class="p-w-sm text-right" style="margin: 0px -15px;">
+                                    <span style="font-size:16px;margin-top:-5px;">
+                                       <a><i class="p-xs fa fa-download"> </i>
+<!--                                        <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>-->
+<!--                                        <a ng-init="vm.showFeatureTemplates = false" ng-click="vm.showFeatureTemplates = !vm.showFeatureTemplates;vm.loadAssayFeatureTemplates()">-->
+<!--                                            <i uib-tooltip="{{vm.assay.featuresDataset ? 'Change Template':'Choose Template'}}" class="p-xs fa fa-edit"></i>-->
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+                                <uib-tabset class="tab-panel">
 
                                     <uib-tab heading="Explore" active="tab.active">
 
+                                        <uib-tab-heading class="assay-info" align="center">
+                                            <p class="tab-info">EXPLORE</p>
+                                        </uib-tab-heading>
                                         <!-- explorer view goes here -->
                                         <section ui-view="clinical-explorer" id="explorer-section">
                                             <i>Explorer panel should load here</i>
@@ -107,6 +121,10 @@
                                     </uib-tab>
 
                                     <uib-tab heading="Dataset Descriptor" class="dsads">
+
+                                        <uib-tab-heading class="assay-info" align="center">
+                                            <p class="tab-info">Dataset Descriptor</p>
+                                        </uib-tab-heading>
                                         <div class="ibox-content">
 
                                             <div class="row">
@@ -361,6 +379,10 @@
                                     </uib-tab>
 
                                     <uib-tab heading="Preview Dataset" class="dsads">
+                                        <uib-tab-heading class="assay-info" align="center">
+                                            <p class="tab-info">Preview Dataset</p>
+                                        </uib-tab-heading>
+
                                         <div class="ibox-content">
                                             <div uib-alert class="alert-info">
                                                 <h4>No Preview available.</h4>

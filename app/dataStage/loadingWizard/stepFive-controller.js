@@ -27,6 +27,10 @@
         $scope.$parent.wzCtrl.datasetId = $stateParams.datasetId;
 
         var progress;
+
+        vm.loadFile3 = function(){
+            wizardService.loadDataset(datasetId, fileId, vm.activityId);
+        }
         vm.loadFile2 = function(){
             vm.isLoading = true;
 

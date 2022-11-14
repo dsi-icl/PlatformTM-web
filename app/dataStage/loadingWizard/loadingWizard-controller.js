@@ -49,11 +49,11 @@ function wizardController($scope, $state, $stateParams,wizardService){
 
     };
 
-    vm.goToStep2 = function(activityId,datasetId){
+    vm.goToStep2 = function(assessmentId,datasetId){
         vm.datasetId= datasetId;
-        vm.activityId= activityId;
+        vm.assessmentId= assessmentId;
         $state.go('loader.wizard.step_two',{
-            activityId: activityId,
+            assessmentId: assessmentId,
             datasetId: datasetId ,
             fileId: vm.fileId});
 

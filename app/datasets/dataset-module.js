@@ -77,9 +77,19 @@ function config($stateProvider, $urlRouterProvider) {
                         }],
                         loadDirectives: ['$ocLazyLoad', function ($ocLazyLoad) {
                             return $ocLazyLoad.load('datasets/clinical-explorer/clinicalDataTree-directive.js');
+                        }],
+                        loadDependencies: ['$ocLazyLoad',function($ocLazyLoad){
+                            return $ocLazyLoad.load(
+                                {
+                                    serie: true,
+                                    files: ['explore/dc/dc-module.js','explore/dc/XfilterServices/AssayXF.js','explore/dc/XfilterServices/SubjectXF.js','lib/plugins/iCheck/custom.css', 'lib/plugins/iCheck/icheck.min.js',
+                                        'explore/dc/XfilterServices/ClinicalXF.js', 'explore/dc/XfilterServices/XFlinker.js', 'explore/dc/dc-service.js','explore/dc/dc-directives.js'
+                                    ]
+                                }
+                            )
                         }]
                     },
-                    controller: 'ClinicalCtrl',
+                    controller: 'ClinicalCtrl'
                 }
             }
         })

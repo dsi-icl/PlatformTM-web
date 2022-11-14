@@ -288,7 +288,7 @@ nav a {
     overflow: scroll;
     font-weight: bolder;
     -webkit-padding-start: 0px;
-    height: 136px;
+    height: 50px;
     border: 0;
 }
 
@@ -857,7 +857,7 @@ a.editable-select {
     /*overflow: scroll;*/
     font-weight: bolder;
     -webkit-padding-start: 0px;
-    height: 150px;
+    height: 50px;
     border: 0;
     /*display: table;*/
     width: 100%;
@@ -884,7 +884,7 @@ a.editable-select {
     border-radius: 0;
     border: 0;
     margin-right:0;
-    height: 150px;
+    height: 50px;
 }
 
 .tab-panel > ul li > a:hover, .tab-panel > ul li > a:focus {
@@ -917,7 +917,7 @@ a.editable-select {
 
 
 .tab-panel .tab-info {
-    padding-top: 10px;
+    /*padding-top: 10px;*/
     color: #F3F3F4;
     /*font-size: .5em;*/
 }

@@ -189,9 +189,9 @@ function wizardService($http, $q,ngAppConfig,localStorageService){
         return deferred.promise;
     };
 
-    var _loadDataset = function(datasetId, fileId){
+    var _loadDataset = function(datasetId, fileId, assessmentId){
         var deferred = $q.defer();
-        $http.get(serviceBase + 'data-loading/files/'+fileId+'/load-to/datasets/'+datasetId)
+        $http.get(serviceBase + 'data-loading/files/'+fileId+'/load/datasets/'+datasetId+'/assessments/'+assessmentId)
             .success(function (response) {
                 console.debug("LOAD DATASET Inside http get success",response)
                 deferred.resolve(response);
