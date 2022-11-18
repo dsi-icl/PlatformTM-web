@@ -30,9 +30,9 @@
                             </div>
                             <div class="clinical-tree ">
                                 <ul>
-                                    <li ng-repeat="cDataset in vm.clinicalDatasets">
+                                    <li ng-repeat="cDataset in projVM.clinicalDatasets">
                                         <div class="list-item">
-                                            <i class="fa fa-table"></i> <span class="list-item-text">{{cDataset.name}}</span>
+                                            <i class="fa fa-table"></i> <span class="list-item-text">{{cDataset.title}}</span>
                                             <span ng-show="cDataset.loading" style="position: absolute; right: 100px;"><i class="fa fa-circle-o-notch fa-spin "></i><small> Preparing...</small></span>
                                             <a ng-hide="cDataset.ready || cDataset.loading" ng-click="vm.downloadDataset(cDataset)"
                                                style="position: absolute; right: 100px;">

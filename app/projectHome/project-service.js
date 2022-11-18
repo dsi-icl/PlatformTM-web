@@ -9,9 +9,29 @@ function projService($http,$resource, ngAppConfig) {
             method: 'PUT',
             params: {projectId: '@id'}
         },
-        getActivitiesForProject:{
+        // getActivitiesForProject:{
+        //     method: 'GET',
+        //     url : serviceBase+'projects/:projectId/activities',
+        //     isArray : true
+        // },
+        getSubjDataCollection:{
             method: 'GET',
-            url : serviceBase+'projects/:projectId/activities',
+            url : serviceBase+'projects/:projectId/subjDataCollection',
+            isArray : true
+        },
+        getDescriptors:{
+            method: 'GET',
+            url : serviceBase+'projects/:projectId/descriptors',
+            isArray : true
+        },
+        getClinicalDatasets:{
+            method: 'GET',
+            url : serviceBase+'projects/:projectId/datasets',
+            isArray : true
+        },
+        getAssays:{
+            method: 'GET',
+            url : serviceBase+'projects/:projectId/assays',
             isArray : true
         },
         getProjectByAccession:{

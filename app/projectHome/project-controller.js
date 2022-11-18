@@ -13,6 +13,10 @@ function ProjectHomeCtrl($scope,$state,$stateParams,projService) {
                 //vm.project = project
                 //vm.ready = true
             });
+
+        projService.getProjectResource.getClinicalDatasets({projectId:vm.projectId},function(response){
+            vm.clinicalDatasets = response;
+        });
     }
 }
 

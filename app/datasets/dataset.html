@@ -97,305 +97,183 @@
                                 <div class="p-w-sm text-right" style="margin: 0px -15px;">
                                     <span style="font-size:16px;margin-top:-5px;">
                                        <a><i class="p-xs fa fa-download"> </i>
-<!--                                        <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>-->
-<!--                                        <a ng-init="vm.showFeatureTemplates = false" ng-click="vm.showFeatureTemplates = !vm.showFeatureTemplates;vm.loadAssayFeatureTemplates()">-->
-<!--                                            <i uib-tooltip="{{vm.assay.featuresDataset ? 'Change Template':'Choose Template'}}" class="p-xs fa fa-edit"></i>-->
+                                           <!--                                        <a ng-click="vm.deleteDS()"><i class="p-xs fa fa-trash"> </i></a>-->
+                                           <!--                                        <a ng-init="vm.showFeatureTemplates = false" ng-click="vm.showFeatureTemplates = !vm.showFeatureTemplates;vm.loadAssayFeatureTemplates()">-->
+                                           <!--                                            <i uib-tooltip="{{vm.assay.featuresDataset ? 'Change Template':'Choose Template'}}" class="p-xs fa fa-edit"></i>-->
                                         </a>
                                     </span>
                                 </div>
                             </div>
 
-                                <uib-tabset class="tab-panel">
+                            <uib-tabset class="tab-panel">
 
-                                    <uib-tab heading="Explore" active="tab.active">
+                                <uib-tab heading="Explore" active="tab.active">
 
-                                        <uib-tab-heading class="assay-info" align="center">
-                                            <p class="tab-info">EXPLORE</p>
-                                        </uib-tab-heading>
-                                        <!-- explorer view goes here -->
-                                        <section ui-view="clinical-explorer" id="explorer-section">
-                                            <i>Explorer panel should load here</i>
-                                        </section>
+                                    <uib-tab-heading class="assay-info" align="center">
+                                        <p class="tab-info">EXPLORE</p>
+                                    </uib-tab-heading>
+                                    <!-- explorer view goes here -->
+                                    <section ui-view="clinical-explorer" id="explorer-section">
+                                        <i>Explorer panel should load here</i>
+                                    </section>
 
 
-                                    </uib-tab>
+                                </uib-tab>
 
-                                    <uib-tab heading="Dataset Descriptor" class="dsads">
+                                <uib-tab heading="Dataset Descriptor" class="dsads">
 
-                                        <uib-tab-heading class="assay-info" align="center">
-                                            <p class="tab-info">Dataset Descriptor</p>
-                                        </uib-tab-heading>
-                                        <div class="ibox-content">
+                                    <uib-tab-heading class="assay-info" align="center">
+                                        <p class="tab-info">Dataset Descriptor</p>
+                                    </uib-tab-heading>
+                                    <div class="ibox-content">
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="wrapper wrapper-content">
-                                                        <div class="ibox-content" style="min-height: 110px">
-                                                            <div class=" row">
-                                                                <div class="col-md-12">
-                                                                    <dl class="dl-horizontal">
-                                                                        <dt>Descriptor Name</dt>
-                                                                        <dd>
-                                                                            <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="wrapper wrapper-content">
+                                                    <div class="ibox-content" style="min-height: 110px">
+                                                        <div class=" row">
+                                                            <div class="col-md-12">
+                                                                <dl class="dl-horizontal">
+                                                                    <dt>Descriptor Name</dt>
+                                                                    <dd>
+                                                                        <div class="col-md-6">
                                                                                 <span>
                                                                                     {{vm.dataset.descriptor.title}} Dataset Descriptor
                                                                                 </span>
-                                                                            </div>
-                                                                        </dd>
-                                                                        <div class="hr-line-dashed"></div>
-                                                                        <dt>Description:</dt>
-                                                                        <dd>
-                                                                            <div class="col-md-6">
+                                                                        </div>
+                                                                    </dd>
+                                                                    <div class="hr-line-dashed"></div>
+                                                                    <dt>Description:</dt>
+                                                                    <dd>
+                                                                        <div class="col-md-6">
                                                                                 <span>
                                                                                     {{vm.dataset.descriptor.description}}
                                                                                 </span>
-                                                                            </div>
-                                                                        </dd>
-                                                                        <div class="hr-line-dashed"></div>
-                                                                        <dt>Dataset Descriptor Type:</dt>
-                                                                        <dd>
-                                                                            <div class="col-md-6">
+                                                                        </div>
+                                                                    </dd>
+                                                                    <div class="hr-line-dashed"></div>
+                                                                    <dt>Dataset Descriptor Type:</dt>
+                                                                    <dd>
+                                                                        <div class="col-md-6">
                                                                                 <span>
                                                                                     {{vm.dataset.descriptor.datasetType}}
                                                                                 </span>
-                                                                            </div>
-                                                                        </dd>
-                                                                        <div class="hr-line-dashed"></div>
-                                                                    </dl>
-                                                                </div>
+                                                                        </div>
+                                                                    </dd>
+                                                                    <div class="hr-line-dashed"></div>
+                                                                </dl>
                                                             </div>
                                                         </div>
+                                                    </div>
 
 
-                                                        <div>
-                                                            <div class="ibox-title panel-header">
-                                                                <span>Dataset Field Descriptors</span>
-                                                                <span style="font-size:16px;margin-top:-5px;"
-                                                                    class="pull-right">
+                                                    <div>
+                                                        <div class="ibox-title panel-header">
+                                                            <span>Dataset Field Descriptors</span>
+                                                            <span style="font-size:16px;margin-top:-5px;"
+                                                                  class="pull-right">
 <!--                                                                    <i class="p-xs fa fa-eye"></i>-->
                                                                     <i class="p-xs fa fa-download"> </i>
                                                                 </span>
-                                                            </div>
+                                                        </div>
 
 
-                                                            <div id="{{ds.id}}" class=" animated fadeIn">
+                                                        <div id="{{ds.id}}" class=" animated fadeIn">
 
 
-                                                                <!--Descriptor  Fields-->
-                                                                <div class="ibox-content">
+                                                            <!--Descriptor  Fields-->
+                                                            <div class="ibox-content">
+                                                                <div>
                                                                     <div>
-                                                                        <div>
-                                                                            <!--FOO TABLE-->
-<!--                                                                            <table id="bs_template_tbl1"-->
-<!--                                                                                class="footable table table-stripped toggle-arrow-tiny"-->
-<!--                                                                                data-page-size="15">-->
-<!--                                                                                <thead>-->
-<!--                                                                                    <tr>-->
-<!--                                                                                        <th width="10%">Field Name-->
-<!--                                                                                        </th>-->
-<!--                                                                                        <th width="12%">Field Label-->
-<!--                                                                                        </th>-->
-<!--                                                                                        <th>Description</th>-->
-<!--                                                                                        <th width="10%">Field Type-->
-<!--                                                                                        </th>-->
-<!--                                                                                        <th>Name Term ID</th>-->
-<!--                                                                                        <th>Name Term XRef</th>-->
-<!--                                                                                    </tr>-->
-<!--                                                                                </thead>-->
-<!--                                                                                <tbody>-->
-<!--                                                                                    <tr ng-repeat="field in vm.dataset.descriptor.fields">-->
-<!--                                                                                        <td>-->
-<!--                                                                                            <span>{{ field.name }}</span>-->
-<!--                                                                                            <span ng-if="!field.name">-->
-<!--                                                                                                &lt;!&ndash; {{ field.name ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                <span>empty</span>-->
-<!--                                                                                            </span>-->
-<!--                                                                                        </td>-->
-<!--                                                                                        <td>-->
-<!--                                                                                            <span ng-if="field.label">-->
-<!--                                                                                                &lt;!&ndash; {{ field.label ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                {{ field.label }}-->
-<!--                                                                                            </span>-->
-
-<!--                                                                                            <span ng-if="!field.label">-->
-<!--                                                                                                &lt;!&ndash; {{ field.label ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                <span>empty</span>-->
-<!--                                                                                            </span>-->
-<!--                                                                                        </td>-->
-<!--                                                                                        <td>-->
-
-<!--                                                                                            <span-->
-<!--                                                                                                ng-if="field.description">-->
-<!--                                                                                                &lt;!&ndash; {{ field.description ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                {{ field.description }}-->
-<!--                                                                                            </span>-->
-
-<!--                                                                                            <span-->
-<!--                                                                                                ng-if="!field.description">-->
-<!--                                                                                                &lt;!&ndash; {{ field.description ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                <span>empty</span>-->
-<!--                                                                                            </span>-->
-<!--                                                                                        </td>-->
-<!--                                                                                        <td>-->
-<!--                                                                                            <span-->
-<!--                                                                                                ng-if='field.fieldType'>-->
-<!--                                                                                                &lt;!&ndash; {{-->
-<!--                                                                                                    field.fieldType || 'empty'-->
-<!--                                                                                                    }} &ndash;&gt;-->
-<!--                                                                                                &lt;!&ndash; {{-->
-<!--                                                                                                field.varType ||-->
-<!--                                                                                                'empty'-->
-<!--                                                                                                }} &ndash;&gt;-->
-<!--                                                                                                {{-->
-<!--                                                                                                expVM.showFieldType(field)-->
-
-<!--                                                                                                }}-->
-<!--                                                                                            </span>-->
-<!--                                                                                            <span-->
-<!--                                                                                                ng-if='!field.fieldType'>-->
-<!--                                                                                                &lt;!&ndash; {{-->
-<!--                                                                                                    field.fieldType || 'empty'-->
-<!--                                                                                                    }} &ndash;&gt;-->
-<!--                                                                                                &lt;!&ndash; {{-->
-<!--                                                                                                field.varType ||-->
-<!--                                                                                                'empty'-->
-<!--                                                                                                }} &ndash;&gt;-->
-<!--                                                                                                <a>empty</a>-->
-<!--                                                                                            </span>-->
-<!--                                                                                        </td>-->
-<!--                                                                                        <td>-->
-<!--                                                                                            <span ng-if="field.term">-->
-<!--                                                                                                &lt;!&ndash; {{ field.term ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                {{ field.roleId }}-->
-<!--                                                                                            </span>-->
-
-<!--                                                                                            <span ng-if="!field.term">-->
-<!--                                                                                                &lt;!&ndash; {{ field.term ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                <a>empty</a>-->
-<!--                                                                                            </span>-->
-<!--                                                                                        </td>-->
-<!--                                                                                        <td>-->
-<!--                                                                                            <span ng-if="field.term">-->
-<!--                                                                                                &lt;!&ndash; {{ field.term ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                {{ field.roleId }}-->
-<!--                                                                                            </span>-->
-
-<!--                                                                                            <span ng-if="!field.term">-->
-<!--                                                                                                &lt;!&ndash; {{ field.term ||-->
-<!--                                                                                                    'empty' }} &ndash;&gt;-->
-<!--                                                                                                <a>empty</a>-->
-<!--                                                                                            </span>-->
-<!--                                                                                        </td>-->
-
-
-<!--                                                                                    </tr>-->
-<!--                                                                                </tbody>-->
-<!--                                                                                &lt;!&ndash;                                        <tfoot>&ndash;&gt;-->
-<!--                                                                                &lt;!&ndash;                                        <tr>&ndash;&gt;-->
-<!--                                                                                &lt;!&ndash;                                            <td colspan="6">&ndash;&gt;-->
-<!--                                                                                &lt;!&ndash;                                                <ul class="pagination pull-right"></ul>&ndash;&gt;-->
-<!--                                                                                &lt;!&ndash;                                            </td>&ndash;&gt;-->
-<!--                                                                                &lt;!&ndash;                                        </tr>&ndash;&gt;-->
-<!--                                                                                &lt;!&ndash;                                        </tfoot>&ndash;&gt;-->
-<!--                                                                            </table>-->
-
-                                                                            <table id="bs_template_tbl1" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
-                                                                                <thead>
-                                                                                <tr>
-                                                                                    <th width="15%">Field Name </th>
-                                                                                    <th width="15%">Field Label</th>
-                                                                                    <th>Description</th>
-                                                                                    <th width="15%">Field Type</th>
-                                                                                    <th width="15%">Name Term ID</th>
-                                                                                    <th width="15%">Name Term XRef</th>
-                                                                                </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                <tr ng-repeat="field in vm.dataset.descriptor.fields">
-                                                                                    <td>
+                                                                        <table id="bs_template_tbl1" class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th width="15%">Field Name </th>
+                                                                                <th width="15%">Field Label</th>
+                                                                                <th>Description</th>
+                                                                                <th width="15%">Field Type</th>
+                                                                                <th width="15%">Name Term ID</th>
+                                                                                <th width="15%">Name Term XRef</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            <tr ng-repeat="field in vm.dataset.descriptor.fields">
+                                                                                <td>
                                     <span>
                                             {{ field.name || 'empty' }}
                                     </span>
-                                                                                    </td>
-                                                                                    <td>
+                                                                                </td>
+                                                                                <td>
                                     <span >
                                             {{ field.label || 'empty' }}
                                     </span>
-                                                                                    </td>
-                                                                                    <td>
+                                                                                </td>
+                                                                                <td>
                                     <span >
                                             {{ field.description || 'empty' }}
                                     </span>
-                                                                                    </td>
-                                                                                    <td>
+                                                                                </td>
+                                                                                <td>
                                     <span>
                                         {{ field.fieldType }}
                                     </span>
-                                                                                    </td>
-                                                                                    <td>
+                                                                                </td>
+                                                                                <td>
                                     <span >
                                             {{ field.term || 'empty' }}
                                     </span>
-                                                                                    </td>
-                                                                                    <td>
+                                                                                </td>
+                                                                                <td>
                                     <span >
                                             {{ field.term || 'empty' }}
                                     </span>
 
 
-                                                                                </tr>
-                                                                                </tbody>
-                                                                            </table>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
 
-                                                                        </div>
                                                                     </div>
-
                                                                 </div>
 
                                                             </div>
-
-                                                            <div ng-hide="vm.dataset.descriptor" class="ibox-content">
-                                                                <div uib-alert class="alert-info">
-                                                                    <h4>No Dataset Descriptor defined for this dataset.</h4>
-                                                                </div>
-                                                            </div>
-
 
                                                         </div>
+
+                                                        <div ng-hide="vm.dataset.descriptor" class="ibox-content">
+                                                            <div uib-alert class="alert-info">
+                                                                <h4>No Dataset Descriptor defined for this dataset.</h4>
+                                                            </div>
+                                                        </div>
+
+
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                         </div>
-                                    </uib-tab>
 
-                                    <uib-tab heading="Preview Dataset" class="dsads">
-                                        <uib-tab-heading class="assay-info" align="center">
-                                            <p class="tab-info">Preview Dataset</p>
-                                        </uib-tab-heading>
+                                    </div>
+                                </uib-tab>
 
-                                        <div class="ibox-content">
-                                            <div uib-alert class="alert-info">
-                                                <h4>No Preview available.</h4>
-                                            </div>
+                                <uib-tab heading="Preview Dataset" class="dsads">
+                                    <uib-tab-heading class="assay-info" align="center">
+                                        <p class="tab-info">Preview Dataset</p>
+                                    </uib-tab-heading>
+
+                                    <div class="ibox-content">
+                                        <div uib-alert class="alert-info">
+                                            <h4>No Preview available.</h4>
                                         </div>
-                                    </uib-tab>
-                                </uib-tabset>
+                                    </div>
+                                </uib-tab>
+                            </uib-tabset>
 
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

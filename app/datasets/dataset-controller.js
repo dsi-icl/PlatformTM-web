@@ -39,7 +39,7 @@ function DatasetCtrl($scope, $state, $filter, $stateParams, datasetService) {
 
 
     vm.plotSwitchClicked = function (var1, var2) {
-        //plot functionality....
+       console.log('Im here')
     }
 
     datasetService.getPrimaryDatasetResource.get({datasetId:vm.datasetId, projectId:vm.projectId},function(data){

@@ -35,20 +35,6 @@ function config($stateProvider, $urlRouterProvider) {
         })
         .state('project.datasets.dataset', {
             url: "/datasets/{datasetId}",
-            // templateUrl: "datasets/dataset.html",
-            // controller:"DatasetCtrl as vm2",
-            // resolve: {
-            //     loadController:['$ocLazyLoad',function($ocLazyLoad){
-            //         return $ocLazyLoad.load([
-            //             'datasets/dataset-controller.js'
-            //         ]);
-            //     }],
-            //     loadPlugin: ['$ocLazyLoad',function ($ocLazyLoad) {
-            //         return $ocLazyLoad.load([
-            //             'lib/plugins/steps/jquery.steps.css','lib/plugins/iCheck/custom.css','lib/plugins/iCheck/icheck.min.js'
-            //         ]);
-            //     }]
-            // },
             views: {
                 "": {
                     templateUrl: 'datasets/dataset.html',
@@ -64,7 +50,7 @@ function config($stateProvider, $urlRouterProvider) {
                             ]);
                         }]
                     },
-                    controller: 'DatasetCtrl as vm'
+                    controller: 'DatasetCtrl as dsVM'
                 },
                 'clinical-explorer@project.datasets.dataset': {
                     templateUrl: 'datasets/clinical-explorer/clinical-explorer.html',
